@@ -6,6 +6,21 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_door_close.wav           heavy door: thud and latch
   sfx_door_locked.wav          a locked door rattling
   amb_wind_night.wav           20 s seamless wind loop
+  sfx_breath_loop.wav          the porter breathing (loop)
+  sfx_pant_loop.wav            out of breath (loop): the porter winded, the hunter winded
+  sfx_gasp.wav                 a held breath running out
+  sfx_heartbeat_loop.wav       heartbeat while hiding (loop)
+  sfx_ring_loop.wav            ringing ears while staring at the demon (loop)
+  sfx_hoof_<n>.wav             carved hoof soles on stone (3)
+  sfx_felt_<n>.wav             felt overshoes, barely there (3)
+  sfx_hum_loop.wav             a hummed plainchant phrase (loop)
+  sfx_rummage.wav              a hunter searching a hiding spot
+  sfx_hide.wav                 climbing into a hiding spot
+  sfx_key_turn.wav             a key turning in a lock
+  sfx_capture.wav              caught
+  sfx_rook_<n>.wav             rooks (3)
+  sfx_rat_<n>.wav              rats (3)
+  sfx_cat_0.wav                the abbey cat
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -161,6 +176,152 @@ def wind(rng, seconds=20.0, fade=2.0):
     return body
 
 
+def breath_cycle(rng, seconds, rate, depth=1.0):
+    """Breathing: band-passed noise swelling on each in and out breath."""
+    n = int(seconds * RATE)
+    air = bandpass(noise(n, rng), 900, 0.6)
+    out = []
+    for i in range(n):
+        ph = (i / RATE * rate) % 1.0
+        # In-breath (0..0.4) then a softer, longer out-breath.
+        a = math.sin(math.pi * ph / 0.4) if ph < 0.4 else 0.6 * math.sin(math.pi * (ph - 0.4) / 0.6)
+        out.append(air[i] * max(0.0, a) ** 1.5 * depth)
+    return out
+
+
+def loopable(x, fade=0.3):
+    """Crossfades the last `fade` seconds into the start."""
+    f = int(fade * RATE)
+    body, tail = x[:-f], x[-f:]
+    for i in range(f):
+        k = i / f
+        body[i] = body[i] * k + tail[i] * (1.0 - k)
+    return body
+
+
+def gasp(rng):
+    n = int(0.9 * RATE)
+    air = bandpass(noise(n, rng), 1300, 0.9)
+    return [s * (min(1.0, i / (0.05 * RATE)) * math.exp(-i / (0.25 * RATE))) for i, s in enumerate(air)]
+
+
+def heartbeat(rng, bpm=96.0, beats=8):
+    period = 60.0 / bpm
+    n = int(period * beats * RATE)
+    out = [0.0] * n
+    for b in range(beats):
+        for k, (delay, g) in enumerate(((0.0, 1.0), (0.24, 0.7))):
+            thump = tone(int(0.2 * RATE), 48 + 6 * k, 0.05, rng, detune=0.0)
+            start = int((b * period + delay) * RATE)
+            for i, s in enumerate(thump):
+                if start + i < n:
+                    out[start + i] += s * g
+    return out
+
+
+def ring(seconds=6.0):
+    n = int(seconds * RATE)
+    # Two close tones beating slowly; whole cycles so it loops.
+    f1, f2 = 3500.0, 3500.0 + 1.0 / seconds * 3
+    return [0.6 * math.sin(2 * math.pi * f1 * i / RATE) + 0.4 * math.sin(2 * math.pi * f2 * i / RATE) for i in range(n)]
+
+
+def hoof(rng):
+    n = int(0.25 * RATE)
+    clack = mix(tone(n, 620, 0.02, rng, 0.06), gain(tone(n, 1240, 0.012, rng, 0.06), 0.5))
+    crack = [a * b for a, b in zip(highpass(noise(n, rng), 2000), env(n, 0.0005, 0.008))]
+    return mix(clack, crack, gain(tone(n, 90, 0.04, rng), 0.6))
+
+
+def felt(rng):
+    n = int(0.2 * RATE)
+    return [a * b for a, b in zip(lowpass(noise(n, rng), 350), env(n, 0.01, 0.04))]
+
+
+def hum(rng):
+    """A slow modal phrase hummed through the nose: harmonics under a soft formant."""
+    notes = [(146.8, 1.2), (164.8, 0.8), (174.6, 1.2), (164.8, 0.8), (146.8, 1.6), (130.8, 1.0),
+             (146.8, 2.0), (0.0, 1.4)]
+    out, phase = [], 0.0
+    for f, d in notes:
+        n = int(d * RATE)
+        for i in range(n):
+            t = i / n
+            if f == 0.0:
+                out.append(0.0)
+                continue
+            vib = 1.0 + 0.006 * math.sin(2 * math.pi * 5.0 * i / RATE)
+            phase += f * vib / RATE
+            v = sum(math.sin(2 * math.pi * h * phase) / h ** 1.3 for h in range(1, 7))
+            a = min(1.0, t * 6) * min(1.0, (1.0 - t) * 6)
+            out.append(v * a)
+    return bandpass(lowpass(out, 1200), 300, 0.5)
+
+
+def rummage(rng):
+    n = int(2.2 * RATE)
+    base = bandpass(noise(n, rng), 1100, 0.7)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        a = max(0.0, math.sin(2 * math.pi * 1.7 * t + rng.uniform(-0.2, 0.2))) ** 4
+        out.append(base[i] * a)
+    return mix(out, pad(gain(thud(rng), 0.5), 0.6), pad(gain(latch(rng), 0.6), 1.5))
+
+
+def scrape(rng, seconds):
+    n = int(seconds * RATE)
+    base = bandpass(noise(n, rng), 600, 1.2)
+    return [s * math.sin(math.pi * i / n) for i, s in enumerate(base)]
+
+
+def key_turn(rng):
+    clicks = [pad(gain(latch(rng), g), d) for d, g in ((0.0, 0.5), (0.12, 0.7), (0.3, 1.0))]
+    return mix(*clicks, pad(gain(tone(int(0.3 * RATE), 1800, 0.05, rng), 0.2), 0.3))
+
+
+def capture(rng):
+    n = int(2.0 * RATE)
+    boom = mix(tone(n, 41, 0.6, rng, 0.0), gain(tone(n, 62, 0.4, rng, 0.0), 0.6))
+    hit = [a * b for a, b in zip(lowpass(noise(n, rng), 1500), env(n, 0.002, 0.15))]
+    return mix(boom, hit)
+
+
+def rook(rng):
+    n = int(rng.uniform(0.25, 0.4) * RATE)
+    out, phase = [], 0.0
+    f0 = rng.uniform(380, 480)
+    for i in range(n):
+        t = i / n
+        phase += f0 * (1.0 + 0.3 * t) / RATE
+        saw = 2.0 * (phase % 1.0) - 1.0
+        out.append(saw * (rng.uniform(0.6, 1.0)) * math.sin(math.pi * t) ** 0.5)
+    caw = bandpass(out, 1400, 1.0)
+    return mix(caw, pad(gain(bandpass(out, 1100, 1.0), 0.8), 0.45))
+
+
+def rat(rng):
+    out = []
+    for k in range(rng.randint(2, 4)):
+        n = int(rng.uniform(0.04, 0.08) * RATE)
+        f = rng.uniform(3200, 4500)
+        chirp = [math.sin(2 * math.pi * f * (1.0 + 0.2 * i / n) * i / RATE) * math.sin(math.pi * i / n) for i in range(n)]
+        out = mix(out, pad(chirp, k * rng.uniform(0.08, 0.14))) if out else chirp
+    return out
+
+
+def cat(rng):
+    n = int(0.9 * RATE)
+    out, phase = [], 0.0
+    for i in range(n):
+        t = i / n
+        f = 520 + 260 * math.sin(math.pi * min(1.0, t * 1.4))
+        phase += f / RATE
+        v = sum(math.sin(2 * math.pi * h * phase) / h for h in range(1, 6))
+        out.append(v * math.sin(math.pi * t) ** 0.7)
+    return bandpass(out, 900, 0.8)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -171,6 +332,23 @@ def main():
     write("sfx_door_close.wav", mix(thud(rng), pad(gain(latch(rng), 0.6), 0.03)))
     write("sfx_door_locked.wav", mix(*[pad(gain(latch(rng), 1.0 - 0.15 * k), 0.07 * k) for k in range(5)]))
     write("amb_wind_night.wav", wind(rng), peak=0.6)
+    write("sfx_breath_loop.wav", loopable(breath_cycle(rng, 8.3, 0.36)), peak=0.5)
+    write("sfx_pant_loop.wav", loopable(breath_cycle(rng, 4.3, 1.4)), peak=0.6)
+    write("sfx_gasp.wav", gasp(rng))
+    write("sfx_heartbeat_loop.wav", heartbeat(rng), peak=0.7)
+    write("sfx_ring_loop.wav", ring(), peak=0.25)
+    for k in range(3):
+        write(f"sfx_hoof_{k}.wav", hoof(rng), peak=0.9)
+        write(f"sfx_felt_{k}.wav", felt(rng), peak=0.4)
+    write("sfx_hum_loop.wav", hum(rng), peak=0.5)
+    write("sfx_rummage.wav", rummage(rng), peak=0.7)
+    write("sfx_hide.wav", mix(scrape(rng, 0.6), pad(gain(thud(rng), 0.4), 0.45)), peak=0.6)
+    write("sfx_key_turn.wav", key_turn(rng), peak=0.6)
+    write("sfx_capture.wav", capture(rng), peak=0.9)
+    for k in range(3):
+        write(f"sfx_rook_{k}.wav", rook(rng), peak=0.6)
+        write(f"sfx_rat_{k}.wav", rat(rng), peak=0.4)
+    write("sfx_cat_0.wav", cat(rng), peak=0.5)
 
 
 if __name__ == "__main__":

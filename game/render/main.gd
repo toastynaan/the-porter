@@ -8,13 +8,18 @@ extends Node
 ## (960 on 16:9), so pixels stay square; leftover rows are letterboxed.
 ##
 ## Pick the level with a user argument: `-- --level=res://path/to/level.tscn`.
+## reload_level() replaces it with a fresh copy (a restart from the bell).
 ## F11 toggles full screen.
+
+signal level_loaded(level: Node)
 
 const RENDER_HEIGHT := 540
 
 @export var level: PackedScene
 
 var pixel_scale := 1
+## The level now in the World viewport.
+var current_level: Node
 
 @onready var world: SubViewport = $World
 @onready var screen: TextureRect = $Screen
@@ -28,12 +33,26 @@ func _ready() -> void:
 	mat.set_shader_parameter(&"src_linear", tex)
 	get_viewport().size_changed.connect(_layout)
 	_layout()
-	var scene := level
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--level="):
-			scene = load(arg.trim_prefix("--level="))
-	if scene:
-		world.add_child(scene.instantiate())
+			level = load(arg.trim_prefix("--level="))
+	if level:
+		load_level(level)
+
+
+## Replaces the level with a new instance of `scene`.
+func load_level(scene: PackedScene) -> void:
+	level = scene
+	if current_level:
+		world.remove_child(current_level)
+		current_level.queue_free()
+	current_level = scene.instantiate()
+	world.add_child(current_level)
+	level_loaded.emit(current_level)
+
+
+func reload_level() -> void:
+	load_level(level)
 
 
 ## Input reaches nodes inside the SubViewport only through push_input.

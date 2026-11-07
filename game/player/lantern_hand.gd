@@ -1,14 +1,18 @@
+class_name LanternHand
 extends Node3D
 ## Holds the lantern low in the left hand, always in view (Look and Feel,
 ## "Camera and player feel"). The hand follows the head's pitch only partly,
 ## the lantern hangs straight down and swings like a pendulum from the hand's
 ## movement (its swing is the main motion on screen), and holding
-## `cover_lantern` tucks it under the cloak. `tremor` is the hunger hook: a
-## hand tremor, 0..1.
+## `cover_lantern` tucks it under the cloak (so does hiding: `force_cover`).
+## Hunger shakes the hand (Look and Feel, "Hunger": hand tremor on the
+## lantern); `tremor` adds more for scripted moments.
 
 ## Hand position relative to the head, held and tucked under the cloak.
 const HOLD := Vector3(-0.22, -0.22, -0.52)
 const TUCKED := Vector3(-0.1, -0.62, -0.26)
+## Hiding: held close under the chin, so its glow stays inside the spot.
+const HIDDEN := Vector3(-0.08, -0.14, -0.2)
 ## How much of the head's pitch the hand follows.
 const PITCH_FOLLOW := 0.6
 ## Lantern length from handle to centre, m: sets the swing's period.
@@ -19,8 +23,11 @@ const TUCK_TIME := 0.3
 ## Tremor amplitude at tremor 1, m.
 const TREMOR_SIZE := 0.008
 
-## 0..1 hand tremor (hunger, M4).
+## Extra hand tremor, 0..1, on top of hunger's.
 @export var tremor := 0.0
+
+## Keeps the lantern covered whatever the player holds (hiding).
+var force_cover := false
 
 var _swing := Vector2.ZERO
 var _swing_vel := Vector2.ZERO
@@ -43,13 +50,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	delta = clampf(delta, 0.001, 1.0 / 30.0)
 	_t += delta
-	var cover := Input.is_action_pressed(&"cover_lantern")
+	var cover := force_cover or Input.is_action_pressed(&"cover_lantern")
 	if cover != lantern.covered:
 		lantern.covered = cover
 	_tuck = move_toward(_tuck, 1.0 if lantern.covered else 0.0, delta / TUCK_TIME)
 	var unpitch := Basis(Vector3.RIGHT, _head.rotation.x * (PITCH_FOLLOW - 1.0))
 	var jitter := Vector3(_noise.get_noise_1d(_t * 40.0), _noise.get_noise_1d(_t * 40.0 + 70.0), 0.0)
-	position = unpitch * HOLD.lerp(TUCKED, smoothstep(0.0, 1.0, _tuck)) + jitter * TREMOR_SIZE * tremor
+	var shake := maxf(tremor, 1.0 if GameState.is_hungry() else 0.0)
+	var tucked := HIDDEN if force_cover else TUCKED
+	position = unpitch * HOLD.lerp(tucked, smoothstep(0.0, 1.0, _tuck)) + jitter * TREMOR_SIZE * shake
 	basis = unpitch
 	_update_swing(delta)
 

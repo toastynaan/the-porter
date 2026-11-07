@@ -9,8 +9,12 @@ extends Node
 @export var screen: CanvasItem
 @export var world: SubViewport
 
-## 0..1 from staring at the demon; set by the stare meter (M3).
+## 0..1 from staring at the demon; set by the stare meter (group "dose_driver").
 var stare := 0.0
+
+
+func _ready() -> void:
+	add_to_group(&"dose_driver")
 
 
 func _process(_delta: float) -> void:

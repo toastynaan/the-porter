@@ -1,7 +1,8 @@
 extends AudioStreamPlayer3D
 ## Footsteps: one sound per stride from the player, picked by the surface
 ## underfoot (placeholder synthesised sounds, art/sfx/sfx_step_*). Running
-## is louder (Look and Feel, "Sound feel": every surface has its own sound).
+## is louder (Look and Feel, "Sound feel": every surface has its own sound),
+## and hunters hear it further (Earshot.RUN, Earshot.WALK).
 
 const SURFACES: Array[String] = ["stone", "wood", "mud", "grass"]
 const VARIANTS := 4
@@ -21,6 +22,7 @@ func _ready() -> void:
 
 
 func _on_stepped(surface: String, running: bool) -> void:
+	Earshot.make(owner, global_position, Earshot.RUN if running else Earshot.WALK, owner)
 	if not AudioOut.enabled():
 		return
 	var list: Array = _streams.get(surface, _streams["stone"])

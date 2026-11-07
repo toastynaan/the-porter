@@ -6,3 +6,12 @@ class_name AudioOut
 
 static func enabled() -> bool:
 	return DisplayServer.get_name() != "headless"
+
+
+## A copy of `wav` that loops end to end (the placeholder WAVs import unlooped).
+static func looped(wav: AudioStreamWAV) -> AudioStreamWAV:
+	var loop := wav.duplicate() as AudioStreamWAV
+	loop.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	loop.loop_begin = 0
+	loop.loop_end = int(loop.get_length() * loop.mix_rate)
+	return loop

@@ -39,6 +39,7 @@ func _run() -> void:
 		markers[String(m.name)] = (m as Node3D).global_position
 	_player.use_input_override = true
 	_player.run_override = true
+	_player.stamina.tireless = true
 	var total := 0.0
 	var sim := 0.0
 	for stop in TOUR:

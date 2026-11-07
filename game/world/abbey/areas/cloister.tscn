@@ -6,89 +6,70 @@
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="4_t5cdb"]
 [ext_resource type="Material" path="res://game/world/materials/flags.tres" id="5_uj1ur"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="6_38cv0"]
+[ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="7_g6atd"]
 
 [node name="Cloister" type="Node3D" unique_id=442020926]
 
 [node name="Walls" type="Node3D" parent="." unique_id=438653093 groups=["nav_source"]]
 
-[node name="ArcN_00" type="Node3D" parent="Walls" unique_id=152595204 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcN_00" parent="Walls" unique_id=152595204 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
 
-[node name="ArcN_01" type="Node3D" parent="Walls" unique_id=273714183 instance=ExtResource("2_g6atd")]
-editor_description = "A cloister arcade bay with no parapet: a way into the garth."
+[node name="ArcN_01" parent="Walls" unique_id=273714183 instance=ExtResource("2_g6atd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -24)
 
-[node name="ArcN_02" type="Node3D" parent="Walls" unique_id=1565234448 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcN_02" parent="Walls" unique_id=1565234448 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -24)
 
-[node name="ArcN_03" type="Node3D" parent="Walls" unique_id=345304033 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcN_03" parent="Walls" unique_id=345304033 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -24)
 
-[node name="Pier_-80_-240_0" type="Node3D" parent="Walls" unique_id=253748516 instance=ExtResource("3_fh3mh")]
-editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+[node name="Pier_-80_-240_0" parent="Walls" unique_id=253748516 instance=ExtResource("3_fh3mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24)
 
-[node name="Pier_80_-240_0" type="Node3D" parent="Walls" unique_id=1532597961 instance=ExtResource("3_fh3mh")]
-editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+[node name="Pier_80_-240_0" parent="Walls" unique_id=1532597961 instance=ExtResource("3_fh3mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -24)
 
-[node name="ArcS_00" type="Node3D" parent="Walls" unique_id=1802855867 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcS_00" parent="Walls" unique_id=1802855867 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
 
-[node name="ArcS_01" type="Node3D" parent="Walls" unique_id=1406393526 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcS_01" parent="Walls" unique_id=1406393526 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -8)
 
-[node name="ArcS_02" type="Node3D" parent="Walls" unique_id=1338081491 instance=ExtResource("2_g6atd")]
-editor_description = "A cloister arcade bay with no parapet: a way into the garth."
+[node name="ArcS_02" parent="Walls" unique_id=1338081491 instance=ExtResource("2_g6atd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -8)
 
-[node name="ArcS_03" type="Node3D" parent="Walls" unique_id=1264761579 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcS_03" parent="Walls" unique_id=1264761579 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -8)
 
-[node name="Pier_-80_-80_0" type="Node3D" parent="Walls" unique_id=866937943 instance=ExtResource("3_fh3mh")]
-editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+[node name="Pier_-80_-80_0" parent="Walls" unique_id=866937943 instance=ExtResource("3_fh3mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
 
-[node name="Pier_80_-80_0" type="Node3D" parent="Walls" unique_id=437265975 instance=ExtResource("3_fh3mh")]
-editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+[node name="Pier_80_-80_0" parent="Walls" unique_id=437265975 instance=ExtResource("3_fh3mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
 
-[node name="ArcW_00" type="Node3D" parent="Walls" unique_id=446740881 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcW_00" parent="Walls" unique_id=446740881 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, -22)
 
-[node name="ArcW_01" type="Node3D" parent="Walls" unique_id=786726785 instance=ExtResource("2_g6atd")]
-editor_description = "A cloister arcade bay with no parapet: a way into the garth."
+[node name="ArcW_01" parent="Walls" unique_id=786726785 instance=ExtResource("2_g6atd")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, -18)
 
-[node name="ArcW_02" type="Node3D" parent="Walls" unique_id=1839093927 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcW_02" parent="Walls" unique_id=1839093927 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, -14)
 
-[node name="ArcW_03" type="Node3D" parent="Walls" unique_id=103205477 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcW_03" parent="Walls" unique_id=103205477 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, -10)
 
-[node name="ArcE_00" type="Node3D" parent="Walls" unique_id=25580736 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcE_00" parent="Walls" unique_id=25580736 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, -22)
 
-[node name="ArcE_01" type="Node3D" parent="Walls" unique_id=2134283244 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcE_01" parent="Walls" unique_id=2134283244 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, -18)
 
-[node name="ArcE_02" type="Node3D" parent="Walls" unique_id=895082162 instance=ExtResource("2_g6atd")]
-editor_description = "A cloister arcade bay with no parapet: a way into the garth."
+[node name="ArcE_02" parent="Walls" unique_id=895082162 instance=ExtResource("2_g6atd")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, -14)
 
-[node name="ArcE_03" type="Node3D" parent="Walls" unique_id=437142749 instance=ExtResource("1_2tfmb")]
-editor_description = "A cloister arcade bay: 3.2 x 2.4 m opening over a 0.6 m parapet."
+[node name="ArcE_03" parent="Walls" unique_id=437142749 instance=ExtResource("1_2tfmb")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, -10)
 
 [node name="Floors" type="Node3D" parent="." unique_id=1345291919 groups=["nav_source"]]
@@ -145,11 +126,39 @@ material = ExtResource("6_38cv0")
 
 [node name="HidingSpots" type="Node3D" parent="." unique_id=1103257136]
 
-[node name="Hide_PillarW" type="Marker3D" parent="HidingSpots" unique_id=1861413267 groups=["hiding_spot"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.05, -16)
+[node name="PillarW" type="Area3D" parent="HidingSpots" unique_id=980257719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.05, -16)
+script = ExtResource("7_g6atd")
+noise = 0.0
+check_chance = 0.9
+look_yaw = 70.0
+size = Vector3(1, 2.4, 1)
 
-[node name="Hide_PillarE" type="Marker3D" parent="HidingSpots" unique_id=43754815 groups=["hiding_spot"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.05, -20)
+[node name="View" type="Marker3D" parent="HidingSpots/PillarW" unique_id=895733403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 1.4000001, 0.25)
+
+[node name="Exit" type="Marker3D" parent="HidingSpots/PillarW" unique_id=1889845851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6000004, 0, 0.6000004)
+
+[node name="Check" type="Marker3D" parent="HidingSpots/PillarW" unique_id=1998258958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1999998, 0, -1.3999996)
+
+[node name="PillarE" type="Area3D" parent="HidingSpots" unique_id=178553029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.05, -20)
+script = ExtResource("7_g6atd")
+noise = 0.0
+check_chance = 0.9
+look_yaw = 70.0
+size = Vector3(1, 2.4, 1)
+
+[node name="View" type="Marker3D" parent="HidingSpots/PillarE" unique_id=2107617367]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.75, 1.4000001, -0.25)
+
+[node name="Exit" type="Marker3D" parent="HidingSpots/PillarE" unique_id=1614289365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000004, 0, -0.6000004)
+
+[node name="Check" type="Marker3D" parent="HidingSpots/PillarE" unique_id=9837789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1999998, 0, 1.3999996)
 
 [node name="Markers" type="Node3D" parent="." unique_id=1820057986]
 
@@ -158,3 +167,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 
 [node name="CloisterWalk" type="Marker3D" parent="Markers" unique_id=556517986 groups=["area_marker"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -26)
+
+[node name="StalkPoints" type="Node3D" parent="." unique_id=872846472]
+
+[node name="Stalk0" type="Marker3D" parent="StalkPoints" unique_id=1416236010 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -26)
+
+[node name="Stalk1" type="Marker3D" parent="StalkPoints" unique_id=191156324 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.05, -26)
+
+[node name="Stalk2" type="Marker3D" parent="StalkPoints" unique_id=696521415 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.05, -6)
+
+[node name="Stalk3" type="Marker3D" parent="StalkPoints" unique_id=509770098 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -6)
+
+[node name="Stalk4" type="Marker3D" parent="StalkPoints" unique_id=1881678850 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
+
+[node name="Stalk5" type="Marker3D" parent="StalkPoints" unique_id=998183627 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="Stalk6" type="Marker3D" parent="StalkPoints" unique_id=532114403 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -16)
+
+[node name="Stalk7" type="Marker3D" parent="StalkPoints" unique_id=824560796 groups=["stalk_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -16)

@@ -18,8 +18,11 @@ const DOOR := 1 << 9           ## Door leaves. Left out of the navmesh bake, so 
 const INTERACT := 1 << 10      ## Interactable areas the player's view ray finds (squeezes).
 
 # Masks
-## The porter walks on the world and is blocked by doors.
-const MASK_PLAYER := WORLD | DOOR
+## The porter walks on the world and is blocked by doors and by other
+## bodies on the capsule layer (hunters, the demon).
+const MASK_PLAYER := WORLD | DOOR | CAPSULE
+## Hunters walk on the world and are blocked by doors; they don't push the porter.
+const MASK_HUNTER := WORLD | DOOR
 ## Capsules walk on the world, are blocked by intact walls and by each other.
 ## They do not collide with ragdolls or debris (they push those instead, see below).
 const MASK_CAPSULE := WORLD | DESTRUCTIBLE | CAPSULE

@@ -2,7 +2,8 @@ class_name Interactor
 extends RayCast3D
 ## What the porter can reach: the first thing along the view within REACH
 ## whose node, or an ancestor, has interact(by). The interact dot shows when
-## something is in reach; `interact` uses it.
+## something is in reach; `interact` uses it, and `lock` turns a key in it
+## (toggle_lock(by)) when it has a lock.
 
 signal focus_changed(target: Node)
 
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	var target: Node = null
-	if is_colliding() and not _player.crawling:
+	if is_colliding() and not _player.busy():
 		target = _interactable(get_collider() as Node)
 	if target != focused:
 		focused = target
@@ -35,6 +36,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	var click := event is InputEventMouseButton
 	if event.is_action_pressed(&"interact") and focused and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		focused.interact(_player)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"lock") and focused and focused.has_method(&"toggle_lock"):
+		focused.toggle_lock(_player)
 		get_viewport().set_input_as_handled()
 
 

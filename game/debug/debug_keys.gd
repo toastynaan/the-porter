@@ -1,6 +1,9 @@
 extends Node
-## Development keys, in debug builds only: [ and ] ease Dose down or up by 25
-## over 2 seconds, to try the look anywhere.
+## Development keys, in debug builds only:
+##   [ and ]  ease Dose down or up by 25 over 2 seconds, to try the look anywhere
+##   H        hungry or fed (shorter breath, slower sprint recovery, tremor)
+##   K        the nearest awake hunter starts chasing you
+##   J        the demon appears now, somewhere you aren't looking
 
 const STEP := 25.0
 const EASE_TIME := 2.0
@@ -20,3 +23,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			GameState.add_dose(-minf(STEP, GameState.dose), EASE_TIME)
 		KEY_BRACKETRIGHT:
 			GameState.add_dose(minf(STEP, GameState.DOSE_MAX - GameState.dose), EASE_TIME)
+		KEY_H:
+			GameState.set_flag(&"hungry", not GameState.is_hungry())
+			print("hungry: ", GameState.is_hungry())
+		KEY_K:
+			_chase_me()
+		KEY_J:
+			for stalker: Stalker in get_tree().get_nodes_in_group(&"stalkers"):
+				stalker.appear_now()
+
+
+func _chase_me() -> void:
+	var player := get_tree().get_first_node_in_group(&"player") as Node3D
+	if player == null:
+		return
+	var nearest: Hunter = null
+	for hunter: Hunter in get_tree().get_nodes_in_group(&"hunters"):
+		if not hunter.dormant and (nearest == null or hunter.global_position.distance_to(player.global_position)
+				< nearest.global_position.distance_to(player.global_position)):
+			nearest = hunter
+	if nearest:
+		nearest.chase()

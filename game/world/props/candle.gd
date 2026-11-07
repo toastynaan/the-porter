@@ -2,6 +2,7 @@ class_name Candle
 extends Node3D
 ## A lit candle: someone is there or was just there (Look and Feel, "Lighting
 ## rules"). Small range, no shadows, a slow flicker. Put it out with `lit`.
+## A hunter sees anyone standing in its light (HunterSenses.is_lit).
 
 @export var lit := true:
 	set(value):
@@ -20,6 +21,7 @@ var _t := randf() * 100.0
 
 
 func _ready() -> void:
+	add_to_group(&"candles")
 	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	_noise.frequency = 1.0
 	light.visible = lit

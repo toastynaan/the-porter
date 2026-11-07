@@ -8,6 +8,8 @@ extends Node
 ## snap_dose() is for loading a save behind a fade and for tooling only.
 ##
 ## Suspicion only goes up (design doc, "Suspicion, chases and hiding").
+## Captures only go up too: loading a bell never undoes one, so the second
+## capture kills you even after a restart.
 
 signal dose_changed(dose: float)
 signal suspicion_changed(suspicion: int)
@@ -37,7 +39,12 @@ var seconds_per_hour := 0.0
 var suspicion := 0
 ## Times the player has been caught (the first wakes them, the second kills).
 var captures := 0
+## Keys the porter holds (design doc, "Tools": the gate, the guesthouse and
+## the charnel house). Doors name the key that locks them.
+var keys: Array[StringName] = [&"gate", &"guesthouse", &"charnel"]
 var flags: Dictionary = {}
+## The bell the night restarts from, or empty before the first one.
+var last_bell := &""
 
 var dose: float:
 	get:
@@ -100,6 +107,12 @@ func has_flag(flag: StringName) -> bool:
 	return flags.has(flag)
 
 
+## Skipped the bread (design doc, "Sources"): a shorter breath, slower
+## sprint recovery, a hand tremor on the lantern.
+func is_hungry() -> bool:
+	return get_flag(&"hungry", false) == true
+
+
 ## Saves the night at a bell. Returns false if the write failed.
 func ring_bell(bell: StringName) -> bool:
 	var save := SaveGame.new()
@@ -110,10 +123,12 @@ func ring_bell(bell: StringName) -> bool:
 	save.dose = _dose
 	save.suspicion = suspicion
 	save.captures = captures
+	save.keys = keys.duplicate()
 	save.flags = flags.duplicate(true)
 	if ResourceSaver.save(save, save_path) != OK:
 		push_error("GameState: could not write %s" % save_path)
 		return false
+	last_bell = bell
 	bell_saved.emit(bell)
 	return true
 
@@ -132,8 +147,10 @@ func load_last_bell() -> bool:
 		return false
 	night = save.night
 	hour = save.hour
-	captures = save.captures
+	captures = maxi(captures, save.captures)
+	keys = save.keys.duplicate()
 	flags = save.flags.duplicate(true)
+	last_bell = save.bell
 	suspicion = save.suspicion
 	suspicion_changed.emit(suspicion)
 	phase = save.phase as Phase

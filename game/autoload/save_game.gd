@@ -10,4 +10,5 @@ extends Resource
 @export var dose := 0.0
 @export var suspicion := 0
 @export var captures := 0
+@export var keys: Array[StringName] = []
 @export var flags: Dictionary = {}

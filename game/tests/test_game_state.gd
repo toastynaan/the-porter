@@ -63,13 +63,16 @@ func _run() -> void:
 	GameState.set_phase(GameState.Phase.ROUND)
 	GameState.hour = 25.5
 	GameState.captures = 2
+	GameState.keys.erase(&"charnel")
 	GameState.set_flag(&"ate_bread", false)
 	GameState.raise_suspicion(30)
 	_check(GameState.load_last_bell(), "bell save loads")
 	_check(GameState.dose == 42.0 and GameState.phase == GameState.Phase.MATINS and GameState.hour == 24.0,
 		"dose, phase and clock restored")
-	_check(GameState.suspicion == 20 and GameState.captures == 1 and GameState.get_flag(&"ate_bread") == true,
-		"suspicion, captures and flags restored")
+	_check(GameState.suspicion == 20 and GameState.get_flag(&"ate_bread") == true and GameState.keys.has(&"charnel"),
+		"suspicion, keys and flags restored")
+	_check(GameState.captures == 2, "a reload never undoes a capture (%d)" % GameState.captures)
+	_check(GameState.last_bell == &"matins", "remembers the last bell")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE))
 
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))

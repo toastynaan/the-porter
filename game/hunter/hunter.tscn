@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://game/hunter/hunter.gd" id="1_hunter"]
+[ext_resource type="PackedScene" path="res://game/demon/demon_costume.tscn" id="2_costume"]
+[ext_resource type="Script" path="res://game/hunter/hunter_senses.gd" id="3_senses"]
+[ext_resource type="Script" path="res://game/hunter/hunter_audio.gd" id="4_audio"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+radius = 0.3
+height = 1.8
+
+[node name="Hunter" type="CharacterBody3D"]
+floor_max_angle = 0.802851
+floor_snap_length = 0.3
+script = ExtResource("1_hunter")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("Shape_body")
+
+[node name="Agent" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+path_height_offset = 0.1
+radius = 0.3
+height = 1.8
+
+[node name="Costume" parent="." instance=ExtResource("2_costume")]
+starable = false
+
+[node name="Senses" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+script = ExtResource("3_senses")
+
+[node name="Audio" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+script = ExtResource("4_audio")

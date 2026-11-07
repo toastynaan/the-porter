@@ -3,8 +3,8 @@ extends Node3D
 ## The porter's horn lantern, the game's main light (Look and Feel, "Lighting
 ## rules"): warm, about 5 m of useful reach, a slow flicker, shadows on.
 ## Covering it with the cloak drops the reach to about 1 m and hides the
-## flame. It gutters in a draught (an open door nearby) and at high Dose:
-## the flame flutters and the light dips.
+## flame. It gutters in a draught (an open door nearby), at high Dose and
+## while he stares at the demon: the flame flutters and the light dips.
 
 const REACH := 5.0
 const COVERED_REACH := 1.0
@@ -28,6 +28,8 @@ var covered := false:
 	set = set_covered
 ## 0..1, how hard the flame is guttering now.
 var gutter := 0.0
+## 0..1 from the stare meter.
+var stare := 0.0
 
 var _noise := FastNoiseLite.new()
 var _t := 0.0
@@ -48,7 +50,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not freeze_flicker:
 		_t += delta * flicker_speed
-	var target := maxf(_draught(), smoothstep(GUTTER_DOSE.x, GUTTER_DOSE.y, GameState.dose))
+	var target := maxf(maxf(_draught(), stare), smoothstep(GUTTER_DOSE.x, GUTTER_DOSE.y, GameState.dose))
 	gutter = move_toward(gutter, target, delta * 1.5)
 	var n := _noise.get_noise_1d(_t)
 	# Guttering: fast flutter that only ever dips the light.

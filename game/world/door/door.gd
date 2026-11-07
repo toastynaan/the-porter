@@ -10,9 +10,14 @@ extends Node3D
 ## "Camera and player feel"). A locked door rattles. An open door is a
 ## draught: the lantern gutters near it.
 ##
+## A door with a `key` can be locked and unlocked (`lock` action) by whoever
+## holds that key (GameState.keys), from either side, while it is shut.
+## Opening, shutting and rattling are loud (Earshot.DOOR).
+##
 ## The leaf is on the DOOR physics layer, which the navmesh bake leaves out,
-## so a doorway is always open to navigation; hunters open doors (M3). The
-## leaf's body is itself the hinge: an AnimatableBody3D only carries its
+## so a doorway is always open to navigation. Hunters open doors themselves
+## and are stopped by locked ones (crosses() tells them a path goes through).
+## The leaf's body is itself the hinge: an AnimatableBody3D only carries its
 ## collision along when its own transform changes, not its parent's.
 
 signal toggled(open: bool)
@@ -20,6 +25,7 @@ signal toggled(open: bool)
 const OPEN_SOUND := preload("res://art/sfx/sfx_door_open.wav")
 const CLOSE_SOUND := preload("res://art/sfx/sfx_door_close.wav")
 const LOCKED_SOUND := preload("res://art/sfx/sfx_door_locked.wav")
+const KEY_SOUND := preload("res://art/sfx/sfx_key_turn.wav")
 const LEAF_THICKNESS := 0.08
 
 @export var size := Vector2(0.9, 2.0):
@@ -39,6 +45,8 @@ const LEAF_THICKNESS := 0.08
 @export var open_angle := 170.0
 @export var open_time := 0.6
 @export var locked := false
+## The key that locks and unlocks it (GameState.keys), or empty for none.
+@export var key := &""
 @export var start_open := false
 ## Oak by default; hidden doors take the material of the wall around them.
 @export var material: Material:
@@ -107,9 +115,37 @@ func _build() -> void:
 
 func interact(_by: Node) -> void:
 	if locked:
-		_play(LOCKED_SOUND)
+		rattle()
 		return
 	set_open(not is_open)
+
+
+## Locks or unlocks it with its key, if the porter holds that key and the
+## door is shut. Returns whether the key turned.
+func toggle_lock(_by: Node = null) -> bool:
+	if key.is_empty() or is_open or not GameState.keys.has(key):
+		return false
+	locked = not locked
+	_play(KEY_SOUND)
+	Earshot.make(self, global_position + Vector3.UP, Earshot.KEY, self)
+	return true
+
+
+## Someone tries a locked door.
+func rattle() -> void:
+	_play(LOCKED_SOUND)
+	Earshot.make(self, global_position + Vector3.UP, Earshot.DOOR, self)
+
+
+## True if the segment from `a` to `b` passes through this doorway.
+func crosses(a: Vector3, b: Vector3) -> bool:
+	var inv := global_transform.affine_inverse()
+	var la := inv * a
+	var lb := inv * b
+	if signf(la.z) == signf(lb.z) or is_equal_approx(la.z, lb.z):
+		return false
+	var hit := la.lerp(lb, la.z / (la.z - lb.z))
+	return absf(hit.x) <= size.x * 0.5 + 0.2 and hit.y > -1.0 and hit.y < size.y + 0.5
 
 
 func set_open(open: bool, instant := false) -> void:
@@ -123,6 +159,7 @@ func set_open(open: bool, instant := false) -> void:
 		_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		_tween.tween_property(_leaf, ^"rotation:y", target, open_time)
 		_play(OPEN_SOUND if open else CLOSE_SOUND)
+		Earshot.make(self, global_position + Vector3.UP, Earshot.DOOR, self)
 	toggled.emit(open)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://game/player/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://game/player/lantern_hand.gd" id="2_hand"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://game/player/interactor.gd" id="4_interactor"]
 [ext_resource type="Script" path="res://game/player/footsteps.gd" id="5_steps"]
 [ext_resource type="Script" path="res://game/player/breath.gd" id="6_breath"]
+[ext_resource type="Script" path="res://game/player/stamina.gd" id="7_stamina"]
+[ext_resource type="Script" path="res://game/player/stare_meter.gd" id="8_stare"]
+[ext_resource type="Script" path="res://game/player/body_sounds.gd" id="9_body"]
 
 [sub_resource type="CapsuleShape3D" id="Shape_body"]
 radius = 0.3
@@ -47,3 +50,12 @@ script = ExtResource("5_steps")
 
 [node name="Breath" type="Node" parent="."]
 script = ExtResource("6_breath")
+
+[node name="Stamina" type="Node" parent="."]
+script = ExtResource("7_stamina")
+
+[node name="StareMeter" type="Node" parent="."]
+script = ExtResource("8_stare")
+
+[node name="BodySounds" type="Node" parent="."]
+script = ExtResource("9_body")
