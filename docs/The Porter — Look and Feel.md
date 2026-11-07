@@ -156,8 +156,15 @@ The abbey is plain, worn and cramped. It's a working building, not a cathedral: 
 | Lime plaster | Dormitory, infirmary | Off-white, cracked, damp patches |
 | Wool and linen | Bedding, habits, curtains | Heavy, dull, frayed |
 | Beeswax and tallow | Candles everywhere | Drips that build up on surfaces; drips are a clue system |
-| Earth and mud | Graveyard, outer court | Wet, footprints persist |
+| Earth and mud | Graveyard, outer court, the lane | Wet, footprints persist |
+| Cobbles | The lane outside the gate, with a gutter down the middle | Uneven, wet, reflecting the lanterns |
 | Bone | Charnel house, crypt | Stacked neatly, which is worse than scattered |
+
+**The lane outside the gate**
+
+The city presses against the abbey's west wall. The lane is narrow and tall: timber-framed houses of three or four storeys, lime plaster between dark oak, each upper floor jutting out over the one below, gable ends to the street. Lanterns hang from iron brackets outside the houses, so the lane is a row of warm pools in fog; lit windows show who is awake. The inn stands opposite the gate. The view up the lane ends on a great church front in the fog. Beyond the roofs: more roofs, spires, the city wall.
+
+Mood references (street and gate images, Nov 2026): rain-wet streets with lamp pools and fog, tall facades closing in, a Gothic church at the end of the lane, an ivy-grown stone gate arch with a lantern and a lodge beside it. Take the mood, not the period details: no lamp posts, iron balconies, sash windows or ornamental ironwork. The medieval versions are lanterns on brackets, jettied upper floors, small shuttered or horn-paned windows, and a plain barred grille.
 
 **Dressing rules**
 
@@ -188,7 +195,7 @@ No HUD. Everything the player needs to know is in the world or in an object they
 No music in the usual sense. The score is the abbey: chant, bells, wind and people.
 
 - **Chant is the theme.** Plainchant at Matins is the only real music. Its melody returns everywhere: hummed by Thomas, hummed by hunters on their rounds, whispered backwards at high Dose.
-- **Bells are the clock.** Distant village bells and the abbey bell mark time. A bell at the wrong hour is a scare.
+- **Bells are the clock.** The city's church bells and the abbey bell mark time. A bell at the wrong hour is a scare.
 - **The room tone is never silent.** Wind under doors, the mill wheel, rats, a snore from the dorm, a cough. Then the demon comes and it all goes quiet.
 - **Footsteps tell you who.** Every surface has its own sound (stone, wood, mud, straw), and each NPC has a step rhythm. Hoof soles on stone are the loudest sound in the game.
 - **Your body is loud.** Breathing, heartbeat when hiding, the lantern's creak, the habit dragging. Holding your breath cuts all of it.

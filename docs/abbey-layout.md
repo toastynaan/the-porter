@@ -8,13 +8,17 @@ The abbey is one walled square, 80 × 80 m, on a 4 m kit grid. Every building op
 
 | Area | Where | What's in it | Hiding spots |
 | --- | --- | --- | --- |
-| Outer court | West strip | Gate (west wall, barred), porter's cell beside it, guesthouse, well, woodpile | Under the cot, behind the woodpile |
+| Outer court | West strip | Gate (west wall: an iron grille under a stone porch, barred at sunset), porter's cell beside it, guesthouse, well, woodpile | Under the cot, behind the woodpile |
 | Church | North | Bell tower (west end, 12 m), nave, choir, altar (east end); crypt under the choir | Under the altar cloth, the open tomb |
 | Cloister | Centre | Garth (24 m square with walks) inside arcades; one open bay a side | Behind the piers |
 | Dormitory (east range) | East of the cloister | Slype, chapter house, day stair, warming room, undercroft; dormitory upstairs; latrine block at the south end | Under three of the beds (north end, middle, south end) |
 | South range | South of the cloister | Refectory, kitchen, bakehouse with the oven | The oven (bones inside) |
 | Cellar (west range) | West of the cloister | Granary (hidden stair), outer parlour passage, stores (cloister door locked) | Grain sacks |
 | Graveyard and infirmary | East and south-east | Graves, charnel house, infirmary, mill, mill race, fishpond | In the bone pile, under a sick bed in the infirmary |
+
+## The lane outside the gate
+
+`areas/street.tscn`, outside the west wall and outside the navmesh. A 6 m lane runs the length of the wall with a gutter down the middle. On its far side is a row of timber houses: gable ends to the lane, upper floors jutting 0.5 m per storey, lit and dark windows, a lantern outside each (`StreetLanterns`). The inn stands opposite the gate. Two alleys end out of sight. At each end the lane turns west into fog. The gate porch holds a lantern over the grille. Beyond are rooftops, spires and the city wall (`Skyline`: meshes only, no collision or shadows). Debug key G steps out into the lane and back. `tools/street_shots.sh` renders it.
 
 ## Routes
 

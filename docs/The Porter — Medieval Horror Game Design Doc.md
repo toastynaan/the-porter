@@ -4,7 +4,7 @@ Nov 6, 2026 · @Pahul
 
 ## Pitch
 
-You are the new porter of a remote abbey: you keep the gate, ring the night bells and walk the lantern rounds. Pilgrims vanish, brothers die, and something with horns hunts the cloister at night. The abbey says it is a demon. It is a group of your own brothers, and they are drugging the whole abbey so everyone believes it.
+You are the new porter of an abbey inside the walls of medieval London: you keep the gate, ring the night bells and walk the lantern rounds. Pilgrims vanish, brothers die, and something with horns hunts the cloister at night. The abbey says it is a demon. It is a group of your own brothers, and they are drugging the whole abbey so everyone believes it.
 
 First-person, single-player, 6 nights, roughly 4–6 hours.
 
@@ -18,17 +18,18 @@ First-person, single-player, 6 nights, roughly 4–6 hours.
 
 ## Setting
 
-The whole abbey is one walled square about 80 m across. Every building opens off the cloister, so nothing is more than a minute's walk or about 20 seconds' run away and nothing is out of earshot. It is a Benedictine abbey on a pilgrimage road in northern England, late autumn, around 1340, with about a dozen brothers.
+The whole abbey is one walled square about 80 m across. Every building opens off the cloister, so nothing is more than a minute's walk or about 20 seconds' run away and nothing is out of earshot. It is a Benedictine abbey inside the walls of London, late autumn in the 1420s, with about a dozen brothers. Its gate opens onto a narrow lane of the city: timber houses whose upper floors lean out over the street, an inn opposite the gate, and a lantern hung outside each house on winter nights (the mayor's order of 1415). The gate is an iron grille under a stone porch, so the porter sees each visitor whole in the lantern light before he decides.
 
-Small is the point. The player learns every corner by night 2, so on later nights they notice when something is wrong: a door open that is always shut, a lamp out, a brother where he shouldn't be. With no far-off place to run to, the hunter is always close, and the player can hear him from anywhere. The abbey guards a relic, the finger bone of a local saint, which draws pilgrims and gives the cult its excuse.
+Small is the point. The player learns every corner by night 2, so on later nights they notice when something is wrong: a door open that is always shut, a lamp out, a brother where he shouldn't be. With no far-off place to run to, the hunter is always close, and the player can hear him from anywhere. The city is right outside, but the porter bars the gate at sunset: on most nights the street is something you see through the grille and hear over the wall, not somewhere to run. You go out into it only when the story sends you. The abbey guards a relic, the finger bone of a local saint, which draws pilgrims and gives the cult its excuse.
 
 &#91;embedded content: Abbey layout · 7 areas around the cloister\]
 
-Seven areas, laid out the way real Benedictine abbeys were: church on the north side, dormitory on the east with night stairs straight down into the church, refectory and kitchens on the south, stores on the west.
+Seven areas inside the walls, and the lane outside the gate, laid out the way real Benedictine abbeys were: church on the north side, dormitory on the east with night stairs straight down into the church, refectory and kitchens on the south, stores on the west.
 
 | Area | What's in it | Night role | Hiding spots |
 | --- | --- | --- | --- |
-| Outer court | Gate, porter's cell, guesthouse, well | Your hub. Visitors, missing guests | Under your cot, the woodpile |
+| Outer court | Gate (an iron grille onto the lane), porter's cell, guesthouse, well | Your hub. Visitors, missing guests | Under your cot, the woodpile |
+| The lane (outside the gate) | Timber houses, the inn opposite the gate, two alleys | Visitors come up it to the gate. Seen through the grille and over the wall; walked only when the story sends you out | None |
 | Church | Choir, bell tower, crypt and relic underneath | Matins headcount, incense, cult meetings below | Under the altar cloth, inside an open tomb |
 | Cloister | Covered walkway around a garden | Every route crosses it; long sightlines through the arches | Behind pillars (unreliable) |
 | Dormitory (east) | Beds upstairs, chapter house below, night stairs to the church | Empty beds tell you who is out | Under beds |
