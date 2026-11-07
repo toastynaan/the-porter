@@ -22,6 +22,15 @@ Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5
 - **First capture:** you wake in the infirmary with Thomas over you, +40 Dose, and your keys gone. The night goes on to dawn.
 - **Second capture:** it kills you, and the night starts again at the Matins bell.
 
+## Finding the way
+
+There is no HUD, so the world shows where the next duty is (`game/night/wayfinding.gd`):
+- **A lamp at the duty.** While a duty is due, its lamp burns: at the gate, in the tower by the bell rope, by each door on the round. The ledger is lit by your cell candle, the sanctuary lamp is the lamp itself, and at dawn a candle stands by the moved keys.
+- **Lit doorways on the way.** The doors on the path from you to the duty are opened, and a lamp hangs over each doorway on the duty's side, so each lit doorway leads to the next. They go out once the duty is done. Doors and lamps you're looking at are left alone, so nothing opens or lights in front of you.
+- **Sound.** You can follow the knocking to the gate, and the Matins chant starts when you ring the bell, so you can follow it to the choir.
+
+Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its route dark.
+
 ## Numbers
 
 | What | Value | Source |
@@ -55,7 +64,7 @@ The pacing waits are exports on each beat: Knocks `first_delay`, Choir `office_t
 
 ## Not built yet
 
-- **Visible duties:** the candle clock, the ledger page and the gate grate aren't built. Lines in brackets stand in for them, along with a few routing hints.
+- **Visible duties:** the candle clock, the ledger page and the gate grate aren't built. Lines in brackets stand in for them, along with a few routing hints, alongside the lit way.
 - **Bodies on screen:** there are no hands in view, and the bell rope doesn't lift you.
 - **Morning scene:** dawn doesn't show the abbey's official version of the night.
 - **The brothers:** they're greybox figures with their builds from the character table. They don't move between places, sit, or have props or sounds.

@@ -30,6 +30,9 @@ func _ready() -> void:
 	await _shot("supper")
 	_pilot.duty("Bread").interact(p)
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Gate", 30.0)
+	# The way to the gate: lit doorways through the kitchen, the lamp at the end.
+	p.place(Vector3(-4, 0.05, -3.1), deg_to_rad(90.0))
+	await _shot("way_to_gate", 1.0)
 	p.place(Vector3(-36, 0.05, -2), deg_to_rad(90.0))
 	await _pilot.use("BarGate")
 	await _pilot.use("Ledger")
@@ -42,6 +45,10 @@ func _ready() -> void:
 	await _pilot.use("Grate")
 	await _shot("knock_no_one", 0.4)
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Bell", 30.0)
+	# The way to the bell: a lamp over the tower door, seen across the court.
+	p.place(Vector3(-38.5, 0.05, -25.5), 0.0)
+	_pilot.face(Vector3(-28, 1.6, -30))
+	await _shot("way_to_bell", 1.0)
 	p.place(Vector3(-24, 0.05, -30.8), 0.0)
 	_pilot.face(Vector3(-24, 1.4, -32))
 	await _pilot.use("BellRope")

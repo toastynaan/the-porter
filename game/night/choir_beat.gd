@@ -6,7 +6,9 @@ extends NightBeat
 ## The incense is +25 Dose, fast, and can't be avoided on nights 1-3; on
 ## those nights it takes Dose to 50 at least and keeps it there for the rest
 ## of the night, so no one sees a mask clearly before night 4 (M0 default).
-## The porter counts the brothers by looking at each one in turn.
+## The porter counts the brothers by looking at each one in turn. The chant
+## starts as the bell is rung, so he can follow it to the choir, and the way
+## there is lit.
 
 const CHANT := preload("res://art/sfx/sfx_chant_loop.wav")
 const INCENSE_DOSE := 25.0
@@ -30,16 +32,19 @@ var _chant: AudioStreamPlayer3D
 func _ready() -> void:
 	_chant = AudioStreamPlayer3D.new()
 	_chant.stream = AudioOut.looped(CHANT)
-	_chant.unit_size = 8.0
+	_chant.unit_size = 12.0
+	_chant.max_distance = 120.0
 	add_child(_chant)
 
 
 func run() -> void:
 	var p := player()
-	await until(func() -> bool: return p.global_position.distance_to(choir.global_position) < choir_radius)
 	_chant.global_position = choir.global_position + Vector3.UP * 1.5
 	if AudioOut.enabled():
 		_chant.play()
+	var way := Wayfinding.show_way(self, choir.global_position)
+	await until(func() -> bool: return p.global_position.distance_to(choir.global_position) < choir_radius)
+	Wayfinding.put_out(way)
 	await say("", "(The incense is lit.)")
 	GameState.add_dose(maxf(INCENSE_DOSE, NIGHT_FLOOR - GameState.dose), INCENSE_TIME)
 	GameState.dose_floor = NIGHT_FLOOR

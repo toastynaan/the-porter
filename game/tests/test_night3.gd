@@ -44,6 +44,15 @@ func _run() -> void:
 		"ate the bread and took Thomas's remedy")
 	_check(_said("(The bread tastes bitter.)") and _said("(Offers a remedy for your headaches.)"), "the doc's supper lines")
 
+	# No HUD: the way to the gate is lit, its doors open, from his seat.
+	await _pilot.until(func() -> bool: return _pilot.duty("BarGate").enabled, 5.0)
+	var gate_lamp: Candle = night.get_node(^"Lamps/GateLamp")
+	var refectory_door: Door = night.get_node(^"Abbey/Navigation/SouthRange/Doors/RefectoryW0Door_00")
+	var kitchen_door: Door = night.get_node(^"Abbey/Navigation/SouthRange/Doors/KitchenW0Door_00")
+	_check(gate_lamp.lit and refectory_door.is_open and kitchen_door.is_open,
+		"a lamp burns at the gate, and the doors between supper and the gate stand open")
+	_check(_lamp_over(refectory_door) and _lamp_over(kitchen_door), "a lamp hangs over each of those doorways")
+
 	# The gate: he walks out to it (the brothers leave supper once he has gone).
 	p.place(Vector3(-36, 0.05, -2), deg_to_rad(90.0))
 	await _pilot.use("BarGate")
@@ -63,7 +72,13 @@ func _run() -> void:
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Bell", 5.0)
 	_check(GameState.has_flag(&"n3_child_knock"), "at Dose 50+, a small knock low on the gate, no one there")
 
-	# The Matins bell saves the night.
+	# The Matins bell saves the night. A lamp in the tower; the gate's is out.
+	await _pilot.until(func() -> bool: return _pilot.duty("BellRope").enabled, 10.0)
+	var tower_lamp: Candle = night.get_node(^"Lamps/TowerLamp")
+	var tower_door: Door = night.get_node(^"Abbey/Navigation/Church/Doors/TowerW0Door_01")
+	_check(tower_lamp.lit and tower_door.is_open and _lamp_over(tower_door) and not gate_lamp.lit,
+		"the bell is due: a lamp in the tower and over its open door; the gate lamp is out")
+	_check(not _lamp_over(refectory_door), "the lamps on the way to the gate are gone")
 	await _pilot.use("BellRope")
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Choir", 5.0)
 	_check(GameState.last_bell == &"matins" and GameState.has_bell_save(), "the Matins bell is rung and saved")
@@ -129,6 +144,10 @@ func _run() -> void:
 	Talk.auto_choice = Callable()
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))
 	get_tree().quit(0 if _fails == 0 else 1)
+
+
+func _lamp_over(door: Door) -> bool:
+	return door.get_children().any(func(c: Node) -> bool: return c is Candle and not c.is_queued_for_deletion())
 
 
 func _said(text: String) -> bool:

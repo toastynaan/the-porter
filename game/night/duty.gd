@@ -6,17 +6,32 @@ extends Area3D
 ## `interact` while it is `enabled` and it emits `used`; the beat that
 ## enabled it awaits that. Disabled, the view ray passes through it. The box
 ## (`size`) stands on the origin.
+##
+## There is no HUD, so the world shows the way: while it is wanted its
+## `lamp` burns (put out again after unless `keep_lit`), and the doors on the
+## way to it from the porter stand open with a lamp over each (Wayfinding).
 
 signal used(by: Node)
 
 @export var enabled := false:
 	set(value):
+		var was := enabled
 		enabled = value
 		collision_layer = Layers.INTERACT if value else 0
+		if value != was and is_inside_tree() and not Engine.is_editor_hint():
+			_show_way(value)
 @export var size := Vector3(0.6, 0.6, 0.6):
 	set(value):
 		size = value
 		_build()
+## Lit while the duty is wanted, so the porter can find it.
+@export var lamp: Candle
+## The lamp stays lit once the duty is done (a lamp he checks is burning).
+@export var keep_lit := false
+## Lights the way to it when it becomes wanted.
+@export var open_way := true
+
+var _way: Array[Node3D] = []
 
 var _shape: CollisionShape3D
 
@@ -38,6 +53,14 @@ func _build() -> void:
 	box.size = size
 	_shape.shape = box
 	_shape.position = Vector3(0.0, size.y * 0.5, 0.0)
+
+
+func _show_way(wanted: bool) -> void:
+	if lamp:
+		lamp.lit = wanted or keep_lit
+	Wayfinding.put_out(_way)
+	if wanted and open_way:
+		_way = Wayfinding.show_way(self, global_position)
 
 
 func interact(by: Node) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3]
+[gd_scene load_steps=28 format=3]
 
 [ext_resource type="PackedScene" path="res://game/world/abbey/abbey.tscn" id="abbey"]
 [ext_resource type="PackedScene" path="res://game/npc/brother.tscn" id="brother"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://game/hunter/hunter.tscn" id="hunter"]
 [ext_resource type="PackedScene" path="res://game/demon/stalker.tscn" id="stalker"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
 [ext_resource type="Script" path="res://game/night/supper_beat.gd" id="supper_gd"]
 [ext_resource type="Script" path="res://game/night/gate_beat.gd" id="gate_gd"]
@@ -212,6 +213,29 @@ editor_description = "Where a restart from the Matins bell puts you."
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -35, 1.4, -4.5)
 mesh = SubResource("Mesh_keys")
 
+[node name="Lamps" type="Node3D" parent="."]
+editor_description = "Lamps lit where a duty is due, so the porter can find it (no HUD). Each Duty names its lamp."
+
+[node name="GateLamp" parent="Lamps" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -39.4, 2.5, -3.75)
+lit = false
+
+[node name="TowerLamp" parent="Lamps" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -24.5, 2.5, -31)
+lit = false
+
+[node name="StoresLamp" parent="Lamps" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -11.45, 2.3, -7.1)
+lit = false
+
+[node name="ChapterLamp" parent="Lamps" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.45, 2.3, -19)
+lit = false
+
+[node name="KeysCandle" parent="Lamps" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -37.55, 0.5, -11.35)
+lit = false
+
 [node name="Duties" type="Node3D" parent="."]
 
 [node name="Bread" type="Area3D" parent="Duties"]
@@ -223,30 +247,37 @@ size = Vector3(0.3, 0.15, 0.25)
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
 mesh = SubResource("Mesh_bread")
 
-[node name="BarGate" type="Area3D" parent="Duties"]
+[node name="BarGate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
 script = ExtResource("duty_gd")
 size = Vector3(1.0, 2.4, 3.0)
+lamp = NodePath("../../Lamps/GateLamp")
 
-[node name="Grate" type="Area3D" parent="Duties"]
+[node name="Grate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
 script = ExtResource("duty_gd")
 size = Vector3(1.0, 2.4, 3.0)
+lamp = NodePath("../../Lamps/GateLamp")
 
-[node name="Ledger" type="Area3D" parent="Duties"]
+[node name="Ledger" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -33.2, 0.85, -10.9)
 script = ExtResource("duty_gd")
 size = Vector3(0.45, 0.25, 0.55)
+lamp = NodePath("../../Abbey/Navigation/OuterCourt/Lights/CellCandle")
+keep_lit = true
 
-[node name="BellRope" type="Area3D" parent="Duties"]
+[node name="BellRope" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -24, 0.05, -32)
 script = ExtResource("duty_gd")
 size = Vector3(0.6, 2.2, 0.6)
+lamp = NodePath("../../Lamps/TowerLamp")
 
-[node name="KeysMoved" type="Area3D" parent="Duties"]
+[node name="KeysMoved" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38, 0.5, -11.1)
 script = ExtResource("duty_gd")
 size = Vector3(0.3, 0.2, 0.3)
+lamp = NodePath("../../Lamps/KeysCandle")
+keep_lit = true
 
 [node name="Mesh" type="MeshInstance3D" parent="Duties/KeysMoved"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
@@ -254,24 +285,28 @@ mesh = SubResource("Mesh_keys")
 
 [node name="RoundStops" type="Node3D" parent="Duties"]
 
-[node name="StoresDoor" type="Area3D" parent="Duties/RoundStops"]
+[node name="StoresDoor" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -11.2, 0.05, -6)
 script = ExtResource("duty_gd")
 size = Vector3(0.5, 2.1, 1.1)
+lamp = NodePath("../../../Lamps/StoresLamp")
 metadata/hint = "(The round. First the stores door, off the west walk of the cloister.)"
 metadata/line = "(The stores door is locked, as it should be.)"
 
-[node name="ChapterDoor" type="Area3D" parent="Duties/RoundStops"]
+[node name="ChapterDoor" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.2, 0.05, -18)
 script = ExtResource("duty_gd")
 size = Vector3(0.5, 2.1, 1.1)
+lamp = NodePath("../../../Lamps/ChapterLamp")
 metadata/hint = "(Next, the chapter house door, off the east walk.)"
 metadata/line = "(The chapter house door is shut.)"
 
-[node name="SanctuaryLamp" type="Area3D" parent="Duties/RoundStops"]
+[node name="SanctuaryLamp" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 26.6, 0.9, -33)
 script = ExtResource("duty_gd")
 size = Vector3(0.4, 0.4, 0.4)
+lamp = NodePath("../../../Abbey/Navigation/Church/Lights/SanctuaryLamp")
+keep_lit = true
 metadata/hint = "(Last, the sanctuary lamp by the altar.)"
 metadata/line = "(The sanctuary lamp is burning.)"
 
