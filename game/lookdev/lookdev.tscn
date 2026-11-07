@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://game/lookdev/lookdev.gd" id="1_lookdev"]
+[ext_resource type="Environment" path="res://game/render/env_night.tres" id="2_env"]
+[ext_resource type="PackedScene" path="res://game/lookdev/greybox_wall.tscn" id="3_wall"]
+[ext_resource type="PackedScene" path="res://game/lookdev/ref_figure.tscn" id="4_figure"]
+[ext_resource type="PackedScene" path="res://game/lantern/lantern.tscn" id="5_lantern"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_ground"]
+albedo_color = Color(0.29, 0.29, 0.28, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="Mesh_ground"]
+material = SubResource("Mat_ground")
+size = Vector2(80, 80)
+
+[node name="Lookdev" type="Node3D"]
+script = ExtResource("1_lookdev")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.906308, 0, -0.422618, -0.178606, 0.906308, 0.383022, 0.383022, 0.422618, -0.821394, 0, 10, 0)
+light_color = Color(0.431, 0.498, 0.588, 1)
+light_energy = 0.3
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_ground")
+
+[node name="Subject" type="Node3D" parent="."]
+
+[node name="GreyboxWall" parent="Subject" instance=ExtResource("3_wall")]
+
+[node name="RefFigure" parent="." instance=ExtResource("4_figure")]
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 6)
+fov = 70.0
+
+[node name="Lantern" parent="Camera" instance=ExtResource("5_lantern")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.45, -0.35)
