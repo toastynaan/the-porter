@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="1_block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="2_stone"]
+
+[node name="WallGate" type="Node3D"]
+editor_description = "A wall with a 3.0 x 3.4 m opening: the main gate, and where the mill race runs under a building."
+
+[node name="JambL" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(0.5, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="JambR" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(0.5, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="Lintel" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+script = ExtResource("1_block")
+size = Vector3(3.0, 0.6, 0.8)
+material = ExtResource("2_stone")

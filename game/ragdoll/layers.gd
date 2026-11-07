@@ -14,8 +14,12 @@ const DEBRIS_SMALL := 1 << 7   ## Small chunks. Never collide with each other.
 ## Round 5: dead bodies. Walking capsules ignore them (no jitter over piles);
 ## a foot Area3D nudges them instead. Nav treats them as walkable.
 const DEAD_BODY := 1 << 8
+const DOOR := 1 << 9           ## Door leaves. Left out of the navmesh bake, so doorways stay open.
+const INTERACT := 1 << 10      ## Interactable areas the player's view ray finds (squeezes).
 
 # Masks
+## The porter walks on the world and is blocked by doors.
+const MASK_PLAYER := WORLD | DOOR
 ## Capsules walk on the world, are blocked by intact walls and by each other.
 ## They do not collide with ragdolls or debris (they push those instead, see below).
 const MASK_CAPSULE := WORLD | DESTRUCTIBLE | CAPSULE

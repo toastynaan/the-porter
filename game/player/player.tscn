@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://game/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://game/player/lantern_hand.gd" id="2_hand"]
+[ext_resource type="PackedScene" path="res://game/lantern/lantern.tscn" id="3_lantern"]
+[ext_resource type="Script" path="res://game/player/interactor.gd" id="4_interactor"]
+[ext_resource type="Script" path="res://game/player/footsteps.gd" id="5_steps"]
+[ext_resource type="Script" path="res://game/player/breath.gd" id="6_breath"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+radius = 0.3
+height = 1.75
+
+[node name="Player" type="CharacterBody3D"]
+floor_max_angle = 0.802851
+floor_snap_length = 0.3
+script = ExtResource("1_player")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("Shape_body")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LookBack" type="Node3D" parent="Head"]
+
+[node name="Camera" type="Camera3D" parent="Head/LookBack"]
+fov = 70.0
+near = 0.05
+
+[node name="Interactor" type="RayCast3D" parent="Head/LookBack/Camera"]
+script = ExtResource("4_interactor")
+
+[node name="LanternHand" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, -0.22, -0.52)
+script = ExtResource("2_hand")
+
+[node name="Pivot" type="Node3D" parent="Head/LanternHand"]
+
+[node name="Lantern" parent="Head/LanternHand/Pivot" instance=ExtResource("3_lantern")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14, 0)
+
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+script = ExtResource("5_steps")
+
+[node name="Breath" type="Node" parent="."]
+script = ExtResource("6_breath")

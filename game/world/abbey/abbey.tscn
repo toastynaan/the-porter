@@ -1,0 +1,589 @@
+[gd_scene format=3]
+
+[ext_resource type="Environment" path="res://game/render/env_night.tres" id="1_n65ch"]
+[ext_resource type="NavigationMesh" path="res://game/world/abbey/abbey_nav.res" id="2_ol7df"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall.tscn" id="3_43vra"]
+[ext_resource type="PackedScene" path="res://game/world/kit/corner.tscn" id="4_ray55"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_gate.tscn" id="5_lb8pl"]
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="6_r8dkf"]
+[ext_resource type="Material" path="res://game/world/materials/mud.tres" id="7_6ukdg"]
+[ext_resource type="Material" path="res://game/world/materials/grass.tres" id="8_cjnf8"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/church.tscn" id="9_6tter"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/outer_court.tscn" id="10_syt3m"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/cloister.tscn" id="11_obkaf"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/cellar.tscn" id="12_kv3ux"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/dormitory.tscn" id="13_datr7"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/south_range.tscn" id="14_xqujl"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/graveyard_infirmary.tscn" id="15_sf11h"]
+[ext_resource type="PackedScene" path="res://game/player/player.tscn" id="16_jgjiy"]
+[ext_resource type="Script" path="res://game/player/player.gd" id="17_q38h8"]
+[ext_resource type="Script" path="res://game/world/ambience/wind.gd" id="18_rgnk3"]
+
+[node name="Abbey" type="Node3D" unique_id=1216566674]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2135618730]
+environment = ExtResource("1_n65ch")
+
+[node name="Moon" type="DirectionalLight3D" parent="." unique_id=1456319537]
+transform = Transform3D(0.74807465, 0.36693802, -0.5529384, 0, 0.8332222, 0.5529384, 0.66361463, -0.4136392, 0.62331235, 0, 30, 0)
+light_color = Color(0.43137255, 0.49803922, 0.5882353, 1)
+light_energy = 0.3
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Navigation" type="NavigationRegion3D" parent="." unique_id=1650793054]
+navigation_mesh = ExtResource("2_ol7df")
+
+[node name="Grounds" type="Node3D" parent="Navigation" unique_id=1454079081]
+
+[node name="Walls" type="Node3D" parent="Navigation/Grounds" unique_id=127640381 groups=["nav_source"]]
+
+[node name="PrecinctN_00" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1846798833 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, -40)
+
+[node name="PrecinctN_01" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1397253469 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -40)
+
+[node name="PrecinctN_02" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=121623720 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -40)
+
+[node name="PrecinctN_03" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=246125662 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -40)
+
+[node name="PrecinctN_04" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=658840904 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -40)
+
+[node name="PrecinctN_05" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=21994210 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -40)
+
+[node name="PrecinctN_06" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=600423207 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -40)
+
+[node name="PrecinctN_07" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1480974164 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -40)
+
+[node name="PrecinctN_08" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1844158592 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -40)
+
+[node name="PrecinctN_09" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1951973331 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -40)
+
+[node name="PrecinctN_10" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=411635210 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -40)
+
+[node name="PrecinctN_11" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1992294436 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -40)
+
+[node name="PrecinctN_12" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1391811900 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -40)
+
+[node name="PrecinctN_13" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1517433419 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -40)
+
+[node name="PrecinctN_14" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=2140582718 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -40)
+
+[node name="PrecinctN_15" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=483875023 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -40)
+
+[node name="PrecinctN_16" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1332711791 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -40)
+
+[node name="PrecinctN_17" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=2004145528 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -40)
+
+[node name="PrecinctN_18" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1197092215 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -40)
+
+[node name="PrecinctN_19" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=165462555 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -40)
+
+[node name="Pier_-400_-400_0" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=808689980 instance=ExtResource("4_ray55")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -40)
+
+[node name="Pier_400_-400_0" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1959704197 instance=ExtResource("4_ray55")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -40)
+
+[node name="PrecinctS_00" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=316701593 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 40)
+
+[node name="PrecinctS_01" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1677566671 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 40)
+
+[node name="PrecinctS_02" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1840508338 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 40)
+
+[node name="PrecinctS_03" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=569187976 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 40)
+
+[node name="PrecinctS_04" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=891378245 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 40)
+
+[node name="PrecinctS_05" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=187513919 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 40)
+
+[node name="PrecinctS_06" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=484306745 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 40)
+
+[node name="PrecinctS_07" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1612824633 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 40)
+
+[node name="PrecinctS_08" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1564527752 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 40)
+
+[node name="PrecinctS_09" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=189593978 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 40)
+
+[node name="PrecinctS_10" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1572896877 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 40)
+
+[node name="PrecinctS_11" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1313542585 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 40)
+
+[node name="PrecinctS_12" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=107681066 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 40)
+
+[node name="PrecinctS_13" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=755795885 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 40)
+
+[node name="PrecinctS_14" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1078021848 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 40)
+
+[node name="PrecinctS_15" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=410643118 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 40)
+
+[node name="PrecinctS_16" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=985697695 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 40)
+
+[node name="PrecinctS_17" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=311148877 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 40)
+
+[node name="PrecinctS_18" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=979817080 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 40)
+
+[node name="PrecinctS_19" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=307406311 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 40)
+
+[node name="Pier_-400_400_0" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1703413525 instance=ExtResource("4_ray55")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 40)
+
+[node name="Pier_400_400_0" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=384015792 instance=ExtResource("4_ray55")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 40)
+
+[node name="PrecinctW_00" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=2043808767 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -38)
+
+[node name="PrecinctW_01" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=882861286 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -34)
+
+[node name="PrecinctW_02" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1692997156 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -30)
+
+[node name="PrecinctW_03" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=21922280 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -26)
+
+[node name="PrecinctW_04" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1010539803 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -22)
+
+[node name="PrecinctW_05" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1937420996 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -18)
+
+[node name="PrecinctW_06" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1051966988 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -14)
+
+[node name="PrecinctW_07" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1808139415 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -10)
+
+[node name="PrecinctW_08" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1299576912 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -6)
+
+[node name="PrecinctW_09" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=36853933 instance=ExtResource("5_lb8pl")]
+editor_description = "A wall with a 3.0 x 3.4 m opening: the main gate, and where the mill race runs under a building."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -2)
+
+[node name="PrecinctW_10" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1375047032 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 2)
+
+[node name="PrecinctW_11" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=674220176 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 6)
+
+[node name="PrecinctW_12" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=347341517 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 10)
+
+[node name="PrecinctW_13" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=906038548 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 14)
+
+[node name="PrecinctW_14" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1285942981 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 18)
+
+[node name="PrecinctW_15" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=455091464 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 22)
+
+[node name="PrecinctW_16" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=304534155 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 26)
+
+[node name="PrecinctW_17" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1281368915 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 30)
+
+[node name="PrecinctW_18" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=224628628 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 34)
+
+[node name="PrecinctW_19" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=198550199 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 38)
+
+[node name="PrecinctE_00" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1934787694 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -38)
+
+[node name="PrecinctE_01" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=471054480 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -34)
+
+[node name="PrecinctE_02" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1613612055 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -30)
+
+[node name="PrecinctE_03" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1851338502 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -26)
+
+[node name="PrecinctE_04" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1325436418 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -22)
+
+[node name="PrecinctE_05" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1039689769 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -18)
+
+[node name="PrecinctE_06" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1676161952 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -14)
+
+[node name="PrecinctE_07" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=77745710 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -10)
+
+[node name="PrecinctE_08" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1656041309 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -6)
+
+[node name="PrecinctE_09" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=384210268 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -2)
+
+[node name="PrecinctE_10" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1669895204 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 2)
+
+[node name="PrecinctE_11" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=148721055 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 6)
+
+[node name="PrecinctE_12" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=736398906 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 10)
+
+[node name="PrecinctE_13" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1956116125 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 14)
+
+[node name="PrecinctE_14" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=2145293231 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 18)
+
+[node name="PrecinctE_15" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=757379947 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 22)
+
+[node name="PrecinctE_16" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=975118188 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 26)
+
+[node name="PrecinctE_17" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1405049443 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 30)
+
+[node name="PrecinctE_18" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=650586810 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 34)
+
+[node name="PrecinctE_19" type="Node3D" parent="Navigation/Grounds/Walls" unique_id=1872115276 instance=ExtResource("3_43vra")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 38)
+
+[node name="Floors" type="Node3D" parent="Navigation/Grounds" unique_id=1427487583 groups=["nav_source"]]
+
+[node name="Ground_0" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1606895479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -0.3, -38)
+script = ExtResource("6_r8dkf")
+size = Vector3(60, 0.3, 4)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_1" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1514456196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -38)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_2" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=681914372]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -0.3, -32)
+script = ExtResource("6_r8dkf")
+size = Vector3(12, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_3" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1801127069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, -0.3, -32)
+script = ExtResource("6_r8dkf")
+size = Vector3(12, 0.3, 8)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_4" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=679155123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, -26)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 4)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_5" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=865719726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -26)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_6" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=232291022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.3, -20)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_7" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=567543868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, -0.3, -20)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_8" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1440161375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -16)
+script = ExtResource("6_r8dkf")
+size = Vector3(16, 0.3, 16)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_9" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=168788401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -0.3, -20)
+script = ExtResource("6_r8dkf")
+size = Vector3(12, 0.3, 8)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_10" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1050479166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, -14)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 4)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_11" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=571481091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -10)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 12)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_12" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1247715352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, -0.3, -8)
+script = ExtResource("6_r8dkf")
+size = Vector3(12, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_13" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=520250123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, 4)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 16)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_14" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1017897852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -0.3, 0)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_15" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=842586526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 0)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_16" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=684364280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 8)
+script = ExtResource("6_r8dkf")
+size = Vector3(24, 0.3, 8)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_17" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1404801238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, 6)
+script = ExtResource("6_r8dkf")
+size = Vector3(20, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_18" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1465074314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -0.3, 12)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 8)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_19" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1565427636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -0.3, 12)
+script = ExtResource("6_r8dkf")
+size = Vector3(8, 0.3, 8)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_20" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1979088867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -0.3, 14)
+script = ExtResource("6_r8dkf")
+size = Vector3(52, 0.3, 4)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_21" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=889660822]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, -0.3, 18)
+script = ExtResource("6_r8dkf")
+size = Vector3(32, 0.3, 4)
+material = ExtResource("7_6ukdg")
+surface = "mud"
+
+[node name="Ground_22" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=551543409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 18)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_23" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=453395498]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 22)
+script = ExtResource("6_r8dkf")
+size = Vector3(80, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_24" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=399824591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -0.3, 30)
+script = ExtResource("6_r8dkf")
+size = Vector3(64, 0.3, 12)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_25" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1073494254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 30)
+script = ExtResource("6_r8dkf")
+size = Vector3(4, 0.3, 12)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Ground_26" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=2027422055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 38)
+script = ExtResource("6_r8dkf")
+size = Vector3(80, 0.3, 4)
+material = ExtResource("8_cjnf8")
+surface = "grass"
+
+[node name="Church" type="Node3D" parent="Navigation" unique_id=1194119076 instance=ExtResource("9_6tter")]
+
+[node name="OuterCourt" type="Node3D" parent="Navigation" unique_id=1623355506 instance=ExtResource("10_syt3m")]
+
+[node name="Cloister" type="Node3D" parent="Navigation" unique_id=442020926 instance=ExtResource("11_obkaf")]
+
+[node name="Cellar" type="Node3D" parent="Navigation" unique_id=134828452 instance=ExtResource("12_kv3ux")]
+
+[node name="Dormitory" type="Node3D" parent="Navigation" unique_id=706273523 instance=ExtResource("13_datr7")]
+
+[node name="SouthRange" type="Node3D" parent="Navigation" unique_id=1658669278 instance=ExtResource("14_xqujl")]
+
+[node name="GraveyardInfirmary" type="Node3D" parent="Navigation" unique_id=1027817204 instance=ExtResource("15_sf11h")]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1066156173 instance=ExtResource("16_jgjiy")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -34, 0.05, 0)
+floor_max_angle = 0.802851
+floor_snap_length = 0.3
+script = ExtResource("17_q38h8")
+
+[node name="Wind" type="AudioStreamPlayer" parent="." unique_id=167565140]
+script = ExtResource("18_rgnk3")

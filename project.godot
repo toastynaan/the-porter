@@ -356,6 +356,13 @@ toggle_fullscreen={
 3d_physics/layer_7="debris"
 3d_physics/layer_8="debris_small"
 3d_physics/layer_9="dead_body"
+3d_physics/layer_10="door"
+3d_physics/layer_11="interact"
+
+[navigation]
+
+3d/default_cell_size=0.1
+3d/default_cell_height=0.1
 
 [physics]
 

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="1_block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="2_stone"]
+
+[node name="WallDoor" type="Node3D"]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+
+[node name="JambL" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.225, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(1.55, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="JambR" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.225, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(1.55, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="Lintel" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_block")
+size = Vector3(0.9, 2, 0.8)
+material = ExtResource("2_stone")

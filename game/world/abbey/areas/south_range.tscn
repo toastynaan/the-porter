@@ -1,0 +1,340 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/world/kit/wall.tscn" id="1_fenyx"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_window.tscn" id="2_hyd1l"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_door.tscn" id="3_a7wl1"]
+[ext_resource type="PackedScene" path="res://game/world/kit/corner.tscn" id="4_glopw"]
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="5_iyvy8"]
+[ext_resource type="Material" path="res://game/world/materials/flags.tres" id="6_k0hgm"]
+[ext_resource type="Material" path="res://game/world/materials/roof.tres" id="7_jkrbh"]
+[ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="8_4cbiu"]
+[ext_resource type="Script" path="res://game/world/door/door.gd" id="9_ypo0j"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="10_ft240"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="11_a3ic0"]
+[ext_resource type="Material" path="res://game/world/materials/bone.tres" id="12_e8hul"]
+[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="13_kocct"]
+[ext_resource type="Script" path="res://game/world/props/candle.gd" id="14_dcw5d"]
+
+[node name="SouthRange" type="Node3D" unique_id=1658669278]
+
+[node name="Walls" type="Node3D" parent="." unique_id=402368443 groups=["nav_source"]]
+
+[node name="RefectoryN0_00" type="Node3D" parent="Walls" unique_id=1481322699 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -4)
+
+[node name="RefectoryN0_01" type="Node3D" parent="Walls" unique_id=2032953944 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="RefectoryN0_02" type="Node3D" parent="Walls" unique_id=1008164591 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+
+[node name="RefectoryN0_03" type="Node3D" parent="Walls" unique_id=354095854 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+
+[node name="RefectoryN0_04" type="Node3D" parent="Walls" unique_id=1730973866 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="RefectoryN0_05" type="Node3D" parent="Walls" unique_id=650545874 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -4)
+
+[node name="RefectoryS0_00" type="Node3D" parent="Walls" unique_id=1361843357 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 4)
+
+[node name="RefectoryS0_01" type="Node3D" parent="Walls" unique_id=105187517 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+
+[node name="RefectoryS0_02" type="Node3D" parent="Walls" unique_id=1372108534 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+
+[node name="RefectoryS0_03" type="Node3D" parent="Walls" unique_id=1547590529 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="RefectoryS0_04" type="Node3D" parent="Walls" unique_id=80452394 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+
+[node name="RefectoryS0_05" type="Node3D" parent="Walls" unique_id=927409792 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 4)
+
+[node name="Pier_-120_40_0" type="Node3D" parent="Walls" unique_id=1246221010 instance=ExtResource("4_glopw")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 4)
+
+[node name="Pier_120_40_0" type="Node3D" parent="Walls" unique_id=1639044767 instance=ExtResource("4_glopw")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 4)
+
+[node name="RefectoryW0_00" type="Node3D" parent="Walls" unique_id=1089046397 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -2)
+
+[node name="RefectoryW0_01" type="Node3D" parent="Walls" unique_id=160460538 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 2)
+
+[node name="KitchenS0_00" type="Node3D" parent="Walls" unique_id=346839612 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 4)
+
+[node name="KitchenS0_01" type="Node3D" parent="Walls" unique_id=1259662258 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 4)
+
+[node name="Pier_-200_40_0" type="Node3D" parent="Walls" unique_id=717390777 instance=ExtResource("4_glopw")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 4)
+
+[node name="KitchenW0_00" type="Node3D" parent="Walls" unique_id=1094574455 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -2)
+
+[node name="KitchenW0_01" type="Node3D" parent="Walls" unique_id=408421260 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 2)
+
+[node name="BakehouseS0_00" type="Node3D" parent="Walls" unique_id=594032646 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 12)
+
+[node name="BakehouseS0_01" type="Node3D" parent="Walls" unique_id=925587577 instance=ExtResource("3_a7wl1")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 12)
+
+[node name="Pier_-200_120_0" type="Node3D" parent="Walls" unique_id=820285280 instance=ExtResource("4_glopw")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 12)
+
+[node name="Pier_-120_120_0" type="Node3D" parent="Walls" unique_id=1610366220 instance=ExtResource("4_glopw")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="BakehouseW0_00" type="Node3D" parent="Walls" unique_id=1026444928 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 6)
+
+[node name="BakehouseW0_01" type="Node3D" parent="Walls" unique_id=117148533 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 10)
+
+[node name="BakehouseE0_00" type="Node3D" parent="Walls" unique_id=797099114 instance=ExtResource("2_hyd1l")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 6)
+
+[node name="BakehouseE0_01" type="Node3D" parent="Walls" unique_id=1380836233 instance=ExtResource("1_fenyx")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 10)
+
+[node name="Floors" type="Node3D" parent="." unique_id=1120765528 groups=["nav_source"]]
+
+[node name="RefectoryFloor_0" type="StaticBody3D" parent="Floors" unique_id=1944235710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+script = ExtResource("5_iyvy8")
+size = Vector3(24, 0.35, 8)
+material = ExtResource("6_k0hgm")
+
+[node name="KitchenFloor_0" type="StaticBody3D" parent="Floors" unique_id=1395029771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -0.3, 4)
+script = ExtResource("5_iyvy8")
+size = Vector3(8, 0.35, 16)
+material = ExtResource("6_k0hgm")
+
+[node name="Roofs" type="Node3D" parent="." unique_id=751311319]
+
+[node name="RefectoryRoof" type="StaticBody3D" parent="Roofs" unique_id=1238109022]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 4, 0)
+script = ExtResource("5_iyvy8")
+size = Vector3(8.8, 3.96, 24)
+shape = 1
+material = ExtResource("7_jkrbh")
+
+[node name="KitchenRoof" type="StaticBody3D" parent="Roofs" unique_id=109852598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2, 4, 4.2)
+script = ExtResource("5_iyvy8")
+size = Vector3(8.4, 3.7799997, 16.4)
+shape = 1
+material = ExtResource("7_jkrbh")
+
+[node name="Doors" type="Node3D" parent="." unique_id=842039777]
+
+[node name="RefectoryN0Door_02" type="Node3D" parent="Doors" unique_id=462621473 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2, 0, -4)
+script = ExtResource("9_ypo0j")
+
+[node name="RefectoryS0Door_03" type="Node3D" parent="Doors" unique_id=901250154 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+script = ExtResource("9_ypo0j")
+
+[node name="RefectoryW0Door_00" type="Node3D" parent="Doors" unique_id=964938143 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -12, 0, -2)
+script = ExtResource("9_ypo0j")
+
+[node name="KitchenS0Door_00" type="Node3D" parent="Doors" unique_id=1741973880 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 4)
+script = ExtResource("9_ypo0j")
+
+[node name="KitchenW0Door_00" type="Node3D" parent="Doors" unique_id=444305405 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -2)
+script = ExtResource("9_ypo0j")
+
+[node name="BakehouseS0Door_01" type="Node3D" parent="Doors" unique_id=2146217760 instance=ExtResource("8_4cbiu")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14, 0, 12)
+script = ExtResource("9_ypo0j")
+
+[node name="Props" type="Node3D" parent="." unique_id=1028988917 groups=["nav_source"]]
+
+[node name="Table-15" type="StaticBody3D" parent="Props" unique_id=1633858900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -1.5)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.75, 0.9)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="Table15" type="StaticBody3D" parent="Props" unique_id=787511228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.5)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.75, 0.9)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="Bench-235" type="StaticBody3D" parent="Props" unique_id=80413871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2.35)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.45, 0.35)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="Bench-65" type="StaticBody3D" parent="Props" unique_id=1834100410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.65)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.45, 0.35)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="Bench65" type="StaticBody3D" parent="Props" unique_id=1917314189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.65)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.45, 0.35)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="Bench235" type="StaticBody3D" parent="Props" unique_id=1688518188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 2.35)
+script = ExtResource("5_iyvy8")
+size = Vector3(16, 0.45, 0.35)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="KitchenHearth" type="StaticBody3D" parent="Props" unique_id=1267299994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.05, -2.9)
+script = ExtResource("5_iyvy8")
+size = Vector3(2.4, 1, 1.2)
+material = ExtResource("11_a3ic0")
+
+[node name="KitchenTable" type="StaticBody3D" parent="Props" unique_id=307615000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, 1.6)
+script = ExtResource("5_iyvy8")
+size = Vector3(1.8, 0.8, 0.9)
+material = ExtResource("10_ft240")
+surface = "wood"
+
+[node name="OvenBase" type="StaticBody3D" parent="Props" unique_id=998189891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.45, 0.05, 8)
+script = ExtResource("5_iyvy8")
+size = Vector3(2.3, 0.6, 2.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenBack" type="StaticBody3D" parent="Props" unique_id=1743436981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.45, 0.65, 8)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 1.35, 2.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenSideN" type="StaticBody3D" parent="Props" unique_id=1342746497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 0.65, 7)
+script = ExtResource("5_iyvy8")
+size = Vector3(2, 1.35, 0.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenSideS" type="StaticBody3D" parent="Props" unique_id=1114719200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 0.65, 9)
+script = ExtResource("5_iyvy8")
+size = Vector3(2, 1.35, 0.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenFrontN" type="StaticBody3D" parent="Props" unique_id=1133763256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 0.65, 7.4)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 1.35, 0.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenFrontS" type="StaticBody3D" parent="Props" unique_id=2129555828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 0.65, 8.6)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 1.35, 0.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenFrontTop" type="StaticBody3D" parent="Props" unique_id=823674432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 1.35, 8)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 0.65, 0.8)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenTop" type="StaticBody3D" parent="Props" unique_id=382333213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.45, 2, 8)
+script = ExtResource("5_iyvy8")
+size = Vector3(2.3, 0.4, 2.4)
+material = ExtResource("11_a3ic0")
+
+[node name="OvenBone0" type="StaticBody3D" parent="Props" unique_id=326183137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.9, 0.65, 7.6)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 0.06, 0.08)
+material = ExtResource("12_e8hul")
+solid = false
+
+[node name="OvenBone1" type="StaticBody3D" parent="Props" unique_id=911408825]
+transform = Transform3D(0.8253356, 0, 0.5646425, 0, 1, 0, -0.5646425, 0, 0.8253356, -18.55, 0.65, 7.9)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 0.06, 0.08)
+material = ExtResource("12_e8hul")
+solid = false
+
+[node name="OvenBone2" type="StaticBody3D" parent="Props" unique_id=345697746]
+transform = Transform3D(0.3623577, 0, 0.9320391, 0, 1, 0, -0.9320391, 0, 0.3623577, -18.2, 0.65, 8.2)
+script = ExtResource("5_iyvy8")
+size = Vector3(0.3, 0.06, 0.08)
+material = ExtResource("12_e8hul")
+solid = false
+
+[node name="Lights" type="Node3D" parent="." unique_id=649601436]
+
+[node name="KitchenCandle" type="Node3D" parent="Lights" unique_id=1838852370 instance=ExtResource("13_kocct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4, 0.85, 1.6)
+script = ExtResource("14_dcw5d")
+
+[node name="HidingSpots" type="Node3D" parent="." unique_id=1038139744]
+
+[node name="Hide_Oven" type="Marker3D" parent="HidingSpots" unique_id=1104987046 groups=["hiding_spot"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4, 0.65, 8)
+
+[node name="Markers" type="Node3D" parent="." unique_id=2018743217]
+
+[node name="Refectory" type="Marker3D" parent="Markers" unique_id=831838698 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="Kitchen" type="Marker3D" parent="Markers" unique_id=622271495 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.05, 0.5)
+
+[node name="Bakehouse" type="Marker3D" parent="Markers" unique_id=155942014 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, 8)

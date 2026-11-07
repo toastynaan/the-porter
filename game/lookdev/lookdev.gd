@@ -14,8 +14,8 @@ extends Node3D
 ##   scale          orthographic front view beside the reference figure
 ## The lantern's own meshes are hidden so they never cover the subject.
 ##
-## By hand: 1-5 pick a shot, [ and ] ease Dose down or up by 25, C covers the
-## lantern.
+## By hand: 1-5 pick a shot, C covers the lantern ([ and ] change Dose
+## anywhere, game/debug/debug_keys.gd).
 ##
 ## User arguments: --review, --asset-id=<id>, --asset=res://<scene or .glb>.
 
@@ -65,10 +65,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5:
 			_shot = key.keycode - KEY_1
 			_frame(SHOTS[_shot])
-		KEY_BRACKETLEFT:
-			GameState.add_dose(-25.0, 2.0)
-		KEY_BRACKETRIGHT:
-			GameState.add_dose(25.0, 2.0)
 		KEY_C:
 			lantern.covered = not lantern.covered
 

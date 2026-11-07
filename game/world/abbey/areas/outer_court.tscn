@@ -1,0 +1,294 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/world/kit/wall.tscn" id="1_7kdy6"]
+[ext_resource type="PackedScene" path="res://game/world/kit/corner.tscn" id="2_cfxxm"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_door.tscn" id="3_qafsb"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_window.tscn" id="4_3txnw"]
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="5_peawp"]
+[ext_resource type="Material" path="res://game/world/materials/flags.tres" id="6_vncmt"]
+[ext_resource type="Material" path="res://game/world/materials/roof.tres" id="7_5c4o4"]
+[ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="8_4mfil"]
+[ext_resource type="Script" path="res://game/world/door/door.gd" id="9_suacn"]
+[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="10_sgf6w"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="11_u8ax0"]
+[ext_resource type="Material" path="res://game/world/materials/bone.tres" id="12_k64gv"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="13_b6klj"]
+[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="14_2u3kn"]
+[ext_resource type="Script" path="res://game/world/props/candle.gd" id="15_c2eg2"]
+
+[node name="OuterCourt" type="Node3D" unique_id=1623355506]
+
+[node name="Walls" type="Node3D" parent="." unique_id=962679431 groups=["nav_source"]]
+
+[node name="CellN0_00" type="Node3D" parent="Walls" unique_id=1032786577 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, -12)
+
+[node name="CellN0_01" type="Node3D" parent="Walls" unique_id=197854931 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -12)
+
+[node name="Pier_-400_-120_0" type="Node3D" parent="Walls" unique_id=1781667339 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -12)
+
+[node name="Pier_-320_-120_0" type="Node3D" parent="Walls" unique_id=344785933 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -12)
+
+[node name="CellS0_00" type="Node3D" parent="Walls" unique_id=1137101419 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, -4)
+
+[node name="CellS0_01" type="Node3D" parent="Walls" unique_id=184140234 instance=ExtResource("3_qafsb")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -4)
+
+[node name="Pier_-400_-40_0" type="Node3D" parent="Walls" unique_id=777064158 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -4)
+
+[node name="Pier_-320_-40_0" type="Node3D" parent="Walls" unique_id=1755616450 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -4)
+
+[node name="CellE0_00" type="Node3D" parent="Walls" unique_id=1279456840 instance=ExtResource("4_3txnw")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32, 0, -10)
+
+[node name="CellE0_01" type="Node3D" parent="Walls" unique_id=295032628 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32, 0, -6)
+
+[node name="GuestN0_00" type="Node3D" parent="Walls" unique_id=341593409 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -24)
+
+[node name="GuestN0_01" type="Node3D" parent="Walls" unique_id=113383601 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -24)
+
+[node name="GuestN0_02" type="Node3D" parent="Walls" unique_id=157028294 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -24)
+
+[node name="Pier_-360_-240_0" type="Node3D" parent="Walls" unique_id=2077506891 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -24)
+
+[node name="Pier_-240_-240_0" type="Node3D" parent="Walls" unique_id=1173315603 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24)
+
+[node name="GuestS0_00" type="Node3D" parent="Walls" unique_id=1961837259 instance=ExtResource("4_3txnw")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -16)
+
+[node name="GuestS0_01" type="Node3D" parent="Walls" unique_id=423727078 instance=ExtResource("3_qafsb")]
+editor_description = "A wall with a 0.9 x 2.0 m doorway in the middle."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -16)
+
+[node name="GuestS0_02" type="Node3D" parent="Walls" unique_id=416918882 instance=ExtResource("4_3txnw")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -16)
+
+[node name="Pier_-360_-160_0" type="Node3D" parent="Walls" unique_id=1040494645 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -16)
+
+[node name="Pier_-240_-160_0" type="Node3D" parent="Walls" unique_id=1923315993 instance=ExtResource("2_cfxxm")]
+editor_description = "A corner pier where walls meet, a hair bigger than the walls so faces never overlap."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -16)
+
+[node name="GuestW0_00" type="Node3D" parent="Walls" unique_id=55786755 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -36, 0, -22)
+
+[node name="GuestW0_01" type="Node3D" parent="Walls" unique_id=47013435 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -36, 0, -18)
+
+[node name="GuestE0_00" type="Node3D" parent="Walls" unique_id=778746563 instance=ExtResource("4_3txnw")]
+editor_description = "A wall with a small window, 0.6 x 1.2 m, sill at 1.6 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 0, -22)
+
+[node name="GuestE0_01" type="Node3D" parent="Walls" unique_id=422176303 instance=ExtResource("1_7kdy6")]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 0, -18)
+
+[node name="Floors" type="Node3D" parent="." unique_id=2066932576 groups=["nav_source"]]
+
+[node name="CellFloor_0" type="StaticBody3D" parent="Floors" unique_id=1484384574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, -0.3, -8)
+script = ExtResource("5_peawp")
+size = Vector3(8, 0.35, 8)
+material = ExtResource("6_vncmt")
+
+[node name="GuestFloor_0" type="StaticBody3D" parent="Floors" unique_id=1039332650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, -20)
+script = ExtResource("5_peawp")
+size = Vector3(12, 0.35, 8)
+material = ExtResource("6_vncmt")
+
+[node name="Roofs" type="Node3D" parent="." unique_id=1973171105]
+
+[node name="CellRoof" type="StaticBody3D" parent="Roofs" unique_id=333842270]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -35.8, 4, -8)
+script = ExtResource("5_peawp")
+size = Vector3(8.799999, 3.9599996, 8.4)
+shape = 1
+material = ExtResource("7_5c4o4")
+
+[node name="GuestRoof" type="StaticBody3D" parent="Roofs" unique_id=1311365751]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30, 4, -20)
+script = ExtResource("5_peawp")
+size = Vector3(8.799999, 3.9599996, 12.800001)
+shape = 1
+material = ExtResource("7_5c4o4")
+
+[node name="Doors" type="Node3D" parent="." unique_id=1187437133]
+
+[node name="CellS0Door_01" type="Node3D" parent="Doors" unique_id=652482535 instance=ExtResource("8_4mfil")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -34, 0, -4)
+script = ExtResource("9_suacn")
+
+[node name="GuestS0Door_01" type="Node3D" parent="Doors" unique_id=453801200 instance=ExtResource("8_4mfil")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -30, 0, -16)
+script = ExtResource("9_suacn")
+
+[node name="GateN" type="Node3D" parent="Doors" unique_id=305419985 instance=ExtResource("8_4mfil")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0.05, -2.75)
+script = ExtResource("9_suacn")
+size = Vector2(1.5, 3.4)
+hinge_right = true
+locked = true
+
+[node name="GateS" type="Node3D" parent="Doors" unique_id=842410328 instance=ExtResource("8_4mfil")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0.05, -1.25)
+script = ExtResource("9_suacn")
+size = Vector2(1.5, 3.4)
+locked = true
+
+[node name="Props" type="Node3D" parent="." unique_id=173998559 groups=["nav_source"]]
+
+[node name="Cot" type="StaticBody3D" parent="Props" unique_id=1711219558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, -11.2)
+script = ExtResource("5_peawp")
+size = Vector3(2, 0.45, 0.8)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="Desk" type="StaticBody3D" parent="Props" unique_id=1362698281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.05, -10.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.6, 0.8, 1.2)
+material = ExtResource("11_u8ax0")
+surface = "wood"
+
+[node name="Ledger" type="StaticBody3D" parent="Props" unique_id=60074575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.85, -10.9)
+script = ExtResource("5_peawp")
+size = Vector3(0.25, 0.06, 0.35)
+material = ExtResource("12_k64gv")
+
+[node name="GuestBed0" type="StaticBody3D" parent="Props" unique_id=840124400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.6, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="GuestBed1" type="StaticBody3D" parent="Props" unique_id=1709905247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.8, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="GuestBed2" type="StaticBody3D" parent="Props" unique_id=2099652212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="GuestBed3" type="StaticBody3D" parent="Props" unique_id=1090945428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.2, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="GuestBed4" type="StaticBody3D" parent="Props" unique_id=1662524970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="GuestBed5" type="StaticBody3D" parent="Props" unique_id=731952474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6, 0.05, -22.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.9, 0.45, 2)
+material = ExtResource("10_sgf6w")
+surface = "wood"
+
+[node name="Stool" type="StaticBody3D" parent="Props" unique_id=579616826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.05, -17.6)
+script = ExtResource("5_peawp")
+size = Vector3(0.4, 0.45, 0.4)
+material = ExtResource("11_u8ax0")
+surface = "wood"
+
+[node name="GateBar" type="StaticBody3D" parent="Props" unique_id=53936685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.45, 1.3, -2)
+script = ExtResource("5_peawp")
+size = Vector3(0.14, 0.14, 3.4)
+material = ExtResource("11_u8ax0")
+surface = "wood"
+
+[node name="Well" type="StaticBody3D" parent="Props" unique_id=793589289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 4)
+script = ExtResource("5_peawp")
+size = Vector3(1.6, 0.8, 1.6)
+shape = 2
+material = ExtResource("13_b6klj")
+
+[node name="Woodpile" type="StaticBody3D" parent="Props" unique_id=2027093063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -13.1)
+script = ExtResource("5_peawp")
+size = Vector3(6, 1.4, 1.2)
+material = ExtResource("11_u8ax0")
+surface = "wood"
+
+[node name="Lights" type="Node3D" parent="." unique_id=362285687]
+
+[node name="CellCandle" type="Node3D" parent="Lights" unique_id=1757474789 instance=ExtResource("14_2u3kn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.85, -10.2)
+script = ExtResource("15_c2eg2")
+
+[node name="GuestCandle" type="Node3D" parent="Lights" unique_id=1247324092 instance=ExtResource("14_2u3kn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.5, -17.6)
+script = ExtResource("15_c2eg2")
+
+[node name="HidingSpots" type="Node3D" parent="." unique_id=1320269107]
+
+[node name="Hide_UnderCot" type="Marker3D" parent="HidingSpots" unique_id=1528280379 groups=["hiding_spot"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, -10.4)
+
+[node name="Hide_Woodpile" type="Marker3D" parent="HidingSpots" unique_id=481013203 groups=["hiding_spot"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4, 0, -13.2)
+
+[node name="Markers" type="Node3D" parent="." unique_id=1472481355]
+
+[node name="OuterCourt" type="Marker3D" parent="Markers" unique_id=983993478 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
+
+[node name="PortersCell" type="Marker3D" parent="Markers" unique_id=997997714 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.05, -8)
+
+[node name="Guesthouse" type="Marker3D" parent="Markers" unique_id=1330957340 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0.05, -19)
+
+[node name="Gate" type="Marker3D" parent="Markers" unique_id=335701377 groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, -2)

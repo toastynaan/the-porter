@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="1_block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="2_stone"]
+
+[node name="Wall" type="Node3D"]
+editor_description = "A plain wall, 4 x 4 x 0.8 m."
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(4, 4, 0.8)
+material = ExtResource("2_stone")

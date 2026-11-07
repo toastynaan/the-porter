@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/greybox.gdshader" id="1_grey"]
+
+[resource]
+shader = ExtResource("1_grey")
+shader_parameter/albedo = Color(0.1804, 0.1412, 0.1098, 1)
+shader_parameter/roughness = 0.8

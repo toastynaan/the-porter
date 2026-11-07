@@ -8,6 +8,7 @@ extends Node
 ## (960 on 16:9), so pixels stay square; leftover rows are letterboxed.
 ##
 ## Pick the level with a user argument: `-- --level=res://path/to/level.tscn`.
+## F11 toggles full screen.
 
 const RENDER_HEIGHT := 540
 
@@ -37,6 +38,10 @@ func _ready() -> void:
 
 ## Input reaches nodes inside the SubViewport only through push_input.
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"toggle_fullscreen"):
+		var full := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if full else DisplayServer.WINDOW_MODE_FULLSCREEN)
+		return
 	if event is InputEventMouse:
 		event = event.duplicate()
 		event.position = (event.position - screen.position) / pixel_scale
