@@ -11,4 +11,5 @@ extends Resource
 @export var suspicion := 0
 @export var captures := 0
 @export var keys: Array[StringName] = []
+@export var ledger: Array[Dictionary] = []
 @export var flags: Dictionary = {}

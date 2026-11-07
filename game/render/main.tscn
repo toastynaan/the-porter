@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://game/render/main.gd" id="1_main"]
 [ext_resource type="Shader" path="res://game/render/post.gdshader" id="2_post"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://game/debug/debug_keys.gd" id="7_debug"]
 [ext_resource type="Script" path="res://game/flow/screen_fade.gd" id="8_fade"]
 [ext_resource type="Script" path="res://game/flow/capture_flow.gd" id="9_capture"]
+[ext_resource type="Script" path="res://game/ui/ledger_view.gd" id="10_ledger"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
 shader = ExtResource("2_post")
@@ -49,6 +50,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("6_dot")
+
+[node name="Ledger" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_ledger")
 
 [node name="Fade" type="ColorRect" parent="UI"]
 anchors_preset = 15

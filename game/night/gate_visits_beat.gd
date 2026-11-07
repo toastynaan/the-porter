@@ -1,0 +1,246 @@
+extends NightBeat
+## Keeping the gate (design doc, "Core loop" 3: talk through the grate, read
+## the visitor, admit to the guesthouse, refuse, or send for the prior.
+## Night 3: "Walter again, with a bag that smells of the incense. A
+## child-sized knock low on the gate; no one there (hallucination at Dose
+## 50+).").
+##
+## Each visitor walks up the lane with his lantern and knocks. At the grille
+## the porter reads him by looking at him: each VisitorDetail he looks at
+## gives a line and goes into the ledger. Then he chooses:
+## - Admit: lift the bar, open the gate; the visitor comes in; shut and bar
+##   the gate behind him; he follows the porter to the guesthouse and takes
+##   the bed the porter shows him; the porter writes him in the ledger.
+## - Turn away: the visitor goes back down the lane.
+## - Send for the prior (Suspicion +10, Ranulf overhears): the prior comes,
+##   lets him in and takes him to a bed himself; the porter still writes him
+##   in the ledger.
+
+const KNOCK := preload("res://art/sfx/sfx_knock.wav")
+const KNOCK_LOW := preload("res://art/sfx/sfx_knock_low.wav")
+const PRIOR_SUSPICION := 10
+const CHILD_KNOCK_DOSE := 50.0
+## Reading: how close to the middle of the view, how near, and how long.
+const READ_ANGLE := 9.0
+const READ_RANGE := 4.0
+const READ_TIME := 0.35
+
+@export var visitors: Array[Visitor] = []
+@export var visitor_scene: PackedScene
+@export var prior_visitor: Visitor
+@export var visitor_speed := VisitorNPC.WALK_SPEED
+## Where visitors come from and go back to, down the lane, out of sight.
+@export var lane_start: Marker3D
+@export var lane_leave: Marker3D
+## Outside the grille, under the porch lantern; just inside the gate.
+@export var porch: Marker3D
+@export var inside: Marker3D
+@export var prior_from: Marker3D
+@export var grate: Duty
+@export var bar_duty: Duty
+@export var open_gate: Duty
+@export var shut_gate: Duty
+@export var ledger: Duty
+## Duty children, one per guesthouse bed (each bed's top centre).
+@export var beds: Node3D
+@export var gate_leaves: Array[Door] = []
+@export var gate_bar: StaticBody3D
+## Seconds before each knock, and between knocks until answered.
+@export var first_delay := 6.0
+@export var knock_every := 5.0
+
+var _audio: AudioStreamPlayer3D
+var _reading := false
+var _taken_beds: Array[Duty] = []
+
+
+func _ready() -> void:
+	_audio = AudioStreamPlayer3D.new()
+	_audio.unit_size = 6.0
+	add_child(_audio)
+
+
+func run() -> void:
+	for v in visitors:
+		await wait(first_delay)
+		await _receive(v)
+	if GameState.dose >= CHILD_KNOCK_DOSE:
+		await wait(first_delay)
+		await _knock_until_answered(KNOCK_LOW, 0.4)
+		GameState.set_flag(&"n3_child_knock")
+		await say("", "(A small knock, low on the gate. No one there.)")
+	await say("", "(The candle has burned down to the Matins mark. Ring the bell in the tower.)")
+
+
+func _receive(v: Visitor) -> void:
+	var npc := _spawn(v, lane_start)
+	await npc.walk_to(porch.global_position)
+	npc.face(inside.global_position)
+	await _knock_until_answered(KNOCK, 1.4)
+	await say(v.speaker, v.greeting)
+	var noticed: Array[VisitorDetail] = []
+	_reading = true
+	_read.call(npc, v, noticed)
+	var pick := await Talk.choose(PackedStringArray(["Admit him to the guesthouse", "Turn him away", "Send for the prior"]))
+	_reading = false
+	match pick:
+		0:
+			GameState.set_flag(v.flag, &"admitted")
+			await _admit(npc)
+		1:
+			GameState.set_flag(v.flag, &"refused")
+			await say("", "(You turn him away. He goes back down the lane.)")
+			_send_away(npc)
+			return
+		_:
+			GameState.set_flag(v.flag, &"prior")
+			GameState.raise_suspicion(PRIOR_SUSPICION)
+			await say("", "(You send for the prior.)")
+			await _prior_admits(npc)
+	await say("", "(Write him in the ledger, at your desk.)")
+	await ledger.wait_for_use()
+	var words := PackedStringArray()
+	for d in noticed:
+		words.append(d.ledger)
+	GameState.write_ledger(v.ledger_name, ", ".join(words))
+	await say("", "(You write: %s.)" % (v.ledger_name + (": " + ", ".join(words) if not words.is_empty() else "")))
+
+
+## Looks the visitor over while the porter decides: each detail he holds his
+## eyes on for a moment gives a line, once.
+func _read(npc: VisitorNPC, v: Visitor, noticed: Array[VisitorDetail]) -> void:
+	var p := player()
+	var dwell := {}
+	while _reading:
+		var dt := get_physics_process_delta_time()
+		for d in v.details:
+			if noticed.has(d):
+				continue
+			var at := npc.part_position(d.part)
+			if p.camera.global_position.distance_to(at) < READ_RANGE and p.camera.is_position_in_frustum(at) \
+					and ViewCheck.off_centre(p.camera, at) < READ_ANGLE:
+				dwell[d] = float(dwell.get(d, 0.0)) + dt
+				if dwell[d] >= READ_TIME:
+					noticed.append(d)
+					Talk.say("", d.line)
+			else:
+				dwell[d] = 0.0
+		await get_tree().physics_frame
+
+
+## Lift the bar, open the gate, let him in, shut and bar it, take him to a bed.
+func _admit(npc: VisitorNPC) -> void:
+	await say("", "(Lift the bar and open the gate.)")
+	await bar_duty.wait_for_use()
+	_show_bar(false)
+	await open_gate.wait_for_use()
+	await _open_gate(true)
+	await npc.walk_to(inside.global_position)
+	await say("", "(Shut the gate behind him, and bar it.)")
+	await shut_gate.wait_for_use()
+	await _open_gate(false)
+	await bar_duty.wait_for_use()
+	_show_bar(true)
+	npc.follow(player())
+	await say("", "(He follows you. Show him a bed in the guesthouse.)")
+	var bed := await _pick_bed()
+	await npc.walk_to(_beside(bed))
+	npc.lie_down(_bed_top(bed))
+
+
+## The prior comes to the gate, lets him in and takes him to a bed.
+func _prior_admits(npc: VisitorNPC) -> void:
+	var prior := _spawn(prior_visitor, prior_from)
+	await prior.walk_to(inside.global_position)
+	await say(prior_visitor.speaker, "(Lets him in, and takes him to the guesthouse himself.)")
+	_show_bar(false)
+	await _open_gate(true)
+	await npc.walk_to(inside.global_position + Vector3(1.2, 0, 0.8))
+	await _open_gate(false)
+	_show_bar(true)
+	var bed := _free_beds()[0]
+	_taken_beds.append(bed)
+	npc.follow(prior)
+	await prior.walk_to(_beside(bed) + Vector3(1.0, 0, 0))
+	await npc.walk_to(_beside(bed))
+	npc.lie_down(_bed_top(bed))
+	_send_away(prior, prior_from)
+
+
+## Waits for the porter to choose a free bed.
+func _pick_bed() -> Duty:
+	var chosen: Array[Duty] = []
+	var free := _free_beds()
+	for bed in free:
+		bed.used.connect(func(_by: Node) -> void: chosen.append(bed), CONNECT_ONE_SHOT)
+		bed.enabled = true
+	while chosen.is_empty():
+		await get_tree().physics_frame
+	for bed in free:
+		bed.enabled = false
+		for c in bed.used.get_connections():
+			bed.used.disconnect(c["callable"])
+	_taken_beds.append(chosen[0])
+	return chosen[0]
+
+
+func _free_beds() -> Array[Duty]:
+	var out: Array[Duty] = []
+	for c in beds.get_children():
+		if c is Duty and not _taken_beds.has(c):
+			out.append(c)
+	return out
+
+
+## Lying on a guesthouse bed (0.45 m high, its length along Z).
+func _bed_top(bed: Duty) -> Transform3D:
+	return Transform3D(Basis.IDENTITY, bed.global_position + Vector3.UP * 0.45)
+
+
+## The floor beside a bed, on its open side.
+func _beside(bed: Duty) -> Vector3:
+	return bed.global_position + Vector3(0, 0, 1.5)
+
+
+func _spawn(v: Visitor, at: Marker3D) -> VisitorNPC:
+	var npc := visitor_scene.instantiate() as VisitorNPC
+	npc.visitor = v
+	npc.speed = visitor_speed
+	get_parent().get_parent().add_child(npc)
+	npc.global_transform = at.global_transform
+	return npc
+
+
+func _send_away(npc: VisitorNPC, to: Marker3D = null) -> void:
+	await npc.walk_to((to if to else lane_leave).global_position)
+	npc.queue_free()
+
+
+## Opens or shuts both leaves of the gate; await it.
+func _open_gate(open: bool) -> void:
+	for leaf in gate_leaves:
+		leaf.locked = not open
+		leaf.set_open(open)
+	await wait(gate_leaves[0].open_time + 0.1)
+
+
+func _show_bar(down: bool) -> void:
+	gate_bar.visible = down
+	gate_bar.collision_layer = Layers.DOOR if down else 0
+
+
+func _knock_until_answered(stream: AudioStream, height: float) -> void:
+	var answered := [false]
+	grate.used.connect(func(_by: Node) -> void: answered[0] = true, CONNECT_ONE_SHOT)
+	grate.enabled = true
+	var t := 0.0
+	while not answered[0]:
+		if t <= 0.0:
+			t = knock_every
+			if AudioOut.enabled():
+				_audio.global_position = grate.global_position + Vector3(-0.6, height, 0.0)
+				_audio.stream = stream
+				_audio.play()
+		await get_tree().physics_frame
+		t -= get_physics_process_delta_time()
+	grate.enabled = false

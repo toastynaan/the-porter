@@ -14,7 +14,23 @@ var current: NightBeat
 
 
 func _ready() -> void:
+	add_to_group(&"night_director")
 	run.call_deferred()
+
+
+## Tonight's duties for the ledger: [text, done], in order.
+func duties() -> Array:
+	var out := []
+	var done := true
+	for c in get_children():
+		var beat := c as NightBeat
+		if beat == null:
+			continue
+		if beat == current:
+			done = false
+		if not beat.duty.is_empty():
+			out.append([beat.duty, done])
+	return out
 
 
 func run() -> void:

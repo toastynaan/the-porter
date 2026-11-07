@@ -14,6 +14,8 @@ const ORDER: Array[StringName] = [&"Supper", &"Gate", &"Knocks", &"Bell", &"Choi
 
 var _fails := 0
 var _choices: Array[int] = []
+## The gate's answer, set by NightPilot.keep_gate while the choice is open.
+var _answer := [-1]
 var _pilot: NightPilot
 
 
@@ -24,7 +26,10 @@ func _ready() -> void:
 func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	Talk.line_seconds = 0.05
-	Talk.auto_choice = func(_options: PackedStringArray) -> int: return _choices.pop_front() if not _choices.is_empty() else 0
+	Talk.auto_choice = func(_options: PackedStringArray) -> int:
+		if _answer[0] >= 0:
+			return _answer[0]
+		return _choices.pop_front() if not _choices.is_empty() else -1
 	var main: Node = load("res://game/render/main.tscn").instantiate()
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
@@ -60,14 +65,13 @@ func _run() -> void:
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Knocks", 5.0)
 	_check(GameState.has_flag(&"gate_barred") and GameState.has_flag(&"n3_ledger"), "gate barred and the ledger written")
 
-	# Knocks: Walter (admitted); then, drugged, the child-sized knock.
+	# Knocks: Walter comes up the lane; read, admitted, bedded, written in.
+	# Then, drugged, the child-sized knock.
 	GameState.snap_dose(60.0)
-	_choices = [0]
-	await _pilot.use("Grate")
-	await _pilot.until(func() -> bool: return GameState.has_flag(&"n3_walter"), 5.0)
-	var walter: Brother = night.get_node(^"Brothers/Walter")
-	_check(GameState.get_flag(&"n3_walter") == &"admitted" and walter.visible
-		and walter.global_position.distance_to(_pilot.mark("WalterRoom")) < 0.5, "Walter is admitted to the guesthouse")
+	var walter := await _pilot.keep_gate(0, [&"box", &"bag"], _answer)
+	var entry: Dictionary = GameState.ledger[-1] if not GameState.ledger.is_empty() else {}
+	_check(GameState.get_flag(&"n3_walter") == &"admitted" and walter.lying and String(entry.get("description", "")).contains("incense"),
+		"Walter comes up the lane, is let in, shown a bed and written in the ledger")
 	await _pilot.use("Grate")
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Bell", 5.0)
 	_check(GameState.has_flag(&"n3_child_knock"), "at Dose 50+, a small knock low on the gate, no one there")

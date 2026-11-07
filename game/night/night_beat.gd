@@ -6,6 +6,8 @@ extends Node
 
 @export var phase := GameState.Phase.SUPPER
 @export var bell := &""
+## The duty as the porter's ledger lists it (empty: not a duty, an event).
+@export var duty := ""
 
 
 ## Does the beat; returns when it is over. Beats override this.

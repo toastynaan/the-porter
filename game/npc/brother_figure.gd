@@ -41,6 +41,12 @@ const HEIGHT := 1.75
 	set(value):
 		tunic = value
 		_rebuild()
+## A cloak of this colour instead of the habit, when its alpha is above 0
+## (Walter: the only saturated colour on any character).
+@export var cloth_color := Color(0, 0, 0, 0):
+	set(value):
+		cloth_color = value
+		_rebuild()
 
 var _parts: Node3D
 
@@ -58,7 +64,10 @@ func _rebuild() -> void:
 	add_child(_parts)
 	var k: Vector2 = BUILDS[build]
 	_parts.scale = Vector3(k.y, k.x, k.y)
-	var cloth := _mat(Color("#4A3828") if tunic else Color("#1E1B19"))
+	var cloth_col := Color("#4A3828") if tunic else Color("#1E1B19")
+	if cloth_color.a > 0.0:
+		cloth_col = Color(cloth_color, 1.0)
+	var cloth := _mat(cloth_col)
 	_add(_cylinder(0.27, 0.2, 1.45, cloth), Vector3(0, 0.725, 0))
 	_add(_cylinder(0.2, 0.1, 0.12, cloth), Vector3(0, 1.5, 0))
 	_add(_sphere(0.14, 0.32, cloth), Vector3(0, 1.62, 0.02))

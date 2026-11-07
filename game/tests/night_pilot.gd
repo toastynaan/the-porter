@@ -18,6 +18,7 @@ static func fresh_night(save_path: String) -> void:
 	GameState.suspicion = 0
 	GameState.flags = {}
 	GameState.keys = [&"gate", &"guesthouse", &"charnel"]
+	GameState.ledger = []
 	GameState.dose_floor = 0.0
 	GameState.seconds_per_hour = 0.0
 	GameState.snap_dose(0.0)
@@ -61,11 +62,47 @@ func use(path: String) -> void:
 ## Short waits: the beats' pacing is for play, not tests.
 func shorten() -> void:
 	var d := director()
-	d.get_node(^"Knocks").set(&"first_delay", 0.3)
-	d.get_node(^"Knocks").set(&"knock_every", 1.0)
-	d.get_node(^"Choir").set(&"office_time", 0.5)
-	d.get_node(^"Crypt").set(&"quiet_time", 0.5)
+	var settings := {^"Knocks": {&"first_delay": 0.3, &"knock_every": 1.0, &"visitor_speed": 6.0},
+		^"Choir": {&"office_time": 0.5}, ^"Crypt": {&"quiet_time": 0.5}}
+	for beat_path: NodePath in settings:
+		var node := d.get_node_or_null(beat_path)
+		if node:
+			for key: StringName in settings[beat_path]:
+				node.set(key, settings[beat_path][key])
 	(night.get_node(^"Stalker") as Stalker).quiet_lead = 0.3
+
+
+## Answers the visitor's knock at the grille, looks at his `read` parts while
+## the choice is open, then answers `pick` (0 admit, 1 turn away, 2 the
+## prior) through `answer`, an Array the test's Talk.auto_choice reads.
+## Admitting, plays the porter's part: bar, gate, gate, bar, a bed, the
+## ledger. Returns the visitor.
+func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
+	await until(func() -> bool: return duty("Grate").enabled, 120.0)
+	player.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
+	duty("Grate").interact(player)
+	var npc := _tree.get_first_node_in_group(&"visitors") as VisitorNPC
+	await until(func() -> bool: return Talk.is_choosing(), 5.0)
+	for part in read:
+		face(npc.part_position(part))
+		await seconds(0.6)
+	answer[0] = pick
+	await frames(3)
+	answer[0] = -1
+	if pick == 0:
+		await use("BarGate")
+		await use("OpenGate")
+		await use("ShutGate")
+		await use("BarGate")
+		player.place(Vector3(-30.0, 0.05, -19.0), 0.0)
+		face(duty("GuestBeds/Bed2").global_position)
+		await use("GuestBeds/Bed2")
+		await until(func() -> bool: return npc.lying, 20.0)
+	if pick != 1:
+		await until(func() -> bool: return duty("Ledger").enabled, 60.0)
+		player.place(Vector3(-33.2, 0.05, -9.6), PI)
+		await use("Ledger")
+	return npc
 
 
 ## In the choir: looks at every brother in turn. Returns how many.

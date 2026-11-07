@@ -46,6 +46,9 @@ var captures := 0
 ## the charnel house). Doors name the key that locks them.
 var keys: Array[StringName] = [&"gate", &"guesthouse", &"charnel"]
 var flags: Dictionary = {}
+## The porter's ledger: who came in, in order. Each entry is
+## {"name": String, "description": String, "night": int}.
+var ledger: Array[Dictionary] = []
 ## The bell the night restarts from, or empty before the first one.
 var last_bell := &""
 
@@ -110,6 +113,11 @@ func has_flag(flag: StringName) -> bool:
 	return flags.has(flag)
 
 
+## Writes a guest into the ledger.
+func write_ledger(guest: String, description: String) -> void:
+	ledger.append({"name": guest, "description": description, "night": night})
+
+
 ## Skipped the bread (design doc, "Sources"): a shorter breath, slower
 ## sprint recovery, a hand tremor on the lantern.
 func is_hungry() -> bool:
@@ -127,6 +135,7 @@ func ring_bell(bell: StringName) -> bool:
 	save.suspicion = suspicion
 	save.captures = captures
 	save.keys = keys.duplicate()
+	save.ledger = ledger.duplicate(true)
 	save.flags = flags.duplicate(true)
 	if ResourceSaver.save(save, save_path) != OK:
 		push_error("GameState: could not write %s" % save_path)
@@ -152,6 +161,7 @@ func load_last_bell() -> bool:
 	hour = save.hour
 	captures = maxi(captures, save.captures)
 	keys = save.keys.duplicate()
+	ledger = save.ledger.duplicate(true)
 	flags = save.flags.duplicate(true)
 	last_bell = save.bell
 	suspicion = save.suspicion

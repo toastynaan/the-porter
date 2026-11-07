@@ -18,14 +18,14 @@ The abbey is one walled square, 80 × 80 m, on a 4 m kit grid. Every building op
 
 ## The lane outside the gate
 
-`areas/street.tscn`, outside the west wall and outside the navmesh. A 6 m lane runs the length of the wall with a gutter down the middle. On its far side is a row of timber houses: gable ends to the lane, upper floors jutting 0.5 m per storey, lit and dark windows, a lantern outside each (`StreetLanterns`). The inn stands opposite the gate. Two alleys end out of sight. At each end the lane turns west into fog. The gate porch holds a lantern over the grille. Beyond are rooftops, spires and the city wall (`Skyline`: meshes only, no collision or shadows). Debug key G steps out into the lane and back. `tools/street_shots.sh` renders it.
+`areas/street.tscn`, outside the west wall, baked into the navmesh (its `Ground`, `Houses` and `GatePorch` nodes are in `nav_source`) so visitors can walk up it and in through the gate. A 6 m lane runs the length of the wall with a gutter down the middle. On its far side is a row of timber houses: gable ends to the lane, upper floors jutting 0.5 m per storey, lit and dark windows, a lantern outside each (`StreetLanterns`). The inn stands opposite the gate. Two alleys end out of sight. At each end the lane turns west into fog. The gate porch holds a lantern over the grille. Beyond are rooftops, spires and the city wall (`Skyline`: meshes only, no collision or shadows). Debug key G steps out into the lane and back. `tools/street_shots.sh` renders it.
 
 ## Routes
 
 | Route | From → to | Notes |
 | --- | --- | --- |
 | Night stairs | Dormitory (upper floor, north end) → choir | 22.5 m from the choir to the dormitory's north end |
-| Day stair | Cloister east walk → dormitory | |
+| Day stair | Cloister east walk → dormitory | 1.6 m wide (widened in M5 so the porter doesn't catch on the floor above) |
 | Crypt stair | Choir (north side) → crypt | |
 | Hidden stair | Plank closet in the granary → passage under the nave → crypt | The closet door looks like the planks. Hunters use it: 31 m from the granary to the passage |
 | Latrine chute | Latrine seat (upper floor) → mill race | Porter only, one way. A hunter goes round: 116 m |
@@ -43,6 +43,7 @@ Walls 4 × 4 × 0.8 m; doorways 0.9 × 2.0 m; the gate 3.0 × 3.4 m; the church 
 ## Editing
 
 - Each area is a scene in `game/world/abbey/areas/`, built from the kit pieces in `game/world/kit/` (`wall`, `wall_door`, `wall_window`, `wall_arch`, `wall_arch_open`, `wall_gate`, `corner`) and `Block`s you resize in the inspector. `abbey.tscn` puts them together.
+- The gate bar is on the door layer, like door leaves: it blocks you but stays out of the navmesh, so the gateway is walkable when the gate is open.
 - Doors are `game/world/door/door.tscn`. Turn one 180° to swing it the other way. Set `locked`, give it a `key` the porter holds, or give it the wall's material to hide it.
 - A hiding spot is an Area3D with `game/hiding/hiding_spot.gd` and Marker3D children `View` (the camera while hidden), `Exit` and `Check` (where a hunter stands). Set its box `size`, `noise` and `check_chance` in the inspector. See `docs/hunting.md`.
 - Stalk points are plain Marker3Ds in the `stalk_point` group.

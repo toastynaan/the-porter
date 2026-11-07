@@ -7,12 +7,15 @@ const OUT := "res://art/_review/m4/"
 
 var _pilot: NightPilot
 var _n := 0
+## The gate's answer while its choice is open (-1: not yet); other choices answer 0.
+var _answer := -1
+var _auto := true
 
 
 func _ready() -> void:
 	NightPilot.fresh_night("user://night3_shots_save.tres")
 	Talk.line_seconds = 2.0
-	Talk.auto_choice = func(_options: PackedStringArray) -> int: return 0
+	Talk.auto_choice = func(_options: PackedStringArray) -> int: return _answer if _answer >= 0 else (0 if _auto else -1)
 	var main: Node = load("res://game/render/main.tscn").instantiate()
 	add_child(main)
 	await get_tree().process_frame
@@ -37,10 +40,7 @@ func _ready() -> void:
 	await _pilot.use("BarGate")
 	await _pilot.use("Ledger")
 	GameState.snap_dose(55.0)
-	await _pilot.until(func() -> bool: return _pilot.duty("Grate").enabled, 15.0)
-	p.place(Vector3(-37.2, 0.05, -2), deg_to_rad(90.0))
-	_pilot.duty("Grate").interact(p)
-	await _shot("knock_walter", 0.6)
+	await _keep_gate(p)
 	# Drugged, the child-sized knock follows.
 	await _pilot.use("Grate")
 	await _shot("knock_no_one", 0.4)
@@ -95,6 +95,47 @@ func _ready() -> void:
 	await _shot("dawn_keys", 0.3)
 	print("night 3 shots: rescued %s, captures %d" % [GameState.has_flag(&"n3_thomas_hid_you"), GameState.captures])
 	get_tree().quit()
+
+
+## Walter at the grille, let in, in his bed, in the ledger.
+func _keep_gate(p: Player) -> void:
+	_auto = false
+	await _pilot.until(func() -> bool: return get_tree().get_first_node_in_group(&"visitors") != null, 30.0)
+	var walter := get_tree().get_first_node_in_group(&"visitors") as VisitorNPC
+	walter.speed = VisitorNPC.WALK_SPEED * 2.0
+	p.place(Vector3(-39.2, 0.05, -2.4), deg_to_rad(90.0))
+	await _pilot.until(func() -> bool: return _pilot.duty("Grate").enabled, 30.0)
+	_pilot.duty("Grate").interact(p)
+	await _pilot.until(func() -> bool: return Talk.is_choosing(), 5.0)
+	for part in [&"box", &"bag", &"face"]:
+		_pilot.face(walter.part_position(part))
+		await _pilot.seconds(0.6)
+	await _shot("walter_at_the_grille", 0.1)
+	_answer = 0
+	await _pilot.frames(3)
+	_answer = -1
+	_auto = true
+	await _pilot.use("BarGate")
+	await _pilot.use("OpenGate")
+	await _pilot.seconds(0.6)
+	_pilot.face(walter.global_position + Vector3.UP * 1.3)
+	await _shot("gate_open", 0.2)
+	await _pilot.use("ShutGate")
+	await _pilot.use("BarGate")
+	p.place(Vector3(-30.0, 0.05, -19.0), 0.0)
+	_pilot.face(_pilot.duty("GuestBeds/Bed2").global_position)
+	await _pilot.use("GuestBeds/Bed2")
+	await _pilot.until(func() -> bool: return walter.lying, 30.0)
+	p.place(Vector3(-31.0, 0.05, -20.0), 0.0)
+	_pilot.face(walter.global_position + Vector3.UP * 0.5)
+	await _shot("walter_in_bed", 0.6)
+	await _pilot.until(func() -> bool: return _pilot.duty("Ledger").enabled, 20.0)
+	p.place(Vector3(-33.2, 0.05, -9.6), PI)
+	await _pilot.use("Ledger")
+	var ledger_view := get_tree().get_first_node_in_group(&"ledger_view") as LedgerView
+	ledger_view.set_showing(true)
+	await _shot("ledger_page", 0.3)
+	ledger_view.set_showing(false)
 
 
 ## The first and last appearances on the round, as he faces them.

@@ -1,6 +1,6 @@
 # Night 3 in the greybox (M4)
 
-Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5 and the game opens at supper. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E.
+Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5 and the game opens at supper. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
 ## The beats
 
@@ -9,8 +9,8 @@ Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
 | Supper | You sit at the refectory table and can look but not walk. Osric serves bread; use the bread to eat it or palm it. Thomas offers a remedy | Core loop 1; night 3 "the bread tastes bitter. Thomas offers a remedy" | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` |
-| Gate | Bar the gate (E at the gate), then write the ledger on your cell desk | Core loop 2 | `gate_barred`, `n3_ledger` |
-| Knocks | Knocking at the gate. Walter through the grate: admit him, turn him away, or send for the prior. At Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
+| Gate | Bar the gate (E at the gate), then open the ledger at tonight's page on your cell desk | Core loop 2 | `gate_barred`, `n3_ledger` |
+| Knocks | Walter comes up the lane with his lantern and knocks at the grille (see "Keeping the gate" below). At Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
 | Bell | Ring the bell rope in the tower. Midnight. **The night saves here** | Core loop 4 | the `matins` bell save |
 | Choir | Go to the choir. The incense is lit. Count the brothers by looking at each one. In the dead brother's place stands a hooded stranger, or, drugged, the dead brother | Core loop 4; night 3 Matins | `n3_incense`, `n3_headcount`, `n3_saw_dead_brother` |
 | Round | Check three stops: the stores door off the west walk, the chapter house door off the east walk, the sanctuary lamp. The demon appears at the end of the walk, then in a doorway, then behind you in the choir | Core loop 5; demon "Stalking" phase | `n3_round` |
@@ -21,6 +21,24 @@ Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5
 **If you're caught in the chase:**
 - **First capture:** you wake in the infirmary with Thomas over you, +40 Dose, and your keys gone. The night goes on to dawn.
 - **Second capture:** it kills you, and the night starts again at the Matins bell.
+
+## Keeping the gate
+
+`game/night/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
+
+1. **He comes up the lane.** Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern.
+2. **He knocks.** He knocks until you come to the grille and press E. He greets you.
+3. **You read him.** While the choice is open, look at a part of him for a moment and the porter notices it, for example "(His box of relics rattles.)". Only what you noticed goes into the ledger.
+4. **You choose:**
+   - **Admit him.** Lift the bar, open the gate, and he comes in. Shut the gate and bar it behind him. He follows you to the guesthouse, where you show him a bed (E on it) and he lies down. Then write him in the ledger at your desk.
+   - **Turn him away.** He walks back down the lane and is gone.
+   - **Send for the prior.** Suspicion +10, because Ranulf overhears. The prior comes, lets him in and takes him to a bed. You still write him in.
+
+**The ledger** is held up with L (gamepad Back). It's a parchment page showing tonight's guests as you wrote them, then tonight's duties, with the done ones struck through. It counts as an object you carry, so it isn't a HUD, and the night goes on while you read.
+
+To add a visitor, make a new `Visitor` resource and add it to the Knocks beat's `visitors` list. To restage the gate, move these markers and duties:
+- markers: `Marks/LaneStart`, `LaneLeave`, `Porch`, `Inside`, `PriorFrom`
+- duties: `Duties/OpenGate`, `ShutGate`, `GuestBeds/Bed0`–`Bed5`
 
 ## Finding the way
 
@@ -40,6 +58,8 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | Palming seen by Osric, refusing the remedy | Suspicion +5 each | low end of the doc's +5 to +20 |
 | Osric watches your plate after serving | 5 s | mine |
 | Sending for the prior | Suspicion +10 | doc |
+| Visitors' walking pace | 1.2 m/s | mine |
+| Reading a detail | looking within 9° of it, from 4 m or closer, for 0.35 s | mine |
 | Seen in the crypt | Suspicion +10 | doc |
 | Incense | +25 over 8 s, and at least enough to reach Dose 50; Dose doesn't fall below 50 for the rest of the night | doc +25; floor of 50 is the M0 default |
 | The stranger becomes the dead brother | Dose 50 (he changes only while you aren't looking) | mine: the tier where cultists start rendering as demons |
@@ -73,6 +93,7 @@ The pacing waits are exports on each beat: Knocks `first_delay`, Choir `office_t
 ## Tests and tools
 
 - **`test_night3`:** the whole night in order, with every beat's effects.
+- **`test_gate`:** the gate job's three outcomes, reading, the ledger entry and the ledger page.
 - **`test_night3_caught`:**
   - restarting at the Matins bell
   - being caught in the chase (infirmary, keys gone, dawn)

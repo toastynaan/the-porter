@@ -285,30 +285,30 @@ size = Vector3(8, 0.35, 40)
 material = ExtResource("7_x2q58")
 
 [node name="DormFloor_0" type="StaticBody3D" parent="Floors" unique_id=791264330]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.72, -21.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.72, -21.4)
 script = ExtResource("6_4nq6i")
-size = Vector3(8, 0.3, 13.4)
+size = Vector3(8, 0.3, 13.2)
 material = ExtResource("8_r5oup")
 surface = "wood"
 
 [node name="DormFloor_1" type="StaticBody3D" parent="Floors" unique_id=1957303291]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.72, -0.6999998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.72, -0.6)
 script = ExtResource("6_4nq6i")
-size = Vector3(8, 0.3, 25.400002)
+size = Vector3(8, 0.3, 25.2)
 material = ExtResource("8_r5oup")
 surface = "wood"
 
 [node name="DormFloor_2" type="StaticBody3D" parent="Floors" unique_id=1816372852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 3.72, -14)
 script = ExtResource("6_4nq6i")
-size = Vector3(1, 0.3, 1.1999998)
+size = Vector3(1, 0.3, 1.6)
 material = ExtResource("8_r5oup")
 surface = "wood"
 
 [node name="DormFloor_3" type="StaticBody3D" parent="Floors" unique_id=2124503531]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 3.72, -14)
 script = ExtResource("6_4nq6i")
-size = Vector3(1, 0.3, 1.1999998)
+size = Vector3(1, 0.3, 1.6)
 material = ExtResource("8_r5oup")
 surface = "wood"
 
@@ -340,6 +340,7 @@ material = ExtResource("9_if733")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 13, 0.05, -14)
 script = ExtResource("10_6m7gb")
 rise = 3.97
+width = 1.6
 material = ExtResource("11_uumq8")
 
 [node name="Doors" type="Node3D" parent="." unique_id=829321442]

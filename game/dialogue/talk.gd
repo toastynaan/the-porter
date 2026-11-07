@@ -4,7 +4,9 @@ extends CanvasLayer
 ## beats await say() and choose(). Until the script is written, lines are
 ## placeholders that describe the beat in brackets, in the design doc's words.
 ##
-## Choices: number keys, or the arrow keys and `interact`. Tests answer through
+## Choices: number keys, or the arrow keys and `interact`. A line said while
+## a choice is open shows over its question for a moment and then gives it
+## back (the porter noticing something while he decides). Tests answer through
 ## `auto_choice` and shorten lines with `line_seconds`.
 
 signal said(speaker: String, text: String)
@@ -16,7 +18,8 @@ const TEXT_COLOR := Color("#D8C9A3")
 const PICK_COLOR := Color("#F0E2BC")
 const DIM_COLOR := Color(0.85, 0.79, 0.64, 0.55)
 
-## Answers choices instead of the keys: func(options: PackedStringArray) -> int.
+## Answers choices instead of the keys: func(options: PackedStringArray) -> int,
+## asked every frame until it returns 0 or more.
 var auto_choice: Callable
 ## Seconds every line stays up; below 0 the reading time is used.
 var line_seconds := -1.0
@@ -28,6 +31,8 @@ var _speaker: Label
 var _text: Label
 var _options: VBoxContainer
 var _choices := PackedStringArray()
+## The question of the open choice: [speaker, text].
+var _prompt := ["", ""]
 var _highlight := 0
 var _picked := -1
 var _line_id := 0
@@ -69,22 +74,25 @@ func say(speaker: String, text: String, seconds := -1.0) -> void:
 		t = line_seconds if line_seconds >= 0.0 else maxf(MIN_SECONDS, text.length() / CHARS_PER_SECOND)
 	await get_tree().create_timer(t, true).timeout
 	if id == _line_id:
-		_clear()
+		if is_choosing():
+			_show_line(_prompt[0], _prompt[1])
+		else:
+			_clear()
 
 
 ## Offers `options` under an optional line; returns the index picked.
 func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	_line_id += 1
+	_prompt = [speaker, text]
 	_show_line(speaker, text)
 	_choices = options
 	_highlight = 0
 	_picked = -1
 	_draw_options()
-	if auto_choice.is_valid():
-		await get_tree().process_frame
-		_picked = auto_choice.call(options)
 	while _picked < 0:
 		await get_tree().process_frame
+		if auto_choice.is_valid() and _picked < 0:
+			_picked = auto_choice.call(options)
 	var picked := _picked
 	history.append(["", "> " + options[picked]])
 	chose.emit(options, picked)
