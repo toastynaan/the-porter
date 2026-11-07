@@ -51,8 +51,28 @@ func _run() -> void:
 			"near-black colour ambient")
 	GameState.snap_dose(0.0)
 
+	# Keys reach the level inside the SubViewport (the lookdev controls).
+	var cam: Camera3D = world.get_node(^"Lookdev/Camera")
+	var before := cam.global_position
+	_press(KEY_4)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_check(cam.global_position.distance_to(before) > 1.0, "key 4 reaches lookdev (silhouette shot)")
+	_press(KEY_BRACKETRIGHT)
+	await get_tree().create_timer(2.5).timeout
+	_check(absf(GameState.dose - 25.0) < 0.01, "] eases Dose up to 25 (%.2f)" % GameState.dose)
+	GameState.snap_dose(0.0)
+
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))
 	get_tree().quit(0 if _fails == 0 else 1)
+
+
+func _press(key: Key) -> void:
+	var e := InputEventKey.new()
+	e.keycode = key
+	e.physical_keycode = key
+	e.pressed = true
+	Input.parse_input_event(e)
 
 
 func _param(mat: ShaderMaterial, param: StringName) -> float:
