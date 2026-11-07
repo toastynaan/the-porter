@@ -1,0 +1,11 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# Blender autosaves and backups
+*.blend1
+*.blend@
+.DS_Store
+override.cfg
+# Review renders: regenerate with tools/review.sh
+art/_review/*
+!art/_review/.gdignore
