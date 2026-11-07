@@ -37,6 +37,9 @@ var hour := 0.0
 ## night's time scale isn't designed yet (M4).
 var seconds_per_hour := 0.0
 var suspicion := 0
+## Decay stops here (design doc, nights 1-3: the Matins incense keeps
+## everyone at Dose 50 or more, so no one sees a mask clearly). Set by the night.
+var dose_floor := 0.0
 ## Times the player has been caught (the first wakes them, the second kills).
 var captures := 0
 ## Keys the porter holds (design doc, "Tools": the gate, the guesthouse and
@@ -58,8 +61,8 @@ func _process(delta: float) -> void:
 		return
 	var hours := delta / seconds_per_hour
 	hour += hours
-	if _dose > 0.0:
-		_set_dose(_dose - DOSE_DECAY_PER_HOUR * hours)
+	if _dose > dose_floor:
+		_set_dose(maxf(_dose - DOSE_DECAY_PER_HOUR * hours, dose_floor))
 
 
 ## Eases `amount` of Dose in over `seconds` (negative amounts ease out).

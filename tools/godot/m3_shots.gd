@@ -12,6 +12,7 @@ var _player: Player
 
 func _ready() -> void:
 	var main: Node = load("res://game/render/main.tscn").instantiate()
+	main.level = load("res://game/encounters/hunt_demo.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

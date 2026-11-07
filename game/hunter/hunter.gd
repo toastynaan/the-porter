@@ -14,11 +14,17 @@ extends CharacterBody3D
 ##   spots nearest where he last saw the porter, a spot used twice tonight
 ##   first. Below 30 he only looks around (design doc, "Thresholds").
 ##
+## He freezes for a moment the first time the porter's lantern light touches
+## him (design doc: "they freeze the moment lantern light touches them"). He
+## carries a shuttered lantern on his back, so he shows as a dark shape
+## against its glow (the doc's sober render: "a lantern behind it").
+##
 ## He opens doors in his way and shuts the ones he opened on patrol behind
 ## him. A locked door stops him: he tries it and gives up (he has no keys).
 ## He can't follow through a squeeze. Slower on stairs.
 ##
-## `dormant` hunters stand hidden and still until take_over() or alert().
+## `dormant` hunters stand hidden and still until take_over(), chase() or
+## alert(); stand_still() shows one where he is, waiting for his cue.
 
 signal state_changed(state: State)
 signal caught(player: Player)
@@ -52,12 +58,17 @@ const ACCEL := 14.0
 const GRAVITY := 9.8
 ## Doors closer than this are his own doing; he ignores their noise.
 const OWN_DOOR_RANGE := 2.5
+## Seconds he stands still when the porter's light first falls on him.
+const FREEZE_TIME := 0.5
 
 ## Node whose Marker3D children are the patrol, in order.
 @export var patrol_route: Node3D
 ## The night's designed chase searches whatever the Suspicion.
 @export var always_search := false
 @export var dormant := false
+
+## Shown but still, senses or not, until chase() or alert().
+var waiting := false
 
 var state := State.PATROL
 var last_seen := Vector3.ZERO
@@ -85,6 +96,8 @@ var _opened: Door
 var _locked_door: Door
 var _locked_time := 0.0
 var _warmup := 0.5
+var _freeze := 0.0
+var _was_lit := false
 var _player: Player
 
 @onready var agent: NavigationAgent3D = $Agent
@@ -103,13 +116,17 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if dormant:
+	if dormant or waiting:
 		return
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group(&"player") as Player
 	if _warmup > 0.0:
 		_warmup -= delta
 		return
+	var lit := _in_porter_light()
+	if lit and not _was_lit:
+		_freeze = FREEZE_TIME
+	_was_lit = lit
 	if state != State.CHASE and state != State.CAPTURE and senses.sees_player:
 		_start_chase()
 	elif state == State.PATROL and senses.glimpsed and senses.awareness >= 0.5:
@@ -130,6 +147,7 @@ func _physics_process(delta: float) -> void:
 ## Wakes a dormant hunter at `xform` (where the demon stood) and sets him on
 ## the porter.
 func take_over(xform: Transform3D) -> void:
+	waiting = false
 	_set_dormant(false)
 	var map := agent.get_navigation_map()
 	var at := NavigationServer3D.map_get_closest_point(map, xform.origin)
@@ -140,6 +158,7 @@ func take_over(xform: Transform3D) -> void:
 
 ## Sets him on the porter from wherever he is (debug key, scripted beats).
 func chase() -> void:
+	waiting = false
 	_set_dormant(false)
 	_warmup = 0.0
 	_start_chase()
@@ -147,13 +166,22 @@ func chase() -> void:
 
 ## Sends him to look at `at` (a scripted noise, the bell).
 func alert(at: Vector3) -> void:
+	waiting = false
 	_set_dormant(false)
 	if state == State.PATROL or state == State.INVESTIGATE:
 		_investigate_at(at, null)
 
 
+## Shows him where he stands, still, until his cue (chase or alert).
+func stand_still() -> void:
+	_set_dormant(false)
+	waiting = true
+	velocity = Vector3.ZERO
+
+
 ## Back to where he started, patrolling (after a capture).
 func reset() -> void:
+	waiting = false
 	global_transform = _home
 	velocity = Vector3.ZERO
 	sprint_time = 0.0
@@ -163,6 +191,8 @@ func reset() -> void:
 	_checking = null
 	_locked_door = null
 	_door_wait = 0.0
+	_freeze = 0.0
+	_was_lit = false
 	_opened = null
 	_set_state(State.PATROL)
 	senses.forget()
@@ -384,6 +414,16 @@ func _reachable(to: Vector3) -> bool:
 	return true
 
 
+## The porter's lantern light reaches his chest.
+func _in_porter_light() -> bool:
+	if _player == null:
+		return false
+	var light := _player.lantern.light
+	var chest := global_position + Vector3.UP * 1.2
+	return light.global_position.distance_to(chest) < light.omni_range \
+		and ViewCheck.clear(self, light.global_position, chest)
+
+
 func _can_grab() -> bool:
 	if _player.hiding:
 		return false
@@ -444,7 +484,9 @@ func _patrol_points() -> Array[Node3D]:
 func _move(delta: float, speed: float) -> void:
 	_sync_target()
 	var flat := Vector3.ZERO
-	if _door_wait > 0.0:
+	if _freeze > 0.0:
+		_freeze -= delta
+	elif _door_wait > 0.0:
 		_door_wait -= delta
 	elif speed > 0.0 and not agent.is_navigation_finished():
 		var next := agent.get_next_path_position()

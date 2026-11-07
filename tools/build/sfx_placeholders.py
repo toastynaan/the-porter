@@ -21,6 +21,11 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_rook_<n>.wav             rooks (3)
   sfx_rat_<n>.wav              rats (3)
   sfx_cat_0.wav                the abbey cat
+  sfx_bell.wav                 the abbey bell, one stroke
+  sfx_knock.wav                knocking at the gate
+  sfx_knock_low.wav            a small knock low on the gate
+  sfx_chant_loop.wav           voices chanting Matins (loop)
+  sfx_bones.wav                a hand closing on bones in ash
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -322,6 +327,52 @@ def cat(rng):
     return bandpass(out, 900, 0.8)
 
 
+def bell(rng, seconds=6.0):
+    """Inharmonic partials of a large bronze bell, struck once."""
+    n = int(seconds * RATE)
+    partials = [(0.5, 1.0, 4.0), (1.0, 0.8, 3.0), (1.19, 0.5, 2.2), (1.5, 0.4, 1.8), (2.0, 0.35, 1.4),
+                (2.51, 0.2, 0.9), (2.66, 0.15, 0.8), (3.01, 0.1, 0.6)]
+    f0 = 196.0
+    out = [0.0] * n
+    for ratio, amp, decay in partials:
+        f = f0 * ratio
+        for i in range(n):
+            out[i] += amp * math.sin(2 * math.pi * f * i / RATE) * math.exp(-i / (decay * RATE))
+    strike = [a * b for a, b in zip(highpass(noise(n, rng), 1500), env(n, 0.001, 0.02))]
+    return mix(out, gain(strike, 0.5))
+
+
+def knocks(rng, count, f, g):
+    out = []
+    for k in range(count):
+        n = int(0.18 * RATE)
+        hit = mix(tone(n, f, 0.05, rng), gain(tone(n, f * 2.1, 0.03, rng), 0.5),
+                  [a * b for a, b in zip(lowpass(noise(n, rng), 1200), env(n, 0.001, 0.02))])
+        out = mix(out, pad(gain(hit, g), k * 0.32)) if out else gain(hit, g)
+    return out
+
+
+def chant(rng):
+    """Three voices on the hummed phrase, a fifth and an octave apart."""
+    base = hum(rng)
+    n = len(base)
+    def shifted(x, ratio):
+        return [x[min(n - 1, int(i * ratio))] for i in range(int(n / ratio))]
+    low = shifted(base, 0.5 ** (7 / 12))
+    high = shifted(base, 2.0 ** (5 / 12))
+    m = min(n, len(low), len(high))
+    return loopable([base[i] + 0.8 * low[i] + 0.5 * high[i] for i in range(m)], fade=0.5)
+
+
+def bones(rng):
+    out = []
+    for k in range(6):
+        n = int(0.06 * RATE)
+        click = mix(tone(n, rng.uniform(900, 1600), 0.01, rng), [a * b for a, b in zip(highpass(noise(n, rng), 2000), env(n, 0.0005, 0.006))])
+        out = mix(out, pad(click, k * rng.uniform(0.05, 0.12) + k * 0.04)) if out else click
+    return mix(out, pad(gain(scrape(rng, 0.5), 0.4), 0.05))
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -349,6 +400,11 @@ def main():
         write(f"sfx_rook_{k}.wav", rook(rng), peak=0.6)
         write(f"sfx_rat_{k}.wav", rat(rng), peak=0.4)
     write("sfx_cat_0.wav", cat(rng), peak=0.5)
+    write("sfx_bell.wav", bell(rng), peak=0.9)
+    write("sfx_knock.wav", knocks(rng, 3, 85, 1.0), peak=0.8)
+    write("sfx_knock_low.wav", knocks(rng, 2, 140, 0.6), peak=0.5)
+    write("sfx_chant_loop.wav", chant(rng), peak=0.5)
+    write("sfx_bones.wav", bones(rng), peak=0.6)
 
 
 if __name__ == "__main__":

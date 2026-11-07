@@ -13,9 +13,11 @@ extends Node3D
 ## and the moment you turn your back on that one and are out of your own
 ## lantern's light, `hunter` takes over and the chase begins.
 ##
-## In the M3 greybox it waits while any hunter is awake nearby or busy, so
-## the two are never seen together, and `rearm` starts the sequence again
-## once a chase is over.
+## On its own it waits while any hunter is awake nearby or busy, so the two
+## are never seen together, and `rearm` starts the sequence again once a
+## chase is over. A `scripted` stalker only appears when a night's beat calls
+## appear_from() or appear_behind() (night 3's round), and appear_ahead()
+## puts it in a doorway the porter is running for.
 
 signal appeared(at: Vector3)
 signal vanished
@@ -44,6 +46,8 @@ enum Step { WAIT, QUIET, SHOWN }
 @export var hunter: Hunter
 ## Starts again after the hunter's chase ends.
 @export var rearm := true
+## Appears only when a beat asks (appear_from, appear_behind, appear_ahead).
+@export var scripted := false
 
 var step := Step.WAIT
 var appearances := 0
@@ -54,6 +58,8 @@ var final := false
 
 var _timer := 0.0
 var _point := Vector3.ZERO
+var _script_points: Array[Vector3] = []
+var _script_behind := false
 var _seen_time := 0.0
 var _away_time := 0.0
 var _shown_time := 0.0
@@ -69,6 +75,8 @@ func _ready() -> void:
 	($Body as StaticBody3D).collision_mask = 0
 	_hide()
 	_timer = randf_range(interval.x, interval.y) * 0.5
+	if scripted:
+		active = false
 	if hunter and rearm:
 		hunter.state_changed.connect(_on_hunter_state)
 
@@ -85,7 +93,7 @@ func _physics_process(delta: float) -> void:
 			_timer -= delta
 			if _timer <= 0.0:
 				_timer = 2.0
-				if _threats_clear() and _pick():
+				if (scripted or _threats_clear()) and _pick():
 					step = Step.QUIET
 					_timer = quiet_lead
 					_set_quiet(true)
@@ -108,6 +116,44 @@ func appear_now() -> void:
 		_show_at(_point)
 
 
+## Appears, after the animals go quiet, at the first of `points` that is out
+## of view and in plain sight once he turns.
+func appear_from(points: Array[Vector3]) -> void:
+	_script_points = points
+	_script_behind = false
+	_begin_scripted()
+
+
+## Appears right behind him, in full silence: the last appearance.
+func appear_behind() -> void:
+	_script_points = []
+	_script_behind = true
+	_begin_scripted()
+
+
+## Stands at `at` now if he can't see it there (behind a shut door or round
+## a corner): ahead of him while he runs.
+func appear_ahead(at: Vector3) -> bool:
+	if _player == null:
+		_player = get_tree().get_first_node_in_group(&"player") as Player
+	if _player == null or step == Step.SHOWN:
+		return false
+	if ViewCheck.on_screen(_player.camera, _points_at(at)):
+		return false
+	active = true
+	final = false
+	_show_at(at)
+	return true
+
+
+func _begin_scripted() -> void:
+	active = true
+	if step == Step.SHOWN:
+		_hide()
+	step = Step.WAIT
+	_timer = 0.0
+
+
 ## Back to the start of the sequence (after a capture).
 func reset() -> void:
 	_hide()
@@ -115,7 +161,7 @@ func reset() -> void:
 	final = false
 	last_distance = 0.0
 	appearances = 0
-	active = true
+	active = not scripted
 	_timer = randf_range(interval.x, interval.y)
 	_set_quiet(false)
 
@@ -171,6 +217,8 @@ func _vanish() -> void:
 	_hide()
 	step = Step.WAIT
 	_timer = randf_range(interval.x, interval.y)
+	if scripted:
+		active = false
 	vanished.emit()
 	get_tree().create_timer(quiet_lead).timeout.connect(func() -> void:
 		if step == Step.WAIT:
@@ -185,6 +233,8 @@ func _hide() -> void:
 
 ## Chooses where to appear next; false if nowhere fits now.
 func _pick() -> bool:
+	if scripted:
+		return _pick_scripted()
 	var lo := first_range.x
 	var hi := first_range.y
 	final = false
@@ -207,6 +257,17 @@ func _pick() -> bool:
 	best.sort_custom(func(a: Vector3, b: Vector3) -> bool: return a.distance_to(from) > b.distance_to(from))
 	_point = best[randi() % mini(3, best.size())]
 	return true
+
+
+func _pick_scripted() -> bool:
+	final = _script_behind
+	if _script_behind:
+		return _pick_behind()
+	for p in _script_points:
+		if _can_place(p):
+			_point = p
+			return true
+	return false
 
 
 ## A spot on the navmesh right behind where the porter is looking.

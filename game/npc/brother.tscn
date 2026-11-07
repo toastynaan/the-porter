@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother.gd" id="1_brother"]
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="2_figure"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+radius = 0.28
+height = 1.75
+
+[node name="Brother" type="Node3D"]
+script = ExtResource("1_brother")
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("2_figure")
+
+[node name="Body" type="StaticBody3D" parent="."]
+
+[node name="Shape" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("Shape_body")

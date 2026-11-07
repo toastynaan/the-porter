@@ -7,6 +7,10 @@ extends Node
 ## (GameState.load_last_bell), at the level's "bell_spawn" marker named after
 ## that bell. Captures only go up, so after a restart the next one kills too.
 ##
+## The first capture also takes your keys (design doc: "something taken or
+## changed: your keys, a page of the ledger, or your friend's trust"; keys
+## chosen for night 3, whose dawn has them moved).
+##
 ## A level loaded with no bell rung yet rings "start", so there is always a
 ## bell to go back to. Hunters find this node through the "capture_flow" group.
 
@@ -67,6 +71,8 @@ func _wake(player: Player) -> void:
 	player.lie_down()
 	GameState.add_dose(WAKE_DOSE, WAKE_DOSE_TIME)
 	GameState.set_flag(&"woke_in_infirmary")
+	GameState.keys.clear()
+	GameState.set_flag(&"keys_taken")
 	await get_tree().create_timer(BLACK_WAKE).timeout
 	fade.fade_to(0.0, FADE_IN)
 	await player.get_up(FADE_IN)

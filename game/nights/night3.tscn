@@ -1,0 +1,427 @@
+[gd_scene load_steps=27 format=3]
+
+[ext_resource type="PackedScene" path="res://game/world/abbey/abbey.tscn" id="abbey"]
+[ext_resource type="PackedScene" path="res://game/npc/brother.tscn" id="brother"]
+[ext_resource type="Script" path="res://game/npc/brother.gd" id="brother_gd"]
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/render/dual_render.gd" id="dual_gd"]
+[ext_resource type="Script" path="res://game/night/duty.gd" id="duty_gd"]
+[ext_resource type="PackedScene" path="res://game/hunter/hunter.tscn" id="hunter"]
+[ext_resource type="PackedScene" path="res://game/demon/stalker.tscn" id="stalker"]
+[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
+[ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
+[ext_resource type="Script" path="res://game/night/supper_beat.gd" id="supper_gd"]
+[ext_resource type="Script" path="res://game/night/gate_beat.gd" id="gate_gd"]
+[ext_resource type="Script" path="res://game/night/knocks_beat.gd" id="knocks_gd"]
+[ext_resource type="Script" path="res://game/night/bell_beat.gd" id="bell_gd"]
+[ext_resource type="Script" path="res://game/night/choir_beat.gd" id="choir_gd"]
+[ext_resource type="Script" path="res://game/night/round_beat.gd" id="round_gd"]
+[ext_resource type="Script" path="res://game/night/crypt_beat.gd" id="crypt_gd"]
+[ext_resource type="Script" path="res://game/night/chase_beat.gd" id="chase_gd"]
+[ext_resource type="Script" path="res://game/night/dawn_beat.gd" id="dawn_gd"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_bread"]
+albedo_color = Color(0.54, 0.4, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_bread"]
+material = SubResource("Mat_bread")
+size = Vector3(0.22, 0.09, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_iron"]
+albedo_color = Color(0.12, 0.11, 0.1, 1)
+roughness = 0.6
+metallic = 0.7
+
+[sub_resource type="BoxMesh" id="Mesh_keys"]
+material = SubResource("Mat_iron")
+size = Vector3(0.14, 0.03, 0.09)
+
+[sub_resource type="StandardMaterial3D" id="Mat_flame"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.878, 0.643, 0.345, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="BoxMesh" id="Mesh_cryptlamp"]
+material = SubResource("Mat_flame")
+size = Vector3(0.12, 0.18, 0.12)
+
+[sub_resource type="CapsuleShape3D" id="Shape_stranger"]
+radius = 0.28
+height = 1.75
+
+[node name="Night3" type="Node3D"]
+editor_description = "Night 3, the vertical slice (design doc, Night 3: The oven). The Director runs the beats in order; move the markers under Marks and Places to restage it."
+
+[node name="Abbey" parent="." instance=ExtResource("abbey")]
+
+[node name="Places" type="Node3D" parent="."]
+editor_description = "Where each brother is in each phase: Places/<Phase>/<Name>."
+
+[node name="Supper" type="Node3D" parent="Places"]
+
+[node name="Thomas" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 1.5, 0.05, -2.75)
+
+[node name="Osric" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 1, 0.05, 0.45)
+
+[node name="Ranulf" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 3, 0.05, -2.75)
+
+[node name="Godric" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -3, 0.05, -2.75)
+
+[node name="Hugh" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -1.5, 0.05, -2.75)
+
+[node name="Edwin" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -1.6, 0.05, -0.15)
+
+[node name="Anselm" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3.2, 0.05, -0.15)
+
+[node name="Matins" type="Node3D" parent="Places"]
+
+[node name="Thomas" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 12, 0.05, -34.1)
+
+[node name="Osric" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -29.9)
+
+[node name="Ranulf" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 10, 0.05, -34.1)
+
+[node name="Godric" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 16, 0.05, -34.1)
+
+[node name="Hugh" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 14, 0.05, -34.1)
+
+[node name="Edwin" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 12, 0.05, -29.9)
+
+[node name="Anselm" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 14, 0.05, -29.9)
+
+[node name="Stranger" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 16, 0.05, -29.9)
+
+[node name="Brothers" type="Node3D" parent="."]
+
+[node name="Thomas" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Thomas"]
+build = 1
+
+[node name="Osric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Osric"]
+build = 2
+
+[node name="Ranulf" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Ranulf"]
+build = 0
+
+[node name="Godric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Godric"]
+build = 3
+
+[node name="Hugh" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Hugh"]
+build = 4
+
+[node name="Edwin" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Edwin"]
+build = 5
+
+[node name="Anselm" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Figure" parent="Brothers/Anselm"]
+build = 6
+
+[node name="Walter" parent="Brothers" instance=ExtResource("brother")]
+
+[node name="Figure" parent="Brothers/Walter"]
+build = 2
+tunic = true
+
+[node name="Stranger" type="Node3D" parent="Brothers" node_paths=PackedStringArray("places")]
+script = ExtResource("brother_gd")
+places = NodePath("../../Places")
+editor_description = "The hooded stranger in the dead brother's place; drugged, the dead brother himself."
+
+[node name="Body" type="StaticBody3D" parent="Brothers/Stranger"]
+
+[node name="Shape" type="CollisionShape3D" parent="Brothers/Stranger/Body"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("Shape_stranger")
+
+[node name="Look" type="Node3D" parent="Brothers/Stranger"]
+script = ExtResource("dual_gd")
+
+[node name="Real" type="Node3D" parent="Brothers/Stranger/Look"]
+script = ExtResource("figure_gd")
+hood_up = true
+
+[node name="Drugged" type="Node3D" parent="Brothers/Stranger/Look"]
+script = ExtResource("figure_gd")
+face_color = Color(0.56, 0.58, 0.58, 1)
+
+[node name="Marks" type="Node3D" parent="."]
+editor_description = "Where the night puts the porter and others."
+
+[node name="PorterSeat" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
+
+[node name="Choir" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 13, 0.05, -32)
+
+[node name="CryptFoot" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 24.5, -4, -33.8)
+
+[node name="RescuePorter" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 28, 0.05, 2.4)
+
+[node name="RescueThomas" type="Marker3D" parent="Marks"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 28, 0.05, 0.9)
+
+[node name="WalterRoom" type="Marker3D" parent="Marks"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -30, 0.05, -20)
+
+[node name="DawnCell" type="Marker3D" parent="Marks"]
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -36.5, 0.05, -6.5)
+
+[node name="matins" type="Marker3D" parent="Marks" groups=["bell_spawn"]]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 6, 0.05, -32)
+editor_description = "Where a restart from the Matins bell puts you."
+
+[node name="KeysOnHook" type="MeshInstance3D" parent="Marks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -35, 1.4, -4.5)
+mesh = SubResource("Mesh_keys")
+
+[node name="Duties" type="Node3D" parent="."]
+
+[node name="Bread" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.8, -1.3)
+script = ExtResource("duty_gd")
+size = Vector3(0.3, 0.15, 0.25)
+
+[node name="Mesh" type="MeshInstance3D" parent="Duties/Bread"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
+mesh = SubResource("Mesh_bread")
+
+[node name="BarGate" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
+script = ExtResource("duty_gd")
+size = Vector3(1.0, 2.4, 3.0)
+
+[node name="Grate" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
+script = ExtResource("duty_gd")
+size = Vector3(1.0, 2.4, 3.0)
+
+[node name="Ledger" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -33.2, 0.85, -10.9)
+script = ExtResource("duty_gd")
+size = Vector3(0.45, 0.25, 0.55)
+
+[node name="BellRope" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -24, 0.05, -32)
+script = ExtResource("duty_gd")
+size = Vector3(0.6, 2.2, 0.6)
+
+[node name="KeysMoved" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38, 0.5, -11.1)
+script = ExtResource("duty_gd")
+size = Vector3(0.3, 0.2, 0.3)
+
+[node name="Mesh" type="MeshInstance3D" parent="Duties/KeysMoved"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("Mesh_keys")
+
+[node name="RoundStops" type="Node3D" parent="Duties"]
+
+[node name="StoresDoor" type="Area3D" parent="Duties/RoundStops"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -11.2, 0.05, -6)
+script = ExtResource("duty_gd")
+size = Vector3(0.5, 2.1, 1.1)
+metadata/hint = "(The round. First the stores door, off the west walk of the cloister.)"
+metadata/line = "(The stores door is locked, as it should be.)"
+
+[node name="ChapterDoor" type="Area3D" parent="Duties/RoundStops"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.2, 0.05, -18)
+script = ExtResource("duty_gd")
+size = Vector3(0.5, 2.1, 1.1)
+metadata/hint = "(Next, the chapter house door, off the east walk.)"
+metadata/line = "(The chapter house door is shut.)"
+
+[node name="SanctuaryLamp" type="Area3D" parent="Duties/RoundStops"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 26.6, 0.9, -33)
+script = ExtResource("duty_gd")
+size = Vector3(0.4, 0.4, 0.4)
+metadata/hint = "(Last, the sanctuary lamp by the altar.)"
+metadata/line = "(The sanctuary lamp is burning.)"
+
+[node name="Stalk" type="Node3D" parent="."]
+editor_description = "Where the demon may stand on the round, in order of preference."
+
+[node name="WalkEnd" type="Node3D" parent="Stalk"]
+
+[node name="P0" type="Marker3D" parent="Stalk/WalkEnd"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -10, 0.05, -26.5)
+
+[node name="P1" type="Marker3D" parent="Stalk/WalkEnd"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -6)
+
+[node name="Doorways" type="Node3D" parent="Stalk"]
+
+[node name="P0" type="Marker3D" parent="Stalk/Doorways"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -27.3)
+
+[node name="P1" type="Marker3D" parent="Stalk/Doorways"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.2, 0.05, -26)
+
+[node name="P2" type="Marker3D" parent="Stalk/Doorways"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -2, 0.05, -4.7)
+
+[node name="Blockers" type="Node3D" parent="Stalk"]
+editor_description = "In the chase: running near a marker puts the demon at its Stand, ahead of you."
+
+[node name="NaveWest" type="Marker3D" parent="Stalk/Blockers"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -8, 0.05, -31)
+
+[node name="Stand" type="Marker3D" parent="Stalk/Blockers/NaveWest"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -8, 0, -0.5)
+
+[node name="Slype" type="Marker3D" parent="Stalk/Blockers"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 8.5, 0.05, -25.5)
+
+[node name="Stand" type="Marker3D" parent="Stalk/Blockers/Slype"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 7.5, 0, -0.5)
+
+[node name="CryptLight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 26.8, -4, -30.6)
+visible = false
+
+[node name="Lamp" type="MeshInstance3D" parent="CryptLight"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("Mesh_cryptlamp")
+
+[node name="Light" type="OmniLight3D" parent="CryptLight"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+light_color = Color(0.878, 0.643, 0.345, 1)
+light_energy = 1.4
+shadow_enabled = true
+omni_range = 7.0
+
+[node name="SupperCandle0" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3, 0.8, -1.5)
+
+[node name="SupperCandle1" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 3, 0.8, -1.5)
+
+[node name="ChoirCandle0" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11, 1.15, -34.9)
+
+[node name="ChoirCandle1" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 15, 1.15, -34.9)
+
+[node name="ChoirCandle2" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11, 1.15, -29.1)
+
+[node name="ChoirCandle3" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 15, 1.15, -29.1)
+
+[node name="Hunter" parent="." instance=ExtResource("hunter")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 26, -4, -30.2)
+dormant = true
+
+[node name="Stalker" parent="." instance=ExtResource("stalker")]
+scripted = true
+rearm = false
+
+[node name="Director" type="Node" parent="."]
+script = ExtResource("director_gd")
+night = 3
+
+[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "bread", "osric", "thomas")]
+script = ExtResource("supper_gd")
+phase = 0
+bell = &"start"
+seat = NodePath("../../Marks/PorterSeat")
+bread = NodePath("../../Duties/Bread")
+osric = NodePath("../../Brothers/Osric")
+thomas = NodePath("../../Brothers/Thomas")
+
+[node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("bar_duty", "gate_bar", "ledger")]
+script = ExtResource("gate_gd")
+phase = 1
+bar_duty = NodePath("../../Duties/BarGate")
+gate_bar = NodePath("../../Abbey/Navigation/OuterCourt/Props/GateBar")
+ledger = NodePath("../../Duties/Ledger")
+
+[node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("grate", "walter", "walter_room")]
+script = ExtResource("knocks_gd")
+phase = 2
+grate = NodePath("../../Duties/Grate")
+walter = NodePath("../../Brothers/Walter")
+walter_room = NodePath("../../Marks/WalterRoom")
+
+[node name="Bell" type="Node" parent="Director" node_paths=PackedStringArray("rope", "bell_at")]
+script = ExtResource("bell_gd")
+phase = 3
+rope = NodePath("../../Duties/BellRope")
+bell_at = NodePath("../../Abbey/Navigation/Church/Props/Bell")
+
+[node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "dead_brother")]
+script = ExtResource("choir_gd")
+phase = 3
+bell = &"matins"
+choir = NodePath("../../Marks/Choir")
+dead_brother = NodePath("../../Brothers/Stranger/Look")
+
+[node name="Round" type="Node" parent="Director" node_paths=PackedStringArray("stops", "stalker", "walk_end", "doorways")]
+script = ExtResource("round_gd")
+phase = 4
+stops = NodePath("../../Duties/RoundStops")
+stalker = NodePath("../../Stalker")
+walk_end = NodePath("../../Stalk/WalkEnd")
+doorways = NodePath("../../Stalk/Doorways")
+
+[node name="Crypt" type="Node" parent="Director" node_paths=PackedStringArray("light", "hunter", "crypt")]
+script = ExtResource("crypt_gd")
+phase = 4
+light = NodePath("../../CryptLight")
+hunter = NodePath("../../Hunter")
+crypt = NodePath("../../Marks/CryptFoot")
+
+[node name="Chase" type="Node" parent="Director" node_paths=PackedStringArray("hunter", "stalker", "oven", "blockers", "thomas", "rescue_porter", "rescue_thomas")]
+script = ExtResource("chase_gd")
+phase = 4
+hunter = NodePath("../../Hunter")
+stalker = NodePath("../../Stalker")
+oven = NodePath("../../Abbey/Navigation/SouthRange/HidingSpots/Oven")
+blockers = NodePath("../../Stalk/Blockers")
+thomas = NodePath("../../Brothers/Thomas")
+rescue_porter = NodePath("../../Marks/RescuePorter")
+rescue_thomas = NodePath("../../Marks/RescueThomas")
+
+[node name="Dawn" type="Node" parent="Director" node_paths=PackedStringArray("cell", "keys_on_hook", "keys_moved")]
+script = ExtResource("dawn_gd")
+phase = 5
+cell = NodePath("../../Marks/DawnCell")
+keys_on_hook = NodePath("../../Marks/KeysOnHook")
+keys_moved = NodePath("../../Duties/KeysMoved")

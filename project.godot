@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameState="*res://game/autoload/game_state.gd"
 TimeDirector="*res://game/ragdoll/time_director.gd"
+Talk="*res://game/dialogue/talk.gd"
 
 [display]
 

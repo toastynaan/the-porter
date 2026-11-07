@@ -24,6 +24,7 @@ func _run() -> void:
 	GameState.captures = 0
 	GameState.snap_dose(10.0)
 	_main = load("res://game/render/main.tscn").instantiate()
+	_main.level = load("res://game/encounters/hunt_demo.tscn")
 	add_child(_main)
 	_flow = _main.get_node(^"CaptureFlow")
 	_quiet_demon()
