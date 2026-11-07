@@ -4,9 +4,13 @@ extends Node
 ##   H        hungry or fed (shorter breath, slower sprint recovery, tremor)
 ##   K        the nearest awake hunter starts chasing you
 ##   J        the demon appears now, somewhere you aren't looking
+##   G        out into the street by the gate, and back in again
 
 const STEP := 25.0
 const EASE_TIME := 2.0
+## Just outside the gate in the lane, and just inside it in the outer court.
+const STREET := Vector3(-43.4, 0.05, 2.0)
+const COURT := Vector3(-36.0, 0.05, -2.0)
 
 
 func _ready() -> void:
@@ -31,6 +35,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_J:
 			for stalker: Stalker in get_tree().get_nodes_in_group(&"stalkers"):
 				stalker.appear_now()
+		KEY_G:
+			var player := get_tree().get_first_node_in_group(&"player") as Player
+			if player:
+				var outside := player.global_position.x < -40.4
+				player.place(COURT if outside else STREET, deg_to_rad(-90.0 if outside else 0.0))
 
 
 func _chase_me() -> void:

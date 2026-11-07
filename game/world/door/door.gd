@@ -53,6 +53,12 @@ const LEAF_THICKNESS := 0.08
 	set(value):
 		material = value
 		_build()
+## An iron grille you can see through (the street gate) instead of a solid
+## leaf. It blocks and locks the same.
+@export var grille := false:
+	set(value):
+		grille = value
+		_build()
 
 var is_open := false
 
@@ -103,7 +109,10 @@ func _build() -> void:
 	var box := BoxMesh.new()
 	box.size = Vector3(size.x - 0.02, size.y - 0.02, LEAF_THICKNESS)
 	box.material = material if material else preload("res://game/world/materials/oak.tres")
-	_mesh.mesh = box
+	if grille:
+		_mesh.mesh = _grille_mesh(box.size)
+	else:
+		_mesh.mesh = box
 	var bs := BoxShape3D.new()
 	bs.size = box.size
 	_shape.shape = bs
@@ -111,6 +120,25 @@ func _build() -> void:
 	hole.size = Vector3(size.x, size.y, 0.8)
 	_opening.shape = hole
 	_opening.position = Vector3(0, size.y * 0.5, 0)
+
+
+## Vertical bars with spiked tops between three rails, filling `leaf`.
+func _grille_mesh(leaf: Vector3) -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var bar := BoxMesh.new()
+	var bars := maxi(2, floori(leaf.x / 0.14))
+	for i in bars + 1:
+		var x := -leaf.x * 0.5 + leaf.x * i / bars
+		bar.size = Vector3(0.035, leaf.y, 0.035)
+		st.append_from(bar, 0, Transform3D(Basis.IDENTITY, Vector3(x, 0, 0)))
+		bar.size = Vector3(0.05, 0.12, 0.05)
+		st.append_from(bar, 0, Transform3D(Basis(Vector3.FORWARD, PI * 0.25), Vector3(x, leaf.y * 0.5 + 0.06, 0)))
+	for y in [-0.42, 0.0, 0.42]:
+		bar.size = Vector3(leaf.x, 0.05, 0.045)
+		st.append_from(bar, 0, Transform3D(Basis.IDENTITY, Vector3(0, leaf.y * y, 0)))
+	st.set_material(preload("res://game/world/materials/iron.tres"))
+	return st.commit()
 
 
 func interact(_by: Node) -> void:
