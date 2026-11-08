@@ -48,7 +48,7 @@ const DOSE_EASE_TIME := 5.0
 const START_KEYS: Array[StringName] = [&"gate", &"guesthouse", &"charnel"]
 ## Flags that last one night only; begin_chapter() clears them.
 const NIGHT_FLAGS: Array[StringName] = [&"night_started", &"gate_taken", &"gate_barred", &"matins_late",
-	&"hungry", &"woke_in_infirmary"]
+	&"hungry", &"woke_in_infirmary", &"jump_scare"]
 
 ## Where the bell save lives (tests point it elsewhere). The quiet save sits
 ## beside it (quiet_path()).
@@ -165,6 +165,12 @@ func add_dose(amount: float, seconds := DOSE_EASE_TIME) -> void:
 	tween.tween_method(step, 0.0, amount, maxf(seconds, 0.01))
 
 
+## Takes in `amount` of Dose now: for sources that come a breath at a
+## time (the incense, frame by frame), which are already smooth.
+func breathe_in(amount: float) -> void:
+	_set_dose(_dose + amount)
+
+
 ## Sets Dose at once. Only for loading behind a fade, tests and tools.
 func snap_dose(value: float) -> void:
 	_set_dose(value)
@@ -210,6 +216,22 @@ func has_flag(flag: StringName) -> bool:
 ## A flag for tonight: n<night>_<name> (night 3's bread is n3_ate_bread).
 func tonight(name_: String) -> StringName:
 	return StringName("n%d_%s" % [night, name_])
+
+
+## What `who` thinks of the porter, -100 to 100 (People.START_TRUST to begin).
+func trust_of(who: StringName) -> int:
+	return int(trust.get(who, People.START_TRUST.get(who, 0)))
+
+
+func change_trust(who: StringName, amount: int) -> void:
+	trust[who] = clampi(trust_of(who) + amount, -100, 100)
+
+
+## Eats clean food: hunger ends for the night, no Dose (docs/mechanics.md,
+## "The drug, and food").
+func eat_clean() -> void:
+	set_flag(&"hungry", false)
+	set_flag(tonight("ate_clean"))
 
 
 ## Writes a guest into the ledger.

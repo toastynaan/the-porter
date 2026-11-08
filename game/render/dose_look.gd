@@ -14,6 +14,12 @@ extends Resource
 ## Source pixels.
 @export var blur: Curve
 @export var levels := 48.0
+## The walls breathe (Dose 75+): how far the whole image swells and
+## settles, as a fraction of the screen.
+@export var breathe: Curve
+## Reverb on everything he hears (Look and Feel, "Drugged audio": reverb
+## grows from Dose 25), wet 0..1.
+@export var reverb: Curve
 ## Volumetric fog albedo, sober (Moonlight #6E7F96) and fully drugged; the fog
 ## moves between them with palette_shift.
 @export var fog_sober := Color("6e7f96")

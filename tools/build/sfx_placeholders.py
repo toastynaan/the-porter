@@ -33,6 +33,12 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_cut.wav                  one quick cut
   sfx_body_fall.wav            a body falling on stone
   sfx_lantern_drop.wav         a lantern dropped, rolling on the flags
+  sfx_whisper_<n>.wav          whispers just below hearing (3)
+  sfx_name.wav                 your name, "Alric", called from somewhere
+  sfx_sting.wav                a jump scare's sting
+  sfx_body_drop.wav            a body dropping from above on a rope
+  sfx_cat_hiss.wav             the cat, hissing as it runs
+  sfx_bite.wav                 a bite of an apple
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -441,6 +447,59 @@ def lantern_drop(rng):
     return mix(clank, roll)
 
 
+def whisper(rng, seconds=1.6):
+    """Breathy noise shaped into syllables."""
+    n = int(seconds * RATE)
+    base = bandpass(noise(n, rng), rng.uniform(1800, 2600), 1.8)
+    out = []
+    syl = rng.uniform(5.0, 7.5)
+    for i, s_ in enumerate(base):
+        t = i / RATE
+        a = max(0.0, math.sin(math.pi * t * syl)) ** 2 * min(1.0, t / 0.1) * max(0.0, 1.0 - max(0.0, t - seconds + 0.3) / 0.3)
+        out.append(s_ * a)
+    return out
+
+
+def name_call(rng):
+    """Two syllables, "Al-ric", in a hoarse voice, from far off."""
+    out = []
+    for k, (f0, f1, dur, form) in enumerate([(150, 140, 0.28, 650), (165, 120, 0.32, 1900)]):
+        n = int(dur * RATE)
+        phase, sig = 0.0, []
+        for i in range(n):
+            t = i / n
+            f = f0 + (f1 - f0) * t
+            phase += f / RATE
+            sig.append((2.0 * (phase % 1.0) - 1.0) * min(1.0, t * 12) * (1.0 - t) ** 0.4)
+        voiced = mix(bandpass(sig, form, 3.0), gain(bandpass(sig, 2600, 4.0), 0.4))
+        out = mix(out, pad(voiced, 0.33 * k)) if out else voiced
+    hiss = [a * b for a, b in zip(highpass(noise(len(out), rng), 3000), env(len(out), 0.05, 0.2))]
+    return lowpass(mix(out, gain(hiss, 0.2)), 3000)
+
+
+def sting(rng):
+    n = int(1.2 * RATE)
+    hit = [a * b for a, b in zip(noise(n, rng), env(n, 0.002, 0.08))]
+    tones = mix(*[[math.sin(2 * math.pi * f * i / RATE) * math.exp(-i / (0.6 * RATE)) for i in range(n)] for f in (311, 329, 466)])
+    return mix(gain(lowpass(hit, 1500), 0.8), gain(tones, 0.5))
+
+
+def body_drop(rng):
+    creak_ = creak(rng, 0.4)
+    return mix(gain(creak_, 0.5), pad(thud(rng), 0.32), pad(gain(thud(rng), 0.5), 0.45))
+
+
+def cat_hiss(rng):
+    n = int(0.7 * RATE)
+    return [a * b for a, b in zip(bandpass(noise(n, rng), 4200, 1.0), env(n, 0.03, 0.25))]
+
+
+def bite(rng):
+    n = int(0.18 * RATE)
+    crunch = [a * b for a, b in zip(highpass(noise(n, rng), 1500), env(n, 0.002, 0.03))]
+    return mix(crunch, pad(gain(crunch, 0.6), 0.06))
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -483,6 +542,13 @@ def main():
     write("sfx_cut.wav", cut(run), peak=0.8)
     write("sfx_body_fall.wav", body_fall(run), peak=0.8)
     write("sfx_lantern_drop.wav", lantern_drop(run), peak=0.7)
+    for k in range(3):
+        write(f"sfx_whisper_{k}.wav", whisper(run), peak=0.4)
+    write("sfx_name.wav", name_call(run), peak=0.5)
+    write("sfx_sting.wav", sting(run), peak=0.9)
+    write("sfx_body_drop.wav", body_drop(run), peak=0.9)
+    write("sfx_cat_hiss.wav", cat_hiss(run), peak=0.6)
+    write("sfx_bite.wav", bite(run), peak=0.6)
 
 
 if __name__ == "__main__":

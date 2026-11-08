@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/nights/night_base.tscn" id="base"]
+[ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
+[ext_resource type="Script" path="res://game/night/choir_beat.gd" id="choir_gd"]
+
+[node name="MatinsNight4" instance=ExtResource("base")]
+editor_description = "For tests: night 4's Matins on its own, where the incense can be partly avoided."
+
+[node name="Director" type="Node" parent="."]
+script = ExtResource("director_gd")
+night = 4
+
+[node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "stall", "west_door")]
+script = ExtResource("choir_gd")
+phase = 3
+choir = NodePath("../../Marks/Choir")
+office_time = 0.5
+stall = NodePath("../../Marks/PorterStall")
+west_door = NodePath("../../Marks/ChoirWestDoor")

@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="Mat_gap"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="Mesh_body"]
+material = SubResource("Mat_gap")
+radius = 0.17
+height = 1.7
+radial_segments = 8
+rings = 2
+
+[sub_resource type="CapsuleMesh" id="Mesh_limb"]
+material = SubResource("Mat_gap")
+radius = 0.045
+height = 1.25
+radial_segments = 6
+rings = 1
+
+[sub_resource type="CapsuleMesh" id="Mesh_leg"]
+material = SubResource("Mat_gap")
+radius = 0.06
+height = 1.1
+radial_segments = 6
+rings = 1
+
+[sub_resource type="SphereMesh" id="Mesh_head"]
+material = SubResource("Mat_gap")
+radius = 0.1
+height = 0.3
+radial_segments = 8
+rings = 4
+
+[node name="Saint" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the Hungry Saint (Look and Feel, The Hungry Saint): about 2.6 m, too thin, bent forward, no horns. It is lit by nothing: unshaded black, a gap in the light. It looks the same drugged or sober. Feet at the origin, facing -Z. Face is where a look would meet it."
+
+[node name="Legs" type="Node3D" parent="."]
+
+[node name="LegL" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09, 0.55, 0)
+mesh = SubResource("Mesh_leg")
+
+[node name="LegR" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.55, 0)
+mesh = SubResource("Mesh_leg")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, 0, 1.8, -0.25)
+mesh = SubResource("Mesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 2.62, -0.6)
+mesh = SubResource("Mesh_head")
+
+[node name="ArmL" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.996, 0.087, 0, -0.087, 0.996, 0, 0, 0, 1, -0.24, 1.75, -0.35)
+mesh = SubResource("Mesh_limb")
+
+[node name="ArmR" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.996, -0.087, 0, 0.087, 0.996, 0, 0, 0, 1, 0.24, 1.75, -0.35)
+mesh = SubResource("Mesh_limb")
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.68)

@@ -47,6 +47,8 @@ func _ready() -> void:
 	_build()
 	if starable and not Engine.is_editor_hint():
 		add_to_group(&"demon")
+	if not Engine.is_editor_hint():
+		add_to_group(&"uncanny")
 
 
 func _process(_delta: float) -> void:

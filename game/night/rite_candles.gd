@@ -8,6 +8,8 @@ extends Node3D
 
 func _ready() -> void:
 	add_to_group(&"rite_candles")
+	for c in get_children():
+		c.add_to_group(&"rite_candle")
 	GameState.fed.connect(func(_id: StringName) -> void: refresh())
 	GameState.loaded.connect(refresh)
 	refresh()

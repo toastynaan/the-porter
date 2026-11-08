@@ -52,9 +52,12 @@ Everything in the world is a placeholder: boxes, cylinders and the greybox figur
 | `prop_tree_apple` | A bare apple tree, about 4 m; only the trunk is solid | Gardens, the orchard (12) |
 | `prop_tree_yew` | An old churchyard yew, about 6 m; only the trunk is solid | Graveyard (2) |
 | `prop_garden_bed` | A dug vegetable bed, 1.2 × 4 m, walked over | Gardens, the kitchen beds (12) |
+| `prop_carved_saint` | A carved saint on a plinth, 1.8 m, stone; its head turns at Dose 50+ (`Carving`) | Cloister (4), nave, choir |
 | `prop_blood_pool`, `prop_blood_spray`, `prop_drag_marks`, `prop_blood_print` | Blood (old blood, #5A1A14), as decals: a pool on the floor, a spray up a wall, drag marks, a boot print | Wherever a death leaves them (`BloodMarks`, `docs/death.md`) |
 
 `candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, already one scene each. The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
+
+Windfall apples (`Windfalls` in `night_base.tscn`) are small spheres under a `Pickup`; the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`).
 
 **Still built in place** (part of a building, or one of a kind): the kitchen and warming-room hearths, the latrine seat, the plank closet over the hidden stair, the crypt rails, the water in the mill race and fishpond, the bends at each end of the lane, and the skyline.
 
@@ -93,6 +96,8 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_roger` | Roger the bailiff (not in the character table yet) | None |
 | `chr_pilgrim` | A pilgrim | Staff and shoulder bag |
 | `chr_carter`, `chr_lane_woman` | Passers-by in the lane | The woman's basket |
+| `chr_cat` | The abbey cat, black, 0.45 m, eyes that catch the light (worn by `game/npc/cat.tscn`) | None |
+| `chr_saint` | The Hungry Saint: about 2.6 m, too thin, bent forward, no horns, unshaded black | None |
 | `chr_body` | A body: the ragdoll rig (`game/ragdoll`) in the victim's colours, standing until it falls (`Corpse`) | None |
 
 `tools/review.sh cast_brothers res://tools/godot/cast_brothers.tscn` renders the brothers side by side through the lookdev stage; `cast_choir_and_lay` and `cast_town` do the rest.

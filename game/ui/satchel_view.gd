@@ -3,7 +3,8 @@ extends Control
 ## The porter's satchel, held up with `satchel` like the ledger
 ## (docs/mechanics.md, "Your hands"): what he carries, a line for each, in
 ## his hands rather than on a grid. Keys, evidence, clean food and the thing
-## he holds to throw. The night goes on while he looks.
+## he holds to throw. Hungry, `interact` eats the clean food he carries. The
+## night goes on while he looks.
 
 var showing := false
 
@@ -36,6 +37,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"satchel") and not get_tree().paused:
 		set_showing(not showing)
 		get_viewport().set_input_as_handled()
+	elif showing and event.is_action_pressed(&"interact") and eat_food():
+		refresh()
+		get_viewport().set_input_as_handled()
+
+
+## Eats the first clean food in the satchel, if he's hungry.
+func eat_food() -> bool:
+	if not GameState.is_hungry():
+		return false
+	for id in GameState.satchel:
+		if Items.kind(id) == &"food":
+			Pickup.eat(id, self)
+			return true
+	return false
 
 
 func set_showing(value: bool) -> void:
@@ -66,6 +81,8 @@ static func page_text() -> String:
 		text += "[b]%s.[/b] %s\n" % [Items.display_name(id), Items.line(id)]
 	if GameState.satchel.is_empty():
 		text += "[color=#%s]Nothing else.[/color]\n" % Manuscript.FADED_INK.to_html()
+	elif GameState.is_hungry() and GameState.satchel.any(func(i: StringName) -> bool: return Items.kind(i) == &"food"):
+		text += "\n[center][color=#%s][i]E: eat[/i][/color][/center]" % Manuscript.FADED_INK.to_html()
 	return text
 
 

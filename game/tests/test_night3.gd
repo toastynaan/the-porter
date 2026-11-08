@@ -110,8 +110,10 @@ func _run() -> void:
 	_check(_offered.has(PackedStringArray(["Eat the bread", "Palm the bread"])),
 		"warned on night 1, he may palm the bread")
 	_check(GameState.get_flag(&"n3_ate_bread") == true and GameState.get_flag(&"n3_took_remedy") == true,
-		"ate the bread and took Thomas's remedy")
-	_check(_said("(The bread tastes bitter.)") and _said("(Offers a remedy for your headaches.)"), "the doc's supper lines")
+		"ate the bread and took Ranulf's remedy")
+	_check(_said("(The bread tastes bitter.)") and Talk.history.any(func(h: Array) -> bool: return h[0] == "Ranulf")
+		and Talk.history.any(func(h: Array) -> bool: return h[0] == "Thomas" and String(h[1]).contains("Not his physic")),
+		"Ranulf offers the remedy, and Thomas warns him off it")
 
 	# No HUD: the way to Cole is lit, its doors open, from his seat.
 	await _pilot.until(func() -> bool: return _pilot.duty("RelieveCole").enabled, 5.0)

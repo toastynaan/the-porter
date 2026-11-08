@@ -29,6 +29,7 @@ static func show_way(from: Node, to: Vector3) -> Array[Node3D]:
 					door.set_open(true, true)
 				var side := signf((door.global_transform.affine_inverse() * to).z)
 				var lamp := LAMP.instantiate() as Node3D
+				lamp.add_to_group(&"wayfinding")
 				lamp.position = Vector3(0.0, LAMP_HEIGHT, side * LAMP_OUT)
 				door.add_child(lamp)
 				lamps.append(lamp)

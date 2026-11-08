@@ -24,6 +24,7 @@ var dead := false
 
 func _ready() -> void:
 	add_to_group(&"corpses")
+	add_to_group(&"uncanny")
 	collision_layer = 0
 	collision_mask = Layers.WORLD
 	var h := float(appearance.get("height", 1.0))

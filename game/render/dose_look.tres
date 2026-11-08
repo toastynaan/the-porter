@@ -27,6 +27,16 @@ _limits = [0.0, 1.0, 0.0, 100.0]
 _data = [Vector2(0, 0.35), 0.0, 0.003, 1, 1, Vector2(50, 0.5), 0.003, 0.0039999997, 1, 1, Vector2(100, 0.7), 0.0039999997, 0.0, 1, 1]
 point_count = 3
 
+[sub_resource type="Curve" id="Curve_breathe"]
+_limits = [0.0, 0.05, 0.0, 100.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 1, 1, Vector2(75, 0), 0.0, 0.00024, 1, 1, Vector2(100, 0.006), 0.00024, 0.0, 1, 1]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_reverb"]
+_limits = [0.0, 1.0, 0.0, 100.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 1, 1, Vector2(25, 0), 0.0, 0.0053333333, 1, 1, Vector2(100, 0.4), 0.0053333333, 0.0, 1, 1]
+point_count = 3
+
 [resource]
 script = ExtResource("1_ib5dn")
 grain = SubResource("Curve_ffjke")
@@ -34,3 +44,5 @@ vignette = SubResource("Curve_tre4d")
 palette_shift = SubResource("Curve_aobu0")
 edge_warp = SubResource("Curve_kueeq")
 blur = SubResource("Curve_5060t")
+breathe = SubResource("Curve_breathe")
+reverb = SubResource("Curve_reverb")

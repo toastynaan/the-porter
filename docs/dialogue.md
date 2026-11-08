@@ -61,6 +61,9 @@ Osric: (Placeholder: he calls after you.)
 | `[if flag]`, `[if not flag]`, `[if flag=value]` | The answer is offered only then (e.g. `[if n3_walter=admitted]`) |
 | `[set flag]`, `[set flag=value]` | Sets a flag when the answer is picked or the point is reached |
 | `[suspicion 5]` | Raises Suspicion |
+| `[item mab_bread]` | Puts something in his satchel (`game/items/items.gd`) |
+| `[note bread_warning]` | Writes a clue in his notes (`game/story/clues.gd`) |
+| `[trust mab 5]` | Changes what someone thinks of him |
 
 A point whose answers have all dropped off ends the talk after its lines. `test_dialogue` reads every conversation under `game/dialogue/` and fails on a mistake: an unknown point, a fourth answer, an answer with no `->`, a tag it doesn't know.
 

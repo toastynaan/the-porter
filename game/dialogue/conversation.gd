@@ -21,6 +21,9 @@ extends Resource
 ##   [if flag] [if not flag] [if flag=value]   offered only then (answers)
 ##   [set flag] [set flag=value]               sets a GameState flag
 ##   [suspicion 5]                             raises Suspicion
+##   [item mab_bread]                          puts something in his satchel
+##   [note thomas_saw_simon]                   writes a clue in his notes
+##   [trust mab 5]                             changes what someone thinks of him
 ## Every talk sets the flag talked_<id>.
 
 const MAX_ANSWERS := 3
@@ -129,6 +132,13 @@ static func apply(tags: PackedStringArray) -> void:
 				GameState.set_flag(StringName(parts[0]), value)
 			"suspicion":
 				GameState.raise_suspicion(int(words[1]))
+			"item":
+				if not GameState.satchel.has(StringName(words[1])):
+					GameState.satchel.append(StringName(words[1]))
+			"note":
+				GameState.note(StringName(words[1]))
+			"trust":
+				GameState.change_trust(StringName(words[1]), int(words[2]))
 
 
 func _parse() -> void:
@@ -219,7 +229,10 @@ func _split_tags(s: String, n: int) -> Array:
 		var ok := words.size() >= 2 and (
 			(words[0] == "if" and (words.size() == 2 or (words.size() == 3 and words[1] == "not")))
 			or (words[0] == "set" and words.size() == 2)
-			or (words[0] == "suspicion" and words.size() == 2 and words[1].is_valid_int()))
+			or (words[0] == "suspicion" and words.size() == 2 and words[1].is_valid_int())
+			or (words[0] == "item" and words.size() == 2 and Items.ALL.has(StringName(words[1])))
+			or (words[0] == "note" and words.size() == 2 and Clues.is_clue(StringName(words[1])))
+			or (words[0] == "trust" and words.size() == 3 and words[2].is_valid_int()))
 		if not ok:
 			_errors.append("line %d: unknown tag [%s]" % [n, tag])
 		else:

@@ -53,6 +53,9 @@ func duties() -> Array:
 
 
 func run() -> void:
+	# Replaced before it began (a reload in the same frame).
+	if not is_inside_tree():
+		return
 	GameState.night = night
 	if not GameState.has_flag(&"night_started"):
 		GameState.set_flag(&"night_started")

@@ -64,6 +64,9 @@ func is_dead() -> bool:
 
 
 func _on_phase(phase: GameState.Phase) -> void:
+	# A level on its way out still hears the new night's phases.
+	if not is_inside_tree():
+		return
 	var marker: Node3D = null
 	if places:
 		var group := places.get_node_or_null(NodePath(GameState.Phase.keys()[phase].capitalize()))

@@ -234,3 +234,8 @@ Added during the run:
 - **M9.** The hidden bodies by night: the well from night 1, the race culvert from 2, the kitchen beds from 3, the bell tower loft from 4, the chapter house flags from 5. The well, loft and flag bodies are described, not shown.
 - **M9.** The choir brothers' names: Wulfric, Aldo and Piers, and Bede, who warns about the bread and hangs in the bell tower.
 - **M9.** The book page's words (`docs/death.md`), and the 29 clues the porter can write (`game/story/clues.gd`), all DRAFT.
+- **M10.** Which hallucinations each tier plays (`docs/drug.md`): whispers, steps behind and the name at 25+; a shape at the edge and a face in the grain at 50+; hooves that stop short and a death that never happened at 75+. The fake deaths are these hallucinations, at random times.
+- **M10.** Six carved saints in the cloister, nave and choir, for "carvings that turn their heads".
+- **M10.** The jump scares are a body dropping on a rope and a face at the grille.
+- **M10.** The candle that lights itself stands by the crypt's ring of rite candles, so it can't be mistaken for the count.
+- **M10.** Mab's bread is from a baker in Fenchurch Street.

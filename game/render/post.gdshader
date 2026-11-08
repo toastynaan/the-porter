@@ -29,6 +29,8 @@ uniform float blur : hint_range(0.0, 4.0) = 0.0;
 // 0..1 from staring at the demon (M3); adds its own edge warp.
 uniform float stare : hint_range(0.0, 1.0) = 0.0;
 uniform float stare_warp : hint_range(0.0, 0.05) = 0.012;
+// The walls breathe (Dose 75+): the whole image swells and settles slowly.
+uniform float breathe : hint_range(0.0, 0.05) = 0.0;
 
 // Drugged shift targets (Look and Feel, "Drugged shift").
 uniform vec3 bruise : source_color = vec3(0.165, 0.086, 0.133);	// #2A1622, shadows
@@ -71,6 +73,13 @@ void fragment() {
 	vec2 uv = (px + 0.5) / src_size;
 	vec2 c = uv - 0.5;
 	float r = length(c);
+
+	// The walls breathe: the image swells from the centre and settles.
+	if (breathe > 0.0) {
+		uv = 0.5 + c * (1.0 - breathe * (0.5 + 0.5 * sin(TIME * 0.9)));
+		c = uv - 0.5;
+		r = length(c);
+	}
 
 	// Edge warp: the edges breathe in and out, out of phase around the frame.
 	float warp = edge_warp + stare * stare_warp;

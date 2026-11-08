@@ -24,6 +24,8 @@ const REFUSE_SUSPICION := 5
 @export var bread: Duty
 @export var osric: Brother
 @export var thomas: Brother
+## Who offers the remedy (none: no remedy tonight).
+@export var ranulf: Brother
 ## Seconds Osric watches your plate after serving before he turns away.
 @export var watch_time := 5.0
 @export var warned_flag := &"bread_warned"
@@ -54,27 +56,39 @@ func run() -> void:
 		pick = await Talk.choose(PackedStringArray(["Eat the bread", "Palm the bread"]))
 	bread.visible = false
 	if pick == 0:
-		GameState.set_flag(&"n3_ate_bread")
+		GameState.set_flag(GameState.tonight("ate_bread"))
 		GameState.add_dose(BREAD_DOSE, BREAD_TIME)
 		await say("", "(The bread tastes bitter.)")
 	else:
-		GameState.set_flag(&"n3_palmed_bread")
+		GameState.set_flag(GameState.tonight("palmed_bread"))
 		GameState.set_flag(&"hungry")
 		if _osric_watching:
 			GameState.raise_suspicion(SEEN_SUSPICION)
-			GameState.set_flag(&"n3_osric_saw")
-			await say("Osric", "(Notices your empty plate.)")
-	thomas.face(p.global_position)
-	await say("Thomas", "(Offers a remedy for your headaches.)")
-	pick = await Talk.choose(PackedStringArray(["Take the remedy", "Refuse it"]))
-	if pick == 0:
-		GameState.set_flag(&"n3_took_remedy")
-		GameState.add_dose(REMEDY_DOSE, REMEDY_TIME)
-	else:
-		GameState.set_flag(&"n3_refused_remedy")
-		GameState.raise_suspicion(REFUSE_SUSPICION)
+			GameState.set_flag(GameState.tonight("osric_saw"))
+			await say("Osric", "Not hungry, brother? There's no shame in a good appetite.")
+	if ranulf:
+		await _remedy(p)
 	await say("", "(Supper ends. Go and take the gate from Cole.)")
 	p.use_input_override = false
+
+
+## Ranulf offers his remedy; Thomas, beside him, warns him off it.
+func _remedy(p: Player) -> void:
+	ranulf.face(p.global_position)
+	await say("Ranulf", "You keep rubbing your eyes, brother. The new ones always get the headaches. A little of this in your ale, and you'll sleep.")
+	thomas.face(p.global_position)
+	await say("Thomas", "(Quietly, so only you hear.) Not his physic. Not that one. Trust me.")
+	var pick := await Talk.choose(PackedStringArray(["Take Brother Ranulf's remedy", "Refuse it"]))
+	if pick == 0:
+		GameState.set_flag(GameState.tonight("took_remedy"))
+		GameState.add_dose(REMEDY_DOSE, REMEDY_TIME)
+		await say("", "(It tastes of honey, and under the honey, something green.)")
+	else:
+		GameState.set_flag(GameState.tonight("refused_remedy"))
+		GameState.raise_suspicion(REFUSE_SUSPICION)
+		GameState.change_trust(&"thomas", 5)
+		await say("Ranulf", "As you like.")
+		await say("Thomas", "(Softly.) Good.")
 
 
 func _osric_turns() -> void:

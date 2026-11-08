@@ -5,6 +5,9 @@ extends Node3D
 ## Covering it with the cloak drops the reach to about 1 m and hides the
 ## flame. It gutters in a draught (an open door nearby), at high Dose and
 ## while he stares at the demon: the flame flutters and the light dips.
+## From Dose 25 the flame bends toward things (design doc, "Effect tiers"):
+## the nearest thing that shouldn't be there (group "uncanny": the demon, a
+## body, the dead in the choir) within BEND_RANGE.
 
 const REACH := 5.0
 const COVERED_REACH := 1.0
@@ -12,6 +15,11 @@ const COVERED_REACH := 1.0
 const DRAUGHT_RANGE := 2.5
 ## Dose where the flame starts guttering on its own, and where it is worst.
 const GUTTER_DOSE := Vector2(75.0, 100.0)
+## Dose where the flame starts bending toward things, and where it bends most;
+## how far it looks, m; how far it leans, radians.
+const BEND_DOSE := Vector2(25.0, 60.0)
+const BEND_RANGE := 9.0
+const BEND_MAX := 0.6
 
 ## Light energy before the flicker.
 @export var energy := 1.8
@@ -30,6 +38,8 @@ var covered := false:
 var gutter := 0.0
 ## 0..1 from the stare meter.
 var stare := 0.0
+## How far the flame leans now (x and z, radians).
+var bent := Vector3.ZERO
 
 var _noise := FastNoiseLite.new()
 var _t := 0.0
@@ -57,6 +67,28 @@ func _process(delta: float) -> void:
 	var flutter := absf(_noise.get_noise_1d(_t * 9.0 + 50.0)) * 2.0 * gutter
 	light.light_energy = energy * (1.0 + flicker * n) * (1.0 - 0.6 * minf(flutter, 1.0))
 	flame.scale = Vector3(1.0 - 0.3 * flutter, 1.0 + 0.5 * flicker * n - 0.4 * flutter, 1.0)
+	_bend(delta)
+
+
+## Leans the flame toward the nearest uncanny thing, drugged.
+func _bend(delta: float) -> void:
+	var k := smoothstep(BEND_DOSE.x, BEND_DOSE.y, GameState.dose)
+	var lean := Vector3.ZERO
+	if k > 0.0:
+		var best := BEND_RANGE
+		for n: Node in get_tree().get_nodes_in_group(&"uncanny"):
+			var t := n as Node3D
+			if t and t.is_visible_in_tree():
+				var d := t.global_position.distance_to(global_position)
+				if d < best:
+					best = d
+					lean = (t.global_position - global_position)
+	var target := Vector3.ZERO
+	if lean != Vector3.ZERO:
+		var local := flame.get_parent_node_3d().global_basis.inverse() * lean.normalized()
+		target = Vector3(-local.z, 0.0, local.x) * BEND_MAX * k
+	bent = bent.lerp(target, 1.0 - exp(-3.0 * delta))
+	flame.rotation = Vector3(bent.x, 0.0, -bent.z)
 
 
 func set_covered(value: bool) -> void:

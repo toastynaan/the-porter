@@ -98,7 +98,7 @@ wake_at = NodePath("../../Marks/WakeCell")
 tower = NodePath("../../BellTower")
 gate = NodePath("../../AbbeyGate")
 
-[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas")]
+[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas", "ranulf")]
 script = ExtResource("supper_gd")
 phase = 0
 due = 17.25
@@ -108,6 +108,7 @@ seat_duty = NodePath("../../Duties/SupperSeat")
 bread = NodePath("../../Duties/Bread")
 osric = NodePath("../../Brothers/Osric")
 thomas = NodePath("../../Brothers/Thomas")
+ranulf = NodePath("../../Brothers/Ranulf")
 
 [node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
 script = ExtResource("gate_gd")
@@ -151,13 +152,15 @@ duty = "Ring the bell for Matins"
 rope = NodePath("../../Duties/BellRope")
 tower = NodePath("../../BellTower")
 
-[node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "dead_brother")]
+[node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "dead_brother", "stall", "west_door")]
 script = ExtResource("choir_gd")
 phase = 3
 bell = &"matins"
 duty = "Count the brothers at Matins"
 choir = NodePath("../../Marks/Choir")
 dead_brother = NodePath("../../Brothers/Stranger/Look")
+stall = NodePath("../../Marks/PorterStall")
+west_door = NodePath("../../Marks/ChoirWestDoor")
 
 [node name="Round" type="Node" parent="Director" node_paths=PackedStringArray("stops", "stalker", "walk_end", "doorways")]
 script = ExtResource("round_gd")

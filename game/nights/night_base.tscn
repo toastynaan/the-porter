@@ -41,6 +41,16 @@
 [ext_resource type="Script" path="res://game/night/rite_candles.gd" id="rite_candles_gd"]
 [ext_resource type="Script" path="res://game/night/restricted.gd" id="restricted_gd"]
 [ext_resource type="Script" path="res://game/death/hidden_body.gd" id="hidden_body_gd"]
+[ext_resource type="Script" path="res://game/drug/hallucinations.gd" id="hallucinations_gd"]
+[ext_resource type="Script" path="res://game/drug/dead_in_choir.gd" id="dead_in_choir_gd"]
+[ext_resource type="Script" path="res://game/drug/false_door.gd" id="false_door_gd"]
+[ext_resource type="Script" path="res://game/drug/self_lit_candle.gd" id="self_lit_gd"]
+[ext_resource type="Script" path="res://game/night/scares.gd" id="scares_gd"]
+[ext_resource type="Script" path="res://game/items/pickup.gd" id="pickup_gd"]
+[ext_resource type="Script" path="res://game/items/windfalls.gd" id="windfalls_gd"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_carved_saint.tscn" id="carved_saint"]
+[ext_resource type="PackedScene" path="res://game/npc/cat.tscn" id="cat"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone_mat"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
@@ -72,6 +82,17 @@ size = Vector3(0.12, 0.18, 0.12)
 [sub_resource type="CapsuleShape3D" id="Shape_stranger"]
 radius = 0.28
 height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="Mat_apple"]
+albedo_color = Color(0.45, 0.16, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="Mesh_apple"]
+material = SubResource("Mat_apple")
+radius = 0.04
+height = 0.08
+radial_segments = 8
+rings = 4
 
 [node name="Night" type="Node3D"]
 editor_description = "The furniture every night shares: the abbey, the brothers and the lane's people at their places, the duties, lamps, marks, the candle clock, the gate and the bell, the hunter and the demon. Each night inherits it (night1.tscn ... night6.tscn) and adds its Director and beats, its conversations and its own things."
@@ -892,3 +913,153 @@ reveal_line = "(A flag rocks under your foot, where Simon was scrubbing. You lev
 
 [node name="Reveal" type="Marker3D" parent="HiddenBodies/ChapterFlag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00, 0.35, 0.00)
+
+[node name="Hallucinations" type="Node3D" parent="."]
+script = ExtResource("hallucinations_gd")
+editor_description = "What the drug does to his senses, by Dose tier (whispers, steps, his name; shapes at the edge, faces in the grain; hooves that stop short, deaths that never happened). Nothing it shows is left behind."
+
+[node name="DeadInChoir" type="Node3D" parent="." node_paths=PackedStringArray("places", "brothers")]
+script = ExtResource("dead_in_choir_gd")
+places = NodePath("../Places/Matins")
+brothers = NodePath("../Brothers")
+editor_description = "At Matins, from Dose 75, the dead brothers stand in the choir at their places."
+
+[node name="Carvings" type="Node3D" parent="."]
+editor_description = "Carved saints: from Dose 50 their heads turn to follow the porter while he isn't looking."
+
+[node name="CloisterNW" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -6, 0.05, -27.7)
+
+[node name="CloisterNE" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 6, 0.05, -27.7)
+
+[node name="CloisterSW" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0.05, -4.9)
+
+[node name="CloisterSE" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 6, 0.05, -4.9)
+
+[node name="Nave" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0.05, -28.9)
+
+[node name="Choir" parent="Carvings" instance=ExtResource("carved_saint")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 18, 0.05, -35.3)
+
+[node name="FalseDoor" type="Node3D" parent="."]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -11.57, 0.05, -18.3)
+script = ExtResource("false_door_gd")
+material = ExtResource("stone_mat")
+editor_description = "The HUD's one lie: on night 5 or 6 at Dose 75+, an outline on a door in this blank wall of the cloister's west walk. It opens on stone."
+
+[node name="SelfLitCandle" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8, -4, -30.6)
+script = ExtResource("self_lit_gd")
+editor_description = "One of the three things nothing explains: on night 5 this candle in the crypt lights itself in front of the porter."
+
+[node name="Candle" parent="SelfLitCandle" instance=ExtResource("candle")]
+lit = false
+
+[node name="Cat" parent="." instance=ExtResource("cat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0.05, -7.5)
+
+[node name="Scares" type="Node3D" parent="." node_paths=PackedStringArray("grille_face")]
+script = ExtResource("scares_gd")
+grille_face = NodePath("../Marks/GrilleFace")
+editor_description = "Scares between chases: steps overhead, a light going out ahead, and the jump scares (a body dropping, a face at the grille), one a night."
+
+[node name="GrilleFace" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -40.7, 0.05, -2.0)
+editor_description = "Where the face at the grille stands, just outside it."
+
+[node name="PorterStall" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6, 0.05, -29.4)
+editor_description = "The porter's stall in the choir: in it at Matins he takes the incense whole."
+
+[node name="ChoirWestDoor" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.0, 0.05, -32.0)
+editor_description = "The choir's west door: from night 4, standing here at Matins he takes about a third of the incense."
+
+[node name="Windfalls" type="Node3D" parent="."]
+script = ExtResource("windfalls_gd")
+editor_description = "Windfall apples under the orchard trees: a third of them each night."
+
+[node name="Apple0" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.02, 25.6)
+script = ExtResource("pickup_gd")
+id = &"apple0"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple1" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2, 0.02, 25.8)
+script = ExtResource("pickup_gd")
+id = &"apple1"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple2" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3, 0.02, 24.3)
+script = ExtResource("pickup_gd")
+id = &"apple2"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple3" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 0.02, 25.7)
+script = ExtResource("pickup_gd")
+id = &"apple3"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple4" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7, 0.02, 31.5)
+script = ExtResource("pickup_gd")
+id = &"apple4"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple5" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8, 0.02, 30.4)
+script = ExtResource("pickup_gd")
+id = &"apple5"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple6" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.02, 31.8)
+script = ExtResource("pickup_gd")
+id = &"apple6"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple7" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9, 0.02, 30.5)
+script = ExtResource("pickup_gd")
+id = &"apple7"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")
+
+[node name="Apple8" type="Node3D" parent="Windfalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3, 0.02, 36.4)
+script = ExtResource("pickup_gd")
+id = &"apple8"
+
+[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_apple")

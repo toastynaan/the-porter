@@ -27,7 +27,8 @@ Mab: (Placeholder: she sees everyone who comes and goes, and nobody asks her.)
 Mab: (Placeholder: she never eats the abbey's bread.)
 -> topics
 
-== alms [set n3_mab_alms]
-Mab: (Placeholder: she thanks you.)
+== alms [set n3_mab_alms] [item mab_bread] [trust mab 5]
+Mab: God keep you, brother. Here. It's not theirs. A woman on Fenchurch Street bakes it.
+(She presses a heel of bread into your hand.)
 -> topics
 "

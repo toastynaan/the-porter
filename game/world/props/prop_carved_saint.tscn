@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/drug/carving.gd" id="carving_gd"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+
+[sub_resource type="BoxMesh" id="Mesh_plinth"]
+material = ExtResource("stone")
+size = Vector3(0.5, 0.6, 0.5)
+
+[sub_resource type="CylinderMesh" id="Mesh_robe"]
+material = ExtResource("stone")
+top_radius = 0.12
+bottom_radius = 0.2
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SphereMesh" id="Mesh_head"]
+material = ExtResource("stone")
+radius = 0.11
+height = 0.24
+radial_segments = 8
+rings = 4
+
+[sub_resource type="BoxMesh" id="Mesh_face"]
+material = ExtResource("stone")
+size = Vector3(0.05, 0.08, 0.06)
+
+[node name="CarvedSaint" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a carved saint on a plinth, 1.8 m in all, in stone. Faces -Z. From Dose 50 its head turns to follow the porter while he isn't looking (Carving). No collision: it stands out of the way, against a wall."
+script = ExtResource("carving_gd")
+
+[node name="Plinth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("Mesh_plinth")
+
+[node name="Robe" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("Mesh_robe")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Skull" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("Mesh_head")
+
+[node name="Nose" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, -0.11)
+mesh = SubResource("Mesh_face")

@@ -416,3 +416,14 @@ Added during the run (M9, `docs/death.md`):
 - A hidden body is found by holding E for 1.5 s at it (the culvert's by wading into it), and the nearest hunter on his rounds hears and comes to look.
 - The ledger turns to the notes with a second press of L, and goes away with a third.
 - A hallucinated death is gone once the porter has looked away for 1 s.
+
+Added during the run (M10, `docs/drug.md`):
+- The drug's events come every 40–70 s at Dose 25+, 30–55 s at 50+, 20–40 s at 75+, never in a chase, a talk or a doze.
+- The shape at the edge of view: 48° off centre, 7–12 m off, gone when he looks within 22° of it or after 2.5 s. The face in the grain: gone after 1.5 s of staring.
+- The flame bends toward the uncanny from Dose 25, fully at 60, within 9 m, up to 0.6 rad. Reverb from 25 to 40% wet at 100. The walls breathe from 75, 0.6% of the screen at 100.
+- Carved saints (six, new to the abbey) turn their heads from Dose 50, within 15 m, only unseen.
+- Incense: "in your stall" is within 1.3 m of it; "by the west door" within 2.2 m; it burns 8 s.
+- Windfall apples: nine places, three a night; with the satchel up, E eats clean food while hungry.
+- Refusing Ranulf's remedy: Suspicion +5 (as built) and Thomas's trust +5.
+- The cat keeps 1.8–3.2 m off, stares every 35–70 s for 4 s (at a hunter within 10 m if there is one), and bolts 14 m when the animals go quiet.
+- The HUD's lie is the cloister's west walk wall, between the granary's door and the stores'.

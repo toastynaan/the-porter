@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 
 
 func _walk() -> void:
-	if _paused:
+	if _paused or not is_inside_tree():
 		return
 	if _leaving:
 		_npc.go_to(leave.global_position)
