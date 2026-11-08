@@ -199,6 +199,8 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 
 (One line per milestone as it lands.)
 
+- 2026-11-08 · M8 · 8289138 · The game's frame: title to chronicle with chapter cards, carry-over, bell and quiet saves, Continue, the capture rule and death, menus and settings, the outline and duty glyph, crouch, lean, satchel, gamepad, the 3-minute hour; nights other than 3 are stubs (17 suites, 426 checks; the commit message's 437 is a miscount). Next: M9, death and bodies.
+
 ## Decisions to review
 
 Things I decided because the docs didn't say. Accept, change or strike each one.
