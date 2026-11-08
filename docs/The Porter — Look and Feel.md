@@ -2,6 +2,8 @@
 
 Nov 6, 2026 · @Pahul
 
+**Changes, Nov 8 2026:** an almost-no HUD (thin outlines on usable things, a faint marker over what the current duty needs); how deaths are shown; the Hungry Saint's look on night 6. See `docs/full-game-run.md`.
+
 ## Direction
 
 **Candlelit lo-fi realism.** Real medieval materials and proportions, rendered at low fidelity, in near-total darkness, lit almost only by what the characters carry. The player should always be able to see a little less than they want to.
@@ -142,6 +144,30 @@ Every brother wears the same black habit, which is accurate and good for the hor
 
 **Build approach:** one base body mesh for all brothers in the habit, with head swaps, a few body-shape blend shapes (thin, heavy, hunched) and attached props. Pilgrims use the same base with different clothing pieces. Walter is the only saturated colour on any character.
 
+## Deaths
+
+People die in front of the player, and how much is shown varies on purpose, so no death can be braced for:
+
+| Style | What's on screen | Used for |
+| --- | --- | --- |
+| Implied | A shape against the light, a struggle half-seen, a cry cut off, a lantern dropped and rolling. Then the body, or only the blood | Deaths in the fog, in the dark, far off |
+| Gory | The wounds in view, blood up the wall, the body left as it fell | The guesthouse, the crypt, night 6 |
+| The throat | One quick cut and blood flying through the lantern light | The lane, the dilemma, Cole at the gate |
+
+- Blood stays dark even fresh: old blood (#5A1A14), never bright. It's the one red that isn't flame or the demon's eyes.
+- Drugged, the killer is the demon (long fingers, a crown of horns); sober, a man in a mask.
+- The body falls (a ragdoll) and stays until the cult moves it. Blood stays until they scrub it.
+
+## The Hungry Saint (night 6)
+
+The real demon is not the costume. It must never look like a man in a mask, so a sober player knows the difference at once.
+
+- **Shape:** taller than the costume, about 2.6 m, and too thin, bent forward under the vaults. No horns: the antlers were the cult's idea of it.
+- **Light:** your lantern dims as it nears, and candles gutter toward it. It is lit by nothing; you see it as a gap in the light.
+- **Movement:** slow and in view, unlike the costume. It moves only on the ground, never quickly.
+- **Sound:** silence before it. Rooks, rats, the cat and the wind all stop.
+- **Dose:** it looks the same drugged or sober. That is how the player knows it's real.
+
 ## Environments and materials
 
 The abbey is plain, worn and cramped. It's a working building, not a cathedral: low ceilings, narrow doors, thick walls, small windows.
@@ -175,7 +201,7 @@ Mood references (street and gate images, Nov 2026): rain-wet streets with lamp p
 
 ## UI
 
-No HUD. Everything the player needs to know is in the world or in an object they hold.
+Almost no HUD. Everything the player needs to know is in the world or in an object they hold, with two quiet exceptions so a first-time player is never lost: an outline on what you can use, and a faint mark over what your duty needs. Neither may take away from the dark.
 
 | Need | Shown by |
 | --- | --- |
@@ -184,9 +210,9 @@ No HUD. Everything the player needs to know is in the world or in an object they
 | Health and hunger | Hand tremor, breathing, slower sprint recovery |
 | Dose | Never shown directly; only through the image itself |
 | Suspicion | Never shown; NPC behaviour changes instead |
-| Interact prompt | A small dot in the centre that becomes a hand symbol near usable objects; nothing else |
-| Objectives | None on screen. The candle-clock marks and the ledger say what's due |
-| Dialogue | Plain subtitles at the bottom, speaker name in small caps, no portraits |
+| Interact prompt | A small dot in the centre. What E would use gets a thin, pale outline while you look at it, within reach |
+| Objectives | The candle-clock marks and the ledger say what's due. A small, dim glyph floats over the one person or thing the current duty needs, seen within about 10 m, and never during a chase or while hiding. The lit way to each duty stays |
+| Dialogue | Plain subtitles at the bottom, speaker name in small caps, no portraits. Up to three numbered answers, then "Walk away" |
 
 **Menus and text** use the manuscript style: parchment background, blackletter only for titles, a readable book typeface for everything else. Chapter cards for each night look like a page from the chronicle, with a decorated initial letter. Keep blackletter out of body text; it is hard to read.
 

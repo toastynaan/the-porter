@@ -2,16 +2,24 @@
 
 Nov 6, 2026 · @Pahul
 
+**Changes, Nov 8 2026** (from the grilling session; the full-game run's spec is `docs/full-game-run.md`):
+- The demon is real. The cult is raising the Hungry Saint, which will one day be Jack the Ripper. It shows itself only on night 6; before that, everything is men and the drug.
+- The rite needs a count of deaths in the six nights. Deaths your choices prevent leave it short.
+- Thomas is the villain you trust. He tells you what he has noticed (always about someone else), is "attacked" on nights 2 and 5, and saves you on night 3.
+- Brother Simon, a choir brother, draws your suspicion: Thomas sends him to scrub blood, then points you at him. On night 5 you save Thomas or Simon.
+- People die in front of you: nine witnessed deaths across the game, on top of the six found bodies. There are also hidden bodies to find.
+- Seven endings: the five, rewritten to say what became of the Saint, plus The Rising and The Broken Rite.
+
 ## Pitch
 
-You are the new porter of an abbey inside the walls of medieval London: you keep the gate, ring the night bells and walk the lantern rounds. Pilgrims vanish, brothers die, and something with horns hunts the cloister at night. The abbey says it is a demon. It is a group of your own brothers, and they are drugging the whole abbey so everyone believes it.
+You are the new porter of an abbey inside the walls of medieval London: you keep the gate, ring the night bells and walk the lantern rounds. Pilgrims vanish, brothers die, and something with horns hunts the cloister at night. The abbey says it is a demon. It is a group of your own brothers, and they are drugging the whole abbey so everyone believes it. But they are also feeding something. Each death is a sacrifice to the Hungry Saint, a real demon, and if they finish, it walks out of the gate into London. Centuries later, London will call it Jack the Ripper.
 
 First-person, single-player, 6 nights, roughly 4–6 hours.
 
 **Design pillars**
 
 1. **People are the horror.** Every threat has a face you have eaten bread with. NPCs are the content.
-2. **Two truths.** Every scare has a supernatural version and a human version. How drugged you are decides which one you see.
+2. **Two truths, then a third.** Every scare has a supernatural version and a human version. How drugged you are decides which one you see. On night 6 the third truth arrives: the thing the men were calling is real.
 3. **Knowing makes you hunted.** Learning things raises the cult's attention on you. Investigation is the risk.
 4. **A routine that turns on you.** The gate, the bell and the rounds are safe on night 1 and deadly by night 6.
 5. **Grounded medieval detail.** Real jobs, real plants, real buildings. The setting is the world your character believes in, not set dressing.
@@ -56,13 +64,13 @@ Seven areas inside the walls, and the lane outside the gate, laid out the way re
 
 You play **Brother Alric**, 19, made porter after the old porter went blind. Everyone else below is a full NPC with a schedule, dialogue and memory of how you treated them.
 
-**The cult and its motive.** The abbey is quietly bankrupt. Three years ago the cellarer began robbing and killing wealthy pilgrims to keep it alive. The infirmarian found out and turned the robbery into a faith: the saint's bones must be fed, and a "demon" explains every death. Now five men believe it.
+**The cult and its motive.** The abbey is quietly bankrupt. Three years ago the cellarer began robbing and killing wealthy pilgrims to keep it alive. The infirmarian found out and turned the robbery into a faith: the saint's bones must be fed, and a "demon" explains every death. Now five men believe it. Thomas found the rite in an old book: the "saint" they feed is the Hungry Saint, a demon. It wakes when it has been fed ten souls in six nights, with the last given in the crypt at Matins. The new porter's six nights are those six nights. The cult needs a porter who lets the right people in and believes in the demon.
 
 **Inside the walls**
 
 | Character | Public face | Truth | In the cult? |
 | --- | --- | --- | --- |
-| Brother Thomas, infirmarian | Gentle healer; your first ally. Saves you on night 3 by hiding you in the infirmary. | The cult's leader. Doses the abbey with ergot and henbane. Keeps you alive because the cult needs a porter. | Leader |
+| Brother Thomas, infirmarian | Gentle healer; your first ally and the man you trust most. He tells you what he has noticed: always someone else (the prior's watching, Brother Simon out at night). He is "attacked" on night 2 and again on night 5, and saves you on night 3 by hiding you in the infirmary. | The cult's leader. Doses the abbey with ergot and henbane, and leads the rite to raise the Hungry Saint. Both attacks are staged, and the men he points you at are innocent. Keeps you alive because the cult needs a porter. | Leader |
 | Brother Ranulf, sacrist | Keeps the relic, candles and incense | Wears the horned costume most nights | Yes |
 | Brother Osric, cellarer | Jolly, feeds you extra bread | Started the killings; handles bodies | Yes |
 | Two lay brothers, Cole and Dunstan | Big, silent labourers. Cole keeps the gate by day while the porter sleeps | Wear the other two costumes; the "teleporting" demon | Yes |
@@ -70,7 +78,8 @@ You play **Brother Alric**, 19, made porter after the old porter went blind. Eve
 | Prior Hugh | Harsh, watches you constantly; the obvious suspect | Investigating the deaths. Suspects *you*, the new porter | No |
 | Brother Anselm, old porter | Blind, kept in the infirmary | Let victims in for years; guilty and terrified | Was complicit |
 | Brother Edwin, novice | Your friend and the person you talk to | Dies on night 4 | No |
-| 4 choir brothers | Background faces at Matins | Filler for the headcount; a few can be victims. One warns you on night 1 that something is wrong with the bread, and is the body in the bell tower on night 2 | No |
+| Brother Simon, a choir brother | Quiet. On night 4 you find him scrubbing blood off the cloister flags, and he hides the rag | Thomas sent him to do it, then told you to watch him. On night 5 you save Thomas or Simon. Saved, he tells you who sent him | No |
+| 3 other choir brothers | Background faces at Matins | Filler for the headcount; a few can be victims. One warns you on night 1 that something is wrong with the bread, and is the body in the bell tower on night 2. One dies in front of you in the fog on night 4 | No |
 
 **Outside the gate**
 
@@ -157,7 +166,8 @@ For the first half of the game the threat should feel like a supernatural stalke
 | 1–2 | Glimpses | A tall horned silhouette at the edge of sight: on the far side of the graveyard, at the end of the cloister walk, in the bell tower window. Look away and back and it is gone. It never makes a sound and never approaches |
 | 3 | Stalking | It appears on your route, closer each time: end of the walk, then the doorway, then behind you in the choir. The night 3 chase is running from it and finding it ahead of you |
 | 4 | Cracks | In the fog it makes mistakes. You hear it breathe, stumble and swear under its breath. Two of it appear at once. One loses its mask: it is Osric |
-| 5–6 | Men | The hunters still wear the costumes so the rest of the abbey keeps believing, but now they talk, call your name, and hunt like men |
+| 5 | Men | The hunters still wear the costumes so the rest of the abbey keeps believing, but now they talk, call your name, and hunt like men |
+| 6 | Men, and the Saint | The men hunt you, and the thing they called comes. See "The Hungry Saint" |
 
 **Rules for the Glimpses and Stalking phases**
 
@@ -177,6 +187,16 @@ For the first half of the game the threat should feel like a supernatural stalke
 | Ahead of you when you run | The night stairs and the hidden cellar stair are shortcuts you don't know about yet |
 | Silent | Felt overshoes. The wooden hoof soles come out only when they want to be heard |
 | Staring makes you sick | Henbane, fear and a lantern you're gripping too hard |
+
+## The Hungry Saint
+
+The demon the cult is raising is real, but it shows itself only on night 6. Until then every scare is men, costumes and the drug. That keeps the two truths honest for five nights.
+
+- **The rite.** The cult's book asks for ten souls in six nights, the last in the crypt at Matins on night 6. The count is never shown: you read it in the book (a page in the crypt on night 3, the whole book on night 6). Deaths your choices prevent leave it short.
+- **Its strength on night 6** depends on the count. Short of it, it's a shadow that can't leave the crypt. Near it, it walks the abbey. Met, it hunts.
+- **How it moves.** Unlike the costume, it moves in view, slowly. Darkness doesn't hide you from it, silence comes before it, and its touch is death. It kills cultists too.
+- **What it becomes.** The chronicle entries follow it down the centuries to Whitechapel, 1888. The game never says "the Ripper"; the last line does the work.
+- **The relic.** The saint's finger bone is still a pig's bone. The abbey's holiness is a fraud; the thing in the crypt isn't.
 
 ## Suspicion, chases and hiding
 
@@ -234,6 +254,10 @@ Six bodies across six nights. Each one is a scare first and a clue second. Clues
 | 5 | Joan, if you sheltered her (otherwise a pilgrim) | Under the grain in the granary | You plunge your arm into the rye to find the hidden key; a hand grips back. She is alive, then she isn't | The rye is black-spurred with ergot. This is the dosing source |
 | 6 | Brother Anselm | In his infirmary bed | He was going to tell you everything. His blind eyes are open and his mouth is stuffed with henbane leaves | Killed for talking. Proves Thomas, the only one with infirmary access |
 
+**Witnessed deaths.** On top of the six bodies you find, nine people die in front of you: none on night 1, then 1, 1, 2, 2 and 3. They're guests you admitted, brothers, and people in the lane; never Walter, Joan, Mab or Roger. Some are implied (a shape in the fog, a cry cut off), some gory, some one quick cut of the throat with blood flying. Drugged, you see the demon do it; sober, a man in a mask. At high Dose, some are hallucinations that leave no body. In the moment you can't stop them; before, your choices decide who dies, and how many. The full list is in `docs/full-game-run.md`.
+
+**Hidden bodies.** Five earlier victims are hidden for players who explore: down the well, in the mill race culvert, under fresh earth in the gardens, in the bell tower loft, under the chapter house flags. Each carries a pilgrim badge that matches a name torn from the ledger.
+
 **Body behaviour**
 
 - Bodies move. If you leave to fetch someone, the body is gone when you return, and you are the one who looks mad.
@@ -250,11 +274,13 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 - **Knocks:** a wealthy merchant-pilgrim (admit him), Walter the pardoner, and a final knock after midnight with no one there. Mab saw nobody. This knock is never explained: it happens even at Dose 0, and no ending accounts for it.
 - **Matins:** count is right. First incense; first whisper.
 - **Round:** tutorial route. A tall horned shape stands still at the far end of the cloister. Look away and it is gone. No chase.
-- **Dawn:** the merchant is in the fishpond (body 1). Thomas says he drowned drunk.
+- **Dawn:** the merchant is in the fishpond (body 1), if you admitted him. Thomas says he drowned drunk. Turned away, he went on to the inn, and the pond is empty.
 
 ### Night 2: The bell
 
-- **Knocks:** Joan asks for sanctuary. A sailor who says he is leaving before dark. Roger the bailiff asks if a "merchant" came through.
+- **Dusk:** Thomas is in the infirmary with a cut across his arm. Something came at him in the dark, he says. (He did it himself.)
+- **Knocks:** Joan asks for sanctuary. A sailor who says he is leaving before dark. Roger the bailiff asks if a "merchant" came through (only if the merchant died).
+- **After midnight:** through the grille you watch whoever you turned away tonight killed in the lane under a street lantern: a tall shape behind him, then he's in the gutter.
 - **Matins:** you pull the bell rope and it is heavy (body 2: the choir brother who warned you about the bread). The count is one short.
 - **Round:** the guesthouse has one more empty bed than your ledger says. A ledger page is gone.
 - **Dawn:** the abbot declares the demon has come and orders more incense. The prior asks where you were.
@@ -264,7 +290,8 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 - **Supper:** the bread tastes bitter. Thomas offers a remedy for your headaches.
 - **Knocks:** Walter again, with a bag that smells of the incense. A child-sized knock low on the gate; no one there (hallucination at Dose 50+).
 - **Matins:** you see a brother in the choir who died on night 2 (hallucination) or a hooded stranger in his place (sober).
-- **Round:** you see a light in the crypt. Investigate and you are spotted. **First chase.** You hide in the bakehouse oven and find bones (body 3). Climbing out, you are nearly caught; Thomas pulls you into the infirmary and hides you.
+- **Supper:** Thomas tells you, quietly, that the prior has been asking about you.
+- **Round:** you see a light in the crypt. At the foot of the stair, the figure by the light has his back to you because he is killing a bound pilgrim. A page of the cult's book lies by the altar. You are spotted. **First chase.** You hide in the bakehouse oven and find bones (body 3). Climbing out, you are nearly caught; Thomas pulls you into the infirmary and hides you.
 - **Dawn:** your keys have been moved. Suspicion now drives hunting every night.
 
 ### Night 4: Edwin (midpoint)
@@ -272,7 +299,8 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 - **Supper:** Edwin whispers that he has seen the demon's face. He'll tell you after Matins.
 - **Knocks:** Mab, inside the gate for the first time, terrified. She saw three demons leave by the mill race.
 - **Matins:** Edwin is missing from the count.
-- **Round:** you find Edwin in the charnel house (body 4). **Two hunters for the first time**: you see the demon in two places at once. If sober, you see two masked men. One loses his mask in the chase: it is Osric.
+- **Round:** in the fog a choir brother is killed a few metres ahead of you: a shape, a cry, his lantern rolling on the flags. The guest you admitted tonight is dead in the guesthouse. You find Edwin in the charnel house (body 4). **Two hunters for the first time**: you see the demon in two places at once. If sober, you see two masked men. One loses his mask in the chase: it is Osric.
+- **Later:** Thomas told you at supper he'd seen Brother Simon out at night. Now you find Simon on his knees on the cloister flags, scrubbing blood, and he hides the rag.
 - **Dawn:** someone has been in your cell. Your cot is wet and the candle clock is snapped. Your one safe space is gone.
 
 ### Night 5: The granary
@@ -280,29 +308,33 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 - **Supper:** Osric, whose face you saw last night, serves your bread and smiles. Eat it (lose clarity) or don't (he watches you). Thomas checks your eyes.
 - **Knocks:** Joan, if you turned her away earlier, back with her brother's pilgrim badge.
 - **Matins:** the abbot collapses from the incense. In the confusion, Anselm pulls you aside: the key to the crypt passage is in the granary.
-- **Round:** search the grain (body 5). The ergot is in the rye. **Hunters lock you inside**; escape through the latrine chute.
+- **The choice:** a cry from the chapter house. Thomas is on the floor, "attacked", and Brother Simon is pinned by a masked man. You can reach only one. Save Thomas and Simon's throat is cut in front of you; save Simon and Thomas turns up "wounded" anyway, and Simon tells you Thomas sent him to scrub the blood.
+- **Round:** search the grain (body 5). The ergot is in the rye. **Hunters lock you inside**; escape through the latrine chute. Roger's sergeant, left outside the gate, is killed in the lane, unless you let him wait inside.
 - **Dawn:** the prior arrests you for the killings. Thomas speaks for you and has you released into his care.
 
 ### Night 6: The hunt
 
 - **Supper:** none. You wake in the infirmary at dusk. Anselm is dead in the next bed (body 6).
 - **Gate:** a knock. It is someone you know: the bailiff, Joan or Mab, depending on earlier choices. Opening the gate is one possible ending.
-- **The hunt:** all five cultists in costume. Every route you've learned is in play. The crypt passage holds the proof: the costumes, the purses and the relic, which is a pig's bone.
+- **The hunt:** all five cultists in costume. Every route you've learned is in play. The crypt passage holds the proof: the costumes, the purses, the relic (which is a pig's bone) and the cult's book.
+- **The Saint:** as Matins nears, the Hungry Saint comes. It kills Dunstan in the cloister, Cole at the gate and whoever is nearer of Osric and Ranulf in the choir, and it walks toward you. At Matins the cult gives it the last soul in the crypt (Brother Simon if he lived, otherwise a pilgrim) unless you stop them.
 - **End:** see Endings.
 
 ## Endings
 
-Five endings, decided by what you carry out of the crypt, who you let in, and your Dose at the end.
+Seven endings, decided by what you carry out of the crypt, who you let in, whether the rite finishes, and your Dose at the end. They're checked in this order:
 
 | Ending | How you get it | What happens |
 | --- | --- | --- |
+| **The New Faith** | Caught on night 6 after drinking Thomas's wine | You wake in a habit with a mask in your lap. Thomas: "The porter has always been one of us." |
+| **The Demon** | Finish with Dose 75+ | You fight and kill "the demon". Sober epilogue: it was the prior, who came to help. You are hanged for the murders |
+| **The Rising** | The last rite finishes and the count was near enough | The Hungry Saint walks out of the gate into London |
+| **The Fire** | Burn the granary and crypt | The proof and the cult burn together. The record calls it a lightning strike. You are never sure who was inside |
 | **The Gate** | Reach the gate with proof and open it for the bailiff | Roger's men take the abbey. The cult hangs, and the bailiff takes the land. Justice, bought by a worse man |
 | **The Witness** | Escape by the mill race with Mab or Joan alive | You flee into the dark with the only other person who knows. Nobody believes either of you. Final shot: a new porter at the gate |
-| **The Fire** | Burn the granary and crypt | The proof and the cult burn together. The record calls it a lightning strike. You are never sure who was inside |
-| **The Demon** | Finish with Dose 75+ | You fight and kill "the demon". Sober epilogue: it was the prior, who came to help. You are hanged for the murders |
-| **The New Faith** | Caught on night 6 after drinking Thomas's wine | You wake in a habit with a mask in your lap. Thomas: "The porter has always been one of us." |
+| **The Broken Rite** | You stopped the last rite and left any other way, or held out to dawn | The Saint is denied, for now |
 
-Every ending closes with a short chronicle entry, written decades later, giving the official version. It never matches what you saw.
+Every ending closes with a short chronicle entry, written decades later, giving the official version. It never matches what you saw. Each says, in the official version's words, what became of the thing in the crypt, and the last lines follow it toward Whitechapel, 1888.
 
 ## Systems to build in Godot
 
