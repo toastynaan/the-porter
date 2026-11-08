@@ -36,7 +36,7 @@ func run() -> void:
 				_audio.stream = KNOCK
 				_audio.play()
 		await get_tree().physics_frame
-		t -= get_physics_process_delta_time()
+		t -= PlayTime.physics(self)
 	grate.enabled = false
 	GameState.set_flag(GameState.tonight("knock_no_one"))
 	GameState.note(&"knock_no_one")

@@ -158,7 +158,7 @@ func _go_home(npc: VisitorNPC) -> void:
 	var t := 0.0
 	while is_instance_valid(npc) and npc.visible and t < 30.0 and npc.global_position.distance_to(door) > 1.2:
 		await get_tree().physics_frame
-		t += get_physics_process_delta_time()
+		t += PlayTime.physics(self)
 	if is_instance_valid(npc):
 		npc.set_present(false)
 

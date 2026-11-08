@@ -92,9 +92,13 @@ var controls_locked := false
 var hiding: HidingSpot
 ## The squint he has his eye to, or null.
 var peeking: Squint
-## Riding on something (the wagon, night 0): he's carried with it and can
-## only look about.
-var riding: Node3D
+## Riding on something (the wagon, night 0): he's carried with it, turns
+## with it, and can only look about.
+var riding: Node3D:
+	set(value):
+		riding = value
+		if riding:
+			_ride_yaw = riding.global_rotation.y
 var _peek_from: Transform3D
 ## What the floor underfoot sounds like.
 var floor_surface := "stone"
@@ -119,6 +123,8 @@ var _talk_pitch := 0.0
 var _talk_cone := Vector2.ZERO
 var _talk_turning := false
 var _talk_tween: Tween
+## The heading of what he rides, last frame.
+var _ride_yaw := 0.0
 
 @onready var head: Node3D = $Head
 @onready var look_back_pivot: Node3D = $Head/LookBack
@@ -199,6 +205,10 @@ func _physics_process(delta: float) -> void:
 	_update_look_back(delta)
 	if riding:
 		global_position = riding.global_position
+		var turned := wrapf(riding.global_rotation.y - _ride_yaw, -PI, PI)
+		_ride_yaw = riding.global_rotation.y
+		rotation.y += turned
+		_talk_yaw += turned
 		velocity = Vector3.ZERO
 		return
 	if crawling or hiding or _hide_moving or peeking:

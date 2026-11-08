@@ -165,7 +165,7 @@ func _read(npc: VisitorNPC, v: Visitor, noticed: Array[VisitorDetail]) -> void:
 				nearest = off
 				looked_at = d
 		for d in v.details:
-			dwell[d] = float(dwell.get(d, 0.0)) + get_physics_process_delta_time() if d == looked_at else 0.0
+			dwell[d] = float(dwell.get(d, 0.0)) + PlayTime.physics(self) if d == looked_at else 0.0
 			if d == looked_at and not noticed.has(d) and dwell[d] >= READ_TIME:
 				noticed.append(d)
 				_notice.call(v, d)
@@ -291,5 +291,5 @@ func _knock_until_answered(stream: AudioStream, height: float) -> void:
 				_audio.stream = stream
 				_audio.play()
 		await get_tree().physics_frame
-		t -= get_physics_process_delta_time()
+		t -= PlayTime.physics(self)
 	grate.enabled = false

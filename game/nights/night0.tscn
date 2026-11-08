@@ -26,6 +26,13 @@
 [ext_resource type="Resource" path="res://game/gate/visitors/lane_roger.tres" id="v_roger"]
 [ext_resource type="Resource" path="res://game/gate/visitors/walter_n3.tres" id="v_walter"]
 [ext_resource type="Resource" path="res://game/dialogue/night0/traveller.tres" id="n0_traveller"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/traveller_road.tres" id="n0_traveller_road"]
+[ext_resource type="Script" path="res://game/night/ride_cue.gd" id="cue_gd"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_warden.tscn" id="chr_warden"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_townswoman.tscn" id="chr_townswoman"]
+[ext_resource type="AudioStream" path="res://art/sfx/sfx_bell.wav" id="sfx_bell"]
+[ext_resource type="AudioStream" path="res://art/sfx/sfx_shutters.wav" id="sfx_shutters"]
+[ext_resource type="AudioStream" path="res://art/sfx/sfx_dog.wav" id="sfx_dog"]
 [ext_resource type="Resource" path="res://game/dialogue/night0/carter.tres" id="n0_carter"]
 [ext_resource type="Resource" path="res://game/dialogue/night0/mab.tres" id="n0_mab"]
 [ext_resource type="Resource" path="res://game/dialogue/night0/hob.tres" id="n0_hob"]
@@ -52,13 +59,13 @@ clears_at = 19.0
 [node name="Road" parent="." instance=ExtResource("road")]
 
 [node name="Wagon" parent="." instance=ExtResource("wagon")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -286, 0, 48.2)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -210, 0, 48.2)
 
 [node name="BodyCart" parent="." instance=ExtResource("body_cart")]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -200, 0, 45.6)
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -130, 0, 45.8)
 
 [node name="Traveller" type="Node3D" parent="."]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -286, 0.9, 49.0)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -210, 0.9, 49.0)
 script = ExtResource("figure_gd")
 
 [node name="Look" type="Node3D" parent="Traveller"]
@@ -68,19 +75,122 @@ look = ExtResource("chr_traveller")
 [node name="Talker" type="Area3D" parent="Traveller"]
 script = ExtResource("talker_gd")
 phases = Array[int]([6])
-conversation = ExtResource("n0_traveller")
+conversation = ExtResource("n0_traveller_road")
 
 [node name="WagonCarter" type="Node3D" parent="."]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -288, 0.9, 48.2)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -212, 0.9, 48.2)
 script = ExtResource("figure_gd")
 
 [node name="Look" type="Node3D" parent="WagonCarter"]
 script = ExtResource("look_gd")
 look = ExtResource("chr_carter")
 
+[node name="RoadFolk" type="Node3D" parent="."]
+editor_description = "People the wagon passes on the road in; the ride's cues turn them to watch it."
+
+[node name="Warden" type="Node3D" parent="RoadFolk"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -121.5, 0, 44.4)
+script = ExtResource("figure_gd")
+
+[node name="Look" type="Node3D" parent="RoadFolk/Warden"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_warden")
+
+[node name="Townswoman" type="Node3D" parent="RoadFolk"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -90, 0, 44.4)
+script = ExtResource("figure_gd")
+
+[node name="Look" type="Node3D" parent="RoadFolk/Townswoman"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_townswoman")
+
+[node name="DoorLight" type="OmniLight3D" parent="RoadFolk/Townswoman"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0.8)
+editor_description = "The firelight in the room behind her, so she stands dark against it."
+light_color = Color(1, 0.66, 0.36, 1)
+light_energy = 2.0
+omni_range = 4.0
+
+[node name="RideCues" type="Node3D" parent="."]
+editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines wait while the porter talks, and are dropped once the wagon is `keep` metres past."
+
+[node name="Fields" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 44.5)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("(Dusk over the fields, and rain on the wind. Ahead, the city wall, and London behind it.)", "Carter: Hup! We'll be in before they shut the gate, or I'll know why.")
+keep = 40.0
+
+[node name="WhiteChapel" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -193, 6, 62)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("(The bell of the white chapel, ringing for Vespers.)", "Traveller: Saint Mary's. White as a bone once, they say. Not now.")
+sound = ExtResource("sfx_bell")
+volume_db = -4.0
+keep = 25.0
+
+[node name="Whoa" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 0, 44.5)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("Carter: Whoa. Whoa, there. Let him by.")
+keep = 12.0
+
+[node name="Wall" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -134, 0, 44.5)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("(The city wall, black against the sky. A lantern burns in Aldgate's arch.)")
+pace = 2.0
+keep = 12.0
+
+[node name="Aldgate" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("watchers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.5, 0, 44.4)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("Warden: In or out, carter? We shut at the curfew bell, and we open for no one after it.", "(He holds his lantern up to your face, and looks at you a long moment.)", "Warden: A monk. For the abbey in the lane? Then God go with you. Go on.")
+pace = 3.2
+hold = 1.0
+watchers = [NodePath("../../RoadFolk/Warden")]
+
+[node name="Shutters" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 4, 44)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("(Shutters bang closed above you as the wagon passes, one after another.)")
+sound = ExtResource("sfx_shutters")
+keep = 15.0
+
+[node name="Doorway" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("watchers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 44.4)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("(A woman in a doorway watches you go by. She crosses herself.)")
+keep = 12.0
+watchers = [NodePath("../../RoadFolk/Townswoman")]
+
+[node name="Dog" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, 50.5)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("Traveller: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
+sound = ExtResource("sfx_dog")
+volume_db = -3.0
+keep = 25.0
+
+[node name="Turn" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 0, 44.5)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("Carter: Here's your lane, brother. Nearly there.")
+pace = 2.5
+keep = 15.0
+
+[node name="Lane" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 28)
+script = ExtResource("cue_gd")
+lines = PackedStringArray("Traveller: That wall's your abbey. God keep you, brother. Bar your door at night.")
+keep = 25.0
+
 [node name="SetDown" type="Marker3D" parent="Marks"]
-transform = Transform3D(-0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, -0.34202, -43.6, 0.05, 3.2)
-editor_description = "Where the carter sets him down, by the abbey gate."
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -41.9, 0.05, 5.4)
+editor_description = "Where the carter sets him down, by the abbey gate: beside the wagon on the gate side, clear of it as it drives on down the lane."
+
+[node name="PullOver" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -168, 0.05, 49)
+editor_description = "Where the carter pulls in toward the ditch on the road in to let the body cart by."
 
 [node name="TopWindow" type="Marker3D" parent="Marks"]
 transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -47.3, 6.05, 2.0)
@@ -189,14 +299,16 @@ conversation = ExtResource("n0_ralph")
 script = ExtResource("director_gd")
 night = 0
 
-[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "body_cart", "set_down", "traveller", "carter", "gate", "cole")]
+[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole")]
 script = ExtResource("ride_gd")
 phase = 6
 bell = &"start"
 duty = "Dusk: the road into London"
 wagon = NodePath("../../Wagon")
 path = NodePath("../../Road/RidePath")
+cues = NodePath("../../RideCues")
 body_cart = NodePath("../../BodyCart")
+pull_over = NodePath("../../Marks/PullOver")
 set_down = NodePath("../../Marks/SetDown")
 traveller = NodePath("../../Traveller")
 carter = NodePath("../../WagonCarter")

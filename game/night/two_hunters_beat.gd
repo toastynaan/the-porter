@@ -42,7 +42,7 @@ func run() -> void:
 	var near := 0.0
 	var calm_for := 0.0
 	while calm_for < calm:
-		var dt := get_physics_process_delta_time()
+		var dt := PlayTime.physics(self)
 		var alive := hunters.filter(func(h: Variant) -> bool: return is_instance_valid(h))
 		var on := alive.filter(func(h: Hunter) -> bool:
 			return ViewCheck.on_screen(p.camera, [h.global_position + Vector3.UP * 1.5]))

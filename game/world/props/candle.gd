@@ -60,7 +60,7 @@ func interact(_by: Node) -> void:
 	var t := 0.0
 	while t < RELIGHT_TIME and (Input.is_action_pressed(&"interact") or has_meta(&"auto")):
 		await get_tree().physics_frame
-		t += get_physics_process_delta_time()
+		t += PlayTime.physics(self)
 	_holding = false
 	if t >= RELIGHT_TIME:
 		lantern.relight()

@@ -259,7 +259,7 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 
 ## Night 0 and day 1
 
-**The ride in.** It's on rails: the wagon drives itself from the white chapel through Aldgate to the lane, about three minutes *(mine)*. In the first minute it pulls aside for a cart carrying a covered body (the hook). You can look about, and talk to the traveller beside you (a conversation, three answers). It ends when the carter sets you down.
+**The ride in.** It's on rails: the wagon drives itself from the white chapel through Aldgate to the lane, about two minutes *(mine)*, with something along the way every 10 to 15 seconds. Early on it pulls aside for a cart carrying a covered body (the hook). You can look about, and talk to the traveller beside you whenever you like; the cart cuts that talk short, and he talks about the body (a conversation, three answers). At Aldgate the warden stops the wagon and looks you over. It ends when the carter sets you down.
 
 **Drinking** at the Cross Keys (night 0). It's a conversation answer with Hob or Agnes.
 - Each ale is +1 drink, to 5. You lose 1 an hour, and sleep clears it. *(mine)*
@@ -393,7 +393,7 @@ The mechanics I chose because the grilling didn't settle them:
 - Hunters' voices are subtitles with a direction, from night 4.
 - Throwables are tidied away by the next night.
 - Drink: +1 an ale, 5 at most, lose 1 an hour; double image at 3+; the headache until noon.
-- The ride takes about three minutes; peeking through a squint gives 25° either way.
+- The ride takes about two minutes; peeking through a squint gives 25° either way.
 - The rules for saving people, and the night-4 break (copied keys).
 - Where the scripted gusts are, and which moment the HUD lies.
 - Chapter select gives a typical state for each night.
@@ -440,7 +440,7 @@ Added during the run (M11, `docs/abbey.md`):
 
 Added during the run (M12, `docs/prologue.md`):
 - Night 0 runs from 16:30 at 150 s an in-game hour, so the ride is grey dusk turning dark and midnight comes about 19 minutes in. Rain until 19:00.
-- The ride: 1.5 m/s, about 3.1 minutes; the body cart passes at 40 s, on the porter's side of the wagon.
+- The ride: about two minutes; 3.5 m/s in the fields, 2 m/s up to Aldgate, 3.2 m/s in the streets, 2.5 m/s in the lane, speeding up and slowing at 1.2 m/s²; the carter pulls in about 13 s in and stops while the body cart (2 m/s) passes on the porter's side; the wagon stops at Aldgate for the warden and at the gate until nobody's talking. *(Changed after the run: it was 1.5 m/s and 3.1 minutes with little on the way.)*
 - Drink: a blur of 0.5 + 0.15 source pixels an ale once over 0.5; the double image grows from 2 (the third ale wearing in) to full at 5; the headache comes from three ales drunk that night (counted, not what's left at sleep): a 0.9-pixel blur until noon.
 - The squints: the cell's at z −6, the court's at 6 and 14; the slit 0.18 × 0.5 m, splayed to 0.4 m at both faces; peeking puts the eye 0.12 m from the bars.
 - The squint scare: he must pass outside within about 4.6 m with nobody of the lane within 12 m; it appears only out of his view; it counts as seen from within 3.5 m, looking within 15° of the slit with a clear line through; it goes when he looks 35° away or steps 4 m off; walking 8 m off without seeing it lets it come again.
@@ -473,3 +473,8 @@ Added during the run (M15, `docs/night6.md`):
 - Fire: catches from within 2.5 m of the spot (measured from his eyes); smoke within 3.5 m of a flame; a flame kills within 0.9 m.
 - Who knocks on night 6: Roger if the merchant or his sergeant died; otherwise Joan, if she's alive and he met her at the gate; otherwise Mab. Roger won't come in without two kinds of proof.
 - Leaving any other way (the gate into the lane, the race alone) or holding out to Lauds is the Broken Rite, whether the rite was stopped or the count was too low.
+
+Added after the run (playtest fixes):
+- The ride's paces and stops (`docs/prologue.md`, "The ride's cues"): 3.5, 2, 3.2 and 2.5 m/s, 1.2 m/s² to speed up and slow down; the body cart at 2 m/s from 40 m past the pull-over, waiting 9 m off; a cue's lines dropped once the wagon is 12 to 40 m past (each cue sets its own); the warden's stop is 1 s after his lines.
+- Paused, nothing in a night counts time: the beats' and scenes' timers and loops wait with the tree (`PlayTime`).
+- A cue's or a beat's line waits until nobody's talking and no line is up (`Talk.quiet()`) on the ride and at the gate after it, so lines don't cover each other there.

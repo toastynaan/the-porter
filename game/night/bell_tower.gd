@@ -27,4 +27,4 @@ func ring(strokes: int) -> void:
 	_audio.global_position = bell.global_position
 	for i in strokes:
 		_audio.play()
-		await get_tree().create_timer(STROKE_GAP).timeout
+		await get_tree().create_timer(STROKE_GAP, false).timeout

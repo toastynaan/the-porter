@@ -12,6 +12,8 @@ const KNOCK := preload("res://art/sfx/sfx_knock.wav")
 
 
 func run() -> void:
+	# After the carter's last word.
+	await until(Talk.quiet)
 	await say("", "(The gate is shut and barred. A lantern burns over it, and no light behind.)")
 	await knock.wait_for_use()
 	if AudioOut.enabled():

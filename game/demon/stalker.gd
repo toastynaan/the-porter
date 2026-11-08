@@ -220,7 +220,7 @@ func _vanish() -> void:
 	if scripted:
 		active = false
 	vanished.emit()
-	get_tree().create_timer(quiet_lead).timeout.connect(func() -> void:
+	get_tree().create_timer(quiet_lead, false).timeout.connect(func() -> void:
 		if step == Step.WAIT:
 			_set_quiet(false))
 

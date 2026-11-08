@@ -128,7 +128,7 @@ func _count(p: Player) -> bool:
 	var looked := {}
 	var saw_dead := false
 	while targets.any(func(t: Node3D) -> bool: return looked.get(t, 0.0) < COUNT_LOOK):
-		var dt := get_physics_process_delta_time()
+		var dt := PlayTime.physics(self)
 		for t in targets:
 			var head := t.global_position + Vector3.UP * 1.6
 			if p.camera.global_position.distance_to(head) < COUNT_RANGE \

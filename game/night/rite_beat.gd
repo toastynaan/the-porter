@@ -52,7 +52,7 @@ func run() -> void:
 			return
 		var holding := p.global_position.distance_to(victim.global_position) < FREE_REACH \
 			and Input.is_action_pressed(&"interact")
-		_hold = _hold + get_physics_process_delta_time() if holding else 0.0
+		_hold = _hold + PlayTime.physics(self) if holding else 0.0
 		if _hold >= FREE_TIME:
 			GameState.set_flag(&"rite_stopped", &"freed")
 			victim.visible = false

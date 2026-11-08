@@ -8,11 +8,28 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 
 | Beat | What happens | Ends when |
 | --- | --- | --- |
-| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, through Aldgate, along the close streets and into the lane at 1.5 m/s *(mine)*, about 3 minutes. The porter sits at the back and can look about. At 40 s *(mine)* the wagon pulls over and a cart with a body under sacking passes close on his side; the traveller beside him talks as it goes by (`n0_traveller`, three answers). At the gate the carter sets him down (`n0_carter`) and drives off | He's in the lane |
+| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, through Aldgate, along the close streets and into the lane, about two minutes. The porter sits at the back, can look about, and turns with the wagon. He can talk to the traveller beside him at any time (`n0_traveller_road`). The ride's cues play as the wagon passes them (below). About 13 s in, the carter pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side, and the traveller breaks off whatever he was saying to talk about it (`n0_traveller`, three answers) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
 | `Arrive` | The gate is shut and barred, a lantern over it, and Cole isn't at it. He knocks (the `KnockGate` duty); nobody comes; the duty flame goes to Mab, whose first words send him to the Keys (`n0_mab`) | Mab has spoken to him |
 | `Inn` | The flame goes to Agnes by the fire; the bed answer gives him the room at the top | `n0_room`, or midnight |
 | `Window` | The bed in his room is wanted. Lying down: the cry, and he's at the window over the abbey wall. In the court a man with a lantern is killed by the well by a figure in a black habit, its back to the window, and dragged off toward the cellar. His notes say what he saw, or, if he'd drunk enough to see double, that he isn't sure (`window_killing`, `window_killing_drunk`). At midnight, if he isn't in bed, Agnes sends him up and it plays the same | The body is gone |
 | `Sleep` | "Lie down again. Sleep, if you can." | He sleeps: day 1 |
+
+**The ride's cues** (`RideCues` in `night0.tscn`, each a `RideCue`): markers beside the road, counted from the nearest point of the road, so moving one moves its moment. Each can say lines, play a sound, set the wagon's pace, stop it for a while, and turn people nearby to watch it. Their lines wait while the porter is talking, and are dropped once the wagon is `keep` metres past.
+
+| Cue | Where | What |
+| --- | --- | --- |
+| `Fields` | The start | Dusk over the fields; the carter means to be in before the gate shuts. Pace 3.5 m/s *(mine)* |
+| `WhiteChapel` | The chapel, 17 m on | Its bell rings for Vespers; the traveller on its name |
+| `Whoa` | 12 m before the pull-over | The carter pulls in to let the cart by |
+| `Wall` | 12 m short of Aldgate | The city wall, a lantern in the arch. Pace 2 m/s |
+| `Aldgate` | The warden, outside the arch | The wagon stops; once nobody's talking, the warden asks in or out, looks at him by lantern light and lets them through; 1 s more, then on at 3.2 m/s |
+| `Shutters` | The first houses | Shutters bang closed above as the wagon passes |
+| `Doorway` | A woman in a doorway | She watches it go by and crosses herself |
+| `Dog` | Farther in | A dog barks behind a door; the traveller says they bar their doors early since the pilgrims |
+| `Turn` | The corner into the lane | "Here's your lane, brother." Pace 2.5 m/s |
+| `Lane` | Halfway down the lane | The traveller: that wall's your abbey; bar your door at night |
+
+The wagon speeds up and slows down at 1.2 m/s² *(mine)*, and its rumble fades as it slows. The body cart starts 40 m past the pull-over and comes on at 2 m/s *(mine)*, waiting 9 m off until the wagon has pulled in. Paused, the ride waits.
 
 The killing (`WindowKilling`) is an implied death that feeds nothing (it's before the six nights). The victim's lantern is lit now (every `DeathScene` with `lantern`): the struggle is shapes against its light, then it falls, rolls and burns low on the ground.
 
@@ -56,7 +73,7 @@ While the gate stands open at dusk: Hob and Agnes at the Keys' door, Kit selling
 
 ## Talk
 
-`docs/dialogue.md` has the new parts: jumps that test flags (`-> point [if flag]`), `[if night=N]`, and `[drink]`. Night 0's conversations are in `game/dialogue/night0/` (the traveller, the carter, Mab, Hob, Agnes, Jankin, Walter, Roger, Ralph, Kit, Gib, Margery), all DRAFT.
+`docs/dialogue.md` has the new parts: jumps that test flags (`-> point [if flag]`), `[if night=N]`, and `[drink]`. Night 0's conversations are in `game/dialogue/night0/` (the traveller on the road and at the body cart, the carter, Mab, Hob, Agnes, Jankin, Walter, Roger, Ralph, Kit, Gib, Margery), all DRAFT.
 
 ## Sounds
 
@@ -64,7 +81,7 @@ New placeholders (`tools/build/sfx_placeholders.py`): the wagon rumbling (wheels
 
 ## Tests and tools
 
-- **`test_prologue`:** from New Game: the ride's length, the body cart passing close, the traveller's talk, set down by the barred gate with nobody at it; the knock and Mab; Agnes's room; ales blurring, doubling and wearing off; the curfew emptying the lane but not the Keys; Gib's call; the squint scare seen through the slit and gone; lying down and the killing through the window, the body dragged off, the drunk note; sleep; day 1's headache until noon, the open gate, the sand, the tour's six stops, the lie, the key, Anselm's warning, the nap to night 1's dusk; the tour skipped on a replay.
+- **`test_prologue`:** from New Game, the ride at its own pace: about two minutes with the cues' lines; talking to the traveller, cut short with no parting line as the carter pulls in and the body cart passes close; paused, the wagon and the clock wait; the stop at Aldgate and the warden; at the gate the wagon waits for a talk to end, the carter's word, set down by the barred gate with nobody at it, and the wagon driving off down the lane; the knock and Mab; Agnes's room; ales blurring, doubling and wearing off; the curfew emptying the lane but not the Keys; Gib's call; the squint scare seen through the slit and gone; lying down and the killing through the window, the body dragged off, the drunk note; sleep; day 1's headache until noon, the open gate, the sand, the tour's six stops, the lie, the key, Anselm's warning, the nap to night 1's dusk; the tour skipped on a replay.
 - **`test_lane`:** Hob's dusk lines on night 2 with the merchant dead and alive; drink's numbers; peeking from the cell (25°, a hunter seeing him only up close with a light); no scare before the bell; the bell, the shut Keys, the lane emptying, the windows going dark, Gib calling and silenced; the scare once; sleep clearing the drink and the headache.
 - **`test_flow`** plays night 0 and day 1 in full (`NightPilot.play_night0`, `play_day1`).
 - **`tools/m12_shots.sh`:** stills to `art/_review/m12/`.

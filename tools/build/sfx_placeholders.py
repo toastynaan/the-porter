@@ -580,6 +580,32 @@ def watch_call(rng):
     return lowpass(mix(voiced, gain(hiss, 0.1)), 2400)
 
 
+def bark(rng):
+    """One bark: a falling, rough voiced tone with a breathy edge."""
+    n = int(rng.uniform(0.16, 0.22) * RATE)
+    out, phase = [], 0.0
+    f0 = rng.uniform(300, 360)
+    for i in range(n):
+        t = i / n
+        phase += f0 * (1.0 - 0.3 * t) / RATE
+        v = sum(math.sin(2 * math.pi * h * phase) / h for h in range(1, 8))
+        out.append(v * (1.0 - t) ** 1.5 * min(1.0, t * 30.0))
+    rough = [a * b for a, b in zip(bandpass(noise(n, rng), 1200, 0.9), env(n, 0.005, 0.06))]
+    return bandpass(mix(out, gain(rough, 0.5)), 750, 0.7)
+
+
+def dog(rng):
+    """A dog behind a door: two barks, then a third, shorter."""
+    return mix(bark(rng), pad(bark(rng), 0.32), pad(gain(bark(rng), 0.7), 0.75))
+
+
+def shutters(rng):
+    """Wooden shutters banged closed, one after another, up a street."""
+    bangs = [pad(gain(mix(thud(rng), pad(gain(latch(rng), 0.5), 0.02)), g), d)
+             for d, g in ((0.0, 1.0), (0.55, 0.7), (1.3, 0.45))]
+    return mix(*bangs)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -636,6 +662,10 @@ def main():
     write("amb_wagon_loop.wav", wagon(run), peak=0.6)
     write("amb_taproom_loop.wav", murmur(run, 12.0), peak=0.5)
     write("sfx_watch_call.wav", watch_call(run), peak=0.6)
+    # Added after the run (the ride's cues), with their own seed.
+    ride = random.Random(1424)
+    write("sfx_dog.wav", dog(ride), peak=0.7)
+    write("sfx_shutters.wav", shutters(ride), peak=0.8)
 
 
 if __name__ == "__main__":

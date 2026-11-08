@@ -2,8 +2,11 @@ extends Node
 ## Night 0 and day 1 (docs/mechanics.md, "Night 0 and day 1" and "Tests";
 ## docs/full-game-run.md, M12), through main.tscn from New Game to night 1's
 ## dusk in one run:
-## - night 0: the ride in arrives at the lane (about three minutes at its own
-##   pace, the body going by in the first minute, the traveller's talk); the
+## - night 0: the ride in arrives at the lane (about two minutes at its own
+##   pace; talking to the traveller, cut short by the body cart going by as
+##   the carter pulls in; paused, it waits; the warden at Aldgate; the wagon
+##   waits at the gate for a talk to end, the carter's word, and it drives
+##   off); the
 ##   gate barred, nobody at it; the knock and Mab sending him to the Keys;
 ##   Agnes's room; ales blur and wear off; the curfew bell, Gib's call and the
 ##   squint scare once; lying down plays the cry and the window (the killing,
@@ -41,39 +44,101 @@ func _run() -> void:
 	_flow.card.seconds = 0.3
 	await _frames(5)
 
-	# Night 0: the ride.
+	# Night 0: the ride, at its own pace.
 	_button(_flow.title, "New Game").pressed.emit()
 	await _until(func() -> bool: return _level() != null and _level().get_node_or_null(^"Director") != null, 10.0)
 	var night := _level()
 	var pilot := NightPilot.new(night, _check)
 	var ride := night.get_node(^"Director/Ride")
-	var length := 0.0
-	var pts: Array[Vector3] = (ride as NightBeat).points(night.get_node(^"Road/RidePath"))
-	for i in range(1, pts.size()):
-		length += pts[i - 1].distance_to(pts[i])
-	var minutes := length / float(ride.get(&"speed")) / 60.0
-	_check(minutes > 2.5 and minutes < 3.5 and float(ride.get(&"meet_at")) < 60.0,
-		"the ride takes about three minutes (%.1f), the body goes by in the first" % minutes)
+	var accel: float = ride.get(&"accel")
 	pilot.shorten()
+	ride.set(&"pace_scale", 1.0)
+	ride.set(&"accel", accel)
 	await _until(func() -> bool: return pilot.beat() == &"Ride" and pilot.player.riding != null, 5.0)
 	var p := pilot.player
 	_check(GameState.night == 0 and p.riding != null and GameState.has_flag(&"n0_riding"), "New Game: night 0, on the carter's wagon")
 	var wagon := night.get_node(^"Wagon") as Node3D
 	var cart := night.get_node(^"BodyCart") as Node3D
+	var talker := (ride.get(&"traveller") as Node3D).get_node(^"Talker") as Talker
+	var answer_with := Talk.auto_choice
+	# He turns to the traveller at once and is still thinking of an answer
+	# when the cart comes.
+	Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
+	talker.interact(p)
+	await _until(func() -> bool: return Talk.is_choosing(), 10.0)
+	_check(Talk.talking and GameState.has_flag(&"talked_n0_traveller_road") and not GameState.has_flag(&"talked_n0_traveller"),
+		"he can talk to the traveller on the road before the cart comes")
+	var said_before := Talk.history.size()
 	var closest := INF
-	var started := wagon.global_position
-	var moved := 0.0
-	while not GameState.has_flag(&"n0_arrived") and is_instance_valid(wagon) and is_instance_valid(cart):
-		closest = minf(closest, cart.global_position.distance_to(wagon.global_position))
-		moved = wagon.global_position.distance_to(started)
+	var elapsed := 0.0
+	var still := 0.0
+	var stops: Array[Vector3] = []
+	var last := wagon.global_position
+	var paused_ok := false
+	var hooked := false
+	var parted := false
+	var held_talk := false
+	var waited_at_gate := false
+	var walked := [false]
+	while not GameState.has_flag(&"n0_arrived") and elapsed < 300.0:
 		await get_tree().physics_frame
-	_check(closest < 4.0 and closest > 2.0 and moved > 10.0, "the wagon drives itself; the body cart passes close by on the other side of the road (%.1f m)" % closest)
-	await _until(func() -> bool: return GameState.has_flag(&"talked_n0_traveller"), 10.0)
-	_check(GameState.has_flag(&"talked_n0_traveller"), "the traveller talks as the body goes by")
-	await _until(func() -> bool: return pilot.beat() == &"Arrive" and not Talk.talking, 60.0)
+		elapsed += get_physics_process_delta_time()
+		if not is_instance_valid(cart):
+			break
+		closest = minf(closest, cart.global_position.distance_to(wagon.global_position))
+		var at := wagon.global_position
+		still = still + get_physics_process_delta_time() if at.distance_to(last) < 0.0001 else 0.0
+		last = at
+		if still >= 0.5 and (stops.is_empty() or stops[-1].distance_to(at) > 1.0):
+			stops.append(at)
+		if not hooked and GameState.has_flag(&"talked_n0_traveller"):
+			hooked = true
+			parted = Talk.history.slice(said_before).any(func(l: Array) -> bool: return l[1] == "Suit yourself, brother.")
+			Talk.auto_choice = answer_with
+		if hooked and not paused_ok and at.x > -150.0 and at.x < -140.0:
+			# Paused: the wagon, the cart and the clock wait.
+			var hour_then := GameState.hour
+			_flow.open_pause()
+			await _frames(60)
+			paused_ok = get_tree().paused and wagon.global_position.is_equal_approx(at) and GameState.hour == hour_then
+			_flow.resume()
+			last = wagon.global_position
+		if hooked and not held_talk and at.x > -46.0 and at.z < 30.0 and not Talk.talking:
+			# In the lane he turns to the traveller again, and is still talking
+			# when the wagon stops.
+			held_talk = true
+			Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
+			talker.interact(p)
+		if held_talk and not walked[0] and still > 1.0 and at.z < 6.0:
+			waited_at_gate = p.riding != null and Talk.talking and not GameState.has_flag(&"n0_arrived")
+			Talk.auto_choice = func(o: PackedStringArray) -> int:
+				if walked[0]:
+					return 0
+				walked[0] = true
+				return o.size() - 1
+	var pulled_in := stops.any(func(s: Vector3) -> bool: return absf(s.x - pilot.mark("PullOver").x) < 1.5)
+	_check(hooked and not parted and pulled_in and closest < 4.0 and closest > 2.0,
+		"the carter pulls in for the body cart (stopped at %s), it passes close by on his side (%.1f m), and the traveller breaks off to talk about it" % [str(stops), closest])
+	_check(paused_ok, "paused, the wagon and the clock wait")
+	var warden := night.get_node(^"RoadFolk/Warden") as Node3D
+	var at_gate := stops.any(func(s: Vector3) -> bool: return absf(s.x - warden.global_position.x) < 1.5)
+	var warden_spoke := Talk.history.any(func(l: Array) -> bool: return l[0] == "Warden")
+	_check(at_gate and warden_spoke, "the wagon stops at Aldgate, and the warden looks them over")
+	var cues_said := Talk.history.filter(func(l: Array) -> bool: return l[0] == "Carter" or l[0] == "Traveller").size()
+	_check(elapsed > 75.0 and elapsed < 150.0 and cues_said >= 8,
+		"the ride takes about two minutes (%.0f s), with something said along the way (%d lines)" % [elapsed, cues_said])
+	_check(waited_at_gate, "at the gate the wagon waits until he's done talking")
+	await _until(func() -> bool: return GameState.has_flag(&"talked_n0_carter") and not Talk.talking, 30.0)
+	Talk.auto_choice = answer_with
 	var gate := night.get_node(^"AbbeyGate") as AbbeyGate
-	_check(GameState.has_flag(&"n0_arrived") and p.riding == null and p.global_position.distance_to(pilot.mark("SetDown")) < 1.0
-		and not is_instance_valid(wagon), "the carter sets him down in the lane by the gate")
+	_check(GameState.has_flag(&"n0_arrived") and GameState.has_flag(&"talked_n0_carter") and p.riding == null
+		and p.global_position.distance_to(pilot.mark("SetDown")) < 1.0, "the carter sets him down in the lane by the gate, and has a word")
+	var last_z := wagon.global_position.z if is_instance_valid(wagon) else INF
+	while is_instance_valid(wagon):
+		last_z = wagon.global_position.z
+		await get_tree().physics_frame
+	_check(last_z < -30.0, "and drives off down the lane (%.0f)" % last_z)
+	await _until(func() -> bool: return pilot.beat() == &"Arrive" and not Talk.talking, 10.0)
 	_check(not gate.is_open() and gate.bar.visible and not (night.get_node(^"People/Cole") as Node3D).visible,
 		"the gate is shut and barred, and nobody keeps it")
 

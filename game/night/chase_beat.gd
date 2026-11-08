@@ -50,7 +50,7 @@ func run() -> void:
 	var searched := false
 	while true:
 		await get_tree().physics_frame
-		var dt := get_physics_process_delta_time()
+		var dt := PlayTime.physics(self)
 		for b in blockers.get_children():
 			if b is Marker3D and not used.has(b) and p.global_position.distance_to((b as Marker3D).global_position) < blocker_radius:
 				if stalker.appear_ahead((b.get_node(^"Stand") as Node3D).global_position):
@@ -90,7 +90,7 @@ func _nearly_caught(p: Player) -> void:
 	var t := 0.0
 	while t < 3.0 and hunter.global_position.distance_to(p.global_position) > 6.0 and hunter.state != Hunter.State.CHASE:
 		await get_tree().physics_frame
-		t += get_physics_process_delta_time()
+		t += PlayTime.physics(self)
 	# He is on you; Thomas's hand is quicker.
 	hunter.stand_still()
 	p.controls_locked = true

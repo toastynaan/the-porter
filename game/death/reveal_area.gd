@@ -11,7 +11,7 @@ func interact(_by: Node) -> void:
 	if _busy or hidden_body == null:
 		return
 	_busy = true
-	while not hidden_body.work(get_physics_process_delta_time()):
+	while not hidden_body.work(PlayTime.physics(self)):
 		await get_tree().physics_frame
 		if not (Input.is_action_pressed(&"interact") or hidden_body.get_meta(&"auto", false)):
 			break

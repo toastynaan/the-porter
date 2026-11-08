@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="prop_mat"]
+
+[sub_resource type="CylinderMesh" id="Mesh_Staff"]
+material = ExtResource("prop_mat")
+top_radius = 0.02
+bottom_radius = 0.025
+height = 2.1
+
+[sub_resource type="BoxMesh" id="Mesh_Lantern"]
+size = Vector3(0.14, 0.2, 0.14)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Glow"]
+albedo_color = Color(1, 0.78, 0.45, 1)
+emission_enabled = true
+emission = Color(1, 0.62, 0.3, 1)
+emission_energy_multiplier = 2.0
+
+[node name="Warden" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the warden at Aldgate, night 0's road in: solid, a dark cloak over a leather jerkin. Props: a tall staff, and a lantern he holds up to look at who comes in. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 0
+tunic = true
+face_color = Color(0.741, 0.588, 0.486, 1)
+cloth_color = Color(0.200, 0.180, 0.165, 1)
+
+[node name="Staff" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 1.05, -0.05)
+cast_shadow = 0
+mesh = SubResource("Mesh_Staff")
+
+[node name="Lantern" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 1.25, -0.25)
+cast_shadow = 0
+mesh = SubResource("Mesh_Lantern")
+surface_material_override/0 = SubResource("Mat_Glow")
+
+[node name="Light" type="OmniLight3D" parent="Lantern"]
+light_color = Color(1, 0.72, 0.42, 1)
+light_energy = 1.4
+omni_range = 5.0
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)

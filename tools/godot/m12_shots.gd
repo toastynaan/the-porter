@@ -31,8 +31,8 @@ func _ready() -> void:
 	var p := _pilot.player
 	(night.get_node(^"Hallucinations") as Hallucinations).active = false
 	var ride := night.get_node(^"Director/Ride")
-	ride.set(&"speed", 7.0)
-	ride.set(&"meet_at", 9.0)
+	ride.set(&"pace_scale", 2.0)
+	ride.set(&"accel", 5.0)
 	_pilot.clock().set_pace(3600.0, 0.1)
 
 	# The ride.

@@ -74,7 +74,7 @@ func use(path: String) -> void:
 ## very fast while he dozes.
 func shorten() -> void:
 	var d := director()
-	var settings := {^"Knocks": {&"knock_every": 1.0, &"visitor_speed": 6.0}, ^"Ride": {&"speed": 20.0, &"meet_at": 3.0},
+	var settings := {^"Knocks": {&"knock_every": 1.0, &"visitor_speed": 6.0}, ^"Ride": {&"pace_scale": 8.0, &"accel": 60.0},
 		^"Choir": {&"office_time": 0.5}, ^"Crypt": {&"quiet_time": 0.5}}
 	for beat_path: NodePath in settings:
 		var node := d.get_node_or_null(beat_path)

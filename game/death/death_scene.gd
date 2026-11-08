@@ -143,13 +143,13 @@ func drag_to(to: Vector3, speed := 1.0) -> void:
 	var d := start.distance_to(to)
 	var t := 0.0
 	while t < d / speed and is_instance_valid(killer):
-		t += get_physics_process_delta_time()
+		t += PlayTime.physics(self)
 		var at := start.lerp(to, minf(t * speed / d, 1.0))
 		killer.global_position = at
 		var dir := (to - start).normalized()
 		killer.rotation = Vector3(0.0, atan2(dir.x, dir.z), 0.0)
 		dragged.global_position = at - dir * 0.9 + Vector3.UP * 0.15
-		await get_tree().physics_frame
+		await PlayTime.physics_frame(self)
 	if is_instance_valid(killer):
 		killer.queue_free()
 	killer = null
@@ -209,7 +209,7 @@ func _struggle(seconds: float) -> void:
 		if killer and killer_node == null:
 			killer.rotation.z = -k * 0.5
 		await get_tree().process_frame
-		t += get_process_delta_time()
+		t += PlayTime.idle(self)
 	if _figure:
 		_figure.rotation.z = 0.0
 	if killer and killer_node == null:
@@ -362,7 +362,7 @@ func _until_unseen(node: Node3D, seconds: float) -> void:
 		if node is Corpse:
 			at = (node as Corpse).centre()
 		var seen := camera != null and ViewCheck.on_screen(camera, [at, node.global_position + Vector3.UP * 0.3])
-		away = 0.0 if seen else away + get_process_delta_time()
+		away = 0.0 if seen else away + PlayTime.idle(self)
 		await get_tree().process_frame
 
 

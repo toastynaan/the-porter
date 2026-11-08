@@ -72,14 +72,14 @@ material = ExtResource("stone")
 surface = "stone"
 
 [node name="ChapelNave" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 62.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 0.00, 62.00)
 script = ExtResource("block")
 size = Vector3(14, 5, 7)
 material = ExtResource("plaster")
 surface = "stone"
 
 [node name="ChapelRoof" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 5.00, 62.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 5.00, 62.00)
 script = ExtResource("block")
 size = Vector3(14.6, 3, 7.6)
 material = ExtResource("roof")
@@ -87,7 +87,7 @@ surface = "stone"
 shape = 1
 
 [node name="ChapelTower" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -241.00, 0.00, 62.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -193.00, 0.00, 62.00)
 script = ExtResource("block")
 size = Vector3(3.5, 10, 3.5)
 material = ExtResource("plaster")
@@ -145,7 +145,7 @@ transform = Transform3D(0.979845, 0, -0.199759, 0, 1, 0, 0.199759, 0, 0.979845, 
 transform = Transform3D(-0.985934, 0, -0.167134, 0, 1, 0, 0.167134, 0, -0.985934, -168.96, 0.00, 36.49)
 
 [node name="Yew3" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.999969, 0, 0.00781843, 0, 1, 0, -0.00781843, 0, -0.999969, -183.88, 0.00, 62.56)
+transform = Transform3D(-0.999969, 0, 0.00781843, 0, 1, 0, -0.00781843, 0, -0.999969, -232.00, 0.00, 62.56)
 
 [node name="Yew4" parent="." instance=ExtResource("yew")]
 transform = Transform3D(-0.132122, 0, 0.991233, 0, 1, 0, -0.991233, 0, -0.132122, -200.83, 0.00, 33.82)
@@ -169,10 +169,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -116.30, 3.20, 44.60)
 editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."
 
 [node name="P0" type="Marker3D" parent="RidePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -286.00, 0.00, 47.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -210.00, 0.00, 47.00)
 
 [node name="P1" type="Marker3D" parent="RidePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 47.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 0.00, 47.00)
 
 [node name="P2" type="Marker3D" parent="RidePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -160.00, 0.00, 47.00)

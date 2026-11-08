@@ -54,7 +54,7 @@ A save is a snapshot of the whole state (`GameState.snapshot()`) and the name of
 
 All in the manuscript style: parchment pages, blackletter only for titles, EB Garamond for the rest (`game/ui/manuscript.gd`, `game/ui/menus/`).
 
-- **Pause:** Esc or Start. The night stops (the tree pauses, lines wait) and the mouse is free. Resume, Settings, How to Play, Quit to the Title.
+- **Pause:** Esc or Start. The night stops (the tree pauses, lines wait, and every beat and scene that counts time stops counting: `PlayTime`) and the mouse is free. Resume, Settings, How to Play, Quit to the Title.
 - **Settings** apply at once and are saved when you leave the page (`user://settings.cfg`, the `Settings` autoload): field of view 60–90°, look sensitivity, invert look, volume, crouch held or toggled, subtitle size (small, medium, large), a dark band behind subtitles, less motion (no head bob, almost no lantern sway, half the stumble), guidance (the duty flame) and a faster clock (off by default: 2 minutes an hour instead of 3) *(mine)*.
 - **How to Play:** the porter's work in four sentences and the controls.
 

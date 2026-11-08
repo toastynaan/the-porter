@@ -7,9 +7,9 @@ script = ExtResource("1_convo")
 id = &"n0_traveller"
 text = "# DRAFT
 # A traveller beside the porter on the carter's wagon, night 0: the road in from the white chapel to Aldgate at dusk.
-# He opens as the cart with the covered body goes by. One choice, a short reply, and he's done.
+# He opens as the carter pulls in and the cart with the covered body goes by (breaking off any talk on the road; traveller_road.tres is that talk). One choice, a short reply, and he's done.
 == start
-(A cart goes by the other way, pulled in close to the ditch. Something long lies under sacking on its bed.)
+(The cart creaks by close enough to touch, its driver's hood pulled low. Something long lies under sacking on its bed.)
 Traveller: You saw that, brother? A pilgrim, found in the ditch by the white chapel. The third this month.
 Traveller: The carter says you're for the abbey inside Aldgate. The new porter, is it?
 Traveller: Pilgrims go in at that gate to see the saint. Not all of them are seen to come out.

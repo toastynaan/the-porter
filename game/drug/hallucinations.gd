@@ -189,7 +189,7 @@ func _shape_life(shape: Node3D, p: Player) -> void:
 		if ViewCheck.off_centre(p.camera, shape.global_position + Vector3.UP * 1.5) < SHAPE_SEEN_ANGLE:
 			break
 		await get_tree().process_frame
-		t += get_process_delta_time()
+		t += PlayTime.idle(self)
 	if is_instance_valid(shape):
 		shape.queue_free()
 
@@ -222,9 +222,9 @@ func _face_life(face: Decal, p: Player) -> void:
 	var t := 0.0
 	while t < 20.0 and stared < 1.5 and is_instance_valid(face):
 		if ViewCheck.off_centre(p.camera, face.global_position) < 15.0:
-			stared += get_process_delta_time()
+			stared += PlayTime.idle(self)
 		await get_tree().process_frame
-		t += get_process_delta_time()
+		t += PlayTime.idle(self)
 	if is_instance_valid(face):
 		face.queue_free()
 

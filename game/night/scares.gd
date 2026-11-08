@@ -141,7 +141,7 @@ func _gone_unseen(node: Node3D, seconds: float) -> void:
 	var t := 0.0
 	var p := _player()
 	while is_instance_valid(node) and p and t < 8.0:
-		t += get_process_delta_time()
+		t += PlayTime.idle(self)
 		if t > seconds and not ViewCheck.on_screen(p.camera, [node.global_position + Vector3.UP * 1.0]):
 			break
 		await get_tree().process_frame

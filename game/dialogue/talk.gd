@@ -10,7 +10,8 @@ extends CanvasLayer
 ## view eases in on their face and he stands still, `interact` skips to the
 ## next line, and every choice ends with "Walk away". Moving walks away too.
 ## Once he has walked away, say() and choose() (-1) return at once until the
-## conversation is ended.
+## conversation is ended. interrupt() ends one the same way, without the
+## parting lines, when something else comes up (the body cart on the road in).
 ##
 ## Choices: number keys, or the arrow keys and `interact`. A line said while
 ## a choice is open shows over its question for a moment and then gives it
@@ -64,6 +65,10 @@ var _line_id := 0
 var _leave_index := -1
 ## Goes up at every reset(); talk begun before it stops.
 var _gen := 0
+## The open conversation is being cut short (interrupt()).
+var _interrupted := false
+## Lines said and not yet over.
+var _lines_up := 0
 var _backing: StyleBoxFlat
 
 
@@ -120,10 +125,12 @@ func say(speaker: String, text: String, seconds := -1.0) -> void:
 	if t <= 0.0:
 		t = line_seconds if line_seconds >= 0.0 else maxf(MIN_SECONDS, text.length() / CHARS_PER_SECOND)
 	get_tree().create_timer(t, false).timeout.connect(func() -> void: _line_over.emit(id))
+	_lines_up += 1
 	while true:
 		var over: int = await _line_over
 		if over == id or over == -1:
 			break
+	_lines_up -= 1
 	if gen != _gen:
 		return
 	if id == _line_id:
@@ -208,7 +215,7 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 		return
 	var walked := left
 	end()
-	if walked and conversation.has_point(Conversation.LEAVE):
+	if walked and not _interrupted and conversation.has_point(Conversation.LEAVE):
 		_say_all(conversation.point(Conversation.LEAVE).lines)
 
 
@@ -229,6 +236,23 @@ func begin(with: Node3D, cone := TALK_CONE) -> bool:
 	if not p.walked_away.is_connected(_walk_away):
 		p.walked_away.connect(_walk_away)
 	return true
+
+
+## Cuts the open conversation short, as if he'd walked away but with no
+## parting lines; returns once it's closed.
+func interrupt() -> void:
+	if not talking:
+		return
+	_interrupted = true
+	_walk_away()
+	# A conversation converse() plays closes within a frame or two; one a
+	# beat opened with begin() is closed here.
+	for i in 10:
+		if not talking:
+			break
+		await get_tree().process_frame
+	end()
+	_interrupted = false
 
 
 ## Closes the conversation; his view comes back.
@@ -268,6 +292,12 @@ func _player() -> Player:
 
 func is_choosing() -> bool:
 	return not _choices.is_empty()
+
+
+## Nobody's talking and no line is up: a beat can say something without
+## stepping on anyone.
+func quiet() -> bool:
+	return not talking and _lines_up == 0
 
 
 func _input(event: InputEvent) -> void:

@@ -115,6 +115,8 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_ralph` | Ralph the chandler: short and heavy | A bundle of candles |
 | `chr_kit` | Kit, Ralph's daughter: small, quick | A basket of candles |
 | `chr_traveller` | The traveller on the wagon: lean, road-worn | A pack |
+| `chr_warden` | The warden at Aldgate on the road in: solid, a dark cloak over a leather jerkin | A tall staff, and a lit lantern |
+| `chr_townswoman` | A woman in a doorway on the road in: a plain dark dress | None |
 | `chr_cat` | The abbey cat, black, 0.45 m, eyes that catch the light (worn by `game/npc/cat.tscn`) | None |
 | `chr_saint` | The Hungry Saint: about 2.6 m, too thin, bent forward, no horns, unshaded black | None |
 | `chr_body` | A body: the ragdoll rig (`game/ragdoll`) in the victim's colours, standing until it falls (`Corpse`) | None |

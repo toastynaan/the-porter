@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n0_traveller_road"
+text = "# DRAFT
+# The traveller beside the porter on the carter's wagon, night 0, when the porter turns to talk to him on the road in.
+# Before the cart with the body: small talk. After it (talked_n0_traveller): he has said his piece about the abbey, and points him to the Keys.
+# The body cart cuts this talk short when it comes (Talk.interrupt), with no parting line.
+== start
+-> after [if talked_n0_traveller]
+-> hello
+
+== hello
+Traveller: Evening, brother. Cold for Martinmas Eve.
+Traveller: You've the look of a man who's been on the road since Lauds.
+-> topics
+
+== again
+-> after [if talked_n0_traveller]
+-> still
+
+== still
+Traveller: Still with me, brother? Talk won't make the carter go any faster.
+-> topics
+
+== topics
+* [if not n0_road_from] Where have you come from? -> from
+* [if not n0_road_trade] What takes you into London? -> trade
+* [if not n0_road_carter] Is the carter always in such a hurry? -> carter
+
+== from [set n0_road_from]
+Traveller: Colchester, by way of every ditch in Essex.
+Traveller: And you're from some little house in the country, by your boots. Sent up to the city to be useful.
+-> topics
+
+== trade [set n0_road_trade]
+Traveller: Wool. I buy it cheap in Colchester and sell it dear in Cheapside, and every toll on the road robs me between.
+Traveller: I'll sleep at Aldgate tonight, and be gone by Saint Edmund's.
+-> topics
+
+== carter [set n0_road_carter]
+Traveller: They shut the city gates at the curfew bell. Be on the wrong side and you sleep in the ditch.
+Traveller: He doesn't care to sleep in a ditch. Not this month.
+-> topics
+
+== after
+Traveller: I've said my piece, brother. Keep your hood up.
+-> after_topics
+
+== after_topics
+* [if not n0_road_think] What do you think goes on in that abbey? -> think
+* [if not n0_road_ask] Who would know more? -> ask
+
+== think [set n0_road_think]
+Traveller: I think a man goes in at that gate with a full purse, and nobody sees him come out.
+Traveller: Call that what you like. I'd call it a reason to keep walking.
+-> after_topics
+
+== ask [set n0_road_ask]
+Traveller: The inn across the lane from your gate. The Cross Keys.
+Traveller: Buy the landlord an ale and he'll talk till the candle's out.
+-> after_topics
+
+== leave
+Traveller: Suit yourself, brother.
+"
