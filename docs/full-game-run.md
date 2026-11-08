@@ -136,7 +136,7 @@ On night 6 its last victim at Matins is Brother Simon if he lived, otherwise a p
 | Brothers | Each walks a routine by the hour (Osric locks the cellar at nine; Thomas grinds herbs; lit windows show who's up). A routine that breaks is a clue. Each remembers how you treated them |
 | Weather | Rain on nights 1–2 halves what the hunter hears, and what you hear. Fog on night 4 cuts sight to a few metres for you and for him. Snow on night 6 leaves footprints you and the hunters can follow |
 | The cat | Follows you on rounds, stares into corners (sometimes a man is there), runs before the demon |
-| Dosing | Bread (+10), incense (+25, from night 4 avoidable by the door), Thomas's remedy (+15), the well from night 4 (+5 a drink), Thomas's wine on night 6 (+40) |
+| Dosing | Bread (+10), incense (+25, from night 4 avoidable by the door), Ranulf's remedy (+15), the well from night 4 (+5 a drink), Thomas's wine on night 6 (+40) |
 | Gate visitors | The doc's knocks, all written: the merchant, Walter, the knock with no one there, Joan, the sailor, Roger, Mab inside, pilgrims. The cult tears ledger pages |
 | The Hungry Saint | Night 6 only. It walks slowly and moves in view. Darkness doesn't hide you from it, silence comes before it, and its touch is death. It kills cultists too |
 | Fire | Take a flame to the granary or the crypt. The fire spreads along set paths, smoke cuts your sight and burns, and you have to get out |

@@ -228,7 +228,7 @@ A hidden **Suspicion** value (0–100) tracks how much the cult thinks you know.
 | --- | --- |
 | Finding a body and not reporting it the "right" way (to Thomas) | +15 |
 | Being seen in a restricted area (crypt, granary at night) | +10 |
-| Refusing bread, wine or Thomas's remedy | +5 to +20 |
+| Refusing bread, wine or Ranulf's remedy | +5 to +20 |
 | Asking the wrong brother the wrong question | +5 to +15 |
 | Admitting a guest the cult wanted kept out, or turning away one they wanted in | +10 |
 | Telling the prior anything | +10 (Ranulf overhears) |
@@ -383,7 +383,7 @@ Build in priority order. P0 makes one night playable; P1 makes six nights; P2 is
 | Hallucination post-process | Vignette, chromatic shift, breathing walls, light bending | Screen-space shader on a full-screen quad; uniforms driven by Dose | P0 |
 | Hunter AI | Patrol, investigate, chase, search, lose track | NavigationAgent3D plus a state machine or behaviour tree (LimboAI or Beehave addons) | P0 |
 | Hiding and breath | Enter spot, hold breath, hunter checks | Area3D per spot with noise and check-chance exports | P0 |
-| Dialogue with memory | Conversations that read and set flags | Dialogic 2 addon, with conditions on the game-state flags | P1 |
+| Dialogue with memory | Conversations that read and set flags | Our own Talk and Conversation system (M7, `docs/dialogue.md`), with tags on the game-state flags | P1 |
 | NPC schedules | Who is where at each phase | Per-NPC schedule Resource: phase → location marker → activity | P1 |
 | Gate visitors | Knock, grate conversation, admit or refuse | Visitor Resources (scripted plus generated pilgrims) queued per night | P1 |
 | Headcount | Count brothers in the choir at Matins | Seat markers in the choir; schedules fill or leave them empty | P1 |

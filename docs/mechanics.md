@@ -234,7 +234,7 @@ There's no quest log and no arrows; the notes are in his hand, oldest first, a p
 
 | Count | It | Source |
 | --- | --- | --- |
-| 7–8 | Stays in the crypt; going down there is the danger | Run spec |
+| 8 or fewer | Stays in the crypt; going down there is the danger | Run spec |
 | 9 | Walks the abbey at 0.9 m/s | *mine* |
 | 10–11 | Walks at 1.2 m/s and kills any cultist it meets | *mine* |
 
