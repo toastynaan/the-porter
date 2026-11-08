@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="prop_mat"]
+
+[sub_resource type="BoxMesh" id="Mesh_Basket"]
+material = ExtResource("prop_mat")
+size = Vector3(0.3, 0.16, 0.2)
+
+[node name="Kit" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Kit, Ralph's daughter, who sells candles at the gate: small, quick. Prop: a basket of candles. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 3
+tunic = true
+face_color = Color(0.816, 0.659, 0.565, 1)
+cloth_color = Color(0.353, 0.290, 0.220, 1)
+
+[node name="Basket" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.75, -0.1)
+cast_shadow = 0
+mesh = SubResource("Mesh_Basket")
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48, -0.12)

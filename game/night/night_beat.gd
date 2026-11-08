@@ -64,6 +64,12 @@ func sleep_through_the_day(keeps: float, line: String) -> void:
 	GameState.seconds_per_hour = 0.0
 	GameState.dose_floor = 0.0
 	GameState.snap_dose(GameState.dose * keeps)
+	# Sleep clears the drink; three ales or more and he wakes with a headache.
+	GameState.flags.erase(&"hangover")
+	if int(GameState.get_flag(&"drank", 0)) >= 3:
+		GameState.set_flag(&"hangover")
+	GameState.flags.erase(&"drank")
+	GameState.drink = 0.0
 	# While he sleeps the cult scrubs what would prove men did it.
 	BloodMarks.clean_at_dawn(get_tree())
 	Lateness.clean_night()

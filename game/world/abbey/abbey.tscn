@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://game/world/ambience/wind.gd" id="18_rgnk3"]
 [ext_resource type="PackedScene" path="res://game/world/abbey/areas/street.tscn" id="20_street"]
 [ext_resource type="PackedScene" path="res://game/world/abbey/areas/gardens.tscn" id="21_gardens"]
+[ext_resource type="PackedScene" path="res://game/world/kit/wall_squint.tscn" id="22_squint"]
 
 [node name="Abbey" type="Node3D" unique_id=1216566674]
 
@@ -196,7 +197,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40,
 [node name="PrecinctW_07" parent="Navigation/Grounds/Walls" unique_id=1808139415 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -10)
 
-[node name="PrecinctW_08" parent="Navigation/Grounds/Walls" unique_id=1299576912 instance=ExtResource("3_43vra")]
+[node name="PrecinctW_08" parent="Navigation/Grounds/Walls" unique_id=1299576912 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -6)
 
 [node name="PrecinctW_09" parent="Navigation/Grounds/Walls" unique_id=36853933 instance=ExtResource("5_lb8pl")]
@@ -205,13 +206,13 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40,
 [node name="PrecinctW_10" parent="Navigation/Grounds/Walls" unique_id=1375047032 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 2)
 
-[node name="PrecinctW_11" parent="Navigation/Grounds/Walls" unique_id=674220176 instance=ExtResource("3_43vra")]
+[node name="PrecinctW_11" parent="Navigation/Grounds/Walls" unique_id=674220176 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 6)
 
 [node name="PrecinctW_12" parent="Navigation/Grounds/Walls" unique_id=347341517 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 10)
 
-[node name="PrecinctW_13" parent="Navigation/Grounds/Walls" unique_id=906038548 instance=ExtResource("3_43vra")]
+[node name="PrecinctW_13" parent="Navigation/Grounds/Walls" unique_id=906038548 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 14)
 
 [node name="PrecinctW_14" parent="Navigation/Grounds/Walls" unique_id=1285942981 instance=ExtResource("3_43vra")]

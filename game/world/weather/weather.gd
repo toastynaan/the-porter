@@ -22,6 +22,8 @@ const FOG_DENSITY := 0.22
 
 @export var kind := Kind.CLEAR
 @export var world_environment: WorldEnvironment
+## The weather clears at this hour (night 0: rain at dusk, then clear); -1 never.
+@export var clears_at := -1.0
 
 var _fall: CPUParticles3D
 var _rain: AudioStreamPlayer
@@ -94,6 +96,12 @@ func _particles(color: Color, size: Vector2, speed: float, amount: int) -> CPUPa
 
 
 func _process(_delta: float) -> void:
+	if clears_at >= 0.0 and kind != Kind.CLEAR and GameState.hour >= clears_at:
+		kind = Kind.CLEAR
+		if _fall:
+			_fall.emitting = false
+		if _rain:
+			_rain.stop()
 	if _fall:
 		var camera := get_viewport().get_camera_3d()
 		if camera:

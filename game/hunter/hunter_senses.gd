@@ -21,6 +21,8 @@ const NOTICE_NEAR := 0.3
 const NOTICE_FAR := 1.5
 ## How fast awareness falls away when he can't see, per second.
 const FORGET_RATE := 0.5
+## At a squint the porter is seen only this close (docs/mechanics.md, "Peeking").
+const SQUINT_SEEN := 3.0
 
 ## Chasing: no noticing delay, and he keeps his eyes on you.
 var focused := false
@@ -89,6 +91,9 @@ static func sees_from(from: Node3D, eye: Vector3, forward: Vector3, player: Play
 		return false
 	var points := player.sight_points()
 	var d := eye.distance_to(points[0])
+	# At a squint he can be seen only up close, with a light.
+	if player.peeking and (d > SQUINT_SEEN or player.lantern.covered):
+		return false
 	if d > Weather.sight(from.get_tree(), LIT_RANGE if is_lit(player) else DARK_RANGE):
 		return false
 	var to := points[0] - eye

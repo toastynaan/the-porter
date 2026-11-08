@@ -31,6 +31,9 @@ uniform float stare : hint_range(0.0, 1.0) = 0.0;
 uniform float stare_warp : hint_range(0.0, 0.05) = 0.012;
 // The walls breathe (Dose 75+): the whole image swells and settles slowly.
 uniform float breathe : hint_range(0.0, 0.05) = 0.0;
+// Drink (night 0): a slow double image, drifting (Look and Feel, "Drink and
+// daylight": a warm smear, no palette shift). 0..1.
+uniform float drunk : hint_range(0.0, 1.0) = 0.0;
 
 // Drugged shift targets (Look and Feel, "Drugged shift").
 uniform vec3 bruise : source_color = vec3(0.165, 0.086, 0.133);	// #2A1622, shadows
@@ -97,6 +100,12 @@ void fragment() {
 		b += (texture(src_linear, uv + o).rgb + texture(src_linear, uv - o).rgb
 			+ texture(src_linear, uv + vec2(o.x, -o.y)).rgb + texture(src_linear, uv + vec2(-o.x, o.y)).rgb) * 0.0625;
 		col = mix(col, b, clamp(blur, 0.0, 1.0));
+	}
+
+	if (drunk > 0.0) {
+		// A second image, offset and drifting slowly, laid over the first.
+		vec2 drift = vec2(sin(TIME * 0.37), cos(TIME * 0.29)) * 0.012 * drunk;
+		col = mix(col, texture(src_linear, uv + drift).rgb, 0.4 * drunk);
 	}
 
 	if (palette_shift > 0.0) {

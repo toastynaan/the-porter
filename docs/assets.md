@@ -53,6 +53,9 @@ Everything in the world is a placeholder: boxes, cylinders and the greybox figur
 | `prop_tree_yew` | An old churchyard yew, about 6 m; only the trunk is solid | Graveyard (2) |
 | `prop_garden_bed` | A dug vegetable bed, 1.2 × 4 m, walked over | Gardens, the kitchen beds (12) |
 | `prop_carved_saint` | A carved saint on a plinth, 1.8 m, stone; its head turns at Dose 50+ (`Carving`) | Cloister (4), nave, choir |
+| `prop_sand_patch` | Fresh sand raked over the ground, about 3 m across, a decal | By the well on day 1 |
+| `road/prop_wagon` | The carter's open cart and horse, with seats at the back for the porter and the traveller and one for the carter | Night 0's ride |
+| `road/prop_body_cart` | A cart with a body under sacking | Night 0's ride, the hook |
 | `prop_blood_pool`, `prop_blood_spray`, `prop_drag_marks`, `prop_blood_print` | Blood (old blood, #5A1A14), as decals: a pool on the floor, a spray up a wall, drag marks, a boot print | Wherever a death leaves them (`BloodMarks`, `docs/death.md`) |
 
 `candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, already one scene each. The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
@@ -69,7 +72,9 @@ Windfall apples (`Windfalls` in `night_base.tscn`) are small spheres under a `Pi
 | `env_house_3storey_wide` | Three storeys, 6 m along the lane | 2 |
 | `env_house_2storey_narrow` | Two storeys, 5 m | 1 |
 | `env_house_2storey_wide` | Two storeys, 6 m | 4 |
-| `env_inn` | The inn opposite the gate, with its sign | 1 |
+| `env_inn` | The Cross Keys opposite the gate, with its sign: three storeys you can enter (taproom, loft of beds, the porter's room at the top with its window toward the abbey), its door, fire and candles | 1 |
+
+Night 0's road is `game/world/road/env_road.tscn` (fields, the white chapel, the city wall and Aldgate, close houses, and the `RidePath` the wagon follows). The squints are `game/world/kit/wall_squint.tscn`, a 4 m wall module with the barred slit.
 
 Each house in `street.tscn` lists its lit windows in `lit_windows` (lit windows show who is awake). The street lanterns are `lamp.tscn`.
 
@@ -95,7 +100,14 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_joan` | Joan, slight | Her brother's pilgrim badge |
 | `chr_roger` | Roger the bailiff (not in the character table yet) | None |
 | `chr_pilgrim` | A pilgrim | Staff and shoulder bag |
-| `chr_carter`, `chr_lane_woman` | Passers-by in the lane | The woman's basket |
+| `chr_carter`, `chr_lane_woman` | The carter, and Margery, passing in the lane | Margery's basket |
+| `chr_hob` | Hob, who keeps the Cross Keys: big, red-faced, an apron | A jug |
+| `chr_agnes` | Agnes, Hob's wife: a dark wool dress | A cloth on her shoulder |
+| `chr_jankin` | Jankin, the Keys' drunk: gangly, patched | A cup |
+| `chr_gib` | Gib the watchman: old, hunched, a grey cloak | His staff (his lantern is the visitor's) |
+| `chr_ralph` | Ralph the chandler: short and heavy | A bundle of candles |
+| `chr_kit` | Kit, Ralph's daughter: small, quick | A basket of candles |
+| `chr_traveller` | The traveller on the wagon: lean, road-worn | A pack |
 | `chr_cat` | The abbey cat, black, 0.45 m, eyes that catch the light (worn by `game/npc/cat.tscn`) | None |
 | `chr_saint` | The Hungry Saint: about 2.6 m, too thin, bent forward, no horns, unshaded black | None |
 | `chr_body` | A body: the ragdoll rig (`game/ragdoll`) in the victim's colours, standing until it falls (`Corpse`) | None |

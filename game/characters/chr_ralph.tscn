@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Material" path="res://game/world/materials/plaster.tres" id="prop_mat"]
+
+[sub_resource type="BoxMesh" id="Mesh_Candles"]
+material = ExtResource("prop_mat")
+size = Vector3(0.12, 0.3, 0.08)
+
+[node name="Ralph" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Ralph the chandler, who makes the abbey's candles: short and heavy. Prop: a bundle of candles. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 2
+tunic = true
+face_color = Color(0.753, 0.565, 0.471, 1)
+cloth_color = Color(0.290, 0.251, 0.188, 1)
+
+[node name="Candles" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.95, -0.1)
+cast_shadow = 0
+mesh = SubResource("Mesh_Candles")
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)

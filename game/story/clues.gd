@@ -6,6 +6,8 @@ class_name Clues
 ## his own hand, so they're plain and short. DRAFT lines.
 
 const ALL := {
+	&"window_killing": "From my window at the Cross Keys I saw a man killed by the well in the abbey's court. A figure in a black habit, its back to me, dragged him toward the cellar.",
+	&"window_killing_drunk": "From my window at the Cross Keys I saw a man killed by the well in the abbey's court, I think. I'd drunk too much to be sure what I saw.",
 	&"sand_by_the_well": "Sand on the court by the well this morning, where I saw the man killed. Thomas says a beast was slaughtered there.",
 	&"bread_warning": "A brother of the choir told me at supper not to eat the bread. Something is wrong with it.",
 	&"knock_no_one": "A knock at the gate after midnight. No one there. Mab saw no one come.",

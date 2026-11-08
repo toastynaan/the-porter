@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n0_kit"
+text = "# DRAFT
+# Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter.
+== start
+(A girl with a tray of candles on a strap round her neck, her hood up against the rain.)
+Kit: Candles! Last of the day, cheap as dirt. You're a brother. Are you the new one?
+-> topics
+
+== again
+Kit: Two left, brother. Both for a ha'penny, and I'll throw in the tray.
+-> topics
+
+== topics
+* [if not n0_kit_porter] I'm the new porter. -> porter
+* [if not n0_kit_candles] (Ask about her candles.) -> candles
+* [if not n0_kit_abbey] Have you been inside? -> abbey
+
+== porter [set n0_kit_porter]
+Kit: I knew it! Everybody knew you were coming. Gib told Margery, and Margery told the lane.
+Kit: You're younger than Brother Anselm. Well. Everybody's younger than Brother Anselm.
+-> topics
+
+== candles [set n0_kit_candles]
+Kit: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like.
+Kit: I'm at your gate most dusks with the tray. The brothers buy whatever I've got left.
+Kit: Brother Ranulf would buy the tray and the strap, if I let him.
+-> topics
+
+== abbey [set n0_kit_abbey]
+Kit: Past the gate? Never. Father says I'm not to, not ever.
+Kit: Is it true there's a saint's finger in a glass box? And lights at night? You'll tell me, when you've seen.
+-> topics
+
+== leave
+Kit: See you at the gate!
+"

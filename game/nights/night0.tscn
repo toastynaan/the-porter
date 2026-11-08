@@ -2,37 +2,235 @@
 
 [ext_resource type="PackedScene" path="res://game/nights/night_base.tscn" id="base"]
 [ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
-[ext_resource type="Script" path="res://game/night/wake_beat.gd" id="wake_gd"]
-[ext_resource type="Script" path="res://game/night/pass_beat.gd" id="pass_gd"]
+[ext_resource type="Script" path="res://game/night/ride_beat.gd" id="ride_gd"]
+[ext_resource type="Script" path="res://game/night/arrive_beat.gd" id="arrive_gd"]
+[ext_resource type="Script" path="res://game/night/inn_beat.gd" id="inn_gd"]
+[ext_resource type="Script" path="res://game/night/window_beat.gd" id="window_gd"]
 [ext_resource type="Script" path="res://game/night/sleep_beat.gd" id="sleep_gd"]
+[ext_resource type="Script" path="res://game/night/duty.gd" id="duty_gd"]
+[ext_resource type="Script" path="res://game/death/death_scene.gd" id="death_gd"]
+[ext_resource type="Script" path="res://game/world/squint_scare.gd" id="scare_gd"]
+[ext_resource type="Script" path="res://game/npc/figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/npc/character_look.gd" id="look_gd"]
+[ext_resource type="Script" path="res://game/npc/talker.gd" id="talker_gd"]
+[ext_resource type="PackedScene" path="res://game/world/road/env_road.tscn" id="road"]
+[ext_resource type="PackedScene" path="res://game/world/road/prop_wagon.tscn" id="wagon"]
+[ext_resource type="PackedScene" path="res://game/world/road/prop_body_cart.tscn" id="body_cart"]
+[ext_resource type="PackedScene" path="res://game/gate/visitor_npc.tscn" id="visitor_npc"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_traveller.tscn" id="chr_traveller"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_carter.tscn" id="chr_carter"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_pilgrim.tscn" id="chr_pilgrim"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_stranger.tscn" id="chr_stranger"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_jankin.tres" id="v_jankin"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_ralph.tres" id="v_ralph"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_roger.tres" id="v_roger"]
+[ext_resource type="Resource" path="res://game/gate/visitors/walter_n3.tres" id="v_walter"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/traveller.tres" id="n0_traveller"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/carter.tres" id="n0_carter"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/mab.tres" id="n0_mab"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/hob.tres" id="n0_hob"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/agnes.tres" id="n0_agnes"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/jankin.tres" id="n0_jankin"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/walter.tres" id="n0_walter"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/roger.tres" id="n0_roger"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/ralph.tres" id="n0_ralph"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/kit.tres" id="n0_kit"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/gib.tres" id="n0_gib"]
+[ext_resource type="Resource" path="res://game/dialogue/night0/margery.tres" id="n0_margery"]
 
 [node name="Night0" instance=ExtResource("base")]
-editor_description = "Night 0, the Cross Keys (a stub until M12): the road in, the inn, the lane and the window. It inherits night_base.tscn."
+editor_description = "Night 0, the Cross Keys (design doc, Night 0): the road in through Aldgate on the carter's wagon, the barred gate and Mab, the evening at the inn and the lane, the curfew bell, the squint scare, and the killing seen from the window. It inherits night_base.tscn."
+
+[node name="Clock" parent="."]
+start_hour = 16.5
+seconds_per_hour = 150.0
+
+[node name="Weather" parent="."]
+kind = 1
+clears_at = 19.0
+
+[node name="Road" parent="." instance=ExtResource("road")]
+
+[node name="Wagon" parent="." instance=ExtResource("wagon")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -286, 0, 48.2)
+
+[node name="BodyCart" parent="." instance=ExtResource("body_cart")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -200, 0, 45.6)
+
+[node name="Traveller" type="Node3D" parent="."]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -286, 0.9, 49.0)
+script = ExtResource("figure_gd")
+
+[node name="Look" type="Node3D" parent="Traveller"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_traveller")
+
+[node name="Talker" type="Area3D" parent="Traveller"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("n0_traveller")
+
+[node name="WagonCarter" type="Node3D" parent="."]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -288, 0.9, 48.2)
+script = ExtResource("figure_gd")
+
+[node name="Look" type="Node3D" parent="WagonCarter"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_carter")
+
+[node name="SetDown" type="Marker3D" parent="Marks"]
+transform = Transform3D(-0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, -0.34202, -43.6, 0.05, 3.2)
+editor_description = "Where the carter sets him down, by the abbey gate."
+
+[node name="TopWindow" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -47.3, 6.05, 2.0)
+editor_description = "The window of his room at the top of the Cross Keys, looking over the abbey wall."
+
+[node name="DragTo" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -20.6, 0.05, -12.5)
+editor_description = "Where the man killed by the well is dragged: toward the cellar."
+
+[node name="SquintStand" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -37.4, 0.05, 14.0)
+editor_description = "Where the shape stands, just inside the south squint."
+
+[node name="KnockGate" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -41.3, 0.05, -2.0)
+script = ExtResource("duty_gd")
+size = Vector3(0.8, 2.2, 3.0)
+glyph_height = 2.4
+
+[node name="InnBed" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -49.0, 6.05, 2.6)
+script = ExtResource("duty_gd")
+size = Vector3(1.0, 0.7, 2.1)
+
+[node name="WindowKilling" type="Node3D" parent="."]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -29.0, 0.05, 6.5)
+script = ExtResource("death_gd")
+id = &"night0_guest"
+victim_look = ExtResource("chr_pilgrim")
+appearance = {"skin": Color(0.72, 0.6, 0.5, 1), "shirt": Color(0.36, 0.3, 0.22, 1), "pants": Color(0.25, 0.22, 0.18, 1), "height": 1.0, "width": 1.0}
+killer_scene = ExtResource("chr_stranger")
+rite = false
+lantern = true
+editor_description = "The killing seen from the window: a guest of the abbey, by the well; a figure in a black habit, its back to the window. Before the six nights: it feeds nothing."
+
+[node name="SquintScare" type="Node3D" parent="." node_paths=PackedStringArray("squint", "stand")]
+script = ExtResource("scare_gd")
+squint = NodePath("../Squints/CourtSouth")
+stand = NodePath("../Marks/SquintStand")
+
+[node name="Hob" parent="People"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -54.5, 0.05, 1.6)
+
+[node name="Agnes" parent="People"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -53.6, 0.05, -1.0)
+
+[node name="Talker" parent="People/Mab"]
+conversation = ExtResource("n0_mab")
+
+[node name="Talker" parent="People/Hob"]
+conversation = ExtResource("n0_hob")
+
+[node name="Talker" parent="People/Agnes"]
+conversation = ExtResource("n0_agnes")
+
+[node name="Talker" parent="People/Kit"]
+conversation = ExtResource("n0_kit")
+
+[node name="Talker" parent="People/Gib"]
+conversation = ExtResource("n0_gib")
+
+[node name="Talker" parent="People/Woman"]
+conversation = ExtResource("n0_margery")
+
+[node name="Jankin" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -49.8, 0.05, -5.0)
+visitor = ExtResource("v_jankin")
+
+[node name="Talker" type="Area3D" parent="People/Jankin"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("n0_jankin")
+
+
+[node name="Walter" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -50.9, 0.05, -1.5)
+visitor = ExtResource("v_walter")
+
+[node name="Talker" type="Area3D" parent="People/Walter"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("n0_walter")
+
+
+[node name="Roger" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -48.4, 0.05, 0.4)
+visitor = ExtResource("v_roger")
+
+[node name="Talker" type="Area3D" parent="People/Roger"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("n0_roger")
+
+
+[node name="Ralph" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -53.0, 0.05, -3.4)
+visitor = ExtResource("v_ralph")
+
+[node name="Talker" type="Area3D" parent="People/Ralph"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("n0_ralph")
+
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
 night = 0
-start_dose = 0.0
 
-[node name="Wake" type="Node" parent="Director" node_paths=PackedStringArray("wake_at", "tower", "gate")]
-script = ExtResource("wake_gd")
+[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "body_cart", "set_down", "traveller", "carter", "gate", "cole")]
+script = ExtResource("ride_gd")
 phase = 6
 bell = &"start"
-due = 17.25
-wake_at = NodePath("../../Marks/WakeCell")
-tower = NodePath("../../BellTower")
+duty = "Dusk: the road into London"
+wagon = NodePath("../../Wagon")
+path = NodePath("../../Road/RidePath")
+body_cart = NodePath("../../BodyCart")
+set_down = NodePath("../../Marks/SetDown")
+traveller = NodePath("../../Traveller")
+carter = NodePath("../../WagonCarter")
 gate = NodePath("../../AbbeyGate")
-lines = PackedStringArray("(Night 0: the Cross Keys. The road in, the inn and the window come later.)")
-supper_bell = false
+cole = NodePath("../../People/Cole")
+traveller_talk = ExtResource("n0_traveller")
+carter_talk = ExtResource("n0_carter")
 
-[node name="Pass" type="Node" parent="Director" node_paths=PackedStringArray("tower")]
-script = ExtResource("pass_gd")
-phase = 7
-tower = NodePath("../../BellTower")
+[node name="Arrive" type="Node" parent="Director" node_paths=PackedStringArray("knock", "mab")]
+script = ExtResource("arrive_gd")
+phase = 6
+duty = "Knock at the abbey gate"
+knock = NodePath("../../Duties/KnockGate")
+mab = NodePath("../../People/Mab")
+
+[node name="Inn" type="Node" parent="Director" node_paths=PackedStringArray("agnes")]
+script = ExtResource("inn_gd")
+phase = 6
+duty = "Find a bed at the Cross Keys"
+agnes = NodePath("../../People/Agnes")
+
+[node name="Window" type="Node" parent="Director" node_paths=PackedStringArray("bed", "window", "death", "drag_to")]
+script = ExtResource("window_gd")
+phase = 6
+duty = "Go up to your room at the top of the inn, and sleep"
+bed = NodePath("../../Duties/InnBed")
+window = NodePath("../../Marks/TopWindow")
+death = NodePath("../../WindowKilling")
+drag_to = NodePath("../../Marks/DragTo")
 
 [node name="Sleep" type="Node" parent="Director" node_paths=PackedStringArray("sleep")]
 script = ExtResource("sleep_gd")
-phase = 5
-duty = "At Lauds: sleep"
-sleep = NodePath("../../Duties/Sleep")
-lines = PackedStringArray("(You lie down in the room at the top of the inn.)")
+phase = 7
+duty = "Sleep"
+sleep = NodePath("../../Duties/InnBed")
+lines = PackedStringArray("(Lie down again. Sleep, if you can.)")
+asleep_line = "(You sleep, badly.)"

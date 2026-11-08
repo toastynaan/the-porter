@@ -8,7 +8,7 @@ material = ExtResource("sacking")
 size = Vector3(0.3, 0.18, 0.22)
 
 [node name="LaneWoman" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: A woman with a basket in the lane at dusk, hurrying home. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+editor_description = "Placeholder: Margery, a neighbour with her basket in the lane at dusk, hurrying home. Feet at the origin, facing -Z. Face is where the conversation camera looks."
 
 [node name="Figure" type="Node3D" parent="."]
 script = ExtResource("figure_gd")

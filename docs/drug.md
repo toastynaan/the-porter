@@ -65,7 +65,7 @@ It follows the porter, keeping 1.8–3.2 m off, trotting to catch up when he's f
 
 - **The knock with no one there** (night 1): `knock_no_one_beat.gd` knocks at the gate at its hour, at any Dose, until he comes to the grille; the lane is empty both ways, and it goes in his notes. Night 1 places it in the small hours (M13).
 - **The candle that lights itself** (night 5): `SelfLitCandle`, by the crypt's ring; it lights once he has looked at it from close for a second, at any Dose.
-- **The shape through the squint** (night 0): the Hungry Saint's figure is built (`game/characters/chr_saint.tscn`: about 2.6 m, too thin, bent forward, no horns, unshaded black, a gap in the light). The squints and the scare come in M12.
+- **The shape through the squint** (night 0): the Hungry Saint's figure (`game/characters/chr_saint.tscn`: about 2.6 m, too thin, bent forward, no horns, unshaded black, a gap in the light) stands inside the south squint once (`docs/prologue.md`, "The squint scare").
 
 ## Sounds
 

@@ -78,7 +78,7 @@ func _run() -> void:
 		and _said("(Placeholder: he calls after you that he'll see you at supper.)") and not p.talking,
 		"the brothers at their dusk places can be talked to, and walked away from")
 	var walkers := night.get_node(^"People").get_children().filter(func(n: Node) -> bool: return n.has_node(^"Walk"))
-	_check(walkers.size() == 2, "two passers-by in the lane")
+	_check(walkers.size() == 2, "two passers-by in the lane (and Hob, Agnes, Kit and Gib about)")
 	(night.get_node(^"GateBench") as GateBench).interact(p)
 	await _pilot.seconds(0.3)
 	_check(_said("(The gate is Cole's until after supper.)") and not _pilot.clock().dozing, "no dozing while the gate is Cole's")

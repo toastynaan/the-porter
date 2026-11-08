@@ -59,6 +59,19 @@
 [ext_resource type="Script" path="res://game/world/well.gd" id="well_gd"]
 [ext_resource type="Script" path="res://game/npc/routine.gd" id="routine_gd"]
 [ext_resource type="Script" path="res://game/npc/murmur.gd" id="murmur_gd"]
+[ext_resource type="Script" path="res://game/world/squint.gd" id="squint_gd"]
+[ext_resource type="Script" path="res://game/world/street/curfew.gd" id="curfew_gd"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_hob.tres" id="v_hob"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_agnes.tres" id="v_agnes"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_kit.tres" id="v_kit"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_gib.tres" id="v_gib"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/hob.tres" id="lane_hob"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/agnes.tres" id="lane_agnes"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/kit.tres" id="lane_kit"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/gib.tres" id="lane_gib"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/carter.tres" id="lane_carter"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/margery.tres" id="lane_margery"]
+[ext_resource type="Resource" path="res://game/dialogue/lane/mab.tres" id="lane_mab"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
@@ -658,6 +671,7 @@ visitor = ExtResource("mab")
 [node name="Talker" type="Area3D" parent="People/Mab"]
 script = ExtResource("talker_gd")
 phases = Array[int]([6, 0, 1, 2])
+conversation = ExtResource("lane_mab")
 
 [node name="Walks" type="Node3D" parent="People"]
 
@@ -673,7 +687,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
 [node name="WomanB" type="Marker3D" parent="People/Walks"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, -9)
 
-[node name="Carter" parent="People" instance=ExtResource("visitor_npc")]
+[node name="Carter" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, -20)
 visitor = ExtResource("carter")
 speed = 1.0
@@ -681,13 +695,14 @@ speed = 1.0
 [node name="Talker" type="Area3D" parent="People/Carter"]
 script = ExtResource("talker_gd")
 phases = Array[int]([6])
+conversation = ExtResource("lane_carter")
 
 [node name="Walk" type="Node" parent="People/Carter" node_paths=PackedStringArray("points", "leave")]
 script = ExtResource("walker_gd")
 points = [NodePath("../../Walks/CarterA"), NodePath("../../Walks/CarterB")]
 leave = NodePath("../../../Marks/LaneLeave")
 
-[node name="Woman" parent="People" instance=ExtResource("visitor_npc")]
+[node name="Woman" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
 visitor = ExtResource("woman")
 speed = 1.0
@@ -695,6 +710,7 @@ speed = 1.0
 [node name="Talker" type="Area3D" parent="People/Woman"]
 script = ExtResource("talker_gd")
 phases = Array[int]([6])
+conversation = ExtResource("lane_margery")
 
 [node name="Walk" type="Node" parent="People/Woman" node_paths=PackedStringArray("points", "leave")]
 script = ExtResource("walker_gd")
@@ -1368,3 +1384,80 @@ script = ExtResource("routine_gd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.05, -34)
 metadata/hour = 20.0
 metadata/light = NodePath("../../../../RoutineLights/Sacristy")
+
+[node name="Squints" type="Node3D" parent="."]
+editor_description = "The three squints in the west wall: one from the porter's cell, two from the outer court (the south one is the squint scare's)."
+
+[node name="Cell" type="Node3D" parent="Squints"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -40, 1.6, -6.0)
+script = ExtResource("squint_gd")
+id = &"cell"
+
+[node name="CourtNorth" type="Node3D" parent="Squints"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -40, 1.6, 6.0)
+script = ExtResource("squint_gd")
+id = &"courtnorth"
+
+[node name="CourtSouth" type="Node3D" parent="Squints"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -40, 1.6, 14.0)
+script = ExtResource("squint_gd")
+id = &"courtsouth"
+
+[node name="Hob" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -45.6, 0.05, -1.2)
+visitor = ExtResource("v_hob")
+
+[node name="Talker" type="Area3D" parent="People/Hob"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("lane_hob")
+
+[node name="Agnes" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -45.6, 0.05, -3.0)
+visitor = ExtResource("v_agnes")
+
+[node name="Talker" type="Area3D" parent="People/Agnes"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("lane_agnes")
+
+[node name="Kit" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -42.3, 0.05, -5.3)
+visitor = ExtResource("v_kit")
+
+[node name="Talker" type="Area3D" parent="People/Kit"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("lane_kit")
+
+[node name="Gib" parent="People" groups=["lane_people"] instance=ExtResource("visitor_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -43.4, 0.05, 24)
+visitor = ExtResource("v_gib")
+speed = 0.9
+
+[node name="Talker" type="Area3D" parent="People/Gib"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+conversation = ExtResource("lane_gib")
+
+[node name="Round" type="Node" parent="People/Gib" node_paths=PackedStringArray("points", "leave")]
+script = ExtResource("walker_gd")
+points = [NodePath("../../../Marks/LaneNorthEnd"), NodePath("../../../Marks/LaneSouthEnd")]
+leave = NodePath("../../../Marks/LaneNorthEnd")
+leave_hour = 99.0
+
+[node name="LaneNorthEnd" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -43.4, 0.05, 40)
+
+[node name="LaneSouthEnd" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -43.4, 0.05, -40)
+
+[node name="Curfew" type="Node3D" parent="." node_paths=PackedStringArray("houses", "inn_door", "gib", "home", "round_ends", "taproom")]
+script = ExtResource("curfew_gd")
+houses = NodePath("../Abbey/Street/Houses")
+inn_door = NodePath("../Abbey/Street/Houses/Inn/Door")
+gib = NodePath("../People/Gib")
+home = NodePath("../Marks/LaneLeave")
+round_ends = [NodePath("../Marks/LaneNorthEnd"), NodePath("../Marks/LaneSouthEnd")]
+taproom = NodePath("../Abbey/Street/Houses/Inn/FireLight")
+editor_description = "The curfew bell at nine: the lane empties, the Keys shuts, windows go dark; then Gib walks the lane calling the hour."

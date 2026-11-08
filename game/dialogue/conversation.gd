@@ -15,6 +15,10 @@ extends Resource
 ##                             At most three. The point's last line stays up
 ##                             while he chooses.
 ##   -> topics                 Goes on to another point with no answer asked.
+##   -> merchant [if died_merchant]
+##                             Goes there only if the tags hold; the first
+##                             such line that holds is taken, else a plain
+##                             "-> point" after them, else the talk ends.
 ##   == leave                  Said as he walks away in the middle of a talk.
 ##
 ## Who they are to the porter (docs/mechanics.md, "Trust"): a talk starts at
@@ -25,6 +29,7 @@ extends Resource
 ## Tags in square brackets, on an answer or after a point's name:
 ##   [if flag] [if not flag] [if flag=value]   offered only then (answers)
 ##   [if trust 30] [if not trust 30]           only if they trust him 30+
+##   [if night=2]                              only on that night
 ##   [set flag] [set flag=value]               sets a GameState flag
 ##   [suspicion 5]                             raises Suspicion
 ##   [item mab_bread]                          puts something in his satchel
@@ -32,6 +37,7 @@ extends Resource
 ##   [trust mab 5]                             changes what someone thinks of him
 ##   [warn]                                    warns them (Warnings)
 ##   [follow] [wait]                           they follow him, or wait (Companion)
+##   [drink]                                   he drinks an ale (GameState.drink)
 ## Every talk sets the flag talked_<id>.
 
 const MAX_ANSWERS := 3
@@ -64,7 +70,16 @@ class Point:
 	var answers: Array[Answer] = []
 	## Where it goes with no answer ("" or "end": the talk is over).
 	var next := ""
+	## Jumps that need their tags to hold: [to, tags], first that holds wins.
+	var branches: Array = []
 	var tags := PackedStringArray()
+
+	## Where it goes now with no answer: the first branch that holds, else next.
+	func go() -> String:
+		for b: Array in branches:
+			if Conversation.holds(b[1]):
+				return b[0]
+		return next
 
 
 ## Names the talked_<id> flag; the file's name if empty.
@@ -133,6 +148,8 @@ static func holds(tags: PackedStringArray) -> bool:
 		var ok: bool
 		if words[-2] == "trust":
 			ok = GameState.trust_of(partner) >= int(cond)
+		elif cond.begins_with("night="):
+			ok = GameState.night == int(cond.trim_prefix("night="))
 		elif "=" in cond:
 			var parts := cond.split("=")
 			ok = str(GameState.get_flag(StringName(parts[0]), "")) == parts[1]
@@ -166,6 +183,8 @@ static func apply(tags: PackedStringArray) -> void:
 				GameState.change_trust(StringName(words[1]), int(words[2]))
 			"warn":
 				Warnings.give(partner, partner_node)
+			"drink":
+				GameState.have_a_drink()
 			"follow", "wait":
 				var c := partner_node.get_node_or_null(^"Companion") as Companion if partner_node else null
 				if c:
@@ -213,7 +232,11 @@ func _parse() -> void:
 			a.tags = split[1]
 			current.answers.append(a)
 		elif line.begins_with("->"):
-			current.next = line.trim_prefix("->").strip_edges()
+			var jump := _split_tags(line.trim_prefix("->").strip_edges(), n)
+			if (jump[1] as PackedStringArray).is_empty():
+				current.next = jump[0]
+			else:
+				current.branches.append([jump[0], jump[1]])
 		else:
 			var l := Line.new()
 			var colon := line.find(":")
@@ -229,9 +252,11 @@ func _parse() -> void:
 	for p: Point in _points.values():
 		if p.answers.size() > MAX_ANSWERS:
 			_errors.append("%s: %d answers (three at most)" % [p.name, p.answers.size()])
-		if not p.answers.is_empty() and not p.next.is_empty():
-			_errors.append("%s: both answers and -> %s" % [p.name, p.next])
+		if not p.answers.is_empty() and (not p.next.is_empty() or not p.branches.is_empty()):
+			_errors.append("%s: both answers and ->" % p.name)
 		var targets := [p.next] if not p.next.is_empty() else []
+		for b: Array in p.branches:
+			targets.append(b[0])
 		for a in p.answers:
 			targets.append(a.to)
 		for t: String in targets:
@@ -257,7 +282,7 @@ func _split_tags(s: String, n: int) -> Array:
 		out += s.substr(i, open - i)
 		var tag := s.substr(open + 1, close - open - 1).strip_edges()
 		var words := tag.split(" ", false)
-		var ok := (words.size() == 1 and words[0] in ["warn", "follow", "wait"]) or words.size() >= 2 and (
+		var ok := (words.size() == 1 and words[0] in ["warn", "follow", "wait", "drink"]) or words.size() >= 2 and (
 			(words[0] == "if" and (words.size() == 2 or (words.size() == 3 and words[1] == "not")
 				or (words.size() == 3 and words[1] == "trust" and words[2].is_valid_int())
 				or (words.size() == 4 and words[1] == "not" and words[2] == "trust" and words[3].is_valid_int())))

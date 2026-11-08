@@ -437,3 +437,13 @@ Added during the run (M11, `docs/abbey.md`):
 - A companion is taken by a hunter within 1.2 m, and that's their death. Someone below trust 0 won't follow.
 - Refusing Thomas's wine to his face: Suspicion +20.
 - At the bell, the prior's questions have three answers; "Something was after me" makes him suspect the porter more.
+
+Added during the run (M12, `docs/prologue.md`):
+- Night 0 runs from 16:30 at 150 s an in-game hour, so the ride is grey dusk turning dark and midnight comes about 19 minutes in. Rain until 19:00.
+- The ride: 1.5 m/s, about 3.1 minutes; the body cart passes at 40 s, on the porter's side of the wagon.
+- Drink: a blur of 0.5 + 0.15 source pixels an ale once over 0.5; the double image grows from 2 (the third ale wearing in) to full at 5; the headache comes from three ales drunk that night (counted, not what's left at sleep): a 0.9-pixel blur until noon.
+- The squints: the cell's at z −6, the court's at 6 and 14; the slit 0.18 × 0.5 m, splayed to 0.4 m at both faces; peeking puts the eye 0.12 m from the bars.
+- The squint scare: he must pass outside within about 4.6 m with nobody of the lane within 12 m; it appears only out of his view; it counts as seen from within 3.5 m, looking within 15° of the slit with a clear line through; it goes when he looks 35° away or steps 4 m off; walking 8 m off without seeing it lets it come again.
+- The curfew: people out in the lane walk to the nearest house door and go in (30 s at most); people indoors stay; windows go dark one by one through the hour; Gib calls every hour from ten to five.
+- Out at midnight on night 0, or shut out by the curfew, Agnes sends him up to bed and the window plays.
+- Day 1 starts at 8:00 in daylight brighter than any dusk: sky 1.4, ambient 1.7, a shadowless sun 0.6.

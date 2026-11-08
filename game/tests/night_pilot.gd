@@ -70,7 +70,7 @@ func use(path: String) -> void:
 ## very fast while he dozes.
 func shorten() -> void:
 	var d := director()
-	var settings := {^"Knocks": {&"knock_every": 1.0, &"visitor_speed": 6.0},
+	var settings := {^"Knocks": {&"knock_every": 1.0, &"visitor_speed": 6.0}, ^"Ride": {&"speed": 20.0, &"meet_at": 3.0},
 		^"Choir": {&"office_time": 0.5}, ^"Crypt": {&"quiet_time": 0.5}}
 	for beat_path: NodePath in settings:
 		var node := d.get_node_or_null(beat_path)
@@ -130,6 +130,49 @@ func play_stub() -> void:
 	await until(func() -> bool: return beat() == &"Sleep", 20.0)
 	await use("Sleep")
 	await until(over, 10.0)
+
+
+## Night 0 from the wagon to sleep: rides in, knocks at the barred gate, is
+## sent across by Mab, takes the room from Agnes (and an ale, if `answer`
+## picks it), lies down, sees the killing from the window and sleeps.
+## `answer` is the Array the test's Talk.auto_choice reads.
+func play_night0(answer: Array) -> void:
+	await until(func() -> bool: return beat() == &"Arrive" and not Talk.talking, 400.0)
+	player.place(duty("KnockGate").global_position + Vector3(-1.2, 0.0, 0.0), deg_to_rad(-90.0))
+	await use("KnockGate")
+	var mab := night.get_node(^"People/Mab") as VisitorNPC
+	player.place(mab.global_position + Vector3(-1.4, 0.0, 0.0), deg_to_rad(-90.0))
+	await talk(mab.get_node(^"Talker") as Talker, [0, 0, 0], answer)
+	await until(func() -> bool: return beat() == &"Inn", 10.0)
+	var agnes := night.get_node(^"People/Agnes") as VisitorNPC
+	player.place(agnes.global_position + Vector3(1.3, 0.0, 0.0), deg_to_rad(90.0))
+	await talk(agnes.get_node(^"Talker") as Talker, [0, 0, 0], answer)
+	await until(func() -> bool: return beat() == &"Window", 10.0)
+	player.place(duty("InnBed").global_position + Vector3(0.0, 0.0, -1.4), 0.0)
+	await use("InnBed")
+	await until(func() -> bool: return beat() == &"Sleep", 120.0)
+	await use("InnBed")
+	await until(over, 20.0)
+
+
+## Day 1 from waking at the Keys to the nap: crosses the lane, follows Thomas
+## and Anselm and tries each duty, takes the guesthouse key, sleeps in his cell.
+func play_day1() -> void:
+	await until(func() -> bool: return beat() == &"Morning" and not player.controls_locked, 10.0)
+	player.place(mark("Day1Meet"), deg_to_rad(90.0))
+	await until(func() -> bool: return beat() == &"Tour", 10.0)
+	for path in ["BarGate", "Ledger", "", "BellRope", "RoundStops/StoresDoor", "GuestBeds/Bed0", "GuestKey"]:
+		if path.is_empty():
+			var candles := night.get_node(^"CandleClock") as CandleClock
+			await until(func() -> bool: return candles.is_in_group(&"glyph_targets"), 60.0)
+			candles.interact(player)
+		else:
+			await until(func() -> bool: return duty(path).enabled, 60.0)
+			player.place(duty(path).global_position + Vector3(0.0, 0.0, 1.2), 0.0)
+			await use(path)
+	await until(func() -> bool: return beat() == &"Nap", 30.0)
+	await use("Sleep")
+	await until(over, 20.0)
 
 
 ## Night 3 from waking to sleep, as test_night3 plays it but without its

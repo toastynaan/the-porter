@@ -5,6 +5,8 @@ extends Node3D
 ## cell). A tall candle burns down from `start_hour` to `end_hour`; dark
 ## rings mark the duties. Look at it and press `interact` to read it.
 
+signal read
+
 @export var start_hour := 16.0
 @export var end_hour := 31.0
 ## Height of the unburned candle, m.
@@ -65,6 +67,7 @@ func interact(_by: Node) -> void:
 			break
 	var line := "(The candle stands at %s." % NightClock.clock_text(GameState.hour)
 	line += " The next mark is %s.)" % next if not next.is_empty() else " Past the last mark.)"
+	read.emit()
 	await Talk.say("", line)
 
 

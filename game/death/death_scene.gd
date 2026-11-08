@@ -55,7 +55,8 @@ const FAKE_UNSEEN := 1.0
 @export var rite := true
 ## A hallucination: leaves nothing, feeds nothing.
 @export var fake := false
-## A lantern falls from the victim's hand and rolls.
+## The victim carries a lit lantern: the struggle is shapes against its light,
+## then it falls from his hand, rolls, and burns low on the ground.
 @export var lantern := false
 ## Which way the body falls, in this node's frame (-Z: forward, away from
 ## the killer behind him); m/s.
@@ -69,6 +70,7 @@ var has_played := false
 var _figure: Node3D
 var _fleeting: Array[Node3D] = []
 var _audio: AudioStreamPlayer3D
+var _flame: OmniLight3D
 
 
 func _ready() -> void:
@@ -94,6 +96,8 @@ func play() -> void:
 	has_played = true
 	_stand_victim()
 	_stand_killer()
+	if lantern:
+		_light_lantern()
 	match style:
 		Style.IMPLIED:
 			await _struggle(struggle_time)
@@ -120,6 +124,41 @@ func play() -> void:
 		_killer_goes_unseen.call()
 	if fake:
 		_vanish_unseen.call()
+
+
+## The killer drags the body to `to` (night 0: toward the cellar), at a
+## walk, leaving drag marks, and both are gone there. Await it.
+func drag_to(to: Vector3, speed := 1.0) -> void:
+	if killer == null or body == null:
+		return
+	killer.set_meta(&"stays", true)
+	var from := body.centre()
+	_mark(&"drag", Transform3D(Basis.looking_at((to - from) * Vector3(1, 0, 1), Vector3.UP), from * Vector3(1, 0, 1) + Vector3(0, global_position.y, 0)))
+	body.visible = false
+	var dragged := CharacterLook.new()
+	dragged.look = victim_look
+	add_child(dragged)
+	dragged.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
+	var start := killer.global_position
+	var d := start.distance_to(to)
+	var t := 0.0
+	while t < d / speed and is_instance_valid(killer):
+		t += get_physics_process_delta_time()
+		var at := start.lerp(to, minf(t * speed / d, 1.0))
+		killer.global_position = at
+		var dir := (to - start).normalized()
+		killer.rotation = Vector3(0.0, atan2(dir.x, dir.z), 0.0)
+		dragged.global_position = at - dir * 0.9 + Vector3.UP * 0.15
+		await get_tree().physics_frame
+	if is_instance_valid(killer):
+		killer.queue_free()
+	killer = null
+	dragged.queue_free()
+	if body:
+		body.queue_free()
+		body = null
+	if not fake:
+		GameState.set_flag(StringName("moved_" + String(id)))
 
 
 ## The killer turns to the porter (in danger: he's seen you) and stays.
@@ -263,12 +302,27 @@ func _drop_lantern() -> void:
 	add_child(lamp)
 	lamp.position = Vector3(0.25, 0.08, -0.3)
 	lamp.rotation = Vector3(0.0, 0.0, PI * 0.5)
+	if _flame:
+		_flame.reparent(lamp, false)
+		_flame.position = Vector3.ZERO
+		create_tween().tween_property(_flame, ^"light_energy", 0.5, 2.5)
 	var roll := create_tween()
 	roll.tween_property(lamp, ^"position", Vector3(0.9, 0.07, -0.9), 1.6).set_ease(Tween.EASE_OUT)
 	roll.parallel().tween_property(lamp, ^"rotation:x", 7.0, 1.6).set_ease(Tween.EASE_OUT)
 	_sound(LANTERN_DROP)
 	if fake:
 		_fleeting.append(lamp)
+
+
+## The victim's lantern, lit in his hand.
+func _light_lantern() -> void:
+	_flame = OmniLight3D.new()
+	_flame.light_color = Color(0.95, 0.62, 0.32)
+	_flame.light_energy = 1.6
+	_flame.omni_range = 7.0
+	_flame.shadow_enabled = true
+	add_child(_flame)
+	_flame.position = Vector3(0.3, 0.95, -0.15)
 
 
 ## Where a named marker child is, or `fallback` in this node's frame.

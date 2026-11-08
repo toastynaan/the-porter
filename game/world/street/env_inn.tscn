@@ -1,12 +1,20 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Script" path="res://game/world/kit/stairs.gd" id="stairs"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
 [ext_resource type="Material" path="res://game/world/materials/plaster.tres" id="plaster"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="roof"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
 [ext_resource type="Material" path="res://game/world/materials/window_dark.tres" id="wdark"]
 [ext_resource type="Material" path="res://game/world/materials/iron.tres" id="iron"]
 [ext_resource type="Script" path="res://game/world/street/timber_house.gd" id="house_gd"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_table.tscn" id="table"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bench.tscn" id="bench"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_barrel.tscn" id="barrel"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bed.tscn" id="bed"]
+[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
+[ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="door"]
 
 [sub_resource type="BoxMesh" id="M8"]
 material = ExtResource("wdark")
@@ -24,62 +32,331 @@ size = Vector3(1.6, 0.06, 0.06)
 material = ExtResource("oak")
 size = Vector3(0.05, 0.7, 1)
 
+[sub_resource type="StandardMaterial3D" id="Mat_fire"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.95, 0.5, 0.2, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="BoxMesh" id="Mesh_fire"]
+material = SubResource("Mat_fire")
+size = Vector3(1.2, 0.35, 0.3)
+
 [node name="Inn" type="Node3D" groups=["placeholder"]]
 script = ExtResource("house_gd")
-editor_description = "Placeholder: the inn opposite the gate, timber-framed, two storeys, 12 m along the lane, with its sign on a bracket. Its street front faces -Z. Lit windows are set per house (lit_windows)."
+editor_description = "Placeholder: the Cross Keys, the inn opposite the gate. Timber-framed, three storeys, 12 m along the lane and 10 m deep; its street front faces -Z with the door in the middle. Inside: the taproom (hearth, counter, tables), stairs at the left back to an open loft of beds, and at the top a small room at the front right with one window toward the abbey. Lit windows are set per house (lit_windows)."
 
-[node name="Storey0" type="StaticBody3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 5)
+[node name="Floor0" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, -0.3, 5.0)
 script = ExtResource("block")
-size = Vector3(10, 3, 11.94)
+size = Vector3(11.4, 0.3, 9.4)
 material = ExtResource("oak")
 surface = "wood"
 
-[node name="Window0_0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 1.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
-
-[node name="Window0_1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 1.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
-
-[node name="Storey1" type="StaticBody3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3, 4.75)
+[node name="Floor1A" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.6, 2.8, 5.0)
 script = ExtResource("block")
-size = Vector3(10.5, 2.8, 11.94)
+size = Vector3(10.2, 0.2, 9.4)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor1B" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 2.8, 2.15)
+script = ExtResource("block")
+size = Vector3(1.2, 0.2, 3.7)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor1C" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 2.8, 9.15)
+script = ExtResource("block")
+size = Vector3(1.2, 0.2, 1.1)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor2A" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.2, 5.8, 5.0)
+script = ExtResource("block")
+size = Vector3(9.0, 0.2, 9.4)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor2B" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 5.8, 5.0)
+script = ExtResource("block")
+size = Vector3(1.2, 0.2, 9.4)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor2C" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.9, 5.8, 2.15)
+script = ExtResource("block")
+size = Vector3(1.2, 0.2, 3.7)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Floor2D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.9, 5.8, 9.15)
+script = ExtResource("block")
+size = Vector3(1.2, 0.2, 1.1)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Loft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 8.600000000000001, 5.0)
+script = ExtResource("block")
+size = Vector3(11.4, 0.2, 9.4)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="WallBack" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0, 9.85)
+script = ExtResource("block")
+size = Vector3(12.0, 8.8, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
 
-[node name="Beam1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.05, -0.4)
-cast_shadow = 0
-mesh = SubResource("M7")
+[node name="WallLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.85, 0, 5.0)
+script = ExtResource("block")
+size = Vector3(0.3, 8.8, 9.4)
+material = ExtResource("plaster")
+surface = "wood"
 
-[node name="Window1_0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 4.3, -0.52)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="WallRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.85, 0, 5.0)
+script = ExtResource("block")
+size = Vector3(0.3, 8.8, 9.4)
+material = ExtResource("plaster")
+surface = "wood"
 
-[node name="Window1_1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 4.3, -0.52)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="FrontLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.3, 0, 0.15)
+script = ExtResource("block")
+size = Vector3(5.4, 8.8, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="FrontRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.3, 0, 0.15)
+script = ExtResource("block")
+size = Vector3(5.4, 7.0, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="OverDoor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 2.3, 0.15)
+script = ExtResource("block")
+size = Vector3(1.2, 6.500000000000001, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="WindowLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2.1, 7.0, 0.15)
+script = ExtResource("block")
+size = Vector3(3.0, 0.9, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="WindowRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 7.0, 0.15)
+script = ExtResource("block")
+size = Vector3(1.6, 0.9, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="OverWindow" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.3, 7.9, 0.15)
+script = ExtResource("block")
+size = Vector3(5.4, 0.9000000000000004, 0.3)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="RoomWest" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.5, 6.0, 2.4)
+script = ExtResource("block")
+size = Vector3(0.25, 2.6, 4.2)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="RoomBackA" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2.0, 6.0, 4.5)
+script = ExtResource("block")
+size = Vector3(1.0, 2.6, 0.25)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="RoomBackB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4.6, 6.0, 4.5)
+script = ExtResource("block")
+size = Vector3(2.2, 2.6, 0.25)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="RoomLintel" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.0, 8.2, 4.5)
+script = ExtResource("block")
+size = Vector3(1.0, 0.4, 0.25)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="Counter" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.6, 0, 7.4)
+script = ExtResource("block")
+size = Vector3(3.0, 1.05, 0.6)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Hearth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0, 9.35)
+script = ExtResource("block")
+size = Vector3(2.4, 1.3, 0.6)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="Chimney" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 1.3, 9.45)
+script = ExtResource("block")
+size = Vector3(1.6, 7.500000000000001, 0.4)
+material = ExtResource("stone")
+surface = "stone"
 
 [node name="Roof" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8, 4.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 8.8, 5.0)
 script = ExtResource("block")
 size = Vector3(12.3, 3.2, 10.8)
 material = ExtResource("roof")
 shape = 1
 
+[node name="StairsDown" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 0.0, 8.6)
+script = ExtResource("stairs")
+rise = 3.0
+run = 4.6
+width = 1.1
+material = ExtResource("oak")
+
+[node name="StairsUp" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -3.9, 3.0, 4.0)
+script = ExtResource("stairs")
+rise = 3.0
+run = 4.6
+width = 1.1
+material = ExtResource("oak")
+
+[node name="Door" parent="." instance=ExtResource("door")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 0, 0, 0.15)
+size = Vector2(1.2, 2.3)
+start_open = true
+
+[node name="Fire" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.2, 9.0)
+mesh = SubResource("Mesh_fire")
+
+[node name="FireLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.8, 8.4)
+light_color = Color(0.95, 0.55, 0.25, 1)
+light_energy = 2.2
+omni_range = 8.0
+shadow_enabled = true
+
+[node name="TopWindow" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4.0, 6.0, 0.9)
+editor_description = "Where the porter stands to look out of his window toward the abbey."
+
+[node name="Table0" parent="." instance=ExtResource("table")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -2.6, 0, 2.6)
+
+[node name="Table1" parent="." instance=ExtResource("table")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 1.4, 0, 2.8)
+
+[node name="Table2" parent="." instance=ExtResource("table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.4, 0, 6.6)
+
+[node name="Bench0" parent="." instance=ExtResource("bench")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -3.5, 0, 2.6)
+
+[node name="Bench1" parent="." instance=ExtResource("bench")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -1.7, 0, 2.6)
+
+[node name="Bench2" parent="." instance=ExtResource("bench")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0.5, 0, 2.8)
+
+[node name="Bench3" parent="." instance=ExtResource("bench")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 2.3, 0, 2.8)
+
+[node name="Bench4" parent="." instance=ExtResource("bench")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -2.4, 0, 7.5)
+
+[node name="Barrel0" parent="." instance=ExtResource("barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 0, 8.9)
+
+[node name="Barrel1" parent="." instance=ExtResource("barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 0, 8.0)
+
+[node name="LoftBed0" parent="." instance=ExtResource("bed")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 2.0, 3.0, 7.8)
+
+[node name="LoftBed1" parent="." instance=ExtResource("bed")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 3.0, 7.8)
+
+[node name="LoftBed2" parent="." instance=ExtResource("bed")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 3.0, 1.8)
+
+[node name="PorterBed" parent="." instance=ExtResource("bed")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 6.0, 2.6)
+
+[node name="Candle0" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.6, 0.78, 2.6)
+
+[node name="Candle1" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.4, 0.78, 2.8)
+
+[node name="Candle2" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.0, 1.08, 7.4)
+
+[node name="Candle3" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.4, 0.78, 6.6)
+
+[node name="CandleRoom" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.8, 6.0, 0.7)
+
+[node name="Window0_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -3.2, 1.4, -0.02)
+cast_shadow = 0
+mesh = SubResource("M8")
+
+[node name="Window0_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 3.2, 1.4, -0.02)
+cast_shadow = 0
+mesh = SubResource("M8")
+
+[node name="Window1_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 4.4, -0.02)
+cast_shadow = 0
+mesh = SubResource("M8")
+
+[node name="Window1_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 4.4, -0.02)
+cast_shadow = 0
+mesh = SubResource("M8")
+
+[node name="Beam1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.05, -0.17)
+cast_shadow = 0
+mesh = SubResource("M7")
+
+[node name="Beam2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 6.05, -0.17)
+cast_shadow = 0
+mesh = SubResource("M7")
+
 [node name="SignBracket" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.55, -1.3)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.55, -0.85)
 cast_shadow = 0
 mesh = SubResource("M9")
 
 [node name="Sign" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 2.75, -1.8)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 2.75, -1.35)
 cast_shadow = 0
 mesh = SubResource("M10")

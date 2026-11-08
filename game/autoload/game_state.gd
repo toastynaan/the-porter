@@ -43,6 +43,8 @@ const DOSE_MAX := 100.0
 const DOSE_DECAY_PER_HOUR := 10.0
 ## Default time, in s, a dose takes to ease in. Each source passes its own.
 const DOSE_EASE_TIME := 5.0
+const DRINK_MAX := 5.0
+const DRINK_LOST_PER_HOUR := 1.0
 ## The porter's keys at the start of the game (design doc, "Tools": the
 ## gate, the guesthouse and the charnel house).
 const START_KEYS: Array[StringName] = [&"gate", &"guesthouse", &"charnel"]
@@ -86,6 +88,9 @@ var notes: Array[Dictionary] = []
 var satchel: Array[StringName] = []
 ## What each person thinks of him, -100 to 100 (docs/mechanics.md, "Trust").
 var trust: Dictionary = {}
+## Ales drunk tonight (docs/mechanics.md, "Drinking": +1 an ale, to 5; he
+## loses 1 an hour; sleep clears it). Drink blurs his sight, like Dose.
+var drink := 0.0
 ## Souls the rite has been fed in the six nights (docs/full-game-run.md,
 ## "The rite"): `count` of them, the ones in `souls` by name (a night played
 ## on its own starts with a count and no names).
@@ -110,6 +115,8 @@ func _process(delta: float) -> void:
 		return
 	var hours := delta / seconds_per_hour
 	hour += hours
+	if drink > 0.0:
+		drink = maxf(drink - DRINK_LOST_PER_HOUR * hours, 0.0)
 	if _dose > dose_floor:
 		_set_dose(maxf(_dose - DOSE_DECAY_PER_HOUR * hours, dose_floor))
 
@@ -132,6 +139,7 @@ func new_game() -> void:
 	satchel = []
 	trust = {}
 	count = 0
+	drink = 0.0
 	souls = []
 	marks = []
 	last_bell = &""
@@ -227,6 +235,12 @@ func change_trust(who: StringName, amount: int) -> void:
 	trust[who] = clampi(trust_of(who) + amount, -100, 100)
 
 
+## An ale: +1 drink, to 5.
+func have_a_drink() -> void:
+	drink = minf(drink + 1.0, DRINK_MAX)
+	set_flag(&"drank", int(get_flag(&"drank", 0)) + 1)
+
+
 ## Eats clean food: hunger ends for the night, no Dose (docs/mechanics.md,
 ## "The drug, and food").
 func eat_clean() -> void:
@@ -281,7 +295,7 @@ func snapshot() -> Dictionary:
 		"dose_floor": dose_floor, "suspicion": suspicion, "captures": captures,
 		"keys": keys.duplicate(), "flags": flags.duplicate(true), "ledger": ledger.duplicate(true),
 		"notes": notes.duplicate(true), "satchel": satchel.duplicate(), "trust": trust.duplicate(),
-		"count": count, "souls": souls.duplicate(), "marks": marks.duplicate(true),
+		"count": count, "souls": souls.duplicate(), "marks": marks.duplicate(true), "drink": drink,
 	}
 
 
@@ -299,6 +313,7 @@ func restore(state: Dictionary) -> void:
 	satchel.assign(state.get("satchel", []))
 	trust = (state.get("trust", {}) as Dictionary).duplicate()
 	count = int(state.get("count", 0))
+	drink = float(state.get("drink", 0.0))
 	souls.assign(state.get("souls", []))
 	marks.assign((state.get("marks", []) as Array).duplicate(true))
 	suspicion = int(state.get("suspicion", 0))

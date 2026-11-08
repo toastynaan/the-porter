@@ -75,6 +75,10 @@ func _run() -> void:
 			dose_before = -1.0
 			await pilot.play_night3(_answer)
 			_check(GameState.has_flag(&"night3_done") and GameState.has_flag(&"n3_thomas_hid_you"), "night 3, played in full in order")
+		elif chapters[i].id == &"night0":
+			await pilot.play_night0(_answer)
+		elif chapters[i].id == &"day1":
+			await pilot.play_day1()
 		else:
 			if chapters[i].id == &"night1":
 				GameState.snap_dose(20.0)

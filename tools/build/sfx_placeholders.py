@@ -550,6 +550,36 @@ def clatter(rng):
     return out
 
 
+def wagon(rng, seconds=8.0):
+    """The carter's wagon: wheels rumbling on ruts, an axle creak, a horse at a walk."""
+    n = int(seconds * RATE)
+    rumble = gain(lowpass(noise(n, rng), 90), 3.0)
+    out = rumble
+    t = 0.2
+    while t < seconds - 0.6:
+        out = mix(out, pad(gain(creak(rng, 0.4), 0.25), t))
+        t += rng.uniform(0.9, 1.6)
+    t = 0.0
+    while t < seconds - 0.3:
+        out = mix(out, pad(gain(hoof(rng), 0.35), t))
+        t += 0.55 if int(t / 0.55) % 2 == 0 else 0.45
+    return loopable(out[:n], fade=0.5)
+
+
+def watch_call(rng):
+    """The watchman calling the hour, far off down the lane: a long sung vowel."""
+    n = int(1.6 * RATE)
+    phase, sig = 0.0, []
+    for i in range(n):
+        t = i / n
+        f = 130 + 12 * math.sin(2.0 * math.pi * 5.0 * i / RATE) - 25 * t
+        phase += f / RATE
+        sig.append((2.0 * (phase % 1.0) - 1.0) * min(1.0, t * 8) * (1.0 - t) ** 0.6)
+    voiced = mix(bandpass(sig, 700, 3.0), gain(bandpass(sig, 1100, 4.0), 0.5))
+    hiss = [a * b for a, b in zip(highpass(noise(n, rng), 3000), env(n, 0.05, 0.3))]
+    return lowpass(mix(voiced, gain(hiss, 0.1)), 2400)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -603,6 +633,9 @@ def main():
     write("sfx_gust.wav", gust(run), peak=0.8)
     write("amb_murmur_loop.wav", murmur(run), peak=0.4)
     write("sfx_clatter.wav", clatter(run), peak=0.8)
+    write("amb_wagon_loop.wav", wagon(run), peak=0.6)
+    write("amb_taproom_loop.wav", murmur(run, 12.0), peak=0.5)
+    write("sfx_watch_call.wav", watch_call(run), peak=0.6)
 
 
 if __name__ == "__main__":

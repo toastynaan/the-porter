@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="1_block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="2_stone"]
+[ext_resource type="Material" path="res://game/world/materials/iron.tres" id="3_iron"]
+
+[sub_resource type="BoxMesh" id="Mesh_bar"]
+material = ExtResource("3_iron")
+size = Vector3(0.02, 0.5, 0.02)
+
+[node name="WallSquint" type="Node3D"]
+editor_description = "A plain wall, 4 x 4 x 0.8 m, with a squint: a barred slit a hand's width by a forearm's height (0.18 x 0.5 m) at eye level in its middle (Look and Feel, The squints). Each face splays to 0.4 m so an eye at the bars sees a sliver of the other side."
+
+[node name="Left" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(1.8, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="Right" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 0)
+script = ExtResource("1_block")
+size = Vector3(1.8, 4, 0.8)
+material = ExtResource("2_stone")
+
+[node name="Below" type="StaticBody3D" parent="."]
+script = ExtResource("1_block")
+size = Vector3(0.4, 1.35, 0.8)
+material = ExtResource("2_stone")
+
+[node name="Above" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+script = ExtResource("1_block")
+size = Vector3(0.4, 2.15, 0.8)
+material = ExtResource("2_stone")
+
+[node name="JambLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.145, 1.35, 0)
+script = ExtResource("1_block")
+size = Vector3(0.11, 0.5, 0.4)
+material = ExtResource("2_stone")
+
+[node name="JambRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.145, 1.35, 0)
+script = ExtResource("1_block")
+size = Vector3(0.11, 0.5, 0.4)
+material = ExtResource("2_stone")
+
+[node name="Bar0" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045, 1.6, 0)
+mesh = SubResource("Mesh_bar")
+
+[node name="Bar1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045, 1.6, 0)
+mesh = SubResource("Mesh_bar")

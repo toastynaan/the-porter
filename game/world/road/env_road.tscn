@@ -1,0 +1,199 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/mud.tres" id="mud"]
+[ext_resource type="Material" path="res://game/world/materials/grass.tres" id="grass"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="Material" path="res://game/world/materials/plaster.tres" id="plaster"]
+[ext_resource type="Material" path="res://game/world/materials/roof.tres" id="roof"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_narrow.tscn" id="h3n"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_2storey_wide.tscn" id="h2w"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_wide.tscn" id="h3w"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_yew.tscn" id="yew"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+
+[node name="Road" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the road in on night 0 (design doc, Night 0: The road in). Grey dusk over mud and ruts: the white chapel in the fields, the city wall and Aldgate's dark arch, then close, tall streets, and the turn into the lane by the abbey gate. The wagon drives it on rails along RidePath. Only night 0 uses it."
+
+[node name="Fields" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -204.00, -0.12, 50.00)
+script = ExtResource("block")
+size = Vector3(172, 0.1, 110)
+material = ExtResource("grass")
+surface = "grass"
+
+[node name="RoadOutside" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -204.00, -0.06, 47.00)
+script = ExtResource("block")
+size = Vector3(172, 0.1, 6)
+material = ExtResource("mud")
+surface = "mud"
+
+[node name="RoadInside" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -94.75, -0.29, 47.00)
+script = ExtResource("block")
+size = Vector3(46.5, 0.3, 6)
+material = ExtResource("mud")
+surface = "mud"
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 20.00)
+script = ExtResource("block")
+size = Vector3(3, 9, 46)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 76.00)
+script = ExtResource("block")
+size = Vector3(3, 9, 48)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="GateTowerN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 41.50)
+script = ExtResource("block")
+size = Vector3(5, 12, 5)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="GateTowerS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 52.50)
+script = ExtResource("block")
+size = Vector3(5, 12, 5)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="GateArch" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 5.20, 47.00)
+script = ExtResource("block")
+size = Vector3(4, 3.8, 6)
+material = ExtResource("stone")
+surface = "stone"
+
+[node name="ChapelNave" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 62.00)
+script = ExtResource("block")
+size = Vector3(14, 5, 7)
+material = ExtResource("plaster")
+surface = "stone"
+
+[node name="ChapelRoof" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 5.00, 62.00)
+script = ExtResource("block")
+size = Vector3(14.6, 3, 7.6)
+material = ExtResource("roof")
+surface = "stone"
+shape = 1
+
+[node name="ChapelTower" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -241.00, 0.00, 62.00)
+script = ExtResource("block")
+size = Vector3(3.5, 10, 3.5)
+material = ExtResource("plaster")
+surface = "stone"
+
+[node name="HouseN0" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -76.00, 0.00, 50.20)
+
+[node name="HouseS0" parent="." instance=ExtResource("h3w")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -76.00, 0.00, 43.80)
+
+[node name="HouseN1" parent="." instance=ExtResource("h2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -81.00, 0.00, 50.20)
+
+[node name="HouseS1" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -81.00, 0.00, 43.80)
+
+[node name="HouseN2" parent="." instance=ExtResource("h3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -87.00, 0.00, 50.20)
+
+[node name="HouseS2" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -87.00, 0.00, 43.80)
+
+[node name="HouseN3" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -93.00, 0.00, 50.20)
+
+[node name="HouseS3" parent="." instance=ExtResource("h2w")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -93.00, 0.00, 43.80)
+
+[node name="HouseN4" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -98.00, 0.00, 50.20)
+
+[node name="HouseS4" parent="." instance=ExtResource("h3w")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -98.00, 0.00, 43.80)
+
+[node name="HouseN5" parent="." instance=ExtResource("h2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -103.00, 0.00, 50.20)
+
+[node name="HouseS5" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -103.00, 0.00, 43.80)
+
+[node name="HouseN6" parent="." instance=ExtResource("h3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -109.00, 0.00, 50.20)
+
+[node name="HouseS6" parent="." instance=ExtResource("h3n")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -109.00, 0.00, 43.80)
+
+[node name="Yew0" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.418294, 0, -0.908312, 0, 1, 0, 0.908312, 0, -0.418294, -130.28, 0.00, 31.00)
+
+[node name="Yew1" parent="." instance=ExtResource("yew")]
+transform = Transform3D(0.979845, 0, -0.199759, 0, 1, 0, 0.199759, 0, 0.979845, -150.74, 0.00, 60.95)
+
+[node name="Yew2" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.985934, 0, -0.167134, 0, 1, 0, 0.167134, 0, -0.985934, -168.96, 0.00, 36.49)
+
+[node name="Yew3" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.999969, 0, 0.00781843, 0, 1, 0, -0.00781843, 0, -0.999969, -183.88, 0.00, 62.56)
+
+[node name="Yew4" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.132122, 0, 0.991233, 0, 1, 0, -0.991233, 0, -0.132122, -200.83, 0.00, 33.82)
+
+[node name="Yew5" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.819198, 0, -0.57351, 0, 1, 0, 0.57351, 0, -0.819198, -217.59, 0.00, 63.87)
+
+[node name="Yew6" parent="." instance=ExtResource("yew")]
+transform = Transform3D(0.717302, 0, -0.696763, 0, 1, 0, 0.696763, 0, 0.717302, -236.23, 0.00, 32.01)
+
+[node name="Yew7" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.931318, 0, -0.364208, 0, 1, 0, 0.364208, 0, -0.931318, -254.74, 0.00, 61.69)
+
+[node name="Yew8" parent="." instance=ExtResource("yew")]
+transform = Transform3D(0.405743, 0, 0.913987, 0, 1, 0, -0.913987, 0, 0.405743, -269.39, 0.00, 31.71)
+
+[node name="GateLamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -116.30, 3.20, 44.60)
+
+[node name="RidePath" type="Node3D" parent="."]
+editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."
+
+[node name="P0" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -286.00, 0.00, 47.00)
+
+[node name="P1" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 47.00)
+
+[node name="P2" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -160.00, 0.00, 47.00)
+
+[node name="P3" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 47.00)
+
+[node name="P4" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -90.00, 0.00, 47.00)
+
+[node name="P5" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -62.00, 0.00, 47.00)
+
+[node name="P6" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -48.00, 0.00, 47.00)
+
+[node name="P7" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -44.60, 0.00, 43.00)
+
+[node name="P8" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -44.60, 0.00, 20.00)
+
+[node name="P9" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -44.60, 0.00, 4.50)

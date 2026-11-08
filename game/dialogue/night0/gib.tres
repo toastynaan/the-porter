@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n0_gib"
+text = "# DRAFT
+# Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell,
+# and walking the lane calling the hour after it (n0_curfew). He tells the porter to be indoors before the bell.
+== start
+-> start_late [if n0_curfew]
+-> start_early
+
+== start_early
+(An old man on a short ladder under the eaves, coaxing a lantern alight with a taper.)
+Gib: Mind my ladder, brother. A lantern on every house, all winter long. Mayor's order.
+Gib: And you be indoors before the bell. Nine o'clock, and not a breath after.
+-> topics
+
+== start_late
+(An old man with a lantern on a pole, walking the middle of the empty lane.)
+Gib: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you indoors.
+-> topics
+
+== again
+-> again_late [if n0_curfew]
+-> again_early
+
+== again_early
+Gib: Still out, brother? Not long to the bell now.
+-> topics
+
+== again_late
+Gib: You again, and the bell long gone. Indoors, brother.
+-> topics
+
+== topics
+* [if not n0_gib_watch] (Ask what he does after the bell.) -> watch
+* [if not n0_gib_lanterns] (Ask about the lanterns.) -> lanterns
+* [if not n0_gib_abbey] (Ask about the abbey wall.) -> abbey
+
+== watch [set n0_gib_watch]
+Gib: After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light.
+Gib: If you hear me call, all's well. If you don't, it isn't.
+-> topics
+
+== lanterns [set n0_gib_lanterns]
+Gib: Since the year of Agincourt. A lantern on every house from Hallowtide to Candlemas.
+Gib: The houses find the candles, and I light them. Saves a few throats, the mayor says.
+-> topics
+
+== abbey [set n0_gib_abbey]
+Gib: I walk past that wall every hour of the night, and I don't look at it.
+Gib: Thirty years. You hear things over a wall like that. You see lights where there shouldn't be lights.
+Gib: I call the hour and I keep walking. You'd do well to learn the same.
+-> topics
+
+== leave
+Gib: Indoors before the bell, mind!
+"

@@ -18,6 +18,9 @@ extends CharacterBody3D
 ## Talking to someone (start_talk, from Talk) he stands still, his view eased
 ## in on their face and held near it; a move key walks him away.
 ##
+## He peeks through a squint (peek(), E again steps back): his eye to the
+## bars, the view held within its few degrees.
+##
 ## He holds one thing to throw at a time, in his right hand (docs/mechanics.md,
 ## "Throwing": a stone, a bone or a cup from his satchel): throw() sends it
 ## about 8 m ahead.
@@ -87,6 +90,12 @@ var stumbling := false
 var controls_locked := false
 ## The spot he is hiding in, or null.
 var hiding: HidingSpot
+## The squint he has his eye to, or null.
+var peeking: Squint
+## Riding on something (the wagon, night 0): he's carried with it and can
+## only look about.
+var riding: Node3D
+var _peek_from: Transform3D
 ## What the floor underfoot sounds like.
 var floor_surface := "stone"
 ## Talking to someone (Talk.begin).
@@ -132,7 +141,7 @@ func _ready() -> void:
 ## True while something else has his body: crawling, hiding, stumbling,
 ## caught, talking.
 func busy() -> bool:
-	return crawling or hiding != null or stumbling or controls_locked or talking
+	return crawling or hiding != null or stumbling or controls_locked or talking or peeking != null
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -142,6 +151,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
 	elif event.is_action_pressed(&"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"interact") and peeking and not _hide_moving:
+		stop_peeking()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed(&"crouch") and Settings.crouch_toggle:
 		crouch_override = not crouch_override
@@ -169,9 +181,9 @@ func _process(delta: float) -> void:
 func _look(turn: Vector2) -> void:
 	var yaw := rotation.y - turn.x
 	var pitch := head.rotation.x - turn.y
-	if hiding:
-		var yaw_limit := deg_to_rad(hiding.look_yaw)
-		var pitch_limit := deg_to_rad(hiding.look_pitch)
+	if hiding or peeking:
+		var yaw_limit := deg_to_rad(hiding.look_yaw if hiding else Squint.PEEK_LOOK)
+		var pitch_limit := deg_to_rad(hiding.look_pitch if hiding else Squint.PEEK_LOOK)
 		yaw = _hide_yaw + clampf(wrapf(yaw - _hide_yaw, -PI, PI), -yaw_limit, yaw_limit)
 		pitch = clampf(pitch, _hide_pitch - pitch_limit, _hide_pitch + pitch_limit)
 	elif talking:
@@ -185,7 +197,11 @@ func _look(turn: Vector2) -> void:
 
 func _physics_process(delta: float) -> void:
 	_update_look_back(delta)
-	if crawling or hiding or _hide_moving:
+	if riding:
+		global_position = riding.global_position
+		velocity = Vector3.ZERO
+		return
+	if crawling or hiding or _hide_moving or peeking:
 		stamina.update(false, delta)
 		return
 	if talking:
@@ -378,6 +394,37 @@ func hide_in(spot: HidingSpot) -> void:
 	hid.emit(spot)
 
 
+## Puts his eye to `squint`, from whichever side he's on.
+func peek(squint: Squint) -> void:
+	if busy() or _hide_moving:
+		return
+	peeking = squint
+	_peek_from = global_transform
+	_hide_moving = true
+	velocity = Vector3.ZERO
+	var eye := squint.eye_for(global_position)
+	var look := -eye.basis.z
+	_hide_yaw = atan2(-look.x, -look.z)
+	_hide_pitch = 0.0
+	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, ^"global_position", eye.origin - Vector3.UP * EYE_HEIGHT, HIDE_TIME)
+	tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(_hide_yaw - rotation.y, -PI, PI), HIDE_TIME)
+	tween.tween_property(head, ^"rotation:x", 0.0, HIDE_TIME)
+	tween.chain().tween_callback(func() -> void: _hide_moving = false)
+
+
+## Steps back from the squint.
+func stop_peeking() -> void:
+	if peeking == null:
+		return
+	_hide_moving = true
+	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, ^"global_position", _peek_from.origin, HIDE_TIME)
+	tween.tween_callback(func() -> void:
+		peeking = null
+		_hide_moving = false)
+
+
 ## Climbs out of the hiding spot to its exit. `instant` for being dragged out.
 func leave_hiding(instant := false) -> void:
 	if hiding == null:
@@ -478,6 +525,8 @@ func get_up(seconds: float) -> void:
 func place(at: Vector3, yaw: float) -> void:
 	if hiding:
 		leave_hiding(true)
+	peeking = null
+	_hide_moving = false
 	global_position = at
 	velocity = Vector3.ZERO
 	rotation = Vector3(0.0, yaw, 0.0)
@@ -519,7 +568,16 @@ func _update_bob(delta: float) -> void:
 		head.rotation.z = -deg_to_rad(LEAN_TILT) * lean
 
 
+## Drunk (3 ales and more), the view drifts a little (none with less motion).
+func _drift() -> void:
+	var k := DoseDriver.drunk_amount() if not Settings.less_motion else 0.0
+	var t := Time.get_ticks_msec() / 1000.0
+	look_back_pivot.rotation.z = sin(t * 0.43) * 0.035 * k
+	look_back_pivot.rotation.x = sin(t * 0.31 + 1.0) * 0.02 * k
+
+
 func _update_look_back(delta: float) -> void:
+	_drift()
 	var looking := Input.is_action_pressed(&"look_back") and not busy()
 	_look_back = move_toward(_look_back, 1.0 if looking else 0.0, delta / LOOK_BACK_TIME)
 	look_back_pivot.rotation.y = deg_to_rad(LOOK_BACK_ANGLE) * smoothstep(0.0, 1.0, _look_back)

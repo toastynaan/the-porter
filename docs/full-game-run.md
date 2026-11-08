@@ -244,3 +244,12 @@ Added during the run:
 - **M11.** The three patrol routes (cloister and church, graveyard and infirmary, outer court and cellar) and who wears the costumes by default: Ranulf, Cole, Dunstan.
 - **M11.** The brothers' routines (`docs/abbey.md`); only Thomas, Osric, Hugh and Ranulf keep one so far; the rest are in bed after Compline.
 - **M11.** The lane's rumours that teach the saving rules (`game/story/rumours.gd`), DRAFT lines, given to Hob and Agnes.
+- **M12.** Every line of night 0 and the lane at dusk (`game/dialogue/night0/`, `game/dialogue/lane/`, DRAFT), including facts they add: Mab's "More go in than come out"; Ralph's sacrist buying far more candles since Michaelmas, paid in coin the abbey never had; Roger wanting word of any merchant who goes in at the gate; Agnes hinting on night 4 that a guest should bar his own door; Gib on night 3 saying the dead man "smelled like a church"; Mab's bread making "the rooks scream at nothing".
+- **M12.** Flags the drafts set for later nights to read: `n0_roger_agreed` (he promised Roger word of merchants), `n0_hob_jankin` (he heard that Hob puts Jankin out at closing), `lane_kit_n4_look` (he promised Kit to look for the candles), `mab_alms_<night>`.
+- **M12.** Night 0's drinkers at the Keys: Jankin, Walter, Roger and Ralph. The traveller and the carter talk on the ride; the carter won't wait while he knocks.
+- **M12.** The killing from the window: a guest with a lantern, killed by the well by a figure in a black habit with its back to the window, then dragged toward the cellar. Drunk, his note says he isn't sure what he saw.
+- **M12.** Day 1 starts in his room at the Keys with Cole at the open gate; the tour's six stops and Thomas's lines (DRAFT, `tour_beat.gd`); Anselm also says the old porter locked the guests in.
+- **M12.** The lane's dusk talks run on every night; night 3 keeps its own Mab, carter and Margery.
+- **M12.** In an implied death the victim's lantern is lit, so the struggle is shapes against its light; dropped, it burns low on the ground.
+- **M12.** After the tour Thomas and Anselm don't walk him to his cell: Thomas leaves for the infirmary, Anselm stays to warn him, and the duty flame leads him to his cot.
+- **M12.** The cell's squint looks straight out across the lane at the houses opposite; the gate, in the same wall 4 m away, is out of its 25°.

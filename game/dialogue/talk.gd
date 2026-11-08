@@ -194,7 +194,7 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 			last = line
 		var answers := conversation.offered(point)
 		if left or answers.is_empty():
-			at = point.next
+			at = point.go()
 			continue
 		var texts := PackedStringArray()
 		for a in answers:

@@ -70,7 +70,7 @@ Each night sets its `Weather/kind`:
 - Nights 1–3: a guest in a locked guesthouse lives.
 - From night 4 the porter's keys have been copied: the lock no longer helps; a guest warned to bar the door from inside lives.
 - Turned away before the curfew bell (21:00), a visitor goes to the Cross Keys and lives; after it, he's out in the lane. The gate records when (`<visitor>_refused_at`, `<visitor>_fate`).
-- The lane says at the next dusk what would have saved them: `Rumours.tonight()` gives the lines whose flags hold (Hob on the old porter who locked his guests in; Agnes on the inn being shut after the bell; Hob on Jankin; Agnes on barring the door from inside; the bailiff's man left outside). The lane's dusk conversations carry them (M12).
+- The lane says at the next dusk what would have saved them: `Rumours.tonight()` gives the lines whose flags hold (Hob on the old porter who locked his guests in; Agnes on the inn being shut after the bell; Hob on Jankin; Agnes on barring the door from inside; the bailiff's man left outside). The lane's dusk conversations carry them (`docs/prologue.md`, "The lane at dusk").
 
 ## Lateness (`Lateness`)
 

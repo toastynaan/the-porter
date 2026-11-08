@@ -15,7 +15,7 @@ At the gate it's the same: Walter's knock opens a conversation at the grille, wi
 
 ## Writing one
 
-Each conversation is a `Conversation` resource, one per person per night: `game/dialogue/night3/osric.tres`. Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
+Each conversation is a `Conversation` resource, one per person per night (`game/dialogue/night3/osric.tres`), or one per person for every dusk (`game/dialogue/lane/hob.tres`). Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
 
 ```
 # A note; ignored.
@@ -51,6 +51,7 @@ Osric: (Placeholder: he calls after you.)
 | `(line)` with no name | What the porter notices |
 | `* answer -> point` | An answer and where it leads: another point, or `end`. Three at most |
 | `-> point` | Goes on to another point with no answer asked |
+| `-> point [if flag]` | Goes there only if the tags hold; a point can list several, and the first that holds is taken (put one with no tags last) |
 | `== leave` | Said as you walk away in the middle of a talk |
 | `# note` | Ignored |
 
@@ -58,7 +59,9 @@ Osric: (Placeholder: he calls after you.)
 
 | Tag | Does |
 | --- | --- |
-| `[if flag]`, `[if not flag]`, `[if flag=value]` | The answer is offered only then (e.g. `[if n3_walter=admitted]`) |
+| `[if flag]`, `[if not flag]`, `[if flag=value]` | The answer is offered (or the jump taken) only then (e.g. `[if n3_walter=admitted]`) |
+| `[if night=2]` | Only on that night (the lane's talks have a branch for each night) |
+| `[drink]` | He drinks an ale (`docs/prologue.md`, "Drinking") |
 | `[set flag]`, `[set flag=value]` | Sets a flag when the answer is picked or the point is reached |
 | `[suspicion 5]` | Raises Suspicion |
 | `[item mab_bread]` | Puts something in his satchel (`game/items/items.gd`) |
