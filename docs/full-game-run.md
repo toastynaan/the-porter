@@ -200,6 +200,7 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 (One line per milestone as it lands.)
 
 - 2026-11-08 · M8 · 8289138 · The game's frame: title to chronicle with chapter cards, carry-over, bell and quiet saves, Continue, the capture rule and death, menus and settings, the outline and duty glyph, crouch, lean, satchel, gamepad, the 3-minute hour; nights other than 3 are stubs (17 suites, 426 checks; the commit message's 437 is a miscount). Next: M9, death and bodies.
+- 2026-11-08 · M9 · 9a4163c · Deaths and bodies: the death node in three styles with two renders, fakes and ragdoll bodies; blood that stays and is scrubbed at dawn; finding, moving, reporting and hidden bodies; the rite's count, the crypt candles and the book; the ledger's notes; being seen; the prior's judgement (19 suites, 479 checks). Next: M10, the drug and the dark.
 
 ## Decisions to review
 
