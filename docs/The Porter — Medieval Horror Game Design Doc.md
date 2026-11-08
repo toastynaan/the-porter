@@ -84,14 +84,16 @@ You play **Brother Alric**, 19, made porter after the old porter went blind. Eve
 
 ## Core loop: one night
 
-Each night is a 40–60 minute shift running from Vespers to dawn, timed by a candle clock in your cell. The burn marks are your objectives: the next duty is due when the flame reaches the next mark.
+Each night runs from waking at dusk to going to sleep at dawn: a 40–60 minute shift timed by a candle clock in your cell. The clock burns slowly in real time, and its burn marks are your duties: each is due when the flame reaches its mark, with some slack either side. Talking and exploring cost time, and a duty done very late is noticed.
 
-1. **Supper (short day scene).** Eat with the brothers in the refectory. Bread and ale are served by Osric. Eat, or palm the bread and risk being seen. Dialogue here sets up the night.
+0. **Waking (dusk).** The porter sleeps through the day while the day porter keeps the gate. He wakes in his cell in the late afternoon and has a few minutes of failing light to look around and talk before the supper bell. Waking is when you notice what changed while you slept.
+1. **Supper (short dusk scene).** Eat with the brothers in the refectory. Bread and ale are served by Osric. You eat the bread until you have found a clue that something is wrong with it; from then on you can palm it instead, and risk being seen. Dialogue here sets up the night.
 2. **Closing the gate.** Bar the gate at sunset. Enter that night's guests in the ledger by name and description.
 3. **Knocks (2–4 per night).** Talk through the grate. Read the visitor: boots, hands, story, what they carry. Choose: admit to the guesthouse, refuse, or send for the prior. Choices are remembered by the visitor and the cult.
 4. **Matins bell (midnight).** Ring the bell, go to the choir, count the brothers. The incense is lit here. A missing brother is the night's main mystery.
 5. **Lantern round.** Walk a set route through 4–5 areas, checking doors and lamps. This is where bodies, cult activity and chases happen. Optional detours carry clues and risk.
-6. **Lauds and dawn.** The night resolves: who is missing, what was moved, who saw you where. A short morning scene shows the abbey's official version of events.
+6. **The small hours.** With the round done, you go back to the gate and wait. You can doze until dawn, but each night's main event interrupts the wait.
+7. **Lauds and dawn.** The night resolves: who is missing, what was moved, who saw you where. A short morning scene shows the abbey's official version of events. The day porter relieves you at the gate and you go to your cell to sleep.
 
 **Tools**
 
@@ -108,7 +110,7 @@ A hidden **Dose** value (0–100) decides whether the game shows you the superna
 
 | Source | Dose | Avoidable? | Cost of avoiding |
 | --- | --- | --- | --- |
-| Rye bread at supper (ergot) | +10 per meal, slow and lasting | Yes, by palming it | Hunger: slower sprint recovery, hand tremor on the lantern. Osric notices empty plates |
+| Rye bread at supper (ergot) | +10 per meal, slow and lasting | Yes, by palming it, once you have found a clue that something is wrong with the bread | Hunger: slower sprint recovery, hand tremor on the lantern. Osric notices empty plates |
 | Incense at Matins (henbane) | +25, fast, fades over the round | No on nights 1–3, when the whole church is filled. From night 4, partly: stand near the door and hold your breath | Missing the headcount or being seen not singing raises suspicion |
 | Wine at Mass or from Thomas | +40 on cult kill nights | Yes, by refusing | Refusing Thomas directly is a large suspicion jump |
 | Thomas's "remedy" for your headaches | +15 | Yes | Refusing it after night 3 tips him off |
