@@ -1,6 +1,6 @@
 extends Node
-## Keeping the gate on night 3 (night3.tscn with only its Knocks beat): Walter
-## comes up the lane with his lantern and knocks at the grille; the porter
+## Keeping the gate on night 3 (night3.tscn with only its Knocks beat): at his
+## hour Walter comes up the lane with his lantern and knocks at the grille; the porter
 ## reads him by looking; each choice plays out.
 ## - Admitted: bar, gate open, he comes in, gate shut and barred, he follows to
 ##   the bed the porter shows him, and the ledger says what the porter noticed
@@ -29,9 +29,9 @@ func _run() -> void:
 	var night := pilot.night
 	var lane_start := pilot.mark("LaneStart")
 	var seen_walking := [false]
-	var npc_ready := func() -> bool: return get_tree().get_first_node_in_group(&"visitors") != null
+	var npc_ready := func() -> bool: return get_tree().get_first_node_in_group(&"callers") != null
 	await pilot.until(npc_ready, 5.0)
-	var walter := get_tree().get_first_node_in_group(&"visitors") as VisitorNPC
+	var walter := get_tree().get_first_node_in_group(&"callers") as VisitorNPC
 	_check(walter.global_position.distance_to(lane_start) < 1.0 and walter.get_node(^"Lantern").visible,
 		"Walter starts down the lane with his lantern")
 	await pilot.until(func() -> bool:
@@ -40,13 +40,18 @@ func _run() -> void:
 	_check(seen_walking[0] and walter.global_position.distance_to(pilot.mark("Porch")) < 0.7,
 		"he walks up the lane and knocks at the grille, under the porch lantern")
 	var said_before := Talk.history.size()
+	var came_in := [false]
+	var watch := func() -> void: came_in[0] = came_in[0] or walter.global_position.x > -39.0
+	get_tree().physics_frame.connect(watch)
 	await pilot.keep_gate(0, [&"box", &"bag"], _answer)
+	get_tree().physics_frame.disconnect(watch)
 	var asides := Talk.history.slice(said_before).map(func(h: Array) -> String: return h[1])
 	_check(asides.has("(His box of relics rattles.)") and asides.has("(His bag smells of the incense.)")
 		and not asides.has("(Oily, cheerful.)"), "reading him: what the porter looks at, he notices")
 	var bed := pilot.duty("GuestBeds/Bed2")
+	_check(came_in[0], "admitted, he walks in through the gateway")
 	_check(walter.lying and walter.global_position.distance_to(bed.global_position) < 0.8,
-		"admitted, he follows the porter and lies down in the bed he is shown")
+		"he follows the porter and lies down in the bed he is shown")
 	var leaves: Array = [night.get_node(^"Abbey/Navigation/OuterCourt/Doors/GateN"), night.get_node(^"Abbey/Navigation/OuterCourt/Doors/GateS")]
 	var bar: Node3D = night.get_node(^"Abbey/Navigation/OuterCourt/Props/GateBar")
 	_check(leaves.all(func(d: Door) -> bool: return not d.is_open and d.locked) and bar.visible, "the gate is shut and barred behind him")
@@ -67,7 +72,7 @@ func _run() -> void:
 	# Turned away: back down the lane, nothing written.
 	pilot = await _night()
 	await pilot.keep_gate(1, [], _answer)
-	var walter_id := (get_tree().get_first_node_in_group(&"visitors") as Node).get_instance_id()
+	var walter_id := (get_tree().get_first_node_in_group(&"callers") as Node).get_instance_id()
 	await pilot.until(func() -> bool: return not is_instance_id_valid(walter_id), 30.0)
 	_check(GameState.get_flag(&"n3_walter") == &"refused" and GameState.ledger.is_empty() and not is_instance_id_valid(walter_id),
 		"turned away, he goes back down the lane and is gone")
@@ -114,6 +119,7 @@ func _night() -> NightPilot:
 	var pilot := NightPilot.new(night, _check)
 	pilot.shorten()
 	await pilot.frames(30)
+	pilot.skip_to(20.0)
 	return pilot
 
 

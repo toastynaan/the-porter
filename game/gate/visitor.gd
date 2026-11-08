@@ -16,6 +16,8 @@ extends Resource
 @export var cloak_color := Color(0, 0, 0, 0)
 ## A brown work tunic rather than a black habit (lay folk).
 @export var tunic := false
+## Carries his own lantern (at night; not in daylight).
+@export var lantern := true
 ## Said at the grille when the porter comes to it.
 @export var greeting := ""
 @export var details: Array[VisitorDetail] = []

@@ -37,6 +37,8 @@ var _shape: CollisionShape3D
 
 
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		add_to_group(&"duties")
 	collision_mask = 0
 	monitoring = false
 	collision_layer = Layers.INTERACT if enabled else 0

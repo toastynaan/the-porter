@@ -1,38 +1,30 @@
 extends NightBeat
 ## The Matins bell (design doc, "Core loop": at midnight ring the bell, go
-## to the choir). The night saves here: a death sends you back to this bell.
-
-const BELL := preload("res://art/sfx/sfx_bell.wav")
-const STROKES := 3
-const STROKE_GAP := 2.2
+## to the choir). The rope can be rung from a little before the Matins mark
+## (`early`); rung more than `late` after it, the lateness is noticed (the
+## candle clock: "a duty done very late is noticed"). The night saves here: a
+## death sends you back to this bell.
 
 @export var rope: Duty
-## Where the bell hangs, for the sound.
-@export var bell_at: Node3D
-
-var _audio: AudioStreamPlayer3D
-
-
-func _ready() -> void:
-	_audio = AudioStreamPlayer3D.new()
-	_audio.stream = BELL
-	_audio.unit_size = 20.0
-	_audio.max_distance = 200.0
-	add_child(_audio)
+@export var tower: BellTower
+## Hours either side of `due`.
+@export var early := 0.25
+@export var late := 0.5
 
 
 func run() -> void:
-	await rope.wait_for_use()
-	GameState.hour = 24.0
+	await clock().wait_until(due - early)
+	var rung := [false]
+	rope.used.connect(func(_by: Node) -> void: rung[0] = true, CONNECT_ONE_SHOT)
+	rope.enabled = true
+	clock().wake()
+	await say("", "(The candle has burned down to the Matins mark. Ring the bell in the tower.)")
+	while not rung[0]:
+		if GameState.hour > due + late and not GameState.has_flag(&"matins_late"):
+			GameState.set_flag(&"matins_late")
+			Talk.say("", "(The bell is late. It will have been noticed.)")
+		await get_tree().physics_frame
+	rope.enabled = false
 	GameState.ring_bell(&"matins")
-	_ring.call()
+	tower.ring(3)
 	await say("", "(Matins. The brothers gather in the choir.)")
-
-
-func _ring() -> void:
-	if not AudioOut.enabled():
-		return
-	_audio.global_position = bell_at.global_position
-	for i in STROKES:
-		_audio.play()
-		await get_tree().create_timer(STROKE_GAP).timeout

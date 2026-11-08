@@ -1,21 +1,36 @@
 extends NightBeat
-## Closing the gate (design doc, "Core loop": bar the gate at sunset; enter
-## that night's guests in the ledger, here as they come, at the knocks). The
-## bar stays down unless the porter lifts it to let someone in.
+## Taking the gate (design doc, "Core loop" 2: after supper you go to the
+## gate and relieve Cole. You close and bar it and keep watch for the night;
+## guests go into the ledger by name and description, here as they come, at
+## the knocks). Cole goes off into the abbey. The bar stays down unless the
+## porter lifts it to let someone in.
 
+@export var gate: AbbeyGate
+@export var cole: VisitorNPC
+## Where Cole goes once relieved (out of sight).
+@export var cole_off: Marker3D
+@export var relieve: Duty
+@export var shut_gate: Duty
 @export var bar_duty: Duty
-## The bar prop; out of its brackets until the porter bars the gate.
-@export var gate_bar: StaticBody3D
 @export var ledger: Duty
 
 
 func _ready() -> void:
-	_show_bar(GameState.has_flag(&"gate_barred"))
+	gate.show_bar(GameState.has_flag(&"gate_barred"))
+	if GameState.has_flag(&"gate_taken"):
+		cole.set_present.call_deferred(false)
 
 
 func run() -> void:
+	await relieve.wait_for_use()
+	GameState.set_flag(&"gate_taken")
+	await say("Cole", "(Says nothing. He leaves you the gate.)")
+	_cole_goes.call()
+	await say("", "(Shut the gate and bar it.)")
+	await shut_gate.wait_for_use()
+	await gate.swing(false)
 	await bar_duty.wait_for_use()
-	_show_bar(true)
+	gate.show_bar(true)
 	GameState.set_flag(&"gate_barred")
 	await say("", "(You lift the bar into its brackets. It takes both hands.)")
 	await say("", "(Open the ledger at tonight's page, on the desk in your cell.)")
@@ -24,9 +39,10 @@ func run() -> void:
 	await say("", "(Tonight's page. Guests are written in as they come.)")
 
 
-func _show_bar(down: bool) -> void:
-	if gate_bar:
-		gate_bar.visible = down
-		# On the door layer: it blocks the porter but stays out of the navmesh,
-		# so the gateway is walkable when the gate is open.
-		gate_bar.collision_layer = Layers.DOOR if down else 0
+## Cole walks off, and is gone once no one is looking.
+func _cole_goes() -> void:
+	await cole.walk_to(cole_off.global_position)
+	var p := player()
+	while ViewCheck.on_screen(p.camera, [cole.global_position + Vector3.UP * 1.0]):
+		await get_tree().physics_frame
+	cole.set_present(false)

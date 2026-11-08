@@ -808,9 +808,9 @@ material = ExtResource("mud")
 surface = "mud"
 
 [node name="GateApron" type="StaticBody3D" parent="Ground"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41.2, -0.28, -2)
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -40.5, -0.28, -2)
 script = ExtResource("block")
-size = Vector3(1.6, 0.3, 4.6)
+size = Vector3(3.8, 0.3, 4.6)
 material = ExtResource("flags")
 surface = "stone"
 

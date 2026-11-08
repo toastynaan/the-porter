@@ -18,8 +18,10 @@ signal flag_changed(flag: StringName, value: Variant)
 signal bell_saved(bell: StringName)
 signal loaded
 
-## The night's duties in order (design doc, "Core loop: one night").
-enum Phase { SUPPER, GATE, KNOCKS, MATINS, ROUND, DAWN }
+## The night's parts (design doc, "Core loop: one night"). In the night's
+## order: DUSK, SUPPER, GATE, KNOCKS, MATINS, ROUND, SMALL_HOURS, DAWN. (DUSK
+## and SMALL_HOURS come last in the list so saved values keep their meaning.)
+enum Phase { SUPPER, GATE, KNOCKS, MATINS, ROUND, DAWN, DUSK, SMALL_HOURS }
 
 const DOSE_MAX := 100.0
 ## Dose lost per in-game hour (design doc: "about 10").
@@ -30,8 +32,9 @@ const DOSE_EASE_TIME := 5.0
 ## Where the bell save lives (tests point it elsewhere).
 var save_path := "user://bell_save.tres"
 var night := 3
-var phase := Phase.SUPPER
-## In-game clock, hours since midnight of the night's start (18.5 = 18:30).
+var phase := Phase.DUSK
+## In-game clock, hours since midnight of the day the night starts (18.5 =
+## 18:30; the small hours run on past 24, so 30.0 is 06:00 next morning).
 var hour := 0.0
 ## Real seconds per in-game hour; 0 stops the clock and the dose decay. The
 ## night's time scale isn't designed yet (M4).

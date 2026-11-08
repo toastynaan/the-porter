@@ -3,11 +3,19 @@ extends Node
 ## Runs one night: its NightBeat children, in order (design doc, "Core loop:
 ## one night"). After a death the night starts again at the beat whose
 ## `bell` was the last one rung. `beats_run` records what ran, for tests.
+##
+## A night played on its own (the slice) starts as if the nights before it
+## had happened: `start_dose` and `start_flags` set that up.
 
 signal beat_started(beat: StringName)
 signal finished
 
 @export var night := 3
+## Dose when the night starts fresh: what the nights before left after a
+## day's sleep.
+@export var start_dose := 0.0
+## Flags the nights before would have set (night 3: warned about the bread).
+@export var start_flags: Array[StringName] = []
 
 var beats_run: Array[StringName] = []
 var current: NightBeat
@@ -18,7 +26,8 @@ func _ready() -> void:
 	run.call_deferred()
 
 
-## Tonight's duties for the ledger: [text, done], in order.
+## Tonight's duties for the ledger: [text, done], in order, each with the
+## time it is due if it has one.
 func duties() -> Array:
 	var out := []
 	var done := true
@@ -29,12 +38,21 @@ func duties() -> Array:
 		if beat == current:
 			done = false
 		if not beat.duty.is_empty():
-			out.append([beat.duty, done])
+			var text := beat.duty
+			if beat.due >= 0.0:
+				text = "%s  %s" % [NightClock.clock_text(beat.due), text]
+			out.append([text, done])
 	return out
 
 
 func run() -> void:
 	GameState.night = night
+	if GameState.last_bell.is_empty() or GameState.last_bell == &"start":
+		if not GameState.has_flag(&"night_started"):
+			GameState.set_flag(&"night_started")
+			GameState.snap_dose(start_dose)
+			for f in start_flags:
+				GameState.set_flag(f)
 	var beats: Array[NightBeat] = []
 	for c in get_children():
 		if c is NightBeat:
@@ -44,11 +62,23 @@ func run() -> void:
 		for i in beats.size():
 			if beats[i].bell == GameState.last_bell:
 				from = i
+	var clock := get_tree().get_first_node_in_group(&"night_clock") as NightClock
 	for i in range(from, beats.size()):
 		current = beats[i]
+		if clock:
+			clock.cap = _next_due(beats, i)
 		GameState.set_phase(current.phase)
 		beats_run.append(current.name)
 		beat_started.emit(current.name)
 		await current.run()
 	current = null
 	finished.emit()
+
+
+## The earliest mark of the beats after `i` (INF if none has one).
+func _next_due(beats: Array[NightBeat], i: int) -> float:
+	var due := INF
+	for k in range(i + 1, beats.size()):
+		if beats[k].due >= 0.0:
+			due = minf(due, beats[k].due)
+	return due

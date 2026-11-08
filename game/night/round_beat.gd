@@ -7,9 +7,6 @@ extends NightBeat
 ## "hint" metadata says where it is (a placeholder until the candle clock and
 ## the ledger carry the duties) and its "line" is what the porter finds.
 
-## Real seconds per in-game hour while the round runs (the clock drives the
-## Dose decay). Greybox pace.
-@export var round_clock := 60.0
 @export var stops: Node3D
 @export var stalker: Stalker
 ## Marker3Ds: where it may stand at the end of a walk, and in a doorway.
@@ -18,7 +15,6 @@ extends NightBeat
 
 
 func run() -> void:
-	GameState.seconds_per_hour = round_clock
 	var duties: Array[Duty] = []
 	for c in stops.get_children():
 		if c is Duty:

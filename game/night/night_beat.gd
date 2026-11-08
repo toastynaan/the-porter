@@ -8,6 +8,10 @@ extends Node
 @export var bell := &""
 ## The duty as the porter's ledger lists it (empty: not a duty, an event).
 @export var duty := ""
+## When it is due by the candle clock, in hours (-1: no set time).
+@export var due := -1.0
+## The porter may doze on the gate bench while this beat waits.
+@export var can_doze := false
 
 
 ## Does the beat; returns when it is over. Beats override this.
@@ -17,6 +21,10 @@ func run() -> void:
 
 func player() -> Player:
 	return get_tree().get_first_node_in_group(&"player") as Player
+
+
+func clock() -> NightClock:
+	return get_tree().get_first_node_in_group(&"night_clock") as NightClock
 
 
 func say(speaker: String, text: String) -> void:

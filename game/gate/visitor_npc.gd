@@ -49,15 +49,21 @@ func _dress() -> void:
 	figure.tunic = visitor.tunic
 	($Parts/box as Node3D).visible = visitor.has_part(&"box")
 	($Parts/bag as Node3D).visible = visitor.has_part(&"bag")
+	($Lantern as Node3D).visible = visitor.lantern
 
 
 ## Walks to `point`; await it.
 func walk_to(point: Vector3) -> void:
+	go_to(point)
+	await arrived
+
+
+## Sets off for `point`; `arrived` is emitted there.
+func go_to(point: Vector3) -> void:
 	_following = null
 	lying = false
 	_target = point
 	agent.target_position = point
-	await arrived
 
 
 ## Follows `who` at a few steps' distance until told otherwise.
@@ -81,6 +87,16 @@ func lie_down(bed: Transform3D) -> void:
 	figure.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
 	figure.position = Vector3(0.0, 0.15, 0.9)
 	$Shape.disabled = true
+
+
+## Takes him out of the world, or puts him back at `at`.
+func set_present(present: bool, at := Transform3D()) -> void:
+	stop()
+	visible = present
+	set_physics_process(present)
+	$Shape.disabled = not present or lying
+	if present:
+		global_transform = at
 
 
 ## Opens a shut door just ahead; true if he has to stop for it.

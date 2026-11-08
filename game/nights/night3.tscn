@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3]
+[gd_scene load_steps=46 format=3]
 
 [ext_resource type="PackedScene" path="res://game/world/abbey/abbey.tscn" id="abbey"]
 [ext_resource type="PackedScene" path="res://game/npc/brother.tscn" id="brother"]
@@ -24,6 +24,20 @@
 [ext_resource type="Script" path="res://game/night/crypt_beat.gd" id="crypt_gd"]
 [ext_resource type="Script" path="res://game/night/chase_beat.gd" id="chase_gd"]
 [ext_resource type="Script" path="res://game/night/dawn_beat.gd" id="dawn_gd"]
+[ext_resource type="Script" path="res://game/night/wake_beat.gd" id="wake_gd"]
+[ext_resource type="Script" path="res://game/night/small_hours_beat.gd" id="small_gd"]
+[ext_resource type="Script" path="res://game/night/night_clock.gd" id="clock_gd"]
+[ext_resource type="Script" path="res://game/night/daylight.gd" id="daylight_gd"]
+[ext_resource type="Script" path="res://game/night/abbey_gate.gd" id="gate_works_gd"]
+[ext_resource type="Script" path="res://game/night/bell_tower.gd" id="tower_gd"]
+[ext_resource type="Script" path="res://game/night/gate_bench.gd" id="bench_gd"]
+[ext_resource type="Script" path="res://game/night/candle_clock.gd" id="candle_clock_gd"]
+[ext_resource type="Script" path="res://game/npc/talker.gd" id="talker_gd"]
+[ext_resource type="Script" path="res://game/npc/lane_walker.gd" id="walker_gd"]
+[ext_resource type="Resource" path="res://game/gate/visitors/cole.tres" id="cole"]
+[ext_resource type="Resource" path="res://game/gate/visitors/mab.tres" id="mab"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_carter.tres" id="carter"]
+[ext_resource type="Resource" path="res://game/gate/visitors/lane_woman.tres" id="woman"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
@@ -63,6 +77,29 @@ editor_description = "Night 3, the vertical slice (design doc, Night 3: The oven
 
 [node name="Places" type="Node3D" parent="."]
 editor_description = "Where each brother is in each phase: Places/<Phase>/<Name>."
+
+[node name="Dusk" type="Node3D" parent="Places"]
+
+[node name="Thomas" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 30, 0.05, 0)
+
+[node name="Osric" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -15, 0.05, 1)
+
+[node name="Ranulf" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 23.5, 0.05, -32)
+
+[node name="Godric" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 16, 0.05, -22)
+
+[node name="Hugh" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 0, 0.05, -26)
+
+[node name="Edwin" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -10, 0.05, -15)
+
+[node name="Anselm" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 34.5, 0.05, 0.5)
 
 [node name="Supper" type="Node3D" parent="Places"]
 
@@ -121,11 +158,23 @@ places = NodePath("../../Places")
 [node name="Figure" parent="Brothers/Thomas"]
 build = 1
 
+[node name="Talker" type="Area3D" parent="Brothers/Thomas"]
+script = ExtResource("talker_gd")
+speaker = "Thomas"
+lines = PackedStringArray("(Placeholder: Thomas, the infirmarian. Gentle, a healer, your first ally.)")
+phases = Array[int]([6])
+
 [node name="Osric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
 [node name="Figure" parent="Brothers/Osric"]
 build = 2
+
+[node name="Talker" type="Area3D" parent="Brothers/Osric"]
+script = ExtResource("talker_gd")
+speaker = "Osric"
+lines = PackedStringArray("(Placeholder: Osric, the cellarer. Jolly; he feeds you extra bread.)")
+phases = Array[int]([6])
 
 [node name="Ranulf" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
@@ -133,11 +182,23 @@ places = NodePath("../../Places")
 [node name="Figure" parent="Brothers/Ranulf"]
 build = 0
 
+[node name="Talker" type="Area3D" parent="Brothers/Ranulf"]
+script = ExtResource("talker_gd")
+speaker = "Ranulf"
+lines = PackedStringArray("(Placeholder: Ranulf, the sacrist. He keeps the relic, the candles and the incense.)")
+phases = Array[int]([6])
+
 [node name="Godric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
 [node name="Figure" parent="Brothers/Godric"]
 build = 3
+
+[node name="Talker" type="Area3D" parent="Brothers/Godric"]
+script = ExtResource("talker_gd")
+speaker = "Abbot Godric"
+lines = PackedStringArray("(Placeholder: Abbot Godric. Frail, kind, fatherly.)")
+phases = Array[int]([6])
 
 [node name="Hugh" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
@@ -145,17 +206,35 @@ places = NodePath("../../Places")
 [node name="Figure" parent="Brothers/Hugh"]
 build = 4
 
+[node name="Talker" type="Area3D" parent="Brothers/Hugh"]
+script = ExtResource("talker_gd")
+speaker = "Prior Hugh"
+lines = PackedStringArray("(Placeholder: Prior Hugh. Harsh; he watches you constantly.)")
+phases = Array[int]([6])
+
 [node name="Edwin" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
 [node name="Figure" parent="Brothers/Edwin"]
 build = 5
 
+[node name="Talker" type="Area3D" parent="Brothers/Edwin"]
+script = ExtResource("talker_gd")
+speaker = "Edwin"
+lines = PackedStringArray("(Placeholder: Edwin, the novice. Your friend, the one you talk to.)")
+phases = Array[int]([6])
+
 [node name="Anselm" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
 [node name="Figure" parent="Brothers/Anselm"]
 build = 6
+
+[node name="Talker" type="Area3D" parent="Brothers/Anselm"]
+script = ExtResource("talker_gd")
+speaker = "Anselm"
+lines = PackedStringArray("(Placeholder: Anselm, the old porter. Blind, kept in the infirmary.)")
+phases = Array[int]([6])
 
 [node name="Stranger" type="Node3D" parent="Brothers" node_paths=PackedStringArray("places")]
 script = ExtResource("brother_gd")
@@ -215,6 +294,15 @@ transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -26, 0.0
 [node name="DawnCell" type="Marker3D" parent="Marks"]
 transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -36.5, 0.05, -6.5)
 
+[node name="WakeCell" type="Marker3D" parent="Marks"]
+transform = Transform3D(-0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, -0.819152, -38.4, 0.05, -9.9)
+
+[node name="ColeGate" type="Marker3D" parent="Marks"]
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -38.6, 0.05, 0)
+
+[node name="ColeOff" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -17, 0.05, 2.5)
+
 [node name="matins" type="Marker3D" parent="Marks" groups=["bell_spawn"]]
 transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 6, 0.05, -32)
 editor_description = "Where a restart from the Matins bell puts you."
@@ -256,6 +344,23 @@ size = Vector3(0.3, 0.15, 0.25)
 [node name="Mesh" type="MeshInstance3D" parent="Duties/Bread"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
 mesh = SubResource("Mesh_bread")
+
+[node name="SupperSeat" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
+script = ExtResource("duty_gd")
+size = Vector3(0.6, 1.2, 0.6)
+
+[node name="RelieveCole" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, 0)
+script = ExtResource("duty_gd")
+size = Vector3(0.8, 2.0, 0.8)
+lamp = NodePath("../../Lamps/GateLamp")
+
+[node name="HandOver" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, 0)
+script = ExtResource("duty_gd")
+size = Vector3(0.8, 2.0, 0.8)
+lamp = NodePath("../../Lamps/GateLamp")
 
 [node name="BarGate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
@@ -355,6 +460,12 @@ keep_lit = true
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 mesh = SubResource("Mesh_keys")
 
+[node name="Sleep" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, -11.2)
+script = ExtResource("duty_gd")
+size = Vector3(2.0, 0.7, 0.9)
+open_way = false
+
 [node name="RoundStops" type="Node3D" parent="Duties"]
 
 [node name="StoresDoor" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
@@ -381,6 +492,103 @@ lamp = NodePath("../../../Abbey/Navigation/Church/Lights/SanctuaryLamp")
 keep_lit = true
 metadata/hint = "(Last, the sanctuary lamp by the altar.)"
 metadata/line = "(The sanctuary lamp is burning.)"
+
+[node name="Clock" type="Node" parent="."]
+script = ExtResource("clock_gd")
+editor_description = "The candle clock: in-game hours, slow awake, fast while the porter dozes."
+
+[node name="Daylight" type="Node" parent="." node_paths=PackedStringArray("world_environment", "moon", "street_lanterns")]
+script = ExtResource("daylight_gd")
+world_environment = NodePath("../Abbey/WorldEnvironment")
+moon = NodePath("../Abbey/Moon")
+street_lanterns = NodePath("../Abbey/Street/StreetLanterns")
+
+[node name="AbbeyGate" type="Node" parent="." node_paths=PackedStringArray("leaves", "bar")]
+script = ExtResource("gate_works_gd")
+leaves = [NodePath("../Abbey/Navigation/OuterCourt/Doors/GateN"), NodePath("../Abbey/Navigation/OuterCourt/Doors/GateS")]
+bar = NodePath("../Abbey/Navigation/OuterCourt/Props/GateBar")
+
+[node name="BellTower" type="Node" parent="." node_paths=PackedStringArray("bell")]
+script = ExtResource("tower_gd")
+bell = NodePath("../Abbey/Navigation/Church/Props/Bell")
+
+[node name="GateBench" type="Area3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -39.35, 0.05, 1.6)
+script = ExtResource("bench_gd")
+editor_description = "Sit and doze while the night waits on the gate."
+
+[node name="CandleClock" type="Node3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -33.25, 0.85, -10.5)
+script = ExtResource("candle_clock_gd")
+
+[node name="People" type="Node3D" parent="."]
+editor_description = "Cole at the gate, Mab outside it, passers-by in the lane at dusk. Lines are placeholders."
+
+[node name="Cole" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -38.6, 0.05, 0)
+visitor = ExtResource("cole")
+
+[node name="Talker" type="Area3D" parent="People/Cole"]
+script = ExtResource("talker_gd")
+speaker = "Cole"
+lines = PackedStringArray("(Says nothing. Big and silent; he keeps the gate by day.)")
+phases = Array[int]([6])
+
+[node name="Mab" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -41.9, 0.05, 0.9)
+visitor = ExtResource("mab")
+
+[node name="Talker" type="Area3D" parent="People/Mab"]
+script = ExtResource("talker_gd")
+speaker = "Mab"
+lines = PackedStringArray("(Placeholder: Mab, a leper. She begs at the gate every night.)")
+phases = Array[int]([6, 0, 1, 2])
+
+[node name="Walks" type="Node3D" parent="People"]
+
+[node name="CarterA" type="Marker3D" parent="People/Walks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, -20)
+
+[node name="CarterB" type="Marker3D" parent="People/Walks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, 14)
+
+[node name="WomanA" type="Marker3D" parent="People/Walks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
+
+[node name="WomanB" type="Marker3D" parent="People/Walks"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, -9)
+
+[node name="Carter" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, -20)
+visitor = ExtResource("carter")
+speed = 1.0
+
+[node name="Talker" type="Area3D" parent="People/Carter"]
+script = ExtResource("talker_gd")
+speaker = "A carter"
+lines = PackedStringArray("(Placeholder: a carter on his way home before dark.)")
+phases = Array[int]([6])
+
+[node name="Walk" type="Node" parent="People/Carter" node_paths=PackedStringArray("points", "leave")]
+script = ExtResource("walker_gd")
+points = [NodePath("../../Walks/CarterA"), NodePath("../../Walks/CarterB")]
+leave = NodePath("../../../Marks/LaneLeave")
+
+[node name="Woman" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
+visitor = ExtResource("woman")
+speed = 1.0
+
+[node name="Talker" type="Area3D" parent="People/Woman"]
+script = ExtResource("talker_gd")
+speaker = "A woman"
+lines = PackedStringArray("(Placeholder: a woman with a basket, hurrying home.)")
+phases = Array[int]([6])
+
+[node name="Walk" type="Node" parent="People/Woman" node_paths=PackedStringArray("points", "leave")]
+script = ExtResource("walker_gd")
+points = [NodePath("../../Walks/WomanA"), NodePath("../../Walks/WomanB")]
+leave = NodePath("../../../Marks/LaneStart")
 
 [node name="Stalk" type="Node3D" parent="."]
 editor_description = "Where the demon may stand on the round, in order of preference."
@@ -463,28 +671,45 @@ rearm = false
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
 night = 3
+start_dose = 30.0
+start_flags = Array[StringName]([&"bread_warned"])
 
-[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "bread", "osric", "thomas")]
+[node name="Wake" type="Node" parent="Director" node_paths=PackedStringArray("wake_at", "tower", "gate")]
+script = ExtResource("wake_gd")
+phase = 6
+bell = &"start"
+due = 17.25
+wake_at = NodePath("../../Marks/WakeCell")
+tower = NodePath("../../BellTower")
+gate = NodePath("../../AbbeyGate")
+
+[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas")]
 script = ExtResource("supper_gd")
 phase = 0
-bell = &"start"
-duty = "Supper in the refectory"
+due = 17.25
+duty = "Supper in the refectory, at the supper bell"
 seat = NodePath("../../Marks/PorterSeat")
+seat_duty = NodePath("../../Duties/SupperSeat")
 bread = NodePath("../../Duties/Bread")
 osric = NodePath("../../Brothers/Osric")
 thomas = NodePath("../../Brothers/Thomas")
 
-[node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("bar_duty", "gate_bar", "ledger")]
+[node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
 script = ExtResource("gate_gd")
 phase = 1
-duty = "Bar the gate at sunset"
+duty = "After supper: take the gate from Cole, shut and bar it, open the ledger"
+gate = NodePath("../../AbbeyGate")
+cole = NodePath("../../People/Cole")
+cole_off = NodePath("../../Marks/ColeOff")
+relieve = NodePath("../../Duties/RelieveCole")
+shut_gate = NodePath("../../Duties/ShutGate")
 bar_duty = NodePath("../../Duties/BarGate")
-gate_bar = NodePath("../../Abbey/Navigation/OuterCourt/Props/GateBar")
 ledger = NodePath("../../Duties/Ledger")
 
-[node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate_leaves", "gate_bar")]
+[node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate")]
 script = ExtResource("visits_gd")
 phase = 2
+can_doze = true
 duty = "Keep the gate: answer the knocks"
 visitors = Array[ExtResource("visitor_gd")]([ExtResource("walter")])
 visitor_scene = ExtResource("visitor_npc")
@@ -500,15 +725,16 @@ open_gate = NodePath("../../Duties/OpenGate")
 shut_gate = NodePath("../../Duties/ShutGate")
 ledger = NodePath("../../Duties/Ledger")
 beds = NodePath("../../Duties/GuestBeds")
-gate_leaves = [NodePath("../../Abbey/Navigation/OuterCourt/Doors/GateN"), NodePath("../../Abbey/Navigation/OuterCourt/Doors/GateS")]
-gate_bar = NodePath("../../Abbey/Navigation/OuterCourt/Props/GateBar")
+gate = NodePath("../../AbbeyGate")
 
-[node name="Bell" type="Node" parent="Director" node_paths=PackedStringArray("rope", "bell_at")]
+[node name="Bell" type="Node" parent="Director" node_paths=PackedStringArray("rope", "tower")]
 script = ExtResource("bell_gd")
 phase = 3
+due = 24.0
+can_doze = true
 duty = "Ring the bell for Matins"
 rope = NodePath("../../Duties/BellRope")
-bell_at = NodePath("../../Abbey/Navigation/Church/Props/Bell")
+tower = NodePath("../../BellTower")
 
 [node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "dead_brother")]
 script = ExtResource("choir_gd")
@@ -545,9 +771,28 @@ thomas = NodePath("../../Brothers/Thomas")
 rescue_porter = NodePath("../../Marks/RescuePorter")
 rescue_thomas = NodePath("../../Marks/RescueThomas")
 
-[node name="Dawn" type="Node" parent="Director" node_paths=PackedStringArray("cell", "keys_on_hook", "keys_moved")]
+[node name="SmallHours" type="Node" parent="Director" node_paths=PackedStringArray("bench", "tower", "gate_lamp")]
+script = ExtResource("small_gd")
+phase = 7
+due = 30.0
+can_doze = true
+duty = "Watch the gate until Lauds"
+bench = NodePath("../../GateBench")
+tower = NodePath("../../BellTower")
+gate_lamp = NodePath("../../Lamps/GateLamp")
+
+[node name="Dawn" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "cole_gate", "hand_over", "cell", "keys_on_hook", "keys_moved", "sleep")]
 script = ExtResource("dawn_gd")
 phase = 5
+due = 30.0
+duty = "At Lauds: give the gate to Cole, and sleep"
+gate = NodePath("../../AbbeyGate")
+cole = NodePath("../../People/Cole")
+cole_off = NodePath("../../Marks/ColeOff")
+cole_gate = NodePath("../../Marks/ColeGate")
+hand_over = NodePath("../../Duties/HandOver")
 cell = NodePath("../../Marks/DawnCell")
+cell_radius = 2.5
 keys_on_hook = NodePath("../../Marks/KeysOnHook")
 keys_moved = NodePath("../../Duties/KeysMoved")
+sleep = NodePath("../../Duties/Sleep")

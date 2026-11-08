@@ -1,9 +1,10 @@
 extends Node
-## Plays night 3 with the test pilot and captures a still at each beat
-## through the full render pipeline, subtitles and all, to
-## art/_review/m4/ (tools/night3_shots.sh).
+## Plays night 3 from dusk to dawn with the test pilot and captures a still
+## at each beat through the full render pipeline, subtitles and all, to
+## art/_review/m6/ (tools/night3_shots.sh). The candle clock is moved on by
+## hand for the dusk shots so the light is right in each.
 
-const OUT := "res://art/_review/m4/"
+const OUT := "res://art/_review/m6/"
 
 var _pilot: NightPilot
 var _n := 0
@@ -25,34 +26,88 @@ func _ready() -> void:
 		if not ok:
 			print("pilot: ", what))
 	_pilot.shorten()
+	_pilot.clock().set_pace(3600.0, 1.0)
 	var p := _pilot.player
 	var night := _pilot.night
+	for walker in ["Carter", "Woman"]:
+		(night.get_node(NodePath("People/" + walker)) as VisitorNPC).speed = 1.0
 
+	# Dusk: the cell, the candle clock, a brother, the open gate, the lane.
+	await _pilot.until(func() -> bool: return not p.controls_locked, 6.0)
+	_pilot.face(Vector3(-33.25, 1.0, -10.5))
+	await _shot("wake_cell", 1.0)
+	p.place(Vector3(-34.1, 0.05, -10.5), deg_to_rad(-90.0))
+	_pilot.face(Vector3(-33.25, 1.05, -10.5))
+	(night.get_node(^"CandleClock") as CandleClock).interact(p)
+	await _shot("candle_clock", 0.4)
+	_pilot.skip_to(16.2)
+	p.place(Vector3(-7.8, 0.05, -15.6), deg_to_rad(90.0))
+	_pilot.face((night.get_node(^"Brothers/Edwin") as Node3D).global_position + Vector3.UP * 1.5)
+	(night.get_node(^"Brothers/Edwin/Talker") as Talker).interact(p)
+	await _said("(Placeholder: Edwin, the novice. Your friend, the one you talk to.)")
+	await _shot("edwin_at_dusk", 0.3)
+	_pilot.skip_to(16.4)
+	p.place(Vector3(-32.0, 0.05, 1.5), deg_to_rad(90.0))
+	_pilot.face(Vector3(-40.0, 1.4, -1.6))
+	await _shot("gate_open_cole", 0.6)
+	_pilot.skip_to(16.8)
+	p.place(Vector3(-44.6, 0.05, 6.5), 0.0)
+	p.head.rotation.x = deg_to_rad(2.0)
+	await _shot("lane_at_dusk", 0.6)
+	var mab := night.get_node(^"People/Mab") as Node3D
+	p.place(Vector3(-43.6, 0.05, 2.4), 0.0)
+	_pilot.face(mab.global_position + Vector3.UP * 1.3)
+	(night.get_node(^"People/Mab/Talker") as Talker).interact(p)
+	await _said("(Placeholder: Mab, a leper. She begs at the gate every night.)")
+	await _shot("mab", 0.3)
+
+	# The supper bell; supper; taking the gate from Cole.
+	_pilot.skip_to(17.25)
+	p.place(Vector3(-32.0, 0.05, 1.5), deg_to_rad(90.0))
+	_pilot.face(Vector3(-40.0, 1.4, -1.6))
+	await _pilot.until(func() -> bool: return _pilot.beat() == &"Supper", 10.0)
+	await _shot("supper_bell", 0.3)
+	_pilot.skip_to(17.5)
+	p.place(_pilot.mark("PorterSeat") + Vector3(0, 0, 0.6), PI)
+	await _pilot.use("SupperSeat")
 	await _pilot.until(func() -> bool: return _pilot.duty("Bread").enabled, 15.0)
 	_pilot.face(_pilot.duty("Bread").global_position + Vector3(0.4, 0.6, -0.6))
 	await _shot("supper")
 	_pilot.duty("Bread").interact(p)
-	await _pilot.until(func() -> bool: return _pilot.beat() == &"Gate", 30.0)
-	# The way to the gate: lit doorways through the kitchen, the lamp at the end.
-	p.place(Vector3(-4, 0.05, -3.1), deg_to_rad(90.0))
-	await _shot("way_to_gate", 1.0)
-	p.place(Vector3(-36, 0.05, -2), deg_to_rad(90.0))
+	await _pilot.until(func() -> bool: return _pilot.duty("RelieveCole").enabled, 40.0)
+	var cole := night.get_node(^"People/Cole") as Node3D
+	p.place(Vector3(-36.2, 0.05, -0.8), deg_to_rad(90.0))
+	_pilot.face(cole.global_position + Vector3.UP * 1.5)
+	await _shot("relieve_cole", 0.3)
+	await _pilot.use("RelieveCole")
+	p.place(Vector3(-37.2, 0.05, -2), deg_to_rad(90.0))
+	await _pilot.use("ShutGate")
 	await _pilot.use("BarGate")
+	await _shot("gate_barred", 1.2)
+	p.place(Vector3(-33.2, 0.05, -9.6), PI)
 	await _pilot.use("Ledger")
+
+	# The knocks, waited out dozing on the bench.
 	GameState.snap_dose(55.0)
+	GameState.dose_floor = 55.0
+	await _pilot.doze()
+	await _shot("bench_doze", 0.5)
 	await _keep_gate(p)
-	# Drugged, the child-sized knock follows.
+	await _pilot.doze()
+	await _pilot.until(func() -> bool: return _pilot.duty("Grate").enabled, 20.0)
+	await _pilot.wake()
+	p.place(Vector3(-39.2, 0.05, -2.4), deg_to_rad(90.0))
 	await _pilot.use("Grate")
 	await _shot("knock_no_one", 0.4)
+	GameState.dose_floor = 0.0
+
+	# Matins: woken at the mark; the bell, the choir, the round, the crypt, the chase.
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Bell", 30.0)
-	# The way to the bell: a lamp over the tower door, seen across the court.
-	p.place(Vector3(-38.5, 0.05, -25.5), 0.0)
-	_pilot.face(Vector3(-28, 1.6, -30))
-	await _shot("way_to_bell", 1.0)
+	await _pilot.doze()
+	await _pilot.wake()
 	p.place(Vector3(-24, 0.05, -30.8), 0.0)
 	_pilot.face(Vector3(-24, 1.4, -32))
 	await _pilot.use("BellRope")
-	await _shot("matins_bell", 0.4)
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Choir", 10.0)
 	await _pilot.count_brothers()
 	await _pilot.seconds(6.0)
@@ -66,8 +121,6 @@ func _ready() -> void:
 	await _shot("crypt_light", 1.0)
 	await _pilot.go_down_to_crypt()
 	var hunter: Hunter = night.get_node(^"Hunter")
-	_pilot.face(hunter.global_position + Vector3.UP * 1.7)
-	await _shot("spotted", 0.0)
 	var oven: HidingSpot = night.get_node(^"Abbey/Navigation/SouthRange/HidingSpots/Oven")
 	p.place(oven.exit.global_position, deg_to_rad(90.0))
 	p.hide_in(oven)
@@ -89,22 +142,46 @@ func _ready() -> void:
 	await _pilot.seconds(1.2)
 	_pilot.face((night.get_node(^"Brothers/Thomas") as Node3D).global_position + Vector3.UP * 1.5)
 	await _shot("thomas", 0.3)
+
+	# The small hours at the gate; Lauds; Cole takes the gate; the keys; sleep.
+	await _pilot.until(func() -> bool: return _pilot.beat() == &"SmallHours", 15.0)
+	p.place(Vector3(-33.0, 0.05, 0.5), deg_to_rad(90.0))
+	_pilot.face(Vector3(-40.0, 1.4, -1.6))
+	await _shot("small_hours", 1.0)
+	await _pilot.doze()
+	await _pilot.wake()
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Dawn", 10.0)
-	await _pilot.seconds(3.0)
+	_pilot.skip_to(30.4)
+	p.place(Vector3(-37.8, 0.05, 1.8), deg_to_rad(-90.0))
+	_pilot.face(cole.global_position + Vector3.UP * 1.5)
+	await _shot("lauds_cole", 1.5)
+	p.place(_pilot.mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await _pilot.use("HandOver")
+	_pilot.skip_to(30.7)
+	await _pilot.until(func() -> bool: return (night.get_node(^"AbbeyGate") as AbbeyGate).is_open(), 5.0)
+	p.place(Vector3(-34.0, 0.05, 0.5), deg_to_rad(90.0))
+	_pilot.face(Vector3(-40.0, 1.4, -1.6))
+	await _shot("gate_open_for_day", 0.6)
+	p.place(_pilot.mark("DawnCell"), deg_to_rad(-120.0))
 	_pilot.face(_pilot.duty("KeysMoved").global_position)
+	await _said("(Your keys are not on their hook.)")
 	await _shot("dawn_keys", 0.3)
-	print("night 3 shots: rescued %s, captures %d" % [GameState.has_flag(&"n3_thomas_hid_you"), GameState.captures])
+	await _pilot.use("KeysMoved")
+	await _pilot.use("Sleep")
+	await _shot("sleep", 3.0)
+	print("night 3 shots: rescued %s, captures %d, done %s" % [GameState.has_flag(&"n3_thomas_hid_you"), GameState.captures, GameState.has_flag(&"night3_done")])
 	get_tree().quit()
 
 
-## Walter at the grille, let in, in his bed, in the ledger.
+## Walter at the grille (he knocked while the porter dozed), let in, and the
+## ledger page with him and the night's duties at their times.
 func _keep_gate(p: Player) -> void:
 	_auto = false
-	await _pilot.until(func() -> bool: return get_tree().get_first_node_in_group(&"visitors") != null, 30.0)
-	var walter := get_tree().get_first_node_in_group(&"visitors") as VisitorNPC
+	await _pilot.until(func() -> bool: return _pilot.duty("Grate").enabled, 30.0)
+	await _pilot.wake()
+	var walter := get_tree().get_first_node_in_group(&"callers") as VisitorNPC
 	walter.speed = VisitorNPC.WALK_SPEED * 2.0
 	p.place(Vector3(-39.2, 0.05, -2.4), deg_to_rad(90.0))
-	await _pilot.until(func() -> bool: return _pilot.duty("Grate").enabled, 30.0)
 	_pilot.duty("Grate").interact(p)
 	await _pilot.until(func() -> bool: return Talk.is_choosing(), 5.0)
 	for part in [&"box", &"bag", &"face"]:
@@ -117,18 +194,12 @@ func _keep_gate(p: Player) -> void:
 	_auto = true
 	await _pilot.use("BarGate")
 	await _pilot.use("OpenGate")
-	await _pilot.seconds(0.6)
-	_pilot.face(walter.global_position + Vector3.UP * 1.3)
-	await _shot("gate_open", 0.2)
 	await _pilot.use("ShutGate")
 	await _pilot.use("BarGate")
 	p.place(Vector3(-30.0, 0.05, -19.0), 0.0)
 	_pilot.face(_pilot.duty("GuestBeds/Bed2").global_position)
 	await _pilot.use("GuestBeds/Bed2")
 	await _pilot.until(func() -> bool: return walter.lying, 30.0)
-	p.place(Vector3(-31.0, 0.05, -20.0), 0.0)
-	_pilot.face(walter.global_position + Vector3.UP * 0.5)
-	await _shot("walter_in_bed", 0.6)
 	await _pilot.until(func() -> bool: return _pilot.duty("Ledger").enabled, 20.0)
 	p.place(Vector3(-33.2, 0.05, -9.6), PI)
 	await _pilot.use("Ledger")
@@ -138,11 +209,14 @@ func _keep_gate(p: Player) -> void:
 	ledger_view.set_showing(false)
 
 
-## The first and last appearances on the round, as he faces them.
+## Waits until `line` has been said (lines queue behind each other).
+func _said(line: String) -> void:
+	await _pilot.until(func() -> bool: return Talk.history.any(func(h: Array) -> bool: return h[1] == line), 15.0)
+
+
+## The last appearance on the round, right behind him, as he faces it.
 func _on_seen(stalker: Stalker) -> void:
-	if stalker.appearances == 1:
-		await _shot("demon_walk_end", 0.1)
-	elif stalker.final:
+	if stalker.final:
 		await _shot("demon_behind", 0.1)
 
 

@@ -1,6 +1,6 @@
-# Night 3 in the greybox (M4)
+# Night 3 in the greybox (M4–M6)
 
-Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5 and the game opens at supper. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
+Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. Press F5 and you wake in your cell in the late afternoon. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
 ## The beats
 
@@ -8,25 +8,47 @@ Night 3, "The oven", runs start to finish as the design doc scripts it. Press F5
 
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
-| Supper | You sit at the refectory table and can look but not walk. Osric serves bread; use the bread to eat it or palm it. Thomas offers a remedy | Core loop 1; night 3 "the bread tastes bitter. Thomas offers a remedy" | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` |
-| Gate | Bar the gate (E at the gate), then open the ledger at tonight's page on your cell desk | Core loop 2 | `gate_barred`, `n3_ledger` |
-| Knocks | Walter comes up the lane with his lantern and knocks at the grille (see "Keeping the gate" below). At Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
-| Bell | Ring the bell rope in the tower. Midnight. **The night saves here** | Core loop 4 | the `matins` bell save |
+| Wake | 16:00. You wake in your cell as the light fails. The gate stands open with Cole at it. Until the supper bell you can walk about, talk to the brothers at their dusk places, or step out into the lane, where Mab begs by the gate and two passers-by go home before dark. The supper bell rings at the candle's mark, 17:15 | Core loop 0 | the `start` bell save |
+| Supper | Take your place at the refectory table; seated, you can look but not walk. Osric serves bread; use it to eat it, or, warned on night 1, palm it. Thomas offers a remedy | Core loop 1; night 3 "the bread tastes bitter. Thomas offers a remedy" | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` |
+| Gate | Relieve Cole at the gate; he goes off into the abbey. Shut the gate and bar it, then open the ledger at tonight's page on your cell desk | Core loop 2 | `gate_taken`, `gate_barred`, `n3_ledger` |
+| Knocks | At 20:00 Walter comes up the lane with his lantern and knocks at the grille (see "Keeping the gate" below). At 22:00, at Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
+| Bell | From 23:45 the bell rope is wanted. Ring it in the tower. After 00:30 it is late, and that is noticed. **The night saves here** | Core loop 4; the candle clock | the `matins` bell save, `matins_late` |
 | Choir | Go to the choir. The incense is lit. Count the brothers by looking at each one. In the dead brother's place stands a hooded stranger, or, drugged, the dead brother | Core loop 4; night 3 Matins | `n3_incense`, `n3_headcount`, `n3_saw_dead_brother` |
 | Round | Check three stops: the stores door off the west walk, the chapter house door off the east walk, the sanctuary lamp. The demon appears at the end of the walk, then in a doorway, then behind you in the choir | Core loop 5; demon "Stalking" phase | `n3_round` |
 | Crypt | After a quiet stretch, a light shows in the crypt with a figure by it, back turned. Go down and he sees you | Night 3 round | `n3_seen_in_crypt` |
 | Chase | The hunter comes for you. The demon stands in doorways that lead away from the bakehouse. Hide in the oven and your hand closes on a jaw. When you climb out after his search he's nearly on you, and Thomas pulls you into the infirmary | Night 3 round; the chase rule "hiding" | `n3_body3`, `n3_thomas_hid_you`, or `n3_caught` |
-| Dawn | Back in your cell. Your keys aren't on their hook; find them on the cot | Night 3 dawn | `n3_keys_moved`, `night3_done` |
+| Small hours | Back to the gate. Doze on the bench until the Lauds bell at 06:00. On night 3 the main event was the crypt and the chase, so nothing interrupts | Core loop 6 | |
+| Dawn | Grey light. Cole comes for the gate; give it to him and he opens it for the day. In your cell your keys aren't on their hook; find them on the cot. Lie down on the cot and sleep through the day | Core loop 7; night 3 dawn | `n3_keys_moved`, `night3_done` |
 
 **If you're caught in the chase:**
-- **First capture:** you wake in the infirmary with Thomas over you, +40 Dose, and your keys gone. The night goes on to dawn.
+- **First capture:** you wake in the infirmary with Thomas over you, +40 Dose, and your keys gone. The night goes on through the small hours to dawn.
 - **Second capture:** it kills you, and the night starts again at the Matins bell.
+
+## The candle clock
+
+`game/night/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
+
+- **Awake, time runs slowly in real time:** 4 minutes an hour. Dusk to the supper bell is about 5 minutes, and the whole night is within the design doc's 40–60 minutes if you doze through the waits.
+- **Dozing on the gate bench, it runs fast:** 2 seconds an hour, with the screen nearly black. Whatever needs you wakes you: a knock (the visitor is at the grille already when you wake), the Matins mark, the Lauds bell. You can doze only once you have the gate, while the night is waiting on it (the knocks, before Matins, the small hours), and while no duty is wanted.
+- **The candle in your cell** (`CandleClock`, on the desk) burns down from 16:00 to 07:00, with rings at the supper bell, Matins and Lauds. Look at it and press E: "(The candle stands at 19:40. The next mark is Matins.)".
+- **The bells** ring at the marks: supper at 17:15, Matins at midnight (you ring it, from 23:45), Lauds at 06:00.
+- **The ledger** lists each duty with its time.
+- **The candle waits for the night.** It doesn't burn past the mark of a beat the night hasn't reached, so however long the round and the chase take, Lauds and the morning wait for the small hours.
+- **Dose decays as the clock runs,** at the doc's 10 an hour, while you're awake and while you doze.
+
+## Dusk and dawn light
+
+`game/night/daylight.gd`. From 16:00 to 17:30 failing daylight fades into night, and from 06:00 to 07:00 grey morning comes up. Day is overcast, flat and grey with no strong shadows (Look and Feel, lighting rule 6), so daylight raises the sky and the ambient light in the night's moonlight colour, with a soft shadowless light from the low sun's side. The lane's lanterns are lit once it is dark. The strength of each is an export on the `Daylight` node.
+
+## People to talk to
+
+At dusk, look at someone and press E. The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) with the speaker, the lines and the phases they talk in; edit the lines there. Mab can be talked to until the knocks; the brothers only at dusk.
 
 ## Keeping the gate
 
 `game/night/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
 
-1. **He comes up the lane.** Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern.
+1. **He comes up the lane.** At his hour (`knock_hours` on the Knocks beat; Walter's is 20:00) Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern. If you're dozing, he's at the grille when the knock wakes you.
 2. **He knocks.** He knocks until you come to the grille and press E. He greets you.
 3. **You read him.** While the choice is open, look at a part of him for a moment and the porter notices it, for example "(His box of relics rattles.)". Only what you noticed goes into the ledger.
 4. **You choose:**
@@ -63,7 +85,15 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | Seen in the crypt | Suspicion +10 | doc |
 | Incense | +25 over 8 s, and at least enough to reach Dose 50; Dose doesn't fall below 50 for the rest of the night | doc +25; floor of 50 is the M0 default |
 | The stranger becomes the dead brother | Dose 50 (he changes only while you aren't looking) | mine: the tier where cultists start rendering as demons |
-| Round clock | 60 s per in-game hour, so Dose decays 10 a minute toward 50 | mine |
+| Night 3's starting Dose, from the nights before | 30 | mine (my M4 recommendation; waiting on you) |
+| Waking pace | 240 s per in-game hour | mine, to fit the doc's 40–60 minute shift |
+| Dozing pace | 2 s per in-game hour | mine |
+| Marks: supper bell, Matins, Lauds | 17:15, 00:00, 06:00 | mine (the doc names the bells, not their times) |
+| Walter's knock, the child's knock | 20:00, 22:00 | mine |
+| The Matins window | from 15 minutes before; late after 30 minutes past | mine |
+| Dusk, dawn | 16:00–17:30, 06:00–07:00 | mine ("about five minutes" of failing light is yours) |
+| Passers-by go home | 17:30 | mine |
+| A day's sleep | Dose halves | mine (you asked for "falling over the day but not to zero") |
 | Quiet stretch before the crypt light | 20 s | doc wants 5–10 minutes; greybox length |
 | In the chase, the oven doesn't give you up while you hold your breath | — | mine, so the scripted beat holds |
 
@@ -74,28 +104,33 @@ Everything is a marker you can move in the editor, under `night3.tscn`:
 | Node | What it holds |
 | --- | --- |
 | `Places/Supper/<Name>`, `Places/Matins/<Name>` | Where each brother stands in each phase. A brother only moves while you aren't looking |
-| `Marks` | Your seat, the choir, the foot of the crypt stair, the infirmary spots for you and Thomas, Walter's guesthouse bed, your cell at dawn, and the Matins spawn |
-| `Duties` | Things you use: the bread, the gate bar, the grate, the ledger, the bell rope, the round's stops (each has a `hint` and a `line`), and the moved keys |
+| `Places/Dusk/<Name>` | Where each brother is at dusk, for talking |
+| `People` | Cole (at the gate by day), Mab, and the two passers-by with their walks (`People/Walks`) |
+| `Marks` | Where you wake, your seat, the choir, the foot of the crypt stair, the infirmary spots for you and Thomas, Cole's place at the gate and where he goes off to (`ColeGate`, `ColeOff`), your cell at dawn, and the Matins spawn |
+| `Duties` | Things you use: your seat at supper, relieving Cole and handing him the gate, the bread, the gate bar, the grate, the ledger, the bell rope, the round's stops (each has a `hint` and a `line`), the moved keys, and the cot you sleep on |
+| `GateBench`, `CandleClock`, `Clock`, `Daylight`, `BellTower`, `AbbeyGate` | The bench you doze on, the candle on your desk, the night's hours, the light, the bell, and the gate's leaves and bar |
 | `Stalk/WalkEnd`, `Stalk/Doorways` | Where the demon may stand on the round, first choice first |
 | `Stalk/Blockers` | During the chase, running near one of these puts the demon at its `Stand` |
 | `CryptLight`, `Hunter` | The cult's light, and the hunter waiting by it |
 
-The pacing waits are exports on each beat: Knocks `first_delay`, Choir `office_time`, Crypt `quiet_time`, Supper `watch_time`.
+Times are exports too. Each beat's `due` is its mark on the candle, and `can_doze` says whether you may doze while it waits. The Knocks beat has `knock_hours` and `child_knock_hour`; the Bell beat has `early` and `late`. The `Clock` node holds the paces. The other pacing waits are Choir `office_time`, Crypt `quiet_time` and Supper `watch_time`.
 
 ## Not built yet
 
-- **Visible duties:** the candle clock, the ledger page and the gate grate aren't built. Lines in brackets stand in for them, along with a few routing hints, alongside the lit way.
-- **Bodies on screen:** there are no hands in view, and the bell rope doesn't lift you.
+- **Visible duties:** the gate grate isn't built. Lines in brackets stand in for it, along with a few routing hints, alongside the lit way.
+- **Bodies on screen:** there are no hands in view, and the bell rope doesn't lift you. Waking and sleeping are fades, not lying down and getting up.
 - **Morning scene:** dawn doesn't show the abbey's official version of the night.
+- **Lateness:** only the Matins bell can be late. Supper and the gate wait for you.
+- **Cole** appears out of the kitchen at dawn even if you're looking that way.
 - **The brothers:** they're greybox figures with their builds from the character table. They don't move between places, sit, or have props or sounds.
 - **Walter:** he's in a brown tunic until his coloured cloak gets a colour.
 
 ## Tests and tools
 
-- **`test_night3`:** the whole night in order, with every beat's effects.
+- **`test_night3`:** the whole night in order, from waking to sleep, with every beat's effects and the clock's marks.
 - **`test_gate`:** the gate job's three outcomes, reading, the ledger entry and the ledger page.
 - **`test_night3_caught`:**
   - restarting at the Matins bell
   - being caught in the chase (infirmary, keys gone, dawn)
   - being caught twice (back to Matins, with the night as it was at the bell)
-- **`tools/night3_shots.sh`:** plays the night and saves a still per beat to `art/_review/m4/`.
+- **`tools/night3_shots.sh`:** plays the night from dusk to dawn and saves a still per beat to `art/_review/m6/`.

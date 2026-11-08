@@ -2,7 +2,8 @@ extends Node
 ## Getting caught on night 3 (main.tscn and night3.tscn). Starting from the
 ## Matins bell, the night picks up in the choir. Caught in the first chase,
 ## the porter wakes in the infirmary with Thomas over him and his keys gone,
-## and the night goes on to dawn, where he finds them moved. Caught again,
+## and the night goes on through the small hours to dawn, where he finds them
+## moved. Caught again,
 ## the night goes back to Matins, Dose and all, and the captures stay.
 ## Run: tools/check.sh
 
@@ -21,8 +22,10 @@ func _ready() -> void:
 func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	# As if the night had come as far as the Matins bell.
+	GameState.set_flag(&"gate_taken")
 	GameState.set_flag(&"gate_barred")
 	GameState.set_flag(&"n3_ate_bread")
+	GameState.hour = 24.0
 	GameState.snap_dose(MATINS_DOSE)
 	GameState.set_phase(GameState.Phase.MATINS)
 	GameState.ring_bell(&"matins")
@@ -35,19 +38,19 @@ func _run() -> void:
 	_check(_pilot.director().beats_run == [&"Choir"], "a night saved at Matins picks up in the choir")
 	_check(p.global_position.distance_to(_spawn()) < 0.5, "the porter is at the Matins spawn")
 	var bar: Node3D = _pilot.night.get_node(^"Abbey/Navigation/OuterCourt/Props/GateBar")
-	_check(bar.visible, "the gate is still barred")
+	var gate: AbbeyGate = _pilot.night.get_node(^"AbbeyGate")
+	_check(bar.visible and not gate.is_open() and absf(GameState.hour - 24.0) < 0.01, "the gate is still shut and barred, at midnight")
 
 	# Caught in the first chase: the infirmary, Thomas, the keys gone.
 	await _to_the_chase()
 	await _pilot.until(func() -> bool: return GameState.captures == 1, 10.0)
 	_check(GameState.captures == 1 and GameState.keys.is_empty(), "caught: the first capture takes his keys")
-	await _pilot.until(func() -> bool: return _pilot.beat() == &"Dawn", 20.0)
+	await _pilot.until(func() -> bool: return _pilot.beat() == &"SmallHours", 20.0)
 	var thomas: Brother = _pilot.night.get_node(^"Brothers/Thomas")
 	_check(GameState.has_flag(&"n3_caught") and GameState.has_flag(&"woke_in_infirmary") and thomas.visible,
 		"he wakes in the infirmary with Thomas over him, and the night goes on")
-	await _pilot.use("KeysMoved")
-	await _pilot.until(func() -> bool: return GameState.has_flag(&"night3_done"), 5.0)
-	_check(GameState.keys.size() == 3, "at dawn he finds his keys, moved")
+	await _pilot.see_out_the_night()
+	_check(GameState.keys.size() == 3 and GameState.has_flag(&"night3_done"), "at dawn he finds his keys, moved, and sleeps")
 
 	# The night again from Matins; caught a second time, it starts over there.
 	GameState.load_last_bell()

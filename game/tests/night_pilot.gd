@@ -21,8 +21,9 @@ static func fresh_night(save_path: String) -> void:
 	GameState.ledger = []
 	GameState.dose_floor = 0.0
 	GameState.seconds_per_hour = 0.0
+	GameState.hour = 0.0
 	GameState.snap_dose(0.0)
-	GameState.phase = GameState.Phase.SUPPER
+	GameState.phase = GameState.Phase.DUSK
 
 
 ## `check` is the test's func(ok: bool, what: String).
@@ -59,10 +60,12 @@ func use(path: String) -> void:
 	await frames(2)
 
 
-## Short waits: the beats' pacing is for play, not tests.
+## Short waits: the beats' pacing is for play, not tests. The candle clock
+## all but stops while he is awake (tests move it on with skip_to) and runs
+## very fast while he dozes.
 func shorten() -> void:
 	var d := director()
-	var settings := {^"Knocks": {&"first_delay": 0.3, &"knock_every": 1.0, &"visitor_speed": 6.0},
+	var settings := {^"Knocks": {&"knock_every": 1.0, &"visitor_speed": 6.0},
 		^"Choir": {&"office_time": 0.5}, ^"Crypt": {&"quiet_time": 0.5}}
 	for beat_path: NodePath in settings:
 		var node := d.get_node_or_null(beat_path)
@@ -70,7 +73,50 @@ func shorten() -> void:
 			for key: StringName in settings[beat_path]:
 				node.set(key, settings[beat_path][key])
 	(night.get_node(^"Stalker") as Stalker).quiet_lead = 0.3
+	(night.get_node(^"Clock") as NightClock).set_pace(3600.0, 0.1)
+	for person in night.get_node(^"People").get_children():
+		if person is VisitorNPC:
+			(person as VisitorNPC).speed = 6.0
 
+
+func clock() -> NightClock:
+	return night.get_node(^"Clock") as NightClock
+
+
+## Moves the candle clock on to `hour` (never back).
+func skip_to(hour: float) -> void:
+	GameState.hour = maxf(GameState.hour, hour)
+
+
+## Sits on the gate bench and dozes; returns once he is dozing.
+func doze() -> void:
+	var bench := night.get_node(^"GateBench") as GateBench
+	await until(func() -> bool: return not player.controls_locked and bench.can_doze(), 5.0)
+	player.place(bench.global_position + Vector3(0.6, 0, 0), 0.0)
+	bench.interact(player)
+	await until(func() -> bool: return clock().dozing, 3.0)
+	_check.call(clock().dozing, "he dozes on the gate bench (%s)" % NightClock.clock_text(GameState.hour))
+
+
+## Waits for the night to wake him on the bench, and for his eyes to open.
+func wake() -> void:
+	var bench := night.get_node(^"GateBench") as GateBench
+	await until(func() -> bool: return not bench.sitting, 30.0)
+
+
+## The small hours and dawn, as the porter plays them: doze until Lauds,
+## give Cole the gate, find the keys in the cell, sleep.
+func see_out_the_night() -> void:
+	await until(func() -> bool: return beat() == &"SmallHours", 20.0)
+	await doze()
+	await wake()
+	await until(func() -> bool: return beat() == &"Dawn", 5.0)
+	player.place(mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await use("HandOver")
+	player.place(mark("DawnCell"), 0.0)
+	await use("KeysMoved")
+	await use("Sleep")
+	await until(func() -> bool: return GameState.has_flag(&"night3_done"), 10.0)
 
 ## Answers the visitor's knock at the grille, looks at his `read` parts while
 ## the choice is open, then answers `pick` (0 admit, 1 turn away, 2 the
@@ -79,9 +125,10 @@ func shorten() -> void:
 ## ledger. Returns the visitor.
 func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
 	await until(func() -> bool: return duty("Grate").enabled, 120.0)
+	await wake()
 	player.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	duty("Grate").interact(player)
-	var npc := _tree.get_first_node_in_group(&"visitors") as VisitorNPC
+	var npc := _tree.get_first_node_in_group(&"callers") as VisitorNPC
 	await until(func() -> bool: return Talk.is_choosing(), 5.0)
 	for part in read:
 		face(npc.part_position(part))
