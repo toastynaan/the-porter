@@ -93,7 +93,7 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_edwin` | Brother Edwin, gangly | Book |
 | `chr_cole`, `chr_dunstan` | The lay brothers, big, in brown work tunics | None |
 | `chr_choir_brother_a`, `_b`, `_c` | The choir brothers on night 3 | None |
-| `chr_choir_brother_dead` | The choir brother found in the bell tower on night 2, seen dead in the choir | None |
+| `chr_choir_brother_dead` | Brother Bede: beside the porter at supper on night 1, hanged in the bell tower on night 2, seen dead in the choir on night 3 | None |
 | `chr_stranger` | A hooded stranger in a habit | None |
 | `chr_mab` | Mab, small, in rags, face covered | Leper's clapper |
 | `chr_walter` | Walter the pardoner, plump, in the only coloured cloak | His box and bag are on VisitorNPC, where they're read |
@@ -101,6 +101,8 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_roger` | Roger the bailiff (not in the character table yet) | None |
 | `chr_pilgrim` | A pilgrim | Staff and shoulder bag |
 | `chr_carter`, `chr_lane_woman` | The carter, and Margery, passing in the lane | Margery's basket |
+| `chr_merchant` | The merchant-pilgrim at the gate on night 1: stout, a dark-red cloak | A fat purse, a pilgrim's staff |
+| `chr_sailor` | The sailor at the gate on night 2: lean, weathered | A sea bundle |
 | `chr_hob` | Hob, who keeps the Cross Keys: big, red-faced, an apron | A jug |
 | `chr_agnes` | Agnes, Hob's wife: a dark wool dress | A cloth on her shoulder |
 | `chr_jankin` | Jankin, the Keys' drunk: gangly, patched | A cup |

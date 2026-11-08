@@ -39,6 +39,8 @@ const CHOICES := ["Admit him to the guesthouse", "Turn him away", "Send for the 
 @export var knock_hours := PackedFloat32Array([20.0])
 ## The small knock with no one there (at Dose 50+).
 @export var child_knock_hour := 22.0
+## The small knock low on the gate (night 3, at Dose 50+).
+@export var child_knock := true
 @export var visitor_scene: PackedScene
 @export var prior_visitor: Visitor
 @export var visitor_speed := VisitorNPC.WALK_SPEED
@@ -59,6 +61,8 @@ const CHOICES := ["Admit him to the guesthouse", "Turn him away", "Send for the 
 @export var gate: AbbeyGate
 ## Seconds between knocks until answered.
 @export var knock_every := 5.0
+## The prior letting a visitor in when he's sent for.
+@export var prior_lines := PackedStringArray(["Hugh: (Lets him in, and takes him to the guesthouse himself.)"])
 
 var _audio: AudioStreamPlayer3D
 var _reading := false
@@ -73,14 +77,18 @@ func _ready() -> void:
 
 func run() -> void:
 	for i in visitors.size():
+		if visitors[i].only_if != &"" and not GameState.has_flag(visitors[i].only_if):
+			continue
 		await clock().wait_until(knock_hours[i] if i < knock_hours.size() else 0.0)
 		can_doze = false
 		await _receive(visitors[i])
 		can_doze = true
+	if not child_knock:
+		return
 	await clock().wait_until(child_knock_hour)
 	if GameState.dose >= CHILD_KNOCK_DOSE:
 		await _knock_until_answered(KNOCK_LOW, 0.4)
-		GameState.set_flag(&"n3_child_knock")
+		GameState.set_flag(GameState.tonight("child_knock"))
 		await say("", "(A small knock, low on the gate. No one there.)")
 
 
@@ -197,7 +205,7 @@ func _admit(npc: VisitorNPC) -> void:
 func _prior_admits(npc: VisitorNPC) -> void:
 	var prior := _spawn(prior_visitor, prior_from)
 	await prior.walk_to(inside.global_position)
-	await say(prior_visitor.speaker, "(Lets him in, and takes him to the guesthouse himself.)")
+	await say_lines(prior_lines)
 	gate.show_bar(false)
 	await gate.swing(true)
 	await npc.walk_to(inside.global_position + Vector3(1.2, 0, 0.8))

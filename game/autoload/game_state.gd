@@ -248,6 +248,12 @@ func eat_clean() -> void:
 	set_flag(tonight("ate_clean"))
 
 
+## The cult tears a guest's page from the ledger: his entries are gone.
+func tear_ledger(guest: String) -> void:
+	ledger.assign(ledger.filter(func(e: Dictionary) -> bool: return e.get("name", "") != guest))
+	set_flag(tonight("ledger_torn"))
+
+
 ## Writes a guest into the ledger.
 func write_ledger(guest: String, description: String) -> void:
 	ledger.append({"name": guest, "description": description, "night": night})

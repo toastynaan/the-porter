@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_godric"
-text = "# Abbot Godric at dusk, in the chapter house (night 3). Placeholder lines in the design doc's words.
+text = "# DRAFT
+# Abbot Godric at dusk, in the chapter house (night 3). Small, frail, very old and kind; he leans on his crosier and coughs.
+# Not in the cult. Drugged hardest, he believes the demon has come, and has ordered more incense to drive it out.
 == start
-Abbot Godric: (Placeholder: the abbot, frail and kind, greets you like a father.)
+(The abbot sits alone on the stone bench, both hands on his crosier. The air in here is blue with incense.)
+Abbot Godric: Come in, my son. Let an old man look at you. You've lost colour since you came to us.
 -> topics
 
 == again
-Abbot Godric: (Placeholder: the abbot coughs from the incense.)
+(The abbot coughs into his sleeve for a long while before he can speak.)
+Abbot Godric: Forgive me. The smoke. A small price for the safety of the house.
 -> topics
 
 == topics
@@ -20,14 +24,20 @@ Abbot Godric: (Placeholder: the abbot coughs from the incense.)
 * [if not n3_godric_blessing] (Ask for his blessing.) -> blessing
 
 == demon [set n3_godric_demon]
-Abbot Godric: (Placeholder: he believes the demon has come, and has ordered more incense to drive it out.)
+Abbot Godric: It has come into our house. I said so before the brothers this morning, and I'll say it again.
+Abbot Godric: I have felt it at the night office, my son. The way you feel a draught from a door left open.
+Abbot Godric: So we'll smoke it out. Incense at every office, and prayer. Our saint will not suffer it long.
 -> topics
 
 == porter [set n3_godric_porter]
-Abbot Godric: (Placeholder: the abbot on the new porter.)
+Abbot Godric: Thomas tells me you keep good hours, and you ring the bell well. That's most of it.
+Abbot Godric: The prior is harder to please. He's no harder on you than he is on himself. Bear with him.
+Abbot Godric: Anselm kept that gate thirty years. Be patient with yourself. It took him a while too.
 -> topics
 
 == blessing [set n3_godric_blessing]
-Abbot Godric: (Placeholder: he blesses you.)
+(You kneel. His hand on your head is as light as paper, and it shakes.)
+Abbot Godric: The Lord bless you and keep you, and keep the gate through you. Go in peace, my son.
+(He signs the cross over you, and coughs.)
 -> topics
 "

@@ -5,13 +5,18 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_anselm"
-text = "# Anselm at dusk, in the infirmary (night 3). Placeholder lines in the design doc's words.
+text = "# DRAFT
+# Anselm at dusk, in the infirmary (night 3). The old porter, blind, hunched in his chair, his stick across his knees.
+# Guilty and terrified: he let victims in for years. He won't say so, and nothing here says so.
 == start
-Anselm: (Placeholder: Anselm, the old porter, blind, in his chair. He knows your step.)
+(The old man in the chair turns his face to the door before you reach it.)
+Anselm: That's the porter's step. You walk like a man who's been told not to run.
+Anselm: Still with us, then. Good. Sit, if you like.
 -> topics
 
 == again
-Anselm: (Placeholder: Anselm turns his blind eyes toward you.)
+(His milky eyes settle on a place just beside your face.)
+Anselm: Back again? Nobody else comes twice. Sit.
 -> topics
 
 == topics
@@ -20,14 +25,23 @@ Anselm: (Placeholder: Anselm turns his blind eyes toward you.)
 * [if not n3_anselm_eyes] (Ask after his eyes.) -> eyes
 
 == bell [set n3_anselm_bell]
-Anselm: (Placeholder: he is frightened, and won't say.)
+(His hand finds your sleeve and grips it. He listens to the room before he speaks.)
+Anselm: I meant what I said. No more than that.
+Anselm: Bar it at the bell and keep it barred. Whoever knocks. Whatever they tell you.
+Anselm: Don't ask me why, boy. I'm old, and I can't see who's listening.
 -> topics
 
 == gate [set n3_anselm_gate]
-Anselm: (Placeholder: Anselm on the years he kept the gate.)
+Anselm: Thirty years I kept it. I knew every knock in the ward by the sound.
+Anselm: The carter's, the bailiff's, Walter's. Pilgrims knock soft, as if the gate might bite.
+Anselm: I let in whoever came. That was the rule I was given, and I kept it.
+(He's quiet a while.)
+Anselm: Write them all down, boy. Every one. Somebody should.
 -> topics
 
 == eyes [set n3_anselm_eyes]
-Anselm: (Placeholder: Anselm on going blind.)
+Anselm: They went like milk in a pail. Grey at the edges first, then the middle. Two winters.
+Anselm: I hear better than I did. That's the bargain God makes with you.
+Anselm: The night before last, I heard the tower creak before ever you rang. There was no wind. Only the rain.
 -> topics
 "

@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_ranulf"
-text = "# Ranulf at dusk, in the church (night 3). Placeholder lines in the design doc's words.
+text = "# DRAFT
+# Ranulf at dusk, in the church (night 3). The sacrist: rigid, a narrow pale face that doesn't blink; his censer chain clinks.
+# He keeps the relic, the candles and the incense. (He wears the horned costume. Nothing here says so.)
 == start
-Ranulf: (Placeholder: Ranulf, the sacrist, at his candles. Narrow, pale, unblinking.)
+(Ranulf is trimming the candles along the choir, one by one. He doesn't turn until you're close.)
+Ranulf: Porter. You're early. The church isn't yours until Matins.
 -> topics
 
 == again
-Ranulf: (Placeholder: Ranulf, still at his candles.)
+(He goes on trimming the candles. The censer hangs from his belt on its chain.)
+Ranulf: Porter. Again.
 -> topics
 
 == topics
@@ -20,14 +24,18 @@ Ranulf: (Placeholder: Ranulf, still at his candles.)
 * [if not n3_ranulf_candles] (Ask about the candles.) -> candles
 
 == incense [set n3_ranulf_incense]
-Ranulf: (Placeholder: the abbot has ordered more incense, to drive the demon out.)
+Ranulf: Father Abbot has ordered it at every office now. Twice the measure at Matins.
+Ranulf: The smoke drives out what shouldn't be here. Breathe it in, porter. Breathe deep. It's for your protection.
 -> topics
 
 == relic [set n3_ranulf_relic]
-Ranulf: (Placeholder: the saint's finger bone, which draws the pilgrims.)
+Ranulf: The saint's finger, in its silver case. Pilgrims walk from Kent to kiss the glass over it.
+Ranulf: It's in my keeping. Not yours. Not the prior's. Mine.
 -> topics
 
 == candles [set n3_ranulf_candles]
-Ranulf: (Placeholder: Ranulf on the candles he keeps.)
+Ranulf: Wax is dear, and the house burns more of it every night. Father Abbot wants no dark corner for the thing to stand in.
+(He doesn't blink.)
+Ranulf: Don't take my candles to light your lantern, porter. I count them.
 -> topics
 "

@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_hugh"
+text = "# DRAFT
+# Prior Hugh at dusk on the north walk (night 1). Cold; he suspects the new porter from the first.
+# He asks why a country house sent a boy to keep a London gate (n1_hugh_why), then gives his rule:
+# nobody comes in after the curfew bell without the prior (n1_hugh_rule).
+# If the porter drank hard at the Keys he says so. hangover is cleared by the day-1 nap, so n0_saw_killing=drunk is the real test.
+== start
+(A tall brother stands in the middle of the north walk, hands in his sleeves, watching you come.)
+Hugh: The new porter. I am Hugh, prior of this house.
+-> keys [if hangover]
+-> keys [if n0_saw_killing=drunk]
+-> why
+
+== keys
+Hugh: You came to us from the Cross Keys this morning smelling of it. I noticed. So did others.
+-> why
+
+== why
+Hugh: A small house in the country sends a boy of nineteen to keep a gate in London. Why you?
+* My abbot sent me, and I came. -> obedient
+* There was no one else to send. -> nobody
+* Why does it matter to you? -> matters
+
+== obedient [set n1_hugh_why=obedient] [trust hugh 5]
+Hugh: Obedience. Keep some by you. You'll need it here.
+-> rule
+
+== nobody [set n1_hugh_why=nobody]
+Hugh: That I believe.
+-> rule
+
+== matters [set n1_hugh_why=matters] [trust hugh -5]
+Hugh: Everything that comes in at that gate matters to me. You came in at it.
+-> rule
+
+== rule [set n1_hugh_rule]
+Hugh: Hear the one rule I care about. After the curfew bell, nobody comes in at that gate unless I say so.
+Hugh: Pilgrim, priest or the King's own uncle. You send for me, and you wait.
+-> end
+
+== again
+Hugh: You've had your rule, porter. Go to your supper.
+-> end
+
+== leave
+Hugh: After the bell, porter. Remember.
+"

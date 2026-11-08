@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_ranulf"
+text = "# DRAFT
+# Ranulf, the sacrist, at the candle stand in the nave at dusk (night 1). Dry, exact, never stops working.
+# He keeps the bells, the candles, the relic and the incense. He offers nothing yet (the remedy is night 3).
+# Hidden: he wears the horned costume; the relic is a pig's bone; the incense doses the choir.
+== start
+(The sacrist at the candle stand in the nave, trimming wicks with small shears. He doesn't stop.)
+Ranulf: The porter. Ranulf, sacrist. The bell is mine. The ringing of it is yours. Don't be late with it.
+-> topics
+
+== again
+Ranulf: Something else?
+-> topics
+
+== topics
+* [if not n1_ranulf_candles] (Ask about the candles.) -> candles
+* [if not n1_ranulf_relic] (Ask about the relic.) -> relic
+* [if not n1_ranulf_incense] (Ask about the incense.) -> incense
+
+== candles [set n1_ranulf_candles]
+Ranulf: Wax on the altar, tallow everywhere else. Every one is counted.
+Ranulf: If you find a lamp out on your round, light it from the sanctuary lamp and tell me. Not the prior. Me.
+-> topics
+
+== relic [set n1_ranulf_relic]
+Ranulf: The saint's finger, in the silver hand on the altar. Pilgrims may kiss the glass.
+Ranulf: I keep the key to it. Nobody opens it. Nobody needs to.
+-> topics
+
+== incense [set n1_ranulf_incense]
+Ranulf: At Matins I cense the choir. Breathe it in. It's the prayers going up.
+Ranulf: And it's good for the chest, in this damp.
+-> topics
+
+== leave
+Ranulf: The black ring, porter. Not after it.
+"

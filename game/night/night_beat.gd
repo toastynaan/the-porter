@@ -47,6 +47,17 @@ func say(speaker: String, text: String) -> void:
 
 
 ## Fades the screen if the game's capture flow (and its fade) is there.
+## Says each line in turn: "Name: words" is Name speaking; anything else
+## (a line in brackets) is what he notices. Await it.
+func say_lines(lines: PackedStringArray) -> void:
+	for line in lines:
+		var at := line.find(": ")
+		if at > 0 and not line.begins_with("("):
+			await say(line.left(at), line.substr(at + 2))
+		else:
+			await say("", line)
+
+
 func fade_to(alpha: float, seconds: float) -> void:
 	var flow := get_tree().get_first_node_in_group(&"capture_flow") as CaptureFlow
 	if flow:

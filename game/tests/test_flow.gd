@@ -1,8 +1,8 @@
 extends Node
 ## The game's frame (docs/full-game-run.md, M8 and "Done when" 1), through
 ## main.tscn from the title screen: New Game plays night 0, day 1 and nights
-## 1 to 6 in order, each opened by its chapter card (the stubs wake and
-## sleep; night 3 is played in full), with Dose halved by each day's sleep
+## 1 to 6 in order, each opened by its chapter card (night 0 to night 3 are
+## played in full; the stubs wake and sleep), with Dose halved by each day's sleep
 ## and the rest carried over, and the night's own flags cleared. Night 6
 ## ends in the chronicle, then the title, where chapter select is open and
 ## there is nothing left to continue. Chapter select starts a night with its
@@ -30,7 +30,7 @@ func _run() -> void:
 	Settings.path = TEST_SETTINGS
 	Settings.finished = false
 	Talk.line_seconds = 0.05
-	Talk.auto_choice = func(_options: PackedStringArray) -> int: return _answer[0] if _answer[0] >= 0 else 0
+	Talk.auto_choice = NightPilot.gate_aware_choice(_answer)
 	_main = load("res://game/render/main.tscn").instantiate()
 	add_child(_main)
 	_flow = _main.get_node(^"Game")
@@ -75,14 +75,23 @@ func _run() -> void:
 			dose_before = -1.0
 			await pilot.play_night3(_answer)
 			_check(GameState.has_flag(&"night3_done") and GameState.has_flag(&"n3_thomas_hid_you"), "night 3, played in full in order")
+			_check(GameState.count == 4 and GameState.souls == [&"merchant", &"lane_death", &"bell_brother", &"crypt_pilgrim"],
+				"by night 3's dawn the rite has the merchant, the lane death, Bede and the crypt pilgrim (%s)" % [GameState.souls])
 		elif chapters[i].id == &"night0":
 			await pilot.play_night0(_answer)
 		elif chapters[i].id == &"day1":
 			await pilot.play_day1()
+		elif chapters[i].id == &"night1":
+			await pilot.play_night1(_answer)
+			_check(GameState.has_flag(&"died_merchant") and GameState.has_flag(&"bread_warned"), "night 1, played in full in order")
+			dose_before = -1.0
+		elif chapters[i].id == &"night2":
+			await pilot.play_night2(_answer)
+			_check(GameState.has_flag(&"found_bell_brother") and GameState.has_flag(&"n2_roger"), "night 2, played in full in order")
+			dose_before = -1.0
 		else:
-			if chapters[i].id == &"night1":
-				GameState.snap_dose(20.0)
-				dose_before = 20.0
+			# A stub: the night doesn't change his Dose before he sleeps.
+			dose_before = GameState.dose
 			await pilot.play_stub()
 		if dose_before > 0.0:
 			_check(absf(GameState.dose - dose_before * 0.5) < 0.5, "a day's sleep halves Dose (%.1f to %.1f)" % [dose_before, GameState.dose])

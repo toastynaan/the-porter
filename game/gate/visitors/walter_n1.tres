@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_walter.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Oily, cheerful. He smiles as if he knows you.)"
+ledger = "oily and cheerful"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(Plump, in a faded red cloak.)"
+ledger = "plump, in a faded red cloak"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Soft hands, and brass rings that want to look like gold.)"
+ledger = "brass rings"
+
+[sub_resource type="Resource" id="Detail_box"]
+script = ExtResource("2_detail")
+part = &"box"
+line = "(His box of relics rattles.)"
+ledger = "carrying a box of relics"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"walter"
+speaker = "Walter"
+look = ExtResource("look")
+ledger_name = "Walter the pardoner"
+greeting = "Good evening, brother porter! Walter the pardoner, known at this gate since before you were breeched, so don't keep Walter standing in the wet."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_box")])
+flag = &"n1_walter"

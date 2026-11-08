@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_merchant.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Well fed, pleased with himself, and sober. A new pilgrim's badge on his hat.)"
+ledger = "well fed and sober, a pilgrim's badge on his hat"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A gown lined with fur, and a fat purse at his belt that clinks when he moves.)"
+ledger = "in a furred gown, a fat purse at his belt"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Gold rings, one on nearly every finger.)"
+ledger = "gold rings on his fingers"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Good boots of soft leather, hardly marked by the road.)"
+ledger = "in good boots"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"merchant"
+speaker = "Merchant"
+look = ExtResource("look")
+ledger_name = "Geoffrey Pykard, merchant of Coventry"
+greeting = "Open up, porter: Geoffrey Pykard of Coventry, come to kneel to your saint. I'll want a bed tonight, and I can pay for it."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n1_merchant"
+question = "What brings you to the saint?"
+answer = PackedStringArray("My wife. She's been sick since Lammas, and the physicians of Coventry have had half my money for it.", "So I've come to your saint. I'll leave a gift at the relic that will make your sacrist smile.")

@@ -98,9 +98,11 @@ func doze() -> void:
 	var bench := night.get_node(^"GateBench") as GateBench
 	await until(func() -> bool: return not player.controls_locked and bench.can_doze(), 5.0)
 	player.place(bench.global_position + Vector3(0.6, 0, 0), 0.0)
+	var from := GameState.hour
 	bench.interact(player)
-	await until(func() -> bool: return clock().dozing, 3.0)
-	_check.call(clock().dozing, "he dozes on the gate bench (%s)" % NightClock.clock_text(GameState.hour))
+	# Dozing, or dozed already: a fast clock can reach the next mark first.
+	await until(func() -> bool: return clock().dozing or GameState.hour > from + 0.25, 3.0)
+	_check.call(clock().dozing or GameState.hour > from + 0.25, "he dozes on the gate bench (%s)" % NightClock.clock_text(GameState.hour))
 
 
 ## Waits for the night to wake him on the bench, and for his eyes to open.
@@ -175,6 +177,153 @@ func play_day1() -> void:
 	await until(over, 20.0)
 
 
+## A night's opening as the porter plays it: wakes, goes in at the supper
+## bell, eats the bread (the test's `answer` picks, where there's a choice),
+## takes the gate from Cole, shuts and bars it, opens the ledger.
+func to_the_gate() -> void:
+	await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
+	skip_to(17.25)
+	await until(func() -> bool: return beat() == &"Supper", 5.0)
+	player.place(mark("PorterSeat") + Vector3(0, 0, 0.6), PI)
+	await use("SupperSeat")
+	await until(func() -> bool: return duty("Bread").enabled, 10.0)
+	duty("Bread").interact(player)
+	await until(func() -> bool: return duty("RelieveCole").enabled, 30.0)
+	player.place(Vector3(-36.5, 0.05, -2), deg_to_rad(90.0))
+	await use("RelieveCole")
+	await use("ShutGate")
+	await until(func() -> bool: return not (night.get_node(^"AbbeyGate") as AbbeyGate).is_open(), 3.0)
+	await use("BarGate")
+	await use("Ledger")
+	await until(func() -> bool: return beat() == &"Knocks", 5.0)
+
+
+## Locks the guesthouse door, as the porter does with his key.
+func lock_guesthouse() -> void:
+	for d: Door in _tree.get_nodes_in_group(&"doors"):
+		if d.key == &"guesthouse":
+			d.set_open(false, true)
+			d.locked = true
+
+
+## Rings Matins, counts the brothers and walks the round (with the night's
+## number of appearances).
+func matins_and_round(appearances: int) -> void:
+	await until(func() -> bool: return beat() == &"Bell", 120.0)
+	if clock().dozing:
+		await wake()
+	elif not duty("BellRope").enabled and GameState.hour < 23.5:
+		await doze()
+		await wake()
+	await until(func() -> bool: return duty("BellRope").enabled, 60.0)
+	player.place(Vector3(-24, 0.05, -30.8), 0.0)
+	await use("BellRope")
+	await until(func() -> bool: return beat() == &"Choir", 10.0)
+	await count_brothers()
+	await walk_round(Callable(), appearances)
+
+
+## Dozes to Lauds, gives Cole the gate, answers whom to tell of any body
+## (the test's `answer`), and sleeps.
+func dawn_and_sleep() -> void:
+	await until(func() -> bool: return beat() == &"SmallHours", 60.0)
+	await doze()
+	await wake()
+	await until(func() -> bool: return beat() == &"Dawn", 60.0)
+	player.place(mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await use("HandOver")
+	player.place(mark("DawnCell"), 0.0)
+	await use("Sleep")
+	await until(over, 15.0)
+
+
+## Night 1 from waking to sleep: admits the merchant (or `merchant` 1 turns
+## him away, 2 sends for the prior) and Walter, locks the guesthouse if
+## `lock`, rings Matins, walks the round, answers the knock with no one
+## there, and at Lauds goes to the fishpond if the merchant died.
+func play_night1(answer: Array, merchant := 0, lock := false, walter := 0) -> void:
+	await to_the_gate()
+	await doze()
+	await keep_gate(merchant, [], answer, "GuestBeds/Bed2")
+	if lock:
+		lock_guesthouse()
+	await doze()
+	await keep_gate(walter, [], answer, "GuestBeds/Bed3")
+	await matins_and_round(1)
+	await doze()
+	await until(func() -> bool: return duty("Grate").enabled, 120.0)
+	await wake()
+	player.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
+	await use("Grate")
+	await until(func() -> bool: return beat() == &"SmallHours", 10.0)
+	await doze()
+	await wake()
+	await until(func() -> bool: return beat() == &"Pond" or beat() == &"Dawn", 30.0)
+	if GameState.has_flag(&"died_merchant"):
+		var body := night.get_node(^"Bodies/Pond") as FoundBody
+		await until(func() -> bool: return body.active(), 5.0)
+		player.place(body.global_position + Vector3(-2.5, 0, 0), deg_to_rad(-90.0))
+		face((body.body as Corpse).centre() if body.body is Corpse else body.global_position)
+		await until(func() -> bool: return body.is_found, 5.0)
+	await until(func() -> bool: return beat() == &"Dawn", 30.0)
+	player.place(mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await use("HandOver")
+	player.place(mark("DawnCell"), 0.0)
+	await use("Sleep")
+	await until(over, 15.0)
+
+
+## Night 2 from waking to sleep: Joan, Roger (if he comes) and the sailor
+## (`joan`, `roger`, `sailor`: 0 admit, 1 turn away, 2 the prior); the lane
+## death at the grille if there is one; the heavy rope and Bede; the count;
+## the round and the guesthouse; Lauds, the abbot and the prior; sleep.
+func play_night2(answer: Array, joan := 0, sailor := 0, roger := 0) -> void:
+	await to_the_gate()
+	await doze()
+	await keep_gate(joan, [], answer, "GuestBeds/Bed2")
+	if GameState.has_flag(&"died_merchant"):
+		await doze()
+		await keep_gate(roger, [], answer, "GuestBeds/Bed3")
+	await doze()
+	await keep_gate(sailor, [], answer, "GuestBeds/Bed4")
+	await until(func() -> bool: return beat() == &"Lane" or beat() == &"Bell", 30.0)
+	if beat() == &"Lane":
+		if (night.get_node(^"GateBench") as GateBench).can_doze() and not duty("Grate").enabled:
+			await doze()
+		await until(func() -> bool: return duty("Grate").enabled or beat() != &"Lane", 120.0)
+		if duty("Grate").enabled:
+			await wake()
+			player.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
+			await use("Grate")
+	await matins_and_round(2)
+	await until(func() -> bool: return beat() == &"Guesthouse", 30.0)
+	player.place(duty("GuesthouseCheck").global_position + Vector3(0, 0, 1.5), 0.0)
+	await use("GuesthouseCheck")
+	await until(func() -> bool: return beat() == &"SmallHours", 30.0)
+	await doze()
+	await wake()
+	await until(func() -> bool: return beat() == &"DawnScene", 30.0)
+	var godric := night.get_node(^"Brothers/Godric") as Node3D
+	await frames(2)
+	player.place(godric.global_position + Vector3(-1.5, 0, 0), deg_to_rad(-90.0))
+	await until(func() -> bool: return beat() == &"Dawn", 60.0)
+	player.place(mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await use("HandOver")
+	player.place(mark("DawnCell"), 0.0)
+	await use("Sleep")
+	await until(over, 15.0)
+
+
+## A Talk.auto_choice for tests that play whole nights: at the grille it
+## waits for `answer` (keep_gate sets it), anything else takes `answer` if
+## set, or the first choice.
+static func gate_aware_choice(answer: Array) -> Callable:
+	return func(options: PackedStringArray) -> int:
+		if options.has("Admit him to the guesthouse"):
+			return answer[0]
+		return answer[0] if answer[0] >= 0 else 0
+
+
 ## Night 3 from waking to sleep, as test_night3 plays it but without its
 ## checks: eats, takes the remedy, admits Walter, rings Matins, counts the
 ## brothers, walks the round, goes down to the crypt, hides in the oven and
@@ -234,13 +383,23 @@ func play_night3(answer: Array) -> void:
 ## prior) through `answer`, an Array the test's Talk.auto_choice reads.
 ## Admitting, plays the porter's part: bar, gate, gate, bar, a bed, the
 ## ledger. Returns the visitor.
-func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
+func keep_gate(pick: int, read: Array[StringName], answer: Array, bed := "GuestBeds/Bed2") -> VisitorNPC:
 	await until(func() -> bool: return duty("Grate").enabled, 120.0)
 	await wake()
 	player.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	duty("Grate").interact(player)
-	var npc := _tree.get_first_node_in_group(&"callers") as VisitorNPC
+	# The one at the grille, not a guest already in bed.
+	var npc: VisitorNPC = null
+	for n in _tree.get_nodes_in_group(&"callers"):
+		if not (n as VisitorNPC).lying and (n as VisitorNPC).visible:
+			npc = n
 	await until(func() -> bool: return Talk.is_choosing(), 5.0)
+	# A visitor with a question: "(Go on.)" to the three choices.
+	if not npc.visitor.question.is_empty():
+		answer[0] = 1
+		await until(func() -> bool: return not Talk.is_choosing(), 2.0)
+		answer[0] = -1
+		await until(func() -> bool: return Talk.is_choosing(), 5.0)
 	# His view is still easing in on the visitor's face.
 	await seconds(Player.TALK_TURN_TIME + 0.05)
 	for part in read:
@@ -254,9 +413,9 @@ func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
 		await use("OpenGate")
 		await use("ShutGate")
 		await use("BarGate")
-		player.place(Vector3(-30.0, 0.05, -19.0), 0.0)
-		face(duty("GuestBeds/Bed2").global_position)
-		await use("GuestBeds/Bed2")
+		player.place(Vector3(duty(bed).global_position.x, 0.05, -19.0), 0.0)
+		face(duty(bed).global_position)
+		await use(bed)
 		await until(func() -> bool: return npc.lying, 20.0)
 	if pick != 1:
 		await until(func() -> bool: return duty("Ledger").enabled, 60.0)
@@ -312,7 +471,7 @@ func count_brothers() -> int:
 ## Checks the round's stops, looking at the demon each time it appears and
 ## turning his back on it. Returns its distances. `on_seen`, if given, is
 ## awaited while he faces it: func(stalker: Stalker).
-func walk_round(on_seen := Callable()) -> Array[float]:
+func walk_round(on_seen := Callable(), appearances := 3) -> Array[float]:
 	await until(func() -> bool: return beat() == &"Round", 15.0)
 	var stalker: Stalker = night.get_node(^"Stalker")
 	var stands := {"StoresDoor": Vector3(-10.2, 0.05, -6), "ChapterDoor": Vector3(10.2, 0.05, -18),
@@ -322,6 +481,9 @@ func walk_round(on_seen := Callable()) -> Array[float]:
 		player.place(stands[stop], 0.0)
 		face(duty("RoundStops/" + stop).global_position + Vector3.UP * 0.2)
 		await use("RoundStops/" + stop)
+		if distances.size() >= appearances:
+			distances.append(0.0)
+			continue
 		await until(func() -> bool: return stalker.step == Stalker.Step.SHOWN, 12.0)
 		_check.call(stalker.step == Stalker.Step.SHOWN, "after the %s, it appears" % stop)
 		distances.append(stalker.last_distance)
@@ -334,7 +496,7 @@ func walk_round(on_seen := Callable()) -> Array[float]:
 		face(player.global_position + (player.global_position - stalker.global_position))
 		await until(func() -> bool: return not stalker.visible, 4.0)
 		Input.action_release(&"cover_lantern")
-	return distances
+	return distances.slice(0, appearances)
 
 
 ## Waits for the crypt light and goes down to it.

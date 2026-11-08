@@ -189,6 +189,10 @@ transform = Transform3D(0, 0, 1.0, 0, 1, 0, -1.0, 0, 0, -8.0, 0.05, -32.0)
 [node name="ChoirC" type="Marker3D" parent="Places/Dusk"]
 transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 5.4, 0.05, -6.0)
 
+[node name="Warner" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.0, 0.05, -4.6)
+editor_description = "Brother Bede at dusk, by the refectory door."
+
 [node name="Supper" type="Node3D" parent="Places"]
 
 [node name="Thomas" type="Marker3D" parent="Places/Supper"]
@@ -208,6 +212,10 @@ transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -1.5, 
 
 [node name="Edwin" type="Marker3D" parent="Places/Supper"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -1.6, 0.05, -0.15)
+
+[node name="Warner" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 1.6, 0.05, -0.15)
+editor_description = "Brother Bede, beside the porter at table (night 1: he warns him about the bread)."
 
 [node name="Anselm" type="Marker3D" parent="Places/Supper"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3.2, 0.05, -0.15)
@@ -246,6 +254,10 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 14, 0.05, -29.9)
 
 [node name="Stranger" type="Marker3D" parent="Places/Matins"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 16, 0.05, -29.9)
+
+[node name="Warner" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 16, 0.05, -29.9)
+editor_description = "Bede's stall; the hooded stranger stands in it on night 3."
 
 [node name="ChoirA" type="Marker3D" parent="Places/Matins"]
 transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 11.0, 0.05, -34.1)
@@ -368,10 +380,23 @@ look = ExtResource("chr_choir_brother_c")
 script = ExtResource("talker_gd")
 phases = Array[int]([6])
 
+[node name="Warner" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+nights = PackedInt32Array(1)
+editor_description = "Brother Bede, the choir brother who warns the porter about the bread at supper on night 1 and hangs in the bell tower on night 2."
+
+[node name="Look" parent="Brothers/Warner"]
+look = ExtResource("chr_choir_brother_dead")
+
+[node name="Talker" type="Area3D" parent="Brothers/Warner"]
+script = ExtResource("talker_gd")
+phases = Array[int]([6])
+
 [node name="Stranger" type="Node3D" parent="Brothers" node_paths=PackedStringArray("places")]
 script = ExtResource("brother_gd")
 places = NodePath("../../Places")
-editor_description = "The hooded stranger in the dead brother's place; drugged, the dead brother himself."
+nights = PackedInt32Array(3)
+editor_description = "The hooded stranger in the dead brother's place on night 3; drugged, the dead brother himself."
 
 [node name="Body" type="StaticBody3D" parent="Brothers/Stranger"]
 

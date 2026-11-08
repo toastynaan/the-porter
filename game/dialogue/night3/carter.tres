@@ -5,18 +5,23 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_carter"
-text = "# A carter in the lane at dusk (night 3). Placeholder lines.
+text = "# DRAFT
+# The carter in the lane at dusk (night 3), walking his empty wagon home before dark. A line or two, and he's gone.
+# Night 3 keeps its own; the other nights are game/dialogue/lane/carter.tres.
 == start
-A carter: (Placeholder: a carter on his way home before dark.)
+(The carter, walking at his horse's head, the wagon rattling empty behind him.)
+Carter: Porter. I can't stop. I want to be out through Aldgate before they shut it.
 * (Ask about the lane.) -> lane
 * (Ask if he has seen pilgrims on the road.) -> pilgrims
 * (Wish him good night.) -> end
 
 == lane
-A carter: (Placeholder: the carter on the lane and the inn.)
+Carter: Quiet as a church. Quieter than your church, by what they say.
+Carter: Hob's doing no trade. Nobody wants to drink with your wall looking at them.
 -> end
 
 == pilgrims
-A carter: (Placeholder: the carter on the pilgrims coming to the abbey.)
+Carter: Not one, all day, from Mile End in. Last week I'd pass a dozen, with their staffs and their badges.
+Carter: Word gets about, porter. Folk would sooner walk to Canterbury.
 -> end
 "

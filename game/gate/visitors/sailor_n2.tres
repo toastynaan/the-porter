@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_sailor.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Weathered, a week's beard. He doesn't hold your eye for long.)"
+ledger = "weathered, a week's beard"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A short coat of tarred cloth, and a knife at his belt.)"
+ledger = "in a tarred coat, a knife at his belt"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(His hands are soft and clean.)"
+ledger = "soft, clean hands"
+lie = "no tar on a sailor's hands"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Cracked shoes, white with salt at the seams.)"
+ledger = "salt-stained shoes"
+
+[sub_resource type="Resource" id="Detail_bag"]
+script = ExtResource("2_detail")
+part = &"bag"
+line = "(A canvas bundle on his shoulder, tied with a seaman's knot.)"
+ledger = "a sea bundle tied with a seaman's knot"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"sailor"
+speaker = "Sailor"
+look = ExtResource("look")
+ledger_name = "Adam Cobb, a sailor"
+greeting = "I know the bell's gone, porter, and I'm sorry for it. A bed for a few hours is all I ask, and I'm gone before first light to catch the tide at Billingsgate."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet"), SubResource("Detail_bag")])
+flag = &"n2_sailor"

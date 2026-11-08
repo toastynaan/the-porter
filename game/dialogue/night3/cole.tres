@@ -5,18 +5,19 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_cole"
-text = "# Cole at dusk, keeping the gate (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
+text = "# DRAFT
+# Cole at dusk, keeping the gate (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
 == start
-(Cole looks at you and says nothing. He keeps the gate by day.)
+(Cole stands in the open gateway, arms folded, watching the lane. He looks round at you and says nothing.)
 * (Ask if anyone came to the gate today.) -> nothing
 * (Say you'll take the gate after supper.) -> nothing
 * (Wish him good evening.) -> end
 
 == again
-(Cole says nothing.)
+(Cole looks at you, then back at the lane. He says nothing.)
 -> end
 
 == nothing
-(He says nothing.)
+(He says nothing. He looks at you a moment longer than he needs to, then back at the lane.)
 -> end
 "

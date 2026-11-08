@@ -12,6 +12,11 @@ extends NightBeat
 ## Marker3Ds: where it may stand at the end of a walk, and in a doorway.
 @export var walk_end: Node3D
 @export var doorways: Node3D
+## How many times he's shown on the round: at the end of the walk, in a
+## doorway, behind him in the choir (handing over to the night's chase).
+@export_range(0, 3) var appearances := 3
+## Said once the first is gone (night 1: the shape at the end of the walk).
+@export var glimpse_lines := PackedStringArray()
 
 
 func run() -> void:
@@ -26,15 +31,21 @@ func run() -> void:
 		await duties[i].wait_for_use()
 		await say("", String(duties[i].get_meta(&"line", "(All is as it should be.)")))
 		await _appearance_done()
+		if i >= appearances:
+			continue
 		match i:
 			0:
 				stalker.appear_from(points(walk_end))
+				if not glimpse_lines.is_empty():
+					await _appearance_done()
+					await say_lines(glimpse_lines)
 			1:
 				stalker.appear_from(points(doorways))
 			2:
 				stalker.appear_behind()
 				await stalker.handed_over
-	GameState.set_flag(&"n3_round")
+	await _appearance_done()
+	GameState.set_flag(GameState.tonight("round"))
 
 
 ## Lets the last appearance finish before the next is called up.

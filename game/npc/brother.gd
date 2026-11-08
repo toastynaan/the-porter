@@ -12,6 +12,10 @@ extends Node3D
 ## world for that phase.
 
 @export var places: Node3D
+## The nights he's in the abbey (none listed: every night). On any other
+## night he's out of the world (Bede is dead after night 1; the hooded
+## stranger only stands in the choir on night 3).
+@export var nights := PackedInt32Array()
 
 const WALK := 1.2
 
@@ -84,6 +88,11 @@ func is_dead() -> bool:
 	return GameState.has_flag(StringName("died_" + String(name).to_lower()))
 
 
+## In the abbey tonight (`nights`).
+func here_tonight() -> bool:
+	return nights.is_empty() or nights.has(GameState.night)
+
+
 func _on_phase(phase: GameState.Phase) -> void:
 	# A level on its way out still hears the new night's phases.
 	if not is_inside_tree():
@@ -94,9 +103,10 @@ func _on_phase(phase: GameState.Phase) -> void:
 		if group:
 			marker = group.get_node_or_null(NodePath(name))
 	_target = null
-	if marker and not is_dead():
+	var gone := is_dead() or not here_tonight()
+	if marker and not gone:
 		_target = marker.global_transform
-	_routine_on = marker == null and routine != null and not is_dead()
+	_routine_on = marker == null and routine != null and not gone
 	if _routine_on:
 		stop = null
 		return

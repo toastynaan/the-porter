@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_godric"
+text = "# DRAFT
+# Abbot Godric in the chapter house at dusk (night 2). Uneasy: he believes a demon troubles the house, but hasn't said so
+# to the chapter yet (he will at dawn, and order more incense). He dreams badly: the drug, though he doesn't know it.
+# He tells the porter to count every brother at Matins tonight, and to breathe the incense.
+== start
+(The abbot sits with his blanket in the chapter house, but he isn't reading. He's watching the door.)
+Godric: Brother Alric. Come in, come in, and shut the door against the draught.
+-> dead [if died_merchant]
+-> whole
+
+== dead
+Godric: A guest of ours died in the night, in the water. I've said a mass for him, and I'll say another.
+-> topics
+
+== whole
+Godric: Your first night passed, and you're whole. Thank God for that.
+-> topics
+
+== again
+Godric: You're still here, child? Good. I'd rather not sit alone tonight.
+-> topics
+
+== topics
+* [if not n2_godric_demon] (Ask what troubles him.) -> demon
+* [if n1_knock_no_one] [if not n2_godric_knock] (Tell him about the knock with no one there.) -> knock
+* [if not n2_godric_counsel] (Ask what he'd have you do tonight.) -> counsel
+
+== demon [set n2_godric_demon]
+Godric: Something has come into this house, brother. I feel it when I pray, like a draught from a door nobody opened.
+Godric: I think it's a demon. I've not said so to the chapter. I'll not say it till I'm sure.
+Godric: Last night I dreamed something knelt at the foot of my bed and counted on its fingers.
+-> topics
+
+== knock [set n2_godric_knock]
+(He crosses himself.)
+Godric: And no one there. If it comes again, don't open to it. Ring the bell and wake me.
+-> topics
+
+== counsel [set n2_godric_counsel]
+Godric: Keep the gate. Count us at Matins, every one, and come to me if one is missing.
+Godric: And breathe the incense, child. That's what it's for. I mean to have Ranulf burn more.
+-> topics
+
+== leave
+Godric: Count us all, brother. Every one.
+"

@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_mab"
-text = "# Mab at the gate (night 3), from dusk until the knocks. Placeholder lines in the design doc's words.
+text = "# DRAFT
+# Mab at the gate (night 3), from dusk until the knocks. She sees who comes and goes, nobody asks her, and she never eats the abbey's bread.
+# Night 3 keeps its own; the other nights are game/dialogue/lane/mab.tres. Alms once (n3_mab_alms): a heel of Fenchurch Street bread.
 == start
-Mab: (Placeholder: Mab, a leper, begs at the gate every night.)
+(Mab sits against the wall by the gate, her clapper in her lap, her face wrapped to the eyes.)
+Mab: Porter. You look worse every night. I say it kindly.
 -> topics
 
 == again
-Mab: (Placeholder: Mab, still at the gate, shakes her clapper.)
+(She knocks her clapper once against the stones.)
+Mab: Still here? So am I.
 -> topics
 
 == topics
@@ -20,15 +24,20 @@ Mab: (Placeholder: Mab, still at the gate, shakes her clapper.)
 * [if not n3_mab_alms] (Give her alms.) -> alms
 
 == saw [set n3_mab_saw]
-Mab: (Placeholder: she sees everyone who comes and goes, and nobody asks her.)
+Mab: Everyone who goes in at that gate, and everyone who comes out. Nobody asks me.
+Mab: Last night something walked the lane after the bell. Taller than a man. It came from the corner of your wall.
+Mab: And the rooks came off your tower before Matins, all at once, screaming. Before your bell, porter. Not after.
 -> topics
 
 == bread [set n3_mab_bread]
-Mab: (Placeholder: she never eats the abbey's bread.)
+Mab: Theirs? Never. Not a crumb in eleven years, and I've been hungry enough to eat straw.
+Mab: Somebody's told you something about it. I can see it on you.
+Mab: Good. Then I don't have to.
 -> topics
 
 == alms [set n3_mab_alms] [item mab_bread] [trust mab 5]
-Mab: God keep you, brother. Here. It's not theirs. A woman on Fenchurch Street bakes it.
-(She presses a heel of bread into your hand.)
+(You drop a coin in the bowl at her feet.)
+Mab: God keep you, porter. Here. It's not theirs. A baker on Fenchurch Street makes it.
+(She sets a heel of bread on the step between you, wrapped in a cloth, and draws back.)
 -> topics
 "

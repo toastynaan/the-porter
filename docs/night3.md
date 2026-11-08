@@ -1,6 +1,6 @@
 # Night 3 in the greybox (M4–M7)
 
-Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. It's the fifth chapter of a New Game (`docs/frame.md`); to play it on its own, choose it in Chapters once you've finished the game, or run `game/nights/night3.tscn` (F6), and you wake in your cell in the late afternoon. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
+Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. It's the fifth chapter of a New Game (`docs/frame.md`); to play it on its own, choose it in Chapters once you've finished the game, or run `game/nights/night3.tscn` (F6), and you wake in your cell in the late afternoon. Every line and conversation is drafted (DRAFT); `docs/nights.md` has what M13 changed and how the beats are set per night. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
 ## The beats
 
@@ -9,16 +9,16 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
 | Wake | 16:00. You wake in your cell as the light fails. The gate stands open with Cole at it. Until the supper bell you can walk about, talk to the brothers at their dusk places, or step out into the lane, where Mab begs by the gate and two passers-by go home before dark. The supper bell rings at the candle's mark, 17:15 | Core loop 0 | the `start` bell save |
-| Supper | Take your place at the refectory table; seated, you can look but not walk. Osric serves bread; use it to eat it, or, warned on night 1, palm it. Ranulf offers a remedy for your headaches, and Thomas, beside you, warns you off it (the design doc's second review) | Core loop 1; night 3 "the bread tastes bitter"; `docs/drug.md` | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` (Thomas's trust +5) |
+| Supper | Take your place at the refectory table; seated, you can look but not walk. Osric serves bread; use it to eat it, or, warned on night 1, palm it. Thomas tells you quietly that the prior has been asking about you. Ranulf offers a remedy for your headaches, and Thomas, beside you, warns you off it (the design doc's second review) | Core loop 1; night 3 "the bread tastes bitter"; `docs/drug.md` | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` (Thomas's trust +5) |
 | Gate | Relieve Cole at the gate; he goes off into the abbey. Shut the gate and bar it, then open the ledger at tonight's page on your cell desk | Core loop 2 | `gate_taken`, `gate_barred`, `n3_ledger` |
 | Knocks | At 20:00 Walter comes up the lane with his lantern and knocks at the grille (see "Keeping the gate" below). At 22:00, at Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
 | Bell | From 23:45 the bell rope is wanted. Ring it in the tower. After 00:30 it is late, and that is noticed. **The night saves here** | Core loop 4; the candle clock | the `matins` bell save, `matins_late` |
 | Choir | Go to the choir. The incense is lit. Count the brothers by looking at each one. In the dead brother's place stands a hooded stranger, or, drugged, the dead brother | Core loop 4; night 3 Matins | `n3_incense`, `n3_headcount`, `n3_saw_dead_brother` |
 | Round | Check three stops: the stores door off the west walk, the chapter house door off the east walk, the sanctuary lamp. The demon appears at the end of the walk, then in a doorway, then behind you in the choir | Core loop 5; demon "Stalking" phase | `n3_round` |
-| Crypt | After a quiet stretch, a light shows in the crypt with a figure by it, back turned. Go down and he sees you | Night 3 round | `n3_seen_in_crypt` |
+| Crypt | After a quiet stretch, a light shows in the crypt with a figure by it, back turned. At the foot of the stair, he has his back to you because he is killing a bound pilgrim (gory; the crypt pilgrim feeds the rite); then he turns and sees you. A page of the cult's book lies by the altar | Night 3 round | `n3_seen_in_crypt`, `died_crypt_pilgrim` |
 | Chase | The hunter comes for you. The demon stands in doorways that lead away from the bakehouse. Hide in the oven and your hand closes on a jaw. When you climb out after his search he's nearly on you, and Thomas pulls you into the infirmary | Night 3 round; the chase rule "hiding" | `n3_body3`, `n3_thomas_hid_you`, or `n3_caught` |
 | Small hours | Back to the gate. Doze on the bench until the Lauds bell at 06:00. On night 3 the main event was the crypt and the chase, so nothing interrupts | Core loop 6 | |
-| Dawn | Grey light. Cole comes for the gate; give it to him and he opens it for the day. In your cell your keys aren't on their hook; find them on the cot. Lie down on the cot and sleep through the day | Core loop 7; night 3 dawn | `n3_keys_moved`, `night3_done` |
+| Dawn | Grey light. Cole comes for the gate; give it to him and he opens it for the day. In your cell your keys aren't on their hook; find them on the cot, with wax in their teeth: copied. Lie down on the cot and sleep through the day | Core loop 7; night 3 dawn | `n3_keys_moved`, `keys_copied`, `night3_done` |
 
 **If you're caught in the chase,** you die: from night 3 every capture kills (`docs/mechanics.md`, "Being hunted"). The night saves quietly as the Crypt beat starts, so death puts you back in the choir just before the crypt light (the `crypt` spawn), with the round done, not at the Matins bell.
 
@@ -129,7 +129,6 @@ Times are exports too. Each beat's `due` is its mark on the candle, and `can_doz
 - **Lateness:** only the Matins bell can be late. Supper and the gate wait for you.
 - **Cole** appears out of the kitchen at dawn even if you're looking that way.
 - **The brothers:** they're greybox figures with their builds and props from the character table. They don't move between places, sit, or make their sounds.
-- **The conversations:** placeholders in brackets, one exchange deep.
 
 ## Tests and tools
 

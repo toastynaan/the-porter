@@ -10,6 +10,19 @@ extends NightBeat
 ## Hours either side of `due`.
 @export var early := 0.25
 @export var late := 0.5
+## Night 2: the rope is heavy, and a body drops past him, hanging from the
+## bell's frame (a FoundBody, shown as he pulls).
+@export var hanged: FoundBody
+@export var heavy_lines := PackedStringArray()
+
+const DROP := preload("res://art/sfx/sfx_body_drop.wav")
+const DROP_HEIGHT := 3.5
+
+
+func _ready() -> void:
+	# Picked up from a save after it: he's still hanging there.
+	if hanged and GameState.has_flag(hanged.found_flag()):
+		hanged.show_body.call_deferred()
 
 
 func run() -> void:
@@ -26,6 +39,25 @@ func run() -> void:
 		await get_tree().physics_frame
 	rope.enabled = false
 	arrived()
+	if hanged:
+		await _heavy()
 	GameState.ring_bell(&"matins")
 	tower.ring(3)
 	await say("", "(Matins. The brothers gather in the choir.)")
+
+
+## The rope is heavy; something drops past him in the dark.
+func _heavy() -> void:
+	var rest := hanged.position
+	hanged.position = rest + Vector3.UP * DROP_HEIGHT
+	hanged.show_body()
+	var drop := create_tween()
+	drop.tween_property(hanged, ^"position", rest, 0.35).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	if AudioOut.enabled():
+		var a := AudioStreamPlayer3D.new()
+		a.stream = DROP
+		hanged.add_child(a)
+		a.play()
+	await drop.finished
+	await say_lines(heavy_lines)
+	hanged.find()

@@ -14,7 +14,7 @@ const ALL := {
 	&"merchant_rope": "Rope marks on the merchant's wrists. A man who falls in a pond drunk doesn't tie his own hands.",
 	&"merchant_purse": "The merchant's purse is gone. He had it at the gate.",
 	&"merchant_moved": "I went for help and the merchant's body was gone from the pond when I came back.",
-	&"sailor_knot": "The brother in the bell tower hangs from a sailor's knot. The only sailor this week left before dark, by my own ledger.",
+	&"sailor_knot": "The brother in the bell tower hangs from a sailor's knot. The only sailor this week came to my gate.",
 	&"ledger_torn": "A page is gone from my ledger. The guesthouse has one more empty bed than I wrote.",
 	&"oven_badge": "A pilgrim's badge, melted in the oven ash. The name on it was torn from my ledger.",
 	&"crypt_book": "A page from a book, by the crypt altar: ten candles drawn in a ring, and a soul for each.",

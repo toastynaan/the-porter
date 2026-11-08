@@ -70,12 +70,12 @@ func _run() -> void:
 	p.place(edwin.global_position + Vector3(2.0, 0, 0), 0.0)
 	await _pilot.talk(night.get_node(^"Brothers/Edwin/Talker") as Talker, [-1], _answer)
 	await _pilot.seconds(0.2)
-	_check(_said("(Placeholder: Mab, a leper, begs at the gate every night.)")
-		and _said("(Placeholder: she sees everyone who comes and goes, and nobody asks her.)") and GameState.has_flag(&"n3_mab_saw"),
+	_check(_said("Porter. You look worse every night. I say it kindly.")
+		and _said("Everyone who goes in at that gate, and everyone who comes out. Nobody asks me.") and GameState.has_flag(&"n3_mab_saw"),
 		"Mab at the gate can be talked to, and answers")
 	_check(edwin.visible and edwin.global_position.distance_to((night.get_node(^"Places/Dusk/Edwin") as Node3D).global_position) < 0.1
-		and _said("(Placeholder: Edwin, the novice, your friend. He talks too fast.)")
-		and _said("(Placeholder: he calls after you that he'll see you at supper.)") and not p.talking,
+		and _said("Alric! There you are. I looked for you at None, then I remembered you sleep all day. You lucky man.")
+		and _said("I'll see you at supper! Sit by me, if they let you.") and not p.talking,
 		"the brothers at their dusk places can be talked to, and walked away from")
 	var walkers := night.get_node(^"People").get_children().filter(func(n: Node) -> bool: return n.has_node(^"Walk"))
 	_check(walkers.size() == 2, "two passers-by in the lane (and Hob, Agnes, Kit and Gib about)")
@@ -111,9 +111,10 @@ func _run() -> void:
 		"warned on night 1, he may palm the bread")
 	_check(GameState.get_flag(&"n3_ate_bread") == true and GameState.get_flag(&"n3_took_remedy") == true,
 		"ate the bread and took Ranulf's remedy")
-	_check(_said("(The bread tastes bitter.)") and Talk.history.any(func(h: Array) -> bool: return h[0] == "Ranulf")
-		and Talk.history.any(func(h: Array) -> bool: return h[0] == "Thomas" and String(h[1]).contains("Not his physic")),
-		"Ranulf offers the remedy, and Thomas warns him off it")
+	_check(_said("(The bread is bitter tonight. The taste stays at the back of your tongue.)") and Talk.history.any(func(h: Array) -> bool: return h[0] == "Ranulf")
+		and Talk.history.any(func(h: Array) -> bool: return h[0] == "Thomas" and String(h[1]).contains("Not from him"))
+		and Talk.history.any(func(h: Array) -> bool: return h[0] == "Thomas" and String(h[1]).contains("The prior has been asking about you")),
+		"the bitter bread; Ranulf offers the remedy, Thomas warns him off it, and says the prior has been asking about him")
 
 	# No HUD: the way to Cole is lit, its doors open, from his seat.
 	await _pilot.until(func() -> bool: return _pilot.duty("RelieveCole").enabled, 5.0)
@@ -193,6 +194,11 @@ func _run() -> void:
 	await _pilot.go_down_to_crypt()
 	_check(hunter.state == Hunter.State.CHASE and GameState.suspicion == suspicion + 10,
 		"a light in the crypt; investigating, he is spotted (Suspicion +10)")
+	var crypt_death: DeathScene = night.get_node(^"CryptPilgrim")
+	_check(crypt_death.has_played and GameState.has_flag(&"died_crypt_pilgrim") and GameState.souls.has(&"crypt_pilgrim")
+		and crypt_death.body != null and _said("(The figure straightens, and turns, and looks straight at you.)"),
+		"at the foot of the stair the figure, its back to him, kills a bound pilgrim (fed to the rite), then turns")
+	_check(night.get_node(^"BookPage") is Readable, "a page of the cult's book lies by the crypt altar")
 
 	# The chase: into the oven; the jaw; held breath while he checks it.
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Chase", 3.0)
@@ -200,7 +206,7 @@ func _run() -> void:
 	p.place(oven.exit.global_position, deg_to_rad(90.0))
 	p.hide_in(oven)
 	await _pilot.until(func() -> bool: return GameState.has_flag(&"n3_body3"), 4.0)
-	_check(GameState.has_flag(&"n3_body3") and _said("(Your hand closes on something in the ash. A jaw.)"), "in the oven, a jaw in the ash (body 3)")
+	_check(GameState.has_flag(&"n3_body3") and _said("(Your hand closes on something in the ash. Smooth, curved, with teeth in it. A jaw.)"), "in the oven, a jaw in the ash (body 3)")
 	var checked := []
 	oven.checked.connect(func(found: bool) -> void: checked.append(found))
 	await _pilot.until(func() -> bool: return hunter.global_position.distance_to(oven.view.global_position) < 8.0, 60.0)
@@ -228,7 +234,7 @@ func _run() -> void:
 	_check(gate_lamp.lit, "the small hours: a lamp at the gate")
 	await _pilot.doze()
 	await _pilot.wake()
-	_check(GameState.hour >= 30.0 and _said("(The bell for Lauds. Grey light.)"), "dozing until Lauds (%s)" % NightClock.clock_text(GameState.hour))
+	_check(GameState.hour >= 30.0 and _said("(The Lauds bell. Grey light comes up over the court.)"), "dozing until Lauds (%s)" % NightClock.clock_text(GameState.hour))
 
 	# Dawn: Cole takes the gate; the keys have been moved; sleep.
 	await _pilot.until(func() -> bool: return _pilot.beat() == &"Dawn", 5.0)
@@ -245,7 +251,8 @@ func _run() -> void:
 	await _pilot.until(func() -> bool: return _said("(Your keys are not on their hook.)"), 3.0)
 	await _pilot.use("KeysMoved")
 	await _pilot.until(func() -> bool: return GameState.has_flag(&"n3_keys_moved"), 3.0)
-	_check(GameState.has_flag(&"n3_keys_moved"), "in his cell, his keys are not where he left them")
+	_check(GameState.has_flag(&"n3_keys_moved") and GameState.has_flag(&"keys_copied") and GameState.has_note(&"keys_moved"),
+		"in his cell, his keys are not where he left them; wax in the teeth: copied")
 	var dose := GameState.dose
 	await _pilot.use("Sleep")
 	await _pilot.until(func() -> bool: return GameState.has_flag(&"night3_done"), 10.0)

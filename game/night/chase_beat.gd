@@ -22,6 +22,9 @@ const BONES_AFTER := 1.5
 @export var thomas: Brother
 @export var rescue_porter: Marker3D
 @export var rescue_thomas: Marker3D
+@export var bones_lines := PackedStringArray(["(Your hand closes on something in the ash. A jaw.)"])
+@export var rescue_lines := PackedStringArray(["Thomas: (Pulls you into the infirmary and hides you.)"])
+@export var caught_lines := PackedStringArray(["Thomas: (Over you as you wake.)"])
 
 var _woke := false
 var _audio: AudioStreamPlayer3D
@@ -60,10 +63,10 @@ func run() -> void:
 			searched = true
 		if hunter.state == Hunter.State.CAPTURE:
 			await until(func() -> bool: return _woke)
-			GameState.set_flag(&"n3_caught")
+			GameState.set_flag(GameState.tonight("caught"))
 			thomas.place(rescue_thomas.global_transform)
 			thomas.face(p.global_position)
-			await say("Thomas", "(Over you as you wake.)")
+			await say_lines(caught_lines)
 			break
 		# He has searched and you come out (or never hid): nearly caught.
 		if searched and p.hiding == null and not p.busy():
@@ -74,11 +77,11 @@ func run() -> void:
 
 
 func _bones() -> void:
-	GameState.set_flag(&"n3_body3")
+	GameState.set_flag(GameState.tonight("body3"))
 	if AudioOut.enabled():
 		_audio.global_position = oven.view.global_position
 		_audio.play()
-	await say("", "(Your hand closes on something in the ash. A jaw.)")
+	await say_lines(bones_lines)
 
 
 ## He comes back as you climb out; Thomas pulls you away.
@@ -96,7 +99,7 @@ func _nearly_caught(p: Player) -> void:
 	p.place(rescue_porter.global_position, rescue_porter.global_rotation.y)
 	thomas.place(rescue_thomas.global_transform)
 	thomas.face(p.global_position)
-	GameState.set_flag(&"n3_thomas_hid_you")
+	GameState.set_flag(GameState.tonight("thomas_hid_you"))
 	await fade_to(0.0, 1.0)
 	p.controls_locked = false
-	await say("Thomas", "(Pulls you into the infirmary and hides you.)")
+	await say_lines(rescue_lines)

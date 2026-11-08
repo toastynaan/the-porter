@@ -133,6 +133,7 @@ func _rung_before() -> void:
 ## Gib's calls stop (a night's event: something has happened in the lane).
 func silence() -> void:
 	silenced = true
+	GameState.set_flag(GameState.tonight("watch_silent"))
 	if gib:
 		gib.set_present(false)
 

@@ -40,6 +40,8 @@ const OUT_OF_STALL_SUSPICION := 10
 ## His stall in the choir, and the choir's west door.
 @export var stall: Marker3D
 @export var west_door: Marker3D
+## Said once he has counted them: all there, one short, one wrong.
+@export var count_lines := PackedStringArray(["(You count the brothers.)"])
 
 var _chant: AudioStreamPlayer3D
 ## The office is being sung; seconds of incense still burning.
@@ -76,7 +78,7 @@ func run() -> void:
 	var saw_dead := await _count(p)
 	GameState.set_flag(GameState.tonight("headcount"))
 	GameState.set_flag(GameState.tonight("saw_dead_brother"), saw_dead)
-	await say("", "(You count the brothers.)")
+	await say_lines(count_lines)
 	await wait(office_time)
 	while _burning > 0.0:
 		await get_tree().physics_frame

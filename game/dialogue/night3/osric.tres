@@ -5,33 +5,42 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_osric"
-text = "# Osric at dusk, in the kitchen (night 3). Placeholder lines in the design doc's words.
+text = "# DRAFT
+# Osric at dusk, in the kitchen (night 3). The cellarer: short and heavy, round red face, always smiling; his ring of keys jingles.
+# Jolly; he feeds you extra bread. (He started the killings. Nothing here says so.)
 == start
-Osric: (Placeholder: Osric, the cellarer, jolly, busy at the kitchen fire. He greets you.)
+(Osric is at the kitchen fire, sleeves rolled, his ring of keys swinging at his belt. His face is red from the heat.)
+Osric: The porter! Come in out of the cold. Mind the pot. You look half starved.
 -> topics
 
 == again
-Osric: (Placeholder: Osric, still at the fire.)
+Osric: Back again? You can smell supper, can you. Not yet, porter. Not yet.
 -> topics
 
 == topics
 * [if not n3_osric_bread] (Ask about the bread.) -> bread
 * [if not n3_osric_supper] (Ask what is for supper.) -> supper
-* [if not n3_osric_page] (Ask about the page torn from the ledger.) -> page
+* [if not n3_osric_page] (Ask if anyone has been at your ledger.) -> page
 
 == bread [set n3_osric_bread]
-Osric: (Placeholder: he laughs, and promises you extra bread.)
+Osric: My bread? Rye from our own granary, baked in our own oven. Best in the ward.
+Osric: There's a bitter crust on it this week. The rye came in damp. It does no harm.
+(He laughs, and claps you on the shoulder with a floury hand.)
+Osric: I'll keep the heel back for you. A growing lad wants the heel.
 -> topics
 
 == supper [set n3_osric_supper]
-Osric: (Placeholder: Osric on tonight's supper.)
+Osric: Pease pottage, rye bread and small ale. Same as last night, and the night before.
+Osric: Father Abbot looks to me like a man about to order a fast. Eat while you can, porter.
 -> topics
 
 # Asking the wrong brother the wrong question: Suspicion +5 (design doc).
 == page [set n3_osric_page] [suspicion 5]
-Osric: (Placeholder: Osric's answer about the missing page.)
+Osric: Your ledger? Who'd want it? A list of wet pilgrims and their boots.
+(He's still smiling. The knife in his hand has stopped.)
+Osric: Keep your cell door shut, porter. The cats get in. A cat will eat anything.
 -> topics
 
 == leave
-Osric: (Placeholder: he calls after you not to be late for supper.)
+Osric: Don't be late for supper! I'll keep the heel back for you.
 "

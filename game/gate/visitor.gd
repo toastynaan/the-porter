@@ -24,6 +24,8 @@ extends Resource
 ## grille"), and what they answer.
 @export var question := ""
 @export var answer: PackedStringArray = []
+## He only comes if this flag is set (e.g. Roger, if the merchant died).
+@export var only_if := &""
 
 
 func has_part(part: StringName) -> bool:

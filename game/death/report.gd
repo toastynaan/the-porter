@@ -13,6 +13,15 @@ const KEPT_QUIET_SUSPICION := 15
 const TO: Array[StringName] = [&"thomas", &"prior", &"none"]
 
 
+## How the porter names each body when he decides whom to tell.
+const WHAT := {&"merchant": "the merchant in the fishpond", &"bell_brother": "Brother Bede in the bell tower",
+	&"edwin": "Edwin in the charnel house", &"body5": "the body in the granary", &"anselm": "Anselm in his bed"}
+
+
+static func name_of(id: StringName) -> String:
+	return String(WHAT.get(id, "the body"))
+
+
 static func choices(what: String) -> PackedStringArray:
 	return PackedStringArray(["Tell Brother Thomas about %s" % what, "Tell the prior", "Tell no one"])
 

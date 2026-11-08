@@ -1,10 +1,13 @@
 extends NightBeat
 ## Lauds and dawn (design doc, "Core loop" 7: Cole comes to take the gate
-## and you go to your cell to sleep; night 3: "your keys have been moved").
-## Cole walks to the gate and the porter gives it to him; Cole opens it for
-## the day. In the cell the keys aren't on their hook but on the cot, and
-## taking them back, the porter lies down and sleeps through the day. Dose
-## falls over the day but not to zero (`sleep_keeps`).
+## and you go to your cell to sleep; night 3: "your keys have been moved.
+## They've been copied"). Cole walks to the gate and the porter gives it to
+## him; Cole opens it for the day. With `keys_moved` (night 3), in the cell
+## the keys aren't on their hook but on the cot, with wax in their teeth:
+## from night 4 a locked guesthouse keeps no one safe (Saving). Before he
+## sleeps he decides whom to tell about any body he found tonight and
+## hasn't told anyone of (Report). Then he lies down and sleeps through the
+## day. Dose falls over the day but not to zero (`sleep_keeps`).
 
 @export var gate: AbbeyGate
 @export var cole: VisitorNPC
@@ -23,10 +26,14 @@ extends NightBeat
 @export var sleep: Duty
 ## Of the night's Dose, the part still in him when he wakes at dusk.
 @export var sleep_keeps := 0.5
+@export var cole_lines := PackedStringArray(["Cole: (Takes the gate without a word, and opens it for the day.)"])
+@export var keys_lines := PackedStringArray(["(Your keys. Someone has moved them.)"])
+@export var sleep_line := "(You sleep through the day.)"
 
 
 func _ready() -> void:
-	keys_moved.visible = false
+	if keys_moved:
+		keys_moved.visible = false
 
 
 func run() -> void:
@@ -38,9 +45,21 @@ func run() -> void:
 	arrived()
 	cole.stop()
 	cole.global_transform = cole_gate.global_transform
-	await say("Cole", "(Takes the gate without a word, and opens it for the day.)")
+	await say_lines(cole_lines)
 	gate.show_bar(false)
 	await gate.swing(true)
+	if keys_moved:
+		await _keys(p)
+	else:
+		await say("", "(Go to your cell and sleep.)")
+	for id in Report.unreported():
+		await Report.ask(id, Report.name_of(id))
+	await sleep.wait_for_use()
+	await sleep_through_the_day(sleep_keeps, sleep_line)
+
+
+## His keys aren't on their hook: on the cot, with wax in their teeth.
+func _keys(p: Player) -> void:
 	keys_on_hook.visible = false
 	keys_moved.visible = true
 	# Wanted from now, so the way to the cell is lit.
@@ -54,7 +73,7 @@ func run() -> void:
 	keys_moved.enabled = false
 	keys_moved.visible = false
 	GameState.keys = [&"gate", &"guesthouse", &"charnel"]
-	GameState.set_flag(&"n3_keys_moved")
-	await say("", "(Your keys. Someone has moved them.)")
-	await sleep.wait_for_use()
-	await sleep_through_the_day(sleep_keeps, "(You sleep through the day.)")
+	GameState.set_flag(GameState.tonight("keys_moved"))
+	GameState.set_flag(&"keys_copied")
+	GameState.note(&"keys_moved")
+	await say_lines(keys_lines)

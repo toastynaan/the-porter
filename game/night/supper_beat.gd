@@ -35,6 +35,29 @@ const WATCHED_FROM := 30
 @export var watch_time := 5.0
 @export var warned_flag := &"bread_warned"
 
+@export_group("Lines")
+## Said once he's seated ("Name: words", or a line in brackets).
+@export var seated_lines := PackedStringArray(["(Supper in the refectory with the brothers.)"])
+## Osric serving.
+@export var serve_lines := PackedStringArray(["Osric: Bread and ale, brother."])
+@export var eat_lines := PackedStringArray(["(The bread tastes bitter.)"])
+@export var palm_seen_lines := PackedStringArray(["Osric: Not hungry, brother? There's no shame in a good appetite."])
+## Who warns him about the bread after he has eaten (night 1: Bede), and
+## what he says; it sets `warned_flag` and writes the clue.
+@export var warner: Brother
+@export var warn_lines := PackedStringArray()
+## A word in his ear from someone at the table (Thomas), unless he has
+## already heard it (`aside_unless`, a flag).
+@export var aside_by: Brother
+@export var aside_lines := PackedStringArray()
+@export var aside_unless := &""
+## Ranulf's offer and Thomas's warning, when there's a remedy tonight.
+@export var remedy_lines := PackedStringArray([
+	"Ranulf: You keep rubbing your eyes, brother. The new ones always get the headaches. A little of this in your ale, and you'll sleep.",
+	"Thomas: (Quietly, so only you hear.) Not his physic. Not that one. Trust me."])
+@export var end_lines := PackedStringArray(["(Supper ends. Go and take the gate from Cole.)"])
+@export_group("")
+
 var _osric_watching := false
 
 
@@ -54,9 +77,9 @@ func run() -> void:
 	p.use_input_override = true
 	p.input_override = Vector2.ZERO
 	bread.visible = true
-	await say("", "(Supper in the refectory with the brothers.)")
+	await say_lines(seated_lines)
 	osric.face(p.global_position)
-	await say("Osric", "(Serves you bread and ale.)")
+	await say_lines(serve_lines)
 	_osric_watching = true
 	get_tree().create_timer(watch_time, false).timeout.connect(_osric_turns)
 	await bread.wait_for_use()
@@ -67,26 +90,34 @@ func run() -> void:
 	if pick == 0:
 		GameState.set_flag(GameState.tonight("ate_bread"))
 		GameState.add_dose(BREAD_DOSE, BREAD_TIME)
-		await say("", "(The bread tastes bitter.)")
+		await say_lines(eat_lines)
 	else:
 		GameState.set_flag(GameState.tonight("palmed_bread"))
 		GameState.set_flag(&"hungry")
 		if _osric_watching:
 			GameState.raise_suspicion(SEEN_SUSPICION)
 			GameState.set_flag(GameState.tonight("osric_saw"))
-			await say("Osric", "Not hungry, brother? There's no shame in a good appetite.")
+			await say_lines(palm_seen_lines)
+	if warner and not warn_lines.is_empty():
+		warner.face(p.global_position)
+		await say_lines(warn_lines)
+		GameState.set_flag(warned_flag)
+		GameState.note(&"bread_warning")
+	if aside_by and not aside_lines.is_empty() and (aside_unless == &"" or not GameState.has_flag(aside_unless)):
+		aside_by.face(p.global_position)
+		await say_lines(aside_lines)
+		GameState.set_flag(GameState.tonight("supper_aside"))
 	if ranulf:
 		await _remedy(p)
-	await say("", "(Supper ends. Go and take the gate from Cole.)")
+	await say_lines(end_lines)
 	p.use_input_override = false
 
 
 ## Ranulf offers his remedy; Thomas, beside him, warns him off it.
 func _remedy(p: Player) -> void:
 	ranulf.face(p.global_position)
-	await say("Ranulf", "You keep rubbing your eyes, brother. The new ones always get the headaches. A little of this in your ale, and you'll sleep.")
 	thomas.face(p.global_position)
-	await say("Thomas", "(Quietly, so only you hear.) Not his physic. Not that one. Trust me.")
+	await say_lines(remedy_lines)
 	var pick := await Talk.choose(PackedStringArray(["Take Brother Ranulf's remedy", "Refuse it"]))
 	if pick == 0:
 		GameState.set_flag(GameState.tonight("took_remedy"))

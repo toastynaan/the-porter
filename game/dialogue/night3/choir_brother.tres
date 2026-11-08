@@ -5,18 +5,25 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_choir_brother"
-text = "# The choir brothers at dusk (night 3); all three share this. Placeholder lines in the design doc's words.
+text = "# DRAFT
+# The choir brothers at dusk (night 3); Wulfric, Aldo and Piers all share this, so nobody is named.
+# Faces you know from Matins. Not in the cult. Bede, who warned you about the bread, sang beside them.
 == start
-A choir brother: (Placeholder: a choir brother, a face you know from Matins.)
+(A brother of the choir, his hands in his sleeves. You know his face from Matins.)
+A choir brother: Porter. God give you good evening.
 * (Ask about the brother who died.) -> died
 * [if bread_warned] (Ask about the bread.) -> bread
 * (Wish him good night.) -> end
 
 == died
-A choir brother: (Placeholder: his answer about the death in the bell tower.)
+A choir brother: Bede. Nine years I sang beside him at the night office. He sang flat, and knew it, and sang anyway.
+A choir brother: The abbot says the demon took him. Maybe so.
+A choir brother: He was frightened, those last days. But not of demons. Bede laughed at demons.
 -> end
 
 == bread
-A choir brother: (Placeholder: his answer about the bread.)
+(He looks toward the kitchen before he answers.)
+A choir brother: He told you that too? He'd stopped eating it. He hid it in his sleeve and threw it over the wall.
+A choir brother: I asked him why. He said it was better I didn't know. Then he was dead.
 -> end
 "

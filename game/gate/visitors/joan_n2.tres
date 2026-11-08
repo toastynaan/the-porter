@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_joan.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Young and sharp-eyed. She looks past you, into the court.)"
+ledger = "young and sharp-eyed, watching the court"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A pilgrim's badge hangs on a cord at her throat. She draws her cloak over it.)"
+ledger = "slight, a pilgrim's badge on a cord at her throat"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Her hands are red with cold, and empty. She has brought nothing with her.)"
+ledger = "nothing in her hands"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Her shoes are soaked through. She has walked a long way in the rain.)"
+ledger = "her shoes soaked through"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"joan"
+speaker = "Joan"
+look = ExtResource("look")
+lantern = false
+ledger_name = "Joan, asking sanctuary"
+greeting = "I ask sanctuary of this house, brother. My husband is looking for me, and I can't go back to him."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n2_joan"
+question = "Why this gate, of all the gates in London?"
+answer = PackedStringArray("It was the nearest with a cross over it. He won't look for me in a house of God. He's never been in one.", "And they say in the lane that this gate takes in anyone who knocks.")

@@ -27,8 +27,7 @@ func run() -> void:
 	p.place(wake_at.global_position, wake_at.global_rotation.y)
 	await fade_to(0.0, 2.5)
 	p.controls_locked = false
-	for line in lines:
-		await say("", line)
+	await say_lines(lines)
 	if due >= 0.0:
 		await clock().wait_until(due)
 	if supper_bell:

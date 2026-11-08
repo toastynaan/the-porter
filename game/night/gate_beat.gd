@@ -13,6 +13,8 @@ extends NightBeat
 @export var shut_gate: Duty
 @export var bar_duty: Duty
 @export var ledger: Duty
+## Cole handing him the gate.
+@export var relieve_lines := PackedStringArray(["Cole: (Says nothing. He leaves you the gate.)"])
 
 
 func _ready() -> void:
@@ -24,7 +26,7 @@ func _ready() -> void:
 func run() -> void:
 	await relieve.wait_for_use()
 	GameState.set_flag(&"gate_taken")
-	await say("Cole", "(Says nothing. He leaves you the gate.)")
+	await say_lines(relieve_lines)
 	_cole_goes.call()
 	await say("", "(Shut the gate and bar it.)")
 	await shut_gate.wait_for_use()
@@ -35,7 +37,7 @@ func run() -> void:
 	await say("", "(You lift the bar into its brackets. It takes both hands.)")
 	await say("", "(Open the ledger at tonight's page, on the desk in your cell.)")
 	await ledger.wait_for_use()
-	GameState.set_flag(&"n3_ledger")
+	GameState.set_flag(GameState.tonight("ledger"))
 	await say("", "(Tonight's page. Guests are written in as they come.)")
 
 

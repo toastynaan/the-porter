@@ -3,16 +3,121 @@
 [ext_resource type="PackedScene" path="res://game/nights/night_base.tscn" id="base"]
 [ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
 [ext_resource type="Script" path="res://game/night/wake_beat.gd" id="wake_gd"]
-[ext_resource type="Script" path="res://game/night/pass_beat.gd" id="pass_gd"]
-[ext_resource type="Script" path="res://game/night/sleep_beat.gd" id="sleep_gd"]
+[ext_resource type="Script" path="res://game/night/supper_beat.gd" id="supper_gd"]
+[ext_resource type="Script" path="res://game/night/gate_beat.gd" id="gate_gd"]
+[ext_resource type="Script" path="res://game/night/gate_visits_beat.gd" id="visits_gd"]
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="visitor_gd"]
+[ext_resource type="PackedScene" path="res://game/gate/visitor_npc.tscn" id="visitor_npc"]
+[ext_resource type="Resource" path="res://game/gate/visitors/prior_hugh.tres" id="prior"]
+[ext_resource type="Script" path="res://game/night/bell_beat.gd" id="bell_gd"]
+[ext_resource type="Script" path="res://game/night/choir_beat.gd" id="choir_gd"]
+[ext_resource type="Script" path="res://game/night/round_beat.gd" id="round_gd"]
+[ext_resource type="Script" path="res://game/night/small_hours_beat.gd" id="small_gd"]
+[ext_resource type="Script" path="res://game/night/dawn_beat.gd" id="dawn_gd"]
+[ext_resource type="Script" path="res://game/death/found_body.gd" id="found_gd"]
+[ext_resource type="Script" path="res://game/night/duty.gd" id="duty_gd"]
+[ext_resource type="Script" path="res://game/night/lane_death_beat.gd" id="lane_gd"]
+[ext_resource type="Script" path="res://game/night/guesthouse_check_beat.gd" id="guest_gd"]
+[ext_resource type="Script" path="res://game/night/scene_beat.gd" id="scene_gd"]
+[ext_resource type="Script" path="res://game/death/death_scene.gd" id="death_gd"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_dead.tscn" id="chr_bede"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_jankin.tscn" id="chr_jankin"]
+[ext_resource type="Resource" path="res://game/gate/visitors/joan_n2.tres" id="joan"]
+[ext_resource type="Resource" path="res://game/gate/visitors/roger_n2.tres" id="roger"]
+[ext_resource type="Resource" path="res://game/gate/visitors/sailor_n2.tres" id="sailor"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/thomas.tres" id="c_thomas"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/osric.tres" id="c_osric"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/ranulf.tres" id="c_ranulf"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/godric.tres" id="c_godric"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/hugh.tres" id="c_hugh"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/edwin.tres" id="c_edwin"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/anselm.tres" id="c_anselm"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/dunstan.tres" id="c_dunstan"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/cole.tres" id="c_cole"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/choira.tres" id="c_choira"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/choirb.tres" id="c_choirb"]
+[ext_resource type="Resource" path="res://game/dialogue/night2/choirc.tres" id="c_choirc"]
 
 [node name="Night2" instance=ExtResource("base")]
-editor_description = "Night 2, the bell (a stub until M13). It inherits night_base.tscn."
+editor_description = "Night 2, the bell (design doc, Night 2): Thomas on the prior about at night, Joan, Roger (if the merchant died) and the sailor at the gate, a death in the lane toward midnight, Bede hanging in the bell tower at Matins, the count one short, an empty bed and a torn page on the round, and at dawn the abbot's demon and the prior's question. It inherits night_base.tscn."
+
+[node name="Weather" parent="."]
+kind = 1
+
+[node name="Talker" parent="Brothers/Thomas"]
+conversation = ExtResource("c_thomas")
+
+[node name="Talker" parent="Brothers/Osric"]
+conversation = ExtResource("c_osric")
+
+[node name="Talker" parent="Brothers/Ranulf"]
+conversation = ExtResource("c_ranulf")
+
+[node name="Talker" parent="Brothers/Godric"]
+conversation = ExtResource("c_godric")
+
+[node name="Talker" parent="Brothers/Hugh"]
+conversation = ExtResource("c_hugh")
+
+[node name="Talker" parent="Brothers/Edwin"]
+conversation = ExtResource("c_edwin")
+
+[node name="Talker" parent="Brothers/Anselm"]
+conversation = ExtResource("c_anselm")
+
+[node name="Talker" parent="Brothers/Dunstan"]
+conversation = ExtResource("c_dunstan")
+
+[node name="Talker" parent="People/Cole"]
+conversation = ExtResource("c_cole")
+
+[node name="Talker" parent="Brothers/ChoirA"]
+conversation = ExtResource("c_choira")
+
+[node name="Talker" parent="Brothers/ChoirB"]
+conversation = ExtResource("c_choirb")
+
+[node name="Talker" parent="Brothers/ChoirC"]
+conversation = ExtResource("c_choirc")
+
+[node name="GodricDawn" type="Marker3D" parent="Marks"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -33.0, 0.05, 1.6)
+
+[node name="HughDawn" type="Marker3D" parent="Marks"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -33.6, 0.05, -0.6)
+
+[node name="GuesthouseCheck" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.9, 0.05, -20.6)
+script = ExtResource("duty_gd")
+size = Vector3(4.0, 2.2, 3.0)
+editor_description = "Night 2's round: look in on the guests."
+
+[node name="Bodies" type="Node3D" parent="."]
+
+[node name="Bede" type="Node3D" parent="Bodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0, 0.65, -32.8)
+script = ExtResource("found_gd")
+id = &"bell_brother"
+figure = ExtResource("chr_bede")
+clue = &"sailor_knot"
+feeds = true
+shown = false
+editor_description = "Brother Bede, hanged from the bell's frame, dropping past the porter as he pulls the rope at Matins."
+
+[node name="LaneDeath" type="Node3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -44.2, 0.05, -0.6)
+script = ExtResource("death_gd")
+id = &"lane_death"
+style = 2
+victim_look = ExtResource("chr_jankin")
+appearance = {"skin": Color(0.72, 0.6, 0.5, 1), "shirt": Color(0.4, 0.33, 0.24, 1), "pants": Color(0.28, 0.24, 0.2, 1), "height": 1.0, "width": 1.0}
+editor_description = "Night 2's lane death, under the Cross Keys' lantern, seen through the grille: the throat."
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
 night = 2
 start_dose = 25.0
+start_flags = Array[StringName]([&"bread_warned", &"died_merchant"])
 
 [node name="Wake" type="Node" parent="Director" node_paths=PackedStringArray("wake_at", "tower", "gate")]
 script = ExtResource("wake_gd")
@@ -22,17 +127,160 @@ due = 17.25
 wake_at = NodePath("../../Marks/WakeCell")
 tower = NodePath("../../BellTower")
 gate = NodePath("../../AbbeyGate")
-lines = PackedStringArray("(Night 2: the bell. Rain again.)")
-supper_bell = false
+lines = PackedStringArray("(You wake to rain on the shutter. The light is nearly gone.)", "(The gate stands open in the rain, and Cole stands in it with his hood up.)", "(Your ledger lies open on the desk at last night's page. You shut it before you slept.)")
 
-[node name="Pass" type="Node" parent="Director" node_paths=PackedStringArray("tower")]
-script = ExtResource("pass_gd")
-phase = 7
+[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas", "watcher", "aside_by")]
+script = ExtResource("supper_gd")
+phase = 0
+due = 17.25
+watch_late = true
+fetcher = &"cole"
+duty = "Supper in the refectory, at the supper bell"
+seat = NodePath("../../Marks/PorterSeat")
+seat_duty = NodePath("../../Duties/SupperSeat")
+bread = NodePath("../../Duties/Bread")
+osric = NodePath("../../Brothers/Osric")
+thomas = NodePath("../../Brothers/Thomas")
+watcher = NodePath("../../Brothers/Hugh")
+aside_by = NodePath("../../Brothers/Thomas")
+seated_lines = PackedStringArray()
+serve_lines = PackedStringArray("(Osric sets down your bread and ale, and the extra heel again.)", "Osric: The heel for the porter. I keep it back special.")
+eat_lines = PackedStringArray("(Dark and sour. It sits heavy in you.)")
+palm_seen_lines = PackedStringArray("Osric: (From the hatch, smiling.) Not hungry, porter? I'll keep an eye on you. Can't have you wasting away.")
+aside_lines = PackedStringArray("Thomas: (Low, under the reading.) I've seen the prior about the house at night, Alric. Places he has no business being.", "Thomas: Say nothing. Only keep your eyes open.")
+aside_unless = &"n2_thomas_prior"
+
+[node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
+script = ExtResource("gate_gd")
+phase = 1
+duty = "After supper: take the gate from Cole, shut and bar it, open the ledger"
+gate = NodePath("../../AbbeyGate")
+cole = NodePath("../../People/Cole")
+cole_off = NodePath("../../Marks/ColeOff")
+relieve = NodePath("../../Duties/RelieveCole")
+shut_gate = NodePath("../../Duties/ShutGate")
+bar_duty = NodePath("../../Duties/BarGate")
+ledger = NodePath("../../Duties/Ledger")
+relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole: Yours.")
+
+[node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate")]
+script = ExtResource("visits_gd")
+phase = 2
+can_doze = true
+duty = "Keep the gate: answer the knocks"
+visitors = Array[ExtResource("visitor_gd")]([ExtResource("joan"), ExtResource("roger"), ExtResource("sailor")])
+knock_hours = PackedFloat32Array(19.0, 20.0, 21.5)
+child_knock = false
+visitor_scene = ExtResource("visitor_npc")
+prior_visitor = ExtResource("prior")
+lane_start = NodePath("../../Marks/LaneStart")
+lane_leave = NodePath("../../Marks/LaneLeave")
+porch = NodePath("../../Marks/Porch")
+inside = NodePath("../../Marks/Inside")
+prior_from = NodePath("../../Marks/PriorFrom")
+grate = NodePath("../../Duties/Grate")
+bar_duty = NodePath("../../Duties/BarGate")
+open_gate = NodePath("../../Duties/OpenGate")
+shut_gate = NodePath("../../Duties/ShutGate")
+ledger = NodePath("../../Duties/Ledger")
+beds = NodePath("../../Duties/GuestBeds")
+gate = NodePath("../../AbbeyGate")
+prior_lines = PackedStringArray("Hugh: Stand aside, porter. I'll see him to a bed myself.", "Hugh: (To the visitor.) This way. Keep close, and touch nothing.")
+
+[node name="Lane" type="Node" parent="Director" node_paths=PackedStringArray("grate", "death", "curfew")]
+script = ExtResource("lane_gd")
+phase = 2
+can_doze = true
+duty = "The grille: something in the lane"
+hour = 23.25
+grate = NodePath("../../Duties/Grate")
+death = NodePath("../../LaneDeath")
+curfew = NodePath("../../Curfew")
+visitors = Array[ExtResource("visitor_gd")]([ExtResource("joan"), ExtResource("roger"), ExtResource("sailor")])
+jankin_look = ExtResource("chr_jankin")
+cry_lines = PackedStringArray("(A cry from the lane, short, and cut off.)", "(You wait for Gib's call. It doesn't come.)")
+death_lines = PackedStringArray("(Under the lantern by the chandler's, a man alone. Behind him stands something tall that wasn't there a moment ago.)", "(A flash at his throat, one cut, and he folds into the gutter. Blood runs dark in the lantern light.)", "(The tall shape stands over him and doesn't move. Not while you're looking.)")
+after_lines = PackedStringArray("(Nothing stands in the lane now. The lantern burns on.)")
+
+[node name="Bell" type="Node" parent="Director" node_paths=PackedStringArray("rope", "tower", "hanged")]
+script = ExtResource("bell_gd")
+phase = 3
+due = 24.0
+watch_late = true
+can_doze = true
+duty = "Ring the bell for Matins"
+rope = NodePath("../../Duties/BellRope")
 tower = NodePath("../../BellTower")
+hanged = NodePath("../../Bodies/Bede")
+heavy_lines = PackedStringArray("(You take the rope and pull. It doesn't give. It's heavy, as if the bell were full of earth.)", "(Something drops past you out of the dark above and stops short, hard, a hand's breadth from your face.)", "(Brother Bede, turning slowly on a rope from the bell's frame. His feet are bare.)", "(You look at the knot under his ear. A sailor's knot, neat and hard.)")
 
-[node name="Sleep" type="Node" parent="Director" node_paths=PackedStringArray("sleep")]
-script = ExtResource("sleep_gd")
+[node name="Choir" type="Node" parent="Director" node_paths=PackedStringArray("choir", "stall", "west_door")]
+script = ExtResource("choir_gd")
+phase = 3
+bell = &"matins"
+duty = "Count the brothers at Matins"
+choir = NodePath("../../Marks/Choir")
+stall = NodePath("../../Marks/PorterStall")
+west_door = NodePath("../../Marks/ChoirWestDoor")
+count_lines = PackedStringArray("(One short. Bede's stall stands empty, and nobody looks at it.)")
+
+[node name="Round" type="Node" parent="Director" node_paths=PackedStringArray("stops", "stalker", "walk_end", "doorways")]
+script = ExtResource("round_gd")
+phase = 4
+duty = "The lantern round: the stores door, the chapter house door, the sanctuary lamp"
+stops = NodePath("../../Duties/RoundStops")
+stalker = NodePath("../../Stalker")
+walk_end = NodePath("../../Stalk/WalkEnd")
+doorways = NodePath("../../Stalk/Doorways")
+appearances = 2
+glimpse_lines = PackedStringArray()
+
+[node name="Guesthouse" type="Node" parent="Director" node_paths=PackedStringArray("check")]
+script = ExtResource("guest_gd")
+phase = 4
+duty = "Look in on the guests"
+check = NodePath("../../Duties/GuesthouseCheck")
+visitor = ExtResource("sailor")
+empty_lines = PackedStringArray("(The sailor's bed is empty. The blanket is folded square, as if no one had slept in it.)", "(The gate is still barred. You barred it yourself.)", "(You open the ledger. The page you wrote him on has been torn out, close to the binding.)")
+quiet_lines = PackedStringArray("(The guesthouse is quiet. Every bed as you left it.)")
+
+[node name="SmallHours" type="Node" parent="Director" node_paths=PackedStringArray("bench", "tower", "gate_lamp")]
+script = ExtResource("small_gd")
+phase = 7
+due = 30.0
+can_doze = true
+duty = "Watch the gate until Lauds"
+bench = NodePath("../../GateBench")
+tower = NodePath("../../BellTower")
+gate_lamp = NodePath("../../Lamps/GateLamp")
+lines = PackedStringArray("(Back to the gate. Keep watch from the bench until Lauds. You can doze, if you dare.)")
+lauds_lines = PackedStringArray("(The Lauds bell. Grey light comes up over the court.)")
+
+[node name="DawnScene" type="Node" parent="Director" node_paths=PackedStringArray("people", "marks")]
+script = ExtResource("scene_gd")
 phase = 5
-duty = "At Lauds: sleep"
+duty = "Lauds: the abbot, in the court"
+people = [NodePath("../../Brothers/Godric"), NodePath("../../Brothers/Hugh")]
+marks = [NodePath("../../Marks/GodricDawn"), NodePath("../../Marks/HughDawn")]
+lines = PackedStringArray("Godric: Brothers. A demon has come into this house. Brother Bede is dead of it, and I will not pretend otherwise.", "Godric: From today, incense at every office, twice the measure, until it is driven out. Pray, and keep together.", "(As the brothers go, the prior's hand closes on your arm and draws you aside.)", "Hugh: A word, porter. Where were you in the night? All of it, hour by hour.")
+answers = PackedStringArray("At the gate all night, and on my round.", "I rang the bell, and I found Brother Bede.", "(Tell him everything you saw.)")
+replies = PackedStringArray("Hugh: The gate and the round. So everyone was where they should be, and still a brother hangs.", "Hugh: You found him. You always seem to be first, porter. I'll remember that.", "Hugh: (He writes it all on his wax before he speaks.) Tell no one else what you've told me. No one.")
+answer_tags = PackedStringArray("set n2_told_hugh=gate", "set n2_told_hugh=round", "set n2_told_hugh=thomas; trust hugh -5")
+
+[node name="Dawn" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "cole_gate", "hand_over", "cell", "keys_on_hook", "sleep")]
+script = ExtResource("dawn_gd")
+phase = 5
+due = 30.0
+watch_late = true
+duty = "At Lauds: give the gate to Cole, and sleep"
+gate = NodePath("../../AbbeyGate")
+cole = NodePath("../../People/Cole")
+cole_off = NodePath("../../Marks/ColeOff")
+cole_gate = NodePath("../../Marks/ColeGate")
+hand_over = NodePath("../../Duties/HandOver")
+cell = NodePath("../../Marks/DawnCell")
+cell_radius = 2.5
+keys_on_hook = NodePath("../../Marks/KeysOnHook")
 sleep = NodePath("../../Duties/Sleep")
-lines = PackedStringArray("(Go to your cell and sleep.)")
+cole_lines = PackedStringArray("(Cole comes across the court for the gate. He holds out his hand for it, and says nothing.)", "(He lifts the bar and swings the gate open on the grey lane.)")
+sleep_line = "(You lie down on your cot, and the day closes over you.)"

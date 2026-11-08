@@ -1,0 +1,96 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_hugh"
+text = "# DRAFT
+# Prior Hugh on the north walk at dusk (night 2). If the merchant died, he wants to know why the guesthouse was left
+# unlocked (n2_hugh_lock), and tells the porter the purse is gone (the merchant_purse note). He suspects the porter, and Walter.
+# Otherwise he is merely cold, and has a word on the pardoner. If Thomas told the porter the prior walks at night,
+# the porter can ask him why (n2_hugh_night): he turns it back on the porter.
+== start
+-> dead [if died_merchant]
+-> sent [if n1_merchant=prior]
+-> cold
+
+== dead
+(The prior steps into your way on the walk, his wax tablet already open.)
+-> dead_told [if reported_merchant=prior]
+-> dead_none [if reported_merchant=none]
+-> dead_ask
+
+== dead_told
+Hugh: You brought me the merchant this morning. The one thing you've done right.
+-> dead_ask
+
+== dead_none
+Hugh: Your round goes past the fishpond, porter. You saw nothing? Nothing at all?
+-> dead_ask
+
+== dead_ask
+Hugh: You turned down the merchant's bed. This morning he was in the fishpond. Was the guesthouse locked, porter?
+* No. I didn't think to lock it. -> honest
+* He was a guest, not a prisoner. -> guest
+* What are you saying I did? -> accuse
+
+== honest [set n2_hugh_lock=honest] [trust hugh 5]
+Hugh: You didn't think. Anselm thought of it every night for thirty years.
+-> purse
+
+== guest [set n2_hugh_lock=guest]
+Hugh: A prisoner would be alive this morning.
+-> purse
+
+== accuse [set n2_hugh_lock=accuse] [trust hugh -5]
+Hugh: I'm not saying. I'm asking. You'll know when I start saying.
+-> purse
+
+== purse [note merchant_purse]
+Hugh: He had a purse at your gate. You'll have seen it. There was none on him this morning.
+Hugh: Thomas says he drowned drunk. Drunk men drown with their purses on.
+-> purse_walter [if n1_walter=admitted]
+-> ask
+
+== purse_walter
+Hugh: And you let the pardoner in after him. (He writes it on his tablet.) I'll be asking Walter about purses.
+-> ask
+
+== sent
+(The prior watches you come down the walk.)
+Hugh: You sent for me last night. (He looks almost surprised.) Good. That's the rule. Keep to it.
+-> ask
+
+== cold
+(The prior watches you come down the walk, and doesn't move out of your way.)
+Hugh: Porter. Your first night, and the house still standing. Don't let it go to your head.
+-> walter_in [if n1_walter=admitted]
+-> walter_out [if n1_walter=refused]
+-> ask
+
+== walter_in
+Hugh: You let the pardoner in. Walter sells pigs' knuckles to widows and calls them saints. Next time, send for me.
+-> ask
+
+== walter_out
+Hugh: You turned the pardoner away. Good. Anselm let him in whenever he knocked.
+-> ask
+
+== ask
+* [if n2_thomas_prior] [if not n2_hugh_night] (Ask why he walks the abbey at night.) -> night
+
+== night [set n2_hugh_night] [trust hugh -5]
+(His face doesn't change, but he closes his tablet.)
+Hugh: Who told you that?
+Hugh: I walk where I please in this house. I'm its prior. Where do you walk, porter, between Matins and Lauds?
+-> end
+
+== again
+(He's writing on his tablet, and doesn't look up.)
+Hugh: Supper, porter.
+-> ask
+
+== leave
+Hugh: We're not done, porter.
+"

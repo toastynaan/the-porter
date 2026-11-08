@@ -8,15 +8,17 @@ extends NightBeat
 @export var bench: GateBench
 @export var tower: BellTower
 @export var gate_lamp: Candle
+@export var lines := PackedStringArray(["(Back to the gate. Keep watch until Lauds; you can doze on the bench.)"])
+@export var lauds_lines := PackedStringArray(["(The bell for Lauds. Grey light.)"])
 
 
 func run() -> void:
 	gate_lamp.lit = true
 	var way := Wayfinding.show_way(self, bench.global_position)
-	await say("", "(Back to the gate. Keep watch until Lauds; you can doze on the bench.)")
+	await say_lines(lines)
 	await clock().wait_until(due)
 	Wayfinding.put_out(way)
 	gate_lamp.lit = false
 	clock().wake()
 	tower.ring(3)
-	await say("", "(The bell for Lauds. Grey light.)")
+	await say_lines(lauds_lines)

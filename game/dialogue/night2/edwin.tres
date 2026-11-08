@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_edwin"
+text = "# DRAFT
+# Edwin on the west walk at dusk (night 2). He opens on the night before: the drowned merchant (Osric carried him off),
+# the merchant who left cursing the lock, or just the porter's first night. Then the knock, the pardoner, and what
+# the brothers are saying: the abbot's bad dreams, and Ranulf on the incense. (The bread is night 3's talk.)
+== start
+-> dead [if died_merchant]
+-> lived [if n1_merchant=admitted]
+-> plain
+
+== dead
+(Edwin catches your sleeve the moment he sees you.)
+Edwin: Did you see him? The merchant, in the fishpond? I wasn't let look.
+Edwin: Brother Osric carried him off before Prime. He said a drowned man's no sight for a novice.
+-> topics
+
+== lived
+Edwin: Your merchant went off this morning cursing you all the way to the gate! For locking him in!
+Edwin: I've never heard a man swear like it, and I've been to Billingsgate.
+-> topics
+
+== plain
+Edwin: You're alive! I mean, of course you are. How was it? Was it long?
+Edwin: Brother Wulfric says the first night's the longest, and then they get longer.
+-> topics
+
+== again
+Edwin: Still here? Me too. I'm meant to be in the church.
+-> topics
+
+== topics
+* [if n1_knock_no_one] [if not n2_edwin_knock] (Tell him about the knock with no one there.) -> knock
+* [if n1_walter=admitted] [if not n2_edwin_walter] (Tell him you let a pardoner in.) -> walter
+* [if not n2_edwin_talk] (Ask what the brothers are saying today.) -> talk
+
+== knock [set n2_edwin_knock]
+Edwin: And nobody there? (He's gone pale, and he's trying not to be.)
+Edwin: Boys from the lane. It'll have been boys. Won't it?
+-> topics
+
+== walter [set n2_edwin_walter]
+Edwin: A pardoner! Did he have a feather from the Archangel's wing? They always have a feather.
+Edwin: Brother Hugh says pardoners are thieves with Latin. I'd still like to see the feather.
+-> topics
+
+== talk [set n2_edwin_talk]
+Edwin: That Father Abbot had bad dreams. He told the chapter this morning, and asked us all to pray for the house.
+Edwin: Brother Hugh says it's the rain. Brother Ranulf says the incense isn't thick enough at Matins.
+-> topics
+
+== leave
+Edwin: See you at supper! I'm reading again!
+"

@@ -5,18 +5,23 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_lane_woman"
-text = "# A woman in the lane at dusk (night 3). Placeholder lines.
+text = "# DRAFT
+# Margery in the lane at dusk (night 3), her basket on her arm, hurrying home before dark.
+# Night 3 keeps its own; the other nights are game/dialogue/lane/margery.tres. She names herself, in case he never met her.
 == start
-A woman: (Placeholder: a woman with a basket, hurrying home before dark.)
+(A woman with a covered basket on her arm, walking fast.)
+Margery: Margery, brother, from by Saint Andrew's, if you've forgotten. I'm not stopping. Not this week.
 * (Ask where she is going.) -> home
 * (Ask what the lane says about the abbey.) -> abbey
 * (Wish her good night.) -> end
 
 == home
-A woman: (Placeholder: home, before the lanterns are lit.)
+Margery: Home, where else? Before Gib lights the lanterns, with the door barred and the shutters too.
+Margery: My husband laughs at me for it. He can laugh from behind a barred door.
 -> end
 
 == abbey
-A woman: (Placeholder: what the lane says about the abbey.)
+Margery: That a holy brother hanged himself in your bell tower. Or the devil hanged him, your abbot says.
+Margery: Devil or rope, brother, he's dead all the same. And I'm late.
 -> end
 "

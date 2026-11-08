@@ -5,18 +5,19 @@
 [resource]
 script = ExtResource("1_convo")
 id = &"n3_dunstan"
-text = "# Dunstan at dusk, by the woodpile (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
+text = "# DRAFT
+# Dunstan at dusk, by the woodpile (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
 == start
-(Dunstan looks at you and says nothing.)
+(Dunstan rests his axe on the block and looks at you. He says nothing.)
 * (Ask about the woodpile.) -> nothing
 * (Ask if he has seen anything.) -> nothing
 * (Wish him good night.) -> end
 
 == again
-(Dunstan says nothing.)
+(Dunstan looks up from the woodpile. He says nothing.)
 -> end
 
 == nothing
-(He says nothing, and goes back to his work.)
+(He says nothing. He sets a log on the block, and the axe comes down.)
 -> end
 "

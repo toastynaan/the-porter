@@ -15,7 +15,7 @@ At the gate it's the same: Walter's knock opens a conversation at the grille, wi
 
 ## Writing one
 
-Each conversation is a `Conversation` resource, one per person per night (`game/dialogue/night3/osric.tres`), or one per person for every dusk (`game/dialogue/lane/hob.tres`). Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
+Each conversation is a `Conversation` resource, one per person per night (`game/dialogue/night1/` to `night3/`, `night0/`), or one per person for every dusk (`game/dialogue/lane/hob.tres`). All are drafts, and each starts with `# DRAFT`. Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
 
 ```
 # A note; ignored.

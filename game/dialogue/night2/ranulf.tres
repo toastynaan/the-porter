@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_ranulf"
+text = "# DRAFT
+# Ranulf on a ladder at the candle beam in the church at dusk (night 2). He keeps the bells.
+# Ringing Matins: the rope has been stiff with the wet and will feel heavy. (Tonight Bede hangs from it; Ranulf knows.)
+# If Ralph told the porter on night 0 how many candles the sacrist buys (n0_ralph_candles), the porter can say so:
+# the wrong question to the wrong brother (Suspicion +5).
+== start
+(Ranulf is up a ladder at the candle beam, fitting new candles. He looks down at you and doesn't come down.)
+Ranulf: Porter.
+-> topics
+
+== again
+Ranulf: You're in my light.
+-> topics
+
+== topics
+* [if not n2_ranulf_bell] (Ask about ringing Matins.) -> bell
+* [if n0_ralph_candles] [if not n2_ranulf_ralph] (Say Ralph the chandler sells him twice what he used to.) -> ralph
+
+== bell [set n2_ranulf_bell]
+Ranulf: Pull like you mean it. The rope's been stiff with the wet these two nights. It'll feel heavy.
+Ranulf: Ring the full peal. The abbot takes a short one for an omen, and he's had omens enough this week.
+-> topics
+
+== ralph [set n2_ranulf_ralph] [suspicion 5]
+(He stops, a candle in each hand, and looks down at you a long moment.)
+Ranulf: Ralph talks a great deal for a man who's paid on the nail.
+Ranulf: A church in winter eats candles, porter. So does a house that prays more than it used to.
+-> topics
+
+== leave
+Ranulf: The full peal, porter.
+"

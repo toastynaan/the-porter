@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_roger.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(A broad, hard face. He looks at the gate, not at you.)"
+ledger = "broad and hard-faced"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A good brown coat, and a staff of office.)"
+ledger = "in a brown coat, with a staff of office"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(A heavy seal ring on his thumb.)"
+ledger = "a seal ring on his thumb"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"roger"
+speaker = "Roger"
+look = ExtResource("look")
+ledger_name = "Roger the bailiff"
+greeting = "Open, porter, in the ward's name. A merchant came in at this gate last night, and I want to know what became of him."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands")])
+flag = &"n2_roger"
+only_if = &"died_merchant"
+question = "Why does the ward care about one merchant?"
+answer = PackedStringArray("Because he had a fat purse when he went in at your gate, and I'd like to know who has it now.", "And because the ward is tired of counting men who go in there. Somebody has to.")

@@ -447,3 +447,10 @@ Added during the run (M12, `docs/prologue.md`):
 - The curfew: people out in the lane walk to the nearest house door and go in (30 s at most); people indoors stay; windows go dark one by one through the hour; Gib calls every hour from ten to five.
 - Out at midnight on night 0, or shut out by the curfew, Agnes sends him up to bed and the window plays.
 - Day 1 starts at 8:00 in daylight brighter than any dusk: sky 1.4, ambient 1.7, a shadowless sun 0.6.
+
+Added during the run (M13, `docs/nights.md`):
+- Night 1's knocks at 19:00 (the merchant) and 20:15 (Walter), both before the curfew bell; the cult comes for an unprotected guest at 01:30; the knock with no one at 02:00.
+- Night 2's knocks at 19:00 (Joan), 20:00 (Roger, only if the merchant died) and 21:30 (the sailor, after the bell, so turning him away puts him in the lane); the lane death at 23:15.
+- The round's shape appears once on night 1, twice on night 2 and three times on night 3.
+- Whom to tell about a body is asked at dawn, before he sleeps, for every body found and not yet reported.
+- The lane death's victim, in order: someone turned away after the bell tonight who isn't a named outsider; else Jankin, unless Hob kept him in; else no one.
