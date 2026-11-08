@@ -9,6 +9,7 @@ Nov 6, 2026 · @Pahul
 - Brother Simon, a choir brother, draws your suspicion: Thomas sends him to scrub blood, then points you at him. On night 5 you save Thomas or Simon.
 - People die in front of you: nine witnessed deaths across the game, on top of the six found bodies. There are also hidden bodies to find.
 - Seven endings: the five, rewritten to say what became of the Saint, plus The Rising and The Broken Rite.
+- Mechanics (from the mechanics grilling; full rules in `docs/mechanics.md`): one forgiving capture, on night 1 or 2 only; crouching and leaning; a satchel; throwing things to draw a hunter; wedging doors; the bell rope as a gamble; the lantern can blow out; hidden trust per person, warnings and companions; the ledger keeps notes; no fighting.
 
 ## Pitch
 
@@ -109,7 +110,8 @@ Each night runs from waking at dusk to going to sleep at dawn: a 40–60 minute 
 - Horn lantern: dim and wind-sensitive. Covering it with your cloak hides you but blinds you.
 - The ledger: your record of who came in. The cult tears pages out; comparing it against the guesthouse beds is a core clue.
 - Keys: the porter holds keys to the gate, guesthouse and charnel house. Losing them is a story beat.
-- The bell rope: summons the whole abbey. Useful in a chase, but you don't know whose side arrives.
+- The bell rope: summons the whole abbey. Useful in a chase, but you don't know whose side arrives: a cultist, the prior, or a friend, whoever is nearest and trusts you.
+- The satchel: what you carry (evidence, clean food, a stone to throw). The cult takes it if you're caught.
 
 ## The two layers: dosing and hallucination
 
@@ -235,7 +237,7 @@ A hidden **Suspicion** value (0–100) tracks how much the cult thinks you know.
 
 Each hiding spot has a noise and a check chance. The hunter checks the 2 spots nearest your last-seen position. A spot used twice in one night is checked first. Holding your breath in a spot drains a breath meter; hunger shortens it.
 
-**Getting caught** the first time is not death. You wake in the infirmary with Thomas over you, a fresh dose in you (+40), and something taken or changed: your keys, a page of the ledger, or your friend's trust. The second capture, on any night, kills you and restarts from the last bell.
+**Getting caught** on night 1 or 2 is not death, once. You wake in the infirmary with Thomas over you, a fresh dose in you (+40), and something taken or changed: your keys, a page of the ledger, or your friend's trust. Any other capture (a second one, or any from night 3 on) kills you and restarts from the last bell.
 
 &#91;embedded content: Hunter AI · 5 states\]
 

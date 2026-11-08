@@ -2,7 +2,7 @@
 
 Nov 8, 2026 · from the grilling session with @Pahul
 
-The run builds the whole of The Porter: six nights in order and seven endings, playable from the title screen, with placeholder art and sound. It goes from M8 to M15 without stopping. The story changes it rests on are in the design doc (see its changelog), and the HUD and gore changes are in the Look and Feel. This file holds the run's own spec: deaths and bodies, the rite, the systems, the nights, the endings and the milestones. It ends with a progress log and the decisions for you to review.
+The run builds the whole of The Porter: six nights in order and seven endings, playable from the title screen, with placeholder art and sound. It goes from M8 to M15 without stopping. The story changes it rests on are in the design doc (see its changelog), and the HUD and gore changes are in the Look and Feel. How every mechanic plays (controls, crouching, the satchel, throwing, captures, trust, warnings, companions, the Saint, fire) is in `docs/mechanics.md`; where the two overlap, that file wins on rules and numbers. This file holds the run's own spec: deaths and bodies, the rite, the systems, the nights, the endings and the milestones. It ends with a progress log and the decisions for you to review.
 
 ## The agreement
 
@@ -114,9 +114,9 @@ On night 6 its last victim at Matins is Brother Simon if he lived, otherwise a p
 | System | What it does |
 | --- | --- |
 | Six nights | Each night: dusk, supper, the gate, knocks, Matins, the round, the small hours, dawn, then sleep and a chapter card. Everything carries over: flags, Dose (halved by a day's sleep), Suspicion, keys, the ledger, the count, bodies, blood, locked doors and what each person thinks of you |
-| Saves | At every bell, one slot. Continue on the title screen. Death sends you back to the last bell (the second capture, as now) |
+| Saves | At every bell, one slot. Continue on the title screen. Death sends you back to the last bell |
 | Menus | Title (New Game, Continue, How to Play, Settings, Quit), pause, settings (field of view 60–90°, mouse sensitivity, invert, volume, clock speed off by default). Manuscript style, as the Look and Feel says |
-| Your death | Short and first-person: the hunter is on you, a blade or a cord, the view drops and goes dark, then back to the last bell |
+| Captures and your death | One forgiving capture, on night 1 or 2 only (you wake in the infirmary); every other capture kills. Death is short and first-person: the hunter is on you, a blade or a cord, the view drops and goes dark, then back to the last bell (`docs/mechanics.md`) |
 | Minimal HUD | A thin pale outline on whatever E would use, while you look at it and within reach. A faint glyph above the one person or thing the current duty needs, seen within about 10 m, never during a chase or while hiding. The lit way stays |
 | Deaths | A scripted death node: the victim, the killer, the style (implied, gory, throat), two renders by Dose, a ragdoll body, blood that stays. At Dose 75+ it can be a hallucination that leaves nothing behind |
 | Bodies | Found, reported (Thomas, the prior, no one), moved by the cult, cleaned up after |
@@ -165,13 +165,13 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 
 | Milestone | What | Done when |
 | --- | --- | --- |
-| M8 | The game's frame: six nights in order, carry-over, bell saves and Continue, chapter cards, title, pause and settings menus, your death, the minimal HUD | A test plays a stub of each night from New Game to dawn and back through the title; death and Continue work |
-| M9 | Death and bodies: the death node (three styles, two renders, fakes, ragdoll), blood that stays and gets cleaned, moving bodies, reporting, hidden bodies, the rite's count and the book | Each style plays in a test scene; reporting changes what follows; the count adds up |
-| M10 | The drug and the dark: Dose tiers, hallucination and fake events, scares between chases, jump scares, the cat | Each tier's events fire in a test, fakes leave nothing, and stills by Dose |
-| M11 | Hunters and the abbey: the Suspicion bands, two hunters, locked doors, voices, unmasking; routines and memory; weather; the well; the wine | Each band and each kind of weather tested; routines walk by the hour |
+| M8 | The game's frame: six nights in order, carry-over, bell saves and Continue, chapter cards, title, pause and settings menus, the capture rule and your death, the minimal HUD, crouch, lean, the satchel, the gamepad | A test plays a stub of each night from New Game to dawn and back through the title; death and Continue work |
+| M9 | Death and bodies: the death node (three styles, two renders, fakes, ragdoll), blood that stays and gets cleaned, moving bodies, reporting, hidden bodies, the rite's count and the book, the ledger's notes, being seen | Each style plays in a test scene; reporting changes what follows; the count adds up |
+| M10 | The drug and the dark: Dose tiers (senses only), hallucination and fake events, HUD lies at 75+, incense by the door, clean food, scares between chases, jump scares, the cat | Each tier's events fire in a test, fakes leave nothing, and stills by Dose |
+| M11 | Hunters and the abbey: the Suspicion bands, two hunters, locked doors, voices, unmasking; throwing, wedging, the bell gamble, the lantern in the wind; routines, trust, warnings, companions, lies at the gate; weather; the well; the wine | Each band and each kind of weather tested; routines walk by the hour |
 | M12 | Nights 1 and 2, and night 3 brought into line (the crypt death, Thomas's beats, the rite's page) | Nights 1–3 play in order in one test |
 | M13 | Nights 4 and 5: the fog, Edwin, Osric unmasked, Simon and the blood, the dilemma, the granary, the arrest | Nights 1–5 in order; both sides of the dilemma |
-| M14 | Night 6: the hunt, the Hungry Saint, fire, the crypt, the seven endings and their chronicles | Every ending reached by a scripted route |
+| M14 | Night 6: the hunt, the Hungry Saint, proof, stopping the rite, fire, the crypt, the seven endings and their chronicles | Every ending reached by a scripted route |
 | M15 | Full pass: every route played by tests, fixes, timing, the play guide, the decisions list | "Done when" above, all of it |
 
 ## Risks
