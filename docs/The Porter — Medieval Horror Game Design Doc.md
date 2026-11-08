@@ -20,7 +20,7 @@ First-person, single-player, 6 nights, roughly 4–6 hours.
 
 The whole abbey is one walled square about 80 m across. Every building opens off the cloister, so nothing is more than a minute's walk or about 20 seconds' run away and nothing is out of earshot. It is a Benedictine abbey inside the walls of London, late autumn in the 1420s, with about a dozen brothers. Its gate opens onto a narrow lane of the city: timber houses whose upper floors lean out over the street, an inn opposite the gate, and a lantern hung outside each house on winter nights (the mayor's order of 1415). The gate is an iron grille under a stone porch, so the porter sees each visitor whole in the lantern light before he decides.
 
-Small is the point. The player learns every corner by night 2, so on later nights they notice when something is wrong: a door open that is always shut, a lamp out, a brother where he shouldn't be. With no far-off place to run to, the hunter is always close, and the player can hear him from anywhere. The city is right outside, but the porter bars the gate at sunset: on most nights the street is something you see through the grille and hear over the wall, not somewhere to run. You go out into it only when the story sends you. The abbey guards a relic, the finger bone of a local saint, which draws pilgrims and gives the cult its excuse.
+Small is the point. The player learns every corner by night 2, so on later nights they notice when something is wrong: a door open that is always shut, a lamp out, a brother where he shouldn't be. With no far-off place to run to, the hunter is always close, and the player can hear him from anywhere. The city is right outside. At dusk, while Cole still keeps the gate open, you can step out and talk to whoever is in the lane. Once you take the gate after supper it stays barred: through the night the street is something you see through the grille and hear over the wall, not somewhere to run. You go out into it at night only when the story sends you. The abbey guards a relic, the finger bone of a local saint, which draws pilgrims and gives the cult its excuse.
 
 &#91;embedded content: Abbey layout · 7 areas around the cloister\]
 
@@ -29,7 +29,7 @@ Seven areas inside the walls, and the lane outside the gate, laid out the way re
 | Area | What's in it | Night role | Hiding spots |
 | --- | --- | --- | --- |
 | Outer court | Gate (an iron grille onto the lane), porter's cell, guesthouse, well | Your hub. Visitors, missing guests | Under your cot, the woodpile |
-| The lane (outside the gate) | Timber houses, the inn opposite the gate, two alleys | Visitors come up it to the gate. Seen through the grille and over the wall; walked only when the story sends you out | None |
+| The lane (outside the gate) | Timber houses, the inn opposite the gate, two alleys | Visitors come up it to the gate. Walked at dusk while the gate is open; at night seen through the grille and over the wall, and walked only when the story sends you out | None |
 | Church | Choir, bell tower, crypt and relic underneath | Matins headcount, incense, cult meetings below | Under the altar cloth, inside an open tomb |
 | Cloister | Covered walkway around a garden | Every route crosses it; long sightlines through the arches | Behind pillars (unreliable) |
 | Dormitory (east) | Beds upstairs, chapter house below, night stairs to the church | Empty beds tell you who is out | Under beds |
@@ -65,12 +65,12 @@ You play **Brother Alric**, 19, made porter after the old porter went blind. Eve
 | Brother Thomas, infirmarian | Gentle healer; your first ally. Saves you on night 3 by hiding you in the infirmary. | The cult's leader. Doses the abbey with ergot and henbane. Keeps you alive because the cult needs a porter. | Leader |
 | Brother Ranulf, sacrist | Keeps the relic, candles and incense | Wears the horned costume most nights | Yes |
 | Brother Osric, cellarer | Jolly, feeds you extra bread | Started the killings; handles bodies | Yes |
-| Two lay brothers, Cole and Dunstan | Big, silent labourers | Wear the other two costumes; the "teleporting" demon | Yes |
+| Two lay brothers, Cole and Dunstan | Big, silent labourers. Cole keeps the gate by day while the porter sleeps | Wear the other two costumes; the "teleporting" demon | Yes |
 | Abbot Godric | Frail, kind, fatherly | Not in the cult. Drugged hardest; truly believes in the demon and orders more incense to drive it out | No |
 | Prior Hugh | Harsh, watches you constantly; the obvious suspect | Investigating the deaths. Suspects *you*, the new porter | No |
 | Brother Anselm, old porter | Blind, kept in the infirmary | Let victims in for years; guilty and terrified | Was complicit |
 | Brother Edwin, novice | Your friend and the person you talk to | Dies on night 4 | No |
-| 4 choir brothers | Background faces at Matins | Filler for the headcount; a few can be victims | No |
+| 4 choir brothers | Background faces at Matins | Filler for the headcount; a few can be victims. One warns you on night 1 that something is wrong with the bread, and is the body in the bell tower on night 2 | No |
 
 **Outside the gate**
 
@@ -86,14 +86,14 @@ You play **Brother Alric**, 19, made porter after the old porter went blind. Eve
 
 Each night runs from waking at dusk to going to sleep at dawn: a 40–60 minute shift timed by a candle clock in your cell. The clock burns slowly in real time, and its burn marks are your duties: each is due when the flame reaches its mark, with some slack either side. Talking and exploring cost time, and a duty done very late is noticed.
 
-0. **Waking (dusk).** The porter sleeps through the day while the day porter keeps the gate. He wakes in his cell in the late afternoon and has a few minutes of failing light to look around and talk before the supper bell. Waking is when you notice what changed while you slept.
-1. **Supper (short dusk scene).** Eat with the brothers in the refectory. Bread and ale are served by Osric. You eat the bread until you have found a clue that something is wrong with it; from then on you can palm it instead, and risk being seen. Dialogue here sets up the night.
-2. **Closing the gate.** Bar the gate at sunset. Enter that night's guests in the ledger by name and description.
+0. **Waking (dusk).** The porter sleeps through the day while Cole keeps the gate. He wakes in his cell in the late afternoon. The gate still stands open with Cole at it, so for a few minutes of failing light you can look around, talk to the brothers, or step out into the lane and talk to whoever is there, before the supper bell. Waking is when you notice what changed while you slept.
+1. **Supper (short dusk scene).** Eat with the brothers in the refectory. Bread and ale are served by Osric. You eat the bread until you have found a clue that something is wrong with it; from then on you can palm it instead, and risk being seen. The first clue is a brother's warning on night 1. Dialogue here sets up the night.
+2. **Taking the gate.** After supper you go to the gate and relieve Cole. You close and bar it and keep watch for the night. Enter that night's guests in the ledger by name and description.
 3. **Knocks (2–4 per night).** Talk through the grate. Read the visitor: boots, hands, story, what they carry. Choose: admit to the guesthouse, refuse, or send for the prior. Choices are remembered by the visitor and the cult.
 4. **Matins bell (midnight).** Ring the bell, go to the choir, count the brothers. The incense is lit here. A missing brother is the night's main mystery.
 5. **Lantern round.** Walk a set route through 4–5 areas, checking doors and lamps. This is where bodies, cult activity and chases happen. Optional detours carry clues and risk.
 6. **The small hours.** With the round done, you go back to the gate and wait. You can doze until dawn, but each night's main event interrupts the wait.
-7. **Lauds and dawn.** The night resolves: who is missing, what was moved, who saw you where. A short morning scene shows the abbey's official version of events. The day porter relieves you at the gate and you go to your cell to sleep.
+7. **Lauds and dawn.** The night resolves: who is missing, what was moved, who saw you where. A short morning scene shows the abbey's official version of events. Cole comes to take the gate and you go to your cell to sleep.
 
 **Tools**
 
@@ -246,7 +246,7 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 
 ### Night 1: The new porter
 
-- **Supper:** meet everyone. Osric gives you extra bread. Anselm, blind, grabs your sleeve: "Don't let them in after the bell."
+- **Supper:** meet everyone. Osric gives you extra bread. Anselm, blind, grabs your sleeve: "Don't let them in after the bell." A choir brother tells you quietly not to eat the bread: something is wrong with it. From night 2 you can palm it.
 - **Knocks:** a wealthy merchant-pilgrim (admit him), Walter the pardoner, and a final knock after midnight with no one there. Mab saw nobody. This knock is never explained: it happens even at Dose 0, and no ending accounts for it.
 - **Matins:** count is right. First incense; first whisper.
 - **Round:** tutorial route. A tall horned shape stands still at the far end of the cloister. Look away and it is gone. No chase.
@@ -255,7 +255,7 @@ The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights
 ### Night 2: The bell
 
 - **Knocks:** Joan asks for sanctuary. A sailor who says he is leaving before dark. Roger the bailiff asks if a "merchant" came through.
-- **Matins:** you pull the bell rope and it is heavy (body 2). The count is one short.
+- **Matins:** you pull the bell rope and it is heavy (body 2: the choir brother who warned you about the bread). The count is one short.
 - **Round:** the guesthouse has one more empty bed than your ledger says. A ledger page is gone.
 - **Dawn:** the abbot declares the demon has come and orders more incense. The prior asks where you were.
 
