@@ -33,6 +33,8 @@ const HIDE_SOUND := preload("res://art/sfx/sfx_hide.wav")
 	set(value):
 		size = value
 		_build()
+## What the outline goes on: the prop you hide in.
+@export var outline: Array[Node3D] = []
 
 ## Times used tonight.
 var uses := 0

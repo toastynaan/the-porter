@@ -2,10 +2,13 @@ class_name NightBeat
 extends Node
 ## One beat of a night (design doc, "Night-by-night script"). The director
 ## sets the beat's `phase` and awaits run(). A beat with a `bell` is where the
-## night picks up again after a death sends it back to that bell.
+## night picks up again after a death or a Continue sends it back to that
+## save; with `quiet` the director saves quietly there as the beat starts.
 
 @export var phase := GameState.Phase.SUPPER
 @export var bell := &""
+## Saves quietly as the beat starts (before a designed chase or set piece).
+@export var quiet := false
 ## The duty as the porter's ledger lists it (empty: not a duty, an event).
 @export var duty := ""
 ## When it is due by the candle clock, in hours (-1: no set time).
@@ -36,6 +39,21 @@ func fade_to(alpha: float, seconds: float) -> void:
 	var flow := get_tree().get_first_node_in_group(&"capture_flow") as CaptureFlow
 	if flow:
 		await flow.fade.fade_to(alpha, seconds)
+
+
+## Lies down and sleeps through the day: the screen goes dark, the clock
+## stops, and of the night's Dose only `keeps` is left (docs/full-game-run.md,
+## "Six nights": Dose halved by a day's sleep). Sets night<N>_done.
+func sleep_through_the_day(keeps: float, line: String) -> void:
+	var p := player()
+	p.controls_locked = true
+	await fade_to(1.0, 2.0)
+	GameState.seconds_per_hour = 0.0
+	GameState.dose_floor = 0.0
+	GameState.snap_dose(GameState.dose * keeps)
+	GameState.set_flag(StringName("night%d_done" % GameState.night))
+	if not line.is_empty():
+		await say("", line)
 
 
 func until(condition: Callable) -> void:

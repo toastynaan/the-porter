@@ -1,22 +1,25 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://game/render/main.gd" id="1_main"]
 [ext_resource type="Shader" path="res://game/render/post.gdshader" id="2_post"]
 [ext_resource type="Script" path="res://game/render/dose_driver.gd" id="3_driver"]
 [ext_resource type="Resource" path="res://game/render/dose_look.tres" id="4_look"]
-[ext_resource type="PackedScene" path="res://game/nights/night3.tscn" id="5_abbey"]
 [ext_resource type="Script" path="res://game/ui/interact_dot.gd" id="6_dot"]
 [ext_resource type="Script" path="res://game/debug/debug_keys.gd" id="7_debug"]
 [ext_resource type="Script" path="res://game/flow/screen_fade.gd" id="8_fade"]
 [ext_resource type="Script" path="res://game/flow/capture_flow.gd" id="9_capture"]
 [ext_resource type="Script" path="res://game/ui/ledger_view.gd" id="10_ledger"]
+[ext_resource type="Script" path="res://game/ui/satchel_view.gd" id="11_satchel"]
+[ext_resource type="Script" path="res://game/ui/duty_glyph.gd" id="12_glyph"]
+[ext_resource type="Script" path="res://game/flow/game_flow.gd" id="13_flow"]
+[ext_resource type="Resource" path="res://game/flow/chapters.tres" id="14_chapters"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
 shader = ExtResource("2_post")
 
 [node name="Main" type="Node"]
+editor_description = "The game: the world render, the UI over it, the menus, and the game flow (title, chapters, endings). Set Level to play one level on its own."
 script = ExtResource("1_main")
-level = ExtResource("5_abbey")
 
 [node name="World" type="SubViewport" parent="."]
 audio_listener_enable_3d = true
@@ -51,6 +54,27 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("6_dot")
 
+[node name="DutyGlyph" type="Control" parent="UI" node_paths=PackedStringArray("main")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("12_glyph")
+main = NodePath("../..")
+
+[node name="Satchel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_satchel")
+
 [node name="Ledger" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 15
@@ -78,3 +102,14 @@ main = NodePath("..")
 
 [node name="DebugKeys" type="Node" parent="."]
 script = ExtResource("7_debug")
+
+[node name="Menus" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 5
+
+[node name="Game" type="Node" parent="." node_paths=PackedStringArray("main", "fade", "menus")]
+script = ExtResource("13_flow")
+main = NodePath("..")
+fade = NodePath("../UI/Fade")
+chapters = ExtResource("14_chapters")
+menus = NodePath("../Menus")

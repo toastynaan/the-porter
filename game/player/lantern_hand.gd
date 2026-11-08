@@ -3,7 +3,8 @@ extends Node3D
 ## Holds the lantern low in the left hand, always in view (Look and Feel,
 ## "Camera and player feel"). The hand follows the head's pitch only partly,
 ## the lantern hangs straight down and swings like a pendulum from the hand's
-## movement (its swing is the main motion on screen), and holding
+## movement (its swing is the main motion on screen; much less with the less
+## motion setting), and holding
 ## `cover_lantern` tucks it under the cloak (so does hiding: `force_cover`).
 ## Hunger shakes the hand (Look and Feel, "Hunger": hand tremor on the
 ## lantern); `tremor` adds more for scripted moments.
@@ -77,4 +78,6 @@ func _update_swing(delta: float) -> void:
 	var push := Vector2(a.z, -a.x) / PENDULUM_LENGTH
 	_swing_vel += (-omega2 * _swing - SWING_DAMPING * _swing_vel + push) * delta
 	_swing = (_swing + _swing_vel * delta).clamp(Vector2(-SWING_LIMIT, -SWING_LIMIT), Vector2(SWING_LIMIT, SWING_LIMIT))
+	if Settings.less_motion:
+		_swing = _swing * 0.2
 	pivot.global_basis = yaw * Basis.from_euler(Vector3(_swing.x, 0.0, _swing.y))

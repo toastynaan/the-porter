@@ -12,8 +12,10 @@ signal woke
 
 ## Where a fresh night starts: the porter wakes in the late afternoon.
 @export var start_hour := 16.0
-## Real seconds per in-game hour, awake and dozing.
-@export var seconds_per_hour := 240.0
+## Real seconds per in-game hour, awake and dozing (3 minutes an hour
+## awake: docs/mechanics.md, "Time and duties"; a third less with the
+## faster-clock setting).
+@export var seconds_per_hour := 180.0
 @export var doze_seconds_per_hour := 2.0
 
 var dozing := false
@@ -25,7 +27,12 @@ func _ready() -> void:
 	add_to_group(&"night_clock")
 	if GameState.last_bell.is_empty():
 		GameState.hour = start_hour
-	GameState.seconds_per_hour = seconds_per_hour
+	GameState.seconds_per_hour = awake_pace()
+
+
+## Real seconds per in-game hour awake, with the Settings.
+func awake_pace() -> float:
+	return Settings.clock_pace(seconds_per_hour)
 
 
 func _process(_delta: float) -> void:
@@ -37,7 +44,7 @@ func _process(_delta: float) -> void:
 func set_pace(awake: float, asleep: float) -> void:
 	seconds_per_hour = awake
 	doze_seconds_per_hour = asleep
-	GameState.seconds_per_hour = asleep if dozing else awake
+	GameState.seconds_per_hour = asleep if dozing else awake_pace()
 
 
 func wait_until(hour: float) -> void:
@@ -54,7 +61,7 @@ func doze() -> void:
 func wake() -> void:
 	if dozing:
 		dozing = false
-		GameState.seconds_per_hour = seconds_per_hour
+		GameState.seconds_per_hour = awake_pace()
 		woke.emit()
 
 

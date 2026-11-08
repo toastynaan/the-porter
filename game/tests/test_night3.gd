@@ -38,7 +38,7 @@ func _run() -> void:
 		if _answer[0] >= 0:
 			return _answer[0]
 		return _choices.pop_front() if not _choices.is_empty() else -1
-	var main: Node = load("res://game/render/main.tscn").instantiate()
+	var main: Node = NightPilot.main_with("res://game/nights/night3.tscn")
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
 	_pilot.shorten()

@@ -26,6 +26,9 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_knock_low.wav            a small knock low on the gate
   sfx_chant_loop.wav           voices chanting Matins (loop)
   sfx_bones.wav                a hand closing on bones in ash
+  sfx_death_blade.wav          your death: one quick cut
+  sfx_death_cord.wav           your death: a cord pulled tight
+  sfx_page.wav                 a page turned (the ledger, the satchel, menus)
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -373,6 +376,30 @@ def bones(rng):
     return mix(out, pad(gain(scrape(rng, 0.5), 0.4), 0.05))
 
 
+def death_blade(rng):
+    """A swish, then a wet blow."""
+    n = int(0.6 * RATE)
+    swish = [a * b for a, b in zip(bandpass(noise(n, rng), 2600, 0.9), env(n, 0.05, 0.05))]
+    blow = mix(pad(gain(tone(int(0.3 * RATE), 70, 0.08, rng), 0.9), 0.1),
+               pad([a * b for a, b in zip(lowpass(noise(int(0.3 * RATE), rng), 700), env(int(0.3 * RATE), 0.002, 0.06))], 0.1))
+    return mix(swish, blow)
+
+
+def death_cord(rng):
+    """Rope creaking tight, and a strangled breath."""
+    strain = creak(rng, 1.2)
+    n = int(1.2 * RATE)
+    choke = [a * b for a, b in zip(bandpass(noise(n, rng), 500, 2.0), env(n, 0.3, 0.4))]
+    return mix(strain, gain(choke, 0.7))
+
+
+def page(rng):
+    n = int(0.35 * RATE)
+    rustle = [a * b for a, b in zip(bandpass(noise(n, rng), 3200, 0.6), env(n, 0.04, 0.07))]
+    flap = pad([a * b for a, b in zip(lowpass(noise(int(0.08 * RATE), rng), 900), env(int(0.08 * RATE), 0.001, 0.02))], 0.22)
+    return mix(rustle, gain(flap, 0.6))
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -405,6 +432,12 @@ def main():
     write("sfx_knock_low.wav", knocks(rng, 2, 140, 0.6), peak=0.5)
     write("sfx_chant_loop.wav", chant(rng), peak=0.5)
     write("sfx_bones.wav", bones(rng), peak=0.6)
+    # The full-game run's sounds, each with its own seed so the ones above
+    # never change.
+    run = random.Random(2026)
+    write("sfx_death_blade.wav", death_blade(run), peak=0.9)
+    write("sfx_death_cord.wav", death_cord(run), peak=0.8)
+    write("sfx_page.wav", page(run), peak=0.5)
 
 
 if __name__ == "__main__":

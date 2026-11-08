@@ -1,10 +1,11 @@
 extends Node
-## Getting caught on night 3 (main.tscn and night3.tscn). Starting from the
-## Matins bell, the night picks up in the choir. Caught in the first chase,
-## the porter wakes in the infirmary with Thomas over him and his keys gone,
-## and the night goes on through the small hours to dawn, where he finds them
-## moved. Caught again,
-## the night goes back to Matins, Dose and all, and the captures stay.
+## Getting caught on night 3 (main.tscn and night3.tscn; docs/mechanics.md,
+## "Being hunted"). Starting from the Matins bell, the night picks up in the
+## choir. Through the round, the night saves quietly just before the crypt.
+## Caught in the chase, the porter dies (from night 3 the first capture
+## kills) and the night goes back to that quiet save, not to the bell: the
+## round stays done, Dose and all as it was at the crypt. Caught again, the
+## same. Continue from the title would still start at the Matins bell.
 ## Run: tools/check.sh
 
 const TEST_SAVE := "user://test_night3_caught_save.tres"
@@ -22,6 +23,7 @@ func _ready() -> void:
 func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	# As if the night had come as far as the Matins bell.
+	GameState.set_flag(&"night_started")
 	GameState.set_flag(&"gate_taken")
 	GameState.set_flag(&"gate_barred")
 	GameState.set_flag(&"n3_ate_bread")
@@ -31,44 +33,55 @@ func _run() -> void:
 	GameState.ring_bell(&"matins")
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_options: PackedStringArray) -> int: return 0
-	_main = load("res://game/render/main.tscn").instantiate()
+	_main = NightPilot.main_with("res://game/nights/night3.tscn")
 	add_child(_main)
 	await _start_pilot()
 	var p := _pilot.player
 	_check(_pilot.director().beats_run == [&"Choir"], "a night saved at Matins picks up in the choir")
-	_check(p.global_position.distance_to(_spawn()) < 0.5, "the porter is at the Matins spawn")
+	_check(p.global_position.distance_to(_pilot.mark("matins")) < 0.5, "the porter is at the Matins spawn")
 	var bar: Node3D = _pilot.night.get_node(^"Abbey/Navigation/OuterCourt/Props/GateBar")
 	var gate: AbbeyGate = _pilot.night.get_node(^"AbbeyGate")
 	_check(bar.visible and not gate.is_open() and absf(GameState.hour - 24.0) < 0.01, "the gate is still shut and barred, at midnight")
 
-	# Caught in the first chase: the infirmary, Thomas, the keys gone.
-	await _to_the_chase()
-	await _pilot.until(func() -> bool: return GameState.captures == 1, 10.0)
-	_check(GameState.captures == 1 and GameState.keys.is_empty(), "caught: the first capture takes his keys")
-	await _pilot.until(func() -> bool: return _pilot.beat() == &"SmallHours", 20.0)
-	var thomas: Brother = _pilot.night.get_node(^"Brothers/Thomas")
-	_check(GameState.has_flag(&"n3_caught") and GameState.has_flag(&"woke_in_infirmary") and thomas.visible,
-		"he wakes in the infirmary with Thomas over him, and the night goes on")
-	await _pilot.see_out_the_night()
-	_check(GameState.keys.size() == 3 and GameState.has_flag(&"night3_done"), "at dawn he finds his keys, moved, and sleeps")
+	# Through the round to the crypt: a quiet save just before it.
+	await _pilot.count_brothers()
+	await _pilot.walk_round()
+	await _pilot.until(func() -> bool: return _pilot.beat() == &"Crypt", 5.0)
+	_check(GameState.has_quiet_save() and GameState.has_flag(&"n3_round"), "the night saves quietly before the crypt")
+	var crypt_dose := GameState.dose
 
-	# The night again from Matins; caught a second time, it starts over there.
-	GameState.load_last_bell()
+	# Caught in the chase: on night 3 the first capture kills.
+	var flow: CaptureFlow = _main.get_node(^"CaptureFlow")
+	var died := [0]
+	flow.died.connect(func() -> void: died[0] += 1)
+	var level := _level_id()
+	await _pilot.go_down_to_crypt()
+	await _pilot.until(func() -> bool: return _level_id() != level and not flow.busy, 30.0)
+	_check(died[0] == 1 and GameState.captures == 1 and not GameState.has_flag(&"woke_in_infirmary"),
+		"caught on night 3: the first capture kills, no infirmary")
+	_check(flow.last_cause == &"cord", "a cord from behind (%s)" % flow.last_cause)
+	await _start_pilot()
+	_check(_pilot.director().beats_run == [&"Crypt"] and _pilot.player.global_position.distance_to(_pilot.mark("crypt")) < 0.5,
+		"back at the quiet save before the crypt, not the Matins bell (%s)" % [_pilot.director().beats_run])
+	_check(GameState.has_flag(&"n3_round") and GameState.has_flag(&"n3_headcount") and absf(GameState.dose - crypt_dose) < 1.0,
+		"with the night as it was there: the round done, Dose %.1f" % GameState.dose)
+
+	# Caught again: the same quiet save.
+	level = _level_id()
+	await _pilot.go_down_to_crypt()
+	await _pilot.until(func() -> bool: return _level_id() != level and not flow.busy, 30.0)
+	await _start_pilot()
+	_check(died[0] == 2 and _pilot.director().beats_run == [&"Crypt"], "caught again: back before the crypt again")
+
+	# Continue loads the bell, not the quiet save.
+	_check(GameState.load_last_bell() and GameState.last_bell == &"matins", "Continue would start at the Matins bell")
 	_main.call(&"reload_level")
 	await _start_pilot()
-	_check(_pilot.director().beats_run == [&"Choir"] and GameState.captures == 1, "back at Matins with one capture")
-	await _to_the_chase()
-	var level := _level_id()
-	var flow: CaptureFlow = _main.get_node(^"CaptureFlow")
-	await _pilot.until(func() -> bool: return _level_id() != level and not flow.busy, 30.0)
-	_check(_level_id() != level and GameState.captures == 2, "the second capture kills; the night goes back to its bell")
-	await _start_pilot()
-	_check(_pilot.director().beats_run == [&"Choir"] and _pilot.player.global_position.distance_to(_spawn()) < 0.5,
-		"in the choir again, from the Matins bell")
-	_check(absf(GameState.dose - MATINS_DOSE) < 0.5 and not GameState.has_flag(&"n3_caught"),
-		"with the night as it was at the bell (Dose %.1f)" % GameState.dose)
+	_check(_pilot.director().beats_run == [&"Choir"] and absf(GameState.dose - MATINS_DOSE) < 0.5,
+		"in the choir, Dose as at the bell (%.1f)" % GameState.dose)
 
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE))
+	for path in [TEST_SAVE, GameState.quiet_path()]:
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	Talk.auto_choice = Callable()
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))
 	get_tree().quit(0 if _fails == 0 else 1)
@@ -78,17 +91,6 @@ func _start_pilot() -> void:
 	_pilot = NightPilot.new(_main.get(&"current_level"), _check)
 	_pilot.shorten()
 	await _pilot.frames(5)
-
-
-## Through Matins and the round, down to the crypt, and stands in the light.
-func _to_the_chase() -> void:
-	await _pilot.count_brothers()
-	await _pilot.walk_round()
-	await _pilot.go_down_to_crypt()
-
-
-func _spawn() -> Vector3:
-	return _pilot.mark("matins")
 
 
 func _level_id() -> int:

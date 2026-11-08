@@ -1,10 +1,11 @@
 class_name HunterSenses
 extends Node3D
 ## The hunter's eyes and ears, at eye height (design doc, "The hunter is a
-## man": he needs light to see you). Within his 100° view he sees the porter
-## out to LIT_RANGE when the porter is lit (lantern uncovered, or standing in
-## a candle's light), and only within DARK_RANGE when he isn't. Never in a
-## hiding spot. Noticing takes a moment, longer the further away; once he is
+## man": he needs light to see you). Within his 100° view he sees the porter's
+## head or chest (Player.sight_points: a leaning head shows past a corner, a
+## crouched porter hides behind anything 1 m high) out to LIT_RANGE when the
+## porter is lit (lantern uncovered, or standing in a candle's light), and
+## only within DARK_RANGE when he isn't. Never in a hiding spot. Noticing takes a moment, longer the further away; once he is
 ## `focused` (chasing) it is instant.
 ##
 ## He hears every Noise within its radius, half that through a wall, double
@@ -64,7 +65,9 @@ func _physics_process(delta: float) -> void:
 func can_see(player: Player) -> bool:
 	if player.hiding:
 		return false
-	var eye := player.camera.global_position
+	# His head (aside, if he leans; low, if he crouches) and his chest.
+	var points := player.sight_points()
+	var eye := points[0]
 	var d := global_position.distance_to(eye)
 	if d > (LIT_RANGE if is_lit(player) else DARK_RANGE):
 		return false
@@ -72,8 +75,7 @@ func can_see(player: Player) -> bool:
 	var to := eye - global_position
 	if d > 1.0 and rad_to_deg(Vector3(forward.x, 0, forward.z).angle_to(Vector3(to.x, 0, to.z))) > FOV * 0.5:
 		return false
-	var chest := player.global_position + Vector3.UP * 1.1
-	return ViewCheck.clear(self, global_position, eye) or ViewCheck.clear(self, global_position, chest)
+	return points.any(func(p: Vector3) -> bool: return ViewCheck.clear(self, global_position, p))
 
 
 ## Lit: his lantern is uncovered, or a lit candle is close enough to show him.

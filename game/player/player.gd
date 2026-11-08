@@ -6,13 +6,19 @@ extends CharacterBody3D
 ## while `look_back` is held. The lantern, interaction, footsteps, breath and
 ## body sounds are child nodes.
 ##
+## He crouches (`crouch`, held or toggled: 0.8 m/s, eyes at 1.0 m, no
+## running, steps heard at half range, hidden behind anything 1 m high) and
+## leans (`lean_left`, `lean_right`: the view moves 0.4 m aside and tilts
+## 10°, and a hunter can see the leaning head). Look follows the mouse or the
+## right stick at the Settings sensitivity (docs/mechanics.md, "Your body").
+##
 ## He crawls through squeezes (crawl_along), hides in hiding spots (hide_in,
 ## then `interact` to climb out), and stumbles when he stares at the demon
 ## too long. `controls_locked` takes his body away (a capture, a cutscene).
 ## Talking to someone (start_talk, from Talk) he stands still, his view eased
 ## in on their face and held near it; a move key walks him away.
 ##
-## Esc frees the mouse; a click captures it again.
+## The pause menu frees the mouse (Esc); a click captures it again.
 
 signal stepped(surface: String, running: bool)
 signal hid(spot: HidingSpot)
@@ -22,7 +28,19 @@ signal walked_away
 
 const WALK_SPEED := 1.4
 const RUN_SPEED := 4.0
+const CROUCH_SPEED := 0.8
 const EYE_HEIGHT := 1.6
+## Crouched: eyes at 1.0 m, the body 1.15 m tall; seconds to crouch or stand.
+const CROUCH_EYE := 1.0
+const CROUCH_BODY := 1.15
+const STAND_BODY := 1.75
+const CROUCH_TIME := 0.25
+## Leaning: the view moves this far aside and tilts this much; seconds to lean.
+const LEAN_OFFSET := 0.4
+const LEAN_TILT := 10.0
+const LEAN_TIME := 0.2
+## Kept clear of a wall when leaning toward it, m.
+const LEAN_CLEARANCE := 0.15
 ## m/s^2 speeding up and slowing down: a heavy habit, not a soldier.
 const ACCEL := 8.0
 const DECEL := 10.0
@@ -35,8 +53,9 @@ const STRIDE_WALK := 0.7
 const STRIDE_RUN := 1.4
 const LOOK_BACK_ANGLE := 150.0
 const LOOK_BACK_TIME := 0.25
-## Radians per pixel of mouse movement.
+## Radians per pixel of mouse movement, and per second at full stick.
 const MOUSE_SENSITIVITY := 0.0022
+const STICK_SPEED := 2.6
 const PITCH_LIMIT := 85.0
 ## Seconds to climb into or out of a hiding spot.
 const HIDE_TIME := 0.7
@@ -51,6 +70,14 @@ var use_input_override := false
 var run_override := false
 
 var running := false
+var crouching := false
+## 0 standing to 1 crouched, eased.
+var crouch_amount := 0.0
+## -1 leaning left to 1 right, eased.
+var lean := 0.0
+## Tests and scripted moments: crouch and lean without the keys.
+var crouch_override := false
+var lean_override := 0.0
 var crawling := false
 var stumbling := false
 var controls_locked := false
@@ -107,16 +134,32 @@ func busy() -> bool:
 func _unhandled_input(event: InputEvent) -> void:
 	var motion := event as InputEventMouseMotion
 	if motion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		if not (controls_locked or stumbling or _hide_moving or _talk_turning):
-			_look(motion.relative * MOUSE_SENSITIVITY)
+		if _can_look():
+			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
 	elif event.is_action_pressed(&"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif event is InputEventMouseButton and event.is_pressed() and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+	elif event.is_action_pressed(&"crouch") and Settings.crouch_toggle:
+		crouch_override = not crouch_override
+	elif event is InputEventMouseButton and event.is_pressed() and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED \
+			and not get_tree().paused and DisplayServer.get_name() != "headless":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		get_viewport().set_input_as_handled()
+
+
+func _can_look() -> bool:
+	return not (controls_locked or stumbling or _hide_moving or _talk_turning)
+
+
+## Mouse or stick movement (radians) at the Settings sensitivity and invert.
+func _turn(raw: Vector2) -> Vector2:
+	return Vector2(raw.x, -raw.y if Settings.invert_look else raw.y) * Settings.sensitivity
+
+
+func _process(delta: float) -> void:
+	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+	if stick.length() > 0.0 and _can_look():
+		_look(_turn(stick * STICK_SPEED * delta))
 
 
 func _look(turn: Vector2) -> void:
@@ -150,12 +193,14 @@ func _physics_process(delta: float) -> void:
 		input = input_override if use_input_override else Input.get_vector(
 			&"move_left", &"move_right", &"move_back", &"move_forward")
 		run_held = run_override if use_input_override else Input.is_action_pressed(&"run")
-	running = run_held and input.length() > 0.1 and stamina.can_run()
+	_update_crouch(delta)
+	running = run_held and input.length() > 0.1 and stamina.can_run() and not crouching
 	stamina.update(running, delta)
+	_update_lean(delta)
 	var wish := global_basis * Vector3(input.x, 0.0, -input.y)
 	wish.y = 0.0
 	wish = wish.limit_length(1.0)
-	var target := wish * (RUN_SPEED if running else WALK_SPEED)
+	var target := wish * (RUN_SPEED if running else (CROUCH_SPEED if crouching else WALK_SPEED))
 	var flat := Vector3(velocity.x, 0.0, velocity.z)
 	var rate := ACCEL if target.length() > flat.length() else DECEL
 	flat = flat.move_toward(target, rate * delta)
@@ -166,6 +211,65 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_read_floor()
 	_update_bob(delta)
+
+
+## Crouches while `crouch` is held (or toggled, by the Settings), and stands
+## again once there is headroom.
+func _update_crouch(delta: float) -> void:
+	var want := crouch_override if (Settings.crouch_toggle or use_input_override) else (
+		Input.is_action_pressed(&"crouch") or crouch_override)
+	if controls_locked:
+		want = crouching
+	if not want and crouching and not _headroom():
+		want = true
+	crouching = want
+	crouch_amount = move_toward(crouch_amount, 1.0 if crouching else 0.0, delta / CROUCH_TIME)
+	var capsule := _collision.shape as CapsuleShape3D
+	var height := lerpf(STAND_BODY, CROUCH_BODY, crouch_amount)
+	if not is_equal_approx(capsule.height, height):
+		capsule.height = height
+		_collision.position.y = height * 0.5
+
+
+## Room to stand up: nothing solid over his head.
+func _headroom() -> bool:
+	var from := global_position + Vector3.UP * (CROUCH_BODY - 0.05)
+	var query := PhysicsRayQueryParameters3D.create(from, global_position + Vector3.UP * (STAND_BODY + 0.05), Layers.WORLD | Layers.DOOR)
+	query.exclude = [get_rid()]
+	return get_world_3d().direct_space_state.intersect_ray(query).is_empty()
+
+
+## Leans while a lean key is held, not running, short of any wall.
+func _update_lean(delta: float) -> void:
+	var want := lean_override
+	if not use_input_override:
+		want += Input.get_axis(&"lean_left", &"lean_right")
+	if running or controls_locked or stumbling:
+		want = 0.0
+	want = clampf(want, -1.0, 1.0)
+	if not is_zero_approx(want):
+		var side := global_basis.x * signf(want)
+		var eye := global_position + Vector3.UP * _stand_eye()
+		var query := PhysicsRayQueryParameters3D.create(eye, eye + side * (LEAN_OFFSET + LEAN_CLEARANCE), Layers.WORLD | Layers.DOOR)
+		query.exclude = [get_rid()]
+		var hit := get_world_3d().direct_space_state.intersect_ray(query)
+		if not hit.is_empty():
+			var room := maxf(eye.distance_to(hit["position"]) - LEAN_CLEARANCE, 0.0)
+			want = signf(want) * minf(absf(want), room / LEAN_OFFSET)
+	lean = move_toward(lean, want, delta / LEAN_TIME)
+
+
+## Eye height standing or crouched (not hiding).
+func _stand_eye() -> float:
+	return lerpf(_eye, CROUCH_EYE, crouch_amount) if _eye > CROUCH_EYE else _eye
+
+
+## Where a hunter looks for him: his head (moved aside when he leans) and his
+## chest. Crouched, the head is the top of his back, below a 1 m stall.
+func sight_points() -> Array[Vector3]:
+	var head_at := camera.global_position - Vector3.UP * 0.12 * crouch_amount
+	var chest := global_position + Vector3.UP * lerpf(1.1, 0.55, crouch_amount)
+	return [head_at, chest]
 
 
 ## Holds his view on `at` (someone's face): he turns to it and his view
@@ -304,13 +408,14 @@ func stumble(seconds: float) -> void:
 	if busy():
 		return
 	stumbling = true
-	# A step back.
+	# A step back. Less motion: half the tip and the drop.
+	var k := 0.5 if Settings.less_motion else 1.0
 	velocity = global_basis.z * 1.2
 	var tween := create_tween().set_trans(Tween.TRANS_SINE)
 	tween.set_parallel()
-	tween.tween_property(head, ^"rotation:z", 0.35, seconds * 0.3).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, ^"_eye", EYE_HEIGHT - 0.5, seconds * 0.3).set_ease(Tween.EASE_OUT)
-	tween.tween_property(head, ^"rotation:x", deg_to_rad(-25.0), seconds * 0.3)
+	tween.tween_property(head, ^"rotation:z", 0.35 * k, seconds * 0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, ^"_eye", EYE_HEIGHT - 0.5 * k, seconds * 0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(head, ^"rotation:x", deg_to_rad(-25.0 * k), seconds * 0.3)
 	tween.chain().tween_property(head, ^"rotation:z", 0.0, seconds * 0.7).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, ^"_eye", EYE_HEIGHT, seconds * 0.7).set_ease(Tween.EASE_IN_OUT)
 	tween.chain().tween_callback(func() -> void: stumbling = false)
@@ -321,6 +426,17 @@ func lie_down() -> void:
 	_eye = 0.7
 	head.position = Vector3(0.0, _eye, 0.0)
 	head.rotation = Vector3(deg_to_rad(60.0), 0.0, 0.0)
+
+
+## Falls dead: the view drops to the floor and rolls; await it.
+func fall_dead(seconds: float) -> void:
+	velocity = Vector3.ZERO
+	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, ^"_eye", 0.25, seconds)
+	tween.tween_property(head, ^"position:y", 0.25, seconds)
+	tween.tween_property(head, ^"rotation:z", deg_to_rad(80.0), seconds)
+	tween.tween_property(head, ^"rotation:x", deg_to_rad(-10.0), seconds)
+	await tween.finished
 
 
 ## Gets up from lying over `seconds`; await it.
@@ -339,6 +455,7 @@ func place(at: Vector3, yaw: float) -> void:
 	velocity = Vector3.ZERO
 	rotation = Vector3(0.0, yaw, 0.0)
 	head.rotation = Vector3.ZERO
+	lean = 0.0
 	_eye = EYE_HEIGHT
 	head.position = Vector3(0.0, EYE_HEIGHT, 0.0)
 
@@ -357,17 +474,22 @@ func _update_bob(delta: float) -> void:
 	var speed := Vector2(velocity.x, velocity.z).length() if is_on_floor() else 0.0
 	var t := clampf((speed - WALK_SPEED) / (RUN_SPEED - WALK_SPEED), 0.0, 1.0)
 	var target_amp := lerpf(BOB_WALK, BOB_RUN, t) * minf(speed / WALK_SPEED, 1.0)
+	if Settings.less_motion:
+		target_amp = 0.0
 	_bob_amp = move_toward(_bob_amp, target_amp, delta * 0.2)
 	var stride := lerpf(STRIDE_WALK, STRIDE_RUN, t)
 	var before := floori(_bob_phase / PI)
 	_bob_phase += speed * delta / stride * PI
 	if floori(_bob_phase / PI) != before and speed > 0.3:
 		stepped.emit(floor_surface, running)
-	# The head dips once per step and sways once per two.
+	# The head dips once per step and sways once per two; crouching lowers
+	# it, leaning moves it aside and tilts it.
 	head.position = Vector3(
-		_bob_amp * 0.5 * sin(_bob_phase),
-		_eye - _bob_amp * (1.0 - cos(2.0 * _bob_phase)) * 0.5,
+		_bob_amp * 0.5 * sin(_bob_phase) + LEAN_OFFSET * lean,
+		_stand_eye() - _bob_amp * (1.0 - cos(2.0 * _bob_phase)) * 0.5,
 		0.0)
+	if not stumbling:
+		head.rotation.z = -deg_to_rad(LEAN_TILT) * lean
 
 
 func _update_look_back(delta: float) -> void:

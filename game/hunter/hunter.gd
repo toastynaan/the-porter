@@ -66,6 +66,9 @@ const FREEZE_TIME := 0.5
 ## The night's designed chase searches whatever the Suspicion.
 @export var always_search := false
 @export var dormant := false
+## How he kills the porter when he takes hold of him (CaptureFlow.die):
+## "cord" or "blade".
+@export var weapon := &"cord"
 
 ## Shown but still, senses or not, until chase() or alert().
 var waiting := false

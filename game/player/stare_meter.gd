@@ -22,15 +22,12 @@ const RING := preload("res://art/sfx/sfx_ring_loop.wav")
 var value := 0.0
 
 var _full := 0.0
-var _base_fov := 70.0
 var _ring: AudioStreamPlayer
 
 @onready var _player: Player = owner
 
 
 func _ready() -> void:
-	# The player's own @onready references aren't set yet.
-	_base_fov = (_player.get_node(^"Head/LookBack/Camera") as Camera3D).fov
 	_ring = AudioStreamPlayer.new()
 	_ring.stream = AudioOut.looped(RING)
 	_ring.volume_db = -80.0
@@ -47,7 +44,7 @@ func _physics_process(delta: float) -> void:
 			_player.stumble(STUMBLE_TIME)
 	else:
 		_full = 0.0
-	_player.camera.fov = _base_fov - FOV_DROP * value - _player.zoom
+	_player.camera.fov = Settings.fov - FOV_DROP * value - _player.zoom
 	_player.lantern.stare = value
 	get_tree().set_group(&"dose_driver", &"stare", value)
 	if AudioOut.enabled():

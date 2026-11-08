@@ -10,20 +10,20 @@ var _tree: SceneTree
 var _check: Callable
 
 
-## A night that hasn't started: no bell rung, nothing done, saves to `save_path`.
+## A night that hasn't started: no bell rung, nothing done, saves to
+## `save_path`, played on its own (no chapter, nothing carried).
 static func fresh_night(save_path: String) -> void:
 	GameState.save_path = save_path
-	GameState.last_bell = &""
-	GameState.captures = 0
-	GameState.suspicion = 0
-	GameState.flags = {}
-	GameState.keys = [&"gate", &"guesthouse", &"charnel"]
-	GameState.ledger = []
-	GameState.dose_floor = 0.0
-	GameState.seconds_per_hour = 0.0
-	GameState.hour = 0.0
-	GameState.snap_dose(0.0)
+	GameState.new_game()
+	GameState.night = 3
 	GameState.phase = GameState.Phase.DUSK
+
+
+## main.tscn with `level` to play on its own (no title).
+static func main_with(level_path: String) -> Node:
+	var main: Node = load("res://game/render/main.tscn").instantiate()
+	main.set(&"level", load(level_path))
+	return main
 
 
 ## `check` is the test's func(ok: bool, what: String).
@@ -35,12 +35,17 @@ func _init(night_root: Node, check: Callable) -> void:
 
 
 func director() -> NightDirector:
-	return night.get_node(^"Director") as NightDirector
+	return night.get_node(^"Director") as NightDirector if is_instance_valid(night) else null
 
 
 func beat() -> StringName:
 	var d := director()
-	return d.current.name if d.current else &""
+	return d.current.name if d and d.current else &""
+
+
+## The night is over: its director has finished, or the game has moved on.
+func over() -> bool:
+	return director() == null or director().current == null
 
 
 func duty(path: String) -> Duty:
@@ -116,7 +121,70 @@ func see_out_the_night() -> void:
 	player.place(mark("DawnCell"), 0.0)
 	await use("KeysMoved")
 	await use("Sleep")
-	await until(func() -> bool: return GameState.has_flag(&"night3_done"), 10.0)
+	await until(func() -> bool: return GameState.has_flag(&"night3_done") or not is_instance_valid(night), 10.0)
+
+## A stub night (M8): wakes, lets the night go by, and sleeps at the cot.
+func play_stub() -> void:
+	await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
+	skip_to(17.25)
+	await until(func() -> bool: return beat() == &"Sleep", 20.0)
+	await use("Sleep")
+	await until(over, 10.0)
+
+
+## Night 3 from waking to sleep, as test_night3 plays it but without its
+## checks: eats, takes the remedy, admits Walter, rings Matins, counts the
+## brothers, walks the round, goes down to the crypt, hides in the oven and
+## holds his breath, is pulled away by Thomas, dozes to Lauds and sleeps.
+## `answer` is the Array the test's Talk.auto_choice reads.
+func play_night3(answer: Array) -> void:
+	await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
+	skip_to(17.5)
+	await until(func() -> bool: return beat() == &"Supper", 5.0)
+	player.place(mark("PorterSeat") + Vector3(0, 0, 0.6), PI)
+	await use("SupperSeat")
+	await until(func() -> bool: return duty("Bread").enabled, 10.0)
+	duty("Bread").interact(player)
+	await until(func() -> bool: return duty("RelieveCole").enabled, 20.0)
+	player.place(Vector3(-36.5, 0.05, -2), deg_to_rad(90.0))
+	await use("RelieveCole")
+	await use("ShutGate")
+	await until(func() -> bool: return not (night.get_node(^"AbbeyGate") as AbbeyGate).is_open(), 3.0)
+	await use("BarGate")
+	await use("Ledger")
+	await until(func() -> bool: return beat() == &"Knocks", 5.0)
+	await doze()
+	await keep_gate(0, [], answer)
+	if GameState.dose >= 50.0:
+		await until(func() -> bool: return duty("Grate").enabled, 30.0)
+		await wake()
+		await use("Grate")
+	await until(func() -> bool: return beat() == &"Bell", 60.0)
+	await doze()
+	await wake()
+	player.place(Vector3(-24, 0.05, -30.8), 0.0)
+	await use("BellRope")
+	await until(func() -> bool: return beat() == &"Choir", 5.0)
+	await count_brothers()
+	await walk_round()
+	await go_down_to_crypt()
+	await until(func() -> bool: return beat() == &"Chase", 3.0)
+	var oven: HidingSpot = night.get_node(^"Abbey/Navigation/SouthRange/HidingSpots/Oven")
+	var hunter: Hunter = night.get_node(^"Hunter")
+	player.place(oven.exit.global_position, deg_to_rad(90.0))
+	player.hide_in(oven)
+	var checked := []
+	oven.checked.connect(func(found: bool) -> void: checked.append(found))
+	await until(func() -> bool: return hunter.global_position.distance_to(oven.view.global_position) < 8.0, 60.0)
+	Input.action_press(&"hold_breath")
+	await until(func() -> bool: return not checked.is_empty(), 12.0)
+	await until(func() -> bool: return hunter.global_position.distance_to(oven.view.global_position) > 4.0 or hunter.state == Hunter.State.PATROL, 8.0)
+	Input.action_release(&"hold_breath")
+	player.leave_hiding()
+	await until(func() -> bool: return GameState.has_flag(&"n3_thomas_hid_you"), 10.0)
+	await see_out_the_night()
+	await until(over, 10.0)
+
 
 ## Answers the visitor's knock at the grille, looks at his `read` parts while
 ## the choice is open, then answers `pick` (0 admit, 1 turn away, 2 the

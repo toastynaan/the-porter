@@ -56,11 +56,4 @@ func run() -> void:
 	GameState.set_flag(&"n3_keys_moved")
 	await say("", "(Your keys. Someone has moved them.)")
 	await sleep.wait_for_use()
-	p.controls_locked = true
-	await fade_to(1.0, 2.0)
-	GameState.seconds_per_hour = 0.0
-	GameState.dose_floor = 0.0
-	GameState.snap_dose(GameState.dose * sleep_keeps)
-	GameState.set_flag(&"night3_done")
-	await say("", "(You sleep through the day.)")
-	await say("", "(End of night 3.)")
+	await sleep_through_the_day(sleep_keeps, "(You sleep through the day.)")

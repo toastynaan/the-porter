@@ -397,3 +397,13 @@ The mechanics I chose because the grilling didn't settle them:
 - The rules for saving people, and the night-4 break (copied keys).
 - Where the scripted gusts are, and which moment the HUD lies.
 - Chapter select gives a typical state for each night.
+
+Added during the run (M8, `docs/frame.md`):
+- Looking with the right stick: 2.6 rad/s at full tilt, times the sensitivity setting.
+- Crouching: the body is 1.15 m tall and it takes 0.25 s; he stands again only with headroom. A hunter looks for the top of his back (0.12 m under his eyes) and his chest (0.55 m), so a 1 m stall hides him from any distance.
+- Leaning takes 0.2 s, not while running, and stops 0.15 m short of a wall.
+- The faster clock runs 2 minutes an in-game hour (the night's own pace is 3).
+- Your death: a cord unless the hunter carries a blade (all of them do for now); the cord pulls the head up and back and shakes it; the blade is a dark-red flash; the view drops and rolls over 0.7 s, then 2 s of black.
+- The outline is about 2 render pixels thick at any distance, pale parchment at 60%; the glyph is lantern-coloured at about 40%.
+- Hunters and visitors don't collide with door leaves; they stop at shut doors and turn back at locked ones by rule.
+- The chapter card goes on by itself after 14 s if you press nothing.

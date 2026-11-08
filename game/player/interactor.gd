@@ -1,9 +1,9 @@
 class_name Interactor
 extends RayCast3D
 ## What the porter can reach: the first thing along the view within REACH
-## whose node, or an ancestor, has interact(by). The interact dot shows when
-## something is in reach; `interact` uses it, and `lock` turns a key in it
-## (toggle_lock(by)) when it has a lock.
+## whose node, or an ancestor, has interact(by). What is in reach gets the
+## thin pale outline (Outline); `interact` uses it, and `lock` turns a key in
+## it (toggle_lock(by)) when it has a lock.
 
 signal focus_changed(target: Node)
 
@@ -27,8 +27,14 @@ func _physics_process(_delta: float) -> void:
 	if is_colliding() and not _player.busy():
 		target = _interactable(get_collider() as Node)
 	if target != focused:
+		Outline.set_on(focused, false)
 		focused = target
+		Outline.set_on(focused, true)
 		focus_changed.emit(focused)
+
+
+func _exit_tree() -> void:
+	Outline.set_on(focused, false)
 
 
 func _unhandled_input(event: InputEvent) -> void:

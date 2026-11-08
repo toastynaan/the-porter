@@ -7,9 +7,12 @@ extends Area3D
 ## enabled it awaits that. Disabled, the view ray passes through it. The box
 ## (`size`) stands on the origin.
 ##
-## There is no HUD, so the world shows the way: while it is wanted its
-## `lamp` burns (put out again after unless `keep_lit`), and the doors on the
-## way to it from the porter stand open with a lamp over each (Wayfinding).
+## The world shows the way: while it is wanted its `lamp` burns (put out
+## again after unless `keep_lit`), and the doors on the way to it from the
+## porter stand open with a lamp over each (Wayfinding). The almost-no HUD
+## adds two quiet marks (docs/mechanics.md, "The minimal HUD"): the outline
+## on `outline` (the prop it stands for) while he looks at it in reach, and
+## the faint duty glyph over it while it is wanted (group "glyph_targets").
 
 signal used(by: Node)
 
@@ -30,6 +33,10 @@ signal used(by: Node)
 @export var keep_lit := false
 ## Lights the way to it when it becomes wanted.
 @export var open_way := true
+## What the outline goes on: the prop the duty stands for (its own meshes if empty).
+@export var outline: Array[Node3D] = []
+## Height of the duty glyph over the origin, m (below 0: just over the box).
+@export var glyph_height := -1.0
 
 var _way: Array[Node3D] = []
 
@@ -58,11 +65,20 @@ func _build() -> void:
 
 
 func _show_way(wanted: bool) -> void:
+	if wanted:
+		add_to_group(&"glyph_targets")
+	else:
+		remove_from_group(&"glyph_targets")
 	if lamp:
 		lamp.lit = wanted or keep_lit
 	Wayfinding.put_out(_way)
 	if wanted and open_way:
 		_way = Wayfinding.show_way(self, global_position)
+
+
+## Where the duty glyph floats.
+func glyph_point() -> Vector3:
+	return global_position + Vector3.UP * (glyph_height if glyph_height >= 0.0 else size.y + 0.15)
 
 
 func interact(by: Node) -> void:

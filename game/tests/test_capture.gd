@@ -1,9 +1,12 @@
 extends Node
-## Getting caught, through the whole game (main.tscn with the hunt demo): a
-## level rings the "start" bell; the first capture wakes you in the
-## infirmary with +40 Dose and the hunter back on his round; the second
-## kills you and restarts the night from the bell, Dose and all, at the
-## bell's spawn; a restart never undoes a capture, so the next one kills too.
+## Getting caught, through the whole game (main.tscn with the hunt demo;
+## docs/mechanics.md, "Being hunted"): a level rings the "start" bell. On
+## night 1 the first capture wakes you in the infirmary with +40 Dose, the
+## satchel emptied but the keys kept, and the hunter back on his round; the
+## second kills you and restarts the night from the bell, Dose and all, at
+## the bell's spawn; a restart never undoes a capture, so the next one kills
+## too. On night 3 the first capture kills. A quiet save after the bell is
+## where death goes back to, until the next bell clears it.
 ## Run: tools/check.sh
 
 const TEST_SAVE := "user://test_capture_save.tres"
@@ -20,8 +23,9 @@ func _ready() -> void:
 
 func _run() -> void:
 	GameState.save_path = TEST_SAVE
-	GameState.last_bell = &""
-	GameState.captures = 0
+	GameState.new_game()
+	GameState.night = 1
+	GameState.satchel.assign([&"apple", &"mask"])
 	GameState.snap_dose(10.0)
 	_main = load("res://game/render/main.tscn").instantiate()
 	_main.level = load("res://game/encounters/hunt_demo.tscn")
@@ -46,6 +50,7 @@ func _run() -> void:
 	await _seconds(4.0)
 	_check(GameState.dose > 49.0, "with a fresh dose in him (%.1f, was 10)" % GameState.dose)
 	_check(GameState.get_flag(&"woke_in_infirmary") == true, "the night remembers it")
+	_check(GameState.satchel.is_empty() and GameState.keys.size() == 3, "the cult took the satchel, but not the keys")
 	var hunter := _hunter()
 	_check(hunter.state == Hunter.State.PATROL and hunter.global_position.distance_to(_player().global_position) > 15.0,
 		"the hunter is back on his round, far off")
@@ -72,6 +77,29 @@ func _run() -> void:
 	await _caught_in_the_cloister()
 	await _until(func() -> bool: return _level_id() != level and not _flow.busy, 15.0)
 	_check(_level_id() != level and GameState.captures == 3, "every capture after that kills")
+
+	# Night 3: the first capture kills.
+	GameState.night = 3
+	GameState.captures = 0
+	_check(not CaptureFlow.forgiving(), "from night 3 no capture is forgiving")
+	level = _level_id()
+	var woke_before: bool = woke[0]
+	woke[0] = false
+	await _caught_in_the_cloister()
+	await _until(func() -> bool: return _level_id() != level and not _flow.busy, 15.0)
+	_check(_level_id() != level and not woke[0] and woke_before, "on night 3 the first capture kills")
+
+	# A quiet save after the bell: death goes back to it, until a bell.
+	_quiet_demon()
+	await _frames(10)
+	GameState.snap_dose(33.0)
+	_check(GameState.quiet_save(&"start") and GameState.has_quiet_save(), "a quiet save")
+	level = _level_id()
+	await _caught_in_the_cloister()
+	await _until(func() -> bool: return _level_id() != level and not _flow.busy, 15.0)
+	_check(absf(GameState.dose - 33.0) < 0.5, "death goes back to the quiet save, not the bell (Dose %.1f)" % GameState.dose)
+	GameState.ring_bell(&"start")
+	_check(not GameState.has_quiet_save(), "the next bell clears it")
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE))
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))

@@ -21,8 +21,11 @@ const INTERACT := 1 << 10      ## Interactable areas the player's view ray finds
 ## The porter walks on the world and is blocked by doors and by other
 ## bodies on the capsule layer (hunters, the demon).
 const MASK_PLAYER := WORLD | DOOR | CAPSULE
-## Hunters walk on the world and are blocked by doors; they don't push the porter.
-const MASK_HUNTER := WORLD | DOOR
+## Hunters (and visitors) walk on the world; they don't push the porter.
+## Doors stop them by their own rule, not by physics (Hunter._handle_door:
+## they stop at a shut door and open it, and a locked one turns them back),
+## so a leaf swinging open toward one can't pin him against its jamb.
+const MASK_HUNTER := WORLD
 ## Capsules walk on the world, are blocked by intact walls and by each other.
 ## They do not collide with ragdolls or debris (they push those instead, see below).
 const MASK_CAPSULE := WORLD | DESTRUCTIBLE | CAPSULE

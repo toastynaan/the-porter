@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/nights/night_base.tscn" id="base"]
+[ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
+[ext_resource type="Script" path="res://game/night/wake_beat.gd" id="wake_gd"]
+[ext_resource type="Script" path="res://game/night/pass_beat.gd" id="pass_gd"]
+[ext_resource type="Script" path="res://game/night/sleep_beat.gd" id="sleep_gd"]
+
+[node name="Day1" instance=ExtResource("base")]
+editor_description = "Day 1, the tour (a stub until M12): Thomas and Anselm show you the duties, then the nap. It inherits night_base.tscn."
+
+[node name="Director" type="Node" parent="."]
+script = ExtResource("director_gd")
+night = 0
+start_dose = 0.0
+
+[node name="Wake" type="Node" parent="Director" node_paths=PackedStringArray("wake_at", "tower", "gate")]
+script = ExtResource("wake_gd")
+phase = 6
+bell = &"start"
+due = 17.25
+wake_at = NodePath("../../Marks/WakeCell")
+tower = NodePath("../../BellTower")
+gate = NodePath("../../AbbeyGate")
+lines = PackedStringArray("(Day 1: the tour. Thomas and Anselm show you the porter's duties.)")
+supper_bell = false
+
+[node name="Pass" type="Node" parent="Director" node_paths=PackedStringArray("tower")]
+script = ExtResource("pass_gd")
+phase = 7
+tower = NodePath("../../BellTower")
+
+[node name="Sleep" type="Node" parent="Director" node_paths=PackedStringArray("sleep")]
+script = ExtResource("sleep_gd")
+phase = 5
+duty = "At Lauds: sleep"
+sleep = NodePath("../../Duties/Sleep")
+lines = PackedStringArray("(They send you to your cell to sleep before your first night.)")

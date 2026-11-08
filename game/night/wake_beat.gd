@@ -8,6 +8,11 @@ extends NightBeat
 @export var wake_at: Marker3D
 @export var tower: BellTower
 @export var gate: AbbeyGate
+## What the porter notices as he wakes (the night's own lines).
+@export var lines := PackedStringArray(["(You wake in your cell. The light is failing.)",
+	"(Cole has the gate open. You have until the supper bell.)"])
+## Rings the supper bell at `due` (off: the night has no supper).
+@export var supper_bell := true
 
 
 func _ready() -> void:
@@ -22,8 +27,10 @@ func run() -> void:
 	p.place(wake_at.global_position, wake_at.global_rotation.y)
 	await fade_to(0.0, 2.5)
 	p.controls_locked = false
-	await say("", "(You wake in your cell. The light is failing.)")
-	await say("", "(Cole has the gate open. You have until the supper bell.)")
-	await clock().wait_until(due)
-	tower.ring(3)
-	await say("", "(The supper bell.)")
+	for line in lines:
+		await say("", line)
+	if due >= 0.0:
+		await clock().wait_until(due)
+	if supper_bell:
+		tower.ring(3)
+		await say("", "(The supper bell.)")

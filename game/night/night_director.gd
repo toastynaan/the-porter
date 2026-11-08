@@ -1,11 +1,15 @@
 class_name NightDirector
 extends Node
 ## Runs one night: its NightBeat children, in order (design doc, "Core loop:
-## one night"). After a death the night starts again at the beat whose
-## `bell` was the last one rung. `beats_run` records what ran, for tests.
+## one night"). After a death or a Continue the night starts again at the
+## beat whose `bell` the save was made at. A beat marked `quiet` saves
+## quietly as it starts (docs/mechanics.md, "Quiet saves": just before every
+## designed chase and set piece). `beats_run` records what ran, for tests.
 ##
-## A night played on its own (the slice) starts as if the nights before it
-## had happened: `start_dose` and `start_flags` set that up.
+## A night played on its own (the slice, tests, chapter select) starts as if
+## the nights before it had happened: the start_ exports set that up. A
+## night that follows the last one in a playthrough (GameState.carried)
+## starts with what the porter brought from it.
 
 signal beat_started(beat: StringName)
 signal finished
@@ -16,6 +20,9 @@ signal finished
 @export var start_dose := 0.0
 ## Flags the nights before would have set (night 3: warned about the bread).
 @export var start_flags: Array[StringName] = []
+@export var start_suspicion := 0
+## The rite's count the nights before would have reached.
+@export var start_count := 0
 
 var beats_run: Array[StringName] = []
 var current: NightBeat
@@ -47,10 +54,12 @@ func duties() -> Array:
 
 func run() -> void:
 	GameState.night = night
-	if GameState.last_bell.is_empty() or GameState.last_bell == &"start":
-		if not GameState.has_flag(&"night_started"):
-			GameState.set_flag(&"night_started")
+	if not GameState.has_flag(&"night_started"):
+		GameState.set_flag(&"night_started")
+		if not GameState.carried:
 			GameState.snap_dose(start_dose)
+			GameState.suspicion = start_suspicion
+			GameState.count = start_count
 			for f in start_flags:
 				GameState.set_flag(f)
 	var beats: Array[NightBeat] = []
@@ -68,6 +77,8 @@ func run() -> void:
 		if clock:
 			clock.cap = _next_due(beats, i)
 		GameState.set_phase(current.phase)
+		if current.quiet and not current.bell.is_empty():
+			GameState.quiet_save(current.bell)
 		beats_run.append(current.name)
 		beat_started.emit(current.name)
 		await current.run()

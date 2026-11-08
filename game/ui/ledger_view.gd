@@ -21,6 +21,7 @@ var _body: RichTextLabel
 
 func _ready() -> void:
 	add_to_group(&"ledger_view")
+	add_to_group(&"held_books")
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_page = PanelContainer.new()
@@ -56,7 +57,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"ledger"):
+	if event.is_action_pressed(&"ledger") and not get_tree().paused:
 		set_showing(not showing)
 		get_viewport().set_input_as_handled()
 
@@ -65,6 +66,9 @@ func set_showing(value: bool) -> void:
 	showing = value
 	visible = value
 	if value:
+		for book: Node in get_tree().get_nodes_in_group(&"held_books"):
+			if book != self and book.get(&"showing") == true:
+				book.call(&"set_showing", false)
 		refresh()
 
 

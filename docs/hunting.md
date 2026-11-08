@@ -4,7 +4,7 @@ How the hunter, hiding spots, captures and the demon work in the greybox, and ev
 
 ## Play it
 
-Press F5 to play night 3 (see `docs/night3.md`). To try the hunter and the demon on their own, run `game/encounters/hunt_demo.tscn` (F6 in the editor): the abbey with one hunter on a round of the cloister, church and graveyard, plus the demon stalking you.
+To play night 3, see `docs/night3.md`. To try the hunter and the demon on their own, run `game/encounters/hunt_demo.tscn` (F6 in the editor): the abbey with one hunter on a round of the cloister, church and graveyard, plus the demon stalking you.
 
 | Key | Does |
 | --- | --- |
@@ -47,7 +47,7 @@ Press F5 to play night 3 (see `docs/night3.md`). To try the hunter and the demon
 | Checking a spot | 2.5 s; only spots within 25 m | mine |
 | At a locked door | tries it, listens 3 s, gives up | mine |
 
-He can't follow through the mill wheel gap or the latrine chute, and he has no keys.
+He can't follow through the mill wheel gap or the latrine chute, and he has no keys. Door leaves don't stop him physically: he stops at a shut one and opens it, and a locked one turns him back, by his own rule (since M8).
 
 He carries a shuttered lantern on his back (*default*; its 3.5 m light is *mine*), so he shows as a dark shape against its glow: the doc's sober render of the demon, "a lantern behind it". The first time your lantern light touches him, he freezes for 0.5 s (*default*).
 
@@ -90,10 +90,11 @@ Nothing is shown on screen. Breathing turns to panting as stamina runs down. In 
 
 `game/flow/capture_flow.gd`, in `main.tscn`.
 
-- **First capture:** you black out and wake in the infirmary (the `WakePoint` marker) with +40 Dose eased in, and your keys are taken (the design doc offers keys, a ledger page or a friend's trust; I chose keys for night 3, whose dawn has them moved). The hunters go back to their rounds.
-- **Second capture, on any night:** it kills you, and the night restarts from the last bell, with Dose and the rest as they were then.
+Since M8 (`docs/frame.md`, "Being caught, and dying"):
+- **The one forgiving capture:** the first, if it comes on night 1 or 2. You black out and wake in the infirmary (the `WakePoint` marker) with +40 Dose eased in, and the cult has taken your satchel but not your keys. The hunters go back to their rounds.
+- **Every other capture kills you:** a second on nights 1–2, and any from night 3 on. The view drops and goes dark, and the night picks up at the latest save, quiet or bell, with Dose and the rest as they were then.
 - **Captures never go back down**, so after a restart every capture kills.
-- **Bells:** a level rings the `start` bell when it loads. Night 3 also saves at the Matins bell.
+- **Saves:** a level rings the `start` bell when it loads; night 3 also saves at the Matins bell, and quietly just before the crypt.
 
 ## The demon
 

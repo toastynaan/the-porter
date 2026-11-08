@@ -1,10 +1,10 @@
 # Night 3 in the greybox (M4–M7)
 
-Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. Press F5 and you wake in your cell in the late afternoon. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
+Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. It's the fifth chapter of a New Game (`docs/frame.md`); to play it on its own, choose it in Chapters once you've finished the game, or run `game/nights/night3.tscn` (F6), and you wake in your cell in the late afternoon. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
 ## The beats
 
-`game/nights/night3.tscn` holds the night. Its `Director` runs one beat script per child, in order (`game/night/*_beat.gd`). Each beat waits for the porter to do his duty before it moves on.
+`game/nights/night3.tscn` holds the night. It inherits `night_base.tscn`, which every night shares (the abbey, the people, the duties, the marks), and adds its `Director`, which runs one beat script per child, in order (`game/night/*_beat.gd`), and its conversations. Each beat waits for the porter to do his duty before it moves on.
 
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
@@ -20,15 +20,13 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 | Small hours | Back to the gate. Doze on the bench until the Lauds bell at 06:00. On night 3 the main event was the crypt and the chase, so nothing interrupts | Core loop 6 | |
 | Dawn | Grey light. Cole comes for the gate; give it to him and he opens it for the day. In your cell your keys aren't on their hook; find them on the cot. Lie down on the cot and sleep through the day | Core loop 7; night 3 dawn | `n3_keys_moved`, `night3_done` |
 
-**If you're caught in the chase:**
-- **First capture:** you wake in the infirmary with Thomas over you, +40 Dose, and your keys gone. The night goes on through the small hours to dawn.
-- **Second capture:** it kills you, and the night starts again at the Matins bell.
+**If you're caught in the chase,** you die: from night 3 every capture kills (`docs/mechanics.md`, "Being hunted"). The night saves quietly as the Crypt beat starts, so death puts you back in the choir just before the crypt light (the `crypt` spawn), with the round done, not at the Matins bell.
 
 ## The candle clock
 
 `game/night/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
 
-- **Awake, time runs slowly in real time:** 4 minutes an hour. Dusk to the supper bell is about 5 minutes, and the whole night is within the design doc's 40–60 minutes if you doze through the waits.
+- **Awake, time runs slowly in real time:** 3 minutes an hour (2 with the faster-clock setting). Dusk to the supper bell is under 4 minutes, and the whole night is within the run's 30–40 minutes if you doze through the waits.
 - **Dozing on the gate bench, it runs fast:** 2 seconds an hour, with the screen nearly black. Whatever needs you wakes you: a knock (the visitor is at the grille already when you wake), the Matins mark, the Lauds bell. You can doze only once you have the gate, while the night is waiting on it (the knocks, before Matins, the small hours), and while no duty is wanted.
 - **The candle in your cell** (`CandleClock`, on the desk) burns down from 16:00 to 07:00, with rings at the supper bell, Matins and Lauds. Look at it and press E: "(The candle stands at 19:40. The next mark is Matins.)".
 - **The bells** ring at the marks: supper at 17:15, Matins at midnight (you ring it, from 23:45), Lauds at 06:00.
@@ -91,7 +89,7 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | Talking: the view narrows, turns to their face in | 22° (70° to 48°), 0.45 s | mine |
 | Talking: looking about | 30° either side of their face; at the grille 40° across, 50° up and down | mine |
 | Walter's place under the porch | 0.3 m north of the middle of the gate, so the grille's centre stile isn't across his face | mine |
-| Waking pace | 240 s per in-game hour | mine, to fit the doc's 40–60 minute shift |
+| Waking pace | 180 s per in-game hour | mechanics (*mine*), for the run's 30–40 minute nights |
 | Dozing pace | 2 s per in-game hour | mine |
 | Marks: supper bell, Matins, Lauds | 17:15, 00:00, 06:00 | mine (the doc names the bells, not their times) |
 | Walter's knock, the child's knock | 20:00, 22:00 | mine |
@@ -138,6 +136,7 @@ Times are exports too. Each beat's `due` is its mark on the candle, and `can_doz
 - **`test_dialogue`:** conversations: the script and its mistakes, every conversation file, the camera, answers and their tags, walking away, `again`, skipping a line.
 - **`test_night3_caught`:**
   - restarting at the Matins bell
-  - being caught in the chase (infirmary, keys gone, dawn)
-  - being caught twice (back to Matins, with the night as it was at the bell)
+  - the quiet save before the crypt
+  - caught in the chase: death, back to the quiet save with the round done (not to Matins), twice
+  - Continue still starts at the Matins bell
 - **`tools/night3_shots.sh`:** plays the night from dusk to dawn and saves a still per beat to `art/_review/m7/`.

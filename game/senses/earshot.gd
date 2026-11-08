@@ -6,6 +6,8 @@ class_name Earshot
 
 const RUN := 12.0
 const WALK := 4.0
+## Crouched steps: half the walk (docs/mechanics.md, "Your body").
+const CROUCH := 2.0
 const DOOR := 10.0
 ## A held breath running out.
 const GASP := 10.0

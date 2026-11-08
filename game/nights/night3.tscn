@@ -1,28 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://game/world/abbey/abbey.tscn" id="abbey"]
-[ext_resource type="PackedScene" path="res://game/npc/brother.tscn" id="brother"]
-[ext_resource type="Script" path="res://game/npc/brother.gd" id="brother_gd"]
-[ext_resource type="Script" path="res://game/npc/character_look.gd" id="look_gd"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_thomas.tscn" id="chr_thomas"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_osric.tscn" id="chr_osric"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_ranulf.tscn" id="chr_ranulf"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_godric.tscn" id="chr_godric"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_hugh.tscn" id="chr_hugh"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_edwin.tscn" id="chr_edwin"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_anselm.tscn" id="chr_anselm"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_dunstan.tscn" id="chr_dunstan"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_a.tscn" id="chr_choir_brother_a"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_b.tscn" id="chr_choir_brother_b"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_c.tscn" id="chr_choir_brother_c"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_stranger.tscn" id="chr_stranger"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_dead.tscn" id="chr_choir_brother_dead"]
-[ext_resource type="Script" path="res://game/render/dual_render.gd" id="dual_gd"]
-[ext_resource type="Script" path="res://game/night/duty.gd" id="duty_gd"]
-[ext_resource type="PackedScene" path="res://game/hunter/hunter.tscn" id="hunter"]
-[ext_resource type="PackedScene" path="res://game/demon/stalker.tscn" id="stalker"]
-[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
-[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://game/nights/night_base.tscn" id="base"]
 [ext_resource type="Script" path="res://game/night/night_director.gd" id="director_gd"]
 [ext_resource type="Script" path="res://game/night/supper_beat.gd" id="supper_gd"]
 [ext_resource type="Script" path="res://game/night/gate_beat.gd" id="gate_gd"]
@@ -39,13 +17,6 @@
 [ext_resource type="Script" path="res://game/night/dawn_beat.gd" id="dawn_gd"]
 [ext_resource type="Script" path="res://game/night/wake_beat.gd" id="wake_gd"]
 [ext_resource type="Script" path="res://game/night/small_hours_beat.gd" id="small_gd"]
-[ext_resource type="Script" path="res://game/night/night_clock.gd" id="clock_gd"]
-[ext_resource type="Script" path="res://game/night/daylight.gd" id="daylight_gd"]
-[ext_resource type="Script" path="res://game/night/abbey_gate.gd" id="gate_works_gd"]
-[ext_resource type="Script" path="res://game/night/bell_tower.gd" id="tower_gd"]
-[ext_resource type="Script" path="res://game/night/gate_bench.gd" id="bench_gd"]
-[ext_resource type="Script" path="res://game/night/candle_clock.gd" id="candle_clock_gd"]
-[ext_resource type="Script" path="res://game/npc/talker.gd" id="talker_gd"]
 [ext_resource type="Resource" path="res://game/dialogue/night3/anselm.tres" id="convo_anselm"]
 [ext_resource type="Resource" path="res://game/dialogue/night3/carter.tres" id="convo_carter"]
 [ext_resource type="Resource" path="res://game/dialogue/night3/choir_brother.tres" id="convo_choir_brother"]
@@ -59,703 +30,58 @@
 [ext_resource type="Resource" path="res://game/dialogue/night3/osric.tres" id="convo_osric"]
 [ext_resource type="Resource" path="res://game/dialogue/night3/ranulf.tres" id="convo_ranulf"]
 [ext_resource type="Resource" path="res://game/dialogue/night3/thomas.tres" id="convo_thomas"]
-[ext_resource type="Script" path="res://game/npc/lane_walker.gd" id="walker_gd"]
-[ext_resource type="Resource" path="res://game/gate/visitors/cole.tres" id="cole"]
-[ext_resource type="Resource" path="res://game/gate/visitors/mab.tres" id="mab"]
-[ext_resource type="Resource" path="res://game/gate/visitors/lane_carter.tres" id="carter"]
-[ext_resource type="Resource" path="res://game/gate/visitors/lane_woman.tres" id="woman"]
 
-[sub_resource type="StandardMaterial3D" id="Mat_bread"]
-albedo_color = Color(0.54, 0.4, 0.24, 1)
-roughness = 0.9
+[node name="Night3" instance=ExtResource("base")]
+editor_description = "Night 3, the vertical slice (design doc, Night 3: The oven). It inherits night_base.tscn; the Director runs the beats in order; move the markers under Marks and Places to restage it."
 
-[sub_resource type="BoxMesh" id="Mesh_bread"]
-material = SubResource("Mat_bread")
-size = Vector3(0.22, 0.09, 0.12)
-
-[sub_resource type="StandardMaterial3D" id="Mat_iron"]
-albedo_color = Color(0.12, 0.11, 0.1, 1)
-roughness = 0.6
-metallic = 0.7
-
-[sub_resource type="BoxMesh" id="Mesh_keys"]
-material = SubResource("Mat_iron")
-size = Vector3(0.14, 0.03, 0.09)
-
-[sub_resource type="StandardMaterial3D" id="Mat_flame"]
-albedo_color = Color(0, 0, 0, 1)
-emission_enabled = true
-emission = Color(0.878, 0.643, 0.345, 1)
-emission_energy_multiplier = 4.0
-
-[sub_resource type="BoxMesh" id="Mesh_cryptlamp"]
-material = SubResource("Mat_flame")
-size = Vector3(0.12, 0.18, 0.12)
-
-[sub_resource type="CapsuleShape3D" id="Shape_stranger"]
-radius = 0.28
-height = 1.75
-
-[node name="Night3" type="Node3D"]
-editor_description = "Night 3, the vertical slice (design doc, Night 3: The oven). The Director runs the beats in order; move the markers under Marks and Places to restage it."
-
-[node name="Abbey" parent="." instance=ExtResource("abbey")]
-
-[node name="Places" type="Node3D" parent="."]
-editor_description = "Where each brother is in each phase: Places/<Phase>/<Name>."
-
-[node name="Dusk" type="Node3D" parent="Places"]
-
-[node name="Thomas" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 30, 0.05, 0)
-
-[node name="Osric" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -15, 0.05, 1)
-
-[node name="Ranulf" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 23.5, 0.05, -32)
-
-[node name="Godric" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 16, 0.05, -22)
-
-[node name="Hugh" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 0, 0.05, -26)
-
-[node name="Edwin" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -10, 0.05, -15)
-
-[node name="Anselm" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 34.5, 0.05, 0.5)
-
-[node name="Dunstan" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, -35.0, 0.0, -14.6)
-
-[node name="ChoirA" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 4.0, 0.05, -6.0)
-
-[node name="ChoirB" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(0, 0, 1.0, 0, 1, 0, -1.0, 0, 0, -8.0, 0.05, -32.0)
-
-[node name="ChoirC" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(0, 0, -1.0, 0, 1, 0, 1.0, 0, 0, 10.0, 0.05, -18.0)
-
-[node name="Supper" type="Node3D" parent="Places"]
-
-[node name="Thomas" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 1.5, 0.05, -2.75)
-
-[node name="Osric" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 1, 0.05, 0.45)
-
-[node name="Ranulf" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 3, 0.05, -2.75)
-
-[node name="Godric" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -3, 0.05, -2.75)
-
-[node name="Hugh" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, -1.5, 0.05, -2.75)
-
-[node name="Edwin" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -1.6, 0.05, -0.15)
-
-[node name="Anselm" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3.2, 0.05, -0.15)
-
-[node name="ChoirA" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 4.5, 0.05, -2.75)
-
-[node name="ChoirB" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, -4.5, 0.05, -2.75)
-
-[node name="ChoirC" type="Marker3D" parent="Places/Supper"]
-transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, -4.8, 0.05, -0.15)
-
-[node name="Matins" type="Node3D" parent="Places"]
-
-[node name="Thomas" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 12, 0.05, -34.1)
-
-[node name="Osric" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -29.9)
-
-[node name="Ranulf" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 10, 0.05, -34.1)
-
-[node name="Godric" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 16, 0.05, -34.1)
-
-[node name="Hugh" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 14, 0.05, -34.1)
-
-[node name="Edwin" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 12, 0.05, -29.9)
-
-[node name="Anselm" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 14, 0.05, -29.9)
-
-[node name="Stranger" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 16, 0.05, -29.9)
-
-[node name="ChoirA" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 11.0, 0.05, -34.1)
-
-[node name="ChoirB" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, 13.0, 0.05, -29.9)
-
-[node name="ChoirC" type="Marker3D" parent="Places/Matins"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 15.0, 0.05, -34.1)
-
-[node name="Brothers" type="Node3D" parent="."]
-
-[node name="Thomas" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Thomas"]
-look = ExtResource("chr_thomas")
-
-[node name="Talker" type="Area3D" parent="Brothers/Thomas"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Thomas"]
 conversation = ExtResource("convo_thomas")
-phases = Array[int]([6])
 
-[node name="Osric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Osric"]
-look = ExtResource("chr_osric")
-
-[node name="Talker" type="Area3D" parent="Brothers/Osric"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Osric"]
 conversation = ExtResource("convo_osric")
-phases = Array[int]([6])
 
-[node name="Ranulf" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Ranulf"]
-look = ExtResource("chr_ranulf")
-
-[node name="Talker" type="Area3D" parent="Brothers/Ranulf"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Ranulf"]
 conversation = ExtResource("convo_ranulf")
-phases = Array[int]([6])
 
-[node name="Godric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Godric"]
-look = ExtResource("chr_godric")
-
-[node name="Talker" type="Area3D" parent="Brothers/Godric"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Godric"]
 conversation = ExtResource("convo_godric")
-phases = Array[int]([6])
 
-[node name="Hugh" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Hugh"]
-look = ExtResource("chr_hugh")
-
-[node name="Talker" type="Area3D" parent="Brothers/Hugh"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Hugh"]
 conversation = ExtResource("convo_hugh")
-phases = Array[int]([6])
 
-[node name="Edwin" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Edwin"]
-look = ExtResource("chr_edwin")
-
-[node name="Talker" type="Area3D" parent="Brothers/Edwin"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Edwin"]
 conversation = ExtResource("convo_edwin")
-phases = Array[int]([6])
 
-[node name="Anselm" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Anselm"]
-look = ExtResource("chr_anselm")
-
-[node name="Talker" type="Area3D" parent="Brothers/Anselm"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Anselm"]
 conversation = ExtResource("convo_anselm")
-phases = Array[int]([6])
 
-[node name="Dunstan" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/Dunstan"]
-look = ExtResource("chr_dunstan")
-
-[node name="Talker" type="Area3D" parent="Brothers/Dunstan"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/Dunstan"]
 conversation = ExtResource("convo_dunstan")
-phases = Array[int]([6])
 
-[node name="ChoirA" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/ChoirA"]
-look = ExtResource("chr_choir_brother_a")
-
-[node name="Talker" type="Area3D" parent="Brothers/ChoirA"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/ChoirA"]
 conversation = ExtResource("convo_choir_brother")
-phases = Array[int]([6])
 
-[node name="ChoirB" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/ChoirB"]
-look = ExtResource("chr_choir_brother_b")
-
-[node name="Talker" type="Area3D" parent="Brothers/ChoirB"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/ChoirB"]
 conversation = ExtResource("convo_choir_brother")
-phases = Array[int]([6])
 
-[node name="ChoirC" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
-places = NodePath("../../Places")
-
-[node name="Look" parent="Brothers/ChoirC"]
-look = ExtResource("chr_choir_brother_c")
-
-[node name="Talker" type="Area3D" parent="Brothers/ChoirC"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="Brothers/ChoirC"]
 conversation = ExtResource("convo_choir_brother")
-phases = Array[int]([6])
 
-[node name="Stranger" type="Node3D" parent="Brothers" node_paths=PackedStringArray("places")]
-script = ExtResource("brother_gd")
-places = NodePath("../../Places")
-editor_description = "The hooded stranger in the dead brother's place; drugged, the dead brother himself."
-
-[node name="Body" type="StaticBody3D" parent="Brothers/Stranger"]
-
-[node name="Shape" type="CollisionShape3D" parent="Brothers/Stranger/Body"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-shape = SubResource("Shape_stranger")
-
-[node name="Look" type="Node3D" parent="Brothers/Stranger"]
-script = ExtResource("dual_gd")
-
-[node name="Real" type="Node3D" parent="Brothers/Stranger/Look"]
-script = ExtResource("look_gd")
-look = ExtResource("chr_stranger")
-
-[node name="Drugged" type="Node3D" parent="Brothers/Stranger/Look"]
-script = ExtResource("look_gd")
-look = ExtResource("chr_choir_brother_dead")
-
-[node name="Marks" type="Node3D" parent="."]
-editor_description = "Where the night puts the porter and others."
-
-[node name="PorterSeat" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
-
-[node name="Choir" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 13, 0.05, -32)
-
-[node name="CryptFoot" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 24.5, -4, -33.8)
-
-[node name="RescuePorter" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 28, 0.05, 2.4)
-
-[node name="RescueThomas" type="Marker3D" parent="Marks"]
-transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 28, 0.05, 0.9)
-
-[node name="LaneStart" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -66, 0.05, -47)
-
-[node name="LaneLeave" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -66, 0.05, 47)
-
-[node name="Porch" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -41.4, 0.05, -2.3)
-
-[node name="Inside" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -37.6, 0.05, -2)
-
-[node name="PriorFrom" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -26, 0.05, -8)
-
-[node name="DawnCell" type="Marker3D" parent="Marks"]
-transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -36.5, 0.05, -6.5)
-
-[node name="WakeCell" type="Marker3D" parent="Marks"]
-transform = Transform3D(-0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, -0.819152, -38.4, 0.05, -9.9)
-
-[node name="ColeGate" type="Marker3D" parent="Marks"]
-transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -38.6, 0.05, 0)
-
-[node name="ColeOff" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -17, 0.05, 2.5)
-
-[node name="matins" type="Marker3D" parent="Marks" groups=["bell_spawn"]]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 6, 0.05, -32)
-editor_description = "Where a restart from the Matins bell puts you."
-
-[node name="KeysOnHook" type="MeshInstance3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -35, 1.4, -4.5)
-mesh = SubResource("Mesh_keys")
-
-[node name="Lamps" type="Node3D" parent="."]
-editor_description = "Lamps lit where a duty is due, so the porter can find it (no HUD). Each Duty names its lamp."
-
-[node name="GateLamp" parent="Lamps" instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -39.4, 2.5, -3.75)
-lit = false
-
-[node name="TowerLamp" parent="Lamps" instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -24.5, 2.5, -31)
-lit = false
-
-[node name="StoresLamp" parent="Lamps" instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -11.45, 2.3, -7.1)
-lit = false
-
-[node name="ChapterLamp" parent="Lamps" instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.45, 2.3, -19)
-lit = false
-
-[node name="KeysCandle" parent="Lamps" instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -37.55, 0.5, -11.35)
-lit = false
-
-[node name="Duties" type="Node3D" parent="."]
-
-[node name="Bread" type="Area3D" parent="Duties"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.8, -1.3)
-script = ExtResource("duty_gd")
-size = Vector3(0.3, 0.15, 0.25)
-
-[node name="Mesh" type="MeshInstance3D" parent="Duties/Bread"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
-mesh = SubResource("Mesh_bread")
-
-[node name="SupperSeat" type="Area3D" parent="Duties"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
-script = ExtResource("duty_gd")
-size = Vector3(0.6, 1.2, 0.6)
-
-[node name="RelieveCole" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, 0)
-script = ExtResource("duty_gd")
-size = Vector3(0.8, 2.0, 0.8)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="HandOver" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, 0)
-script = ExtResource("duty_gd")
-size = Vector3(0.8, 2.0, 0.8)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="BarGate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 2.4, 3.0)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="Grate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 2.4, 3.0)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="OpenGate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 2.4, 3.0)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="ShutGate" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.9, 0.05, -2)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 2.4, 3.0)
-lamp = NodePath("../../Lamps/GateLamp")
-
-[node name="GuestBeds" type="Node3D" parent="Duties"]
-editor_description = "One duty per guesthouse bed: the porter shows a guest his bed."
-
-[node name="Bed0" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -34.6, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-
-[node name="Bed1" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -32.8, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-open_way = false
-
-[node name="Bed2" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -31, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-open_way = false
-
-[node name="Bed3" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -29.2, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-open_way = false
-
-[node name="Bed4" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -27.4, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-open_way = false
-
-[node name="Bed5" type="Area3D" parent="Duties/GuestBeds" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -25.6, 0.05, -22.6)
-script = ExtResource("duty_gd")
-size = Vector3(1.0, 0.55, 2.1)
-lamp = NodePath("../../../Abbey/Navigation/OuterCourt/Lights/GuestCandle")
-keep_lit = true
-open_way = false
-
-[node name="Ledger" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -33.2, 0.85, -10.9)
-script = ExtResource("duty_gd")
-size = Vector3(0.45, 0.25, 0.55)
-lamp = NodePath("../../Abbey/Navigation/OuterCourt/Lights/CellCandle")
-keep_lit = true
-
-[node name="BellRope" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -24, 0.05, -32)
-script = ExtResource("duty_gd")
-size = Vector3(0.6, 2.2, 0.6)
-lamp = NodePath("../../Lamps/TowerLamp")
-
-[node name="KeysMoved" type="Area3D" parent="Duties" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38, 0.5, -11.1)
-script = ExtResource("duty_gd")
-size = Vector3(0.3, 0.2, 0.3)
-lamp = NodePath("../../Lamps/KeysCandle")
-keep_lit = true
-
-[node name="Mesh" type="MeshInstance3D" parent="Duties/KeysMoved"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
-mesh = SubResource("Mesh_keys")
-
-[node name="Sleep" type="Area3D" parent="Duties"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -38.6, 0.05, -11.2)
-script = ExtResource("duty_gd")
-size = Vector3(2.0, 0.7, 0.9)
-open_way = false
-
-[node name="RoundStops" type="Node3D" parent="Duties"]
-
-[node name="StoresDoor" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -11.2, 0.05, -6)
-script = ExtResource("duty_gd")
-size = Vector3(0.5, 2.1, 1.1)
-lamp = NodePath("../../../Lamps/StoresLamp")
-metadata/hint = "(The round. First the stores door, off the west walk of the cloister.)"
-metadata/line = "(The stores door is locked, as it should be.)"
-
-[node name="ChapterDoor" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.2, 0.05, -18)
-script = ExtResource("duty_gd")
-size = Vector3(0.5, 2.1, 1.1)
-lamp = NodePath("../../../Lamps/ChapterLamp")
-metadata/hint = "(Next, the chapter house door, off the east walk.)"
-metadata/line = "(The chapter house door is shut.)"
-
-[node name="SanctuaryLamp" type="Area3D" parent="Duties/RoundStops" node_paths=PackedStringArray("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 26.6, 0.9, -33)
-script = ExtResource("duty_gd")
-size = Vector3(0.4, 0.4, 0.4)
-lamp = NodePath("../../../Abbey/Navigation/Church/Lights/SanctuaryLamp")
-keep_lit = true
-metadata/hint = "(Last, the sanctuary lamp by the altar.)"
-metadata/line = "(The sanctuary lamp is burning.)"
-
-[node name="Clock" type="Node" parent="."]
-script = ExtResource("clock_gd")
-editor_description = "The candle clock: in-game hours, slow awake, fast while the porter dozes."
-
-[node name="Daylight" type="Node" parent="." node_paths=PackedStringArray("world_environment", "moon", "street_lanterns")]
-script = ExtResource("daylight_gd")
-world_environment = NodePath("../Abbey/WorldEnvironment")
-moon = NodePath("../Abbey/Moon")
-street_lanterns = NodePath("../Abbey/Street/StreetLanterns")
-
-[node name="AbbeyGate" type="Node" parent="." node_paths=PackedStringArray("leaves", "bar")]
-script = ExtResource("gate_works_gd")
-leaves = [NodePath("../Abbey/Navigation/OuterCourt/Doors/GateN"), NodePath("../Abbey/Navigation/OuterCourt/Doors/GateS")]
-bar = NodePath("../Abbey/Navigation/OuterCourt/Props/GateBar")
-
-[node name="BellTower" type="Node" parent="." node_paths=PackedStringArray("bell")]
-script = ExtResource("tower_gd")
-bell = NodePath("../Abbey/Navigation/Church/Props/Bell")
-
-[node name="GateBench" type="Area3D" parent="."]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -39.35, 0.05, 1.6)
-script = ExtResource("bench_gd")
-editor_description = "Sit and doze while the night waits on the gate."
-
-[node name="CandleClock" type="Node3D" parent="."]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -33.25, 0.85, -10.5)
-script = ExtResource("candle_clock_gd")
-
-[node name="People" type="Node3D" parent="."]
-editor_description = "Cole at the gate, Mab outside it, passers-by in the lane at dusk. Lines are placeholders."
-
-[node name="Cole" parent="People" instance=ExtResource("visitor_npc")]
-transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -38.6, 0.05, 0)
-visitor = ExtResource("cole")
-
-[node name="Talker" type="Area3D" parent="People/Cole"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="People/Cole"]
 conversation = ExtResource("convo_cole")
-phases = Array[int]([6])
 
-[node name="Mab" parent="People" instance=ExtResource("visitor_npc")]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -41.9, 0.05, 0.9)
-visitor = ExtResource("mab")
-
-[node name="Talker" type="Area3D" parent="People/Mab"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="People/Mab"]
 conversation = ExtResource("convo_mab")
-phases = Array[int]([6, 0, 1, 2])
 
-[node name="Walks" type="Node3D" parent="People"]
-
-[node name="CarterA" type="Marker3D" parent="People/Walks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, -20)
-
-[node name="CarterB" type="Marker3D" parent="People/Walks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, 14)
-
-[node name="WomanA" type="Marker3D" parent="People/Walks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
-
-[node name="WomanB" type="Marker3D" parent="People/Walks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, -9)
-
-[node name="Carter" parent="People" instance=ExtResource("visitor_npc")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.6, 0.05, -20)
-visitor = ExtResource("carter")
-speed = 1.0
-
-[node name="Talker" type="Area3D" parent="People/Carter"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="People/Carter"]
 conversation = ExtResource("convo_carter")
-phases = Array[int]([6])
 
-[node name="Walk" type="Node" parent="People/Carter" node_paths=PackedStringArray("points", "leave")]
-script = ExtResource("walker_gd")
-points = [NodePath("../../Walks/CarterA"), NodePath("../../Walks/CarterB")]
-leave = NodePath("../../../Marks/LaneLeave")
-
-[node name="Woman" parent="People" instance=ExtResource("visitor_npc")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.2, 0.05, 9)
-visitor = ExtResource("woman")
-speed = 1.0
-
-[node name="Talker" type="Area3D" parent="People/Woman"]
-script = ExtResource("talker_gd")
+[node name="Talker" parent="People/Woman"]
 conversation = ExtResource("convo_lane_woman")
-phases = Array[int]([6])
 
-[node name="Walk" type="Node" parent="People/Woman" node_paths=PackedStringArray("points", "leave")]
-script = ExtResource("walker_gd")
-points = [NodePath("../../Walks/WomanA"), NodePath("../../Walks/WomanB")]
-leave = NodePath("../../../Marks/LaneStart")
-
-[node name="Stalk" type="Node3D" parent="."]
-editor_description = "Where the demon may stand on the round, in order of preference."
-
-[node name="WalkEnd" type="Node3D" parent="Stalk"]
-
-[node name="P0" type="Marker3D" parent="Stalk/WalkEnd"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -10, 0.05, -26.5)
-
-[node name="P1" type="Marker3D" parent="Stalk/WalkEnd"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -6)
-
-[node name="Doorways" type="Node3D" parent="Stalk"]
-
-[node name="P0" type="Marker3D" parent="Stalk/Doorways"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 10, 0.05, -27.3)
-
-[node name="P1" type="Marker3D" parent="Stalk/Doorways"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11.2, 0.05, -26)
-
-[node name="P2" type="Marker3D" parent="Stalk/Doorways"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -2, 0.05, -4.7)
-
-[node name="Blockers" type="Node3D" parent="Stalk"]
-editor_description = "In the chase: running near a marker puts the demon at its Stand, ahead of you."
-
-[node name="NaveWest" type="Marker3D" parent="Stalk/Blockers"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -8, 0.05, -31)
-
-[node name="Stand" type="Marker3D" parent="Stalk/Blockers/NaveWest"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -8, 0, -0.5)
-
-[node name="Slype" type="Marker3D" parent="Stalk/Blockers"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 8.5, 0.05, -25.5)
-
-[node name="Stand" type="Marker3D" parent="Stalk/Blockers/Slype"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 7.5, 0, -0.5)
-
-[node name="CryptLight" type="Node3D" parent="."]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 26.8, -4, -30.6)
-visible = false
-
-[node name="Lamp" type="MeshInstance3D" parent="CryptLight"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
-mesh = SubResource("Mesh_cryptlamp")
-
-[node name="Light" type="OmniLight3D" parent="CryptLight"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-light_color = Color(0.878, 0.643, 0.345, 1)
-light_energy = 1.4
-shadow_enabled = true
-omni_range = 7.0
-
-[node name="SupperCandle0" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3, 0.8, -1.5)
-
-[node name="SupperCandle1" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 3, 0.8, -1.5)
-
-[node name="ChoirCandle0" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11, 1.15, -34.9)
-
-[node name="ChoirCandle1" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 15, 1.15, -34.9)
-
-[node name="ChoirCandle2" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 11, 1.15, -29.1)
-
-[node name="ChoirCandle3" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 15, 1.15, -29.1)
-
-[node name="Hunter" parent="." instance=ExtResource("hunter")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 26, -4, -30.2)
-dormant = true
-
-[node name="Stalker" parent="." instance=ExtResource("stalker")]
-scripted = true
-rearm = false
+[node name="crypt" type="Marker3D" parent="Marks" groups=["bell_spawn"]]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 23.5, 0.05, -31.5)
+editor_description = "Where a death after the quiet save before the crypt puts you."
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
@@ -845,6 +171,8 @@ doorways = NodePath("../../Stalk/Doorways")
 [node name="Crypt" type="Node" parent="Director" node_paths=PackedStringArray("light", "hunter", "crypt")]
 script = ExtResource("crypt_gd")
 phase = 4
+bell = &"crypt"
+quiet = true
 light = NodePath("../../CryptLight")
 hunter = NodePath("../../Hunter")
 crypt = NodePath("../../Marks/CryptFoot")

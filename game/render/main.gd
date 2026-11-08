@@ -7,9 +7,10 @@ extends Node
 ## The render keeps 540 lines and takes its width from the window's shape
 ## (960 on 16:9), so pixels stay square; leftover rows are letterboxed.
 ##
-## Pick the level with a user argument: `-- --level=res://path/to/level.tscn`.
-## reload_level() replaces it with a fresh copy (a restart from the bell).
-## F11 toggles full screen.
+## With no level, the game starts at the title (GameFlow). A level set here
+## or with a user argument (`-- --level=res://path/to/level.tscn`) plays on
+## its own, for tests and tools. reload_level() replaces it with a fresh copy
+## (a restart from a save). F11 toggles full screen.
 
 signal level_loaded(level: Node)
 
@@ -53,6 +54,14 @@ func load_level(scene: PackedScene) -> void:
 
 func reload_level() -> void:
 	load_level(level)
+
+
+## Takes the level out (back to the title, between chapters).
+func unload_level() -> void:
+	if current_level:
+		world.remove_child(current_level)
+		current_level.queue_free()
+		current_level = null
 
 
 ## Input reaches nodes inside the SubViewport only through push_input.

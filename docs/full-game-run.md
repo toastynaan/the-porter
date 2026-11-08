@@ -220,3 +220,9 @@ Things I decided because the docs didn't say. Accept, change or strike each one.
 - After the review: no supper on night 4 (the house fasts); the dilemma at dusk on night 5; Ranulf gives the remedy; the prior's bloody sleeve on night 4; the candle that lights itself on night 5; Jankin saved by asking Hob.
 - The Hungry Saint's look (Look and Feel): about 2.6 m, no horns, a gap in the light that dims your lantern, the same at any Dose.
 - The three death styles and which deaths use which (the table above).
+
+Added during the run:
+- **M8.** The chronicle's year is 1424, and night 0 is the eve of Saint Martin (10 November), so day 1 is Martinmas and night 6 the 16th. The chapter cards' headings, titles and paragraphs (`game/flow/chapters.tres`) are drafts, each the chronicle's few lines about that day, never what happens in it.
+- **M8.** Chapter select starts a night with that night's own start state (its Director's `start_` values), the same one it uses played on its own. Until each night is built, the stubs' starting Dose is 25 (night 2), 30 (nights 4 and 5) and 35 (night 6).
+- **M8.** Finishing the game deletes the saves, so the title offers Chapters and New Game, not Continue.
+- **M8.** The seven chronicle entries are drafted now (`game/endings/endings.gd`), with the last lines above; M15 wires the endings to them.

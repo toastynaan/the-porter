@@ -16,6 +16,10 @@ extends CanvasLayer
 ## a choice is open shows over its question for a moment and then gives it
 ## back (the porter noticing something while he decides). Tests answer through
 ## `auto_choice` and shorten lines with `line_seconds`.
+##
+## Lines wait while the game is paused. reset() drops everything said or
+## asked (back to the title, a new chapter): what was waiting returns at once.
+## The subtitle size and the dark band behind them follow the Settings.
 
 signal said(speaker: String, text: String)
 signal chose(options: PackedStringArray, picked: int)
@@ -58,11 +62,17 @@ var _picked := -1
 var _line_id := 0
 ## The "Walk away" choice's index, or -1.
 var _leave_index := -1
+## Goes up at every reset(); talk begun before it stops.
+var _gen := 0
+var _backing: StyleBoxFlat
 
 
 func _ready() -> void:
 	layer = 3
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_backing = StyleBoxFlat.new()
+	_backing.bg_color = Color(0.02, 0.02, 0.03, 0.72)
+	_backing.set_content_margin_all(4)
 	var root := Control.new()
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -80,7 +90,19 @@ func _ready() -> void:
 	_box.add_child(_text)
 	_box.add_child(_options)
 	get_viewport().size_changed.connect(_layout)
+	Settings.changed.connect(_layout)
 	_layout()
+	_clear()
+
+
+## Drops whatever is being said or asked: lines end, a choice returns -1, a
+## conversation stops, and the porter's view is let go.
+func reset() -> void:
+	_gen += 1
+	_choices = PackedStringArray()
+	_line_over.emit(-1)
+	if talking:
+		end()
 	_clear()
 
 
@@ -88,6 +110,7 @@ func _ready() -> void:
 func say(speaker: String, text: String, seconds := -1.0) -> void:
 	if talking and left:
 		return
+	var gen := _gen
 	history.append([speaker, text])
 	said.emit(speaker, text)
 	_line_id += 1
@@ -96,11 +119,13 @@ func say(speaker: String, text: String, seconds := -1.0) -> void:
 	var t := seconds
 	if t <= 0.0:
 		t = line_seconds if line_seconds >= 0.0 else maxf(MIN_SECONDS, text.length() / CHARS_PER_SECOND)
-	get_tree().create_timer(t, true).timeout.connect(func() -> void: _line_over.emit(id))
+	get_tree().create_timer(t, false).timeout.connect(func() -> void: _line_over.emit(id))
 	while true:
 		var over: int = await _line_over
 		if over == id or over == -1:
 			break
+	if gen != _gen:
+		return
 	if id == _line_id:
 		if is_choosing():
 			_show_line(_prompt[0], _prompt[1])
@@ -113,6 +138,7 @@ func say(speaker: String, text: String, seconds := -1.0) -> void:
 func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	if talking and left:
 		return -1
+	var gen := _gen
 	var shown := options.duplicate()
 	_leave_index = -1
 	if talking:
@@ -127,7 +153,9 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	_draw_options()
 	while _picked < 0 and not (talking and left):
 		await get_tree().process_frame
-		if auto_choice.is_valid() and _picked < 0:
+		if gen != _gen:
+			return -1
+		if auto_choice.is_valid() and _picked < 0 and not get_tree().paused:
 			_picked = auto_choice.call(shown)
 	var picked := _picked
 	_choices = PackedStringArray()
@@ -148,11 +176,12 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 func converse(conversation: Conversation, with: Node3D) -> void:
 	if not begin(with):
 		return
+	var gen := _gen
 	var again := GameState.has_flag(conversation.talked_flag())
 	GameState.set_flag(conversation.talked_flag())
 	var at := conversation.start(again)
 	var last: Conversation.Line = null
-	while not left and at != "" and at != Conversation.END:
+	while not left and at != "" and at != Conversation.END and gen == _gen:
 		var point := conversation.point(at)
 		if point == null:
 			push_error("%s: no point called %s (%s)" % [conversation.resource_path, at, conversation.errors()])
@@ -169,10 +198,12 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 		for a in answers:
 			texts.append(a.text)
 		var pick := await choose(texts, last.speaker if last else "", last.text if last else "")
-		if pick < 0:
+		if pick < 0 or gen != _gen:
 			break
 		Conversation.apply(answers[pick].tags)
 		at = answers[pick].to
+	if gen != _gen:
+		return
 	var walked := left
 	end()
 	if walked and conversation.has_point(Conversation.LEAVE):
@@ -238,6 +269,8 @@ func is_choosing() -> bool:
 
 
 func _input(event: InputEvent) -> void:
+	if get_tree().paused:
+		return
 	if _choices.is_empty():
 		if talking and not left and event.is_action_pressed(&"interact"):
 			_line_over.emit(_line_id)
@@ -290,12 +323,21 @@ func _label(color: Color) -> Label:
 	l.add_theme_color_override(&"font_color", color)
 	l.add_theme_color_override(&"font_outline_color", Color(0, 0, 0, 0.85))
 	l.add_theme_constant_override(&"outline_size", 5)
+	_style(l)
 	return l
 
 
-## Sized from the window height, like the interact dot.
+## The dark band behind the line, if the setting asks for it.
+func _style(l: Label) -> void:
+	if Settings.subtitle_backing:
+		l.add_theme_stylebox_override(&"normal", _backing)
+	else:
+		l.remove_theme_stylebox_override(&"normal")
+
+
+## Sized from the window height, like the interact dot, times the subtitle size setting.
 func _font_size(factor: float) -> int:
-	return maxi(10, roundi(get_viewport().get_visible_rect().size.y / 540.0 * 15.0 * factor))
+	return maxi(10, roundi(get_viewport().get_visible_rect().size.y / 540.0 * 15.0 * factor * Settings.subtitle_scale()))
 
 
 func _layout() -> void:
@@ -305,4 +347,6 @@ func _layout() -> void:
 	# Small caps: the name in capitals, smaller than the line.
 	_speaker.add_theme_font_size_override(&"font_size", _font_size(0.75))
 	_text.add_theme_font_size_override(&"font_size", _font_size(1.0))
+	_style(_speaker)
+	_style(_text)
 	_draw_options()
