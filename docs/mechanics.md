@@ -20,6 +20,7 @@ How everything the player does works, for the run in `docs/full-game-run.md`. Th
 | Ledger | L | View / Select | Two pages now: guests and duties, then notes |
 | Satchel | I | D-pad down | **New** |
 | Pause | Esc | Menu / Start | **New:** opens the pause menu (it frees the mouse now) |
+| Peek through a squint | E at a squint | A / Cross | **New:** your eye to the bars; look about a little; E to step back |
 
 Menus work with either. The gamepad bindings are *mine*.
 
@@ -230,6 +231,45 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 - *Flames:* they kill.
 - *Death in the fire* takes you back to the last bell, before you set it.
 
+## Night 0 and day 1
+
+**The ride in.** It's on rails: the wagon drives itself from the white chapel through Aldgate to the lane, about three minutes *(mine)*. You can look about, and talk to the traveller beside you (a conversation, three answers). It ends when the carter sets you down.
+
+**Drinking** at the Cross Keys (night 0). It's a conversation answer with Hob or Agnes.
+- Each ale is +1 drink, to 5. You lose 1 an hour, and sleep clears it. *(mine)*
+- Drink affects sight only, like Dose:
+
+| Drink | You see |
+| --- | --- |
+| 1–2 | Softer focus |
+| 3+ | A slow double image and a drift to the view; the killing at the window is seen through it, and your ledger note says you'd drunk too much |
+
+- Day 1 starts with a headache blur until noon if you drank 3 or more. *(mine)*
+
+**Sleeping** at the inn ends night 0. Lying down on the bed in your room triggers the cry and the window. You can stay at the window or not. Then you sleep, and day 1 begins.
+
+**The squint scare.** Night 0 only, once. If you walk the lane alone after the curfew bell and pass the south squint, a tall horned shape stands still just inside it. It follows the demon's Glimpses rules: it's gone once you've looked away.
+
+**The tour (day 1).** Follow Thomas and Anselm, a companion pair walking ahead. At each duty they stop, explain it, and let you try it:
+- bar the gate;
+- open the ledger;
+- look at the candle clock;
+- take hold of the bell rope (you don't ring it by day);
+- check a round stop;
+- turn down a guest bed.
+
+The duty glyph marks each one. Then they take you to your cell, and lying on the cot is the nap: a fade to dusk, and night 1 begins with its wake.
+
+**Peeking.** At a squint, E puts your eye to the bars. The view is held, as when hiding, within 25° of straight ahead. You can't be seen through it except up close with a light. From inside, the porter's cell squint shows the lane and the gate.
+
+## The lane at dusk
+
+- **Who's about:** while the gate stands open at dusk, the lane's people are out on their routines: Hob and Agnes at the inn door, Kit selling candles at the gate, Gib lighting the lanterns, Mab begging, the carter and Margery passing.
+- **What they say** changes with the nights. Each person's dusk conversation reads the flags: who died, whom you turned away, what you reported. The rumours run ahead of you: what happens in the abbey is talked about in the lane the next dusk.
+- **The inn** is open at dusk. You can go in, talk and drink (drink works as on night 0). The brothers smell it on you: if you're late to supper smelling of ale, Suspicion +5. *(mine)*
+- **The curfew bell** rings at nine. The lane empties, and after it only Gib walks the lane, calling the hour every hour (a clock you can hear from inside). If his call stops, something has happened.
+- **Lane deaths** happen after curfew, seen through the grille or a squint (the run's spec).
+
 ## Settings and accessibility
 
 - **One difficulty,** as designed.
@@ -264,7 +304,8 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 | M9 | Bodies (finding, reporting, moving), the ledger's notes, being seen |
 | M10 | Dose senses-only, HUD lies, incense positioning, clean food |
 | M11 | Throwing, wedging, the bell gamble, the lantern and wind, hunters' voices, the Suspicion bands, routines, trust, warnings, companions, lies at the gate |
-| M14 | The Hungry Saint, proof, stopping the rite, fire |
+| M12 | Night 0 and day 1: the ride, the Cross Keys, drinking, the window, the squints and the squint scare, peeking, the tour; the lane at dusk (its people, rumours, the curfew bell, the watchman) |
+| M15 | The Hungry Saint, proof, stopping the rite, fire |
 
 ## Tests
 
@@ -288,6 +329,9 @@ Each mechanic gets checks in `tools/check.sh` when it's built:
 - **The Saint:** its speed by count, it passes doors, its touch kills.
 - **Proof and the rite:** two kinds open the Gate; freeing the victim or taking the book stops the rite.
 - **Fire:** it spreads, choking leads to collapse, flames kill, and death takes you back before you set it.
+- **Night 0:** the ride arrives at the lane, drink blurs and wears off, lying down plays the window, the squint scare happens once and only after curfew, and the night ends in sleep.
+- **Day 1:** the tour visits every duty, then the nap leads to night 1's dusk.
+- **The lane:** dusk lines change with the flags, the curfew bell empties the lane, and the watchman calls the hour.
 
 ## Decisions to review
 
@@ -307,3 +351,6 @@ The mechanics I chose because the grilling didn't settle them:
 - The cult can't tear out notes, only guest pages.
 - Hunters' voices are subtitles with a direction, from night 4.
 - Throwables are tidied away by the next night.
+- Drink: +1 an ale, 5 at most, lose 1 an hour; double image at 3+; the headache until noon.
+- Drinking at the inn at dusk on later nights: the brothers smell it (Suspicion +5 if late to supper).
+- The ride takes about three minutes; peeking through a squint gives 25° either way.

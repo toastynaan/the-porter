@@ -1,12 +1,12 @@
-# The full-game run (M8–M15)
+# The full-game run (M8–M16)
 
 Nov 8, 2026 · from the grilling session with @Pahul
 
-The run builds the whole of The Porter: six nights in order and seven endings, playable from the title screen, with placeholder art and sound. It goes from M8 to M15 without stopping. The story changes it rests on are in the design doc (see its changelog), and the HUD and gore changes are in the Look and Feel. How every mechanic plays (controls, crouching, the satchel, throwing, captures, trust, warnings, companions, the Saint, fire) is in `docs/mechanics.md`; where the two overlap, that file wins on rules and numbers. This file holds the run's own spec: deaths and bodies, the rite, the systems, the nights, the endings and the milestones. It ends with a progress log and the decisions for you to review.
+The run builds the whole of The Porter: the prologue (night 0 at the Cross Keys and the day-1 tour), six nights in order and seven endings, playable from the title screen, with placeholder art and sound. It goes from M8 to M16 without stopping. The story changes it rests on are in the design doc (see its changelog), and the HUD and gore changes are in the Look and Feel. How every mechanic plays (controls, crouching, the satchel, throwing, captures, trust, warnings, companions, the Saint, fire) is in `docs/mechanics.md`; where the two overlap, that file wins on rules and numbers. This file holds the run's own spec: deaths and bodies, the rite, the systems, the nights, the endings and the milestones. It ends with a progress log and the decisions for you to review.
 
 ## The agreement
 
-- **Scope:** all six nights, all seven endings, menus, saves and death, with placeholder art and sound. Generated pilgrims stay out (the doc's scope decision); every visitor is written by hand.
+- **Scope:** the prologue (night 0 and day 1), all six nights, all seven endings, menus, saves and death, with placeholder art and sound. Generated pilgrims stay out (the doc's scope decision); every visitor is written by hand.
 - **No stops until the end.** I commit after each milestone, push it to main, and add a line to "Progress" below. I stop early only if I'm blocked or something breaks that I can't fix.
 - **Gaps:** where the docs don't say, I decide in their spirit and add the decision to "Decisions to review" at the bottom. Numbers I pick are marked *mine* in the docs, as before.
 - **Writing:** I draft real lines for every conversation, scene and chronicle entry. Each conversation file starts `# DRAFT` until you've rewritten or accepted it.
@@ -14,7 +14,7 @@ The run builds the whole of The Porter: six nights in order and seven endings, p
 
 ## Done when
 
-1. **From the title screen,** New Game plays nights 1 to 6 in order, with a chapter card for each. Continue picks up at the last bell, and death sends you back to it.
+1. **From the title screen,** New Game plays night 0, day 1 and nights 1 to 6 in order, with a chapter card for each. Once you've finished the game, New Game can also begin at night 1. Continue picks up at the last bell, and death sends you back to it.
 2. **Every night runs** from waking at dusk to sleeping at dawn in a scripted test that passes.
 3. **Each of the seven endings** can be reached by a scripted route, and each shows its chronicle entry.
 4. **The deaths:** every witnessed death and found body happens where this file says. Every death that choices can prevent is prevented by its choice in a test.
@@ -27,7 +27,7 @@ What the tests can't tell you is whether it's scary. That's your playtest, after
 
 There are three kinds of death:
 - **Found bodies:** the design doc's six, one a night (the pond, the bell tower, the oven, the charnel house, the granary, the infirmary).
-- **Witnessed deaths:** nine, rising from none on night 1 to three on night 6, on top of the six. You see them happen.
+- **Witnessed deaths:** nine, rising from none on night 1 to three on night 6, on top of the six. You see them happen. Before them, the killing you watch from the inn's window on night 0, which comes before your six nights and doesn't feed the rite.
 - **Hidden bodies:** five optional ones, earlier victims, for players who explore.
 
 **Who can die in front of you:** guests you admitted, brothers, and people in the lane. The named outsiders (Walter, Joan, Mab, Roger) never die in view; Joan can still be body 5, as the doc says.
@@ -47,6 +47,7 @@ The body falls as a ragdoll (the kept ragdoll system). Fresh blood stays dark (L
 
 | Night | Victim | Where you see it | Shown | Your choices |
 | --- | --- | --- | --- | --- |
+| 0 | A guest of the abbey | From your room at the top of the Cross Keys, over the wall: by the well | Implied: a figure in a black habit, back to you, a struggle, then dragging him toward the cellar. Sober you saw a man; drunk you aren't sure | None (before your six nights) |
 | 2 | Whoever you turned away at the gate tonight (a drunk from the inn if you turned no one away) | The lane, through the grille, under a street lantern after midnight | The throat. Far off: a tall shape behind him, then he's down in the gutter. The demon never moves while you look (Glimpses phase) | Decides *who*; someone dies either way |
 | 3 | A bound pilgrim, taken before your watch | The crypt, from the foot of the stair: the figure by the light has his back to you because he is killing him | Gory. Then he turns and sees you, and the night-3 chase starts | None |
 | 4 | A choir brother (not Simon) | The cloister walk in the fog, a few metres ahead of you | Implied: a shape, a cry cut off, his lantern rolling on the flags. When the fog clears there's only blood | None |
@@ -113,6 +114,8 @@ On night 6 its last victim at Matins is Brother Simon if he lived, otherwise a p
 
 | System | What it does |
 | --- | --- |
+| The prologue | Night 0: the wagon ride through Aldgate, the Cross Keys (taproom and rooms), the lane's people, drinking, the curfew bell, the squint scare, the killing seen from your window, sleep. Day 1: grey daylight, the tour of the duties with Thomas and Anselm, the nap (`docs/mechanics.md`) |
+| The lane | A hub at each dusk while the gate is open: the people you met on night 0, their rumours (which follow what you did), the inn. After the curfew bell: the watchman calling the hour, windows going dark, lane deaths seen through the grille and the three squints |
 | Six nights | Each night: dusk, supper, the gate, knocks, Matins, the round, the small hours, dawn, then sleep and a chapter card. Everything carries over: flags, Dose (halved by a day's sleep), Suspicion, keys, the ledger, the count, bodies, blood, locked doors and what each person thinks of you |
 | Saves | At every bell, one slot. Continue on the title screen. Death sends you back to the last bell |
 | Menus | Title (New Game, Continue, How to Play, Settings, Quit), pause, settings (field of view 60–90°, mouse sensitivity, invert, volume, clock speed off by default). Manuscript style, as the Look and Feel says |
@@ -138,6 +141,8 @@ The night-by-night script is in the design doc. In short:
 
 | Night | Knocks | Witnessed | Found | Thomas | Chase rule | Weather |
 | --- | --- | --- | --- | --- | --- | --- |
+| 0 | None: you're outside, at the Cross Keys | The killing by the well, from your window | None | Not yet met | None (the squint scare, if you walk alone after curfew) | Rain at dusk, then clear |
+| Day 1 | None | None | The sand by the well | Leads the tour with Anselm; his first lie | None | Overcast day |
 | 1 | The merchant, Walter, the knock with no one there | None | The merchant (if admitted) | Kind; the night is a tutorial | None (a glimpse at the end of the cloister) | Rain |
 | 2 | Joan, the sailor, Roger | The one you turned away | The bell-tower brother | Found hurt in the infirmary, blaming the demon | None (glimpses) | Rain |
 | 3 | Walter, the child's knock | The crypt pilgrim | The oven bones | His remedy; he tells you the prior watches you; he saves you from the hunter | Hiding (as built) | Clear |
@@ -169,14 +174,15 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 | M9 | Death and bodies: the death node (three styles, two renders, fakes, ragdoll), blood that stays and gets cleaned, moving bodies, reporting, hidden bodies, the rite's count and the book, the ledger's notes, being seen | Each style plays in a test scene; reporting changes what follows; the count adds up |
 | M10 | The drug and the dark: Dose tiers (senses only), hallucination and fake events, HUD lies at 75+, incense by the door, clean food, scares between chases, jump scares, the cat | Each tier's events fire in a test, fakes leave nothing, and stills by Dose |
 | M11 | Hunters and the abbey: the Suspicion bands, two hunters, locked doors, voices, unmasking; throwing, wedging, the bell gamble, the lantern in the wind; routines, trust, warnings, companions, lies at the gate; weather; the well; the wine | Each band and each kind of weather tested; routines walk by the hour |
-| M12 | Nights 1 and 2, and night 3 brought into line (the crypt death, Thomas's beats, the rite's page) | Nights 1–3 play in order in one test |
-| M13 | Nights 4 and 5: the fog, Edwin, Osric unmasked, Simon and the blood, the dilemma, the granary, the arrest | Nights 1–5 in order; both sides of the dilemma |
-| M14 | Night 6: the hunt, the Hungry Saint, proof, stopping the rite, fire, the crypt, the seven endings and their chronicles | Every ending reached by a scripted route |
-| M15 | Full pass: every route played by tests, fixes, timing, the play guide, the decisions list | "Done when" above, all of it |
+| M12 | The prologue and the lane: the road through Aldgate, the Cross Keys inside and out (the inn gains a storey), the lane's people and their dusk rumours, drinking, the curfew bell and the watchman, the squints and the squint scare, the killing from the window; day 1's tour and the nap | Night 0 and day 1 play from New Game to night 1's dusk in one test; the lane's lines change with flags |
+| M13 | Nights 1 and 2, and night 3 brought into line (the crypt death, Thomas's beats, the rite's page) | Night 0 to night 3 play in order in one test |
+| M14 | Nights 4 and 5: the fog, Edwin, Osric unmasked, Simon and the blood, the dilemma, the granary, the arrest | Night 0 to night 5 in order; both sides of the dilemma |
+| M15 | Night 6: the hunt, the Hungry Saint, proof, stopping the rite, fire, the crypt, the seven endings and their chronicles | Every ending reached by a scripted route |
+| M16 | Full pass: every route played by tests, fixes, timing, the play guide, the decisions list | "Done when" above, all of it |
 
 ## Risks
 
-- **Size.** This is about seven milestones the size of M7. I'll keep each one shippable, so the game works at every commit.
+- **Size.** This is about eight milestones the size of M7. I'll keep each one shippable, so the game works at every commit.
 - **The dev build.** Godot 4.8.dev7 may break under this much more. If it costs real time, I'll log it and work around it rather than change versions without you.
 - **Ragdolls.** The kept ragdoll system was built for the old project. If it fights the new bodies, bodies fall as a scripted pose instead, and I'll log that.
 - **The feel.** Pacing, fear and whether players find their way can only be judged by your playtest. I'll keep the doc's rule of 5–10 quiet minutes before each night's main event.
@@ -198,6 +204,11 @@ Things I decided because the docs didn't say. Accept, change or strike each one.
 - Turned away, the merchant lives and Roger doesn't come on night 2.
 - Thomas's night-4 lead on Simon. Simon tells you Thomas sent him only if you save him.
 - The settings list, and the clock-speed setting (off by default).
+- The prologue's details: he's sent from a small house in the country; the abbey has no night porter, so he sleeps at the inn; Mab sends him there; the guest killed on night 0 doesn't feed the rite; Thomas's first lie is the sand by the well.
+- The lane's people and their names (Hob and Agnes, Jankin, Gib, Ralph and Kit, Margery), and Jankin as the night-2 lane death if you turned no one away.
+- The curfew bell at nine, and the watchman calling the hour after it.
+- The squints: three, one from the porter's cell and two from the outer court; the scare at the south one.
+- Once you've finished the game, New Game can begin at night 1.
 - Thomas's night-2 "attack" is a cut across his arm that he made himself.
 - The Hungry Saint's look (Look and Feel): about 2.6 m, no horns, a gap in the light that dims your lantern, the same at any Dose.
 - The three death styles and which deaths use which (the table above).

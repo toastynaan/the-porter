@@ -2,7 +2,7 @@
 
 Nov 6, 2026 · @Pahul
 
-**Changes, Nov 8 2026:** an almost-no HUD (thin outlines on usable things, a faint marker over what the current duty needs); how deaths are shown; the Hungry Saint's look on night 6. See `docs/full-game-run.md`.
+**Changes, Nov 8 2026:** an almost-no HUD (thin outlines on usable things, a faint marker over what the current duty needs); how deaths are shown; the Hungry Saint's look on night 6; the Cross Keys inn, drunkenness, daytime and the squints for the night-0 prologue. See `docs/full-game-run.md`.
 
 ## Direction
 
@@ -144,6 +144,11 @@ Every brother wears the same black habit, which is accurate and good for the hor
 
 **Build approach:** one base body mesh for all brothers in the habit, with head swaps, a few body-shape blend shapes (thin, heavy, hunched) and attached props. Pilgrims use the same base with different clothing pieces. Walter is the only saturated colour on any character.
 
+## Drink and daylight
+
+- **Drunk** (night 0) isn't drugged. It's a warm smear and a slow double image that drifts with the view, with no palette shift and no bruise purple, so the player never mistakes ale for the abbey's drug. Day 1 starts with a faint headache blur until noon.
+- **Day 1** is the only full daylight: overcast, flat and grey, no strong shadows (lighting rule 6). The abbey by day looks plain and harmless, which is the point.
+
 ## Deaths
 
 People die in front of the player, and how much is shown varies on purpose, so no death can be braced for:
@@ -191,6 +196,14 @@ The abbey is plain, worn and cramped. It's a working building, not a cathedral: 
 The city presses against the abbey's west wall. The lane is narrow and tall: timber-framed houses of three or four storeys, lime plaster between dark oak, each upper floor jutting out over the one below, gable ends to the street. Lanterns hang from iron brackets outside the houses, so the lane is a row of warm pools in fog; lit windows show who is awake. The inn stands opposite the gate. The view up the lane ends on a great church front in the fog. Beyond the roofs: more roofs, spires, the city wall.
 
 Mood references (street and gate images, Nov 2026): rain-wet streets with lamp pools and fog, tall facades closing in, a Gothic church at the end of the lane, an ivy-grown stone gate arch with a lantern and a lodge beside it. Take the mood, not the period details: no lamp posts, iron balconies, sash windows or ornamental ironwork. The medieval versions are lanterns on brackets, jettied upper floors, small shuttered or horn-paned windows, and a plain barred grille.
+
+**The Cross Keys** is the warmest room in the game, and it's meant to be: low beams, a big hearth, tallow smoke, faces lit orange, noise. It's the last warm place before the abbey, so the player feels its loss. Its upper rooms are small and cold, with one window toward the abbey.
+
+**The lane by the hour.** At dusk it's busy and lit: doors open, people going home, the inn loud. At nine the curfew bell rings and it empties. After that there are only the lanterns, the watchman's light moving between them, and lit windows going dark one by one, until it's as dark as the abbey.
+
+**The squints** are three small barred windows in the abbey wall, about a hand's width by a forearm's height, at eye level. From outside they show slivers of the court; from inside, slivers of the lane.
+
+**The road in (night 0).** The wagon ride is grey dusk over mud and ruts: the white chapel in the fields, then the city wall and Aldgate's dark arch, then the close, tall streets. It's the only time the player sees beyond the lane.
 
 **Dressing rules**
 

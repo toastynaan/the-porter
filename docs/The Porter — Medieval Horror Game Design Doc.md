@@ -9,6 +9,7 @@ Nov 6, 2026 · @Pahul
 - Brother Simon, a choir brother, draws your suspicion: Thomas sends him to scrub blood, then points you at him. On night 5 you save Thomas or Simon.
 - People die in front of you: nine witnessed deaths across the game, on top of the six found bodies. There are also hidden bodies to find.
 - Seven endings: the five, rewritten to say what became of the Saint, plus The Rising and The Broken Rite.
+- A prologue: **night 0** at the Cross Keys inn on the lane (arriving by carter's wagon through Aldgate, the lane's people, drink, a killing seen from your room), then **day 1**, Thomas and the blind Anselm showing you the porter's duties before your first night. The lane becomes a place you know: a hub at each dusk and a view by night. Three small barred windows (squints) in the wall along the lane.
 - Mechanics (from the mechanics grilling; full rules in `docs/mechanics.md`): one forgiving capture, on night 1 or 2 only; crouching and leaning; a satchel; throwing things to draw a hunter; wedging doors; the bell rope as a gamble; the lantern can blow out; hidden trust per person, warnings and companions; the ledger keeps notes; no fighting.
 
 ## Pitch
@@ -27,7 +28,7 @@ First-person, single-player, 6 nights, roughly 4–6 hours.
 
 ## Setting
 
-The whole abbey is one walled square about 80 m across. Every building opens off the cloister, so nothing is more than a minute's walk or about 20 seconds' run away and nothing is out of earshot. It is a Benedictine abbey inside the walls of London, late autumn in the 1420s, with about a dozen brothers. Its gate opens onto a narrow lane of the city: timber houses whose upper floors lean out over the street, an inn opposite the gate, and a lantern hung outside each house on winter nights (the mayor's order of 1415). The gate is an iron grille under a stone porch, so the porter sees each visitor whole in the lantern light before he decides.
+The whole abbey is one walled square about 80 m across. Every building opens off the cloister, so nothing is more than a minute's walk or about 20 seconds' run away and nothing is out of earshot. It is a Benedictine abbey inside the walls of London, late autumn in the 1420s, with about a dozen brothers. Its gate opens onto a narrow lane of the city: timber houses whose upper floors lean out over the street, an inn opposite the gate (the Cross Keys), and a lantern hung outside each house on winter nights (the mayor's order of 1415). The gate is an iron grille under a stone porch, so the porter sees each visitor whole in the lantern light before he decides. Three small barred windows (squints) in the abbey wall look out on the lane: one from the porter's cell, two from the outer court. At nine the city's curfew bell empties the lane, and after it only the night watchman walks it, calling the hour.
 
 Small is the point. The player learns every corner by night 2, so on later nights they notice when something is wrong: a door open that is always shut, a lamp out, a brother where he shouldn't be. With no far-off place to run to, the hunter is always close, and the player can hear him from anywhere. The city is right outside. At dusk, while Cole still keeps the gate open, you can step out and talk to whoever is in the lane. Once you take the gate after supper it stays barred: through the night the street is something you see through the grille and hear over the wall, not somewhere to run. You go out into it at night only when the story sends you. The abbey guards a relic, the finger bone of a local saint, which draws pilgrims and gives the cult its excuse.
 
@@ -38,7 +39,7 @@ Seven areas inside the walls, and the lane outside the gate, laid out the way re
 | Area | What's in it | Night role | Hiding spots |
 | --- | --- | --- | --- |
 | Outer court | Gate (an iron grille onto the lane), porter's cell, guesthouse, well | Your hub. Visitors, missing guests | Under your cot, the woodpile |
-| The lane (outside the gate) | Timber houses, the inn opposite the gate, two alleys | Visitors come up it to the gate. Walked at dusk while the gate is open; at night seen through the grille and over the wall, and walked only when the story sends you out | None |
+| The lane (outside the gate) | Timber houses, the Cross Keys inn opposite the gate (its taproom, and rooms upstairs), two alleys | Night 0: the whole lane and the inn are yours. After that, visitors come up it to the gate; at each dusk, while the gate is open, you can go out to the people you know; at night it's seen through the grille and the squints, and walked only when the story sends you out | None |
 | Church | Choir, bell tower, crypt and relic underneath | Matins headcount, incense, cult meetings below | Under the altar cloth, inside an open tomb |
 | Cloister | Covered walkway around a garden | Every route crosses it; long sightlines through the arches | Behind pillars (unreliable) |
 | Dormitory (east) | Beds upstairs, chapter house below, night stairs to the church | Empty beds tell you who is out | Under beds |
@@ -92,7 +93,21 @@ You play **Brother Alric**, 19, made porter after the old porter went blind. Eve
 | Roger, the town bailiff | Demands certain guests be handed over | Wants the abbey's land; useful in one ending |
 | Pilgrims (generated) | A new few each night | Traits: wealthy or poor, sick, armed, lying. Wealthy ones are targets |
 
+**The lane** (met on night 0, seen at every dusk after; names are drafts):
+
+| Character | Who | Later |
+| --- | --- | --- |
+| Hob and Agnes, who keep the Cross Keys | The innkeeper and his wife; they hear everything said over the ale | Their talk at each dusk carries the lane's rumours: who went into the abbey and wasn't seen again, what people say you did |
+| Jankin, a drunk | A regular at the Cross Keys, harmless, full of stories | On night 2, if you turned no one away, he is the man killed in the lane |
+| Gib, the night watchman | Old; lights the street lanterns, walks the lane after curfew calling the hour | His call is a clock you can hear from inside the walls; the night it stops is a scare |
+| Ralph the chandler and his daughter Kit | They make the abbey's candles; Kit sells them at the gate | Ralph knows how many candles the sacrist buys, and when it changed |
+| The carter | Brings you in on his wagon on night 0 | Passes in the lane at dusk |
+| Margery, with her basket | A neighbour who hurries home before dark | Passes in the lane at dusk |
+| Walter and Roger | Drinking at the Cross Keys on night 0, before you meet them at the gate | |
+
 ## Core loop: one night
+
+**Before the first night** there is a prologue: night 0 at the Cross Keys and day 1 at the abbey (see "Night-by-night script"). From night 1 the loop below runs every night.
 
 Each night runs from waking at dusk to going to sleep at dawn: a 40–60 minute shift timed by a candle clock in your cell. The clock burns slowly in real time, and its burn marks are your duties: each is due when the flame reaches its mark, with some slack either side. Talking and exploring cost time, and a duty done very late is noticed.
 
@@ -256,7 +271,7 @@ Six bodies across six nights. Each one is a scare first and a clue second. Clues
 | 5 | Joan, if you sheltered her (otherwise a pilgrim) | Under the grain in the granary | You plunge your arm into the rye to find the hidden key; a hand grips back. She is alive, then she isn't | The rye is black-spurred with ergot. This is the dosing source |
 | 6 | Brother Anselm | In his infirmary bed | He was going to tell you everything. His blind eyes are open and his mouth is stuffed with henbane leaves | Killed for talking. Proves Thomas, the only one with infirmary access |
 
-**Witnessed deaths.** On top of the six bodies you find, nine people die in front of you: none on night 1, then 1, 1, 2, 2 and 3. They're guests you admitted, brothers, and people in the lane; never Walter, Joan, Mab or Roger. Some are implied (a shape in the fog, a cry cut off), some gory, some one quick cut of the throat with blood flying. Drugged, you see the demon do it; sober, a man in a mask. At high Dose, some are hallucinations that leave no body. In the moment you can't stop them; before, your choices decide who dies, and how many. The full list is in `docs/full-game-run.md`.
+**Witnessed deaths.** On top of the six bodies you find, nine people die in front of you: none on night 1, then 1, 1, 2, 2 and 3. Before them all, on night 0, you watch a man killed by the well from your window at the Cross Keys. They're guests you admitted, brothers, and people in the lane; never Walter, Joan, Mab or Roger. Some are implied (a shape in the fog, a cry cut off), some gory, some one quick cut of the throat with blood flying. Drugged, you see the demon do it; sober, a man in a mask. At high Dose, some are hallucinations that leave no body. In the moment you can't stop them; before, your choices decide who dies, and how many. The full list is in `docs/full-game-run.md`.
 
 **Hidden bodies.** Five earlier victims are hidden for players who explore: down the well, in the mill race culvert, under fresh earth in the gardens, in the bell tower loft, under the chapter house flags. Each carries a pilgrim badge that matches a name torn from the ledger.
 
@@ -270,9 +285,25 @@ Six bodies across six nights. Each one is a scare first and a clue second. Clues
 
 The game runs in three acts: **The Gate** (nights 1–2), **The Rounds** (nights 3–5) and **The Hunt** (night 6).
 
+### Night 0: The Cross Keys
+
+You are Brother Alric, sent from a small house in the country to be the abbey's new porter.
+- **The road in.** At dusk you ride into London on the back of a carter's wagon, in from the east past the white chapel and through Aldgate. A fellow traveller talks: pilgrims who went into the abbey and weren't seen to leave, lights in it at night, a demon.
+- **The gate.** The carter sets you down in the lane. The abbey gate is shut and barred and nobody answers: since the old porter went blind, no one keeps it at night. Mab, begging by the gate, sends you to the Cross Keys opposite.
+- **The Cross Keys.** The warmest room in the game. Hob and Agnes, Jankin at the bench, Walter selling relics to the drinkers, Roger asking questions, Ralph the chandler. Drink if you like (each ale blurs the night a little more) and listen: everyone has a story about the abbey.
+- **The lane.** Walk it. Gib lights the lanterns, Kit sells her last candles, the curfew bell rings at nine and the lane empties. Walk it alone after curfew and, through a squint in the abbey wall, a tall horned shape stands perfectly still, looking at you. Look again and it's gone.
+- **The window.** Agnes shows you up to a room at the top of the inn. As you lie down, a cry. From the window you see over the abbey wall into the court: a figure in a black habit, its back to you, kills a man by the well and drags him away toward the cellar. Sober, you saw a man. Drunk, you aren't sure what you saw. This death is before your six nights and doesn't feed the rite.
+
+### Day 1: The tour
+
+- **Morning.** Grey daylight. Agnes says you'd had too much, if you had. Cole opens the abbey gate, and the ground by the well has been sanded over.
+- **The duties.** Thomas, leading the blind Anselm by the arm, shows you the porter's work: the gate and its bar, the bench, the ledger on your cell desk, the candle clock, the bell rope in the tower, the round's stops, the guesthouse beds. Ask about the sand by the well and Thomas says a beast was slaughtered for the kitchen: his first lie. When Thomas steps away, Anselm grips your sleeve: "Don't let them in after the bell."
+- **The nap.** Your shift begins at night, so they send you to sleep in your cell.
+
 ### Night 1: The new porter
 
-- **Supper:** meet everyone. Osric gives you extra bread. Anselm, blind, grabs your sleeve: "Don't let them in after the bell." A choir brother tells you quietly not to eat the bread: something is wrong with it. From night 2 you can palm it.
+- **Dusk:** you wake in your cell as the light fails. The gate is still open with Cole at it: walk the abbey and watch the brothers at their work, or step out into the lane to the people you met last night, before the supper bell.
+- **Supper:** meet everyone. Osric gives you extra bread. A choir brother tells you quietly not to eat the bread: something is wrong with it. From night 2 you can palm it.
 - **Knocks:** a wealthy merchant-pilgrim (admit him), Walter the pardoner, and a final knock after midnight with no one there. Mab saw nobody. This knock is never explained: it happens even at Dose 0, and no ending accounts for it.
 - **Matins:** count is right. First incense; first whisper.
 - **Round:** tutorial route. A tall horned shape stands still at the far end of the cloister. Look away and it is gone. No chase.
