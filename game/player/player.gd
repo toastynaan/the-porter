@@ -18,6 +18,10 @@ extends CharacterBody3D
 ## Talking to someone (start_talk, from Talk) he stands still, his view eased
 ## in on their face and held near it; a move key walks him away.
 ##
+## He holds one thing to throw at a time, in his right hand (docs/mechanics.md,
+## "Throwing": a stone, a bone or a cup from his satchel): throw() sends it
+## about 8 m ahead.
+##
 ## The pause menu frees the mouse (Esc); a click captures it again.
 
 signal stepped(surface: String, running: bool)
@@ -421,6 +425,29 @@ func stumble(seconds: float) -> void:
 	tween.chain().tween_callback(func() -> void: stumbling = false)
 
 
+## What he holds to throw, or empty.
+static func held() -> StringName:
+	for id in GameState.satchel:
+		if Items.kind(id) == &"throwable":
+			return id
+	return &""
+
+
+## Throws what he holds, from his right hand along his view. Returns it.
+func throw() -> Thrown:
+	var what := held()
+	if what == &"" or busy():
+		return null
+	GameState.satchel.erase(what)
+	var t := Thrown.new()
+	t.item = what
+	get_parent().add_child(t)
+	var forward := -camera.global_basis.z
+	t.global_position = camera.global_position + forward * 0.4 + camera.global_basis.x * 0.2 - Vector3.UP * 0.1
+	t.linear_velocity = (forward + Vector3.UP * Thrown.LOFT).normalized() * Thrown.SPEED
+	return t
+
+
 ## Lying on his back, looking up (waking in the infirmary).
 func lie_down() -> void:
 	_eye = 0.7
@@ -493,6 +520,6 @@ func _update_bob(delta: float) -> void:
 
 
 func _update_look_back(delta: float) -> void:
-	var held := Input.is_action_pressed(&"look_back") and not busy()
-	_look_back = move_toward(_look_back, 1.0 if held else 0.0, delta / LOOK_BACK_TIME)
+	var looking := Input.is_action_pressed(&"look_back") and not busy()
+	_look_back = move_toward(_look_back, 1.0 if looking else 0.0, delta / LOOK_BACK_TIME)
 	look_back_pivot.rotation.y = deg_to_rad(LOOK_BACK_ANGLE) * smoothstep(0.0, 1.0, _look_back)

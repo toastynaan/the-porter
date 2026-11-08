@@ -64,6 +64,11 @@ Osric: (Placeholder: he calls after you.)
 | `[item mab_bread]` | Puts something in his satchel (`game/items/items.gd`) |
 | `[note bread_warning]` | Writes a clue in his notes (`game/story/clues.gd`) |
 | `[trust mab 5]` | Changes what someone thinks of him |
+| `[if trust 30]`, `[if not trust 30]` | Offered only if the one he's talking to trusts him that much (or not) |
+| `[warn]` | Warns the one he's talking to (`docs/abbey.md`, "Warnings") |
+| `[follow]`, `[wait]` | The one he's talking to follows him, or waits (`Companion`) |
+
+**Greetings follow trust:** a talk starts at `start_warm` if they trust him 30 or more, `start_cold` below 0, else `start`; the same for `again_warm`, `again_cold` and `again`, where those points exist.
 
 A point whose answers have all dropped off ends the talk after its lines. `test_dialogue` reads every conversation under `game/dialogue/` and fails on a mistake: an unknown point, a fourth answer, an answer with no `->`, a tag it doesn't know.
 

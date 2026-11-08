@@ -39,6 +39,10 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_body_drop.wav            a body dropping from above on a rope
   sfx_cat_hiss.wav             the cat, hissing as it runs
   sfx_bite.wav                 a bite of an apple
+  amb_rain_loop.wav            rain on roofs and flags (loop)
+  sfx_gust.wav                 a gust of wind down a stair or through a door
+  amb_murmur_loop.wav          brothers talking low (loop)
+  sfx_clatter.wav              a thrown stone landing on stone
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -500,6 +504,52 @@ def bite(rng):
     return mix(crunch, pad(gain(crunch, 0.6), 0.06))
 
 
+def rain(rng, seconds=12.0):
+    n = int(seconds * RATE)
+    hiss = lowpass(highpass(noise(n, rng), 900), 6000)
+    out = [h * 0.35 for h in hiss]
+    for _ in range(int(seconds * 60)):
+        at = rng.randrange(0, n - 400)
+        k = rng.uniform(0.2, 0.7)
+        for i in range(300):
+            out[at + i] += k * math.exp(-i / 40.0) * rng.uniform(-1, 1)
+    return loopable(out, fade=0.5)
+
+
+def gust(rng, seconds=2.4):
+    n = int(seconds * RATE)
+    out = []
+    w = bandpass(noise(n, rng), 500, 0.5)
+    for i, s_ in enumerate(w):
+        t = i / n
+        out.append(s_ * math.sin(math.pi * t) ** 1.5)
+    return out
+
+
+def murmur(rng, seconds=10.0):
+    n = int(seconds * RATE)
+    out = [0.0] * n
+    t = 0.0
+    while t < seconds - 0.6:
+        seg = whisper(rng, rng.uniform(0.6, 1.4))
+        voiced = lowpass(seg, 900)
+        at = int(t * RATE)
+        for i, v in enumerate(voiced):
+            if at + i < n:
+                out[at + i] += v
+        t += rng.uniform(0.5, 1.2)
+    return loopable(out, fade=0.6)
+
+
+def clatter(rng):
+    out = []
+    for k in range(4):
+        n = int(0.05 * RATE)
+        click = mix(tone(n, rng.uniform(1400, 2600), 0.012, rng), [a * b for a, b in zip(highpass(noise(n, rng), 2500), env(n, 0.0005, 0.008))])
+        out = mix(out, pad(gain(click, 1.0 - 0.2 * k), 0.09 * k + rng.uniform(0, 0.03))) if out else click
+    return out
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -549,6 +599,10 @@ def main():
     write("sfx_body_drop.wav", body_drop(run), peak=0.9)
     write("sfx_cat_hiss.wav", cat_hiss(run), peak=0.6)
     write("sfx_bite.wav", bite(run), peak=0.6)
+    write("amb_rain_loop.wav", rain(run), peak=0.5)
+    write("sfx_gust.wav", gust(run), peak=0.8)
+    write("amb_murmur_loop.wav", murmur(run), peak=0.4)
+    write("sfx_clatter.wav", clatter(run), peak=0.8)
 
 
 if __name__ == "__main__":

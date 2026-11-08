@@ -179,7 +179,9 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 	var gen := _gen
 	var again := GameState.has_flag(conversation.talked_flag())
 	GameState.set_flag(conversation.talked_flag())
-	var at := conversation.start(again)
+	Conversation.partner = People.id_of(with)
+	Conversation.partner_node = with
+	var at := conversation.start(again, Conversation.partner)
 	var last: Conversation.Line = null
 	while not left and at != "" and at != Conversation.END and gen == _gen:
 		var point := conversation.point(at)

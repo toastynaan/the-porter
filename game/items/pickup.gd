@@ -3,8 +3,9 @@ extends Node3D
 ## Something lying about that the porter can take (docs/mechanics.md, "Your
 ## hands"): a windfall apple under the orchard trees, a stone to throw. Look
 ## at it and press `interact`. Clean food eaten now if he's hungry (hunger
-## ends for the night, no Dose), else it goes in his satchel. Taken, it's
-## gone for the night (picked_<id>).
+## ends for the night, no Dose), else it goes in his satchel; something to
+## throw goes in his hand (one at a time). Taken, it's gone for the night
+## (picked_<id>).
 
 const BITE := preload("res://art/sfx/sfx_bite.wav")
 
@@ -50,6 +51,13 @@ func interact(_by: Node) -> void:
 	_area.collision_layer = 0
 	if Items.kind(item) == &"food" and GameState.is_hungry():
 		eat(item, self)
+	elif Items.kind(item) == &"throwable":
+		# One in his hand at a time: the old one is dropped for this.
+		var old := Player.held()
+		if old != &"":
+			GameState.satchel.erase(old)
+		GameState.satchel.append(item)
+		Talk.say("", "(%s, in your hand.)" % Items.display_name(item))
 	elif not GameState.satchel.has(item):
 		GameState.satchel.append(item)
 		Talk.say("", "(%s, in your satchel.)" % Items.display_name(item))

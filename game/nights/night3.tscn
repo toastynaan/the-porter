@@ -98,10 +98,12 @@ wake_at = NodePath("../../Marks/WakeCell")
 tower = NodePath("../../BellTower")
 gate = NodePath("../../AbbeyGate")
 
-[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas", "ranulf")]
+[node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas", "ranulf", "watcher")]
 script = ExtResource("supper_gd")
 phase = 0
 due = 17.25
+watch_late = true
+fetcher = &"cole"
 duty = "Supper in the refectory, at the supper bell"
 seat = NodePath("../../Marks/PorterSeat")
 seat_duty = NodePath("../../Duties/SupperSeat")
@@ -109,6 +111,7 @@ bread = NodePath("../../Duties/Bread")
 osric = NodePath("../../Brothers/Osric")
 thomas = NodePath("../../Brothers/Thomas")
 ranulf = NodePath("../../Brothers/Ranulf")
+watcher = NodePath("../../Brothers/Hugh")
 
 [node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
 script = ExtResource("gate_gd")
@@ -147,6 +150,7 @@ gate = NodePath("../../AbbeyGate")
 script = ExtResource("bell_gd")
 phase = 3
 due = 24.0
+watch_late = true
 can_doze = true
 duty = "Ring the bell for Matins"
 rope = NodePath("../../Duties/BellRope")
@@ -205,6 +209,7 @@ gate_lamp = NodePath("../../Lamps/GateLamp")
 script = ExtResource("dawn_gd")
 phase = 5
 due = 30.0
+watch_late = true
 duty = "At Lauds: give the gate to Cole, and sleep"
 gate = NodePath("../../AbbeyGate")
 cole = NodePath("../../People/Cole")

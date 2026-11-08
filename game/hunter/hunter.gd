@@ -69,6 +69,12 @@ const FREEZE_TIME := 0.5
 ## How he kills the porter when he takes hold of him (CaptureFlow.die):
 ## "cord" or "blade".
 @export var weapon := &"cord"
+## Who is in the costume (People: "osric", "ranulf"...): his voice, and
+## his face if the mask comes off.
+@export var wearer := &""
+
+## The mask came off (night 4): his face shows.
+var unmasked := false
 
 ## Shown but still, senses or not, until chase() or alert().
 var waiting := false
@@ -180,6 +186,39 @@ func stand_still() -> void:
 	_set_dormant(false)
 	waiting = true
 	velocity = Vector3.ZERO
+
+
+## The mask comes off in the chase (night 4: it's Osric). It falls at his
+## feet, where the porter can take it, and his own face shows.
+func unmask() -> Node3D:
+	if unmasked:
+		return null
+	unmasked = true
+	costume.show_face(_face_colour())
+	var mask := Pickup.new()
+	mask.id = StringName("mask_" + String(wearer))
+	mask.item = &"mask"
+	var mesh := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = Vector3(0.18, 0.04, 0.26)
+	mesh.mesh = box
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color("#D8C9A3")
+	mesh.material_override = mat
+	mask.add_child(mesh)
+	get_parent().add_child(mask)
+	mask.global_position = global_position + global_basis.z * 0.6 + Vector3.UP * 0.02
+	GameState.set_flag(StringName("unmasked_" + String(wearer)))
+	return mask
+
+
+func _face_colour() -> Color:
+	match wearer:
+		&"osric":
+			return Color(0.75, 0.45, 0.38)
+		&"ranulf":
+			return Color(0.78, 0.74, 0.68)
+	return Color(0.6, 0.48, 0.4)
 
 
 ## Back to where he started, patrolling (after a capture).
@@ -360,6 +399,14 @@ func _lose_track() -> void:
 	if heard_spot and (_noise_person or _may_search()):
 		_spots.erase(heard_spot)
 		_spots.push_front(heard_spot)
+	# In the snow he follows the porter's freshest prints near where he lost him.
+	var snow := get_tree().get_first_node_in_group(&"footprints") as Footprints
+	if snow and Footprints.active(get_tree()):
+		var trail := snow.freshest(&"porter", last_seen, 12.0)
+		if trail != Vector3.INF and trail.distance_to(last_seen) > 1.0:
+			_spots.clear()
+			_investigate_at(trail, null)
+			return
 	if _spots.is_empty():
 		_investigate_at(last_seen, null)
 	else:

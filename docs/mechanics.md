@@ -427,3 +427,13 @@ Added during the run (M10, `docs/drug.md`):
 - Refusing Ranulf's remedy: Suspicion +5 (as built) and Thomas's trust +5.
 - The cat keeps 1.8–3.2 m off, stares every 35–70 s for 4 s (at a hunter within 10 m if there is one), and bolts 14 m when the animals go quiet.
 - The HUD's lie is the cloister's west walk wall, between the granary's door and the stores'.
+
+Added during the run (M11, `docs/abbey.md`):
+- At Suspicion 60+ the cult locks three doors: the slype, the granary's cloister door and the charnel house (his key opens that one). At 85+ three hunters, all searching.
+- Hunters call every 6–11 s while chasing or searching; "drugged" for the voice is Dose 50+. From night 4 hunters kill with a blade.
+- Fog sight 4 m; an uncovered lantern shows as a glow from 14 m. Snow: up to 400 prints; a hunter follows the freshest within 12 m of where he lost the porter.
+- Routines: Thomas at his herbs from 18:30; Osric locks the granary's cloister door at 21:00 and goes to bed at 21:30; Hugh walks the cloister and the court from 20:30 to 23:30; Ranulf in the church from 20:00.
+- A warning is overheard if Ranulf is within 8 m; it reaches Thomas if a brother who trusts the porter less than 30 was warned, or anyone who distrusts him.
+- A companion is taken by a hunter within 1.2 m, and that's their death. Someone below trust 0 won't follow.
+- Refusing Thomas's wine to his face: Suspicion +20.
+- At the bell, the prior's questions have three answers; "Something was after me" makes him suspect the porter more.

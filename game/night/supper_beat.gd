@@ -26,6 +26,11 @@ const REFUSE_SUSPICION := 5
 @export var thomas: Brother
 ## Who offers the remedy (none: no remedy tonight).
 @export var ranulf: Brother
+## Who watches him at supper from Suspicion 30 (docs/mechanics.md, "Reading
+## the hidden numbers": someone is always watching you at supper).
+@export var watcher: Brother
+
+const WATCHED_FROM := 30
 ## Seconds Osric watches your plate after serving before he turns away.
 @export var watch_time := 5.0
 @export var warned_flag := &"bread_warned"
@@ -41,7 +46,11 @@ func run() -> void:
 	var p := player()
 	await say("", "(Supper. Take your place in the refectory.)")
 	await seat_duty.wait_for_use()
+	arrived()
 	p.place(seat.global_position, seat.global_rotation.y)
+	if watcher and GameState.suspicion >= WATCHED_FROM:
+		watcher.face(p.global_position)
+		GameState.set_flag(GameState.tonight("watched_at_supper"), StringName(watcher.name))
 	p.use_input_override = true
 	p.input_override = Vector2.ZERO
 	bread.visible = true

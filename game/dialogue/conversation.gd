@@ -17,19 +17,34 @@ extends Resource
 ##   -> topics                 Goes on to another point with no answer asked.
 ##   == leave                  Said as he walks away in the middle of a talk.
 ##
+## Who they are to the porter (docs/mechanics.md, "Trust"): a talk starts at
+## "start_warm" if they trust him 30 or more, "start_cold" below 0, else
+## "start" (and "again_warm", "again_cold", "again" the next time), where
+## those points exist: the greeting follows trust.
+##
 ## Tags in square brackets, on an answer or after a point's name:
 ##   [if flag] [if not flag] [if flag=value]   offered only then (answers)
+##   [if trust 30] [if not trust 30]           only if they trust him 30+
 ##   [set flag] [set flag=value]               sets a GameState flag
 ##   [suspicion 5]                             raises Suspicion
 ##   [item mab_bread]                          puts something in his satchel
 ##   [note thomas_saw_simon]                   writes a clue in his notes
 ##   [trust mab 5]                             changes what someone thinks of him
+##   [warn]                                    warns them (Warnings)
+##   [follow] [wait]                           they follow him, or wait (Companion)
 ## Every talk sets the flag talked_<id>.
 
 const MAX_ANSWERS := 3
 const END := "end"
 const AGAIN := "again"
 const LEAVE := "leave"
+## Trust from which they greet him warmly and tell him more; below 0, coldly.
+const WARM := 30
+
+## Who he is talking to now (Talk.converse sets it): their People id, and
+## the node, for [trust], [warn], [follow] and [wait].
+static var partner := &""
+static var partner_node: Node3D
 
 
 class Line:
@@ -68,10 +83,18 @@ func talked_flag() -> StringName:
 	return StringName("talked_" + key)
 
 
-## Where a talk starts: the first point, or "again" if he has talked to them.
-func start(talked_before: bool) -> String:
+## Where a talk starts: the first point, or "again" if he has talked to them,
+## warm or cold by what they think of him.
+func start(talked_before: bool, who := &"") -> String:
 	_parse()
-	return AGAIN if talked_before and _points.has(AGAIN) else _first
+	var base := AGAIN if talked_before and _points.has(AGAIN) else _first
+	if who != &"" and (base == AGAIN or base == "start"):
+		var t := GameState.trust_of(who)
+		if t >= WARM and _points.has(base + "_warm"):
+			return base + "_warm"
+		if t < 0 and _points.has(base + "_cold"):
+			return base + "_cold"
+	return base
 
 
 func has_point(point_name: String) -> bool:
@@ -105,10 +128,12 @@ static func holds(tags: PackedStringArray) -> bool:
 		var words := tag.split(" ", false)
 		if words[0] != "if":
 			continue
-		var negate := words.size() == 3 and words[1] == "not"
+		var negate := words.size() >= 3 and words[1] == "not"
 		var cond := words[-1]
 		var ok: bool
-		if "=" in cond:
+		if words[-2] == "trust":
+			ok = GameState.trust_of(partner) >= int(cond)
+		elif "=" in cond:
 			var parts := cond.split("=")
 			ok = str(GameState.get_flag(StringName(parts[0]), "")) == parts[1]
 		else:
@@ -139,6 +164,12 @@ static func apply(tags: PackedStringArray) -> void:
 				GameState.note(StringName(words[1]))
 			"trust":
 				GameState.change_trust(StringName(words[1]), int(words[2]))
+			"warn":
+				Warnings.give(partner, partner_node)
+			"follow", "wait":
+				var c := partner_node.get_node_or_null(^"Companion") as Companion if partner_node else null
+				if c:
+					c.set_following(words[0] == "follow")
 
 
 func _parse() -> void:
@@ -226,8 +257,10 @@ func _split_tags(s: String, n: int) -> Array:
 		out += s.substr(i, open - i)
 		var tag := s.substr(open + 1, close - open - 1).strip_edges()
 		var words := tag.split(" ", false)
-		var ok := words.size() >= 2 and (
-			(words[0] == "if" and (words.size() == 2 or (words.size() == 3 and words[1] == "not")))
+		var ok := (words.size() == 1 and words[0] in ["warn", "follow", "wait"]) or words.size() >= 2 and (
+			(words[0] == "if" and (words.size() == 2 or (words.size() == 3 and words[1] == "not")
+				or (words.size() == 3 and words[1] == "trust" and words[2].is_valid_int())
+				or (words.size() == 4 and words[1] == "not" and words[2] == "trust" and words[3].is_valid_int())))
 			or (words[0] == "set" and words.size() == 2)
 			or (words[0] == "suspicion" and words.size() == 2 and words[1].is_valid_int())
 			or (words[0] == "item" and words.size() == 2 and Items.ALL.has(StringName(words[1])))

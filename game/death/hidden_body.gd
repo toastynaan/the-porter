@@ -19,6 +19,8 @@ const REVEAL := preload("res://game/death/reveal_area.gd")
 ## What the porter sees as he begins (the bucket comes up heavy...).
 @export var reveal_line := ""
 @export var reveal_time := 1.5
+## Found with its own reveal (off: something else finds it, the Well).
+@export var own_reveal := true
 
 var _reveal: Area3D
 var _holding := 0.0
@@ -29,7 +31,7 @@ func _ready() -> void:
 	super._ready()
 	if is_found and not is_moved:
 		show_body.call_deferred()
-	if not by_walking and not is_found:
+	if not by_walking and not is_found and own_reveal:
 		_reveal = REVEAL.new()
 		_reveal.collision_layer = Layers.INTERACT if available() else 0
 		_reveal.collision_mask = 0

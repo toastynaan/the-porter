@@ -3,7 +3,8 @@ extends RayCast3D
 ## What the porter can reach: the first thing along the view within REACH
 ## whose node, or an ancestor, has interact(by). What is in reach gets the
 ## thin pale outline (Outline); `interact` uses it, and `lock` turns a key in
-## it (toggle_lock(by)) when it has a lock.
+## it (toggle_lock(by)) when it has a lock. `interact` with nothing in reach
+## throws what he holds.
 
 signal focus_changed(target: Node)
 
@@ -42,6 +43,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	var click := event is InputEventMouseButton
 	if event.is_action_pressed(&"interact") and focused and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		focused.interact(_player)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"interact") and focused == null and not _player.busy() and Player.held() != &"" \
+			and not Talk.talking and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
+		# Looking at nothing usable, holding something: he throws it.
+		_player.throw()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed(&"lock") and focused and focused.has_method(&"toggle_lock"):
 		focused.toggle_lock(_player)

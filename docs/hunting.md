@@ -49,6 +49,8 @@ To play night 3, see `docs/night3.md`. To try the hunter and the demon on their 
 
 He can't follow through the mill wheel gap or the latrine chute, and he has no keys. Door leaves don't stop him physically: he stops at a shut one and opens it, and a locked one turns him back, by his own rule (since M8).
 
+Since M11 (`docs/abbey.md`): how many hunters go out on a round, and how they hunt, follows Suspicion's bands (`Hunt`); each has a `wearer`, calls the porter's name from night 4 (`HunterVoice`), can lose his mask (`unmask()`), comes to look at a thrown stone, hears half as far in rain, sees 4 m in fog (but sees a lantern's glow further) and follows prints in snow.
+
 He carries a shuttered lantern on his back (*default*; its 3.5 m light is *mine*), so he shows as a dark shape against its glow: the doc's sober render of the demon, "a lantern behind it". The first time your lantern light touches him, he freezes for 0.5 s (*default*).
 
 ## Hiding

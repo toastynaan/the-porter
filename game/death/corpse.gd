@@ -54,7 +54,7 @@ func _ready() -> void:
 
 ## Falls dead now, pushed by `push` (m/s), struck at `bone`.
 func fall(push := Vector3.ZERO, bone := Bones.CHEST) -> void:
-	if dead:
+	if dead or ragdoll == null or not is_inside_tree():
 		return
 	dead = true
 	ragdoll.launch(push, global_position + Vector3.UP * 1.2, bone)

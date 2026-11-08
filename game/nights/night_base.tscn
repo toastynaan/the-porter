@@ -51,6 +51,14 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_carved_saint.tscn" id="carved_saint"]
 [ext_resource type="PackedScene" path="res://game/npc/cat.tscn" id="cat"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone_mat"]
+[ext_resource type="Script" path="res://game/hunter/hunt.gd" id="hunt_gd"]
+[ext_resource type="Script" path="res://game/world/weather/weather.gd" id="weather_gd"]
+[ext_resource type="Script" path="res://game/world/weather/footprints.gd" id="footprints_gd"]
+[ext_resource type="Script" path="res://game/world/weather/gust.gd" id="gust_gd"]
+[ext_resource type="Script" path="res://game/night/off_hours_bell.gd" id="off_hours_gd"]
+[ext_resource type="Script" path="res://game/world/well.gd" id="well_gd"]
+[ext_resource type="Script" path="res://game/npc/routine.gd" id="routine_gd"]
+[ext_resource type="Script" path="res://game/npc/murmur.gd" id="murmur_gd"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
@@ -94,6 +102,37 @@ height = 0.08
 radial_segments = 8
 rings = 4
 
+[sub_resource type="StandardMaterial3D" id="Mat_stone"]
+albedo_color = Color(0.42, 0.41, 0.38, 1)
+
+[sub_resource type="SphereMesh" id="Mesh_stone"]
+material = SubResource("Mat_stone")
+radius = 0.045
+height = 0.07
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="Mat_bonething"]
+albedo_color = Color(0.8, 0.76, 0.64, 1)
+
+[sub_resource type="CapsuleMesh" id="Mesh_bone"]
+material = SubResource("Mat_bonething")
+radius = 0.025
+height = 0.16
+radial_segments = 6
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="Mat_cup"]
+albedo_color = Color(0.35, 0.24, 0.14, 1)
+
+[sub_resource type="CylinderMesh" id="Mesh_cup"]
+material = SubResource("Mat_cup")
+top_radius = 0.04
+bottom_radius = 0.035
+height = 0.09
+radial_segments = 8
+rings = 1
+
 [node name="Night" type="Node3D"]
 editor_description = "The furniture every night shares: the abbey, the brothers and the lane's people at their places, the duties, lamps, marks, the candle clock, the gate and the bell, the hunter and the demon. Each night inherits it (night1.tscn ... night6.tscn) and adds its Director and beats, its conversations and its own things."
 
@@ -129,13 +168,13 @@ transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 34.5, 
 transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, -35.0, 0.0, -14.6)
 
 [node name="ChoirA" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 4.0, 0.05, -6.0)
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 4.0, 0.05, -6.0)
 
 [node name="ChoirB" type="Marker3D" parent="Places/Dusk"]
 transform = Transform3D(0, 0, 1.0, 0, 1, 0, -1.0, 0, 0, -8.0, 0.05, -32.0)
 
 [node name="ChoirC" type="Marker3D" parent="Places/Dusk"]
-transform = Transform3D(0, 0, -1.0, 0, 1, 0, 1.0, 0, 0, 10.0, 0.05, -18.0)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 5.4, 0.05, -6.0)
 
 [node name="Supper" type="Node3D" parent="Places"]
 
@@ -842,6 +881,7 @@ editor_description = "The five hidden bodies (docs/full-game-run.md, Hidden bodi
 [node name="Well" type="Node3D" parent="HiddenBodies"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -1.0, 4)
 script = ExtResource("hidden_body_gd")
+own_reveal = false
 id = &"hidden_well"
 appearance = {"skin": Color(0.62, 0.6, 0.55, 1), "shirt": Color(0.36, 0.3, 0.22, 1), "pants": Color(0.25, 0.22, 0.18, 1), "height": 1.0, "width": 1.0}
 line = "(A pilgrim's hat in the bucket, a badge pinned to it. Down in the black water, a face looking up.)"
@@ -1063,3 +1103,268 @@ id = &"apple8"
 [node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
 mesh = SubResource("Mesh_apple")
+
+[node name="Hunt" type="Node3D" parent="." node_paths=PackedStringArray("routes", "gatehouse", "locks")]
+script = ExtResource("hunt_gd")
+routes = [NodePath("Routes/Cloister"), NodePath("Routes/Graveyard"), NodePath("Routes/Court")]
+gatehouse = NodePath("Gatehouse")
+locks = [NodePath("../Abbey/Navigation/Dormitory/Doors/EastE0Door_00"), NodePath("../Abbey/Navigation/Cellar/Doors/WestE0Door_03"), NodePath("../Abbey/Navigation/GraveyardInfirmary/Doors/CharnelW0Door_01")]
+editor_description = "How hard he's hunted on the round, by Suspicion: one hunter, a searching one, two (one at the gatehouse, these doors locked), the whole cult. A night's beat calls begin()."
+
+[node name="Routes" type="Node3D" parent="Hunt"]
+
+[node name="Cloister" type="Node3D" parent="Hunt/Routes"]
+
+[node name="P0" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0.05, -26)
+
+[node name="P1" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 10, 0.05, -26)
+
+[node name="P2" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 10, 0.05, -6)
+
+[node name="P3" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0.05, -6)
+
+[node name="P4" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0.05, -32)
+
+[node name="P5" type="Marker3D" parent="Hunt/Routes/Cloister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 13, 0.05, -32)
+
+[node name="Graveyard" type="Node3D" parent="Hunt/Routes"]
+
+[node name="P0" type="Marker3D" parent="Hunt/Routes/Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0.05, -10)
+
+[node name="P1" type="Marker3D" parent="Hunt/Routes/Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 30, 0.05, -8)
+
+[node name="P2" type="Marker3D" parent="Hunt/Routes/Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 30, 0.05, 10)
+
+[node name="P3" type="Marker3D" parent="Hunt/Routes/Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.05, 14)
+
+[node name="P4" type="Marker3D" parent="Hunt/Routes/Graveyard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0.05, -20)
+
+[node name="Court" type="Node3D" parent="Hunt/Routes"]
+
+[node name="P0" type="Marker3D" parent="Hunt/Routes/Court"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0.05, 2)
+
+[node name="P1" type="Marker3D" parent="Hunt/Routes/Court"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -26, 0.05, -12)
+
+[node name="P2" type="Marker3D" parent="Hunt/Routes/Court"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -16, 0.05, -20)
+
+[node name="P3" type="Marker3D" parent="Hunt/Routes/Court"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -16, 0.05, -6)
+
+[node name="P4" type="Marker3D" parent="Hunt/Routes/Court"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -24, 0.05, 8)
+
+[node name="Gatehouse" type="Marker3D" parent="Hunt"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -36.5, 0.05, -1.0)
+editor_description = "Where one hunter waits at Suspicion 60+."
+
+[node name="Weather" type="Node3D" parent="." node_paths=PackedStringArray("world_environment")]
+script = ExtResource("weather_gd")
+world_environment = NodePath("../Abbey/WorldEnvironment")
+editor_description = "The night's weather: rain (nights 1-2) halves hearing both ways; fog (night 4) cuts sight to a few metres; snow (night 6) leaves footprints. Each night sets its kind."
+
+[node name="Footprints" type="Node3D" parent="."]
+script = ExtResource("footprints_gd")
+editor_description = "In the snow, prints the porter and the hunters leave and can follow."
+
+[node name="OffHoursBell" type="Node3D" parent="." node_paths=PackedStringArray("matins_rope", "tower", "arrive_at", "safe_place")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -24, 0.05, -32)
+script = ExtResource("off_hours_gd")
+matins_rope = NodePath("../Duties/BellRope")
+tower = NodePath("../BellTower")
+arrive_at = NodePath("../Marks/TowerDoor")
+safe_place = NodePath("../Marks/WakeCell")
+editor_description = "The bell rope out of hours: the whole abbey comes; who comes first follows trust and Suspicion."
+
+[node name="TowerDoor" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -21.6, 0.05, -30.6)
+editor_description = "Where whoever answers the bell out of hours comes in."
+
+[node name="Gusts" type="Node3D" parent="."]
+editor_description = "Scripted gusts that can put the lantern out (never in a chase): each on its nights."
+
+[node name="TowerStair" type="Node3D" parent="Gusts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -24, 1.5, -31)
+script = ExtResource("gust_gd")
+nights = Array[int]([2])
+size = Vector3(3, 3, 3)
+editor_description = "Night 2: a gust down the tower stair as he comes for the rope."
+
+[node name="FogDoor" type="Node3D" parent="Gusts" node_paths=PackedStringArray("door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 9.4, 1.5, -14)
+script = ExtResource("gust_gd")
+nights = Array[int]([4])
+size = Vector3(2.4, 3, 4)
+door = NodePath("../../Abbey/Navigation/Dormitory/Doors/EastW0Door_02")
+editor_description = "Night 4: the door that blows open in the fog."
+
+[node name="Well" type="Node3D" parent="." node_paths=PackedStringArray("hidden")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0, 4)
+script = ExtResource("well_gd")
+hidden = NodePath("../HiddenBodies/Well")
+editor_description = "The court well: draw water and drink (dosed from night 4). The first time, the bucket comes up heavy."
+
+[node name="Throwables" type="Node3D" parent="."]
+editor_description = "Stones, bones and cups to throw (docs/mechanics.md, Throwing): a few in every area, more where people work."
+
+[node name="StoneCourt0" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0.02, 0)
+script = ExtResource("pickup_gd")
+id = &"stonecourt0"
+item = &"stone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneCourt0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_stone")
+
+[node name="StoneCourt1" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -26, 0.02, 9)
+script = ExtResource("pickup_gd")
+id = &"stonecourt1"
+item = &"stone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneCourt1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_stone")
+
+[node name="StoneGarth0" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3, 0.02, -14)
+script = ExtResource("pickup_gd")
+id = &"stonegarth0"
+item = &"stone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneGarth0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_stone")
+
+[node name="StoneGarth1" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0.02, -19)
+script = ExtResource("pickup_gd")
+id = &"stonegarth1"
+item = &"stone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneGarth1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_stone")
+
+[node name="CupRefectory0" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.2, 0.8, -1.5)
+script = ExtResource("pickup_gd")
+id = &"cuprefectory0"
+item = &"cup"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/CupRefectory0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_cup")
+
+[node name="CupRefectory1" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.6, 0.8, -1.5)
+script = ExtResource("pickup_gd")
+id = &"cuprefectory1"
+item = &"cup"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/CupRefectory1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_cup")
+
+[node name="BoneGraveyard0" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 26, 0.02, -8)
+script = ExtResource("pickup_gd")
+id = &"bonegraveyard0"
+item = &"bone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/BoneGraveyard0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_bone")
+
+[node name="BoneGraveyard1" type="Node3D" parent="Throwables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.02, -14)
+script = ExtResource("pickup_gd")
+id = &"bonegraveyard1"
+item = &"bone"
+
+[node name="Mesh" type="MeshInstance3D" parent="Throwables/BoneGraveyard1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("Mesh_bone")
+
+[node name="RoutineLights" type="Node3D" parent="."]
+editor_description = "Windows lit while a brother is at his routine's stop (lit windows show who's up)."
+
+[node name="Infirmary" parent="RoutineLights" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28.6, 0.8, 0.6)
+lit = false
+
+[node name="Sacristy" parent="RoutineLights" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21.4, 0.9, -34.6)
+lit = false
+
+[node name="Murmur" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4.7, 1.5, -6.0)
+script = ExtResource("murmur_gd")
+editor_description = "Two brothers talking low on the south walk at dusk; from Suspicion 30 they fall silent when he comes near."
+
+[node name="Routine" type="Node" parent="Brothers/Thomas"]
+script = ExtResource("routine_gd")
+
+[node name="At1850" type="Marker3D" parent="Brothers/Thomas/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28, 0.05, 0.0)
+metadata/hour = 18.5
+metadata/light = NodePath("../../../../RoutineLights/Infirmary")
+
+[node name="Routine" type="Node" parent="Brothers/Osric"]
+script = ExtResource("routine_gd")
+
+[node name="At1850" type="Marker3D" parent="Brothers/Osric/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -16, 0.05, 0)
+metadata/hour = 18.5
+
+[node name="At2100" type="Marker3D" parent="Brothers/Osric/Routine"]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -11, 0.05, -22)
+metadata/hour = 21.0
+metadata/lock = NodePath("../../../../Abbey/Navigation/Cellar/Doors/WestE0Door_01")
+
+[node name="At2150" type="Marker3D" parent="Brothers/Osric/Routine"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 10.5, 0.05, -12)
+metadata/hour = 21.5
+metadata/away = true
+
+[node name="Routine" type="Node" parent="Brothers/Hugh"]
+script = ExtResource("routine_gd")
+
+[node name="At2050" type="Marker3D" parent="Brothers/Hugh/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0.05, -26)
+metadata/hour = 20.5
+
+[node name="At2150" type="Marker3D" parent="Brothers/Hugh/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0.05, -14)
+metadata/hour = 21.5
+
+[node name="At2250" type="Marker3D" parent="Brothers/Hugh/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 10, 0.05, -16)
+metadata/hour = 22.5
+
+[node name="At2350" type="Marker3D" parent="Brothers/Hugh/Routine"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 10.5, 0.05, -12)
+metadata/hour = 23.5
+metadata/away = true
+
+[node name="Routine" type="Node" parent="Brothers/Ranulf"]
+script = ExtResource("routine_gd")
+
+[node name="At2000" type="Marker3D" parent="Brothers/Ranulf/Routine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.05, -34)
+metadata/hour = 20.0
+metadata/light = NodePath("../../../../RoutineLights/Sacristy")

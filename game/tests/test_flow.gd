@@ -66,8 +66,10 @@ func _run() -> void:
 			GameState.set_flag(&"carried_flag")
 			GameState.set_flag(&"gate_taken")
 		if i == 2:
-			_check(GameState.suspicion == 12 and GameState.has_flag(&"carried_flag") and not GameState.has_flag(&"gate_taken"),
-				"Suspicion and story flags carry over; the night's own flags don't")
+			# Night 0 and day 1 were clean nights: 5 off at each dawn.
+			_check(GameState.suspicion == 2 and GameState.has_flag(&"n0_clean") and GameState.has_flag(&"carried_flag")
+				and not GameState.has_flag(&"gate_taken"),
+				"Suspicion carries over, less 5 for each clean night; story flags carry, the night's own don't (%d)" % GameState.suspicion)
 		if chapters[i].id == &"night3":
 			GameState.snap_dose(40.0)
 			dose_before = -1.0

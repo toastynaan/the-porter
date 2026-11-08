@@ -35,6 +35,7 @@ func run() -> void:
 	cole.go_to(cole_gate.global_position)
 	await say("", "(Cole comes for the gate.)")
 	await hand_over.wait_for_use()
+	arrived()
 	cole.stop()
 	cole.global_transform = cole_gate.global_transform
 	await say("Cole", "(Takes the gate without a word, and opens it for the day.)")

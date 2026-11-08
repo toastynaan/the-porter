@@ -25,6 +25,7 @@ func run() -> void:
 			Talk.say("", "(The bell is late. It will have been noticed.)")
 		await get_tree().physics_frame
 	rope.enabled = false
+	arrived()
 	GameState.ring_bell(&"matins")
 	tower.ring(3)
 	await say("", "(Matins. The brothers gather in the choir.)")

@@ -5,7 +5,10 @@ extends Node3D
 ## Covering it with the cloak drops the reach to about 1 m and hides the
 ## flame. It gutters in a draught (an open door nearby), at high Dose and
 ## while he stares at the demon: the flame flutters and the light dips.
-## From Dose 25 the flame bends toward things (design doc, "Effect tiers"):
+## Wind can put it out, but only at set moments (Gust, never in a chase):
+## the flame gutters for GUST_WARNING s and, unless he covers it in time,
+## goes out. Out, it's dark but for others' lights until he relights it at a
+## lit candle or lamp (hold E, Candle). From Dose 25 the flame bends toward things (design doc, "Effect tiers"):
 ## the nearest thing that shouldn't be there (group "uncanny": the demon, a
 ## body, the dead in the choir) within BEND_RANGE.
 
@@ -15,6 +18,8 @@ const COVERED_REACH := 1.0
 const DRAUGHT_RANGE := 2.5
 ## Dose where the flame starts guttering on its own, and where it is worst.
 const GUTTER_DOSE := Vector2(75.0, 100.0)
+## Seconds the flame gutters in a gust before it goes out.
+const GUST_WARNING := 1.5
 ## Dose where the flame starts bending toward things, and where it bends most;
 ## how far it looks, m; how far it leans, radians.
 const BEND_DOSE := Vector2(25.0, 60.0)
@@ -40,6 +45,10 @@ var gutter := 0.0
 var stare := 0.0
 ## How far the flame leans now (x and z, radians).
 var bent := Vector3.ZERO
+## Blown out: no light until relit.
+var out := false
+## Seconds left of a gust's guttering.
+var gusting := 0.0
 
 var _noise := FastNoiseLite.new()
 var _t := 0.0
@@ -60,7 +69,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not freeze_flicker:
 		_t += delta * flicker_speed
-	var target := maxf(maxf(_draught(), stare), smoothstep(GUTTER_DOSE.x, GUTTER_DOSE.y, GameState.dose))
+	if gusting > 0.0:
+		gusting -= delta
+		if gusting <= 0.0 and not covered:
+			blow_out()
+	var target := maxf(maxf(maxf(_draught(), stare), smoothstep(GUTTER_DOSE.x, GUTTER_DOSE.y, GameState.dose)), 1.0 if gusting > 0.0 else 0.0)
 	gutter = move_toward(gutter, target, delta * 1.5)
 	var n := _noise.get_noise_1d(_t)
 	# Guttering: fast flutter that only ever dips the light.
@@ -91,6 +104,26 @@ func _bend(delta: float) -> void:
 	flame.rotation = Vector3(bent.x, 0.0, -bent.z)
 
 
+## A gust: the flame gutters, and goes out unless he covers it in time.
+func gust() -> void:
+	if out or gusting > 0.0:
+		return
+	gusting = GUST_WARNING
+
+
+func blow_out() -> void:
+	out = true
+	gusting = 0.0
+	light.visible = false
+	flame.visible = false
+
+
+func relight() -> void:
+	out = false
+	light.visible = true
+	flame.visible = not covered and body.visible
+
+
 func set_covered(value: bool) -> void:
 	covered = value
 	if not is_node_ready():
@@ -99,13 +132,13 @@ func set_covered(value: bool) -> void:
 		_reach_tween.kill()
 	_reach_tween = create_tween()
 	_reach_tween.tween_property(light, ^"omni_range", COVERED_REACH if covered else REACH, cover_time)
-	flame.visible = not covered and body.visible
+	flame.visible = not covered and body.visible and not out
 
 
 ## Shows or hides the lantern's own meshes; the light stays.
 func set_meshes_visible(value: bool) -> void:
 	body.visible = value
-	flame.visible = value and not covered
+	flame.visible = value and not covered and not out
 
 
 ## 0..1 draught from the nearest open door.

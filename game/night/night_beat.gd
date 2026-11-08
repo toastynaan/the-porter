@@ -9,6 +9,18 @@ extends Node
 @export var bell := &""
 ## Saves quietly as the beat starts (before a designed chase or set piece).
 @export var quiet := false
+## Lateness counts for this duty from `due` until arrived() (docs/mechanics.md,
+## "Lateness"): 15 minutes late is noticed, 45 brings someone to fetch him.
+@export var watch_late := false
+## Who comes to fetch him: "prior", or "cole" (at dusk).
+@export var fetcher := &"prior"
+
+## The porter has come to this duty (lateness stops counting).
+var is_arrived := false
+
+
+func arrived() -> void:
+	is_arrived = true
 ## The duty as the porter's ledger lists it (empty: not a duty, an event).
 @export var duty := ""
 ## When it is due by the candle clock, in hours (-1: no set time).
@@ -54,6 +66,7 @@ func sleep_through_the_day(keeps: float, line: String) -> void:
 	GameState.snap_dose(GameState.dose * keeps)
 	# While he sleeps the cult scrubs what would prove men did it.
 	BloodMarks.clean_at_dawn(get_tree())
+	Lateness.clean_night()
 	GameState.set_flag(StringName("night%d_done" % GameState.night))
 	if not line.is_empty():
 		await say("", line)

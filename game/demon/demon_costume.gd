@@ -41,6 +41,7 @@ var _arms: Array[Node3D] = []
 var _mask_mat: StandardMaterial3D
 var _eye_mat: StandardMaterial3D
 var _mask_color := Color("#D8C9A3")
+var _unmasked := false
 
 
 func _ready() -> void:
@@ -60,8 +61,15 @@ func _process(_delta: float) -> void:
 	_body.scale = Vector3(1.0, 1.0 + TALL_SCALE * tall, 1.0)
 	for arm in _arms:
 		arm.scale = Vector3(1.0, 1.0 + STRETCH_SCALE * stretch, 1.0)
-	_mask_mat.albedo_color = _mask_color.lerp(Color(0.05, 0.045, 0.05), 0.85 * tall)
+	_mask_mat.albedo_color = _mask_color if _unmasked else _mask_color.lerp(Color(0.05, 0.045, 0.05), 0.85 * tall)
 	_eye_mat.emission_energy_multiplier = EYE_ENERGY * smoothstep(EYES_DOSE.x, EYES_DOSE.y, d)
+
+
+## The mask is off (Hunter.unmask): the face under it shows, `skin` coloured,
+## whatever the Dose.
+func show_face(skin: Color) -> void:
+	_mask_color = skin
+	_unmasked = true
 
 
 ## Points the stare meter and sight checks look at: head and chest.

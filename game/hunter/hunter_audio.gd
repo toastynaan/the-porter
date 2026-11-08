@@ -2,7 +2,9 @@ extends Node3D
 ## What the porter hears of a hunter (Look and Feel, "Sound feel"): felt
 ## overshoes on his rounds, barely there, and the chant hummed under his
 ## breath; carved hoof soles when he runs, the loudest sound in the game;
-## panting when winded; rummaging when he checks a hiding spot.
+## panting when winded; rummaging when he checks a hiding spot. In the rain
+## they carry half as far (Weather.hearing_factor). In the snow his steps
+## leave prints (Footprints).
 ## (Placeholder synthesised sounds, art/sfx/.)
 
 const HOOVES: Array[AudioStream] = [preload("res://art/sfx/sfx_hoof_0.wav"),
@@ -42,6 +44,9 @@ func _player(stream: AudioStream, db: float, unit: float) -> AudioStreamPlayer3D
 
 
 func _process(delta: float) -> void:
+	var carry := Weather.hearing_factor(get_tree())
+	for p in [_steps, _hum, _pant, _rummage]:
+		(p as AudioStreamPlayer3D).max_distance = 60.0 * carry
 	if not AudioOut.enabled() or _hunter.dormant:
 		_stop_all()
 		return
@@ -53,6 +58,9 @@ func _process(delta: float) -> void:
 	var stride := STRIDE_RUN if speed > 2.5 else STRIDE_WALK
 	if _travel >= stride:
 		_travel = 0.0
+		var snow := get_tree().get_first_node_in_group(&"footprints") as Footprints
+		if snow:
+			snow.leave(_hunter.global_position, _hunter.rotation.y, &"hunter")
 		_steps.stream = (HOOVES if chasing else FELT).pick_random()
 		_steps.volume_db = 2.0 if chasing else -10.0
 		_steps.pitch_scale = randf_range(0.92, 1.08)

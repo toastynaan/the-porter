@@ -51,14 +51,28 @@ func forget() -> void:
 func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group(&"player") as Player
-	glimpsed = _player != null and can_see(_player)
+	glimpsed = _player != null and (can_see(_player) or _glow_in_fog(_player))
 	if glimpsed:
 		var d := global_position.distance_to(_player.camera.global_position)
 		var notice := lerpf(NOTICE_NEAR, NOTICE_FAR, clampf(d / LIT_RANGE, 0.0, 1.0))
 		awareness = 1.0 if focused else minf(awareness + delta / notice, 1.0)
 	else:
 		awareness = maxf(awareness - FORGET_RATE * delta, 0.0)
-	sees_player = glimpsed and awareness >= 1.0
+	sees_player = glimpsed and awareness >= 1.0 and _player != null and can_see(_player)
+
+
+## In the fog an uncovered lantern is a glowing ball he can make out from
+## Weather.LANTERN_GLOW off, though he can't see the porter: enough to come
+## and look (a glimpse), not to chase.
+func _glow_in_fog(player: Player) -> bool:
+	if Weather.now(get_tree()) != Weather.Kind.FOG or player.lantern.covered or player.hiding:
+		return false
+	var at := player.lantern.global_position
+	var to := at - global_position
+	var forward := -global_basis.z
+	return to.length() < Weather.LANTERN_GLOW and to.length() > Weather.FOG_SIGHT \
+		and rad_to_deg(Vector3(forward.x, 0, forward.z).angle_to(Vector3(to.x, 0, to.z))) < FOV * 0.5 \
+		and ViewCheck.clear(self, global_position, at)
 
 
 ## Whether the porter is in view now, by the light rules.
@@ -75,7 +89,7 @@ static func sees_from(from: Node3D, eye: Vector3, forward: Vector3, player: Play
 		return false
 	var points := player.sight_points()
 	var d := eye.distance_to(points[0])
-	if d > (LIT_RANGE if is_lit(player) else DARK_RANGE):
+	if d > Weather.sight(from.get_tree(), LIT_RANGE if is_lit(player) else DARK_RANGE):
 		return false
 	var to := points[0] - eye
 	if d > 1.0 and rad_to_deg(Vector3(forward.x, 0, forward.z).angle_to(Vector3(to.x, 0, to.z))) > FOV * 0.5:
@@ -96,7 +110,7 @@ static func is_lit(player: Player) -> bool:
 func hear(at: Vector3, radius: float, source: Node) -> void:
 	if source == owner:
 		return
-	var r := radius * (2.0 if listening else 1.0)
+	var r := radius * (2.0 if listening else 1.0) * Weather.hearing_factor(get_tree())
 	var d := global_position.distance_to(at)
 	if d > r:
 		return

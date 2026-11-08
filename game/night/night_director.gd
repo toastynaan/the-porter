@@ -84,6 +84,8 @@ func run() -> void:
 		GameState.set_phase(current.phase)
 		if current.quiet and not current.bell.is_empty():
 			GameState.quiet_save(current.bell)
+		if current.watch_late and current.due >= 0.0:
+			Lateness.watch.call(current, self)
 		beats_run.append(current.name)
 		beat_started.emit(current.name)
 		await current.run()

@@ -240,3 +240,6 @@ Added during the run:
 - **M10.** The jump scares are a body dropping on a rope and a face at the grille.
 - **M10.** The candle that lights itself stands by the crypt's ring of rite candles, so it can't be mistaken for the count.
 - **M10.** Mab's bread is from a baker in Fenchurch Street.
+- **M11.** The three patrol routes (cloister and church, graveyard and infirmary, outer court and cellar) and who wears the costumes by default: Ranulf, Cole, Dunstan.
+- **M11.** The brothers' routines (`docs/abbey.md`); only Thomas, Osric, Hugh and Ranulf keep one so far; the rest are in bed after Compline.
+- **M11.** The lane's rumours that teach the saving rules (`game/story/rumours.gd`), DRAFT lines, given to Hob and Agnes.

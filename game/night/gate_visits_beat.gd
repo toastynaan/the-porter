@@ -92,6 +92,18 @@ func _receive(v: Visitor) -> void:
 	await _knock_until_answered(KNOCK, 1.4)
 	var noticed: Array[VisitorDetail] = []
 	var pick := -1
+	if not v.question.is_empty() and not GameState.has_flag(GameState.tonight("asked_" + String(v.id))):
+		Talk.begin(npc, GRILLE_CONE)
+		await say(v.speaker, v.greeting)
+		_reading = true
+		_read.call(npc, v, noticed)
+		var ask := await Talk.choose(PackedStringArray([v.question, "(Go on.)"]), v.speaker, v.greeting)
+		if ask == 0:
+			GameState.set_flag(GameState.tonight("asked_" + String(v.id)))
+			for line in v.answer:
+				await say(v.speaker, line)
+		_reading = false
+		Talk.end()
 	while pick < 0:
 		Talk.begin(npc, GRILLE_CONE)
 		await say(v.speaker, v.greeting)
@@ -109,6 +121,9 @@ func _receive(v: Visitor) -> void:
 			await _admit(npc)
 		1:
 			GameState.set_flag(v.flag, &"refused")
+			# Before the curfew bell he goes to the Cross Keys; after it, the inn is shut.
+			GameState.set_flag(StringName(String(v.flag) + "_refused_at"), GameState.hour)
+			GameState.set_flag(StringName(String(v.flag) + "_fate"), Saving.turned_away_fate(GameState.hour))
 			await say("", "(You turn him away. He goes back down the lane.)")
 			_send_away(npc)
 			return
@@ -145,8 +160,17 @@ func _read(npc: VisitorNPC, v: Visitor, noticed: Array[VisitorDetail]) -> void:
 			dwell[d] = float(dwell.get(d, 0.0)) + get_physics_process_delta_time() if d == looked_at else 0.0
 			if d == looked_at and not noticed.has(d) and dwell[d] >= READ_TIME:
 				noticed.append(d)
-				Talk.say("", d.line)
+				_notice.call(v, d)
 		await get_tree().physics_frame
+
+
+## He notices `d`: its line, and if it gives the visitor's story away, that
+## too, in his notes.
+func _notice(v: Visitor, d: VisitorDetail) -> void:
+	await Talk.say("", d.line)
+	if not d.lie.is_empty():
+		GameState.note(StringName("lie_%s_%s" % [v.id, d.part]), "%s at the gate: %s." % [v.ledger_name, d.lie])
+		await Talk.say("", "(Something doesn't fit: %s.)" % d.lie)
 
 
 ## Lift the bar, open the gate, let him in, shut and bar it, take him to a bed.

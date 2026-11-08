@@ -42,8 +42,10 @@ static func text(id: StringName) -> String:
 	return String(ALL.get(id, ""))
 
 
+## A clue the game can write: one of ALL, or a lie noticed at the gate
+## ("lie_<visitor>_<part>", written with its own words).
 static func is_clue(id: StringName) -> bool:
-	return ALL.has(id)
+	return ALL.has(id) or String(id).begins_with("lie_")
 
 
 ## How many clues the porter has written.

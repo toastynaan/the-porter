@@ -201,6 +201,8 @@ static func _take_out(who: Node3D) -> void:
 
 
 func _spawn_body(already_dead: bool, at := Transform3D()) -> void:
+	if not is_inside_tree():
+		return
 	body = BODY.instantiate() as Corpse
 	body.appearance = appearance
 	var origin := at.origin if at != Transform3D() else global_position

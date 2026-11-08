@@ -76,6 +76,8 @@ func found_flag() -> StringName:
 
 ## Puts the body here now (a beat that brings it into the world later).
 func show_body() -> void:
+	if not is_inside_tree():
+		return
 	shown = true
 	if feeds:
 		GameState.feed_rite(id)
@@ -92,6 +94,8 @@ func active() -> bool:
 
 
 func _spawn() -> void:
+	if not is_inside_tree():
+		return
 	if not body_visible:
 		body = Node3D.new()
 		add_child(body)

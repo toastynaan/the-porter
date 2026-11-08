@@ -10,3 +10,7 @@ extends Resource
 @export var line := ""
 ## The words that go into his ledger entry, if the porter noticed it.
 @export var ledger := ""
+## What it gives away, if it contradicts their story (docs/mechanics.md,
+## "Lies"): "no pilgrim's badge". Noticing it, the porter thinks "(Something
+## doesn't fit: no pilgrim's badge.)" and notes it.
+@export var lie := ""

@@ -22,6 +22,8 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 **If you're caught in the chase,** you die: from night 3 every capture kills (`docs/mechanics.md`, "Being hunted"). The night saves quietly as the Crypt beat starts, so death puts you back in the choir just before the crypt light (the `crypt` spawn), with the round done, not at the Matins bell.
 
+**Lateness** (`docs/abbey.md`): supper, the Matins bell and the hand-over at dawn are watched: 15 minutes late is noticed (Suspicion +5), 45 brings Cole (at supper) or the prior to fetch you. From Suspicion 30 the prior watches you at supper.
+
 ## The candle clock
 
 `game/night/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).

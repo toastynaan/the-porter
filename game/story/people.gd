@@ -14,6 +14,9 @@ const NAMES := {
 	&"hob": "Hob", &"agnes": "Agnes", &"jankin": "Jankin", &"gib": "Gib the watchman",
 	&"ralph": "Ralph the chandler", &"kit": "Kit", &"margery": "Margery", &"carter": "the carter",
 }
+## The brothers (they have Brother Thomas to confide in).
+const BROTHERS: Array[StringName] = [&"thomas", &"osric", &"ranulf", &"godric", &"hugh", &"edwin", &"anselm",
+	&"simon", &"cole", &"dunstan", &"choira", &"choirb", &"choirc", &"warner"]
 const START_TRUST := {
 	&"thomas": 40, &"edwin": 50, &"anselm": 20, &"osric": 20, &"ranulf": 0, &"mab": 0, &"joan": 0,
 	&"hugh": -20, &"choira": 10, &"choirb": 10, &"choirc": 10, &"warner": 10, &"simon": 10,
