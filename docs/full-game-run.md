@@ -10,11 +10,13 @@ The run builds the whole of The Porter: the prologue (night 0 at the Cross Keys 
 - **No stops until the end.** I commit after each milestone, push it to main, and add a line to "Progress" below. I stop early only if I'm blocked or something breaks that I can't fix.
 - **Gaps:** where the docs don't say, I decide in their spirit and add the decision to "Decisions to review" at the bottom. Numbers I pick are marked *mine* in the docs, as before.
 - **Writing:** I draft real lines for every conversation, scene and chronicle entry. Each conversation file starts `# DRAFT` until you've rewritten or accepted it.
+- **Sound:** final recordings stay last, but each system wires its placeholder sounds as it lands, so playtests can judge fear.
+- **Length:** a first playthrough of 4–5 hours (night 0 15–20 minutes, the tour 5, nights 30–40). Bigger means deeper, not longer: every night different, every choice with a consequence you can see.
 - **Before it starts:** you read this file and the two doc changelogs and say go. Close the Godot editor during the run (or don't save from it): I'll be rewriting scenes on disk.
 
 ## Done when
 
-1. **From the title screen,** New Game plays night 0, day 1 and nights 1 to 6 in order, with a chapter card for each. Once you've finished the game, New Game can also begin at night 1. Continue picks up at the last bell, and death sends you back to it.
+1. **From the title screen,** New Game plays night 0, day 1 and nights 1 to 6 in order, with a chapter card for each. Once you've finished the game, chapter select can start any night. Continue picks up at the last bell; death sends you back to the last quiet save, a few minutes back at most.
 2. **Every night runs** from waking at dusk to sleeping at dawn in a scripted test that passes.
 3. **Each of the seven endings** can be reached by a scripted route, and each shows its chronicle entry.
 4. **The deaths:** every witnessed death and found body happens where this file says. Every death that choices can prevent is prevented by its choice in a test.
@@ -41,20 +43,22 @@ The body falls as a ragdoll (the kept ragdoll system). Fresh blood stays dark (L
 
 **Two renders:** drugged, you see the demon do it, with long fingers and a crown of horns; sober, a man in a mask. At Dose 75 and up, some deaths you see are hallucinations: they leave no body and no blood, and the cult doesn't need to clean them up. You can't tell which until you go and look.
 
-**Choices decide who dies.** In the moment you can't stop a death; before it, your choices can. Who you admit, who you turn away and who you save on night 5 change who is killed, and how many.
+**Choices decide who dies.** In the moment you can't stop a death; before it, your choices can. Who you admit, who you turn away, whether you lock the guesthouse, whom you warn and who you save on night 5 change who is killed, and how many. Every night has at least one person a careful porter can save, by a rule he can learn (`docs/mechanics.md`, "Saving people"), and the lane's talk at the next dusk says what would have saved them.
+
+**Where you stand** varies, so no death plays like a cutscene, and control is never taken away: helpless behind the grille; in danger, as the killer turns to you; seconds too late; or only hearing it.
 
 ### Witnessed deaths
 
 | Night | Victim | Where you see it | Shown | Your choices |
 | --- | --- | --- | --- | --- |
 | 0 | A guest of the abbey | From your room at the top of the Cross Keys, over the wall: by the well | Implied: a figure in a black habit, back to you, a struggle, then dragging him toward the cellar. Sober you saw a man; drunk you aren't sure | None (before your six nights) |
-| 2 | Whoever you turned away at the gate tonight (a drunk from the inn if you turned no one away) | The lane, through the grille, under a street lantern after midnight | The throat. Far off: a tall shape behind him, then he's down in the gutter. The demon never moves while you look (Glimpses phase) | Decides *who*; someone dies either way |
-| 3 | A bound pilgrim, taken before your watch | The crypt, from the foot of the stair: the figure by the light has his back to you because he is killing him | Gory. Then he turns and sees you, and the night-3 chase starts | None |
-| 4 | A choir brother (not Simon) | The cloister walk in the fog, a few metres ahead of you | Implied: a shape, a cry cut off, his lantern rolling on the flags. When the fog clears there's only blood | None |
-| 4 | The guest you admitted tonight | The guesthouse, through its open door, on your round | Gory: the rite's cuts, the marks the Saint itself leaves on night 6 | Turn them away and they live |
-| 5 | Brother Simon, if you save Thomas | The chapter house, as you carry Thomas out | The throat, in front of you | Save Simon and no one dies here |
-| 5 | Roger's sergeant, sent to watch the gate | The lane, from the grille, during the lock-in | Implied: his lantern goes out, a sound in the dark, then he's gone. His blood is there at dawn | Let him wait inside the gate and he lives |
-| 6 | Dunstan | The cloister: the Hungry Saint finds him first | Gory: the first time you see it move | None |
+| 2 | Whoever you turned away after the curfew bell; if no one, Jankin, put out of the Cross Keys at closing | The lane, through the grille, under a street lantern after midnight (helpless) | The throat. Far off: a tall shape behind him, then he's down in the gutter. The demon never moves while you look (Glimpses phase) | Turn people away only before curfew, and ask Hob at dusk to keep Jankin in, and no one dies |
+| 3 | A bound pilgrim, taken before your watch | The crypt, from the foot of the stair: the figure by the light has his back to you because he is killing him (in danger) | Gory. Then he turns and sees you, and the night-3 chase starts | None |
+| 4 | A choir brother (not Simon) | The cloister walk in the fog: you hear it a few metres ahead, and reach him as his lantern is still rolling on the flags (seconds too late) | Implied: a cry cut off, then the body. The prior is the next to arrive, and there's blood on his sleeve | None |
+| 4 | The guest you admitted tonight | The guesthouse, its door open, on your round (seconds too late) | Gory: the rite's cuts, the marks the Saint itself leaves on night 6 | Warn him to bar the door from inside (your lock no longer helps), or turn him away before curfew |
+| 5 | Brother Simon, if you save Thomas | The chapter house at dusk, as you carry Thomas out (in danger: the masked man turns to you) | The throat, in front of you | Save Simon and no one dies here |
+| 5 | Roger's sergeant, sent to watch the gate | The lane, during the lock-in (heard only) | Implied: you hear it from inside the granary. His lantern is out and his blood is there at dawn | Let him wait inside the gate and he lives |
+| 6 | Dunstan | The cloister: the Hungry Saint finds him first (in danger: it turns to you next) | Gory: the first time you see it move | None |
 | 6 | Cole | At the gate, keeping it shut against you | The throat | None |
 | 6 | Osric or Ranulf (whichever is nearer you) | The choir | Implied: the candles go out one by one, then silence | None |
 
@@ -64,7 +68,7 @@ These are the design doc's six, with what changes:
 
 | Night | Body | Changes |
 | --- | --- | --- |
-| 1 | The merchant in the fishpond | Only if you admitted him. Turn him away and he goes on to the inn; the pond is empty at dawn, and Roger doesn't come asking on night 2 |
+| 1 | The merchant in the fishpond | Only if you admitted him and left the guesthouse unlocked. Locked in, or turned away before curfew (he goes to the Cross Keys), he lives; the pond is empty at dawn, and Roger doesn't come asking on night 2 |
 | 2 | The choir brother in the bell tower, who warned you about the bread | None |
 | 3 | Bones in the oven | Old victims, from before your watch |
 | 4 | Edwin in the charnel house | None |
@@ -96,15 +100,15 @@ There are five optional ones. Each is an earlier victim, has a pilgrim badge tha
 
 ## The rite
 
-The cult's book says the Hungry Saint wakes when it has been fed **ten** souls in the six nights, with the last given in the crypt at Matins on night 6. The count is never shown. You learn it from the book: a page in the crypt on night 3, and the whole book on night 6.
+The cult's book says the Hungry Saint wakes when it has been fed **ten** souls in the six nights, with the last given in the crypt at Matins on night 6. No number is shown, but the crypt keeps count: the cult lights a candle there for each soul, and you can go down and count them. The book's page (night 3) says what the candles are for.
 
 | Deaths | How many | Which |
 | --- | --- | --- |
-| Always come | 7 | The bell-tower brother and the lane death (night 2); the crypt pilgrim (3); Edwin and the fog brother (4); body 5 (5); Anselm (6) |
-| Your choices can stop | 4 | The merchant (1); the night-4 guest; Brother Simon (5); Roger's sergeant (5) |
+| Always come | 6 | The bell-tower brother (night 2); the crypt pilgrim (3); Edwin and the fog brother (4); body 5 (5); Anselm (6) |
+| Your choices can stop | 5 | The merchant (1); the lane death (2); the night-4 guest; Brother Simon (5); Roger's sergeant (5) |
 
 What the count has reached by night 6 decides how strong the Saint is:
-- **7–8:** it's a shadow that can't leave the crypt. The Rising can't happen.
+- **8 or fewer:** it's a shadow that can't leave the crypt. The Rising can't happen. (Save three of the five and you get here.)
 - **9:** it walks the abbey slowly, and the cult's last rite can finish it.
 - **10–11:** it walks and hunts, and only stopping the last rite (or the fire) keeps it in.
 
@@ -116,6 +120,8 @@ On night 6 its last victim at Matins is Brother Simon if he lived, otherwise a p
 | --- | --- |
 | The prologue | Night 0: the wagon ride through Aldgate, the Cross Keys (taproom and rooms), the lane's people, drinking, the curfew bell, the squint scare, the killing seen from your window, sleep. Day 1: grey daylight, the tour of the duties with Thomas and Anselm, the nap (`docs/mechanics.md`) |
 | The lane | A hub at each dusk while the gate is open: the people you met on night 0, their rumours (which follow what you did), the inn. After the curfew bell: the watchman calling the hour, windows going dark, lane deaths seen through the grille and the three squints |
+| Quiet saves | Before every designed chase and set piece, so a death costs a few minutes at most. Bells still save too, and Continue starts from the last bell |
+| Tells | Every hidden number shows in the world: crypt candles for the count, talk stopping and doors locking for Suspicion, greetings for trust (`docs/mechanics.md`) |
 | Six nights | Each night: dusk, supper, the gate, knocks, Matins, the round, the small hours, dawn, then sleep and a chapter card. Everything carries over: flags, Dose (halved by a day's sleep), Suspicion, keys, the ledger, the count, bodies, blood, locked doors and what each person thinks of you |
 | Saves | At every bell, one slot. Continue on the title screen. Death sends you back to the last bell |
 | Menus | Title (New Game, Continue, How to Play, Settings, Quit), pause, settings (field of view 60–90°, mouse sensitivity, invert, volume, clock speed off by default). Manuscript style, as the Look and Feel says |
@@ -144,11 +150,13 @@ The night-by-night script is in the design doc. In short:
 | 0 | None: you're outside, at the Cross Keys | The killing by the well, from your window | None | Not yet met | None (the squint scare, if you walk alone after curfew) | Rain at dusk, then clear |
 | Day 1 | None | None | The sand by the well | Leads the tour with Anselm; his first lie | None | Overcast day |
 | 1 | The merchant, Walter, the knock with no one there | None | The merchant (if admitted) | Kind; the night is a tutorial | None (a glimpse at the end of the cloister) | Rain |
-| 2 | Joan, the sailor, Roger | The one you turned away | The bell-tower brother | Found hurt in the infirmary, blaming the demon | None (glimpses) | Rain |
-| 3 | Walter, the child's knock | The crypt pilgrim | The oven bones | His remedy; he tells you the prior watches you; he saves you from the hunter | Hiding (as built) | Clear |
-| 4 | Mab, inside the gate, and a pilgrim | The fog brother; the guest | Edwin | Tells you he saw Brother Simon out at night; you find Simon scrubbing blood on the cloister flags | Two hunters; one is Osric | Fog |
-| 5 | Joan (if turned away before) and Roger's sergeant | Simon (or no one); the sergeant (or no one) | Joan or a pilgrim | 'Attacked' in the chapter house as Simon is: you save one. If Simon lives, he tells you Thomas sent him | Locked in the granary; out by the latrine chute | Clear |
-| 6 | Roger, Joan or Mab, depending on what you did | Dunstan, Cole, Osric or Ranulf | Anselm | The wine; the truth in the crypt | The whole cult, and the Saint | Snow |
+| 2 | Joan, the sailor, Roger | Someone turned away after curfew, or Jankin (or no one) | The bell-tower brother | Tells you the prior is about at night | None (glimpses) | Rain |
+| 3 | Walter, the child's knock | The crypt pilgrim | The oven bones | Warns you off Ranulf's remedy; tells you the prior asks about you; saves you from the hunter | Hiding (as built) | Clear |
+| 4 | Mab, inside the gate, and a pilgrim | The fog brother; the guest (or no one) | Edwin | No supper (the house fasts); tells you he saw Brother Simon out at night; you find Simon scrubbing blood | Two hunters; one is Osric | Fog |
+| 5 | Joan (if turned away before) and Roger's sergeant | Simon (or no one); the sergeant (or no one) | Joan or a pilgrim | The dilemma at dusk: 'attacked' in the chapter house as Simon is; you save one. At dawn the prior arrests you, and believes you if you can show him enough | Locked in the granary; out by the latrine chute | Clear |
+| 6 | Roger, Joan or Mab, depending on what you did | Dunstan, Cole, Osric or Ranulf | Anselm | No duties at all. The wine; the truth in the crypt | The whole cult, and the Saint | Snow |
+
+Nights 1 and 2 teach the routine. From night 3 each breaks a step of it: the crypt breaks the round (3), there's no supper (4), the night opens with the dilemma (5), and there are no duties at all (6).
 
 ## Endings
 
@@ -157,7 +165,7 @@ They're checked in this order when night 6 ends:
 | Ending | How you get it | What happens | The chronicle's last line |
 | --- | --- | --- | --- |
 | The New Faith | Caught on night 6 after drinking Thomas's wine | You wake in a habit with a mask in your lap. "The porter has always been one of us" | You keep the gate for it, for forty years |
-| The Demon | Reach the end at Dose 75+ | You fight "the demon" and kill it. Sober: it was the prior, who came to help. You're hanged for the murders | It was fed, and slept |
+| The Demon | At Dose 75+, "the demon" corners you with a light and you choose to strike | You kill it. Sober: it was the prior, who came to help. You're hanged for the murders | It was fed, and slept |
 | The Rising | The last rite finishes (you didn't stop it) and the count reached 9 or more | It walks out of the gate into London | Whitechapel, 1888 |
 | The Fire | You burned the granary and the crypt, with the book | The proof, the cult and the book burn together. The record calls it lightning | You're never sure who was inside |
 | The Gate | Reach the gate with proof (a costume, a purse, the pig's bone) and open it for Roger | Roger's men take the abbey; the cult hangs; the bailiff takes the land | Its name was never written down again, until 1888 |
@@ -170,15 +178,15 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 
 | Milestone | What | Done when |
 | --- | --- | --- |
-| M8 | The game's frame: six nights in order, carry-over, bell saves and Continue, chapter cards, title, pause and settings menus, the capture rule and your death, the minimal HUD, crouch, lean, the satchel, the gamepad | A test plays a stub of each night from New Game to dawn and back through the title; death and Continue work |
-| M9 | Death and bodies: the death node (three styles, two renders, fakes, ragdoll), blood that stays and gets cleaned, moving bodies, reporting, hidden bodies, the rite's count and the book, the ledger's notes, being seen | Each style plays in a test scene; reporting changes what follows; the count adds up |
-| M10 | The drug and the dark: Dose tiers (senses only), hallucination and fake events, HUD lies at 75+, incense by the door, clean food, scares between chases, jump scares, the cat | Each tier's events fire in a test, fakes leave nothing, and stills by Dose |
-| M11 | Hunters and the abbey: the Suspicion bands, two hunters, locked doors, voices, unmasking; throwing, wedging, the bell gamble, the lantern in the wind; routines, trust, warnings, companions, lies at the gate; weather; the well; the wine | Each band and each kind of weather tested; routines walk by the hour |
+| M8 | The game's frame: six nights in order, carry-over, bell saves, quiet saves and Continue, chapter cards and chapter select, title, pause and settings menus, the capture rule and your death, the minimal HUD (and its setting), crouch, lean, the satchel, the gamepad, the clock's pace | A test plays a stub of each night from New Game to dawn and back through the title; death and Continue work |
+| M9 | Death and bodies: the death node (three styles, two renders, fakes, ragdoll), blood that stays and gets cleaned, moving bodies, reporting, hidden bodies, the rite's count, the crypt candles and the book, the ledger's notes, being seen, the prior's night-5 judgement | Each style plays in a test scene; reporting changes what follows; the count adds up |
+| M10 | The drug and the dark: Dose tiers (senses only), hallucination and fake events, the HUD's one lie, incense by the door, clean food, Ranulf's remedy, scares between chases, jump scares, the cat, the three things never explained | Each tier's events fire in a test, fakes leave nothing, and stills by Dose |
+| M11 | Hunters and the abbey: the Suspicion bands, two hunters, locked doors, voices, unmasking; throwing, the bell, scripted gusts; routines, trust and greetings, warnings, companions, lies at the gate, the rules for saving people and the dusk talk that teaches them; weather; the well; the wine | Each band and each kind of weather tested; routines walk by the hour |
 | M12 | The prologue and the lane: the road through Aldgate, the Cross Keys inside and out (the inn gains a storey), the lane's people and their dusk rumours, drinking, the curfew bell and the watchman, the squints and the squint scare, the killing from the window; day 1's tour and the nap | Night 0 and day 1 play from New Game to night 1's dusk in one test; the lane's lines change with flags |
 | M13 | Nights 1 and 2, and night 3 brought into line (the crypt death, Thomas's beats, the rite's page) | Night 0 to night 3 play in order in one test |
 | M14 | Nights 4 and 5: the fog, Edwin, Osric unmasked, Simon and the blood, the dilemma, the granary, the arrest | Night 0 to night 5 in order; both sides of the dilemma |
 | M15 | Night 6: the hunt, the Hungry Saint, proof, stopping the rite, fire, the crypt, the seven endings and their chronicles | Every ending reached by a scripted route |
-| M16 | Full pass: every route played by tests, fixes, timing, the play guide, the decisions list | "Done when" above, all of it |
+| M16 | Full pass: every route played by tests, fixes, timing (4–5 hours), the play guide, the decisions list | "Done when" above, all of it |
 
 ## Risks
 
@@ -195,7 +203,7 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 
 Things I decided because the docs didn't say. Accept, change or strike each one.
 
-- The rite needs ten deaths; the Saint's strength bands are 7–8, 9 and 10–11.
+- The rite needs ten deaths; the Saint's strength bands are 8 or fewer, 9, and 10–11; six deaths always come, five can be stopped.
 - The witnessed deaths and their places, as in the table above, including Roger's sergeant (a new minor character) and the drunk from the inn.
 - The hidden bodies and their places.
 - Which bodies the cult moves (the merchant, Edwin, the night-4 guest).
@@ -209,6 +217,6 @@ Things I decided because the docs didn't say. Accept, change or strike each one.
 - The curfew bell at nine, and the watchman calling the hour after it.
 - The squints: three, one from the porter's cell and two from the outer court; the scare at the south one.
 - Once you've finished the game, New Game can begin at night 1.
-- Thomas's night-2 "attack" is a cut across his arm that he made himself.
+- After the review: no supper on night 4 (the house fasts); the dilemma at dusk on night 5; Ranulf gives the remedy; the prior's bloody sleeve on night 4; the candle that lights itself on night 5; Jankin saved by asking Hob.
 - The Hungry Saint's look (Look and Feel): about 2.6 m, no horns, a gap in the light that dims your lantern, the same at any Dose.
 - The three death styles and which deaths use which (the table above).

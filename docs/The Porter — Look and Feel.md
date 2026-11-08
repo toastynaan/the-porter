@@ -172,6 +172,7 @@ The real demon is not the costume. It must never look like a man in a mask, so a
 - **Movement:** slow and in view, unlike the costume. It moves only on the ground, never quickly.
 - **Sound:** silence before it. Rooks, rats, the cat and the wind all stop.
 - **Dose:** it looks the same drugged or sober. That is how the player knows it's real.
+- **Seen once before:** on night 0, sober, through a squint in the abbey wall: too tall, too thin, no horns, gone when you look again. On night 6 the player should recognise it.
 
 ## Environments and materials
 
@@ -224,7 +225,7 @@ Almost no HUD. Everything the player needs to know is in the world or in an obje
 | Dose | Never shown directly; only through the image itself |
 | Suspicion | Never shown; NPC behaviour changes instead |
 | Interact prompt | A small dot in the centre. What E would use gets a thin, pale outline while you look at it, within reach |
-| Objectives | The candle-clock marks and the ledger say what's due. A small, dim glyph floats over the one person or thing the current duty needs, seen within about 10 m, and never during a chase or while hiding. The lit way to each duty stays |
+| Objectives | The candle-clock marks and the ledger say what's due. A small, dim glyph floats over the one person or thing the current duty needs, seen within about 10 m, and never during a chase or while hiding (a setting turns it off). The lit way to each duty stays |
 | Dialogue | Plain subtitles at the bottom, speaker name in small caps, no portraits. Up to three numbered answers, then "Walk away" |
 
 **Menus and text** use the manuscript style: parchment background, blackletter only for titles, a readable book typeface for everything else. Chapter cards for each night look like a page from the chronicle, with a decorated initial letter. Keep blackletter out of body text; it is hard to read.
