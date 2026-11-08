@@ -42,6 +42,8 @@ const OUT_OF_STALL_SUSPICION := 10
 @export var west_door: Marker3D
 ## Said once he has counted them: all there, one short, one wrong.
 @export var count_lines := PackedStringArray(["(You count the brothers.)"])
+## Written in his notes once he has counted (night 4: Edwin missing).
+@export var count_note := &""
 
 var _chant: AudioStreamPlayer3D
 ## The office is being sung; seconds of incense still burning.
@@ -79,6 +81,8 @@ func run() -> void:
 	GameState.set_flag(GameState.tonight("headcount"))
 	GameState.set_flag(GameState.tonight("saw_dead_brother"), saw_dead)
 	await say_lines(count_lines)
+	if count_note != &"":
+		GameState.note(count_note)
 	await wait(office_time)
 	while _burning > 0.0:
 		await get_tree().physics_frame

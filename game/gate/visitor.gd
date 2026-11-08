@@ -26,6 +26,10 @@ extends Resource
 @export var answer: PackedStringArray = []
 ## He only comes if this flag is set (e.g. Roger, if the merchant died).
 @export var only_if := &""
+## The porter's words if he warns him at his bed to bar the door from
+## inside (from night 4 the lock doesn't help: Saving, Warnings). Empty: no
+## such choice.
+@export var warn_line := ""
 
 
 func has_part(part: StringName) -> bool:

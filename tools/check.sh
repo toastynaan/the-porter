@@ -13,8 +13,8 @@
 set -u
 GODOT="${GODOT:-/Applications/Godot_4_8.app/Contents/MacOS/Godot}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-# Seconds a test may take (test_flow plays four whole nights).
-TIMEOUT=420
+# Seconds a test may take (test_flow plays six whole nights).
+TIMEOUT=900
 LOG="$(mktemp -d)"
 trap 'rm -rf "$LOG" "$ROOT/override.cfg"' EXIT
 fail=0

@@ -14,6 +14,9 @@ extends NightBeat
 @export var answers := PackedStringArray()
 @export var replies := PackedStringArray()
 @export var answer_tags := PackedStringArray()
+## Written in his notes, and set (tonight's), once the lines are said.
+@export var note := &""
+@export var flag := &""
 
 
 func run() -> void:
@@ -34,6 +37,10 @@ func run() -> void:
 		if who.has_method(&"face"):
 			who.call(&"face", p.global_position)
 	await say_lines(lines)
+	if note != &"":
+		GameState.note(note)
+	if flag != &"":
+		GameState.set_flag(GameState.tonight(String(flag)))
 	if answers.is_empty():
 		return
 	var pick := maxi(await Talk.choose(answers), 0)

@@ -454,3 +454,14 @@ Added during the run (M13, `docs/nights.md`):
 - The round's shape appears once on night 1, twice on night 2 and three times on night 3.
 - Whom to tell about a body is asked at dawn, before he sleeps, for every body found and not yet reported.
 - The lane death's victim, in order: someone turned away after the bell tonight who isn't a named outsider; else Jankin, unless Hob kept him in; else no one.
+
+Added during the run (M14, `docs/nights.md`):
+- Night 4's knocks at 19:00 (Mab) and 20:00 (the pilgrim, so turning him away sends him to the Keys); Edwin dies out of sight at 23:00.
+- The night-4 warning is given at the guest's bed, as the porter shows him to it.
+- The fog death plays within 9 m of its spot; the prior arrives 1.5 s after the porter reaches the body.
+- Two hunters at night 4's charnel house; Osric's mask comes off once he's been within 7 m for 0.6 s; the chase ends after 6 s with neither chasing or searching. The scripted hunters carry blades from night 4.
+- Night 5's dilemma has no time limit: the first of the two he reaches is the one he saves. Saving Simon is Simon's trust +20.
+- Night 5's knocks at 19:00 (Joan, if she comes) and 20:30 (the sergeant).
+- The lock-in bars twenty doors (the west range's, the church's and the dormitory's ground floor) and sends two hunters (one in the granary, one in the choir); it ends when he's out of the latrine chute.
+- The prior believing him is his trust +40.
+- A conversation's `[if clue]` holds for a clue in his notes as well as a flag.

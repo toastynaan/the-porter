@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_carter.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(A thick neck and a broken nose. His eyes keep going up the lane, into the dark.)"
+ledger = "broken-nosed, watching the lane"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A leather jack, with the badge of the ward sewn on the breast.)"
+ledger = "in a leather jack, with the badge of the ward"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(A cudgel in one fist. His lantern hangs from the other, and the flame won't keep still.)"
+ledger = "a cudgel and a lantern"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Hobnailed boots. He shifts them on the stones and never stands still.)"
+ledger = "in hobnailed boots"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"sergeant"
+speaker = "Sergeant"
+look = ExtResource("look")
+ledger_name = "Nicholas Kene, sergeant to Roger the bailiff"
+greeting = "Sergeant of the ward, porter, sent by Roger the bailiff to watch your gate till morning. I'd sooner watch it from your side of the bars. Let me sit inside till it's light, and I'll be no trouble to anyone."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n5_sergeant"
+question = "Why does Roger want my gate watched?"
+answer = PackedStringArray("He wants a count. Who goes in tonight, who comes out, and what they carry out with them.", "He said watch the gate. He never said which side of it. I've heard what they say in the Keys, and I know which side I'd rather.")

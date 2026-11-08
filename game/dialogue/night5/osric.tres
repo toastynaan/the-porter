@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n5_osric"
+text = "# DRAFT
+# Osric at dusk, at the kitchen fire (night 5, clear and cold). The fast is over: bread tonight, and the heel kept back.
+# Smiling. If the porter saw his face under the mask last night (osric_mask), he knows this face; Osric acts as if nothing happened.
+# Where he was last night: the wrong question (Suspicion +5). Saying he saw his face: Suspicion +15, and Osric ends the talk.
+== start
+(Osric is at the kitchen fire, flour to the elbow, the smell of new bread all round him. He beams at you.)
+Osric: The porter! The fast's done, God be thanked. Bread tonight, and I've kept the heel back for you.
+-> mask [if osric_mask]
+-> topics
+
+== mask
+(It's the face you saw in the fog last night, with the horns pushed back off it. It's smiling at you.)
+-> topics
+
+== again
+Osric: Back again? You can smell it. Patience, porter. Not till the bell.
+-> topics
+
+== topics
+* [if not n5_osric_fast] (Ask why the fast was lifted.) -> fast
+* [if not n5_osric_where] (Ask where he was last night.) -> where
+* [if osric_mask] [if not n5_osric_face] (Say you saw his face in the fog.) -> face
+
+== fast [set n5_osric_fast]
+Osric: Father Abbot lifted it after Prime. A night and a day of nothing, and half the house couldn't stand at Lauds.
+Osric: Eat tonight, porter. All of it. You'll want your strength.
+-> topics
+
+# The wrong question to the wrong brother (design doc): Suspicion +5.
+== where [set n5_osric_where] [suspicion 5]
+Osric: Abed, in the dormitory, listening to my belly. Like every Christian in the house. Where else would I be?
+(He goes on kneading.)
+Osric: Ask the brother in the next bed. He'll tell you how I snore.
+-> topics
+
+# Accusing a cultist to his face: Suspicion +15.
+== face [set n5_osric_face] [suspicion 15]
+(He laughs, a big warm laugh. The dough under his hands doesn't stop.)
+Osric: My face? In the fog? Porter, you've been fasting. A hungry man sees faces in his porridge.
+Osric: Eat your bread tonight. All of it. You'll see clearer for it.
+-> end
+
+== leave
+Osric: The heel's yours, porter! Don't be late!
+"

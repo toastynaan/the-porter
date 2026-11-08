@@ -6,7 +6,7 @@ How the game holds together from the title screen to the last chronicle: chapter
 
 Press F5. The game opens on the title: **New Game**, **Continue** (once there is a save), **Chapters** (once you've finished the game), **How to Play**, **Settings**, **Quit**. Menus take the mouse, the keyboard (arrows and Enter) or a gamepad.
 
-New Game plays the chapters in order, each opened by its card: night 0 (the Cross Keys), day 1 (the tour), then nights 1 to 6. Night 0, day 1 (`docs/prologue.md`) and nights 1 to 3 (`docs/nights.md`) are built in full so far; nights 4 to 6 are stubs that wake you at dusk, let the night go by and send you to your cot (M14 and M15 build them). When night 6 ends, the ending's chronicle closes the game and you're back at the title with Chapters open.
+New Game plays the chapters in order, each opened by its card: night 0 (the Cross Keys), day 1 (the tour), then nights 1 to 6. Night 0, day 1 (`docs/prologue.md`) and nights 1 to 5 (`docs/nights.md`) are built in full so far; night 6 is a stub that wakes you at dusk, lets the night go by and sends you to your cot (M15 builds it). When night 6 ends, the ending's chronicle closes the game and you're back at the title with Chapters open.
 
 ## Chapters
 
@@ -19,8 +19,8 @@ New Game plays the chapters in order, each opened by its card: night 0 (the Cros
 | Night 1 | The first night: The New Porter | `game/nights/night1.tscn` |
 | Night 2 | The second night: The Bell | `game/nights/night2.tscn` |
 | Night 3 | The third night: The Oven | `game/nights/night3.tscn` |
-| Night 4 | The fourth night: Edwin | `game/nights/night4.tscn` (stub) |
-| Night 5 | The fifth night: The Granary | `game/nights/night5.tscn` (stub) |
+| Night 4 | The fourth night: Edwin | `game/nights/night4.tscn` |
+| Night 5 | The fifth night: The Granary | `game/nights/night5.tscn` |
 | Night 6 | The sixth night: The Hunt | `game/nights/night6.tscn` (stub) |
 
 The card is a chronicle page: the heading in small capitals, the title in blackletter, a decorated initial in old-blood red, and a few lines in the chronicler's voice. It goes on when you press E, or by itself after 14 s *(mine)*. The chronicle's dates put night 0 on the eve of Saint Martin, 10 November 1424 *(mine)*, so day 1 is Martinmas and night 6 is the 16th.
@@ -105,7 +105,7 @@ Hunters and visitors no longer collide with door leaves. They stop at a shut doo
 
 ## Tests and tools
 
-- **`test_flow`:** from the title, New Game through every chapter in order with its card (night 0, day 1 and nights 1 to 3 played in full), carry-over and the night's own flags cleared, the chronicle and the title with Chapters, chapter select, pause, death to the quiet save, and Continue from the bell.
+- **`test_flow`:** from the title, New Game through every chapter in order with its card (night 0, day 1 and nights 1 to 5 played in full), carry-over and the night's own flags cleared, the chronicle and the title with Chapters, chapter select, pause, death to the quiet save, and Continue from the bell.
 - **`test_body`:** crouch speed, eye height and quiet steps; hidden behind a 1 m stall; lean offset and tilt, the head seen past a corner, leaning into a wall; the right stick.
 - **`test_frame`:** the outline in reach and not beyond; the glyph for the current duty only, within 10 m and in view, not in a chase, while talking or hiding, or with guidance off; the satchel and the ledger; the settings; the clock's pace.
 - **`test_capture`:** the forgiving capture on night 1 (satchel taken, keys kept), death after it, death at once on night 3, and the quiet save.

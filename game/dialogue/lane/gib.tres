@@ -147,7 +147,7 @@ Gib: I don't sleep on the watch, brother. That's the whole of the job.
 
 # Night 5: about night 4. A cry in the fog; Mab's place empty, if she was let in.
 == n5 [set lane_gib_5]
--> n5_cry [if died_choirb]
+-> n5_cry [if died_choira]
 -> n5_mab
 
 == n5_cry
@@ -156,7 +156,7 @@ Gib: I called the hour twice over, to be sure I was still there.
 -> n5_mab
 
 == n5_mab
--> n5_empty [if n4_mab_inside]
+-> n5_empty [if n4_mab=admitted]
 -> n5_bell
 
 == n5_empty
@@ -177,7 +177,7 @@ Gib: I always do. From the far side of the lane, mind.
 # Night 6: about night 5. Roger's sergeant, left outside the gate or let in. Snow.
 == n6 [set lane_gib_6]
 -> n6_dead [if died_sergeant]
--> n6_lived [if n5_sergeant_inside]
+-> n6_lived [if n5_sergeant=admitted]
 -> n6_snow
 
 == n6_dead

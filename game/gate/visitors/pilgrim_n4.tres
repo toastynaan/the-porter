@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_pilgrim.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(A plain, decent face, clean-shaven and grey with fright. He keeps looking back down the lane.)"
+ledger = "clean-shaven, looking back down the lane"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(A good brown gown, a modest purse at his belt, and an eating knife beside it.)"
+ledger = "in a good gown, a purse and a knife at his belt"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Fine gloves, his own work by the stitching. He pulls one off to cross himself. The knuckles are swollen like knots in a rope.)"
+ledger = "in fine gloves, his knuckles swollen"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Sound boots, muddy from the lane.)"
+ledger = "in sound boots"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"night4_guest"
+speaker = "Pilgrim"
+look = ExtResource("look")
+ledger_name = "Richard Payne, glover, of Maidstone"
+greeting = "Open, porter, for God's love. Richard Payne, glover, of Maidstone, come to your saint for my hands. I'll pay for a bed, and gladly. Only let me in off that lane."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n4_guest"
+question = "Why not take a bed at the Keys?"
+answer = PackedStringArray("The Keys is in the lane, porter, and the lane is where they find them. It's all anyone talked of at their table.", "Your side of the wall has a saint in it, and a bar on the gate. I'll take my chances there.")
+warn_line = "(Tell him to bar his door from inside tonight, and open to no one, whoever calls him.)"

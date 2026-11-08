@@ -29,6 +29,10 @@ extends NightBeat
 @export var cole_lines := PackedStringArray(["Cole: (Takes the gate without a word, and opens it for the day.)"])
 @export var keys_lines := PackedStringArray(["(Your keys. Someone has moved them.)"])
 @export var sleep_line := "(You sleep through the day.)"
+## Night 4: someone has been in his cell. Said as he comes into it; the
+## candle clock is found snapped.
+@export var cell_lines := PackedStringArray()
+@export var candle_clock: Node3D
 
 
 func _ready() -> void:
@@ -52,6 +56,12 @@ func run() -> void:
 		await _keys(p)
 	else:
 		await say("", "(Go to your cell and sleep.)")
+		if not cell_lines.is_empty():
+			await until(func() -> bool: return p.global_position.distance_to(cell.global_position) < cell_radius)
+			if candle_clock:
+				candle_clock.rotation = Vector3(0.0, 0.0, deg_to_rad(80.0))
+			await say_lines(cell_lines)
+			GameState.set_flag(GameState.tonight("cell_violated"))
 	for id in Report.unreported():
 		await Report.ask(id, Report.name_of(id))
 	await sleep.wait_for_use()

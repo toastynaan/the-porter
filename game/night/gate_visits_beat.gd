@@ -199,6 +199,11 @@ func _admit(npc: VisitorNPC) -> void:
 	var bed := await _pick_bed()
 	await npc.walk_to(_beside(bed))
 	npc.lie_down(_bed_top(bed))
+	if not npc.visitor.warn_line.is_empty():
+		var warn := await Talk.choose(PackedStringArray([npc.visitor.warn_line, "(Leave him to sleep.)"]))
+		if warn == 0:
+			Warnings.give(npc.visitor.id, npc)
+			await say("", "(He nods, and you hear the bar go across behind you.)")
 
 
 ## The prior comes to the gate, lets him in and takes him to a bed.

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_mab.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Her face is wrapped to the eyes, as always. It's the eyes that have changed: wide, and never still.)"
+ledger = "face wrapped to the eyes, frightened"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(She's pressed to the bars with her back to the lane. Her bowl isn't with her. She left it where she sits.)"
+ledger = "pressed to the bars, without her bowl"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Her hands shake so that the clapper in them knocks on the grille: a dry little clack, again and again.)"
+ledger = "her hands shaking, her clapper knocking the bars"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(The rags on her feet are soaked, and black with mud to the ankle.)"
+ledger = "the rags on her feet soaked with mud"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"mab"
+speaker = "Mab"
+look = ExtResource("look")
+lantern = false
+ledger_name = "Mab, the leper at the gate"
+greeting = "Porter. Porter, open. It's Mab. Eleven years I've sat outside this gate and sent folk over to the Keys, and never once asked to come in. I'm asking now."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n4_mab"
+question = "What did you see, Mab?"
+answer = PackedStringArray("I went down for water at the bottom of the lane, where your mill race runs out under the wall. Three of them came out of it, porter. Out of the water, one after another.", "Horned, all three, and taller than any man. They passed so close I could smell them. Incense, like your church.", "One slipped on the bank and swore. Then the fog had them.")

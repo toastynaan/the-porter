@@ -184,7 +184,7 @@ Hob: They're saying a young one of yours was found in the bone house. Laid out a
 -> n5_more
 
 == n5_more
--> n5_fog [if died_choirb]
+-> n5_fog [if died_choira]
 -> n5_plain [if not died_edwin]
 -> n5_ask
 
@@ -209,7 +209,7 @@ Hob: But you won't. Your sort never do.
 # Night 6: about night 5. Roger's sergeant, left outside the gate or let in.
 == n6 [set lane_hob_6]
 -> n6_dead [if died_sergeant]
--> n6_lived [if n5_sergeant_inside]
+-> n6_lived [if n5_sergeant=admitted]
 -> n6_snow
 
 == n6_dead

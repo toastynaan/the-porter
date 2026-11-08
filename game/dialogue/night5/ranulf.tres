@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n5_ranulf"
+text = "# DRAFT
+# Ranulf at dusk, filling the censers in the choir (night 5, clear and cold). Smooth. (He wears the horned costume.)
+# The abbot sick from the smoke; where Ranulf was when Thomas was \"attacked\" (Suspicion +5); and, if the porter has
+# heard from Kit tonight that he bought no candles (lane_kit_5), the wrong question (Suspicion +10): we have all we need.
+== start
+(Ranulf is filling the censers from his leather bag. The church already smells of it, though Matins is hours off.)
+Ranulf: Porter. Early again. You've made a habit of it.
+-> topics
+
+== again
+(He hangs a censer on its hook and reaches for the next.)
+Ranulf: Porter.
+-> topics
+
+== topics
+* [if not n5_ranulf_abbot] (Say the abbot can hardly breathe for the smoke.) -> abbot
+* [if not n5_ranulf_where] (Ask where he was when Thomas was attacked.) -> where
+* [if lane_kit_5] [if not n5_ranulf_candles] (Say Kit told you he bought no candles today.) -> candles
+
+== abbot [set n5_ranulf_abbot]
+Ranulf: Then he should breathe deeper. It works on what's in the chest as well as what's in the house.
+Ranulf: Father Abbot ordered it. I only burn it.
+-> topics
+
+# The wrong question to the wrong brother (design doc): Suspicion +5.
+== where [set n5_ranulf_where] [suspicion 5]
+Ranulf: Here, at my candles, as I am every evening at that hour. I heard the cry, like everyone.
+(He doesn't blink.)
+Ranulf: And you, porter? Thomas says you were first through the door. You generally are.
+-> topics
+
+# The wrong question to the wrong brother (design doc): Suspicion +10.
+== candles [set n5_ranulf_candles] [suspicion 10]
+(He stops with a censer in his hand.)
+Ranulf: Kit should mind her tray.
+Ranulf: We have all we need now, porter. That's all.
+-> topics
+
+== leave
+Ranulf: In the choir tonight, porter. Breathe deep.
+"

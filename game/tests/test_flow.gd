@@ -1,8 +1,8 @@
 extends Node
 ## The game's frame (docs/full-game-run.md, M8 and "Done when" 1), through
 ## main.tscn from the title screen: New Game plays night 0, day 1 and nights
-## 1 to 6 in order, each opened by its chapter card (night 0 to night 3 are
-## played in full; the stubs wake and sleep), with Dose halved by each day's sleep
+## 1 to 6 in order, each opened by its chapter card (night 0 to night 5 are
+## played in full; night 6, a stub, wakes and sleeps), with Dose halved by each day's sleep
 ## and the rest carried over, and the night's own flags cleared. Night 6
 ## ends in the chronicle, then the title, where chapter select is open and
 ## there is nothing left to continue. Chapter select starts a night with its
@@ -89,10 +89,19 @@ func _run() -> void:
 			await pilot.play_night2(_answer)
 			_check(GameState.has_flag(&"found_bell_brother") and GameState.has_flag(&"n2_roger"), "night 2, played in full in order")
 			dose_before = -1.0
+		elif chapters[i].id == &"night4":
+			await pilot.play_night4(_answer)
+			_check(GameState.has_flag(&"found_edwin") and GameState.has_note(&"osric_mask"), "night 4, played in full in order")
+			dose_before = -1.0
+		elif chapters[i].id == &"night5":
+			await pilot.play_night5(_answer)
+			_check(GameState.get_flag(&"n5_saved") == &"simon" and GameState.has_flag(&"n5_escaped"), "night 5, played in full in order")
+			_check(GameState.count == 7, "by night 5's dawn the rite has seven souls (%s)" % [GameState.souls])
+			dose_before = -1.0
 		else:
 			# A stub: the night doesn't change his Dose before he sleeps.
-			dose_before = GameState.dose
 			await pilot.play_stub()
+			dose_before = pilot.dose_at_sleep
 		if dose_before > 0.0:
 			_check(absf(GameState.dose - dose_before * 0.5) < 0.5, "a day's sleep halves Dose (%.1f to %.1f)" % [dose_before, GameState.dose])
 		dose_before = GameState.dose
@@ -127,7 +136,10 @@ func _run() -> void:
 	_flow.resume()
 	_check(not get_tree().paused and not _flow.pause.visible, "Resume")
 
-	# Death: back to the latest save, quiet or bell.
+	# Death: back to the latest save, quiet or bell. (Night 5 saves quietly
+	# itself as the dilemma begins; the test's own quiet save comes after.)
+	await _until(func() -> bool: return _director().current != null and _director().current.name == &"Dilemma", 10.0)
+	await _frames(3)
 	var capture: CaptureFlow = _main.get_node(^"CaptureFlow")
 	GameState.snap_dose(44.0)
 	GameState.quiet_save(&"start")

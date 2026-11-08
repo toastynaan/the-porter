@@ -211,7 +211,7 @@ Mab: Ask me again tonight.
 
 # Night 5: about night 4. Three of them, by the mill race.
 == n5 [set lane_mab_5]
--> n5_inside [if n4_mab_inside]
+-> n5_inside [if n4_mab=admitted]
 -> n5_outside
 
 == n5_inside
@@ -239,7 +239,7 @@ Mab: Only you. And you're nobody either, porter. No offence.
 # Night 6: about night 5. Roger's sergeant. Snow.
 == n6 [set lane_mab_6]
 -> n6_dead [if died_sergeant]
--> n6_lived [if n5_sergeant_inside]
+-> n6_lived [if n5_sergeant=admitted]
 -> n6_snow
 
 == n6_dead

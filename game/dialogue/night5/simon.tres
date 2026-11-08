@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n5_simon"
+text = "# DRAFT
+# Brother Simon at dusk, at the back of the nave (night 5, clear and cold). Only if the porter saved him (n5_saved=simon).
+# Shaking and grateful. He says little more than he told the porter in the chapter house: Thomas sent him to scrub the blood
+# (the thomas_sent_simon note). He asks the porter not to tell anyone. Where he scrubbed: a flag that rocked (the hidden body).
+== start
+(Brother Simon sits at the back of the nave, knees drawn up, a strip of linen at his neck where the knife touched him.)
+(He flinches at your step, then sees who it is.)
+Simon: Porter. Alric. I've not thanked you. I can't stop shaking long enough to thank you.
+Simon: What I told you in the chapter house. Keep it. Please. Don't tell anyone I said it.
+-> topics
+
+== again
+(Simon hasn't moved. He's watching the door.)
+Simon: You came back. Nobody else has.
+-> topics
+
+== topics
+* [if not n5_simon_sent] (Ask who sent him to scrub the blood.) -> sent
+* [if simon_blood] [if not n5_simon_flags] (Ask what he was really scrubbing.) -> flags
+* [if not n5_simon_promise] (Promise to keep it to yourself.) -> promise
+
+== sent [set n5_simon_sent] [note thomas_sent_simon]
+Simon: I told you. Don't make me say it again.
+(He looks past you at the door, and whispers it.)
+Simon: Brother Thomas. He said it was for the good of the house. He said the abbot mustn't see it.
+Simon: He was kind about it. He's always kind.
+-> topics
+
+== flags [set n5_simon_flags]
+Simon: Not wine. You knew it wasn't. It came up pink in the bucket, and then it wouldn't come up at all.
+Simon: There was a flag that rocked when I knelt on it. I didn't lift it. I didn't want to know.
+-> topics
+
+== promise [set n5_simon_promise] [trust simon 5]
+(He lets out a breath, and some of the shaking goes out with it.)
+Simon: Thank you. I'll not go back to the dormitory. I'll sleep here, where the candles are.
+-> topics
+
+== leave
+Simon: Don't tell anyone. Please.
+"

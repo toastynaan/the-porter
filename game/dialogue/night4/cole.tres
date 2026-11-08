@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n4_cole"
+text = "# DRAFT
+# Cole at dusk, keeping the gate (night 4, fog). Lay brothers don't talk (Look and Feel, \"Characters\").
+== start
+(Cole stands in the open gateway. Behind him the fog has swallowed the lane. He looks round at you and says nothing.)
+* (Ask if anyone came to the gate today.) -> nothing
+* (Say you'll take the gate at the bell.) -> nothing
+* (Wish him good evening.) -> end
+
+== again
+(Cole looks at you, then back at the fog. He says nothing.)
+-> end
+
+== nothing
+(He says nothing. He looks at you a moment longer than he needs to, then back into the fog.)
+-> end
+"

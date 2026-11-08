@@ -154,8 +154,9 @@ static func holds(tags: PackedStringArray) -> bool:
 			var parts := cond.split("=")
 			ok = str(GameState.get_flag(StringName(parts[0]), "")) == parts[1]
 		else:
+			# A flag, or a clue in his notes (osric_mask: he has seen Osric's face).
 			var v: Variant = GameState.get_flag(StringName(cond), false)
-			ok = v != null and not (typeof(v) == TYPE_BOOL and not v)
+			ok = (v != null and not (typeof(v) == TYPE_BOOL and not v)) or GameState.has_note(StringName(cond))
 		if ok == negate:
 			return false
 	return true

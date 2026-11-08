@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_joan.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(The same sharp eyes. Tonight they don't go past you to the court. They stay on yours.)"
+ledger = "sharp-eyed, the woman you turned away"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(No cloak drawn close tonight. She stands square to the grille.)"
+ledger = "standing square to the grille"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(The badge she hid from you before is in her fist, held up to the bars on its cord. A little lead pilgrim's badge, worn smooth.)"
+ledger = "her brother's pilgrim badge"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Her shoes are dry tonight, and grey with the city's dust. She never went home.)"
+ledger = "her shoes grey with dust"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"joan"
+speaker = "Joan"
+look = ExtResource("look")
+lantern = false
+ledger_name = "Joan, sister of a lost pilgrim"
+greeting = "You turned me away once, brother, and I lied to you that night. There's no husband. My brother came to your saint, and he never came home. Let me in, and let me look for him."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n5_joan"
+only_if = &"n2_joan_refused_at"
+question = "What became of your brother?"
+answer = PackedStringArray("He came to your saint before Michaelmas, with a bad chest and money sewn into his coat. The Keys saw him go in at this gate.", "Nobody saw him come out. Nobody in that lane has ever seen one come out.")

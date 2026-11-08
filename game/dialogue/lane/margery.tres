@@ -123,7 +123,7 @@ Margery: Good night! I'll settle for a night, brother. Never mind good.
 
 # Night 5
 == n5 [set lane_margery_5]
--> n5_mab [if n4_mab_inside]
+-> n5_mab [if n4_mab=admitted]
 -> n5_more
 
 == n5_mab

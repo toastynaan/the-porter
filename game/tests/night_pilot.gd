@@ -27,6 +27,10 @@ static func main_with(level_path: String) -> Node:
 
 
 ## `check` is the test's func(ok: bool, what: String).
+## His Dose as he lay down to sleep (play_stub).
+var dose_at_sleep := -1.0
+
+
 func _init(night_root: Node, check: Callable) -> void:
 	night = night_root
 	_tree = night_root.get_tree()
@@ -130,6 +134,7 @@ func play_stub() -> void:
 	await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
 	skip_to(17.25)
 	await until(func() -> bool: return beat() == &"Sleep", 20.0)
+	dose_at_sleep = GameState.dose
 	await use("Sleep")
 	await until(over, 10.0)
 
@@ -180,8 +185,9 @@ func play_day1() -> void:
 ## A night's opening as the porter plays it: wakes, goes in at the supper
 ## bell, eats the bread (the test's `answer` picks, where there's a choice),
 ## takes the gate from Cole, shuts and bars it, opens the ledger.
-func to_the_gate() -> void:
-	await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
+func to_the_gate(from_wake := true) -> void:
+	if from_wake:
+		await until(func() -> bool: return beat() == &"Wake" and not player.controls_locked, 10.0)
 	skip_to(17.25)
 	await until(func() -> bool: return beat() == &"Supper", 5.0)
 	player.place(mark("PorterSeat") + Vector3(0, 0, 0.6), PI)
@@ -321,7 +327,164 @@ static func gate_aware_choice(answer: Array) -> Callable:
 	return func(options: PackedStringArray) -> int:
 		if options.has("Admit him to the guesthouse"):
 			return answer[0]
+		# Warning a guest at his bed: answer[1] if the test gives one (1: no).
+		if options.has("(Leave him to sleep.)"):
+			return answer[1] if answer.size() > 1 else 0
 		return answer[0] if answer[0] >= 0 else 0
+
+
+## Takes the gate from Cole after supper (or with no supper): relieve, shut,
+## bar, the ledger.
+func take_gate() -> void:
+	await until(func() -> bool: return duty("RelieveCole").enabled, 30.0)
+	player.place(Vector3(-36.5, 0.05, -2), deg_to_rad(90.0))
+	await use("RelieveCole")
+	await use("ShutGate")
+	await until(func() -> bool: return not (night.get_node(^"AbbeyGate") as AbbeyGate).is_open(), 3.0)
+	await use("BarGate")
+	await use("Ledger")
+	await until(func() -> bool: return beat() == &"Knocks", 5.0)
+
+
+## Goes within `radius` of `node` (a marker, a body) and faces it.
+func go_to(node: Node3D, radius := 1.5) -> void:
+	var at := node.global_position
+	player.place(at + Vector3(radius, 0, 0), deg_to_rad(90.0))
+	face(at + Vector3.UP * 1.0)
+
+
+## Gives Cole the gate and sleeps (answers whom to tell through the test's
+## auto choice).
+func hand_over_and_sleep() -> void:
+	await until(func() -> bool: return beat() == &"Dawn", 60.0)
+	player.place(mark("ColeGate") + Vector3(1.2, 0, 0), deg_to_rad(90.0))
+	await use("HandOver")
+	player.place(mark("DawnCell"), 0.0)
+	await use("Sleep")
+	await until(over, 15.0)
+
+
+## Night 4 from waking to sleep: Edwin's whisper and Thomas at dusk, no
+## supper, the gate; Mab let in, the pilgrim (`guest`: 0 admit, 1 turn away;
+## warned at his bed if the test's answer[1] is 0); Matins without Edwin; the
+## round's stops; the death in the fog and the prior; the guesthouse; Edwin
+## in the charnel house; the two hunters (he lets Osric come close, sees his
+## face, and gets away); Simon scrubbing; Lauds; his cell; sleep.
+func play_night4(answer: Array, guest := 0) -> void:
+	await until(func() -> bool: return beat() == &"Edwin" and not player.controls_locked, 15.0)
+	go_to(mark_node("EdwinDusk"))
+	await until(func() -> bool: return beat() == &"Thomas", 15.0)
+	go_to(mark_node("ThomasDusk"))
+	await until(func() -> bool: return beat() == &"Fast", 15.0)
+	skip_to(17.25)
+	await until(func() -> bool: return beat() == &"Gate", 10.0)
+	await take_gate()
+	await doze()
+	await keep_gate(0, [], answer, "GuestBeds/Bed2")
+	await doze()
+	await keep_gate(guest, [], answer, "GuestBeds/Bed3")
+	await matins_and_round(0)
+	await until(func() -> bool: return beat() == &"Fog", 30.0)
+	player.place(mark("FogSpot") + Vector3(-6.0, 0, 0), deg_to_rad(-90.0))
+	await until(func() -> bool: return (night.get_node(^"FogDeath") as DeathScene).has_played, 10.0)
+	go_to(night.get_node(^"FogDeath") as Node3D, 2.0)
+	await until(func() -> bool: return beat() != &"Fog", 30.0)
+	if beat() == &"Guest":
+		player.place(mark("GuestDoor") + Vector3(0, 0, 2.0), PI)
+		await until(func() -> bool: return beat() != &"Guest", 30.0)
+	await until(func() -> bool: return beat() == &"Charnel", 10.0)
+	var edwin := night.get_node(^"Bodies/Edwin") as FoundBody
+	await until(func() -> bool: return edwin.active(), 5.0)
+	player.place(edwin.global_position + Vector3(-2.5, 0, 0), deg_to_rad(-90.0))
+	face((edwin.body as Corpse).centre() if edwin.body is Corpse else edwin.global_position)
+	await until(func() -> bool: return beat() == &"Hunters", 15.0)
+	await frames(3)
+	var two := director().get_node(^"Hunters")
+	var hunters: Array = two.get(&"hunters")
+	if hunters.size() == 2:
+		# Both of them at once: stand back from the two so both are in view.
+		var a := (hunters[0] as Hunter).global_position
+		var b := (hunters[1] as Hunter).global_position
+		var mid := (a + b) * 0.5
+		var side := (b - a).cross(Vector3.UP).normalized()
+		player.place(mid + side * 8.0, 0.0)
+		face(mid + Vector3.UP * 1.5)
+		await until(func() -> bool: return GameState.has_note(&"two_demons"), 2.0)
+		(hunters[1] as Hunter).queue_free()
+		var osric := hunters[0] as Hunter
+		await until(func() -> bool: return osric.global_position.distance_to(player.global_position) < 6.5, 4.0)
+		face(osric.global_position + Vector3.UP * 1.6)
+		await until(func() -> bool: return GameState.has_note(&"osric_mask"), 2.0)
+	# He gets away (the chase itself is test_hunt's): they lose him.
+	player.place(mark("DawnCell"), 0.0)
+	for h: Variant in hunters:
+		if is_instance_valid(h):
+			(h as Node).queue_free()
+	await until(func() -> bool: return beat() == &"Simon", 90.0)
+	go_to(mark_node("SimonScrubbing"), 2.0)
+	await until(func() -> bool: return beat() == &"SmallHours", 15.0)
+	await doze()
+	await wake()
+	await hand_over_and_sleep()
+
+
+## Night 5 from waking to sleep: the cry and the chapter house (`save`:
+## &"thomas" or &"simon"); supper, the gate; Joan if she comes, the sergeant
+## (`sergeant`: 0 let him wait inside, 1 leave him in the lane); Matins and
+## Anselm; the granary, the grain, the lock-in and out by the latrine chute;
+## Lauds and the prior's arrest; sleep.
+func play_night5(answer: Array, save := &"simon", sergeant := 0) -> void:
+	await until(func() -> bool: return beat() == &"Dilemma" and not player.controls_locked, 15.0)
+	player.place(mark("ThomasUp") + Vector3(-3.0, 0, 0), deg_to_rad(-90.0))
+	var reach := duty("ReachSimon" if save == &"simon" else "ReachThomas")
+	await until(func() -> bool: return reach.enabled, 10.0)
+	reach.interact(player)
+	await until(func() -> bool: return beat() != &"Dilemma", 30.0)
+	await to_the_gate(false)
+	if GameState.has_flag(&"n2_joan_refused_at"):
+		await doze()
+		await keep_gate(0, [], answer, "GuestBeds/Bed2")
+	await doze()
+	await keep_gate(sergeant, [], answer, "GuestBeds/Bed4")
+	await until(func() -> bool: return beat() == &"Bell", 120.0)
+	await matins_and_round_no_round()
+	await until(func() -> bool: return beat() == &"Anselm", 30.0)
+	go_to(mark_node("AnselmChoir"), 1.5)
+	await until(func() -> bool: return beat() == &"Granary", 15.0)
+	player.place(duty("Grain").global_position + Vector3(0, 0, 1.4), 0.0)
+	await use("Grain")
+	await until(func() -> bool: return GameState.keys.has(&"crypt_passage"), 10.0)
+	var chute := night.get_node(^"Abbey/Navigation/Dormitory/Squeezes/LatrineChute")
+	player.place((chute.get_node(^"P0") as Node3D).global_position + Vector3(0, 0, 0.6), PI)
+	chute.call(&"interact", player)
+	await until(func() -> bool: return beat() != &"Granary", 30.0)
+	await until(func() -> bool: return beat() == &"SmallHours", 15.0)
+	await doze()
+	await wake()
+	await until(func() -> bool: return beat() == &"Arrest", 30.0)
+	var hugh := night.get_node(^"Brothers/Hugh") as Node3D
+	await frames(2)
+	player.place(hugh.global_position + Vector3(-1.5, 0, 0), deg_to_rad(-90.0))
+	await hand_over_and_sleep()
+
+
+## Rings Matins and counts the brothers (no round after: night 5 goes on to
+## the granary).
+func matins_and_round_no_round() -> void:
+	if clock().dozing:
+		await wake()
+	elif not duty("BellRope").enabled and GameState.hour < 23.5:
+		await doze()
+		await wake()
+	await until(func() -> bool: return duty("BellRope").enabled, 60.0)
+	player.place(Vector3(-24, 0.05, -30.8), 0.0)
+	await use("BellRope")
+	await until(func() -> bool: return beat() == &"Choir", 10.0)
+	await count_brothers()
+
+
+func mark_node(mark_name: String) -> Node3D:
+	return night.get_node(NodePath("Marks/" + mark_name)) as Node3D
 
 
 ## Night 3 from waking to sleep, as test_night3 plays it but without its
@@ -456,7 +619,7 @@ func walk_off() -> void:
 ## brothers leave, before he has turned to each one.)
 func count_brothers() -> int:
 	player.place(mark("Choir") + Vector3(-5.5, 0, 0), deg_to_rad(-90.0))
-	await until(func() -> bool: return GameState.has_flag(&"n3_incense"), 5.0)
+	await until(func() -> bool: return GameState.has_flag(GameState.tonight("incense")), 5.0)
 	var present: Array[Brother] = []
 	for b: Brother in _tree.get_nodes_in_group(&"brothers"):
 		if b.visible and b.global_position.distance_to(mark("Choir")) < 10.0:
