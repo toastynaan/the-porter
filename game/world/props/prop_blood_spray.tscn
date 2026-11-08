@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[sub_resource type="Gradient" id="Grad"]
+offsets = PackedFloat32Array(0, 0.35, 1)
+colors = PackedColorArray(0.353, 0.102, 0.078, 0.9, 0.3, 0.085, 0.065, 0.6, 0.25, 0.06, 0.05, 0)
+
+[sub_resource type="GradientTexture2D" id="Tex"]
+gradient = SubResource("Grad")
+width = 64
+height = 64
+fill = 1
+fill_from = Vector2(0.5, 0.6)
+fill_to = Vector2(0.95, 0.15)
+
+[node name="BloodSpray" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Blood up a wall, about 1 m wide and 1.4 m high, thrown from a cut. A decal facing -Z: put the origin a little in front of the wall, facing it."
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+size = Vector3(1.0, 0.8, 1.4)
+texture_albedo = SubResource("Tex")
+upper_fade = 0.2
+lower_fade = 0.3
+cull_mask = 1048573

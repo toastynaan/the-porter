@@ -36,6 +36,11 @@
 [ext_resource type="Resource" path="res://game/gate/visitors/mab.tres" id="mab"]
 [ext_resource type="Resource" path="res://game/gate/visitors/lane_carter.tres" id="carter"]
 [ext_resource type="Resource" path="res://game/gate/visitors/lane_woman.tres" id="woman"]
+[ext_resource type="Script" path="res://game/death/blood_marks.gd" id="blood_marks_gd"]
+[ext_resource type="Script" path="res://game/night/seen_watch.gd" id="seen_watch_gd"]
+[ext_resource type="Script" path="res://game/night/rite_candles.gd" id="rite_candles_gd"]
+[ext_resource type="Script" path="res://game/night/restricted.gd" id="restricted_gd"]
+[ext_resource type="Script" path="res://game/death/hidden_body.gd" id="hidden_body_gd"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
@@ -714,3 +719,176 @@ dormant = true
 scripted = true
 rearm = false
 
+[node name="BloodMarks" type="Node3D" parent="."]
+script = ExtResource("blood_marks_gd")
+editor_description = "Blood and marks that stay from night to night until the cult cleans them (GameState.marks). They spawn here."
+
+[node name="SeenWatch" type="Node" parent="."]
+script = ExtResource("seen_watch_gd")
+editor_description = "Being seen somewhere the porter shouldn't be (the Restricted places and near a body) by a brother: Suspicion +10 once per place per night."
+
+[node name="RiteCandles" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, -4, -32)
+script = ExtResource("rite_candles_gd")
+editor_description = "The crypt keeps count: a candle lit for each soul the rite has been fed, in order round the ring."
+
+[node name="C0" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.300, 0, 0.000)
+lit = false
+
+[node name="C1" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.126, 0, 0.650)
+lit = false
+
+[node name="C2" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.650, 0, 1.126)
+lit = false
+
+[node name="C3" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000, 0, 1.300)
+lit = false
+
+[node name="C4" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.650, 0, 1.126)
+lit = false
+
+[node name="C5" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.126, 0, 0.650)
+lit = false
+
+[node name="C6" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.300, 0, 0.000)
+lit = false
+
+[node name="C7" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.126, 0, -0.650)
+lit = false
+
+[node name="C8" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.650, 0, -1.126)
+lit = false
+
+[node name="C9" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000, 0, -1.300)
+lit = false
+
+[node name="C10" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.650, 0, -1.126)
+lit = false
+
+[node name="C11" parent="RiteCandles" instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.126, 0, -0.650)
+lit = false
+
+[node name="Restricted" type="Node3D" parent="."]
+editor_description = "Places the porter shouldn't be seen (docs/mechanics.md, Being seen): each a box, with the hour it starts to count."
+
+[node name="Crypt" type="Node3D" parent="Restricted"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -2.2, -32)
+script = ExtResource("restricted_gd")
+place = &"crypt"
+where = "in the crypt"
+size = Vector3(16, 3.6, 8)
+from_hour = -1.0
+
+[node name="Passage" type="Node3D" parent="Restricted"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -2.2, -30)
+script = ExtResource("restricted_gd")
+place = &"crypt"
+where = "in the crypt"
+size = Vector3(38, 3.6, 4)
+from_hour = -1.0
+
+[node name="Granary" type="Node3D" parent="Restricted"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.5, -14)
+script = ExtResource("restricted_gd")
+place = &"granary"
+where = "in the granary after Compline"
+size = Vector3(8, 3.6, 28)
+from_hour = 20.0
+
+[node name="Dormitory" type="Node3D" parent="Restricted"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 5.6, -8)
+script = ExtResource("restricted_gd")
+place = &"dormitory"
+where = "on the dormitory floor in the night"
+size = Vector3(8, 3.4, 40)
+from_hour = 20.0
+
+[node name="HiddenBodies" type="Node3D" parent="."]
+editor_description = "The five hidden bodies (docs/full-game-run.md, Hidden bodies): earlier victims, each with a pilgrim's badge whose name was torn from the ledger. Each is found at its Reveal marker from its night on."
+
+[node name="Well" type="Node3D" parent="HiddenBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -1.0, 4)
+script = ExtResource("hidden_body_gd")
+id = &"hidden_well"
+appearance = {"skin": Color(0.62, 0.6, 0.55, 1), "shirt": Color(0.36, 0.3, 0.22, 1), "pants": Color(0.25, 0.22, 0.18, 1), "height": 1.0, "width": 1.0}
+line = "(A pilgrim's hat in the bucket, a badge pinned to it. Down in the black water, a face looking up.)"
+clue = &"well_badge"
+body_visible = false
+from_night = 1
+by_walking = false
+reveal_line = "(You draw water. The bucket comes up heavy.)"
+
+[node name="Reveal" type="Marker3D" parent="HiddenBodies/Well"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90, 1.05, 0.00)
+
+[node name="RaceCulvert" type="Node3D" parent="HiddenBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -1.2, 18)
+script = ExtResource("hidden_body_gd")
+id = &"hidden_raceculvert"
+appearance = {"skin": Color(0.6, 0.62, 0.58, 1), "shirt": Color(0.3, 0.26, 0.2, 1), "pants": Color(0.22, 0.2, 0.17, 1), "height": 1.0, "width": 1.0}
+line = "(Something soft against your legs in the culvert. A man, face down, a badge on his hat.)"
+clue = &"race_badge"
+body_visible = true
+from_night = 2
+by_walking = true
+reveal_line = ""
+
+[node name="Reveal" type="Marker3D" parent="HiddenBodies/RaceCulvert"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00, 0.00, 0.00)
+
+[node name="GardenBed" type="Node3D" parent="HiddenBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.05, 28.6)
+script = ExtResource("hidden_body_gd")
+id = &"hidden_gardenbed"
+appearance = {"skin": Color(0.66, 0.6, 0.52, 1), "shirt": Color(0.34, 0.3, 0.24, 1), "pants": Color(0.24, 0.22, 0.18, 1), "height": 0.97, "width": 1.0}
+line = "(A hand. Then a sleeve, with a badge sewn to it.)"
+clue = &"garden_badge"
+body_visible = true
+from_night = 3
+by_walking = false
+reveal_line = "(Your lantern catches turned earth, fresh, too long for a row of leeks. You dig with your hands.)"
+
+[node name="Reveal" type="Marker3D" parent="HiddenBodies/GardenBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00, 0.00, -1.40)
+
+[node name="TowerLoft" type="Node3D" parent="HiddenBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 10.5, -33.5)
+script = ExtResource("hidden_body_gd")
+id = &"hidden_towerloft"
+appearance = {"skin": Color(0.66, 0.6, 0.52, 1), "shirt": Color(0.3, 0.28, 0.24, 1), "pants": Color(0.24, 0.22, 0.18, 1), "height": 1.0, "width": 1.0}
+line = "(In the loft, under the rooks' mess, a man curled on his side. A badge on his coat.)"
+clue = &"loft_badge"
+body_visible = false
+from_night = 4
+by_walking = false
+reveal_line = "(You climb the ladder past the bell. The rooks go up all at once.)"
+
+[node name="Reveal" type="Marker3D" parent="HiddenBodies/TowerLoft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.70, -10.45, 0.50)
+
+[node name="ChapterFlag" type="Node3D" parent="HiddenBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -0.3, -21)
+script = ExtResource("hidden_body_gd")
+id = &"hidden_chapterflag"
+appearance = {"skin": Color(0.66, 0.6, 0.52, 1), "shirt": Color(0.3, 0.28, 0.24, 1), "pants": Color(0.24, 0.22, 0.18, 1), "height": 1.0, "width": 1.0}
+line = "(Under it, packed earth, and a face. A pilgrim's badge at the throat.)"
+clue = &"chapter_badge"
+body_visible = false
+from_night = 5
+by_walking = false
+reveal_line = "(A flag rocks under your foot, where Simon was scrubbing. You lever it up.)"
+
+[node name="Reveal" type="Marker3D" parent="HiddenBodies/ChapterFlag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00, 0.35, 0.00)

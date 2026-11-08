@@ -31,6 +31,11 @@ const STRETCH_SCALE := 0.4
 ## Overrides GameState.dose when >= 0 (lookdev, tests).
 @export var dose_override := -1.0
 
+## How far into its drugged renders it is now: 0 the costume as it is,
+## 1 taller with ember eyes (Dose 74); `stretch` likewise for 75-100.
+var tall := 0.0
+var stretch := 0.0
+
 var _body: Node3D
 var _arms: Array[Node3D] = []
 var _mask_mat: StandardMaterial3D
@@ -48,8 +53,8 @@ func _process(_delta: float) -> void:
 	var d := dose_override
 	if d < 0.0:
 		d = 0.0 if Engine.is_editor_hint() else GameState.dose
-	var tall := smoothstep(TALL_DOSE.x, TALL_DOSE.y, d)
-	var stretch := smoothstep(STRETCH_DOSE.x, STRETCH_DOSE.y, d)
+	tall = smoothstep(TALL_DOSE.x, TALL_DOSE.y, d)
+	stretch = smoothstep(STRETCH_DOSE.x, STRETCH_DOSE.y, d)
 	_body.scale = Vector3(1.0, 1.0 + TALL_SCALE * tall, 1.0)
 	for arm in _arms:
 		arm.scale = Vector3(1.0, 1.0 + STRETCH_SCALE * stretch, 1.0)

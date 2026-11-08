@@ -29,6 +29,10 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   sfx_death_blade.wav          your death: one quick cut
   sfx_death_cord.wav           your death: a cord pulled tight
   sfx_page.wav                 a page turned (the ledger, the satchel, menus)
+  sfx_cry.wav                  a man's cry, cut off
+  sfx_cut.wav                  one quick cut
+  sfx_body_fall.wav            a body falling on stone
+  sfx_lantern_drop.wav         a lantern dropped, rolling on the flags
 
 Replace them with recordings when the sound pass comes; keep the file names.
 Run: python3 tools/build/sfx_placeholders.py
@@ -400,6 +404,43 @@ def page(rng):
     return mix(rustle, gain(flap, 0.6))
 
 
+def cry(rng):
+    """A man's voice, a vowel rising, cut off short."""
+    n = int(0.55 * RATE)
+    out, phase = [], 0.0
+    for i in range(n):
+        t = i / RATE
+        f = 180 + 140 * min(1.0, t / 0.35) + 6 * math.sin(2 * math.pi * 5.5 * t)
+        phase += f / RATE
+        saw = 2.0 * (phase % 1.0) - 1.0
+        a = min(1.0, t / 0.04) * (1.0 if t < 0.5 else max(0.0, 1.0 - (t - 0.5) / 0.012))
+        out.append(saw * a)
+    voice = mix(bandpass(out, 700, 2.5), gain(bandpass(out, 1200, 3.0), 0.6), gain(bandpass(out, 2600, 4.0), 0.3))
+    breath = [a * b for a, b in zip(highpass(noise(n, rng), 2000), env(n, 0.02, 0.2))]
+    return mix(voice, gain(breath, 0.15))
+
+
+def cut(rng):
+    n = int(0.25 * RATE)
+    slice_ = [a * b for a, b in zip(bandpass(noise(n, rng), 3800, 1.4), env(n, 0.003, 0.03))]
+    wet = [a * b for a, b in zip(lowpass(noise(n, rng), 600), env(n, 0.02, 0.08))]
+    return mix(slice_, pad(gain(wet, 0.8), 0.03))
+
+
+def body_fall(rng):
+    return mix(thud(rng), pad(gain(thud(rng), 0.6), 0.12), pad(gain(scrape(rng, 0.3), 0.3), 0.1))
+
+
+def lantern_drop(rng):
+    n = int(0.08 * RATE)
+    clank = mix(tone(n, 1300, 0.03, rng), gain(tone(n, 2100, 0.02, rng), 0.6), [a * b for a, b in zip(highpass(noise(n, rng), 3000), env(n, 0.001, 0.01))])
+    roll = []
+    for k in range(9):
+        click = mix(tone(int(0.04 * RATE), rng.uniform(900, 1500), 0.012, rng))
+        roll = mix(roll, pad(gain(click, 0.6 * (1.0 - k / 10)), 0.15 + k * 0.11)) if roll else pad(gain(click, 0.6), 0.15)
+    return mix(clank, roll)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     rng = random.Random(1340)
@@ -438,6 +479,10 @@ def main():
     write("sfx_death_blade.wav", death_blade(run), peak=0.9)
     write("sfx_death_cord.wav", death_cord(run), peak=0.8)
     write("sfx_page.wav", page(run), peak=0.5)
+    write("sfx_cry.wav", cry(run), peak=0.8)
+    write("sfx_cut.wav", cut(run), peak=0.8)
+    write("sfx_body_fall.wav", body_fall(run), peak=0.8)
+    write("sfx_lantern_drop.wav", lantern_drop(run), peak=0.7)
 
 
 if __name__ == "__main__":

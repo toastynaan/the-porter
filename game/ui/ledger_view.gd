@@ -3,8 +3,11 @@ extends Control
 ## The porter's ledger, held up with `ledger` (Look and Feel, "UI": who came
 ## in is shown by the ledger, written in a manuscript hand on parchment; the
 ## ledger and the candle clock say what is due). An object he carries, not a
-## HUD: tonight's guests as he wrote them, then tonight's duties, the done
-## ones struck through. The night goes on while he reads.
+## HUD, with two pages (docs/mechanics.md, "The ledger's notes"): tonight's
+## guests as he wrote them and tonight's duties, the done ones struck
+## through; then his notes, oldest first, a night to a section. `ledger`
+## turns to the notes, and again puts it away. The night goes on while he
+## reads.
 
 const PARCHMENT := Color("#CDBB93")
 const INK := Color("#2B1D12")
@@ -13,6 +16,8 @@ const TITLE_FONT := preload("res://art/fonts/unifraktur_maguntia/UnifrakturMagun
 const BOOK_FONT := preload("res://art/fonts/eb_garamond/EBGaramond.ttf")
 
 var showing := false
+## 0: guests and duties; 1: notes.
+var page := 0
 
 var _page: PanelContainer
 var _title: Label
@@ -58,13 +63,17 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"ledger") and not get_tree().paused:
-		set_showing(not showing)
+		if showing and page == 0:
+			turn_to(1)
+		else:
+			set_showing(not showing)
 		get_viewport().set_input_as_handled()
 
 
 func set_showing(value: bool) -> void:
 	showing = value
 	visible = value
+	page = 0
 	if value:
 		for book: Node in get_tree().get_nodes_in_group(&"held_books"):
 			if book != self and book.get(&"showing") == true:
@@ -72,8 +81,18 @@ func set_showing(value: bool) -> void:
 		refresh()
 
 
-## Rewrites the page from the ledger and the night's duties.
+func turn_to(p: int) -> void:
+	page = p
+	refresh()
+
+
+## Rewrites the page from the ledger and the night's duties, or his notes.
 func refresh() -> void:
+	if page == 1:
+		_title.text = "Notes"
+		_body.text = notes_text()
+		return
+	_title.text = "The Ledger"
 	var text := "[center][i]Guests[/i][/center]\n"
 	var guests := GameState.ledger.filter(func(e: Dictionary) -> bool: return e.get("night", 0) == GameState.night)
 	if guests.is_empty():
@@ -89,7 +108,22 @@ func refresh() -> void:
 		for d: Array in director.duties():
 			text += ("[s][color=#%s]%s[/color][/s]" % [FADED_INK.to_html(), d[0]]) if d[1] else String(d[0])
 			text += "\n"
+	text += "\n[center][color=#%s][i]L: the notes[/i][/color][/center]" % FADED_INK.to_html()
 	_body.text = text
+
+
+## The notes page: his notes, oldest first, under each night.
+static func notes_text() -> String:
+	if GameState.notes.is_empty():
+		return "[color=#%s]Nothing written yet.[/color]" % FADED_INK.to_html()
+	var text := ""
+	var night := -1
+	for n: Dictionary in GameState.notes:
+		if int(n.get("night", 0)) != night:
+			night = int(n.get("night", 0))
+			text += "[center][i]%s[/i][/center]\n" % ("The first evening" if night == 0 else "Night %d" % night)
+		text += String(n.get("text", "")) + "\n"
+	return text
 
 
 func _layout() -> void:

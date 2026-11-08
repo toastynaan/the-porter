@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://game/ui/duty_glyph.gd" id="12_glyph"]
 [ext_resource type="Script" path="res://game/flow/game_flow.gd" id="13_flow"]
 [ext_resource type="Resource" path="res://game/flow/chapters.tres" id="14_chapters"]
+[ext_resource type="Script" path="res://game/ui/page_view.gd" id="15_page"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
 shader = ExtResource("2_post")
@@ -84,6 +85,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("10_ledger")
+
+[node name="Page" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_page")
 
 [node name="Fade" type="ColorRect" parent="UI"]
 anchors_preset = 15

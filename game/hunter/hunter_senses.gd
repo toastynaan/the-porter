@@ -63,19 +63,24 @@ func _physics_process(delta: float) -> void:
 
 ## Whether the porter is in view now, by the light rules.
 func can_see(player: Player) -> bool:
+	return sees_from(self, global_position, -global_basis.z, player)
+
+
+## The sight rules for anyone (a hunter, a brother): from `eye`, looking
+## along `forward`, can he see the porter? His head (aside, if he leans; low,
+## if he crouches) or his chest, in the 100° view, out to LIT_RANGE when the
+## porter is lit and DARK_RANGE when he isn't, with nothing solid between.
+static func sees_from(from: Node3D, eye: Vector3, forward: Vector3, player: Player) -> bool:
 	if player.hiding:
 		return false
-	# His head (aside, if he leans; low, if he crouches) and his chest.
 	var points := player.sight_points()
-	var eye := points[0]
-	var d := global_position.distance_to(eye)
+	var d := eye.distance_to(points[0])
 	if d > (LIT_RANGE if is_lit(player) else DARK_RANGE):
 		return false
-	var forward := -global_basis.z
-	var to := eye - global_position
+	var to := points[0] - eye
 	if d > 1.0 and rad_to_deg(Vector3(forward.x, 0, forward.z).angle_to(Vector3(to.x, 0, to.z))) > FOV * 0.5:
 		return false
-	return points.any(func(p: Vector3) -> bool: return ViewCheck.clear(self, global_position, p))
+	return points.any(func(p: Vector3) -> bool: return ViewCheck.clear(from, eye, p))
 
 
 ## Lit: his lantern is uncovered, or a lit candle is close enough to show him.

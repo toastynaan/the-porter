@@ -407,3 +407,12 @@ Added during the run (M8, `docs/frame.md`):
 - The outline is about 2 render pixels thick at any distance, pale parchment at 60%; the glyph is lantern-coloured at about 40%.
 - Hunters and visitors don't collide with door leaves; they stop at shut doors and turn back at locked ones by rule.
 - The chapter card goes on by itself after 14 s if you press nothing.
+
+Added during the run (M9, `docs/death.md`):
+- Finding a body: looking within 14° of it from 5 m or closer for 0.6 s.
+- A body the cult moves goes once the porter is 20 m off and can't see it for a second.
+- Being seen: "after Compline" and "at night" start at 20:00; "near a body" is within 4 m.
+- Reporting to no one costs nothing unless a brother saw him by the body (+15, the design doc's number); reporting to Thomas costs +5 per body at the next dusk ("dangerous later").
+- A hidden body is found by holding E for 1.5 s at it (the culvert's by wading into it), and the nearest hunter on his rounds hears and comes to look.
+- The ledger turns to the notes with a second press of L, and goes away with a third.
+- A hallucinated death is gone once the porter has looked away for 1 s.

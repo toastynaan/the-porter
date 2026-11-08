@@ -228,3 +228,8 @@ Added during the run:
 - **M8.** Chapter select starts a night with that night's own start state (its Director's `start_` values), the same one it uses played on its own. Until each night is built, the stubs' starting Dose is 25 (night 2), 30 (nights 4 and 5) and 35 (night 6).
 - **M8.** Finishing the game deletes the saves, so the title offers Chapters and New Game, not Continue.
 - **M8.** The seven chronicle entries are drafted now (`game/endings/endings.gd`), with the last lines above; M15 wires the endings to them.
+- **M9.** How each style plays on screen and its timing (`docs/death.md`): the implied struggle 1.2 s, gory 0.6 s, the throat's cut at 0.25 s; a pool of blood under every body.
+- **M9.** The crypt's ring has twelve candle places (all eleven deaths that can come before Matins on night 6, and the last).
+- **M9.** The hidden bodies by night: the well from night 1, the race culvert from 2, the kitchen beds from 3, the bell tower loft from 4, the chapter house flags from 5. The well, loft and flag bodies are described, not shown.
+- **M9.** The choir brothers' names: Wulfric, Aldo and Piers, and Bede, who warns about the bread and hangs in the bell tower.
+- **M9.** The book page's words (`docs/death.md`), and the 29 clues the porter can write (`game/story/clues.gd`), all DRAFT.

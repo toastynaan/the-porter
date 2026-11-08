@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/death/corpse.gd" id="corpse_gd"]
+
+[node name="Body" type="CharacterBody3D" groups=["placeholder"]]
+editor_description = "Placeholder: a body, built on the ragdoll rig (game/ragdoll) in the victim's colours (appearance: skin, shirt, pants, height, width). It stands until fall(), then goes limp and stays where it comes to rest. Feet at the origin, facing -Z."
+script = ExtResource("corpse_gd")

@@ -75,6 +75,10 @@ All in the manuscript style: parchment pages, blackletter only for titles, EB Ga
 | Leaning sight | A hunter looks for the leaning head where it is, so it shows past a corner | mechanics |
 | Look on the right stick | 2.6 rad/s at full tilt, times the sensitivity setting | *mine* |
 
+## The ledger
+
+L holds up the ledger at tonight's guests and duties; L again turns to the porter's notes; L a third time puts it away (`docs/death.md`, "The ledger's notes").
+
 ## The satchel
 
 Press I (down on the pad) and the porter holds up his satchel like the ledger: his keys, then each thing he carries with its line. Opening one puts the other away. Items are listed in `game/items/items.gd`: evidence (a mask, hoof soles, a purse, the relic, a page of the book, the book), clean food (an apple, Mab's bread) and something to throw (a stone, a bone, a cup). Each kind of proof is named for the Gate ending.

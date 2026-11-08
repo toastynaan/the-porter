@@ -57,6 +57,12 @@ func _process(_delta: float) -> void:
 	_set_place(_target)
 
 
+## Dead (died_<name>, from a DeathScene on this night or one before): out of
+## the world for good.
+func is_dead() -> bool:
+	return GameState.has_flag(StringName("died_" + String(name).to_lower()))
+
+
 func _on_phase(phase: GameState.Phase) -> void:
 	var marker: Node3D = null
 	if places:
@@ -64,7 +70,7 @@ func _on_phase(phase: GameState.Phase) -> void:
 		if group:
 			marker = group.get_node_or_null(NodePath(name))
 	_target = null
-	if marker:
+	if marker and not is_dead():
 		_target = marker.global_transform
 	_moving = true
 

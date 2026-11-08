@@ -28,6 +28,10 @@ signal phase_changed(phase: Phase)
 signal flag_changed(flag: StringName, value: Variant)
 signal bell_saved(bell: StringName)
 signal loaded
+## The rite was fed a soul (docs/full-game-run.md, "The rite").
+signal fed(id: StringName)
+## The porter wrote a note in his ledger.
+signal noted(id: StringName)
 
 ## The night's parts (design doc, "Core loop: one night"). In the night's
 ## order: DUSK, SUPPER, GATE, KNOCKS, MATINS, ROUND, SMALL_HOURS, DAWN. (DUSK
@@ -82,8 +86,14 @@ var notes: Array[Dictionary] = []
 var satchel: Array[StringName] = []
 ## What each person thinks of him, -100 to 100 (docs/mechanics.md, "Trust").
 var trust: Dictionary = {}
-## Souls the rite has been fed in the six nights (docs/full-game-run.md, "The rite").
+## Souls the rite has been fed in the six nights (docs/full-game-run.md,
+## "The rite"): `count` of them, the ones in `souls` by name (a night played
+## on its own starts with a count and no names).
 var count := 0
+var souls: Array[StringName] = []
+## Blood and marks left in the abbey, until the cult cleans them
+## (BloodMarks): {"kind", "xform", "night", "proves_men", "id"}.
+var marks: Array[Dictionary] = []
 ## The bell (or quiet save) the state in memory was saved at, or empty
 ## before the first one. The night picks up there after a load.
 var last_bell := &""
@@ -122,6 +132,8 @@ func new_game() -> void:
 	satchel = []
 	trust = {}
 	count = 0
+	souls = []
+	marks = []
 	last_bell = &""
 	snap_dose(0.0)
 	clear_quiet_save()
@@ -205,6 +217,35 @@ func write_ledger(guest: String, description: String) -> void:
 	ledger.append({"name": guest, "description": description, "night": night})
 
 
+## The porter writes a note on the ledger's second page, in his own hand
+## (docs/mechanics.md, "The ledger's notes"), once per `id`. A note whose id
+## is in Clues counts toward what the prior needs on night 5. `text` empty:
+## the clue's own text.
+func note(id: StringName, text := "") -> bool:
+	for n in notes:
+		if n.get("id") == id:
+			return false
+	if text.is_empty():
+		text = Clues.text(id)
+	notes.append({"id": id, "text": text, "night": night})
+	noted.emit(id)
+	return true
+
+
+func has_note(id: StringName) -> bool:
+	return notes.any(func(n: Dictionary) -> bool: return n.get("id") == id)
+
+
+## Feeds the rite the soul `id`, once: a candle lights in the crypt.
+func feed_rite(id: StringName) -> void:
+	if souls.has(id):
+		return
+	souls.append(id)
+	count += 1
+	set_flag(StringName("fed_" + String(id)))
+	fed.emit(id)
+
+
 ## Skipped the bread (design doc, "Sources"): a shorter breath, slower
 ## sprint recovery, a hand tremor on the lantern.
 func is_hungry() -> bool:
@@ -218,7 +259,7 @@ func snapshot() -> Dictionary:
 		"dose_floor": dose_floor, "suspicion": suspicion, "captures": captures,
 		"keys": keys.duplicate(), "flags": flags.duplicate(true), "ledger": ledger.duplicate(true),
 		"notes": notes.duplicate(true), "satchel": satchel.duplicate(), "trust": trust.duplicate(),
-		"count": count,
+		"count": count, "souls": souls.duplicate(), "marks": marks.duplicate(true),
 	}
 
 
@@ -236,6 +277,8 @@ func restore(state: Dictionary) -> void:
 	satchel.assign(state.get("satchel", []))
 	trust = (state.get("trust", {}) as Dictionary).duplicate()
 	count = int(state.get("count", 0))
+	souls.assign(state.get("souls", []))
+	marks.assign((state.get("marks", []) as Array).duplicate(true))
 	suspicion = int(state.get("suspicion", 0))
 	suspicion_changed.emit(suspicion)
 	phase = int(state.get("phase", Phase.DUSK)) as Phase

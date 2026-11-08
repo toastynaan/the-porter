@@ -62,6 +62,8 @@ func run() -> void:
 			GameState.count = start_count
 			for f in start_flags:
 				GameState.set_flag(f)
+		# What Thomas was told since the last dusk has reached the cult.
+		Report.at_dusk()
 	var beats: Array[NightBeat] = []
 	for c in get_children():
 		if c is NightBeat:

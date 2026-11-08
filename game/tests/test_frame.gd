@@ -106,10 +106,15 @@ func _run() -> void:
 		"I holds up the satchel: the keys and the apple")
 	_press(&"ledger")
 	await _pilot.frames(2)
-	_check(ledger.showing and not satchel.showing, "the ledger takes its place")
+	_check(ledger.showing and not satchel.showing and ledger.page == 0, "the ledger takes its place")
+	GameState.note(&"bread_warning")
 	_press(&"ledger")
 	await _pilot.frames(2)
-	_check(not ledger.showing and not satchel.showing, "and goes down again")
+	_check(ledger.showing and ledger.page == 1 and LedgerView.notes_text().contains("not to eat the bread"),
+		"L again turns to his notes")
+	_press(&"ledger")
+	await _pilot.frames(2)
+	_check(not ledger.showing and not satchel.showing, "and again puts it away")
 
 	# Settings apply at once.
 	Settings.set_value(&"fov", 85.0)

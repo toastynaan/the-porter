@@ -43,7 +43,8 @@ func fade_to(alpha: float, seconds: float) -> void:
 
 ## Lies down and sleeps through the day: the screen goes dark, the clock
 ## stops, and of the night's Dose only `keeps` is left (docs/full-game-run.md,
-## "Six nights": Dose halved by a day's sleep). Sets night<N>_done.
+## "Six nights": Dose halved by a day's sleep); the cult scrubs the marks that
+## prove men did it. Sets night<N>_done.
 func sleep_through_the_day(keeps: float, line: String) -> void:
 	var p := player()
 	p.controls_locked = true
@@ -51,6 +52,8 @@ func sleep_through_the_day(keeps: float, line: String) -> void:
 	GameState.seconds_per_hour = 0.0
 	GameState.dose_floor = 0.0
 	GameState.snap_dose(GameState.dose * keeps)
+	# While he sleeps the cult scrubs what would prove men did it.
+	BloodMarks.clean_at_dawn(get_tree())
 	GameState.set_flag(StringName("night%d_done" % GameState.night))
 	if not line.is_empty():
 		await say("", line)
