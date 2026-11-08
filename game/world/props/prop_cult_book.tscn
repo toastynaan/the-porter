@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="Mat_0"]
+albedo_color = Color(0.25, 0.2, 0.15, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_0"]
+material = SubResource("Mat_0")
+size = Vector3(0.12, 0.9, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_1"]
+albedo_color = Color(0.45, 0.35, 0.28, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_1"]
+material = SubResource("Mat_1")
+size = Vector3(0.4, 0.06, 0.3)
+
+[node name="CultBook" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the cult's book, open on its stand by the crypt's ring, bound in skin, the torn page's stub at its spine (night 6)."
+
+[node name="Stand" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+mesh = SubResource("Mesh_0")
+
+[node name="Book" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("Mesh_1")

@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n6_hugh"
+text = "# DRAFT
+# Prior Hugh at dusk, at the porter's cell door with a lantern (night 6, snow). Only if he believed the porter at dawn
+# (prior_believes): he stands with him tonight. Grim and practical: where the proof is (down the hidden stair with the
+# key from the rye; two kinds), the gate (Cole holds it and won't open), Roger (a bad bargain, maybe the only one).
+# With the thomas_sent_simon note he joins Anselm's death to Thomas. He warns that a lantern looking for the porter
+# may be his. (At Dose 75+ he is the demon who corners the porter with a light. Nothing here says so.)
+== start
+(The prior is at your door with a lantern, snow on his hood. He looks as if he hasn't slept since he let you go.)
+Hugh: Up, porter. No bell tonight, no supper. The abbot is sick in his bed and doesn't know what day it is.
+Hugh: Anselm is dead. Henbane packed into his mouth like straw. Somebody heard him talk.
+-> thomas [if thomas_sent_simon]
+-> topics
+
+== thomas
+Hugh: Henbane, in the infirmary, and only Thomas keeps that key. And Simon says Thomas sent him to scrub the blood.
+Hugh: I'm not blind, porter. Only slow.
+-> topics
+
+== again
+(The prior is trimming his lantern's wick with a thumbnail. He doesn't look up.)
+Hugh: Well? We haven't the night to stand here.
+-> topics
+
+== topics
+* [if not n6_hugh_proof] (Ask where to look for proof.) -> proof
+* [if not n6_hugh_gate] (Ask about the gate.) -> gate
+* [if not n6_hugh_roger] (Ask whether Roger will help.) -> roger
+
+== proof [set n6_hugh_proof]
+Hugh: That key you pulled out of the rye opens the closet in the granary. The stair behind it goes down under the nave.
+Hugh: Whatever they keep, they keep down there. Bring up two kinds of thing, not two of a kind. One proves nothing.
+-> topics
+
+== gate [set n6_hugh_gate]
+Hugh: Cole has the gate, and Cole won't open it. Not for you, not for me. Not for the abbot, if he could stand.
+Hugh: I'll be about the court with a light. If a lantern comes looking for you tonight, it may be mine. Look before you run.
+-> topics
+
+== roger [set n6_hugh_roger]
+Hugh: Roger's men have been in the Keys since noon. He's wanted this ground since before I was prior.
+Hugh: Give him proof and he'll hang them, and take the house for his trouble. A bad bargain. It may be the only one left.
+-> topics
+
+== leave
+Hugh: Keep off the open garth, porter. In this snow they'll follow your feet.
+"

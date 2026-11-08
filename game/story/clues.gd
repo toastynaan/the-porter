@@ -21,6 +21,7 @@ const ALL := {
 	&"crypt_candles": "Candles burning in the crypt, in a ring. More of them each night.",
 	&"keys_moved": "My keys were moved in the night. There's wax in the teeth: someone took a mould of them.",
 	&"incense_bag": "Walter's bag smells of the incense they burn at Matins.",
+	&"anselm_henbane": "Anselm dead in his bed, his mouth stuffed with henbane leaves. Only Thomas keeps the infirmary.",
 	&"edwin_missing": "Edwin was not at Matins.",
 	&"edwin_comb": "Edwin's wounds are in rows, too even for claws. Like a wool-carding comb.",
 	&"edwin_moved": "I went for help and Edwin was gone from the charnel house when I came back.",

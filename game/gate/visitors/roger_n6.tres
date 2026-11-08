@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_roger.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(The same broad, hard face, red with cold. Tonight he looks at you, not at the gate.)"
+ledger = "hard-faced, red with cold"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(Snow on the shoulders of the good brown coat. Behind him in the lane, a dozen men of the ward with torches and cudgels.)"
+ledger = "with a dozen men of the ward, torches lit"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(The seal ring on his thumb, and his staff of office in his fist. It's the staff he's been knocking with.)"
+ledger = "a seal ring, his staff of office"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Good boots, snow to the ankle. The lane behind him is trodden to slush by his men.)"
+ledger = "his men's tracks trodden to slush behind him"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"roger"
+speaker = "Roger"
+look = ExtResource("look")
+ledger_name = "Roger the bailiff, with men of the ward"
+greeting = "Open, porter, in the ward's name. I've a dozen men at my back and the sheriff's ear. All I lack is a reason. Show me one through these bars, and we're in before the bell."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n6_roger"
+question = "What would you need to see?"
+answer = PackedStringArray("Something out of that house I can lay before the sheriff. One of their devil's faces. A dead pilgrim's purse. Whatever they keep that no honest house would.", "Bring me one thing, and they'll say the porter found it in a ditch. Bring me two kinds, and they'll hang.", "And then that house will want a master who can keep it. We'll see to that after.")

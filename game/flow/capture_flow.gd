@@ -17,6 +17,8 @@ extends Node
 
 signal woke
 signal died
+## A death begins (`cause`: blade, cord, fire, smoke, saint).
+signal dying(cause: StringName)
 
 const WAKE_DOSE := 40.0
 const WAKE_DOSE_TIME := 6.0
@@ -64,6 +66,16 @@ static func forgiving() -> bool:
 func on_captured(hunter: Node3D, player: Player) -> void:
 	if busy or player == null:
 		return
+	# Night 6, after Thomas's wine: he isn't killed. He wakes in a habit.
+	if GameState.night == 6 and GameState.has_flag(&"drank_wine"):
+		busy = true
+		player.controls_locked = true
+		_turn_to(player, hunter)
+		await fade.fade_to(1.0, FADE_OUT)
+		GameState.set_flag(&"ending", &"new_faith")
+		busy = false
+		get_tree().call_group(&"night_director", &"end_night")
+		return
 	if forgiving():
 		busy = true
 		player.controls_locked = true
@@ -87,6 +99,7 @@ func die(cause: StringName, killer: Node3D = null) -> void:
 	var player := get_tree().get_first_node_in_group(&"player") as Player
 	if busy or player == null:
 		return
+	dying.emit(cause)
 	busy = true
 	last_cause = cause
 	player.controls_locked = true

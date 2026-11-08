@@ -25,6 +25,9 @@ const HUNTER := preload("res://game/hunter/hunter.tscn")
 @export var locks: Array[Door] = []
 ## Who wears the costumes, in the order they're sent out.
 @export var wearers: Array[StringName] = [&"ranulf", &"cole", &"dunstan"]
+## However many the night sends whatever the Suspicion (night 6: the whole
+## cult but Thomas, who leads the rite); 0: by the bands.
+@export var count_override := 0
 
 var hunters: Array[Hunter] = []
 var band_now := Band.WATCHED
@@ -54,6 +57,8 @@ func begin() -> void:
 			count = 2
 		Band.WHOLE:
 			count = 3
+	if count_override > 0:
+		count = count_override
 	for i in count:
 		var h := HUNTER.instantiate() as Hunter
 		h.wearer = wearers[i % wearers.size()]

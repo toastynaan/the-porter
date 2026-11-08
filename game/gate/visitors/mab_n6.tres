@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_mab.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Her face is wrapped to the eyes, white with snow. The eyes are steady tonight. She's made up her mind to something.)"
+ledger = "face wrapped, white with snow"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(Her blanket is pulled up over her head like a hood, and the snow lies on it and doesn't melt.)"
+ledger = "her blanket over her head"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Her clapper hangs from her wrist. Her bare hands grip the iron of the bars, and she doesn't feel the cold of it. She hasn't felt anything in those hands for years.)"
+ledger = "bare hands on the frozen bars"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(The rags on her feet are wet through. Her tracks come up from the bottom of the lane, where the race runs out.)"
+ledger = "tracks from the bottom of the lane"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"mab"
+speaker = "Mab"
+look = ExtResource("look")
+lantern = false
+ledger_name = "Mab, the leper at the gate"
+greeting = "Porter. It's Mab. They went down to your race again, the horned ones. I came to tell you before I lost my nerve."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n6_mab"
+question = "What did you see at the race?"
+answer = PackedStringArray("At dusk, at the bottom of the lane where it runs out under your wall. Five of them this time, down the bank and into the water, and in under the arch.", "Going in, porter. Not coming out. Whatever they're about tonight, they're about it in there with you.", "That water's their door. A door opens both ways. If you've a mind to come out by it, I know that bank in the dark.")

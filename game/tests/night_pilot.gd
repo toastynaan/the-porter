@@ -468,6 +468,32 @@ func play_night5(answer: Array, save := &"simon", sergeant := 0) -> void:
 	await hand_over_and_sleep()
 
 
+## Night 6 from dusk to the Broken Rite: finds Anselm, refuses the wine
+## (answer[0] is set for it), lets the hunt go by (the hunters are test_hunt's),
+## goes down at the rite and takes the book, and holds out to dawn.
+func play_night6(answer: Array) -> void:
+	await until(func() -> bool: return beat() == &"Anselm" and not player.controls_locked, 15.0)
+	var anselm := night.get_node(^"Bodies/Anselm") as Node3D
+	player.place(Vector3(27.6, 0.05, 2.4), deg_to_rad(-90.0))
+	face(anselm.global_position + Vector3.UP * 0.6)
+	await until(func() -> bool: return beat() == &"Wine", 10.0)
+	answer[0] = 1
+	var thomas := night.get_node(^"Brothers/Thomas") as Node3D
+	await frames(2)
+	player.place(thomas.global_position + Vector3(-1.5, 0, 0), deg_to_rad(-90.0))
+	await until(func() -> bool: return beat() == &"Knock", 20.0)
+	answer[0] = -1
+	(night.get_node(^"Hunt") as Hunt).end()
+	skip_to(23.0)
+	await until(func() -> bool: return beat() == &"Rite", 10.0)
+	await seconds(0.5)
+	(night.get_node(^"Saint") as HungrySaint).sleep()
+	(night.get_node(^"Proof/Book") as Pickup).interact(player)
+	await until(func() -> bool: return GameState.has_flag(&"rite_stopped"), 5.0)
+	skip_to(30.0)
+	await until(over, 15.0)
+
+
 ## Rings Matins and counts the brothers (no round after: night 5 goes on to
 ## the granary).
 func matins_and_round_no_round() -> void:

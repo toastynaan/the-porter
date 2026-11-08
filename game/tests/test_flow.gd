@@ -2,7 +2,7 @@ extends Node
 ## The game's frame (docs/full-game-run.md, M8 and "Done when" 1), through
 ## main.tscn from the title screen: New Game plays night 0, day 1 and nights
 ## 1 to 6 in order, each opened by its chapter card (night 0 to night 5 are
-## played in full; night 6, a stub, wakes and sleeps), with Dose halved by each day's sleep
+## played in full; night 6 is played to the Broken Rite), with Dose halved by each day's sleep
 ## and the rest carried over, and the night's own flags cleared. Night 6
 ## ends in the chronicle, then the title, where chapter select is open and
 ## there is nothing left to continue. Chapter select starts a night with its
@@ -98,6 +98,11 @@ func _run() -> void:
 			_check(GameState.get_flag(&"n5_saved") == &"simon" and GameState.has_flag(&"n5_escaped"), "night 5, played in full in order")
 			_check(GameState.count == 7, "by night 5's dawn the rite has seven souls (%s)" % [GameState.souls])
 			dose_before = -1.0
+		elif chapters[i].id == &"night6":
+			await pilot.play_night6(_answer)
+			_check(GameState.get_flag(&"ending", &"") == &"broken_rite" and GameState.get_flag(&"rite_stopped") == &"book",
+				"night 6, played to the Broken Rite: the book taken, held out to dawn")
+			dose_before = -1.0
 		else:
 			# A stub: the night doesn't change his Dose before he sleeps.
 			await pilot.play_stub()
@@ -105,7 +110,8 @@ func _run() -> void:
 		if dose_before > 0.0:
 			_check(absf(GameState.dose - dose_before * 0.5) < 0.5, "a day's sleep halves Dose (%.1f to %.1f)" % [dose_before, GameState.dose])
 		dose_before = GameState.dose
-		_check(GameState.has_flag(StringName("night%d_done" % chapters[i].night)), "%s ends in sleep" % chapters[i].title)
+		if chapters[i].id != &"night6":
+			_check(GameState.has_flag(StringName("night%d_done" % chapters[i].night)), "%s ends in sleep" % chapters[i].title)
 	_check(order.size() == 8 and order[0] == &"night0" and order[1] == &"day1" and order[-1] == &"night6", "in order: %s" % [order])
 
 	# The ending: the chronicle, then the title, with chapter select open.

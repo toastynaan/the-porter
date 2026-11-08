@@ -28,10 +28,12 @@ run() {
 	shift
 	"$GODOT" --headless --path "$ROOT" "$@" >"$LOG/$name.txt" 2>&1 &
 	local pid=$!
-	(sleep "$TIMEOUT" && kill "$pid" 2>/dev/null && echo "TIMEOUT after ${TIMEOUT}s" >>"$LOG/$name.txt") &
+	(sleep "$TIMEOUT" && kill "$pid" 2>/dev/null && echo "TIMEOUT after ${TIMEOUT}s" >>"$LOG/$name.txt") 2>/dev/null &
 	local watchdog=$!
 	wait "$pid"
 	local code=$?
+	# Its sleep too, or it outlives us and later kills whatever has that pid.
+	pkill -P "$watchdog" 2>/dev/null
 	kill "$watchdog" 2>/dev/null
 	wait "$watchdog" 2>/dev/null
 	return $code

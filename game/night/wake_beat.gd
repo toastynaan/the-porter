@@ -6,6 +6,11 @@ extends NightBeat
 ## lane, before the supper bell). The bell rings at the candle's supper mark.
 
 @export var wake_at: Marker3D
+## Night 6: in the infirmary in Thomas's care, unless the prior believed him
+## (`alt_if`): then here, his cell, with `alt_lines`.
+@export var alt_at: Marker3D
+@export var alt_if := &""
+@export var alt_lines := PackedStringArray()
 @export var tower: BellTower
 @export var gate: AbbeyGate
 ## What the porter notices as he wakes (the night's own lines).
@@ -24,10 +29,12 @@ func run() -> void:
 	var p := player()
 	p.controls_locked = true
 	await fade_to(1.0, 0.0)
-	p.place(wake_at.global_position, wake_at.global_rotation.y)
+	var alt := alt_at != null and alt_if != &"" and GameState.has_flag(alt_if)
+	var at := alt_at if alt else wake_at
+	p.place(at.global_position, at.global_rotation.y)
 	await fade_to(0.0, 2.5)
 	p.controls_locked = false
-	await say_lines(lines)
+	await say_lines(alt_lines if alt else lines)
 	if due >= 0.0:
 		await clock().wait_until(due)
 	if supper_bell:

@@ -26,6 +26,8 @@ signal finished
 
 var beats_run: Array[StringName] = []
 var current: NightBeat
+## The night was brought to an end early (night 6: an ending).
+var ended := false
 
 
 func _ready() -> void:
@@ -89,6 +91,18 @@ func run() -> void:
 		beats_run.append(current.name)
 		beat_started.emit(current.name)
 		await current.run()
+		if ended or not is_inside_tree():
+			return
+	current = null
+	ended = true
+	finished.emit()
+
+
+## Ends the night now, whatever beat is running (night 6: an ending).
+func end_night() -> void:
+	if ended:
+		return
+	ended = true
 	current = null
 	finished.emit()
 

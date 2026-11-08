@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Visitor" format=3]
+
+[ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_joan.tscn" id="look"]
+[ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
+
+[sub_resource type="Resource" id="Detail_face"]
+script = ExtResource("2_detail")
+part = &"face"
+line = "(Her face is pinched white with cold, and her lips are blue. The eyes are the same: sharp, and on yours.)"
+ledger = "white with cold, sharp-eyed"
+
+[sub_resource type="Resource" id="Detail_body"]
+script = ExtResource("2_detail")
+part = &"body"
+line = "(Snow lies thick on her hood and shoulders. She's been standing out in it a long while.)"
+ledger = "snow thick on her hood"
+
+[sub_resource type="Resource" id="Detail_hands"]
+script = ExtResource("2_detail")
+part = &"hands"
+line = "(Her brother's badge hangs outside her cloak now, on its cord, where anyone can see it.)"
+ledger = "her brother's badge worn in plain sight"
+
+[sub_resource type="Resource" id="Detail_feet"]
+script = ExtResource("2_detail")
+part = &"feet"
+line = "(Her skirts are dark and stiff to the knee, freezing as they dry. She's been in water tonight, not only snow.)"
+ledger = "her skirts wet to the knee"
+
+[resource]
+script = ExtResource("1_visitor")
+id = &"joan"
+speaker = "Joan"
+look = ExtResource("look")
+lantern = false
+ledger_name = "Joan, sister of a lost pilgrim"
+greeting = "Brother. It's Joan. You shut this gate on me, and I don't blame you for it now. Open it, and I'll get you out of there. I know another way."
+details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_feet")])
+flag = &"n6_joan"
+question = "What other way?"
+answer = PackedStringArray("Your mill race. It runs out under the wall at the bottom of the lane, and there's room under the arch for a body, if the body doesn't mind the cold.", "I've watched it from the bank every night since you shut me out. Things go in there that come out with horns on. Whatever can go in by it can come out by it.")

@@ -465,3 +465,11 @@ Added during the run (M14, `docs/nights.md`):
 - The lock-in bars twenty doors (the west range's, the church's and the dormitory's ground floor) and sends two hunters (one in the granary, one in the choir); it ends when he's out of the latrine chute.
 - The prior believing him is his trust +40.
 - A conversation's `[if clue]` holds for a clue in his notes as well as a flag.
+
+Added during the run (M15, `docs/night6.md`):
+- Night 6's knock at 20:00; the rite and the Saint from 23:00; the Demon's approach from 22:30.
+- The Saint: a shadow that keeps within 10 m of its home in the crypt at 8 or fewer; finds its way again every 2.5 s; its touch reaches 1.1 m; hiding doesn't save him from it; its lantern-dimming is to a third. It kills Dunstan, Cole and Osric (the choir's) the first time he comes within 14 m of each after it wakes, once it walks.
+- Night 6's hunters: Osric, Ranulf, Cole and Dunstan (Thomas leads the rite), all with blades.
+- Fire: catches from within 2.5 m of the spot (measured from his eyes); smoke within 3.5 m of a flame; a flame kills within 0.9 m.
+- Who knocks on night 6: Roger if the merchant or his sergeant died; otherwise Joan, if she's alive and he met her at the gate; otherwise Mab. Roger won't come in without two kinds of proof.
+- Leaving any other way (the gate into the lane, the race alone) or holding out to Lauds is the Broken Rite, whether the rite was stopped or the count was too low.

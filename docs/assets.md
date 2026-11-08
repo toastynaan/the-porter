@@ -56,11 +56,16 @@ Everything in the world is a placeholder: boxes, cylinders and the greybox figur
 | `prop_sand_patch` | Fresh sand raked over the ground, about 3 m across, a decal | By the well on day 1 |
 | `road/prop_wagon` | The carter's open cart and horse, with seats at the back for the porter and the traveller and one for the carter | Night 0's ride |
 | `road/prop_body_cart` | A cart with a body under sacking | Night 0's ride, the hook |
+| `prop_cult_masks` | The cult's masks and habits on their pegs | The crypt passage, night 6 (proof: a costume) |
+| `prop_hoof_soles` | Carved hoof soles on straps, a pair | The crypt passage, night 6 (proof: a costume) |
+| `prop_purse_chest` | An iron-bound chest of pilgrims' purses | The crypt passage, night 6 (proof: a purse) |
+| `prop_relic_hand` | The silver hand with the relic: a pig's knuckle | The crypt, night 6 (proof: the relic) |
+| `prop_cult_book` | The cult's book open on its stand | By the crypt's ring, night 6 (proof: the book; take it and the rite stops) |
 | `prop_blood_pool`, `prop_blood_spray`, `prop_drag_marks`, `prop_blood_print` | Blood (old blood, #5A1A14), as decals: a pool on the floor, a spray up a wall, drag marks, a boot print | Wherever a death leaves them (`BloodMarks`, `docs/death.md`) |
 
 `candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, already one scene each. The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
 
-Windfall apples (`Windfalls` in `night_base.tscn`) are small spheres under a `Pickup`; the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`).
+Windfall apples (`Windfalls` in `night_base.tscn`) are small spheres under a `Pickup`; the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`), and so do night 6's flames (`Fire`). The Hungry Saint is `chr_saint` worn by `HungrySaint` (`game/saint/`).
 
 **Still built in place** (part of a building, or one of a kind): the kitchen and warming-room hearths, the latrine seat, the plank closet over the hidden stair, the crypt rails, the water in the mill race and fishpond, the bends at each end of the lane, and the skyline.
 

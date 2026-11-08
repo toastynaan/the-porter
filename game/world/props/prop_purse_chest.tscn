@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="Mat_0"]
+albedo_color = Color(0.28, 0.18, 0.1, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_0"]
+material = SubResource("Mat_0")
+size = Vector3(0.7, 0.4, 0.42)
+
+[sub_resource type="StandardMaterial3D" id="Mat_1"]
+albedo_color = Color(0.15, 0.15, 0.16, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_1"]
+material = SubResource("Mat_1")
+size = Vector3(0.72, 0.05, 0.44)
+
+[sub_resource type="StandardMaterial3D" id="Mat_2"]
+albedo_color = Color(0.36, 0.22, 0.12, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_2"]
+material = SubResource("Mat_2")
+size = Vector3(0.14, 0.1, 0.06)
+
+[node name="PurseChest" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: an iron-bound chest of pilgrims' purses, each with a name inside the flap (night 6, the crypt passage)."
+
+[node name="Chest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("Mesh_0")
+
+[node name="Band" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0)
+mesh = SubResource("Mesh_1")
+
+[node name="Purse" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.45, 0)
+mesh = SubResource("Mesh_2")
