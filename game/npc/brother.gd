@@ -12,8 +12,8 @@ var _moving := false
 ## Where he is going: a Transform3D, or null for out of the world.
 var _target: Variant = null
 
-## The stand-in figure, if he has one (a DualRender may stand in instead).
-@onready var figure: BrotherFigure = get_node_or_null(^"Figure")
+## How he looks (a DualRender may stand in instead).
+@onready var look := get_node_or_null(^"Look") as CharacterLook
 @onready var _shape: CollisionShape3D = $Body/Shape
 
 
@@ -31,6 +31,11 @@ func _ready() -> void:
 func place(xform: Variant) -> void:
 	_moving = false
 	_set_place(xform)
+
+
+## Where his face is, for the conversation camera.
+func face_position() -> Vector3:
+	return look.face_position() if look else global_position + Vector3.UP * 1.6
 
 
 ## Turns him to face `point`.

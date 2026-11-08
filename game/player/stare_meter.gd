@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 			_player.stumble(STUMBLE_TIME)
 	else:
 		_full = 0.0
-	_player.camera.fov = _base_fov - FOV_DROP * value
+	_player.camera.fov = _base_fov - FOV_DROP * value - _player.zoom
 	_player.lantern.stare = value
 	get_tree().set_group(&"dose_driver", &"stare", value)
 	if AudioOut.enabled():

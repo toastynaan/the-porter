@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="Table" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a trestle table, 2 m long (along X), 0.9 m wide, 0.75 m high."
+
+[node name="Table" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(2, 0.75, 0.9)
+material = ExtResource("oak")
+surface = "wood"

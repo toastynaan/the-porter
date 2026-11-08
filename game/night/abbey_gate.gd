@@ -7,7 +7,8 @@ extends Node
 ## navmesh, so the gateway is walkable when the gate is open.
 
 @export var leaves: Array[Door] = []
-@export var bar: StaticBody3D
+## The bar (a prop scene): its colliders go on the door layer while it's down.
+@export var bar: Node3D
 
 
 ## Open by day: unbarred, unlocked, both leaves open, at once.
@@ -28,7 +29,8 @@ func swing(open: bool) -> void:
 
 func show_bar(down: bool) -> void:
 	bar.visible = down
-	bar.collision_layer = Layers.DOOR if down else 0
+	for body in bar.find_children("*", "CollisionObject3D", true, false):
+		(body as CollisionObject3D).collision_layer = Layers.DOOR if down else 0
 
 
 func is_open() -> bool:

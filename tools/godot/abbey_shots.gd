@@ -16,6 +16,8 @@ const VIEWS := {
 	"bakehouse_oven": [Vector3(-14.6, 0.05, 8.3), 90.0, -14.0, 0.0],
 	"granary_hidden_door": [Vector3(-16.4, 0.05, -17.0), 60.0, -4.0, 0.0],
 	"crypt": [Vector3(15, -4.0, -31.5), -90.0, 2.0, 0.0],
+	"orchard": [Vector3(-8, 0.0, 21.5), 150.0, 6.0, 0.0],
+	"graveyard_yew": [Vector3(31, 0.0, -9.5), -20.0, 10.0, 0.0],
 }
 const SETTLE_TIME := 1.5
 

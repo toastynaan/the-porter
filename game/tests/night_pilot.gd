@@ -130,6 +130,8 @@ func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
 	duty("Grate").interact(player)
 	var npc := _tree.get_first_node_in_group(&"callers") as VisitorNPC
 	await until(func() -> bool: return Talk.is_choosing(), 5.0)
+	# His view is still easing in on the visitor's face.
+	await seconds(Player.TALK_TURN_TIME + 0.05)
 	for part in read:
 		face(npc.part_position(part))
 		await seconds(0.6)
@@ -152,18 +154,48 @@ func keep_gate(pick: int, read: Array[StringName], answer: Array) -> VisitorNPC:
 	return npc
 
 
-## In the choir: looks at every brother in turn. Returns how many.
+## Talks to `talker`: answers each choice with the next of `picks` through
+## `answer` (an Array the test's Talk.auto_choice reads); -1 walks away.
+## Returns once the talk is over.
+func talk(talker: Talker, picks: Array[int], answer: Array) -> void:
+	talker.interact(player)
+	for pick in picks:
+		await until(func() -> bool: return Talk.is_choosing() or not talker.talking, 10.0)
+		if not talker.talking:
+			break
+		if pick < 0:
+			await walk_off()
+		else:
+			answer[0] = pick
+			await until(func() -> bool: return not Talk.is_choosing(), 2.0)
+			answer[0] = -1
+	await until(func() -> bool: return not talker.talking, 10.0)
+
+
+## Walks away from the conversation he is in: a step back.
+func walk_off() -> void:
+	player.use_input_override = true
+	player.input_override = Vector2(0.0, -1.0)
+	await until(func() -> bool: return not Talk.talking, 2.0)
+	player.input_override = Vector2.ZERO
+	player.use_input_override = false
+
+
+## In the choir: looks at every brother in turn. Returns how many were there.
+## (Brothers in line are counted together, so the office may end, and the
+## brothers leave, before he has turned to each one.)
 func count_brothers() -> int:
 	player.place(mark("Choir") + Vector3(-5.5, 0, 0), deg_to_rad(-90.0))
 	await until(func() -> bool: return GameState.has_flag(&"n3_incense"), 5.0)
-	var counted := 0
+	var present: Array[Brother] = []
 	for b: Brother in _tree.get_nodes_in_group(&"brothers"):
 		if b.visible and b.global_position.distance_to(mark("Choir")) < 10.0:
-			face(b.global_position + Vector3.UP * 1.6)
-			await seconds(0.4)
-			counted += 1
+			present.append(b)
+	for b in present:
+		face(b.global_position + Vector3.UP * 1.6)
+		await seconds(0.4)
 	await until(func() -> bool: return GameState.has_flag(&"n3_headcount"), 3.0)
-	return counted
+	return present.size()
 
 
 ## Checks the round's stops, looking at the demon each time it appears and

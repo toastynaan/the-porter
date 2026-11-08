@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Material" path="res://game/world/materials/iron.tres" id="iron"]
+
+[sub_resource type="SphereMesh" id="Mesh_Censer"]
+material = ExtResource("iron")
+radius = 0.07
+height = 0.12
+radial_segments = 8
+rings = 4
+
+[sub_resource type="CylinderMesh" id="Mesh_Chain"]
+material = ExtResource("iron")
+top_radius = 0.005
+bottom_radius = 0.005
+height = 0.3
+radial_segments = 4
+rings = 1
+
+[node name="Ranulf" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Brother Ranulf, the sacrist. Average build, rigid posture; narrow, pale, unblinking. Prop: the censer for the incense. Sound: censer chain clinking. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+face_color = Color(0.8, 0.74, 0.66, 1)
+
+[node name="Censer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26, 0.62, -0.16)
+cast_shadow = 0
+mesh = SubResource("Mesh_Censer")
+
+[node name="Chain" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26, 0.82, -0.16)
+cast_shadow = 0
+mesh = SubResource("Mesh_Chain")
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)

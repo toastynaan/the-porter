@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_apple.tscn" id="prop_tree_apple"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_garden_bed.tscn" id="prop_garden_bed"]
+
+[node name="Gardens" type="Node3D"]
+editor_description = "The gardens south of the mill race: the orchard on the west side, the kitchen beds on the east."
+
+[node name="Props" type="Node3D" parent="." groups=["nav_source"]]
+
+[node name="Apple0" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(1.0, 0, 0.0, 0, 1, 0, -0.0, 0, 1.0, -34, 0, 25.0)
+
+[node name="Apple1" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(0.681998, 0, 0.731354, 0, 1, 0, -0.731354, 0, 0.681998, -27, 0, 25.0)
+
+[node name="Apple2" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.069756, 0, 0.997564, 0, 1, 0, -0.997564, 0, -0.069756, -20, 0, 25.0)
+
+[node name="Apple3" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.777146, 0, 0.62932, 0, 1, 0, -0.62932, 0, -0.777146, -13, 0, 25.0)
+
+[node name="Apple4" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.990268, 0, -0.139173, 0, 1, 0, 0.139173, 0, -0.990268, -30.5, 0, 31.0)
+
+[node name="Apple5" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.573576, 0, -0.819152, 0, 1, 0, 0.819152, 0, -0.573576, -23.5, 0, 31.0)
+
+[node name="Apple6" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(0.207912, 0, -0.978148, 0, 1, 0, 0.978148, 0, 0.207912, -16.5, 0, 31.0)
+
+[node name="Apple7" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(0.857167, 0, -0.515038, 0, 1, 0, 0.515038, 0, 0.857167, -9.5, 0, 31.0)
+
+[node name="Apple8" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(0.961262, 0, 0.275637, 0, 1, 0, -0.275637, 0, 0.961262, -34, 0, 37.0)
+
+[node name="Apple9" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(0.45399, 0, 0.891007, 0, 1, 0, -0.891007, 0, 0.45399, -27, 0, 37.0)
+
+[node name="Apple10" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, -0.34202, -20, 0, 37.0)
+
+[node name="Apple11" parent="Props" instance=ExtResource("prop_tree_apple")]
+transform = Transform3D(-0.920505, 0, 0.390731, 0, 1, 0, -0.390731, 0, -0.920505, -13, 0, 37.0)
+
+[node name="Bed0" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 0, 28.0)
+
+[node name="Bed1" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 28.0)
+
+[node name="Bed2" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0, 0, 28.0)
+
+[node name="Bed3" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 28.0)
+
+[node name="Bed4" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.0, 0, 28.0)
+
+[node name="Bed5" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 28.0)
+
+[node name="Bed6" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 0, 34.0)
+
+[node name="Bed7" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 34.0)
+
+[node name="Bed8" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0, 0, 34.0)
+
+[node name="Bed9" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 34.0)
+
+[node name="Bed10" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.0, 0, 34.0)
+
+[node name="Bed11" parent="Props" instance=ExtResource("prop_garden_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 34.0)
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Gardens" type="Marker3D" parent="Markers" groups=["area_marker"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.05, 31)

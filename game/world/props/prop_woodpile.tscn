@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="Woodpile" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a stack of split logs, 2 m long (along X), 1.2 m deep, 1.4 m high."
+
+[node name="Woodpile" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(2, 1.4, 1.2)
+material = ExtResource("oak")
+surface = "wood"

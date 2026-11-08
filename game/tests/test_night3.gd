@@ -63,14 +63,20 @@ func _run() -> void:
 	var lane := _pilot.mark("LaneStart")
 	var way := NavigationServer3D.map_get_path(map, p.global_position, lane, true)
 	_check(not way.is_empty() and way[-1].distance_to(lane) < 0.5, "he can walk out through the gate into the lane")
-	(night.get_node(^"People/Mab/Talker") as Talker).interact(p)
-	(night.get_node(^"Brothers/Edwin/Talker") as Talker).interact(p)
-	await _pilot.seconds(0.5)
+	# Talking: Mab answers one question, then he walks away; Edwin calls after him.
+	p.place(Vector3(-40.4, 0.05, 0.9), deg_to_rad(90.0))
+	await _pilot.talk(night.get_node(^"People/Mab/Talker") as Talker, [0, -1], _answer)
 	var edwin: Brother = night.get_node(^"Brothers/Edwin")
-	_check(_said("(Placeholder: Mab, a leper. She begs at the gate every night.)") and edwin.visible
-		and edwin.global_position.distance_to((night.get_node(^"Places/Dusk/Edwin") as Node3D).global_position) < 0.1
-		and _said("(Placeholder: Edwin, the novice. Your friend, the one you talk to.)"),
-		"Mab at the gate and the brothers at their dusk places can be talked to")
+	p.place(edwin.global_position + Vector3(2.0, 0, 0), 0.0)
+	await _pilot.talk(night.get_node(^"Brothers/Edwin/Talker") as Talker, [-1], _answer)
+	await _pilot.seconds(0.2)
+	_check(_said("(Placeholder: Mab, a leper, begs at the gate every night.)")
+		and _said("(Placeholder: she sees everyone who comes and goes, and nobody asks her.)") and GameState.has_flag(&"n3_mab_saw"),
+		"Mab at the gate can be talked to, and answers")
+	_check(edwin.visible and edwin.global_position.distance_to((night.get_node(^"Places/Dusk/Edwin") as Node3D).global_position) < 0.1
+		and _said("(Placeholder: Edwin, the novice, your friend. He talks too fast.)")
+		and _said("(Placeholder: he calls after you that he'll see you at supper.)") and not p.talking,
+		"the brothers at their dusk places can be talked to, and walked away from")
 	var walkers := night.get_node(^"People").get_children().filter(func(n: Node) -> bool: return n.has_node(^"Walk"))
 	_check(walkers.size() == 2, "two passers-by in the lane")
 	(night.get_node(^"GateBench") as GateBench).interact(p)
@@ -101,7 +107,7 @@ func _run() -> void:
 	_check(p.use_input_override, "seated: he can look but not walk")
 	_pilot.duty("Bread").interact(p)
 	await _pilot.until(func() -> bool: return _pilot.beat() != &"Supper", 10.0)
-	_check(not _offered.is_empty() and _offered[0] == PackedStringArray(["Eat the bread", "Palm the bread"]),
+	_check(_offered.has(PackedStringArray(["Eat the bread", "Palm the bread"])),
 		"warned on night 1, he may palm the bread")
 	_check(GameState.get_flag(&"n3_ate_bread") == true and GameState.get_flag(&"n3_took_remedy") == true,
 		"ate the bread and took Thomas's remedy")
@@ -165,7 +171,7 @@ func _run() -> void:
 	# The choir: the incense, and every brother counted.
 	GameState.snap_dose(0.0)
 	var counted := await _pilot.count_brothers()
-	_check(GameState.has_flag(&"n3_headcount") and counted == 8, "counts the brothers in the choir (%d)" % counted)
+	_check(GameState.has_flag(&"n3_headcount") and counted == 11, "counts the eleven brothers in the choir (%d)" % counted)
 	await _pilot.seconds(8.0)
 	_check(GameState.dose >= 49.9 and GameState.dose_floor == 50.0, "the incense takes Dose to 50 and holds it there (%.1f)" % GameState.dose)
 	var stranger: DualRender = night.get_node(^"Brothers/Stranger/Look")

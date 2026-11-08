@@ -4,7 +4,7 @@ extends Node
 ## art/_review/m6/ (tools/night3_shots.sh). The candle clock is moved on by
 ## hand for the dusk shots so the light is right in each.
 
-const OUT := "res://art/_review/m6/"
+const OUT := "res://art/_review/m7/"
 
 var _pilot: NightPilot
 var _n := 0
@@ -43,9 +43,12 @@ func _ready() -> void:
 	_pilot.skip_to(16.2)
 	p.place(Vector3(-7.8, 0.05, -15.6), deg_to_rad(90.0))
 	_pilot.face((night.get_node(^"Brothers/Edwin") as Node3D).global_position + Vector3.UP * 1.5)
+	# Talking: hold the choice open for the still, then walk away.
+	_auto = false
 	(night.get_node(^"Brothers/Edwin/Talker") as Talker).interact(p)
-	await _said("(Placeholder: Edwin, the novice. Your friend, the one you talk to.)")
+	await _pilot.until(func() -> bool: return Talk.is_choosing(), 10.0)
 	await _shot("edwin_at_dusk", 0.3)
+	await _pilot.walk_off()
 	_pilot.skip_to(16.4)
 	p.place(Vector3(-32.0, 0.05, 1.5), deg_to_rad(90.0))
 	_pilot.face(Vector3(-40.0, 1.4, -1.6))
@@ -58,8 +61,10 @@ func _ready() -> void:
 	p.place(Vector3(-43.6, 0.05, 2.4), 0.0)
 	_pilot.face(mab.global_position + Vector3.UP * 1.3)
 	(night.get_node(^"People/Mab/Talker") as Talker).interact(p)
-	await _said("(Placeholder: Mab, a leper. She begs at the gate every night.)")
+	await _pilot.until(func() -> bool: return Talk.is_choosing(), 10.0)
 	await _shot("mab", 0.3)
+	await _pilot.walk_off()
+	_auto = true
 
 	# The supper bell; supper; taking the gate from Cole.
 	_pilot.skip_to(17.25)

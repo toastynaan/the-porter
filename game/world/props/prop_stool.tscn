@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="Stool" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a three-legged stool, 0.45 m high."
+
+[node name="Stool" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.4, 0.45, 0.4)
+material = ExtResource("oak")
+surface = "wood"

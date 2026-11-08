@@ -2,10 +2,13 @@ extends Node
 ## Keeping the gate on night 3 (night3.tscn with only its Knocks beat): at his
 ## hour Walter comes up the lane with his lantern and knocks at the grille; the porter
 ## reads him by looking; each choice plays out.
+## - At the grille they talk: the porter's view eases in on Walter's face.
 ## - Admitted: bar, gate open, he comes in, gate shut and barred, he follows to
 ##   the bed the porter shows him, and the ledger says what the porter noticed
 ##   (and nothing he didn't).
-## - Turned away: he goes back down the lane; nothing in the ledger.
+## - Walked away from: Walter waits at the grille, knocking, until the porter
+##   comes back. Then turned away: he goes back down the lane; nothing in the
+##   ledger.
 ## - The prior: Suspicion +10; the prior takes him to a bed; he is written in.
 ## And the ledger, held up, shows him and the night's duty.
 ## Run: tools/check.sh
@@ -46,8 +49,9 @@ func _run() -> void:
 	await pilot.keep_gate(0, [&"box", &"bag"], _answer)
 	get_tree().physics_frame.disconnect(watch)
 	var asides := Talk.history.slice(said_before).map(func(h: Array) -> String: return h[1])
-	_check(asides.has("(His box of relics rattles.)") and asides.has("(His bag smells of the incense.)")
-		and not asides.has("(Oily, cheerful.)"), "reading him: what the porter looks at, he notices")
+	_check(asides.has("(Oily, cheerful.)") and asides.has("(His box of relics rattles.)") and asides.has("(His bag smells of the incense.)")
+		and not asides.has("(Plump, in a coloured cloak.)"),
+		"reading him: what the porter looks at (his face as they talk, then the box and bag), he notices; not his cloak")
 	var bed := pilot.duty("GuestBeds/Bed2")
 	_check(came_in[0], "admitted, he walks in through the gateway")
 	_check(walter.lying and walter.global_position.distance_to(bed.global_position) < 0.8,
@@ -58,7 +62,7 @@ func _run() -> void:
 	await pilot.frames(5)
 	var entry: Dictionary = GameState.ledger[-1] if not GameState.ledger.is_empty() else {}
 	_check(entry.get("name", "") == "Walter the pardoner" and String(entry.get("description", "")).contains("box of relics")
-		and String(entry.get("description", "")).contains("incense") and not String(entry.get("description", "")).contains("oily"),
+		and String(entry.get("description", "")).contains("incense") and not String(entry.get("description", "")).contains("plump"),
 		"the ledger says what he noticed: %s" % [entry])
 	_check(GameState.get_flag(&"n3_walter") == &"admitted", "the night remembers he was let in")
 	var ledger_view := LedgerView.new()
@@ -69,8 +73,23 @@ func _run() -> void:
 		"held up, the ledger shows him and tonight's duty")
 	ledger_view.queue_free()
 
-	# Turned away: back down the lane, nothing written.
+	# Walked away from, then turned away: back down the lane, nothing written.
 	pilot = await _night()
+	var porter := pilot.player
+	await pilot.until(func() -> bool: return pilot.duty("Grate").enabled, 120.0)
+	await pilot.wake()
+	porter.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
+	pilot.duty("Grate").interact(porter)
+	await pilot.until(func() -> bool: return Talk.is_choosing(), 5.0)
+	await pilot.seconds(Player.TALK_TURN_TIME + 0.1)
+	walter = get_tree().get_first_node_in_group(&"callers") as VisitorNPC
+	_check(porter.talking and porter.zoom > Player.TALK_ZOOM - 0.5 and ViewCheck.off_centre(porter.camera, walter.face_position()) < 3.0,
+		"at the grille, his view eases in on Walter's face")
+	await pilot.walk_off()
+	_check(not porter.talking and not Talk.talking, "he can walk away from the grille")
+	await pilot.until(func() -> bool: return pilot.duty("Grate").enabled, 5.0)
+	_check(pilot.duty("Grate").enabled and walter.global_position.distance_to(pilot.mark("Porch")) < 0.7 and GameState.get_flag(&"n3_walter") == null,
+		"Walter waits at the grille, knocking, for him to come back")
 	await pilot.keep_gate(1, [], _answer)
 	var walter_id := (get_tree().get_first_node_in_group(&"callers") as Node).get_instance_id()
 	await pilot.until(func() -> bool: return not is_instance_id_valid(walter_id), 30.0)

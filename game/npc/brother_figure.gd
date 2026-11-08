@@ -4,8 +4,8 @@ extends Node3D
 ## Greybox stand-in for a brother (Look and Feel, "Characters": every brother
 ## wears the same black habit, and is told apart by build, face, prop and
 ## sound). A habit, a hood and a face, scaled by build from the character
-## table. Built here so it can be regenerated; the base body and head swaps
-## replace it in M5. Faces -Z.
+## table. Built here so it can be regenerated. Each character's scene in
+## game/characters/ holds one, so the model replaces it there. Faces -Z.
 
 enum Build { AVERAGE, TALL_THIN, SHORT_HEAVY, SMALL_FRAIL, LEAN, GANGLY, HUNCHED, BIG }
 

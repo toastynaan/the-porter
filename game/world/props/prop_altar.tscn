@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="wool"]
+
+[node name="Altar" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the high altar, 2 x 1 m, 1.05 m high, with a cloth hanging to the floor on its -Z side (a hiding spot under it)."
+
+[node name="AltarTop" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+script = ExtResource("block")
+size = Vector3(2, 0.15, 1)
+material = ExtResource("stone")
+
+[node name="AltarBack" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.35)
+script = ExtResource("block")
+size = Vector3(2, 0.85, 0.3)
+material = ExtResource("stone")
+
+[node name="AltarCloth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.52)
+script = ExtResource("block")
+size = Vector3(2.04, 0.85, 0.04)
+material = ExtResource("wool")
+solid = false

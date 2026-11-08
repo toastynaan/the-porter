@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_anselm"
+text = "# Anselm at dusk, in the infirmary (night 3). Placeholder lines in the design doc's words.
+== start
+Anselm: (Placeholder: Anselm, the old porter, blind, in his chair. He knows your step.)
+-> topics
+
+== again
+Anselm: (Placeholder: Anselm turns his blind eyes toward you.)
+-> topics
+
+== topics
+* [if not n3_anselm_bell] (Ask what he meant: \"Don't let them in after the bell.\") -> bell
+* [if not n3_anselm_gate] (Ask him about keeping the gate.) -> gate
+* [if not n3_anselm_eyes] (Ask after his eyes.) -> eyes
+
+== bell [set n3_anselm_bell]
+Anselm: (Placeholder: he is frightened, and won't say.)
+-> topics
+
+== gate [set n3_anselm_gate]
+Anselm: (Placeholder: Anselm on the years he kept the gate.)
+-> topics
+
+== eyes [set n3_anselm_eyes]
+Anselm: (Placeholder: Anselm on going blind.)
+-> topics
+"

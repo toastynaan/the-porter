@@ -1,4 +1,4 @@
-# Night 3 in the greybox (M4–M6)
+# Night 3 in the greybox (M4–M7)
 
 Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. Press F5 and you wake in your cell in the late afternoon. Every line is a placeholder in brackets that describes the beat in the design doc's words. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
@@ -42,16 +42,18 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 ## People to talk to
 
-At dusk, look at someone and press E. The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) with the speaker, the lines and the phases they talk in; edit the lines there. Mab can be talked to until the knocks; the brothers only at dusk.
+At dusk, look at someone and press E: your view eases in on their face, they say their line, and you pick one of three answers or walk away (see `docs/dialogue.md`). The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk, Dunstan by the woodpile, and the three choir brothers on the south walk, in the nave and on the east walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) naming their conversation (`game/dialogue/night3/`) and the phases they talk in. Mab can be talked to until the knocks; the brothers only at dusk.
+
+Everyone wears a character scene from `game/characters/` (see `docs/assets.md`). Night 3 has eleven brothers in the choir: the seven named ones, the three living choir brothers, and the stranger in the dead brother's place. Dunstan, a lay brother, is about only at dusk.
 
 ## Keeping the gate
 
 `game/night/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
 
 1. **He comes up the lane.** At his hour (`knock_hours` on the Knocks beat; Walter's is 20:00) Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern. If you're dozing, he's at the grille when the knock wakes you.
-2. **He knocks.** He knocks until you come to the grille and press E. He greets you.
-3. **You read him.** While the choice is open, look at a part of him for a moment and the porter notices it, for example "(His box of relics rattles.)". Only what you noticed goes into the ledger.
-4. **You choose:**
+2. **He knocks.** He knocks until you come to the grille and press E. You talk through the grille: your view eases in on his face, and he greets you.
+3. **You read him.** While the choice is open, look at a part of him for a moment and the porter notices it, for example "(His box of relics rattles.)". The part nearest the middle of your view is the one you read, so talking face to face you notice his face first. Only what you noticed goes into the ledger.
+4. **You choose,** or walk away. Walk away and he waits at the grille, knocking now and then, until you come back:
    - **Admit him.** Lift the bar, open the gate, and he comes in. Shut the gate and bar it behind him. He follows you to the guesthouse, where you show him a bed (E on it) and he lies down. Then write him in the ledger at your desk.
    - **Turn him away.** He walks back down the lane and is gone.
    - **Send for the prior.** Suspicion +10, because Ranulf overhears. The prior comes, lets him in and takes him to a bed. You still write him in.
@@ -86,6 +88,9 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | Incense | +25 over 8 s, and at least enough to reach Dose 50; Dose doesn't fall below 50 for the rest of the night | doc +25; floor of 50 is the M0 default |
 | The stranger becomes the dead brother | Dose 50 (he changes only while you aren't looking) | mine: the tier where cultists start rendering as demons |
 | Night 3's starting Dose, from the nights before | 30 | mine (my M4 recommendation; waiting on you) |
+| Talking: the view narrows, turns to their face in | 22° (70° to 48°), 0.45 s | mine |
+| Talking: looking about | 30° either side of their face; at the grille 40° across, 50° up and down | mine |
+| Walter's place under the porch | 0.3 m north of the middle of the gate, so the grille's centre stile isn't across his face | mine |
 | Waking pace | 240 s per in-game hour | mine, to fit the doc's 40–60 minute shift |
 | Dozing pace | 2 s per in-game hour | mine |
 | Marks: supper bell, Matins, Lauds | 17:15, 00:00, 06:00 | mine (the doc names the bells, not their times) |
@@ -105,6 +110,7 @@ Everything is a marker you can move in the editor, under `night3.tscn`:
 | --- | --- |
 | `Places/Supper/<Name>`, `Places/Matins/<Name>` | Where each brother stands in each phase. A brother only moves while you aren't looking |
 | `Places/Dusk/<Name>` | Where each brother is at dusk, for talking |
+| `Brothers` | The brothers, each with his `Look` (character scene) and `Talker` (conversation) |
 | `People` | Cole (at the gate by day), Mab, and the two passers-by with their walks (`People/Walks`) |
 | `Marks` | Where you wake, your seat, the choir, the foot of the crypt stair, the infirmary spots for you and Thomas, Cole's place at the gate and where he goes off to (`ColeGate`, `ColeOff`), your cell at dawn, and the Matins spawn |
 | `Duties` | Things you use: your seat at supper, relieving Cole and handing him the gate, the bread, the gate bar, the grate, the ledger, the bell rope, the round's stops (each has a `hint` and a `line`), the moved keys, and the cot you sleep on |
@@ -122,15 +128,16 @@ Times are exports too. Each beat's `due` is its mark on the candle, and `can_doz
 - **Morning scene:** dawn doesn't show the abbey's official version of the night.
 - **Lateness:** only the Matins bell can be late. Supper and the gate wait for you.
 - **Cole** appears out of the kitchen at dawn even if you're looking that way.
-- **The brothers:** they're greybox figures with their builds from the character table. They don't move between places, sit, or have props or sounds.
-- **Walter:** he's in a brown tunic until his coloured cloak gets a colour.
+- **The brothers:** they're greybox figures with their builds and props from the character table. They don't move between places, sit, or make their sounds.
+- **The conversations:** placeholders in brackets, one exchange deep.
 
 ## Tests and tools
 
 - **`test_night3`:** the whole night in order, from waking to sleep, with every beat's effects and the clock's marks.
-- **`test_gate`:** the gate job's three outcomes, reading, the ledger entry and the ledger page.
+- **`test_gate`:** the gate job's three outcomes, talking at the grille and walking away from it, reading, the ledger entry and the ledger page.
+- **`test_dialogue`:** conversations: the script and its mistakes, every conversation file, the camera, answers and their tags, walking away, `again`, skipping a line.
 - **`test_night3_caught`:**
   - restarting at the Matins bell
   - being caught in the chase (infirmary, keys gone, dawn)
   - being caught twice (back to Matins, with the night as it was at the bell)
-- **`tools/night3_shots.sh`:** plays the night from dusk to dawn and saves a still per beat to `art/_review/m6/`.
+- **`tools/night3_shots.sh`:** plays the night from dusk to dawn and saves a still per beat to `art/_review/m7/`.

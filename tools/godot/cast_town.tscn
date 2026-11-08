@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/characters/chr_mab.tscn" id="mab"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_walter.tscn" id="walter"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_joan.tscn" id="joan"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_roger.tscn" id="roger"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_pilgrim.tscn" id="pilgrim"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_carter.tscn" id="carter"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_lane_woman.tscn" id="lane_woman"]
+
+[node name="cast_town" type="Node3D"]
+editor_description = "Review lineup (tools/review.sh): the characters side by side, turned to face the lookdev camera."
+
+[node name="mab" parent="." instance=ExtResource("mab")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.4, 0, 0)
+
+[node name="walter" parent="." instance=ExtResource("walter")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.6, 0, 0)
+
+[node name="joan" parent="." instance=ExtResource("joan")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.8, 0, 0)
+
+[node name="roger" parent="." instance=ExtResource("roger")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="pilgrim" parent="." instance=ExtResource("pilgrim")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8, 0, 0)
+
+[node name="carter" parent="." instance=ExtResource("carter")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.6, 0, 0)
+
+[node name="lane_woman" parent="." instance=ExtResource("lane_woman")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.4, 0, 0)

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[sub_resource type="BoxMesh" id="Mesh_Clapper"]
+material = ExtResource("oak")
+size = Vector3(0.03, 0.18, 0.1)
+
+[node name="Mab" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Mab, a leper. Small, wrapped in rags; face covered by cloth. Prop: a leper's clapper. Sound: the clapper. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 6
+tunic = true
+face_color = Color(0.42, 0.35, 0.24, 1)
+
+[node name="Clapper" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.9, -0.14)
+cast_shadow = 0
+mesh = SubResource("Mesh_Clapper")
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.376, -0.12)

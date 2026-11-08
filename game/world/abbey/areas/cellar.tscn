@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="10_rreph"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="12_2i4ku"]
 [ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="13_7moi7"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="13_p10tg"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_barrel.tscn" id="prop_barrel"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_grain_sacks.tscn" id="prop_grain_sacks"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_shelves.tscn" id="prop_shelves"]
 
 [node name="Cellar" type="Node3D" unique_id=134828452]
 
@@ -296,64 +298,29 @@ size = Vector3(0.9, 0.2, 0.1)
 material = ExtResource("12_2i4ku")
 surface = "wood"
 
-[node name="Sacks-2730" type="StaticBody3D" parent="Props" unique_id=777546124]
+[node name="Sacks-2730" parent="Props" instance=ExtResource("prop_grain_sacks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.05, -26.4)
-script = ExtResource("5_7r8mi")
-size = Vector3(1.2, 0.8, 0.9)
-material = ExtResource("13_p10tg")
-surface = "wood"
 
-[node name="Sacks-2630" type="StaticBody3D" parent="Props" unique_id=1520389113]
+[node name="Sacks-2630" parent="Props" instance=ExtResource("prop_grain_sacks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.05, -25.4)
-script = ExtResource("5_7r8mi")
-size = Vector3(1.2, 0.8, 0.9)
-material = ExtResource("13_p10tg")
-surface = "wood"
 
-[node name="Sacks-2743" type="StaticBody3D" parent="Props" unique_id=132318323]
+[node name="Sacks-2743" parent="Props" instance=ExtResource("prop_grain_sacks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3, 0.05, -26.4)
-script = ExtResource("5_7r8mi")
-size = Vector3(1.2, 0.8, 0.9)
-material = ExtResource("13_p10tg")
-surface = "wood"
 
-[node name="Sacks-1882" type="StaticBody3D" parent="Props" unique_id=206406558]
+[node name="Sacks-1882" parent="Props" instance=ExtResource("prop_grain_sacks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2, 0.85, -25.9)
-script = ExtResource("5_7r8mi")
-size = Vector3(1.2, 0.8, 0.9)
-material = ExtResource("13_p10tg")
-surface = "wood"
 
-[node name="Barrel-1190" type="StaticBody3D" parent="Props" unique_id=929066643]
+[node name="Barrel-1190" parent="Props" instance=ExtResource("prop_barrel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.05, -10)
-script = ExtResource("5_7r8mi")
-size = Vector3(0.7, 0.9, 0.7)
-shape = 2
-material = ExtResource("12_2i4ku")
-surface = "wood"
 
-[node name="Barrel-1182" type="StaticBody3D" parent="Props" unique_id=1105569040]
+[node name="Barrel-1182" parent="Props" instance=ExtResource("prop_barrel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 0.05, -10)
-script = ExtResource("5_7r8mi")
-size = Vector3(0.7, 0.9, 0.7)
-shape = 2
-material = ExtResource("12_2i4ku")
-surface = "wood"
 
-[node name="Barrel-1110" type="StaticBody3D" parent="Props" unique_id=1748120143]
+[node name="Barrel-1110" parent="Props" instance=ExtResource("prop_barrel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.05, -9.2)
-script = ExtResource("5_7r8mi")
-size = Vector3(0.7, 0.9, 0.7)
-shape = 2
-material = ExtResource("12_2i4ku")
-surface = "wood"
 
-[node name="Shelves" type="StaticBody3D" parent="Props" unique_id=1668419872]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3, 0.05, -6)
-script = ExtResource("5_7r8mi")
-size = Vector3(0.5, 1.8, 3)
-material = ExtResource("12_2i4ku")
-surface = "wood"
+[node name="Shelves" parent="Props" instance=ExtResource("prop_shelves")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -19.3, 0.05, -6)
 
 [node name="HidingSpots" type="Node3D" parent="." unique_id=1616813480]
 

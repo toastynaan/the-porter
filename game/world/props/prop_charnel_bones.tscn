@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/bone.tres" id="bone"]
+
+[node name="CharnelBones" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the charnel house bones, long bones stacked neatly in two piles under a row of skulls, with a gap behind a low stack to hide in. Faces -Z."
+
+[node name="SkullRow" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("block")
+size = Vector3(6, 0.4, 0.8)
+material = ExtResource("bone")
+
+[node name="BonePileN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, 0)
+script = ExtResource("block")
+size = Vector3(3.4, 1, 1.2)
+material = ExtResource("bone")
+
+[node name="BonePileS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 0, 0)
+script = ExtResource("block")
+size = Vector3(1.4, 1, 1.2)
+material = ExtResource("bone")
+
+[node name="BoneCover" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.55, 0)
+script = ExtResource("block")
+size = Vector3(1.2, 0.45, 1.2)
+material = ExtResource("bone")

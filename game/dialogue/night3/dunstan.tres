@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_dunstan"
+text = "# Dunstan at dusk, by the woodpile (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
+== start
+(Dunstan looks at you and says nothing.)
+* (Ask about the woodpile.) -> nothing
+* (Ask if he has seen anything.) -> nothing
+* (Wish him good night.) -> end
+
+== again
+(Dunstan says nothing.)
+-> end
+
+== nothing
+(He says nothing, and goes back to his work.)
+-> end
+"

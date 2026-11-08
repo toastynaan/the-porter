@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="Material" path="res://game/world/materials/foliage.tres" id="foliage"]
+
+[node name="Yew" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: an old churchyard yew, dark and dense, about 6 m high and 5 m across. Only the trunk is solid."
+
+[node name="Trunk" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.7, 2.2, 0.7)
+shape = 2
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Crown" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+script = ExtResource("block")
+size = Vector3(4.6, 3.6, 4.6)
+shape = 2
+material = ExtResource("foliage")
+solid = false
+
+[node name="Top" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, 0)
+script = ExtResource("block")
+size = Vector3(2.6, 1.2, 2.6)
+shape = 2
+material = ExtResource("foliage")
+solid = false

@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+
+[node name="BellRope" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the bell rope, 8.6 m from the bell down to the tower floor."
+
+[node name="BellRope" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.04, 8.6, 0.04)
+material = ExtResource("sacking")
+solid = false

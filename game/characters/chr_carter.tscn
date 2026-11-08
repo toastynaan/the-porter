@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+
+[node name="Carter" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: A carter in the lane at dusk, going home before dark. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+tunic = true
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)

@@ -1,0 +1,92 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="Material" path="res://game/world/materials/plaster.tres" id="plaster"]
+[ext_resource type="Material" path="res://game/world/materials/roof.tres" id="roof"]
+[ext_resource type="Material" path="res://game/world/materials/window_dark.tres" id="wdark"]
+[ext_resource type="Script" path="res://game/world/street/timber_house.gd" id="house_gd"]
+
+[sub_resource type="BoxMesh" id="M0"]
+material = ExtResource("wdark")
+size = Vector3(0.06, 2, 0.9)
+
+[sub_resource type="BoxMesh" id="M1"]
+material = ExtResource("wdark")
+size = Vector3(0.06, 0.8, 0.6)
+
+[sub_resource type="BoxMesh" id="M5"]
+material = ExtResource("oak")
+size = Vector3(0.32, 0.22, 5)
+
+[node name="House3StoreyNarrow" type="Node3D" groups=["placeholder"]]
+script = ExtResource("house_gd")
+editor_description = "Placeholder: a timber-framed house of three storeys, 5 m along the lane, each upper floor jutting 0.5 m over the one below. Its street front faces -Z. Lit windows are set per house (lit_windows)."
+
+[node name="Storey0" type="StaticBody3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 5)
+script = ExtResource("block")
+size = Vector3(10, 3, 4.94)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Door0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.83, 0, -0.02)
+cast_shadow = 0
+mesh = SubResource("M0")
+
+[node name="Window0_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.83, 1.4, -0.02)
+cast_shadow = 0
+mesh = SubResource("M1")
+
+[node name="Storey1" type="StaticBody3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3, 4.75)
+script = ExtResource("block")
+size = Vector3(10.5, 2.8, 4.94)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="Beam1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.05, -0.4)
+cast_shadow = 0
+mesh = SubResource("M5")
+
+[node name="Window1_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.83, 4.3, -0.52)
+cast_shadow = 0
+mesh = SubResource("M1")
+
+[node name="Window1_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.83, 4.3, -0.52)
+cast_shadow = 0
+mesh = SubResource("M1")
+
+[node name="Storey2" type="StaticBody3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 5.8, 4.5)
+script = ExtResource("block")
+size = Vector3(11, 2.6, 4.94)
+material = ExtResource("plaster")
+surface = "wood"
+
+[node name="Beam2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 5.85, -0.9)
+cast_shadow = 0
+mesh = SubResource("M5")
+
+[node name="Window2_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.83, 7.1, -1.02)
+cast_shadow = 0
+mesh = SubResource("M1")
+
+[node name="Window2_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.83, 7.1, -1.02)
+cast_shadow = 0
+mesh = SubResource("M1")
+
+[node name="Roof" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4, 4.5)
+script = ExtResource("block")
+size = Vector3(5.3, 3.07, 11.3)
+material = ExtResource("roof")
+shape = 1

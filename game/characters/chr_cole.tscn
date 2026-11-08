@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+
+[node name="Cole" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Cole, a lay brother. Big labourer; weathered, blank. Brown work tunic, not a habit. Sound: heavy boots, no talk. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 7
+tunic = true
+face_color = Color(0.6, 0.47, 0.38, 1)
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.664, -0.12)

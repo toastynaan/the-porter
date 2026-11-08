@@ -14,7 +14,8 @@ The abbey is one walled square, 80 × 80 m, on a 4 m kit grid. Every building op
 | Dormitory (east range) | East of the cloister | Slype, chapter house, day stair, warming room, undercroft; dormitory upstairs; latrine block at the south end | Under three of the beds (north end, middle, south end) |
 | South range | South of the cloister | Refectory, kitchen, bakehouse with the oven | The oven (bones inside) |
 | Cellar (west range) | West of the cloister | Granary (hidden stair), outer parlour passage, stores (cloister door locked) | Grain sacks |
-| Graveyard and infirmary | East and south-east | Graves, charnel house, infirmary, mill, mill race, fishpond | In the bone pile, under a sick bed in the infirmary |
+| Graveyard and infirmary | East and south-east | Graves, two yews, charnel house, infirmary, mill, mill race, fishpond | In the bone pile, under a sick bed in the infirmary |
+| Gardens | South, beyond the mill race | The orchard (12 apple trees) on the west side, the kitchen beds on the east | None |
 
 ## The lane outside the gate
 
@@ -42,7 +43,8 @@ Walls 4 × 4 × 0.8 m; doorways 0.9 × 2.0 m; the gate 3.0 × 3.4 m; the church 
 
 ## Editing
 
-- Each area is a scene in `game/world/abbey/areas/`, built from the kit pieces in `game/world/kit/` (`wall`, `wall_door`, `wall_window`, `wall_arch`, `wall_arch_open`, `wall_gate`, `corner`) and `Block`s you resize in the inspector. `abbey.tscn` puts them together.
+- Each area is a scene in `game/world/abbey/areas/`, built from the kit pieces in `game/world/kit/` (`wall`, `wall_door`, `wall_window`, `wall_arch`, `wall_arch_open`, `wall_gate`, `corner`), `Block`s you resize in the inspector (floors, roofs, stairs, hearths), and props: one scene per kind of thing in `game/world/props/` (beds, benches, graves, trees). `abbey.tscn` puts them together. The lane's houses are one scene per house type in `game/world/street/`. `docs/assets.md` lists every placeholder and how to replace it with a model.
+- To add a prop, instance its scene under the area's `Props` node (it's in `nav_source`, so it shapes the navmesh).
 - The gate bar is on the door layer, like door leaves: it blocks you but stays out of the navmesh, so the gateway is walkable when the gate is open.
 - Doors are `game/world/door/door.tscn`. Turn one 180° to swing it the other way. Set `locked`, give it a `key` the porter holds, or give it the wall's material to hide it.
 - A hiding spot is an Area3D with `game/hiding/hiding_spot.gd` and Marker3D children `View` (the camera while hidden), `Exit` and `Check` (where a hunter stands). Set its box `size`, `noise` and `check_chance` in the inspector. See `docs/hunting.md`.

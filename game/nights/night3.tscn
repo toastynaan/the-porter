@@ -1,9 +1,22 @@
-[gd_scene load_steps=46 format=3]
+[gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://game/world/abbey/abbey.tscn" id="abbey"]
 [ext_resource type="PackedScene" path="res://game/npc/brother.tscn" id="brother"]
 [ext_resource type="Script" path="res://game/npc/brother.gd" id="brother_gd"]
-[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/npc/character_look.gd" id="look_gd"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_thomas.tscn" id="chr_thomas"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_osric.tscn" id="chr_osric"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_ranulf.tscn" id="chr_ranulf"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_godric.tscn" id="chr_godric"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_hugh.tscn" id="chr_hugh"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_edwin.tscn" id="chr_edwin"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_anselm.tscn" id="chr_anselm"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_dunstan.tscn" id="chr_dunstan"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_a.tscn" id="chr_choir_brother_a"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_b.tscn" id="chr_choir_brother_b"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_c.tscn" id="chr_choir_brother_c"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_stranger.tscn" id="chr_stranger"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_dead.tscn" id="chr_choir_brother_dead"]
 [ext_resource type="Script" path="res://game/render/dual_render.gd" id="dual_gd"]
 [ext_resource type="Script" path="res://game/night/duty.gd" id="duty_gd"]
 [ext_resource type="PackedScene" path="res://game/hunter/hunter.tscn" id="hunter"]
@@ -33,6 +46,19 @@
 [ext_resource type="Script" path="res://game/night/gate_bench.gd" id="bench_gd"]
 [ext_resource type="Script" path="res://game/night/candle_clock.gd" id="candle_clock_gd"]
 [ext_resource type="Script" path="res://game/npc/talker.gd" id="talker_gd"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/anselm.tres" id="convo_anselm"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/carter.tres" id="convo_carter"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/choir_brother.tres" id="convo_choir_brother"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/cole.tres" id="convo_cole"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/dunstan.tres" id="convo_dunstan"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/edwin.tres" id="convo_edwin"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/godric.tres" id="convo_godric"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/hugh.tres" id="convo_hugh"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/lane_woman.tres" id="convo_lane_woman"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/mab.tres" id="convo_mab"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/osric.tres" id="convo_osric"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/ranulf.tres" id="convo_ranulf"]
+[ext_resource type="Resource" path="res://game/dialogue/night3/thomas.tres" id="convo_thomas"]
 [ext_resource type="Script" path="res://game/npc/lane_walker.gd" id="walker_gd"]
 [ext_resource type="Resource" path="res://game/gate/visitors/cole.tres" id="cole"]
 [ext_resource type="Resource" path="res://game/gate/visitors/mab.tres" id="mab"]
@@ -101,6 +127,18 @@ transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -10, 0.0
 [node name="Anselm" type="Marker3D" parent="Places/Dusk"]
 transform = Transform3D(-1, 0, -1.22465e-16, 0, 1, 0, 1.22465e-16, 0, -1, 34.5, 0.05, 0.5)
 
+[node name="Dunstan" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, -35.0, 0.0, -14.6)
+
+[node name="ChoirA" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 4.0, 0.05, -6.0)
+
+[node name="ChoirB" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(0, 0, 1.0, 0, 1, 0, -1.0, 0, 0, -8.0, 0.05, -32.0)
+
+[node name="ChoirC" type="Marker3D" parent="Places/Dusk"]
+transform = Transform3D(0, 0, -1.0, 0, 1, 0, 1.0, 0, 0, 10.0, 0.05, -18.0)
+
 [node name="Supper" type="Node3D" parent="Places"]
 
 [node name="Thomas" type="Marker3D" parent="Places/Supper"]
@@ -123,6 +161,15 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -1.6, 0.05, -0.15)
 
 [node name="Anselm" type="Marker3D" parent="Places/Supper"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -3.2, 0.05, -0.15)
+
+[node name="ChoirA" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 4.5, 0.05, -2.75)
+
+[node name="ChoirB" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, -4.5, 0.05, -2.75)
+
+[node name="ChoirC" type="Marker3D" parent="Places/Supper"]
+transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, -4.8, 0.05, -0.15)
 
 [node name="Matins" type="Node3D" parent="Places"]
 
@@ -150,90 +197,136 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 14, 0.05, -29.9)
 [node name="Stranger" type="Marker3D" parent="Places/Matins"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 16, 0.05, -29.9)
 
+[node name="ChoirA" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 11.0, 0.05, -34.1)
+
+[node name="ChoirB" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(1.0, 0, 0, 0, 1, 0, 0, 0, 1.0, 13.0, 0.05, -29.9)
+
+[node name="ChoirC" type="Marker3D" parent="Places/Matins"]
+transform = Transform3D(-1.0, 0, 0, 0, 1, 0, 0, 0, -1.0, 15.0, 0.05, -34.1)
+
 [node name="Brothers" type="Node3D" parent="."]
 
 [node name="Thomas" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Thomas"]
-build = 1
+[node name="Look" parent="Brothers/Thomas"]
+look = ExtResource("chr_thomas")
 
 [node name="Talker" type="Area3D" parent="Brothers/Thomas"]
 script = ExtResource("talker_gd")
-speaker = "Thomas"
-lines = PackedStringArray("(Placeholder: Thomas, the infirmarian. Gentle, a healer, your first ally.)")
+conversation = ExtResource("convo_thomas")
 phases = Array[int]([6])
 
 [node name="Osric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Osric"]
-build = 2
+[node name="Look" parent="Brothers/Osric"]
+look = ExtResource("chr_osric")
 
 [node name="Talker" type="Area3D" parent="Brothers/Osric"]
 script = ExtResource("talker_gd")
-speaker = "Osric"
-lines = PackedStringArray("(Placeholder: Osric, the cellarer. Jolly; he feeds you extra bread.)")
+conversation = ExtResource("convo_osric")
 phases = Array[int]([6])
 
 [node name="Ranulf" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Ranulf"]
-build = 0
+[node name="Look" parent="Brothers/Ranulf"]
+look = ExtResource("chr_ranulf")
 
 [node name="Talker" type="Area3D" parent="Brothers/Ranulf"]
 script = ExtResource("talker_gd")
-speaker = "Ranulf"
-lines = PackedStringArray("(Placeholder: Ranulf, the sacrist. He keeps the relic, the candles and the incense.)")
+conversation = ExtResource("convo_ranulf")
 phases = Array[int]([6])
 
 [node name="Godric" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Godric"]
-build = 3
+[node name="Look" parent="Brothers/Godric"]
+look = ExtResource("chr_godric")
 
 [node name="Talker" type="Area3D" parent="Brothers/Godric"]
 script = ExtResource("talker_gd")
-speaker = "Abbot Godric"
-lines = PackedStringArray("(Placeholder: Abbot Godric. Frail, kind, fatherly.)")
+conversation = ExtResource("convo_godric")
 phases = Array[int]([6])
 
 [node name="Hugh" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Hugh"]
-build = 4
+[node name="Look" parent="Brothers/Hugh"]
+look = ExtResource("chr_hugh")
 
 [node name="Talker" type="Area3D" parent="Brothers/Hugh"]
 script = ExtResource("talker_gd")
-speaker = "Prior Hugh"
-lines = PackedStringArray("(Placeholder: Prior Hugh. Harsh; he watches you constantly.)")
+conversation = ExtResource("convo_hugh")
 phases = Array[int]([6])
 
 [node name="Edwin" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Edwin"]
-build = 5
+[node name="Look" parent="Brothers/Edwin"]
+look = ExtResource("chr_edwin")
 
 [node name="Talker" type="Area3D" parent="Brothers/Edwin"]
 script = ExtResource("talker_gd")
-speaker = "Edwin"
-lines = PackedStringArray("(Placeholder: Edwin, the novice. Your friend, the one you talk to.)")
+conversation = ExtResource("convo_edwin")
 phases = Array[int]([6])
 
 [node name="Anselm" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
 places = NodePath("../../Places")
 
-[node name="Figure" parent="Brothers/Anselm"]
-build = 6
+[node name="Look" parent="Brothers/Anselm"]
+look = ExtResource("chr_anselm")
 
 [node name="Talker" type="Area3D" parent="Brothers/Anselm"]
 script = ExtResource("talker_gd")
-speaker = "Anselm"
-lines = PackedStringArray("(Placeholder: Anselm, the old porter. Blind, kept in the infirmary.)")
+conversation = ExtResource("convo_anselm")
+phases = Array[int]([6])
+
+[node name="Dunstan" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Look" parent="Brothers/Dunstan"]
+look = ExtResource("chr_dunstan")
+
+[node name="Talker" type="Area3D" parent="Brothers/Dunstan"]
+script = ExtResource("talker_gd")
+conversation = ExtResource("convo_dunstan")
+phases = Array[int]([6])
+
+[node name="ChoirA" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Look" parent="Brothers/ChoirA"]
+look = ExtResource("chr_choir_brother_a")
+
+[node name="Talker" type="Area3D" parent="Brothers/ChoirA"]
+script = ExtResource("talker_gd")
+conversation = ExtResource("convo_choir_brother")
+phases = Array[int]([6])
+
+[node name="ChoirB" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Look" parent="Brothers/ChoirB"]
+look = ExtResource("chr_choir_brother_b")
+
+[node name="Talker" type="Area3D" parent="Brothers/ChoirB"]
+script = ExtResource("talker_gd")
+conversation = ExtResource("convo_choir_brother")
+phases = Array[int]([6])
+
+[node name="ChoirC" parent="Brothers" node_paths=PackedStringArray("places") instance=ExtResource("brother")]
+places = NodePath("../../Places")
+
+[node name="Look" parent="Brothers/ChoirC"]
+look = ExtResource("chr_choir_brother_c")
+
+[node name="Talker" type="Area3D" parent="Brothers/ChoirC"]
+script = ExtResource("talker_gd")
+conversation = ExtResource("convo_choir_brother")
 phases = Array[int]([6])
 
 [node name="Stranger" type="Node3D" parent="Brothers" node_paths=PackedStringArray("places")]
@@ -251,12 +344,12 @@ shape = SubResource("Shape_stranger")
 script = ExtResource("dual_gd")
 
 [node name="Real" type="Node3D" parent="Brothers/Stranger/Look"]
-script = ExtResource("figure_gd")
-hood_up = true
+script = ExtResource("look_gd")
+look = ExtResource("chr_stranger")
 
 [node name="Drugged" type="Node3D" parent="Brothers/Stranger/Look"]
-script = ExtResource("figure_gd")
-face_color = Color(0.56, 0.58, 0.58, 1)
+script = ExtResource("look_gd")
+look = ExtResource("chr_choir_brother_dead")
 
 [node name="Marks" type="Node3D" parent="."]
 editor_description = "Where the night puts the porter and others."
@@ -283,7 +376,7 @@ transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -66, 0.0
 transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -66, 0.05, 47)
 
 [node name="Porch" type="Marker3D" parent="Marks"]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -41.4, 0.05, -2)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -41.4, 0.05, -2.3)
 
 [node name="Inside" type="Marker3D" parent="Marks"]
 transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -37.6, 0.05, -2)
@@ -530,8 +623,7 @@ visitor = ExtResource("cole")
 
 [node name="Talker" type="Area3D" parent="People/Cole"]
 script = ExtResource("talker_gd")
-speaker = "Cole"
-lines = PackedStringArray("(Says nothing. Big and silent; he keeps the gate by day.)")
+conversation = ExtResource("convo_cole")
 phases = Array[int]([6])
 
 [node name="Mab" parent="People" instance=ExtResource("visitor_npc")]
@@ -540,8 +632,7 @@ visitor = ExtResource("mab")
 
 [node name="Talker" type="Area3D" parent="People/Mab"]
 script = ExtResource("talker_gd")
-speaker = "Mab"
-lines = PackedStringArray("(Placeholder: Mab, a leper. She begs at the gate every night.)")
+conversation = ExtResource("convo_mab")
 phases = Array[int]([6, 0, 1, 2])
 
 [node name="Walks" type="Node3D" parent="People"]
@@ -565,8 +656,7 @@ speed = 1.0
 
 [node name="Talker" type="Area3D" parent="People/Carter"]
 script = ExtResource("talker_gd")
-speaker = "A carter"
-lines = PackedStringArray("(Placeholder: a carter on his way home before dark.)")
+conversation = ExtResource("convo_carter")
 phases = Array[int]([6])
 
 [node name="Walk" type="Node" parent="People/Carter" node_paths=PackedStringArray("points", "leave")]
@@ -581,8 +671,7 @@ speed = 1.0
 
 [node name="Talker" type="Area3D" parent="People/Woman"]
 script = ExtResource("talker_gd")
-speaker = "A woman"
-lines = PackedStringArray("(Placeholder: a woman with a basket, hurrying home.)")
+conversation = ExtResource("convo_lane_woman")
 phases = Array[int]([6])
 
 [node name="Walk" type="Node" parent="People/Woman" node_paths=PackedStringArray("points", "leave")]

@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+
+[node name="Bell" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the abbey bell, 1.2 m across. Hangs in the tower; BellTower plays the bell from here."
+
+[node name="Bell" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.2, 1.2, 1.2)
+shape = 2
+material = ExtResource("stone")

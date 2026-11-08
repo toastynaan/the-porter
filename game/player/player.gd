@@ -9,12 +9,16 @@ extends CharacterBody3D
 ## He crawls through squeezes (crawl_along), hides in hiding spots (hide_in,
 ## then `interact` to climb out), and stumbles when he stares at the demon
 ## too long. `controls_locked` takes his body away (a capture, a cutscene).
+## Talking to someone (start_talk, from Talk) he stands still, his view eased
+## in on their face and held near it; a move key walks him away.
 ##
 ## Esc frees the mouse; a click captures it again.
 
 signal stepped(surface: String, running: bool)
 signal hid(spot: HidingSpot)
 signal unhid(spot: HidingSpot)
+## A move key while talking: he walks away from the conversation.
+signal walked_away
 
 const WALK_SPEED := 1.4
 const RUN_SPEED := 4.0
@@ -36,6 +40,9 @@ const MOUSE_SENSITIVITY := 0.0022
 const PITCH_LIMIT := 85.0
 ## Seconds to climb into or out of a hiding spot.
 const HIDE_TIME := 0.7
+## Talking: degrees the view narrows, and seconds to turn to their face.
+const TALK_ZOOM := 22.0
+const TALK_TURN_TIME := 0.45
 
 ## Tests and scripted moments drive the player through these instead of the
 ## keyboard: x right, y forward, as from Input.get_vector().
@@ -51,6 +58,10 @@ var controls_locked := false
 var hiding: HidingSpot
 ## What the floor underfoot sounds like.
 var floor_surface := "stone"
+## Talking to someone (Talk.begin).
+var talking := false
+## Degrees off the field of view while talking (StareMeter takes its own).
+var zoom := 0.0
 
 var _bob_phase := 0.0
 var _bob_amp := 0.0
@@ -62,6 +73,12 @@ var _hide_moving := false
 ## The hiding spot's view: look is limited around it.
 var _hide_yaw := 0.0
 var _hide_pitch := 0.0
+## Talking: the view held on their face, and turning to it.
+var _talk_yaw := 0.0
+var _talk_pitch := 0.0
+var _talk_cone := Vector2.ZERO
+var _talk_turning := false
+var _talk_tween: Tween
 
 @onready var head: Node3D = $Head
 @onready var look_back_pivot: Node3D = $Head/LookBack
@@ -81,15 +98,16 @@ func _ready() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-## True while something else has his body: crawling, hiding, stumbling, caught.
+## True while something else has his body: crawling, hiding, stumbling,
+## caught, talking.
 func busy() -> bool:
-	return crawling or hiding != null or stumbling or controls_locked
+	return crawling or hiding != null or stumbling or controls_locked or talking
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	var motion := event as InputEventMouseMotion
 	if motion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		if not (controls_locked or stumbling or _hide_moving):
+		if not (controls_locked or stumbling or _hide_moving or _talk_turning):
 			_look(motion.relative * MOUSE_SENSITIVITY)
 	elif event.is_action_pressed(&"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
@@ -109,6 +127,11 @@ func _look(turn: Vector2) -> void:
 		var pitch_limit := deg_to_rad(hiding.look_pitch)
 		yaw = _hide_yaw + clampf(wrapf(yaw - _hide_yaw, -PI, PI), -yaw_limit, yaw_limit)
 		pitch = clampf(pitch, _hide_pitch - pitch_limit, _hide_pitch + pitch_limit)
+	elif talking:
+		var yaw_cone := deg_to_rad(_talk_cone.x)
+		var pitch_cone := deg_to_rad(_talk_cone.y)
+		yaw = _talk_yaw + clampf(wrapf(yaw - _talk_yaw, -PI, PI), -yaw_cone, yaw_cone)
+		pitch = clampf(pitch, _talk_pitch - pitch_cone, _talk_pitch + pitch_cone)
 	rotation.y = yaw
 	head.rotation.x = clampf(pitch, -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
 
@@ -117,6 +140,9 @@ func _physics_process(delta: float) -> void:
 	_update_look_back(delta)
 	if crawling or hiding or _hide_moving:
 		stamina.update(false, delta)
+		return
+	if talking:
+		_stand_and_talk(delta)
 		return
 	var input := Vector2.ZERO
 	var run_held := false
@@ -139,6 +165,53 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= GRAVITY * delta
 	move_and_slide()
 	_read_floor()
+	_update_bob(delta)
+
+
+## Holds his view on `at` (someone's face): he turns to it and his view
+## narrows, and he can look about only within `cone` (degrees either side).
+func start_talk(at: Vector3, cone: Vector2) -> void:
+	talking = true
+	running = false
+	_talk_cone = cone
+	var to := at - camera.global_position
+	_talk_yaw = atan2(-to.x, -to.z)
+	_talk_pitch = clampf(atan2(to.y, Vector2(to.x, to.z).length()), -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
+	_talk_turning = true
+	if _talk_tween:
+		_talk_tween.kill()
+	_talk_tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_talk_tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(_talk_yaw - rotation.y, -PI, PI), TALK_TURN_TIME)
+	_talk_tween.tween_property(head, ^"rotation:x", _talk_pitch, TALK_TURN_TIME)
+	_talk_tween.tween_property(self, ^"zoom", TALK_ZOOM, TALK_TURN_TIME)
+	_talk_tween.chain().tween_callback(func() -> void: _talk_turning = false)
+
+
+## Lets his view go: the conversation is over, or he walked away.
+func end_talk() -> void:
+	if not talking:
+		return
+	talking = false
+	_talk_turning = false
+	if _talk_tween:
+		_talk_tween.kill()
+	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
+
+
+## Talking: he stands still, and a move key walks him away.
+func _stand_and_talk(delta: float) -> void:
+	stamina.update(false, delta)
+	var wish := input_override if use_input_override else Input.get_vector(
+		&"move_left", &"move_right", &"move_back", &"move_forward")
+	if wish.length() > 0.5 and not controls_locked:
+		walked_away.emit()
+	var flat := Vector3(velocity.x, 0.0, velocity.z).move_toward(Vector3.ZERO, DECEL * delta)
+	velocity.x = flat.x
+	velocity.z = flat.z
+	if not is_on_floor():
+		velocity.y -= GRAVITY * delta
+	move_and_slide()
 	_update_bob(delta)
 
 

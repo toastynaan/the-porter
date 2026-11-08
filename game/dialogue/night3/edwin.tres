@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_edwin"
+text = "# Edwin at dusk, on the west walk (night 3). Placeholder lines in the design doc's words.
+== start
+Edwin: (Placeholder: Edwin, the novice, your friend. He talks too fast.)
+-> topics
+
+== again
+Edwin: (Placeholder: Edwin again, glad of the company.)
+-> topics
+
+== topics
+* [if not n3_edwin_how] (Ask how he is.) -> how
+* [if bread_warned] [if not n3_edwin_bread] (Tell him what you were warned about the bread.) -> bread
+* [if not n3_edwin_tower] (Ask about the brother found in the bell tower.) -> tower
+
+== how [set n3_edwin_how]
+Edwin: (Placeholder: Edwin on how he is.)
+-> topics
+
+== bread [set n3_edwin_bread]
+Edwin: (Placeholder: Edwin's answer about the bread.)
+-> topics
+
+== tower [set n3_edwin_tower]
+Edwin: (Placeholder: Edwin on the death in the bell tower.)
+-> topics
+
+== leave
+Edwin: (Placeholder: he calls after you that he'll see you at supper.)
+"

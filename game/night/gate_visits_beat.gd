@@ -8,9 +8,11 @@ extends NightBeat
 ## Each visitor comes at his hour by the candle clock (`knock_hours`), walks
 ## up the lane with his lantern and knocks; the knock wakes a dozing porter
 ## (who hasn't seen him come: he is at the grille already). No dozing while
-## someone is at the gate. At the grille
-## the porter reads him by looking at him: each VisitorDetail he looks at
-## gives a line and goes into the ledger. Then he chooses:
+## someone is at the gate. At the grille they talk (Talk.begin: the porter's
+## view eases in on him), and the porter reads him by looking him over: each
+## VisitorDetail he looks at gives a line and goes into the ledger. He can
+## walk away from the grille; the visitor waits, knocking now and then, until
+## he comes back. Then he chooses:
 ## - Admit: lift the bar, open the gate; the visitor comes in; shut and bar
 ##   the gate behind him; he follows the porter to the guesthouse and takes
 ##   the bed the porter shows him; the porter writes him in the ledger.
@@ -27,6 +29,10 @@ const CHILD_KNOCK_DOSE := 50.0
 const READ_ANGLE := 9.0
 const READ_RANGE := 4.0
 const READ_TIME := 0.35
+## At the grille he can look the visitor over, boots to face (degrees either
+## side of the face, yaw and pitch).
+const GRILLE_CONE := Vector2(40.0, 50.0)
+const CHOICES := ["Admit him to the guesthouse", "Turn him away", "Send for the prior"]
 
 @export var visitors: Array[Visitor] = []
 ## When each visitor knocks, in hours (in the order of `visitors`).
@@ -84,12 +90,19 @@ func _receive(v: Visitor) -> void:
 		await npc.walk_to(porch.global_position)
 	npc.face(inside.global_position)
 	await _knock_until_answered(KNOCK, 1.4)
-	await say(v.speaker, v.greeting)
 	var noticed: Array[VisitorDetail] = []
-	_reading = true
-	_read.call(npc, v, noticed)
-	var pick := await Talk.choose(PackedStringArray(["Admit him to the guesthouse", "Turn him away", "Send for the prior"]))
-	_reading = false
+	var pick := -1
+	while pick < 0:
+		Talk.begin(npc, GRILLE_CONE)
+		await say(v.speaker, v.greeting)
+		_reading = true
+		_read.call(npc, v, noticed)
+		pick = await Talk.choose(PackedStringArray(CHOICES), v.speaker, v.greeting)
+		_reading = false
+		Talk.end()
+		if pick < 0:
+			# He walked away from the grille; the visitor waits for him.
+			await _knock_until_answered(KNOCK, 1.4)
 	match pick:
 		0:
 			GameState.set_flag(v.flag, &"admitted")
@@ -113,25 +126,26 @@ func _receive(v: Visitor) -> void:
 	await say("", "(You write: %s.)" % (v.ledger_name + (": " + ", ".join(words) if not words.is_empty() else "")))
 
 
-## Looks the visitor over while the porter decides: each detail he holds his
-## eyes on for a moment gives a line, once.
+## Looks the visitor over while the porter decides: the detail he holds his
+## eyes on for a moment (the part nearest the middle of his view) gives a
+## line, once. Talking to him through the grille, that starts with his face.
 func _read(npc: VisitorNPC, v: Visitor, noticed: Array[VisitorDetail]) -> void:
 	var p := player()
 	var dwell := {}
 	while _reading:
-		var dt := get_physics_process_delta_time()
+		var looked_at: VisitorDetail = null
+		var nearest := READ_ANGLE
 		for d in v.details:
-			if noticed.has(d):
-				continue
 			var at := npc.part_position(d.part)
-			if p.camera.global_position.distance_to(at) < READ_RANGE and p.camera.is_position_in_frustum(at) \
-					and ViewCheck.off_centre(p.camera, at) < READ_ANGLE:
-				dwell[d] = float(dwell.get(d, 0.0)) + dt
-				if dwell[d] >= READ_TIME:
-					noticed.append(d)
-					Talk.say("", d.line)
-			else:
-				dwell[d] = 0.0
+			var off := ViewCheck.off_centre(p.camera, at)
+			if p.camera.global_position.distance_to(at) < READ_RANGE and p.camera.is_position_in_frustum(at) and off < nearest:
+				nearest = off
+				looked_at = d
+		for d in v.details:
+			dwell[d] = float(dwell.get(d, 0.0)) + get_physics_process_delta_time() if d == looked_at else 0.0
+			if d == looked_at and not noticed.has(d) and dwell[d] >= READ_TIME:
+				noticed.append(d)
+				Talk.say("", d.line)
 		await get_tree().physics_frame
 
 

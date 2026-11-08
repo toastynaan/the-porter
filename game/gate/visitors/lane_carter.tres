@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Visitor" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="Visitor" format=3]
 
 [ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_carter.tscn" id="look"]
 
 [resource]
 script = ExtResource("1_visitor")
 id = &"lane_carter"
 speaker = "A carter"
-build = 0
-tunic = true
+look = ExtResource("look")
 lantern = false

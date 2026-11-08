@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+
+[node name="GrainSacks" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a heap of rye sacks, 1.2 x 0.9 m, 0.8 m high."
+
+[node name="GrainSacks" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.2, 0.8, 0.9)
+material = ExtResource("sacking")
+surface = "wood"

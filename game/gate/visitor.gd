@@ -11,11 +11,8 @@ extends Resource
 @export var speaker := ""
 ## The name he writes in the ledger; what he noticed follows it.
 @export var ledger_name := ""
-@export var build := BrotherFigure.Build.AVERAGE
-## A coloured cloak (alpha 0: none, a habit or a tunic).
-@export var cloak_color := Color(0, 0, 0, 0)
-## A brown work tunic rather than a black habit (lay folk).
-@export var tunic := false
+## How he looks: his character scene (game/characters/chr_<name>.tscn).
+@export var look: PackedScene
 ## Carries his own lantern (at night; not in daylight).
 @export var lantern := true
 ## Said at the grille when the porter comes to it.

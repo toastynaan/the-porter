@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="ChoirStalls" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a 4 m run of choir stalls (along X), 0.7 m deep, 1.1 m high. The monks face -Z."
+
+[node name="ChoirStalls" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(4, 1.1, 0.7)
+material = ExtResource("oak")
+surface = "wood"

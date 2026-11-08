@@ -12,10 +12,13 @@
 [ext_resource type="Script" path="res://game/world/kit/stairs.gd" id="10_6m7gb"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="11_uumq8"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="12_6485r"]
-[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="14_mvuvs"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="15_2ehwo"]
 [ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="15_f5c0b"]
 [ext_resource type="Script" path="res://game/world/squeeze/squeeze.gd" id="17_4riax"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bed.tscn" id="prop_bed"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bed_raised.tscn" id="prop_bed_raised"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bench.tscn" id="prop_bench"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_stool.tscn" id="prop_stool"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nylum"]
 size = Vector3(1.2, 1, 1.4)
@@ -377,152 +380,83 @@ transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 20, 
 
 [node name="Props" type="Node3D" parent="." unique_id=2060592599 groups=["nav_source"]]
 
-[node name="BedW5" type="StaticBody3D" parent="Props" unique_id=973991152]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -25)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW5" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -25)
 
-[node name="BedW8" type="StaticBody3D" parent="Props" unique_id=552994688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -22)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW8" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -22)
 
-[node name="BedE8" type="StaticBody3D" parent="Props" unique_id=1882853955]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -22)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE8" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -22)
 
-[node name="BedW11" type="StaticBody3D" parent="Props" unique_id=1871159831]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -19)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW11" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -19)
 
-[node name="BedE11" type="StaticBody3D" parent="Props" unique_id=1554159257]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -19)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE11" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -19)
 
-[node name="BedW14" type="StaticBody3D" parent="Props" unique_id=305420153]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -16)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW14" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -16)
 
-[node name="BedE14" type="StaticBody3D" parent="Props" unique_id=1599040405]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -16)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE14" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -16)
 
-[node name="BedW20" type="StaticBody3D" parent="Props" unique_id=961840020]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -10)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW20" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -10)
 
-[node name="BedE20" type="StaticBody3D" parent="Props" unique_id=879042762]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -10)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE20" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -10)
 
-[node name="BedE23" type="StaticBody3D" parent="Props" unique_id=487966392]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -7)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE23" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -7)
 
-[node name="BedW26" type="StaticBody3D" parent="Props" unique_id=1365528385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -4)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW26" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -4)
 
-[node name="BedE26" type="StaticBody3D" parent="Props" unique_id=1178397084]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -4)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE26" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -4)
 
-[node name="BedW29" type="StaticBody3D" parent="Props" unique_id=2047487216]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, -1)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW29" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -1)
 
-[node name="BedE29" type="StaticBody3D" parent="Props" unique_id=641984459]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, -1)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE29" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -1)
 
-[node name="BedW32" type="StaticBody3D" parent="Props" unique_id=1307576006]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, 2)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW32" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, 2)
 
-[node name="BedE32" type="StaticBody3D" parent="Props" unique_id=367241440]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, 2)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE32" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, 2)
 
-[node name="BedW35" type="StaticBody3D" parent="Props" unique_id=940085806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, 5)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW35" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, 5)
 
-[node name="BedE35" type="StaticBody3D" parent="Props" unique_id=1963271596]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.02, 5)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedE35" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, 5)
 
-[node name="BedW38" type="StaticBody3D" parent="Props" unique_id=1955677332]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.02, 8)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.45, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
+[node name="BedW38" parent="Props" instance=ExtResource("prop_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, 8)
 
-[node name="DormStool" type="StaticBody3D" parent="Props" unique_id=1596172692]
+[node name="BedW23" parent="Props" instance=ExtResource("prop_bed_raised")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13.4, 4.02, -7)
+
+[node name="BedE5" parent="Props" instance=ExtResource("prop_bed_raised")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, -25)
+
+[node name="BedE38" parent="Props" instance=ExtResource("prop_bed_raised")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, 8)
+
+[node name="DormStool" parent="Props" instance=ExtResource("prop_stool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 4.02, -1)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.35, 0.45, 0.35)
-material = ExtResource("8_r5oup")
-surface = "wood"
 
-[node name="ChapterBench" type="StaticBody3D" parent="Props" unique_id=1959405659]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3, 0.05, -20)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.5, 0.45, 7)
-material = ExtResource("8_r5oup")
-surface = "wood"
+[node name="ChapterBench0" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.3, 0.05, -22.5)
+
+[node name="ChapterBench1" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.3, 0.05, -20)
+
+[node name="ChapterBench2" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.3, 0.05, -17.5)
 
 [node name="Hearth" type="StaticBody3D" parent="Props" unique_id=1995837711]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0.05, -8)
@@ -535,111 +469,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 4.02, 18.6)
 script = ExtResource("6_4nq6i")
 size = Vector3(6, 0.45, 0.8)
 material = ExtResource("8_r5oup")
-surface = "wood"
-
-[node name="BedW23" type="StaticBody3D" parent="Props" unique_id=1628211067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4, 4.35, -7)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.12, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedW23Leg0" type="StaticBody3D" parent="Props" unique_id=1612330673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.46, 4.02, -7.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedW23Leg1" type="StaticBody3D" parent="Props" unique_id=1042975008]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.46, 4.02, -6.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedW23Leg2" type="StaticBody3D" parent="Props" unique_id=2122191026]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.339999, 4.02, -7.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedW23Leg3" type="StaticBody3D" parent="Props" unique_id=1878094737]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.339999, 4.02, -6.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE5" type="StaticBody3D" parent="Props" unique_id=737328490]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.35, -25)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.12, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE5Leg0" type="StaticBody3D" parent="Props" unique_id=133791575]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.66, 4.02, -25.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE5Leg1" type="StaticBody3D" parent="Props" unique_id=1432319527]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.66, 4.02, -24.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE5Leg2" type="StaticBody3D" parent="Props" unique_id=1319045146]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.54, 4.02, -25.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE5Leg3" type="StaticBody3D" parent="Props" unique_id=2053172330]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.54, 4.02, -24.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE38" type="StaticBody3D" parent="Props" unique_id=1688653931]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 4.35, 8)
-script = ExtResource("6_4nq6i")
-size = Vector3(2, 0.12, 0.9)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE38Leg0" type="StaticBody3D" parent="Props" unique_id=1839245659]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.66, 4.02, 7.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE38Leg1" type="StaticBody3D" parent="Props" unique_id=943420855]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.66, 4.02, 8.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE38Leg2" type="StaticBody3D" parent="Props" unique_id=1802538162]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.54, 4.02, 7.61)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
-surface = "wood"
-
-[node name="BedE38Leg3" type="StaticBody3D" parent="Props" unique_id=1031393609]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.54, 4.02, 8.39)
-script = ExtResource("6_4nq6i")
-size = Vector3(0.08, 0.32999998, 0.08)
-material = ExtResource("14_mvuvs")
 surface = "wood"
 
 [node name="Lights" type="Node3D" parent="." unique_id=308982692]

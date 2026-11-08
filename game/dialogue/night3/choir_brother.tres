@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_choir_brother"
+text = "# The choir brothers at dusk (night 3); all three share this. Placeholder lines in the design doc's words.
+== start
+A choir brother: (Placeholder: a choir brother, a face you know from Matins.)
+* (Ask about the brother who died.) -> died
+* [if bread_warned] (Ask about the bread.) -> bread
+* (Wish him good night.) -> end
+
+== died
+A choir brother: (Placeholder: his answer about the death in the bell tower.)
+-> end
+
+== bread
+A choir brother: (Placeholder: his answer about the bread.)
+-> end
+"

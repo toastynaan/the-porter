@@ -8,11 +8,13 @@
 [ext_resource type="Material" path="res://game/world/materials/flags.tres" id="6_k0hgm"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="7_jkrbh"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="8_4cbiu"]
-[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="10_ft240"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="11_a3ic0"]
-[ext_resource type="Material" path="res://game/world/materials/bone.tres" id="12_e8hul"]
 [ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="13_aoyhy"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="13_kocct"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bench.tscn" id="prop_bench"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_oven.tscn" id="prop_oven"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_oven_bones.tscn" id="prop_oven_bones"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_table.tscn" id="prop_table"]
 
 [node name="SouthRange" type="Node3D" unique_id=1658669278]
 
@@ -157,129 +159,164 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14,
 
 [node name="Props" type="Node3D" parent="." unique_id=1028988917 groups=["nav_source"]]
 
-[node name="Table-15" type="StaticBody3D" parent="Props" unique_id=1633858900]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -1.5)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.75, 0.9)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN0" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.05, -1.5)
 
-[node name="Table15" type="StaticBody3D" parent="Props" unique_id=787511228]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.5)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.75, 0.9)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN1" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.05, -1.5)
 
-[node name="Bench-235" type="StaticBody3D" parent="Props" unique_id=80413871]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2.35)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.45, 0.35)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN2" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, -1.5)
 
-[node name="Bench-65" type="StaticBody3D" parent="Props" unique_id=1834100410]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.65)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.45, 0.35)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN3" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.05, -1.5)
 
-[node name="Bench65" type="StaticBody3D" parent="Props" unique_id=1917314189]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.65)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.45, 0.35)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN4" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.05, -1.5)
 
-[node name="Bench235" type="StaticBody3D" parent="Props" unique_id=1688518188]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 2.35)
-script = ExtResource("5_iyvy8")
-size = Vector3(16, 0.45, 0.35)
-material = ExtResource("10_ft240")
-surface = "wood"
+[node name="TableN5" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.05, -1.5)
+
+[node name="TableN6" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, -1.5)
+
+[node name="TableN7" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.05, -1.5)
+
+[node name="TableS0" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.05, 1.5)
+
+[node name="TableS1" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.05, 1.5)
+
+[node name="TableS2" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, 1.5)
+
+[node name="TableS3" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.05, 1.5)
+
+[node name="TableS4" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.05, 1.5)
+
+[node name="TableS5" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.05, 1.5)
+
+[node name="TableS6" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, 1.5)
+
+[node name="TableS7" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.05, 1.5)
+
+[node name="BenchNN0" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7, 0.05, -2.35)
+
+[node name="BenchNN1" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5, 0.05, -2.35)
+
+[node name="BenchNN2" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 0.05, -2.35)
+
+[node name="BenchNN3" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1, 0.05, -2.35)
+
+[node name="BenchNN4" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1, 0.05, -2.35)
+
+[node name="BenchNN5" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3, 0.05, -2.35)
+
+[node name="BenchNN6" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 0.05, -2.35)
+
+[node name="BenchNN7" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7, 0.05, -2.35)
+
+[node name="BenchNS0" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.05, -0.65)
+
+[node name="BenchNS1" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.05, -0.65)
+
+[node name="BenchNS2" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, -0.65)
+
+[node name="BenchNS3" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.05, -0.65)
+
+[node name="BenchNS4" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.05, -0.65)
+
+[node name="BenchNS5" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.05, -0.65)
+
+[node name="BenchNS6" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, -0.65)
+
+[node name="BenchNS7" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.05, -0.65)
+
+[node name="BenchSN0" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7, 0.05, 0.65)
+
+[node name="BenchSN1" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5, 0.05, 0.65)
+
+[node name="BenchSN2" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 0.05, 0.65)
+
+[node name="BenchSN3" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1, 0.05, 0.65)
+
+[node name="BenchSN4" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1, 0.05, 0.65)
+
+[node name="BenchSN5" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3, 0.05, 0.65)
+
+[node name="BenchSN6" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 0.05, 0.65)
+
+[node name="BenchSN7" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7, 0.05, 0.65)
+
+[node name="BenchSS0" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.05, 2.35)
+
+[node name="BenchSS1" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.05, 2.35)
+
+[node name="BenchSS2" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, 2.35)
+
+[node name="BenchSS3" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.05, 2.35)
+
+[node name="BenchSS4" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.05, 2.35)
+
+[node name="BenchSS5" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.05, 2.35)
+
+[node name="BenchSS6" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, 2.35)
+
+[node name="BenchSS7" parent="Props" instance=ExtResource("prop_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.05, 2.35)
+
+[node name="KitchenTable" parent="Props" instance=ExtResource("prop_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, 1.6)
+
+[node name="Oven" parent="Props" instance=ExtResource("prop_oven")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -18.45, 0.05, 8)
+
+[node name="OvenBones" parent="Props" instance=ExtResource("prop_oven_bones")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -18.45, 0.05, 8)
 
 [node name="KitchenHearth" type="StaticBody3D" parent="Props" unique_id=1267299994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.05, -2.9)
 script = ExtResource("5_iyvy8")
 size = Vector3(2.4, 1, 1.2)
 material = ExtResource("11_a3ic0")
-
-[node name="KitchenTable" type="StaticBody3D" parent="Props" unique_id=307615000]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, 1.6)
-script = ExtResource("5_iyvy8")
-size = Vector3(1.8, 0.8, 0.9)
-material = ExtResource("10_ft240")
-surface = "wood"
-
-[node name="OvenBase" type="StaticBody3D" parent="Props" unique_id=998189891]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.45, 0.05, 8)
-script = ExtResource("5_iyvy8")
-size = Vector3(2.3, 0.6, 2.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenBack" type="StaticBody3D" parent="Props" unique_id=1743436981]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.45, 0.65, 8)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 1.35, 2.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenSideN" type="StaticBody3D" parent="Props" unique_id=1342746497]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 0.65, 7)
-script = ExtResource("5_iyvy8")
-size = Vector3(2, 1.35, 0.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenSideS" type="StaticBody3D" parent="Props" unique_id=1114719200]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 0.65, 9)
-script = ExtResource("5_iyvy8")
-size = Vector3(2, 1.35, 0.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenFrontN" type="StaticBody3D" parent="Props" unique_id=1133763256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 0.65, 7.4)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 1.35, 0.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenFrontS" type="StaticBody3D" parent="Props" unique_id=2129555828]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 0.65, 8.6)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 1.35, 0.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenFrontTop" type="StaticBody3D" parent="Props" unique_id=823674432]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 1.35, 8)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 0.65, 0.8)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenTop" type="StaticBody3D" parent="Props" unique_id=382333213]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.45, 2, 8)
-script = ExtResource("5_iyvy8")
-size = Vector3(2.3, 0.4, 2.4)
-material = ExtResource("11_a3ic0")
-
-[node name="OvenBone0" type="StaticBody3D" parent="Props" unique_id=326183137]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.9, 0.65, 7.6)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 0.06, 0.08)
-material = ExtResource("12_e8hul")
-solid = false
-
-[node name="OvenBone1" type="StaticBody3D" parent="Props" unique_id=911408825]
-transform = Transform3D(0.8253356, 0, 0.5646425, 0, 1, 0, -0.5646425, 0, 0.8253356, -18.55, 0.65, 7.9)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 0.06, 0.08)
-material = ExtResource("12_e8hul")
-solid = false
-
-[node name="OvenBone2" type="StaticBody3D" parent="Props" unique_id=345697746]
-transform = Transform3D(0.3623577, 0, 0.9320391, 0, 1, 0, -0.9320391, 0, 0.3623577, -18.2, 0.65, 8.2)
-script = ExtResource("5_iyvy8")
-size = Vector3(0.3, 0.06, 0.08)
-material = ExtResource("12_e8hul")
-solid = false
 
 [node name="Lights" type="Node3D" parent="." unique_id=649601436]
 

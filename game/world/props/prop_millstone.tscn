@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+
+[node name="Millstone" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a millstone, 1.4 m across, 0.5 m high."
+
+[node name="Millstone" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.4, 0.5, 1.4)
+shape = 2
+material = ExtResource("stone")

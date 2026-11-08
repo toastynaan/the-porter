@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_hugh"
+text = "# Prior Hugh at dusk, on the north walk (night 3). Placeholder lines in the design doc's words.
+== start
+Prior Hugh: (Placeholder: the prior, harsh, watching you. He asks where you were last night.)
+* (Tell him what you saw.) -> told
+* (Say you were at the gate.) -> gate
+* (Ask what he wants with you.) -> wants
+
+== again
+Prior Hugh: (Placeholder: the prior writes on his wax tablet and does not look up.)
+-> end
+
+# Telling the prior anything: Suspicion +10, because Ranulf overhears (design doc).
+== told [set n3_told_prior] [suspicion 10]
+Prior Hugh: (Placeholder: he writes it on his wax tablet.)
+-> end
+
+== gate
+Prior Hugh: (Placeholder: the prior's answer.)
+-> end
+
+== wants
+Prior Hugh: (Placeholder: the prior's answer.)
+-> end
+
+== leave
+Prior Hugh: (Placeholder: he watches you go.)
+"

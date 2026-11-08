@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_lane_woman"
+text = "# A woman in the lane at dusk (night 3). Placeholder lines.
+== start
+A woman: (Placeholder: a woman with a basket, hurrying home before dark.)
+* (Ask where she is going.) -> home
+* (Ask what the lane says about the abbey.) -> abbey
+* (Wish her good night.) -> end
+
+== home
+A woman: (Placeholder: home, before the lanterns are lit.)
+-> end
+
+== abbey
+A woman: (Placeholder: what the lane says about the abbey.)
+-> end
+"

@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://game/world/ambience/animals.gd" id="18_n65ch"]
 [ext_resource type="Script" path="res://game/world/ambience/wind.gd" id="18_rgnk3"]
 [ext_resource type="PackedScene" path="res://game/world/abbey/areas/street.tscn" id="20_street"]
+[ext_resource type="PackedScene" path="res://game/world/abbey/areas/gardens.tscn" id="21_gardens"]
 
 [node name="Abbey" type="Node3D" unique_id=1216566674]
 
@@ -495,6 +496,8 @@ surface = "grass"
 [node name="SouthRange" parent="Navigation" unique_id=1658669278 instance=ExtResource("14_xqujl")]
 
 [node name="GraveyardInfirmary" parent="Navigation" unique_id=1027817204 instance=ExtResource("15_sf11h")]
+
+[node name="Gardens" parent="Navigation" instance=ExtResource("21_gardens")]
 
 [node name="Player" parent="." unique_id=1066156173 instance=ExtResource("16_jgjiy")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -34, 0.05, 0)

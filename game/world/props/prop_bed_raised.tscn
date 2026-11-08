@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="wool"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="BedRaised" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a bed on legs with room to hide under it, 0.9 x 2 m, 0.45 m high. Its head is at -Z."
+
+[node name="Mattress" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33, 0)
+script = ExtResource("block")
+size = Vector3(0.9, 0.12, 2)
+material = ExtResource("wool")
+surface = "wood"
+
+[node name="Leg0" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39, 0, -0.94)
+script = ExtResource("block")
+size = Vector3(0.08, 0.33, 0.08)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Leg1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39, 0, -0.94)
+script = ExtResource("block")
+size = Vector3(0.08, 0.33, 0.08)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Leg2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39, 0, 0.94)
+script = ExtResource("block")
+size = Vector3(0.08, 0.33, 0.08)
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="Leg3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39, 0, 0.94)
+script = ExtResource("block")
+size = Vector3(0.08, 0.33, 0.08)
+material = ExtResource("oak")
+surface = "wood"

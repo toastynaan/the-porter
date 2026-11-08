@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_ranulf"
+text = "# Ranulf at dusk, in the church (night 3). Placeholder lines in the design doc's words.
+== start
+Ranulf: (Placeholder: Ranulf, the sacrist, at his candles. Narrow, pale, unblinking.)
+-> topics
+
+== again
+Ranulf: (Placeholder: Ranulf, still at his candles.)
+-> topics
+
+== topics
+* [if not n3_ranulf_incense] (Ask about the incense.) -> incense
+* [if not n3_ranulf_relic] (Ask about the relic.) -> relic
+* [if not n3_ranulf_candles] (Ask about the candles.) -> candles
+
+== incense [set n3_ranulf_incense]
+Ranulf: (Placeholder: the abbot has ordered more incense, to drive the demon out.)
+-> topics
+
+== relic [set n3_ranulf_relic]
+Ranulf: (Placeholder: the saint's finger bone, which draws the pilgrims.)
+-> topics
+
+== candles [set n3_ranulf_candles]
+Ranulf: (Placeholder: Ranulf on the candles he keeps.)
+-> topics
+"

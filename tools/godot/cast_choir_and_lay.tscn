@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/characters/chr_cole.tscn" id="cole"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_dunstan.tscn" id="dunstan"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_a.tscn" id="choir_brother_a"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_b.tscn" id="choir_brother_b"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_c.tscn" id="choir_brother_c"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_dead.tscn" id="choir_brother_dead"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_stranger.tscn" id="stranger"]
+
+[node name="cast_choir_and_lay" type="Node3D"]
+editor_description = "Review lineup (tools/review.sh): the characters side by side, turned to face the lookdev camera."
+
+[node name="cole" parent="." instance=ExtResource("cole")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.4, 0, 0)
+
+[node name="dunstan" parent="." instance=ExtResource("dunstan")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.6, 0, 0)
+
+[node name="choir_brother_a" parent="." instance=ExtResource("choir_brother_a")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.8, 0, 0)
+
+[node name="choir_brother_b" parent="." instance=ExtResource("choir_brother_b")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="choir_brother_c" parent="." instance=ExtResource("choir_brother_c")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8, 0, 0)
+
+[node name="choir_brother_dead" parent="." instance=ExtResource("choir_brother_dead")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.6, 0, 0)
+
+[node name="stranger" parent="." instance=ExtResource("stranger")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.4, 0, 0)

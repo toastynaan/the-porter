@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="Material" path="res://game/world/materials/foliage.tres" id="foliage"]
+
+[node name="AppleTree" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a bare apple tree in late autumn, about 4 m high. Only the trunk is solid."
+
+[node name="Trunk" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.3, 1.8, 0.3)
+shape = 2
+material = ExtResource("oak")
+surface = "wood"
+
+[node name="BranchN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.6, -0.35)
+script = ExtResource("block")
+size = Vector3(0.12, 1.6, 0.12)
+shape = 2
+material = ExtResource("oak")
+solid = false
+
+[node name="BranchS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 1.6, 0.35)
+script = ExtResource("block")
+size = Vector3(0.12, 1.5, 0.12)
+shape = 2
+material = ExtResource("oak")
+solid = false
+
+[node name="BranchE" type="StaticBody3D" parent="."]
+transform = Transform3D(0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0.35, 1.7, 0)
+script = ExtResource("block")
+size = Vector3(0.1, 1.4, 0.1)
+shape = 2
+material = ExtResource("oak")
+solid = false
+
+[node name="BranchW" type="StaticBody3D" parent="."]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -0.35, 1.7, 0)
+script = ExtResource("block")
+size = Vector3(0.1, 1.5, 0.1)
+shape = 2
+material = ExtResource("oak")
+solid = false
+
+[node name="Crown" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+script = ExtResource("block")
+size = Vector3(2.8, 1.4, 2.8)
+shape = 2
+material = ExtResource("foliage")
+solid = false

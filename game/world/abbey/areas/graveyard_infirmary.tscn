@@ -11,13 +11,19 @@
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="9_71cqu"]
 [ext_resource type="Script" path="res://game/world/kit/stairs.gd" id="10_t7s2c"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="11_7ga27"]
-[ext_resource type="Material" path="res://game/world/materials/bone.tres" id="13_71sf5"]
-[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="14_kf56h"]
-[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="15_216ls"]
 [ext_resource type="Material" path="res://game/world/materials/water.tres" id="16_u6l2u"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="17_5bbay"]
 [ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="17_sojsl"]
 [ext_resource type="Script" path="res://game/world/squeeze/squeeze.gd" id="19_mlivx"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bed.tscn" id="prop_bed"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bed_raised.tscn" id="prop_bed_raised"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_charnel_bones.tscn" id="prop_charnel_bones"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_grave.tscn" id="prop_grave"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_mill_wheel.tscn" id="prop_mill_wheel"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_millstone.tscn" id="prop_millstone"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_mortar.tscn" id="prop_mortar"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_table.tscn" id="prop_table"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_yew.tscn" id="prop_tree_yew"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihtni"]
 size = Vector3(6, 1.2, 3)
@@ -262,53 +268,128 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 8)
 
 [node name="Props" type="Node3D" parent="." unique_id=1707662913 groups=["nav_source"]]
 
-[node name="SkullRow" type="StaticBody3D" parent="Props" unique_id=1294793281]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 1.05, -20)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.8, 0.4, 6)
-material = ExtResource("13_71sf5")
+[node name="CharnelBones" parent="Props" instance=ExtResource("prop_charnel_bones")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 39, 0.05, -20)
 
-[node name="SickBed0" type="StaticBody3D" parent="Props" unique_id=1309988897]
+[node name="SickBed0" parent="Props" instance=ExtResource("prop_bed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0.05, 2.4)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.9, 0.5, 2)
-material = ExtResource("14_kf56h")
-surface = "wood"
 
-[node name="SickBed1" type="StaticBody3D" parent="Props" unique_id=317374753]
+[node name="SickBed1" parent="Props" instance=ExtResource("prop_bed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.05, 2.4)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.9, 0.5, 2)
-material = ExtResource("14_kf56h")
-surface = "wood"
 
-[node name="SickBed2" type="StaticBody3D" parent="Props" unique_id=558938442]
+[node name="SickBed2" parent="Props" instance=ExtResource("prop_bed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0.05, 2.4)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.9, 0.5, 2)
-material = ExtResource("14_kf56h")
-surface = "wood"
 
-[node name="HerbTable" type="StaticBody3D" parent="Props" unique_id=1633667344]
+[node name="SickBed3" parent="Props" instance=ExtResource("prop_bed_raised")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.05, 2.4)
+
+[node name="HerbTable" parent="Props" instance=ExtResource("prop_table")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.4, 0.05, -2.6)
-script = ExtResource("5_kwyhn")
-size = Vector3(1.6, 0.8, 0.8)
-material = ExtResource("15_216ls")
-surface = "wood"
 
-[node name="Mortar" type="StaticBody3D" parent="Props" unique_id=479378325]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0.85, -2.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.2, 0.15, 0.2)
-shape = 2
-material = ExtResource("8_vj80h")
+[node name="Mortar" parent="Props" instance=ExtResource("prop_mortar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0.8, -2.5)
 
-[node name="Millstone" type="StaticBody3D" parent="Props" unique_id=1406938254]
+[node name="Millstone" parent="Props" instance=ExtResource("prop_millstone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.05, 12)
-script = ExtResource("5_kwyhn")
-size = Vector3(1.4, 0.5, 1.4)
-shape = 2
-material = ExtResource("8_vj80h")
+
+[node name="MillWheel" parent="Props" instance=ExtResource("prop_mill_wheel")]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 28, 1, 16.4)
+
+[node name="Grave0" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -38.5)
+
+[node name="Grave1" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -36.5)
+
+[node name="Grave2" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -34.5)
+
+[node name="Grave3" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -32.5)
+
+[node name="Grave4" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -30.5)
+
+[node name="Grave5" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -38.5)
+
+[node name="Grave6" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -36.5)
+
+[node name="Grave7" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -34.5)
+
+[node name="Grave8" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -32.5)
+
+[node name="Grave9" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -30.5)
+
+[node name="Grave10" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -38.5)
+
+[node name="Grave11" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -36.5)
+
+[node name="Grave12" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -34.5)
+
+[node name="Grave13" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -32.5)
+
+[node name="Grave14" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -30.5)
+
+[node name="Grave15" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -25)
+
+[node name="Grave16" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -21)
+
+[node name="Grave17" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -17)
+
+[node name="Grave18" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -13)
+
+[node name="Grave19" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -9)
+
+[node name="Grave20" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -25)
+
+[node name="Grave21" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -21)
+
+[node name="Grave22" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -17)
+
+[node name="Grave23" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -13)
+
+[node name="Grave24" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -9)
+
+[node name="Grave25" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -25)
+
+[node name="Grave26" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -21)
+
+[node name="Grave27" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -17)
+
+[node name="Grave28" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -13)
+
+[node name="Grave29" parent="Props" instance=ExtResource("prop_grave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -9)
+
+[node name="Yew0" parent="Props" instance=ExtResource("prop_tree_yew")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5, 0, -12.5)
+
+[node name="Yew1" parent="Props" instance=ExtResource("prop_tree_yew")]
+transform = Transform3D(0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, 0.819152, 32.5, 0, -27)
 
 [node name="RaceWater" type="StaticBody3D" parent="Props" unique_id=1479138904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.06, 18)
@@ -318,14 +399,6 @@ material = ExtResource("16_u6l2u")
 surface = "mud"
 solid = false
 
-[node name="MillWheel" type="StaticBody3D" parent="Props" unique_id=1918831629]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 28, 1, 16.4)
-script = ExtResource("5_kwyhn")
-size = Vector3(3.2, 3.2, 3.2)
-shape = 2
-material = ExtResource("15_216ls")
-surface = "wood"
-
 [node name="PondWater" type="StaticBody3D" parent="Props" unique_id=1829388658]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.17, 30)
 script = ExtResource("5_kwyhn")
@@ -333,269 +406,6 @@ size = Vector3(11.2, 0.02, 11.2)
 material = ExtResource("16_u6l2u")
 surface = "mud"
 solid = false
-
-[node name="Grave0" type="StaticBody3D" parent="Props" unique_id=1083643083]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -38.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave1" type="StaticBody3D" parent="Props" unique_id=314702585]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -36.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave2" type="StaticBody3D" parent="Props" unique_id=194131946]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -34.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave3" type="StaticBody3D" parent="Props" unique_id=735789025]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -32.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave4" type="StaticBody3D" parent="Props" unique_id=1579720650]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -30.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave5" type="StaticBody3D" parent="Props" unique_id=1692901235]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -38.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave6" type="StaticBody3D" parent="Props" unique_id=166014352]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -36.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave7" type="StaticBody3D" parent="Props" unique_id=412901657]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -34.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave8" type="StaticBody3D" parent="Props" unique_id=927094564]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -32.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave9" type="StaticBody3D" parent="Props" unique_id=2107243637]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, -30.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave10" type="StaticBody3D" parent="Props" unique_id=28674961]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -38.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave11" type="StaticBody3D" parent="Props" unique_id=528724560]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -36.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave12" type="StaticBody3D" parent="Props" unique_id=492768568]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -34.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave13" type="StaticBody3D" parent="Props" unique_id=549583011]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -32.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave14" type="StaticBody3D" parent="Props" unique_id=2144867469]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -30.5)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave15" type="StaticBody3D" parent="Props" unique_id=2003737099]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -25)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave16" type="StaticBody3D" parent="Props" unique_id=277175570]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -21)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave17" type="StaticBody3D" parent="Props" unique_id=1466425904]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -17)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave18" type="StaticBody3D" parent="Props" unique_id=758735022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -13)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave19" type="StaticBody3D" parent="Props" unique_id=1979966381]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -9)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave20" type="StaticBody3D" parent="Props" unique_id=171010871]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -25)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave21" type="StaticBody3D" parent="Props" unique_id=36186622]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -21)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave22" type="StaticBody3D" parent="Props" unique_id=1838681022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -17)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave23" type="StaticBody3D" parent="Props" unique_id=1740970165]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -13)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave24" type="StaticBody3D" parent="Props" unique_id=123874831]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -9)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave25" type="StaticBody3D" parent="Props" unique_id=1211814335]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -25)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave26" type="StaticBody3D" parent="Props" unique_id=920817456]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -21)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave27" type="StaticBody3D" parent="Props" unique_id=698686117]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -17)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave28" type="StaticBody3D" parent="Props" unique_id=1081565894]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -13)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="Grave29" type="StaticBody3D" parent="Props" unique_id=92852711]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -9)
-script = ExtResource("5_kwyhn")
-size = Vector3(2, 0.3, 0.9)
-material = ExtResource("7_fjpsq")
-surface = "mud"
-
-[node name="BonePileN" type="StaticBody3D" parent="Props" unique_id=913032682]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0.05, -18.7)
-script = ExtResource("5_kwyhn")
-size = Vector3(1.2, 1, 3.4)
-material = ExtResource("13_71sf5")
-
-[node name="BonePileS" type="StaticBody3D" parent="Props" unique_id=644472321]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0.05, -22.3)
-script = ExtResource("5_kwyhn")
-size = Vector3(1.2, 1, 1.4)
-material = ExtResource("13_71sf5")
-
-[node name="BoneCover" type="StaticBody3D" parent="Props" unique_id=1903709085]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0.6, -21)
-script = ExtResource("5_kwyhn")
-size = Vector3(1.2, 0.45, 1.2)
-material = ExtResource("13_71sf5")
-
-[node name="SickBed3" type="StaticBody3D" parent="Props" unique_id=835207499]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.43, 2.4)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.9, 0.12, 2)
-material = ExtResource("14_kf56h")
-surface = "wood"
-
-[node name="SickBed3Leg0" type="StaticBody3D" parent="Props" unique_id=1916880676]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.61, 0.05, 1.46)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.08, 0.38, 0.08)
-material = ExtResource("14_kf56h")
-surface = "wood"
-
-[node name="SickBed3Leg1" type="StaticBody3D" parent="Props" unique_id=432706788]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.61, 0.05, 3.3400002)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.08, 0.38, 0.08)
-material = ExtResource("14_kf56h")
-surface = "wood"
-
-[node name="SickBed3Leg2" type="StaticBody3D" parent="Props" unique_id=1518149695]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.39, 0.05, 1.46)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.08, 0.38, 0.08)
-material = ExtResource("14_kf56h")
-surface = "wood"
-
-[node name="SickBed3Leg3" type="StaticBody3D" parent="Props" unique_id=582164496]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.39, 0.05, 3.3400002)
-script = ExtResource("5_kwyhn")
-size = Vector3(0.08, 0.38, 0.08)
-material = ExtResource("14_kf56h")
-surface = "wood"
 
 [node name="Lights" type="Node3D" parent="." unique_id=1106803541]
 

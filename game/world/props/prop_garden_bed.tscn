@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/mud.tres" id="mud"]
+
+[node name="GardenBed" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: a dug vegetable bed, 1.2 x 4 m (along Z), edged with planks."
+
+[node name="GardenBed" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.2, 0.12, 4)
+material = ExtResource("mud")
+solid = false

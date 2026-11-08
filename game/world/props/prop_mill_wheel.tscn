@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="MillWheel" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the mill's water wheel, 3.2 m across. Turned in the scene so its axle runs across the race."
+
+[node name="MillWheel" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(3.2, 3.2, 3.2)
+shape = 2
+material = ExtResource("oak")
+surface = "wood"

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+
+[node name="Roger" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Roger, the town bailiff. (Not in the character table yet: a lay townsman in a dark tunic.) Feet at the origin, facing -Z. Face is where the conversation camera looks."
+
+[node name="Figure" type="Node3D" parent="."]
+script = ExtResource("figure_gd")
+build = 4
+tunic = true
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.632, -0.12)

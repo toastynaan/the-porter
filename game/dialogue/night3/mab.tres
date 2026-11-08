@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_mab"
+text = "# Mab at the gate (night 3), from dusk until the knocks. Placeholder lines in the design doc's words.
+== start
+Mab: (Placeholder: Mab, a leper, begs at the gate every night.)
+-> topics
+
+== again
+Mab: (Placeholder: Mab, still at the gate, shakes her clapper.)
+-> topics
+
+== topics
+* [if not n3_mab_saw] (Ask what she has seen.) -> saw
+* [if bread_warned] [if not n3_mab_bread] (Ask if she eats the abbey's bread.) -> bread
+* [if not n3_mab_alms] (Give her alms.) -> alms
+
+== saw [set n3_mab_saw]
+Mab: (Placeholder: she sees everyone who comes and goes, and nobody asks her.)
+-> topics
+
+== bread [set n3_mab_bread]
+Mab: (Placeholder: she never eats the abbey's bread.)
+-> topics
+
+== alms [set n3_mab_alms]
+Mab: (Placeholder: she thanks you.)
+-> topics
+"

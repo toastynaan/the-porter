@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Visitor" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="Visitor" format=3]
 
 [ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_walter.tscn" id="look"]
 [ext_resource type="Script" path="res://game/gate/visitor_detail.gd" id="2_detail"]
 
 [sub_resource type="Resource" id="Detail_face"]
@@ -31,9 +32,8 @@ ledger = "his bag smells of the incense"
 script = ExtResource("1_visitor")
 id = &"walter"
 speaker = "Walter"
+look = ExtResource("look")
 ledger_name = "Walter the pardoner"
-build = 2
-cloak_color = Color(0.54, 0.23, 0.2, 1)
 greeting = "(Walter the pardoner, again.)"
 details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_box"), SubResource("Detail_bag")])
 flag = &"n3_walter"

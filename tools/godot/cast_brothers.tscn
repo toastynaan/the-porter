@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/characters/chr_thomas.tscn" id="thomas"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_osric.tscn" id="osric"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_ranulf.tscn" id="ranulf"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_godric.tscn" id="godric"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_hugh.tscn" id="hugh"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_edwin.tscn" id="edwin"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_anselm.tscn" id="anselm"]
+
+[node name="cast_brothers" type="Node3D"]
+editor_description = "Review lineup (tools/review.sh): the characters side by side, turned to face the lookdev camera."
+
+[node name="thomas" parent="." instance=ExtResource("thomas")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.4, 0, 0)
+
+[node name="osric" parent="." instance=ExtResource("osric")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.6, 0, 0)
+
+[node name="ranulf" parent="." instance=ExtResource("ranulf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.8, 0, 0)
+
+[node name="godric" parent="." instance=ExtResource("godric")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="hugh" parent="." instance=ExtResource("hugh")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8, 0, 0)
+
+[node name="edwin" parent="." instance=ExtResource("edwin")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.6, 0, 0)
+
+[node name="anselm" parent="." instance=ExtResource("anselm")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.4, 0, 0)

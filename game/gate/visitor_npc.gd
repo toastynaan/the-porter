@@ -29,7 +29,7 @@ var _target := Vector3.INF
 var _following: Node3D
 var _door_wait := 0.0
 
-@onready var figure: BrotherFigure = $Figure
+@onready var look: CharacterLook = $Look
 @onready var agent: NavigationAgent3D = $Agent
 @onready var parts: Node3D = $Parts
 
@@ -44,9 +44,7 @@ func _ready() -> void:
 func _dress() -> void:
 	if visitor == null:
 		return
-	figure.build = visitor.build
-	figure.cloth_color = visitor.cloak_color
-	figure.tunic = visitor.tunic
+	look.look = visitor.look
 	($Parts/box as Node3D).visible = visitor.has_part(&"box")
 	($Parts/bag as Node3D).visible = visitor.has_part(&"bag")
 	($Lantern as Node3D).visible = visitor.lantern
@@ -84,8 +82,8 @@ func lie_down(bed: Transform3D) -> void:
 	stop()
 	lying = true
 	global_transform = bed
-	figure.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
-	figure.position = Vector3(0.0, 0.15, 0.9)
+	look.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
+	look.position = Vector3(0.0, 0.15, 0.9)
 	$Shape.disabled = true
 
 
@@ -117,6 +115,11 @@ func _door_ahead(dir: Vector3) -> bool:
 func part_position(part: StringName) -> Vector3:
 	var marker := parts.get_node_or_null(NodePath(String(part))) as Node3D
 	return marker.global_position if marker else global_position + Vector3.UP * 1.2
+
+
+## Where his face is, for the conversation camera.
+func face_position() -> Vector3:
+	return look.face_position()
 
 
 func face(point: Vector3) -> void:

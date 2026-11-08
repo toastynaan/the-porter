@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_godric"
+text = "# Abbot Godric at dusk, in the chapter house (night 3). Placeholder lines in the design doc's words.
+== start
+Abbot Godric: (Placeholder: the abbot, frail and kind, greets you like a father.)
+-> topics
+
+== again
+Abbot Godric: (Placeholder: the abbot coughs from the incense.)
+-> topics
+
+== topics
+* [if not n3_godric_demon] (Ask about the demon.) -> demon
+* [if not n3_godric_porter] (Ask how you are doing as porter.) -> porter
+* [if not n3_godric_blessing] (Ask for his blessing.) -> blessing
+
+== demon [set n3_godric_demon]
+Abbot Godric: (Placeholder: he believes the demon has come, and has ordered more incense to drive it out.)
+-> topics
+
+== porter [set n3_godric_porter]
+Abbot Godric: (Placeholder: the abbot on the new porter.)
+-> topics
+
+== blessing [set n3_godric_blessing]
+Abbot Godric: (Placeholder: he blesses you.)
+-> topics
+"

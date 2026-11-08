@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_thomas"
+text = "# Thomas at dusk, in the infirmary (night 3). Placeholder lines in the design doc's words.
+== start
+Thomas: (Placeholder: Thomas, the infirmarian, greets you. Gentle, a healer, your first ally.)
+-> topics
+
+== again
+Thomas: (Placeholder: Thomas looks up from grinding his herbs.)
+-> topics
+
+== topics
+* [if not n3_thomas_headaches] (Ask about your headaches.) -> headaches
+* [if not n3_thomas_anselm] (Ask after Anselm.) -> anselm
+* [if not n3_thomas_tower] (Ask about the brother found in the bell tower.) -> tower
+
+== headaches [set n3_thomas_headaches]
+Thomas: (Placeholder: he will bring you a remedy for your headaches at supper.)
+-> topics
+
+== anselm [set n3_thomas_anselm]
+Thomas: (Placeholder: the old porter is blind now, and kept here in the infirmary.)
+-> topics
+
+== tower [set n3_thomas_tower]
+Thomas: (Placeholder: Thomas's account of the death in the bell tower.)
+-> topics
+
+== leave
+Thomas: (Placeholder: he tells you to rest before your night.)
+"

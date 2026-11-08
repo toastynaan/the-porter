@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+
+[node name="Mortar" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: Thomas's stone mortar, 0.2 m across."
+
+[node name="Mortar" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.2, 0.15, 0.2)
+shape = 2
+material = ExtResource("stone")

@@ -10,11 +10,15 @@
 [ext_resource type="Script" path="res://game/world/kit/stairs.gd" id="8_vhbyn"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="9_2mhh7"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="10_m6lq6"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="12_61jq4"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="13_wvabc"]
-[ext_resource type="Material" path="res://game/world/materials/wool.tres" id="14_ouw7n"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="15_ifd7n"]
 [ext_resource type="Script" path="res://game/hiding/hiding_spot.gd" id="15_oxks8"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_altar.tscn" id="prop_altar"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bell.tscn" id="prop_bell"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_bell_rope.tscn" id="prop_bell_rope"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_choir_stalls.tscn" id="prop_choir_stalls"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_reliquary.tscn" id="prop_reliquary"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tomb_open.tscn" id="prop_tomb_open"]
 
 [node name="Church" type="Node3D" unique_id=1194119076]
 
@@ -439,19 +443,32 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -28,
 
 [node name="Props" type="Node3D" parent="." unique_id=510246038 groups=["nav_source"]]
 
-[node name="Bell" type="StaticBody3D" parent="Props" unique_id=1514984135]
+[node name="Bell" parent="Props" instance=ExtResource("prop_bell")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 9.4, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(1.2, 1.2, 1.2)
-shape = 2
-material = ExtResource("9_2mhh7")
 
-[node name="BellRope" type="StaticBody3D" parent="Props" unique_id=1151263476]
+[node name="BellRope" parent="Props" instance=ExtResource("prop_bell_rope")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.8, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.04, 8.6, 0.04)
-material = ExtResource("12_61jq4")
-solid = false
+
+[node name="Reliquary" parent="Props" instance=ExtResource("prop_reliquary")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, -4, -32)
+
+[node name="StallsN0" parent="Props" instance=ExtResource("prop_choir_stalls")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 11, 0.05, -34.9)
+
+[node name="StallsN1" parent="Props" instance=ExtResource("prop_choir_stalls")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 15, 0.05, -34.9)
+
+[node name="StallsS0" parent="Props" instance=ExtResource("prop_choir_stalls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.05, -29.1)
+
+[node name="StallsS1" parent="Props" instance=ExtResource("prop_choir_stalls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.05, -29.1)
+
+[node name="Altar" parent="Props" instance=ExtResource("prop_altar")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 26.6, 0.05, -32)
+
+[node name="OpenTomb" parent="Props" instance=ExtResource("prop_tomb_open")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, -34.6)
 
 [node name="CryptRailS" type="StaticBody3D" parent="Props" unique_id=14566571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.05, -34.1)
@@ -466,81 +483,6 @@ script = ExtResource("5_8a8d7")
 size = Vector3(0.12, 0.9, 1.36)
 material = ExtResource("13_wvabc")
 surface = "wood"
-
-[node name="Reliquary" type="StaticBody3D" parent="Props" unique_id=1780148371]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, -4, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.8, 1.1, 0.8)
-material = ExtResource("9_2mhh7")
-
-[node name="StallsN" type="StaticBody3D" parent="Props" unique_id=916964645]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.05, -34.9)
-script = ExtResource("5_8a8d7")
-size = Vector3(8, 1.1, 0.7)
-material = ExtResource("13_wvabc")
-surface = "wood"
-
-[node name="StallsS" type="StaticBody3D" parent="Props" unique_id=801123712]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.05, -29.1)
-script = ExtResource("5_8a8d7")
-size = Vector3(8, 1.1, 0.7)
-material = ExtResource("13_wvabc")
-surface = "wood"
-
-[node name="AltarTop" type="StaticBody3D" parent="Props" unique_id=1734835777]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6, 0.9, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(1, 0.15, 2)
-material = ExtResource("9_2mhh7")
-
-[node name="AltarBack" type="StaticBody3D" parent="Props" unique_id=1105435039]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.95, 0.05, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.3, 0.85, 2)
-material = ExtResource("9_2mhh7")
-
-[node name="AltarCloth" type="StaticBody3D" parent="Props" unique_id=1749899801]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.08, 0.2, -32)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.04, 0.85, 2.04)
-material = ExtResource("14_ouw7n")
-solid = false
-
-[node name="TombBase" type="StaticBody3D" parent="Props" unique_id=1846163904]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, -34.6)
-script = ExtResource("5_8a8d7")
-size = Vector3(2.2, 0.1, 1)
-material = ExtResource("9_2mhh7")
-
-[node name="TombN" type="StaticBody3D" parent="Props" unique_id=266991416]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, -35.05)
-script = ExtResource("5_8a8d7")
-size = Vector3(2.2, 0.85, 0.1)
-material = ExtResource("9_2mhh7")
-
-[node name="TombS" type="StaticBody3D" parent="Props" unique_id=1932883859]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, -34.15)
-script = ExtResource("5_8a8d7")
-size = Vector3(2.2, 0.85, 0.1)
-material = ExtResource("9_2mhh7")
-
-[node name="TombW" type="StaticBody3D" parent="Props" unique_id=538114549]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05, 0.05, -34.6)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.1, 0.85, 0.8)
-material = ExtResource("9_2mhh7")
-
-[node name="TombE" type="StaticBody3D" parent="Props" unique_id=1404164504]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.95, 0.05, -34.6)
-script = ExtResource("5_8a8d7")
-size = Vector3(0.1, 0.85, 0.8)
-material = ExtResource("9_2mhh7")
-
-[node name="TombLid" type="StaticBody3D" parent="Props" unique_id=977473710]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.45, 0.9, -34.6)
-script = ExtResource("5_8a8d7")
-size = Vector3(1.3, 0.12, 1)
-material = ExtResource("9_2mhh7")
 
 [node name="Lights" type="Node3D" parent="." unique_id=144900238]
 

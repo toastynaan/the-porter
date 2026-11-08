@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="Shelves" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: storeroom shelves, 3 m long (along X), 0.5 m deep, 1.8 m high. Open side faces -Z."
+
+[node name="Shelves" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(3, 1.8, 0.5)
+material = ExtResource("oak")
+surface = "wood"

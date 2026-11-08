@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+
+[node name="GateBar" type="Node3D" groups=["placeholder"]]
+editor_description = "Placeholder: the oak bar across the gate, 3.4 m long (along Z). On the door layer, like door leaves; AbbeyGate shows and hides it."
+
+[node name="GateBar" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.14, 0.14, 3.4)
+material = ExtResource("oak")
+surface = "wood"
+collision_layer = 512

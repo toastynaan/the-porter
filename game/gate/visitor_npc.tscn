@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://game/gate/visitor_npc.gd" id="1_npc"]
-[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="2_figure"]
+[ext_resource type="Script" path="res://game/npc/character_look.gd" id="2_look"]
 
 [sub_resource type="CapsuleShape3D" id="Shape_body"]
 radius = 0.22
@@ -59,8 +59,8 @@ path_height_offset = 0.15
 radius = 0.3
 height = 1.8
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("2_figure")
+[node name="Look" type="Node3D" parent="."]
+script = ExtResource("2_look")
 
 [node name="Parts" type="Node3D" parent="."]
 editor_description = "What the porter can look at to read him; names match VisitorDetail.part."

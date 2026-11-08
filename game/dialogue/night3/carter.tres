@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/dialogue/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_carter"
+text = "# A carter in the lane at dusk (night 3). Placeholder lines.
+== start
+A carter: (Placeholder: a carter on his way home before dark.)
+* (Ask about the lane.) -> lane
+* (Ask if he has seen pilgrims on the road.) -> pilgrims
+* (Wish him good night.) -> end
+
+== lane
+A carter: (Placeholder: the carter on the lane and the inn.)
+-> end
+
+== pilgrims
+A carter: (Placeholder: the carter on the pilgrims coming to the abbey.)
+-> end
+"
