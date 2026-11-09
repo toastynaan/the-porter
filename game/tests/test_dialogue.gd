@@ -9,6 +9,10 @@ extends Node
 ##   asked questions drop off.
 ## - Walking away by moving: the talk ends, his view comes back, they call
 ##   after him. The next talk starts at "again". `interact` skips a line.
+## - Keys held down (from the playtest): `interact` held skips one line, and
+##   doesn't open the talk again as it closes; the move key he walked up
+##   with doesn't walk him away. Cut short (Talk.interrupt), a talk's choice
+##   goes and it leaves the next talk alone.
 ## Run: tools/check.sh
 
 const SCRIPT := """# A test talk.
@@ -176,25 +180,94 @@ func _run() -> void:
 	_check(_said("(Answer C.)") and not _player.talking and _count_said("(Calls after you.)") == leaves,
 		"an answer that leads to end closes the talk; nobody calls after him")
 
-	# `interact` skips a line in a talk.
+	# `interact` skips a line in a talk; held down, it counts once. A held key
+	# repeats, and in the editor's game window the repeats come as presses.
 	Talk.line_seconds = -1.0
 	var skip_c := Conversation.new()
-	skip_c.text = "== start\nOsric: (A long first line, long enough to take a few seconds to read.)\nOsric: (Second.)\n-> end\n"
+	skip_c.text = "== start\nOsric: (A long first line, long enough to take a few seconds to read.)\nOsric: (Second, and long enough to take a few seconds to read.)\nOsric: (Third.)\n-> end\n"
 	talker.conversation = skip_c
 	talker.interact(_player)
 	await _seconds(0.3)
-	var press := InputEventAction.new()
-	press.action = &"interact"
-	press.pressed = true
-	Input.parse_input_event(press)
+	_action(&"interact", true)
 	await _seconds(0.2)
-	_check(Talk._text.text == "(Second.)", "interact skips to the next line (%s)" % Talk._text.text)
+	_check(Talk._text.text.begins_with("(Second"), "interact skips to the next line (%s)" % Talk._text.text)
+	for i in 8:
+		_action(&"interact", true)
+		await _seconds(0.05)
+	_check(Talk.talking and Talk._text.text.begins_with("(Second"), "held down, it skips no further (%s)" % Talk._text.text)
+	_action(&"interact", false)
+	await _seconds(0.1)
+	_action(&"interact", true)
+	await _seconds(0.1)
+	_check(Talk._text.text == "(Third.)", "let go and pressed again, it skips on (%s)" % Talk._text.text)
+	_action(&"interact", false)
 	await _until(func() -> bool: return not talker.talking, 5.0)
+
+	# Pressed on Osric and held: the talk opens once, plays its line, and
+	# doesn't open again as it closes.
+	var short_c := Conversation.new()
+	short_c.text = "== start\nOsric: (Only line.)\n-> end\n"
+	talker.conversation = short_c
+	_player.place(Vector3(-30, 0.05, 7.0), 0.0)
+	var interactor: Interactor = _player.get_node(^"Head/LookBack/Camera/Interactor")
+	await _until(func() -> bool: return interactor.focused == talker, 2.0)
+	var said := _count_said("(Only line.)")
+	_action(&"interact", true)
+	await _seconds(0.1)
+	_check(Talk.talking and _count_said("(Only line.)") == said + 1, "interact on Osric opens the talk")
+	for i in 80:
+		_action(&"interact", true)
+		await _seconds(0.05)
+	_check(not Talk.talking and _count_said("(Only line.)") == said + 1,
+		"held down through his line and after, it neither skips it nor opens the talk again (%d times)" % (_count_said("(Only line.)") - said))
+	_action(&"interact", false)
+
+	# Walked up with a move key held: that key doesn't walk him away; let go
+	# and pressed again, it does.
+	talker.conversation = c
+	Input.action_press(&"move_left")
+	talker.interact(_player)
+	await _seconds(0.4)
+	_check(Talk.talking and _player.talking, "the move key he walked up with doesn't walk him away")
+	Input.action_release(&"move_left")
+	await _seconds(0.1)
+	Input.action_press(&"move_left")
+	await _seconds(0.1)
+	_check(not Talk.talking and not _player.talking, "let go and pressed again, it does")
+	Input.action_release(&"move_left")
+	await _seconds(0.5)
+
+	# Cut short (as the body cart does on the road in): its choice goes,
+	# nobody calls after him, and the talk opened next is left alone.
+	_player.place(Vector3(-30, 0.05, 7.5), PI)
+	await _seconds(0.3)
+	talker.interact(_player)
+	await _choice()
+	leaves = _count_said("(Calls after you.)")
+	Talk.interrupt()
+	var next_c := Conversation.new()
+	next_c.text = "== start\nOsric: (Something else.)\nOsric: (And more.)\n-> end\n"
+	Talk.converse(next_c, osric)
+	await _seconds(0.2)
+	_check(Talk.talking and not talker.talking and Talk._text.text == "(Something else.)"
+		and not Talk.is_choosing() and Talk._options.get_child_count() == 0,
+		"cut short, its choice goes and the next talk opens at once (%s)" % Talk._text.text)
+	await _until(func() -> bool: return not Talk.talking, 8.0)
+	_check(_said("(And more.)") and _count_said("(Calls after you.)") == leaves,
+		"the next talk plays out, and nobody calls after him from the first")
 
 	Talk.auto_choice = Callable()
 	Talk.line_seconds = -1.0
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))
 	get_tree().quit(0 if _fails == 0 else 1)
+
+
+## Presses (or lets go of) `action`, as a key would.
+func _action(action: StringName, pressed: bool) -> void:
+	var e := InputEventAction.new()
+	e.action = action
+	e.pressed = pressed
+	Input.parse_input_event(e)
 
 
 func _conversations(dir: String) -> Array[String]:

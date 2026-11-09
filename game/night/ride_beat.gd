@@ -251,7 +251,7 @@ func _watch() -> void:
 ## by close on his side, and the traveller talks about it as the wagon goes on.
 func _let_the_cart_by() -> void:
 	_hush = true
-	await Talk.interrupt()
+	Talk.interrupt()
 	await until(func() -> bool: return not _speaking)
 	_pulled_in = true
 	await until(func() -> bool: return _cart_along < _pull_along + 6.0)
@@ -263,8 +263,7 @@ func _let_the_cart_by() -> void:
 func _hook() -> void:
 	if traveller_talk == null:
 		return
-	if Talk.talking:
-		await Talk.interrupt()
+	Talk.interrupt()
 	await Talk.converse(traveller_talk, traveller)
 
 

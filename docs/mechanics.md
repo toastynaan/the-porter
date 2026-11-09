@@ -478,3 +478,5 @@ Added after the run (playtest fixes):
 - The ride's paces and stops (`docs/prologue.md`, "The ride's cues"): 3.5, 2, 3.2 and 2.5 m/s, 1.2 m/s² to speed up and slow down; the body cart at 2 m/s from 40 m past the pull-over, waiting 9 m off; a cue's lines dropped once the wagon is 12 to 40 m past (each cue sets its own); the warden's stop is 1 s after his lines.
 - Paused, nothing in a night counts time: the beats' and scenes' timers and loops wait with the tree (`PlayTime`).
 - A cue's or a beat's line waits until nobody's talking and no line is up (`Talk.quiet()`) on the ride and at the gate after it, so lines don't cover each other there.
+- A press counts once, and only after the key is let go (`Press`): holding E, Esc, the ledger or satchel key, lock or crouch-toggle does nothing more than one press. In the playtest (the editor's game window) a held E's repeats counted as new presses: it ran through a whole talk, answered for him, and opened it again as it closed.
+- A move key held when a talk begins doesn't walk him away until he lets go of it and presses one again.

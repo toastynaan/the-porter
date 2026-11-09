@@ -100,7 +100,8 @@ func _receive(v: Visitor) -> void:
 	await _knock_until_answered(KNOCK, 1.4)
 	var noticed: Array[VisitorDetail] = []
 	var pick := -1
-	if not v.question.is_empty() and not GameState.has_flag(GameState.tonight("asked_" + String(v.id))):
+	var asking := not v.question.is_empty() and not GameState.has_flag(GameState.tonight("asked_" + String(v.id)))
+	while asking:
 		Talk.begin(npc, GRILLE_CONE)
 		await say(v.speaker, v.greeting)
 		_reading = true
@@ -110,8 +111,14 @@ func _receive(v: Visitor) -> void:
 			GameState.set_flag(GameState.tonight("asked_" + String(v.id)))
 			for line in v.answer:
 				await say(v.speaker, line)
+		var walked := Talk.left
 		_reading = false
 		Talk.end()
+		asking = ask < 0
+		if walked:
+			# He walked away from the grille; the visitor waits for him, and
+			# asks again if he hadn't heard the question out.
+			await _knock_until_answered(KNOCK, 1.4)
 	while pick < 0:
 		Talk.begin(npc, GRILLE_CONE)
 		await say(v.speaker, v.greeting)

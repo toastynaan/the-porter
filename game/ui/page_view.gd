@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if showing and _shown_for > 0.3 and (event.is_action_pressed(&"interact") or event.is_action_pressed(&"ledger") or event.is_action_pressed(&"satchel")):
+	if showing and _shown_for > 0.3 and (Press.fresh(event, &"interact") or Press.fresh(event, &"ledger") or Press.fresh(event, &"satchel")):
 		set_showing(false)
 		get_viewport().set_input_as_handled()
 

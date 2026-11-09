@@ -137,11 +137,15 @@ func _run() -> void:
 	get_tree().quit(0 if _fails == 0 else 1)
 
 
+## A tap: pressed and let go (a press counts once until it's let go, Press).
 func _press(action: StringName) -> void:
 	var e := InputEventAction.new()
 	e.action = action
 	e.pressed = true
 	Input.parse_input_event(e)
+	var up := InputEventAction.new()
+	up.action = action
+	Input.parse_input_event(up)
 
 
 func _check(ok: bool, what: String) -> void:

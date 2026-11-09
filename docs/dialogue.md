@@ -5,9 +5,9 @@ Look at someone and press E. They turn to you, and your view eases in on their f
 ## How a talk plays
 
 - **The camera.** Your view turns to their face over 0.45 s and narrows by 22° (70° to 48°). You can look about within 30° of their face, so you can still study them. You stand still.
-- **Their lines.** Each shows for its reading time; E skips to the next. The last line stays up while you choose.
+- **Their lines.** Each shows for its reading time; E skips to the next. The last line stays up while you choose. Each press of E counts once: held down, it skips one line and answers nothing.
 - **Answers.** Up to three, numbered, then "Walk away", dimmer. Pick with the number keys, or the arrow keys and E.
-- **Walking away.** Pick "Walk away", or press any move key: the talk ends at once, your view widens again, and you walk off. They may call something after you.
+- **Walking away.** Pick "Walk away", or press any move key: the talk ends at once, your view widens again, and you walk off. They may call something after you. A move key you were already holding when the talk began doesn't count until you let go of it.
 - **Memory.** Talking to someone sets `talked_<id>`. The next time, they start at their `again` point. Answers can set flags and raise Suspicion, and can be offered only while a flag holds, so a question you've asked can drop off the list.
 - **Time.** The candle clock runs while you talk.
 

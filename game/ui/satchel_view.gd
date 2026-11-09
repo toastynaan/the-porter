@@ -34,10 +34,10 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"satchel") and not get_tree().paused:
+	if Press.fresh(event, &"satchel") and not get_tree().paused:
 		set_showing(not showing)
 		get_viewport().set_input_as_handled()
-	elif showing and event.is_action_pressed(&"interact") and eat_food():
+	elif showing and Press.fresh(event, &"interact") and eat_food():
 		refresh()
 		get_viewport().set_input_as_handled()
 

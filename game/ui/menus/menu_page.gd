@@ -109,6 +109,6 @@ func _page_turn() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed(&"ui_cancel"):
+	if visible and Press.fresh(event, &"ui_cancel"):
 		get_viewport().set_input_as_handled()
 		back.emit()

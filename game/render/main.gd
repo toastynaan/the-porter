@@ -66,7 +66,7 @@ func unload_level() -> void:
 
 ## Input reaches nodes inside the SubViewport only through push_input.
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"toggle_fullscreen"):
+	if Press.fresh(event, &"toggle_fullscreen"):
 		var full := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if full else DisplayServer.WINDOW_MODE_FULLSCREEN)
 		return

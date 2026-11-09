@@ -115,11 +115,15 @@ func _flat_speed() -> float:
 	return Vector2(_player.velocity.x, _player.velocity.z).length()
 
 
+## A tap: pressed and let go (a press counts once until it's let go, Press).
 func _press(action: StringName) -> void:
 	var e := InputEventAction.new()
 	e.action = action
 	e.pressed = true
 	Input.parse_input_event(e)
+	var up := InputEventAction.new()
+	up.action = action
+	Input.parse_input_event(up)
 
 
 func _seconds(s: float) -> void:

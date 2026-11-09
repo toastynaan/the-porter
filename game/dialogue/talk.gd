@@ -8,10 +8,13 @@ extends CanvasLayer
 ## Conversations: converse() plays a Conversation with someone; a beat can
 ## open one itself with begin() and end(). While one is open the porter's
 ## view eases in on their face and he stands still, `interact` skips to the
-## next line, and every choice ends with "Walk away". Moving walks away too.
-## Once he has walked away, say() and choose() (-1) return at once until the
-## conversation is ended. interrupt() ends one the same way, without the
-## parting lines, when something else comes up (the body cart on the road in).
+## next line, and every choice ends with "Walk away". Moving walks away too
+## (once he has let go of the keys he walked up with). Once he has walked
+## away, say() and choose() (-1) return at once until the conversation is
+## ended. interrupt() ends one at once, without the parting lines, when
+## something else comes up (the body cart on the road in); what it was saying
+## or asking stops there and leaves the next conversation alone. A press of
+## `interact` counts once (Press): holding it doesn't skip on, or answer.
 ##
 ## Choices: number keys, or the arrow keys and `interact`. A line said while
 ## a choice is open shows over its question for a moment and then gives it
@@ -65,8 +68,9 @@ var _line_id := 0
 var _leave_index := -1
 ## Goes up at every reset(); talk begun before it stops.
 var _gen := 0
-## The open conversation is being cut short (interrupt()).
-var _interrupted := false
+## Goes up at every begin(), interrupt() and reset(): a conversation whose
+## number has gone stops where it is.
+var _talk := 0
 ## Lines said and not yet over.
 var _lines_up := 0
 var _backing: StyleBoxFlat
@@ -104,6 +108,7 @@ func _ready() -> void:
 ## conversation stops, and the porter's view is let go.
 func reset() -> void:
 	_gen += 1
+	_talk += 1
 	_choices = PackedStringArray()
 	_line_over.emit(-1)
 	if talking:
@@ -146,6 +151,7 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	if talking and left:
 		return -1
 	var gen := _gen
+	var mine := _talk if talking else -1
 	var shown := options.duplicate()
 	_leave_index = -1
 	if talking:
@@ -160,7 +166,7 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	_draw_options()
 	while _picked < 0 and not (talking and left):
 		await get_tree().process_frame
-		if gen != _gen:
+		if gen != _gen or (mine >= 0 and _talk != mine):
 			return -1
 		if auto_choice.is_valid() and _picked < 0 and not get_tree().paused:
 			_picked = auto_choice.call(shown)
@@ -183,14 +189,14 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 func converse(conversation: Conversation, with: Node3D) -> void:
 	if not begin(with):
 		return
-	var gen := _gen
+	var mine := _talk
 	var again := GameState.has_flag(conversation.talked_flag())
 	GameState.set_flag(conversation.talked_flag())
 	Conversation.partner = People.id_of(with)
 	Conversation.partner_node = with
 	var at := conversation.start(again, Conversation.partner)
 	var last: Conversation.Line = null
-	while not left and at != "" and at != Conversation.END and gen == _gen:
+	while not left and at != "" and at != Conversation.END:
 		var point := conversation.point(at)
 		if point == null:
 			push_error("%s: no point called %s (%s)" % [conversation.resource_path, at, conversation.errors()])
@@ -198,6 +204,8 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 		Conversation.apply(point.tags)
 		for line in point.lines:
 			await say(line.speaker, line.text)
+			if _talk != mine:
+				return
 			last = line
 		var answers := conversation.offered(point)
 		if left or answers.is_empty():
@@ -207,15 +215,15 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 		for a in answers:
 			texts.append(a.text)
 		var pick := await choose(texts, last.speaker if last else "", last.text if last else "")
-		if pick < 0 or gen != _gen:
+		if _talk != mine:
+			return
+		if pick < 0:
 			break
 		Conversation.apply(answers[pick].tags)
 		at = answers[pick].to
-	if gen != _gen:
-		return
 	var walked := left
 	end()
-	if walked and not _interrupted and conversation.has_point(Conversation.LEAVE):
+	if walked and conversation.has_point(Conversation.LEAVE):
 		_say_all(conversation.point(Conversation.LEAVE).lines)
 
 
@@ -224,7 +232,7 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 ## stumbling, already talking).
 func begin(with: Node3D, cone := TALK_CONE) -> bool:
 	var p := _player()
-	if p == null or p.busy():
+	if talking or p == null or p.busy():
 		return false
 	if with.has_method(&"face"):
 		with.call(&"face", p.global_position)
@@ -232,27 +240,24 @@ func begin(with: Node3D, cone := TALK_CONE) -> bool:
 			else with.global_position + Vector3.UP * 1.6
 	talking = true
 	left = false
+	_talk += 1
 	p.start_talk(at, cone)
 	if not p.walked_away.is_connected(_walk_away):
 		p.walked_away.connect(_walk_away)
 	return true
 
 
-## Cuts the open conversation short, as if he'd walked away but with no
-## parting lines; returns once it's closed.
+## Cuts the open conversation short, with no parting lines: its line and
+## its choice go, and it's closed now, so a beat can open another at once.
 func interrupt() -> void:
 	if not talking:
 		return
-	_interrupted = true
-	_walk_away()
-	# A conversation converse() plays closes within a frame or two; one a
-	# beat opened with begin() is closed here.
-	for i in 10:
-		if not talking:
-			break
-		await get_tree().process_frame
+	_talk += 1
+	_choices = PackedStringArray()
+	_line_over.emit(-1)
+	_line_id += 1
+	_clear()
 	end()
-	_interrupted = false
 
 
 ## Closes the conversation; his view comes back.
@@ -303,13 +308,16 @@ func quiet() -> bool:
 func _input(event: InputEvent) -> void:
 	if get_tree().paused:
 		return
+	# A click that only recaptures the mouse doesn't count.
+	if event is InputEventMouseButton and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
 	if _choices.is_empty():
-		if talking and not left and event.is_action_pressed(&"interact"):
+		if talking and not left and Press.fresh(event, &"interact"):
 			_line_over.emit(_line_id)
 			get_viewport().set_input_as_handled()
 		return
 	var key := event as InputEventKey
-	if key and key.pressed and not key.echo and key.keycode >= KEY_1 and key.keycode < KEY_1 + _choices.size():
+	if key and key.keycode >= KEY_1 and key.keycode < KEY_1 + _choices.size() and Press.fresh_key(key):
 		_picked = key.keycode - KEY_1
 	elif event.is_action_pressed(&"ui_up"):
 		_highlight = posmod(_highlight - 1, _choices.size())
@@ -317,7 +325,7 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed(&"ui_down"):
 		_highlight = posmod(_highlight + 1, _choices.size())
 		_draw_options()
-	elif event.is_action_pressed(&"interact") or event.is_action_pressed(&"ui_accept"):
+	elif Press.fresh(event, &"interact") or Press.fresh(event, &"ui_accept"):
 		_picked = _highlight
 	else:
 		return

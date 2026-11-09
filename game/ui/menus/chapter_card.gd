@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not _open or _shown_at < 0.5:
 		return
-	if event.is_action_pressed(&"interact") or event.is_action_pressed(&"ui_accept"):
+	if Press.fresh(event, &"interact") or Press.fresh(event, &"ui_accept"):
 		get_viewport().set_input_as_handled()
 		_finish()
 

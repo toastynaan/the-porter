@@ -186,7 +186,7 @@ func resume() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed(&"pause"):
+	if not Press.fresh(event, &"pause"):
 		return
 	if mode == Mode.PLAYING and not get_tree().paused:
 		open_pause()

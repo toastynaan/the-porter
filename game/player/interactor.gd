@@ -41,15 +41,15 @@ func _exit_tree() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# A click that only recaptures the mouse doesn't count.
 	var click := event is InputEventMouseButton
-	if event.is_action_pressed(&"interact") and focused and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
+	if Press.fresh(event, &"interact") and focused and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		focused.interact(_player)
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"interact") and focused == null and not _player.busy() and Player.held() != &"" \
+	elif Press.fresh(event, &"interact") and focused == null and not _player.busy() and Player.held() != &"" \
 			and not Talk.talking and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		# Looking at nothing usable, holding something: he throws it.
 		_player.throw()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"lock") and focused and focused.has_method(&"toggle_lock"):
+	elif Press.fresh(event, &"lock") and focused and focused.has_method(&"toggle_lock"):
 		focused.toggle_lock(_player)
 		get_viewport().set_input_as_handled()
 

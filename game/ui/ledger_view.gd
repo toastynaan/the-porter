@@ -62,7 +62,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"ledger") and not get_tree().paused:
+	if Press.fresh(event, &"ledger") and not get_tree().paused:
 		if showing and page == 0:
 			turn_to(1)
 		else:

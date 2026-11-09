@@ -123,6 +123,8 @@ var _talk_pitch := 0.0
 var _talk_cone := Vector2.ZERO
 var _talk_turning := false
 var _talk_tween: Tween
+## He has let go of the move keys since the talk began.
+var _talk_still := false
 ## The heading of what he rides, last frame.
 var _ride_yaw := 0.0
 
@@ -155,13 +157,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if motion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if _can_look():
 			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
-	elif event.is_action_pressed(&"interact") and hiding and not _hide_moving and not controls_locked:
+	elif Press.fresh(event, &"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"interact") and peeking and not _hide_moving:
+	elif Press.fresh(event, &"interact") and peeking and not _hide_moving:
 		stop_peeking()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed(&"crouch") and Settings.crouch_toggle:
+	elif Press.fresh(event, &"crouch") and Settings.crouch_toggle:
 		crouch_override = not crouch_override
 	elif event is InputEventMouseButton and event.is_pressed() and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED \
 			and not get_tree().paused and DisplayServer.get_name() != "headless":
@@ -306,6 +308,7 @@ func sight_points() -> Array[Vector3]:
 ## narrows, and he can look about only within `cone` (degrees either side).
 func start_talk(at: Vector3, cone: Vector2) -> void:
 	talking = true
+	_talk_still = false
 	running = false
 	_talk_cone = cone
 	var to := at - camera.global_position
@@ -333,12 +336,15 @@ func end_talk() -> void:
 	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
 
 
-## Talking: he stands still, and a move key walks him away.
+## Talking: he stands still, and a move key walks him away; not the keys
+## he walked up with, until he has let go of them.
 func _stand_and_talk(delta: float) -> void:
 	stamina.update(false, delta)
 	var wish := input_override if use_input_override else Input.get_vector(
 		&"move_left", &"move_right", &"move_back", &"move_forward")
-	if wish.length() > 0.5 and not controls_locked:
+	if wish.length() < 0.2:
+		_talk_still = true
+	elif wish.length() > 0.5 and _talk_still and not controls_locked:
 		walked_away.emit()
 	var flat := Vector3(velocity.x, 0.0, velocity.z).move_toward(Vector3.ZERO, DECEL * delta)
 	velocity.x = flat.x
