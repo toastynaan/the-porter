@@ -42,7 +42,7 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 ## People to talk to
 
-At dusk, look at someone and press E: your view eases in on their face, they say their line, and you pick one of three answers or walk away (see `docs/dialogue.md`). The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk, Dunstan by the woodpile, and the three choir brothers on the south walk, in the nave and on the east walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) naming their conversation (`game/dialogue/night3/`) and the phases they talk in. Mab can be talked to until the knocks; the brothers only at dusk.
+At dusk, look at someone and press E: your view turns to their face for a moment, they say their line, and you pick one of three answers or walk away (see `docs/dialogue.md`). The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk, Dunstan by the woodpile, and the three choir brothers on the south walk, in the nave and on the east walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) naming their conversation (`game/dialogue/night3/`) and the phases they talk in. Mab can be talked to until the knocks; the brothers only at dusk.
 
 Everyone wears a character scene from `game/characters/` (see `docs/assets.md`). Night 3 has eleven brothers in the choir: the seven named ones, the three living choir brothers, and the stranger in the dead brother's place. Dunstan, a lay brother, is about only at dusk.
 
@@ -51,7 +51,7 @@ Everyone wears a character scene from `game/characters/` (see `docs/assets.md`).
 `game/night/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
 
 1. **He comes up the lane.** At his hour (`knock_hours` on the Knocks beat; Walter's is 20:00) Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern. If you're dozing, he's at the grille when the knock wakes you.
-2. **He knocks.** He knocks until you come to the grille and press E. You talk through the grille: your view eases in on his face, and he greets you.
+2. **He knocks.** He knocks until you come to the grille and press E. You talk through the grille: your view turns to his face for a moment, and he greets you.
 3. **You read him.** While the choice is open, look at a part of him for a moment and the porter notices it, for example "(His box of relics rattles.)". The part nearest the middle of your view is the one you read, so talking face to face you notice his face first. Only what you noticed goes into the ledger.
 4. **You choose,** or walk away. Walk away and he waits at the grille, knocking now and then, until you come back:
    - **Admit him.** Lift the bar, open the gate, and he comes in. Shut the gate and bar it behind him. He follows you to the guesthouse, where you show him a bed (E on it) and he lies down. Then write him in the ledger at your desk.
@@ -89,7 +89,7 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | The stranger becomes the dead brother | Dose 50 (he changes only while you aren't looking) | mine: the tier where cultists start rendering as demons |
 | Night 3's starting Dose, from the nights before | 30 | mine (my M4 recommendation; waiting on you) |
 | Talking: the view narrows, turns to their face in | 22° (70° to 48°), 0.45 s | mine |
-| Talking: looking about | 30° either side of their face; at the grille 40° across, 50° up and down | mine |
+| Talking: the view stays on their face, then is his | 1.2 s, then 0.45 s to widen; looking away lets go at once (after the run) | mine |
 | Walter's place under the porch | 0.3 m north of the middle of the gate, so the grille's centre stile isn't across his face | mine |
 | Waking pace | 180 s per in-game hour | mechanics (*mine*), for the run's 30–40 minute nights |
 | Dozing pace | 2 s per in-game hour | mine |

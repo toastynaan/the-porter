@@ -18,9 +18,9 @@ Edwin: You again! Good. Stay a bit. The walk's very long when there's nobody on 
 -> topics
 
 == topics
-* [if not n3_edwin_how] (Ask how he is.) -> how
-* [if bread_warned] [if not n3_edwin_bread] (Tell him what you were warned about the bread.) -> bread
-* [if not n3_edwin_tower] (Ask about the brother found in the bell tower.) -> tower
+* [if not n3_edwin_how] How are you, Edwin? -> how
+* [if bread_warned] [if not n3_edwin_bread] The brother who died warned me off the bread. -> bread
+* [if not n3_edwin_tower] Did you know the brother in the bell tower? -> tower
 
 == how [set n3_edwin_how]
 Edwin: Me? Well. I'm well. I'm not sleeping, but nobody's sleeping. Except Brother Wulfric. He'd sleep through Doomsday.

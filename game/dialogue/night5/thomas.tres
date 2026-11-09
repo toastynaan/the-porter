@@ -39,9 +39,9 @@ Thomas: Alric. Still here? Sit, if you like. I'm no use for anything else tonigh
 -> topics
 
 == topics
-* [if not n5_thomas_attack] (Ask what happened in the chapter house.) -> attack
-* [if osric_mask] [if not n5_thomas_osric] (Tell him you saw Osric's face in the fog.) -> osric
-* [if not n5_thomas_simon] (Ask about Simon.) -> simon
+* [if not n5_thomas_attack] What happened in the chapter house, brother? -> attack
+* [if osric_mask] [if not n5_thomas_osric] The hunter in the fog was Brother Osric. I saw his face. -> osric
+* [if not n5_thomas_simon] What of Brother Simon? -> simon
 
 == attack [set n5_thomas_attack]
 Thomas: I heard Simon cry out and went in. A man in the mask was over him. Something struck me from behind. Then the floor.
@@ -69,8 +69,8 @@ Thomas: How is he? He won't look at me. He hasn't since the chapter house.
 -> simon_ask
 
 == simon_ask
-* [if n5_saved=simon] (Tell him what Simon told you.) -> simon_said
-* [if simon_blood] (Tell him you caught Simon scrubbing blood.) -> simon_blood
+* [if n5_saved=simon] Brother Simon says you sent him to scrub the blood. -> simon_said
+* [if simon_blood] I found Brother Simon scrubbing blood off the stones. -> simon_blood
 * (Say nothing more about it.) -> topics
 
 # Simon's word against him: the cult learns Simon talked (Suspicion +10).

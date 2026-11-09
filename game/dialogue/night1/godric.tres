@@ -19,9 +19,9 @@ Godric: Still with an old man? The bell will ring for supper soon.
 -> topics
 
 == topics
-* [if not n1_godric_blessing] (Ask for his blessing.) -> blessing
-* [if not n1_godric_saint] (Ask about the saint.) -> saint
-* [if not n1_godric_porter] (Ask what he wants of his porter.) -> porter
+* [if not n1_godric_blessing] Will you bless me, Father Abbot? -> blessing
+* [if not n1_godric_saint] Tell me about the saint, Father Abbot. -> saint
+* [if not n1_godric_porter] What would you have of your porter, Father Abbot? -> porter
 
 == blessing [set n1_godric_blessing] [trust godric 5]
 (He lays his hand on your head. It's light and cold, and it shakes.)

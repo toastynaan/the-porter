@@ -26,9 +26,9 @@ Agnes: Well? Warmer?
 -> topics
 
 == topics
-* [if not n0_room] (Ask for a bed for the night.) -> bed
-* [if not n0_agnes_abbey] (Ask about the abbey.) -> abbey
-* (Ask for an ale.) [drink] -> ale
+* [if not n0_room] Have you a bed for the night? -> bed
+* [if not n0_agnes_abbey] What do you know of the abbey? -> abbey
+* An ale, if you would. [drink] -> ale
 
 == bed [set n0_room]
 Agnes: A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.

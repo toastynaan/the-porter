@@ -20,9 +20,9 @@ Thomas: Back again? Sit. I'm only grinding.
 -> topics
 
 == topics
-* [if not n3_thomas_headaches] (Ask about your headaches.) -> headaches
-* [if not n3_thomas_anselm] (Ask after Anselm.) -> anselm
-* [if not n3_thomas_tower] (Ask about the brother found in the bell tower.) -> tower
+* [if not n3_thomas_headaches] My head aches, Brother Thomas. It won't let up. -> headaches
+* [if not n3_thomas_anselm] How is Brother Anselm? -> anselm
+* [if not n3_thomas_tower] Did you know the brother in the bell tower? -> tower
 
 == headaches [set n3_thomas_headaches]
 Thomas: Behind the eyes? Worse when you wake?

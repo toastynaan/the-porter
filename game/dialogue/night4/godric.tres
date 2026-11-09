@@ -20,9 +20,9 @@ Godric: Sit, child. Sit with me a little. I'd rather not be alone in here.
 -> topics
 
 == topics
-* [if not n4_godric_fast] (Ask why he has ordered the fast.) -> fast
-* [if not n4_godric_seen] (Ask what he has seen.) -> seen
-* [if died_crypt_pilgrim] [if not n4_godric_crypt] (Tell him what you saw in the crypt.) -> crypt
+* [if not n4_godric_fast] Why have you ordered the fast, Father Abbot? -> fast
+* [if not n4_godric_seen] What have you seen, Father Abbot? -> seen
+* [if died_crypt_pilgrim] [if not n4_godric_crypt] I saw a bound man killed at the altar in the crypt. -> crypt
 
 == fast [set n4_godric_fast]
 Godric: Our Lord said some kinds go out only by prayer and fasting. So we'll pray, and we'll fast.

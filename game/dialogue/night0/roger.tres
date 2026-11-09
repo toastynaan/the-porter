@@ -48,7 +48,7 @@ Roger: Porter. Thought on what I asked?
 == choice
 * [if not n0_roger_why] Why do you want to know? -> why
 * [if not n0_roger_agreed] I'll send you word. [set n0_roger_agreed] [trust roger 5] -> agreed
-* [if not n0_roger_land] (Ask what the ward wants with the abbey.) -> land
+* [if not n0_roger_land] What does the ward want with the abbey? -> land
 
 == why [set n0_roger_why]
 Roger: Because men with money go in there, and the ward never hears of them again.

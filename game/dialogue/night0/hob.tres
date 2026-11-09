@@ -20,9 +20,9 @@ Hob: Brother.
 -> topics
 
 == topics
-* [if not n0_hob_abbey] (Ask what the lane says about the abbey.) -> abbey
-* [if not n0_hob_bed] (Ask if he has a bed for the night.) -> bed
-* (Ask for an ale.) [drink] -> ale
+* [if not n0_hob_abbey] What does the lane say about the abbey? -> abbey
+* [if not n0_hob_bed] Have you a bed for the night? -> bed
+* An ale, if you would. [drink] -> ale
 
 == abbey [set n0_hob_abbey]
 Hob: I pour, folk talk. I don't say any of it's true.

@@ -50,9 +50,9 @@ Thomas: Brother. Supper soon.
 -> topics
 
 == topics
-* [if not n2_thomas_why] (Ask what the prior would be doing out at night.) -> why
-* [if n1_knock_no_one] [if not n2_thomas_knock] (Tell him about the knock with no one there.) -> knock
-* [if bread_warned] [if not n2_thomas_bread] (Tell him you were warned off the bread.) -> bread
+* [if not n2_thomas_why] What would the prior be doing out at night? -> why
+* [if n1_knock_no_one] [if not n2_thomas_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if bread_warned] [if not n2_thomas_bread] Someone warned me not to eat the bread. -> bread
 
 == why [set n2_thomas_why]
 Thomas: I don't know, and I'd rather not guess at a brother's sins.

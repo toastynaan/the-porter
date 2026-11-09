@@ -39,9 +39,9 @@ Hugh: Go to your supper, porter.
 -> topics
 
 == topics
-* [if prior_sleeve] [if not n5_hugh_sleeve] (Ask about the blood on his sleeve.) -> sleeve
-* [if not n5_hugh_told] (Tell him what you've seen.) -> told
-* [if not n5_hugh_means] (Ask what he means to do.) -> means
+* [if prior_sleeve] [if not n5_hugh_sleeve] Whose blood is that on your sleeve, Father Prior? -> sleeve
+* [if not n5_hugh_told] I'll tell you what I've seen, Father Prior. -> told
+* [if not n5_hugh_means] What do you mean to do, Father Prior? -> means
 
 == sleeve [set n5_hugh_sleeve]
 (He looks down at the sleeve. It's been scrubbed. The stain is still there.)

@@ -112,27 +112,29 @@ light_energy = 2.0
 omni_range = 4.0
 
 [node name="RideCues" type="Node3D" parent="."]
-editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines wait while the porter talks, and are dropped once the wagon is `keep` metres past."
+editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a talk someone starts, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines and talks wait while the porter talks, and are dropped once the wagon is `keep` metres past; a cue with cut_in breaks off his talk instead (the carter's Whoa)."
 
-[node name="Fields" type="Marker3D" parent="RideCues"]
+[node name="Fields" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("talker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("(Dusk over the fields, and rain on the wind. Ahead, the city wall, and London behind it.)", "Carter: Hup! We'll be in before they shut the gate, or I'll know why.")
 keep = 40.0
+talk = ExtResource("n0_traveller_road")
+talker = NodePath("../../Traveller")
 
 [node name="WhiteChapel" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -193, 6, 62)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("(The bell of the white chapel, ringing for Vespers.)", "Traveller: Saint Mary's. White as a bone once, they say. Not now.")
+lines = PackedStringArray("(The bell of the white chapel, ringing for Vespers.)", "Carter: Vespers already. Hup! We'll be in before they shut the gate.")
 sound = ExtResource("sfx_bell")
 volume_db = -4.0
 keep = 25.0
 
 [node name="Whoa" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 0, 44.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -174, 0, 44.5)
 script = ExtResource("cue_gd")
 lines = PackedStringArray("Carter: Whoa. Whoa, there. Let him by.")
 keep = 12.0
+cut_in = true
 
 [node name="Wall" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -134, 0, 44.5)
@@ -304,6 +306,7 @@ script = ExtResource("ride_gd")
 phase = 6
 bell = &"start"
 duty = "Dusk: the road into London"
+speed = 2.6
 wagon = NodePath("../../Wagon")
 path = NodePath("../../Road/RidePath")
 cues = NodePath("../../RideCues")

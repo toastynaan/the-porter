@@ -9,9 +9,9 @@ text = "# DRAFT
 # Dunstan at dusk, by the woodpile (night 3). Lay brothers don't talk (Look and Feel, \"Characters\").
 == start
 (Dunstan rests his axe on the block and looks at you. He says nothing.)
-* (Ask about the woodpile.) -> nothing
-* (Ask if he has seen anything.) -> nothing
-* (Wish him good night.) -> end
+* Is there wood enough for the winter, brother? -> nothing
+* Have you seen anything strange, Brother Dunstan? -> nothing
+* Good night, Brother Dunstan. -> end
 
 == again
 (Dunstan looks up from the woodpile. He says nothing.)

@@ -19,8 +19,8 @@ Piers: Still foggy.
 -> topics
 
 == topics
-* [if not n4_choirc_talk] (Ask what the brothers are saying.) -> talk
-* [if n4_thomas_simon] [if not n4_choirc_simon] (Ask about Brother Simon.) -> simon
+* [if not n4_choirc_talk] What are the brothers saying? -> talk
+* [if n4_thomas_simon] [if not n4_choirc_simon] What do you know of Brother Simon? -> simon
 
 == talk [set n4_choirc_talk]
 Piers: That the abbot saw it at the foot of his bed. That it's hungry, and we fast so it finds nothing in us to eat.

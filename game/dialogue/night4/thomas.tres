@@ -40,9 +40,9 @@ Thomas: Back again? There's no supper to be late for tonight.
 -> topics
 
 == topics
-* [if not n4_thomas_simon_ask] (Ask what Simon was doing out there.) -> simon_ask
-* [if died_crypt_pilgrim] [if not n4_thomas_crypt] (Tell him what you saw in the crypt.) -> crypt
-* [if not n4_thomas_edwin] (Ask after Edwin.) -> edwin
+* [if not n4_thomas_simon_ask] What was Brother Simon doing out there? -> simon_ask
+* [if died_crypt_pilgrim] [if not n4_thomas_crypt] I saw a bound man killed at the altar in the crypt. -> crypt
+* [if not n4_thomas_edwin] How is Edwin? -> edwin
 
 == simon_ask [set n4_thomas_simon_ask]
 Thomas: On his knees on the flags by the chapter house, his lantern hooded. At an hour nobody prays.

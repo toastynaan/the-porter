@@ -36,9 +36,9 @@ Gib: You again, and the bell long gone. Indoors, brother.
 -> topics
 
 == topics
-* [if not n0_gib_watch] (Ask what he does after the bell.) -> watch
-* [if not n0_gib_lanterns] (Ask about the lanterns.) -> lanterns
-* [if not n0_gib_abbey] (Ask about the abbey wall.) -> abbey
+* [if not n0_gib_watch] What do you do after the bell? -> watch
+* [if not n0_gib_lanterns] How long has the lane had lanterns? -> lanterns
+* [if not n0_gib_abbey] What do you make of the abbey wall? -> abbey
 
 == watch [set n0_gib_watch]
 Gib: After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light.

@@ -18,7 +18,7 @@ Kit: Two left, brother. Both for a ha'penny, and I'll throw in the tray.
 
 == topics
 * [if not n0_kit_porter] I'm the new porter. -> porter
-* [if not n0_kit_candles] (Ask about her candles.) -> candles
+* [if not n0_kit_candles] Who makes your candles? -> candles
 * [if not n0_kit_abbey] Have you been inside? -> abbey
 
 == porter [set n0_kit_porter]

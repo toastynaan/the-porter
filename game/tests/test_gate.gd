@@ -84,7 +84,9 @@ func _run() -> void:
 	await pilot.seconds(Player.TALK_TURN_TIME + 0.1)
 	walter = get_tree().get_first_node_in_group(&"callers") as VisitorNPC
 	_check(porter.talking and porter.zoom > Player.TALK_ZOOM - 0.5 and ViewCheck.off_centre(porter.camera, walter.face_position()) < 3.0,
-		"at the grille, his view eases in on Walter's face")
+		"at the grille, his view turns to Walter's face")
+	await pilot.seconds(Player.TALK_HOLD + Player.TALK_TURN_TIME)
+	_check(porter.talking and Talk.is_choosing() and porter.zoom < 0.01, "a moment later it's his again, and Walter waits for an answer")
 	await pilot.walk_off()
 	_check(not porter.talking and not Talk.talking, "he can walk away from the grille")
 	await pilot.until(func() -> bool: return pilot.duty("Grate").enabled, 5.0)

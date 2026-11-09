@@ -24,9 +24,9 @@ Osric: Back again? You can smell it. Patience, porter. Not till the bell.
 -> topics
 
 == topics
-* [if not n5_osric_fast] (Ask why the fast was lifted.) -> fast
-* [if not n5_osric_where] (Ask where he was last night.) -> where
-* [if osric_mask] [if not n5_osric_face] (Say you saw his face in the fog.) -> face
+* [if not n5_osric_fast] Why was the fast lifted, brother? -> fast
+* [if not n5_osric_where] Where were you last night, brother? -> where
+* [if osric_mask] [if not n5_osric_face] I saw your face in the fog last night, brother. -> face
 
 == fast [set n5_osric_fast]
 Osric: Father Abbot lifted it after Prime. A night and a day of nothing, and half the house couldn't stand at Lauds.

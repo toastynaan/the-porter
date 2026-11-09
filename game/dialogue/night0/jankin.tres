@@ -26,9 +26,9 @@ Jankin: Brother! You came back. Nobody comes back to Jankin.
 -> topics
 
 == topics
-* [if not n0_jankin_wall] (Ask about the abbey.) -> wall
-* [if not n0_jankin_who] (Ask who he is.) -> who
-* [if not n0_jankin_home] (Ask where he'll sleep tonight.) -> home
+* [if not n0_jankin_wall] What do you know of the abbey? -> wall
+* [if not n0_jankin_who] Who are you, friend? -> who
+* [if not n0_jankin_home] Where will you sleep tonight? -> home
 
 == wall [set n0_jankin_wall]
 Jankin: The abbey. I'll tell you about the abbey. I saw a thing on its wall.

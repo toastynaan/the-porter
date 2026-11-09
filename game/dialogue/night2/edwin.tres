@@ -35,9 +35,9 @@ Edwin: Still here? Me too. I'm meant to be in the church.
 -> topics
 
 == topics
-* [if n1_knock_no_one] [if not n2_edwin_knock] (Tell him about the knock with no one there.) -> knock
-* [if n1_walter=admitted] [if not n2_edwin_walter] (Tell him you let a pardoner in.) -> walter
-* [if not n2_edwin_talk] (Ask what the brothers are saying today.) -> talk
+* [if n1_knock_no_one] [if not n2_edwin_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if n1_walter=admitted] [if not n2_edwin_walter] I let a pardoner in last night. -> walter
+* [if not n2_edwin_talk] What are the brothers saying today? -> talk
 
 == knock [set n2_edwin_knock]
 Edwin: And nobody there? (He's gone pale, and he's trying not to be.)

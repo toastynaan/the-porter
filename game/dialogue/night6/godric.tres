@@ -22,9 +22,9 @@ Godric: Who is it? Oh. The porter. Is it morning?
 -> topics
 
 == topics
-* [if not n6_godric_how] (Ask how he is.) -> how
-* [if not n6_godric_anselm] (Ask after Anselm.) -> anselm
-* [if not n6_godric_truth] (Tell him what his brothers are.) -> truth
+* [if not n6_godric_how] How are you, Father Abbot? -> how
+* [if not n6_godric_anselm] Have you heard about Brother Anselm, Father Abbot? -> anselm
+* [if not n6_godric_truth] Father Abbot, your brothers are not what they seem. -> truth
 
 == how [set n6_godric_how]
 Godric: Thomas says it's the smoke, in my chest. He brings me something hot at every bell, and I sleep.

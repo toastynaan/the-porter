@@ -16,8 +16,8 @@ text = "# DRAFT
 -> topics
 
 == topics
-* [if not n1_dunstan_name] (Give him your name, and ask his.) -> name
-* [if not n1_dunstan_help] (Offer to carry wood.) -> help
+* [if not n1_dunstan_name] I'm Alric, the new porter. And you, brother? -> name
+* [if not n1_dunstan_help] Let me carry some of that for you. -> help
 
 == name [set n1_dunstan_name]
 Dunstan: Dunstan.

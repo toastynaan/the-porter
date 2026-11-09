@@ -78,7 +78,7 @@ Hugh: You turned the pardoner away. Good. Anselm let him in whenever he knocked.
 -> ask
 
 == ask
-* [if n2_thomas_prior] [if not n2_hugh_night] (Ask why he walks the abbey at night.) -> night
+* [if n2_thomas_prior] [if not n2_hugh_night] Why do you walk the abbey at night, Father Prior? -> night
 
 == night [set n2_hugh_night] [trust hugh -5]
 (His face doesn't change, but he closes his tablet.)

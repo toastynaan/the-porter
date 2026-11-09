@@ -19,8 +19,8 @@ Aldo: Still here? So am I. There's no supper to go to.
 -> topics
 
 == topics
-* [if not n4_choirb_bede] (Ask about Bede's stall.) -> bede
-* [if n4_thomas_simon] [if not n4_choirb_simon] (Ask about Brother Simon.) -> simon
+* [if not n4_choirb_bede] Why is Brother Bede's stall left empty? -> bede
+* [if n4_thomas_simon] [if not n4_choirb_simon] What do you know of Brother Simon? -> simon
 
 == bede [set n4_choirb_bede]
 Aldo: Father Abbot says nobody's to sit in it. His psalter's still there. Nobody will touch it.

@@ -8,19 +8,19 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 
 | Beat | What happens | Ends when |
 | --- | --- | --- |
-| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, through Aldgate, along the close streets and into the lane, about two minutes. The porter sits at the back, can look about, and turns with the wagon. He can talk to the traveller beside him at any time (`n0_traveller_road`). The ride's cues play as the wagon passes them (below). About 13 s in, the carter pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side, and the traveller breaks off whatever he was saying to talk about it (`n0_traveller`, three answers) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
+| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, through Aldgate, along the close streets and into the lane, about two minutes. The porter sits at the back, can look about, and turns with the wagon. As it sets off the traveller beside him turns to him and asks where he's bound (`n0_traveller_road`); he can talk to the traveller again at any time. The ride's cues play as the wagon passes them (below). About 15 s in the carter's "Whoa" breaks off any talk, and he pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side, and the traveller turns to him about it (`n0_traveller`: who he was, the third pilgrim this month, all bound for the abbey) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
 | `Arrive` | The gate is shut and barred, a lantern over it, and Cole isn't at it. He knocks (the `KnockGate` duty); nobody comes; the duty flame goes to Mab, whose first words send him to the Keys (`n0_mab`) | Mab has spoken to him |
 | `Inn` | The flame goes to Agnes by the fire; the bed answer gives him the room at the top | `n0_room`, or midnight |
 | `Window` | The bed in his room is wanted. Lying down: the cry, and he's at the window over the abbey wall. In the court a man with a lantern is killed by the well by a figure in a black habit, its back to the window, and dragged off toward the cellar. His notes say what he saw, or, if he'd drunk enough to see double, that he isn't sure (`window_killing`, `window_killing_drunk`). At midnight, if he isn't in bed, Agnes sends him up and it plays the same | The body is gone |
 | `Sleep` | "Lie down again. Sleep, if you can." | He sleeps: day 1 |
 
-**The ride's cues** (`RideCues` in `night0.tscn`, each a `RideCue`): markers beside the road, counted from the nearest point of the road, so moving one moves its moment. Each can say lines, play a sound, set the wagon's pace, stop it for a while, and turn people nearby to watch it. Their lines wait while the porter is talking, and are dropped once the wagon is `keep` metres past.
+**The ride's cues** (`RideCues` in `night0.tscn`, each a `RideCue`): markers beside the road, counted from the nearest point of the road, so moving one moves its moment. Each can say lines, have someone start a talk with him (`talk`, `talker`), play a sound, set the wagon's pace, stop it for a while, and turn people nearby to watch it. Their lines and talks wait while the porter is talking, and are dropped once the wagon is `keep` metres past; a cue with `cut_in` breaks off his talk instead, and drops the lines still waiting.
 
 | Cue | Where | What |
 | --- | --- | --- |
-| `Fields` | The start | Dusk over the fields; the carter means to be in before the gate shuts. Pace 3.5 m/s *(mine)* |
-| `WhiteChapel` | The chapel, 17 m on | Its bell rings for Vespers; the traveller on its name |
-| `Whoa` | 12 m before the pull-over | The carter pulls in to let the cart by |
+| `Fields` | The start | The traveller turns to him: bound for the city? Pace 2.6 m/s *(mine)* |
+| `WhiteChapel` | The chapel, 17 m on | Its bell rings for Vespers; the carter means to be in before the gate shuts |
+| `Whoa` | 6 m before the pull-over | The carter's Whoa breaks off any talk (`cut_in`), and he pulls in to let the cart by |
 | `Wall` | 12 m short of Aldgate | The city wall, a lantern in the arch. Pace 2 m/s |
 | `Aldgate` | The warden, outside the arch | The wagon stops; once nobody's talking, the warden asks in or out, looks at him by lantern light and lets them through; 1 s more, then on at 3.2 m/s |
 | `Shutters` | The first houses | Shutters bang closed above as the wagon passes |

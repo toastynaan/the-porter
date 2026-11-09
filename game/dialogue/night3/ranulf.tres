@@ -19,9 +19,9 @@ Ranulf: Porter. Again.
 -> topics
 
 == topics
-* [if not n3_ranulf_incense] (Ask about the incense.) -> incense
-* [if not n3_ranulf_relic] (Ask about the relic.) -> relic
-* [if not n3_ranulf_candles] (Ask about the candles.) -> candles
+* [if not n3_ranulf_incense] Why so much incense, Brother Ranulf? -> incense
+* [if not n3_ranulf_relic] What is the relic, brother? -> relic
+* [if not n3_ranulf_candles] You burn a great many candles now, brother. -> candles
 
 == incense [set n3_ranulf_incense]
 Ranulf: Father Abbot has ordered it at every office now. Twice the measure at Matins.

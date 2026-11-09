@@ -69,7 +69,7 @@ Hob: You've the look of a man who slept in his clothes. How do you find it over 
 == n1_ask
 * [if not lane_hob_n1_kind] They've been kind to me. -> n1_kind
 * [if not lane_hob_n1_away] If I turn someone away, where do they go? -> n1_away
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n1_kind [set lane_hob_n1_kind]
 Hob: Kind. Aye, they're kind at the gate, that lot. It's past the gate I'd wonder about.
@@ -103,9 +103,9 @@ Hob: Hark at him. I'll put him out at closing, same as every night. Rain or no.
 -> n2_ask
 
 == n2_ask
-* [if not n2_jankin_kept_in] (Ask him to keep Jankin in tonight.) [set n2_jankin_kept_in] -> n2_keep
-* [if not lane_hob_n2_why] (Ask why he puts Jankin out.) -> n2_why
-* (Ask for an ale.) [drink] -> ale
+* [if not n2_jankin_kept_in] Will you keep Jankin in tonight? [set n2_jankin_kept_in] -> n2_keep
+* [if not lane_hob_n2_why] Why do you put Jankin out? -> n2_why
+* An ale, if you would. [drink] -> ale
 
 == n2_keep
 Hob: Keep him in? The Keys shuts at the bell, brother. Everybody out but them that pay.
@@ -151,7 +151,7 @@ Hob: Quiet in the Keys last night. Nobody wants to drink across from your wall a
 
 == n3_ask
 * [if died_warner] [if not lane_hob_n3_devil] Do you believe it's the devil? -> n3_devil
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n3_devil [set lane_hob_n3_devil]
 Hob: I believe in what I pour and what I'm paid.
@@ -166,8 +166,8 @@ Hob: Silver, from a pardoner. I bit it. It was good.
 -> n4_ask
 
 == n4_ask
-* [if not lane_hob_n4_heard] (Ask what else the lane is saying.) -> n4_heard
-* (Ask for an ale.) [drink] -> ale
+* [if not lane_hob_n4_heard] What else is the lane saying? -> n4_heard
+* An ale, if you would. [drink] -> ale
 
 == n4_heard [set lane_hob_n4_heard]
 Hob: That your abbot has the house fasting against the devil. Kit had it from your kitchen door.
@@ -198,7 +198,7 @@ Hob: The fog's lifted. The lane's waiting to hear what it left behind.
 
 == n5_ask
 * [if not lane_hob_n5_place] What would you do, in my place? -> n5_place
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n5_place [set lane_hob_n5_place]
 Hob: In your place? I'd walk out of that gate and keep walking till I smelled the sea.
@@ -228,7 +228,7 @@ Hob: Snow tonight. I'm barring the Keys early, bell or no bell.
 
 == n6_ask
 * [if not lane_hob_n6_pray] Pray for us tonight. -> n6_pray
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n6_pray [set lane_hob_n6_pray]
 Hob: I gave up praying, brother. It never paid.

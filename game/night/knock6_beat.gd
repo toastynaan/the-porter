@@ -56,7 +56,7 @@ func run() -> void:
 func _answer() -> void:
 	while is_inside_tree():
 		await grate.wait_for_use()
-		Talk.begin(npc, Vector2(60.0, 40.0))
+		Talk.begin(npc)
 		await Talk.say(npc.visitor.speaker, npc.visitor.greeting)
 		var options := PackedStringArray(["Open the gate", "(Not yet.)"])
 		var pick := await Talk.choose(options, npc.visitor.speaker, npc.visitor.greeting)

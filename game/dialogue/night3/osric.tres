@@ -18,9 +18,9 @@ Osric: Back again? You can smell supper, can you. Not yet, porter. Not yet.
 -> topics
 
 == topics
-* [if not n3_osric_bread] (Ask about the bread.) -> bread
-* [if not n3_osric_supper] (Ask what is for supper.) -> supper
-* [if not n3_osric_page] (Ask if anyone has been at your ledger.) -> page
+* [if not n3_osric_bread] What goes into the bread, Brother Osric? -> bread
+* [if not n3_osric_supper] What's for supper, brother? -> supper
+* [if not n3_osric_page] Has anyone been at my ledger, Brother Osric? -> page
 
 == bread [set n3_osric_bread]
 Osric: My bread? Rye from our own granary, baked in our own oven. Best in the ward.

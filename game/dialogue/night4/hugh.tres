@@ -24,9 +24,9 @@ Hugh: You've told me the truth before, and I wrote it down. Do it again.
 
 == ask
 Hugh: What did you see?
-* [if died_crypt_pilgrim] (Tell him about the crypt.) -> crypt
-* (Say it was the demon.) -> demon
-* (Say you were never there.) -> denied
+* [if died_crypt_pilgrim] I saw a bound man killed at the altar in the crypt. -> crypt
+* It was the demon, Father Prior. -> demon
+* It wasn't me, Father Prior. I was never there. -> denied
 
 # Telling the prior anything: Suspicion +10, because Ranulf overhears (design doc).
 == crypt [set n4_hugh_night=crypt] [suspicion 10]
@@ -51,9 +51,9 @@ Hugh: Then someone wears your face. I'll find out who.
 Hugh: Your keys. Give them here.
 (He turns them in the grey light and scrapes a tooth with his thumbnail. Wax comes away.)
 Hugh: Someone has taken a mould of these. When were they out of your hands?
-* [if n3_thomas_hid_you] (Say you were in the infirmary, with Thomas.) -> keys_thomas
-* (Say you don't know.) -> keys_unknown
-* (Say they've never left you.) -> keys_lie
+* [if n3_thomas_hid_you] I was in the infirmary last night, with Brother Thomas. -> keys_thomas
+* I don't know, Father Prior. -> keys_unknown
+* They've never left me, Father Prior. -> keys_lie
 
 == keys_thomas [set n4_hugh_keys=thomas]
 Hugh: With Thomas. All night, and your keys on your belt the whole while.

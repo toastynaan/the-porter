@@ -17,7 +17,7 @@ text = "# DRAFT
 
 == topics
 * [if not n2_dunstan_help] (Pick up an armful and help him stack.) -> help
-* [if died_merchant] [if not n2_dunstan_pond] (Ask if he was there when they pulled the merchant out.) -> pond
+* [if died_merchant] [if not n2_dunstan_pond] Were you there when they pulled the merchant out, brother? -> pond
 
 == help [set n2_dunstan_help]
 (He watches you set the logs down. Then he lifts them off the pile and stacks them again, his own way.)

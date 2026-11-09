@@ -18,8 +18,8 @@ Wulfric: Still here, boy? Go and ring something.
 -> topics
 
 == topics
-* [if not n4_choira_fast] (Ask how he's bearing the fast.) -> fast
-* [if not n4_choira_came] (Ask how he came to the abbey.) -> came
+* [if not n4_choira_fast] How are you bearing the fast, brother? -> fast
+* [if not n4_choira_came] How did you come to the abbey, brother? -> came
 
 == fast [set n4_choira_fast]
 Wulfric: Better than the young ones. I've kept every Lent since before you were born. An empty belly's a quiet one.

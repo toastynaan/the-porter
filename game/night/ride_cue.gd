@@ -6,7 +6,10 @@ extends Marker3D
 ## road to it. Its lines wait while the porter is talking to someone, and are
 ## dropped once the wagon is `keep` metres past. With `hold` the wagon stops
 ## here, waits until he's done talking, says the lines and stands for `hold`
-## seconds (the warden at Aldgate looking them over).
+## seconds (the warden at Aldgate looking them over). With `talk`, someone
+## turns to him and starts a conversation after the lines (the traveller as
+## the wagon sets off); with `cut_in`, its lines cut short any talk he's in
+## and are said at once (the carter pulling in).
 
 ## "Name: words" is Name speaking; a line in brackets is what he notices.
 @export var lines: PackedStringArray
@@ -21,6 +24,12 @@ extends Marker3D
 @export var keep := 30.0
 ## People here who turn to watch the wagon while it's within 15 m.
 @export var watchers: Array[Node3D] = []
+## A conversation `talker` starts with him here, after the lines; it waits,
+## like the lines, while he's talking to someone.
+@export var talk: Conversation
+@export var talker: Node3D
+## The lines cut short any talk he's in, and drop any still waiting.
+@export var cut_in := false
 
 ## Metres along the road (RideBeat sets it).
 var along := 0.0

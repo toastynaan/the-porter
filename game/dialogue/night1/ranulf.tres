@@ -19,9 +19,9 @@ Ranulf: Something else?
 -> topics
 
 == topics
-* [if not n1_ranulf_candles] (Ask about the candles.) -> candles
-* [if not n1_ranulf_relic] (Ask about the relic.) -> relic
-* [if not n1_ranulf_incense] (Ask about the incense.) -> incense
+* [if not n1_ranulf_candles] What should I know about the candles? -> candles
+* [if not n1_ranulf_relic] Tell me about the relic. -> relic
+* [if not n1_ranulf_incense] What's the incense for? -> incense
 
 == candles [set n1_ranulf_candles]
 Ranulf: Wax on the altar, tallow everywhere else. Every one is counted.

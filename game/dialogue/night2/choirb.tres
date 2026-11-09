@@ -20,7 +20,7 @@ Aldo: No Bede yet. He'll catch it from the prior.
 -> topics
 
 == topics
-* [if not n2_choirb_bede] (Say you'll look for him at Matins.) -> bede
+* [if not n2_choirb_bede] I'll look for him at Matins. -> bede
 
 == bede [set n2_choirb_bede]
 Aldo: Count him in for me, then. Third stall on the left.

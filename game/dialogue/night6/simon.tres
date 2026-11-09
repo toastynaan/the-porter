@@ -23,9 +23,9 @@ Simon: Something went by while you were gone. I didn't look.
 -> topics
 
 == topics
-* [if not n6_simon_passage] (Ask what he knows of the crypt passage.) -> passage
-* [if not n6_simon_with=follow] (Ask him to come with you.) [follow] -> follow
-* [if n6_simon_with=follow] (Tell him to wait here.) [wait] -> wait
+* [if not n6_simon_passage] What do you know of the crypt passage, brother? -> passage
+* [if not n6_simon_with=follow] Come with me, Brother Simon. [follow] -> follow
+* [if n6_simon_with=follow] Wait for me here, Brother Simon. [wait] -> wait
 
 == passage [set n6_simon_passage] [note crypt_candles]
 Simon: Thomas sent me down there with candles, twice since Michaelmas. A door in the granary closet that looks like the planks.

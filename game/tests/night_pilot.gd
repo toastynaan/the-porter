@@ -583,7 +583,7 @@ func keep_gate(pick: int, read: Array[StringName], answer: Array, bed := "GuestB
 		if not (n as VisitorNPC).lying and (n as VisitorNPC).visible:
 			npc = n
 	await until(func() -> bool: return Talk.is_choosing(), 5.0)
-	# A visitor with a question: "(Go on.)" to the three choices.
+	# A visitor with a question: ask him nothing, on to the three choices.
 	if not npc.visitor.question.is_empty():
 		answer[0] = 1
 		await until(func() -> bool: return not Talk.is_choosing(), 2.0)

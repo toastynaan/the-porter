@@ -22,9 +22,9 @@ Simon: You came back. Nobody else has.
 -> topics
 
 == topics
-* [if not n5_simon_sent] (Ask who sent him to scrub the blood.) -> sent
-* [if simon_blood] [if not n5_simon_flags] (Ask what he was really scrubbing.) -> flags
-* [if not n5_simon_promise] (Promise to keep it to yourself.) -> promise
+* [if not n5_simon_sent] Who sent you to scrub the blood, brother? -> sent
+* [if simon_blood] [if not n5_simon_flags] What were you really scrubbing, brother? -> flags
+* [if not n5_simon_promise] I'll keep it to myself, brother. I promise. -> promise
 
 == sent [set n5_simon_sent] [note thomas_sent_simon]
 Simon: I told you. Don't make me say it again.

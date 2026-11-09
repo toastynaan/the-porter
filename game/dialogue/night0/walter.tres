@@ -19,8 +19,8 @@ Walter: Back to Walter! They always come back.
 
 == topics
 * [if not n0_walter_box] (Look in his box.) -> box
-* [if not n0_walter_abbey] (Ask if he knows the abbey.) -> abbey
-* [if n0_walter_abbey] [if not n0_walter_why] (Ask what business takes him to its gate.) -> why
+* [if not n0_walter_abbey] Do you know the abbey? -> abbey
+* [if n0_walter_abbey] [if not n0_walter_why] What business have you at the abbey gate? -> why
 
 == box [set n0_walter_box]
 (He lifts the lid. Little bones, scraps of cloth and a cloudy phial, each on its own bed of wool.)

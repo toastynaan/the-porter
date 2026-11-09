@@ -34,8 +34,8 @@ Osric: Back for a taste? Not till the bell.
 -> topics
 
 == topics
-* [if not n2_osric_supper] (Ask what's for supper.) -> supper
-* [if bread_warned] [if not n2_osric_bread] (Ask what's in the bread.) -> bread
+* [if not n2_osric_supper] What's for supper, brother? -> supper
+* [if bread_warned] [if not n2_osric_bread] What's in the bread, brother? -> bread
 
 == supper [set n2_osric_supper]
 Osric: Eels, stewed, if the eelman got through the rain. He did. And the bread, with a heel put by for you.

@@ -20,9 +20,9 @@ Edwin: You're back! I've still got all these to put out. Walk with me?
 -> topics
 
 == topics
-* [if not n1_edwin_relic] (Ask about the relic.) -> relic
-* [if not n1_edwin_duties] (Ask what a novice does all day.) -> duties
-* [if n0_squint_scare] [if not n1_edwin_squint] (Tell him what you saw through the squint.) -> squint
+* [if not n1_edwin_relic] Tell me about the relic. -> relic
+* [if not n1_edwin_duties] What does a novice do all day? -> duties
+* [if n0_squint_scare] [if not n1_edwin_squint] Last night, through a squint, I saw something tall inside the wall. -> squint
 
 == relic [set n1_edwin_relic]
 Edwin: You haven't seen it? The saint's own finger, in a silver hand on the high altar. With the candles behind it, it glows.

@@ -20,9 +20,9 @@ Bede: Brother.
 -> topics
 
 == topics
-* [if not n1_warner_supper] (Ask what's for supper.) -> supper
-* [if not n1_warner_door] (Ask what he's watching for.) -> door
-* [if not n1_warner_tower] (Ask about ringing Matins.) -> tower
+* [if not n1_warner_supper] What's for supper, brother? -> supper
+* [if not n1_warner_door] What are you watching for, brother? -> door
+* [if not n1_warner_tower] How do I ring Matins? -> tower
 
 == supper [set n1_warner_supper]
 Bede: Pottage. Bread. There's always bread.

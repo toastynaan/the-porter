@@ -11,9 +11,9 @@ text = "# DRAFT
 == start
 (A brother of the choir, his hands in his sleeves. You know his face from Matins.)
 A choir brother: Porter. God give you good evening.
-* (Ask about the brother who died.) -> died
-* [if bread_warned] (Ask about the bread.) -> bread
-* (Wish him good night.) -> end
+* Did you know the brother who died? -> died
+* [if bread_warned] The brother who died warned me off the bread. Why? -> bread
+* Good night, brother. -> end
 
 == died
 A choir brother: Bede. Nine years I sang beside him at the night office. He sang flat, and knew it, and sang anyway.

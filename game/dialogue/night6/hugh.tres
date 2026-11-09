@@ -29,9 +29,9 @@ Hugh: Well? We haven't the night to stand here.
 -> topics
 
 == topics
-* [if not n6_hugh_proof] (Ask where to look for proof.) -> proof
-* [if not n6_hugh_gate] (Ask about the gate.) -> gate
-* [if not n6_hugh_roger] (Ask whether Roger will help.) -> roger
+* [if not n6_hugh_proof] Where do I look for proof, Father Prior? -> proof
+* [if not n6_hugh_gate] Who has the gate tonight, Father Prior? -> gate
+* [if not n6_hugh_roger] Will Roger help us, Father Prior? -> roger
 
 == proof [set n6_hugh_proof]
 Hugh: That key you pulled out of the rye opens the closet in the granary. The stair behind it goes down under the nave.

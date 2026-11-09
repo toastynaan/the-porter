@@ -15,8 +15,9 @@ extends CharacterBody3D
 ## He crawls through squeezes (crawl_along), hides in hiding spots (hide_in,
 ## then `interact` to climb out), and stumbles when he stares at the demon
 ## too long. `controls_locked` takes his body away (a capture, a cutscene).
-## Talking to someone (start_talk, from Talk) he stands still, his view eased
-## in on their face and held near it; a move key walks him away.
+## Talking to someone (start_talk, from Talk) he stands still: his view
+## turns to their face and narrows for a moment, then is his again, and a
+## move key walks him away.
 ##
 ## He peeks through a squint (peek(), E again steps back): his eye to the
 ## bars, the view held within its few degrees.
@@ -66,9 +67,13 @@ const STICK_SPEED := 2.6
 const PITCH_LIMIT := 85.0
 ## Seconds to climb into or out of a hiding spot.
 const HIDE_TIME := 0.7
-## Talking: degrees the view narrows, and seconds to turn to their face.
+## Talking: degrees the view narrows, seconds to turn to their face, and
+## seconds it stays on them before it's his again.
 const TALK_ZOOM := 22.0
 const TALK_TURN_TIME := 0.45
+const TALK_HOLD := 1.2
+## Pixels of mouse movement in one go that take his view off their face early.
+const TALK_LET_GO := 3.0
 
 ## Tests and scripted moments drive the player through these instead of the
 ## keyboard: x right, y forward, as from Input.get_vector().
@@ -117,11 +122,9 @@ var _hide_moving := false
 ## The hiding spot's view: look is limited around it.
 var _hide_yaw := 0.0
 var _hide_pitch := 0.0
-## Talking: the view held on their face, and turning to it.
-var _talk_yaw := 0.0
-var _talk_pitch := 0.0
-var _talk_cone := Vector2.ZERO
+## Talking: turning to their face, and his view still on it.
 var _talk_turning := false
+var _talk_glance := false
 var _talk_tween: Tween
 ## He has let go of the move keys since the talk began.
 var _talk_still := false
@@ -156,6 +159,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	var motion := event as InputEventMouseMotion
 	if motion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if _can_look():
+			if _talk_glance and motion.relative.length() >= TALK_LET_GO:
+				_let_go_of_face()
 			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
 	elif Press.fresh(event, &"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
@@ -183,6 +188,8 @@ func _turn(raw: Vector2) -> Vector2:
 func _process(delta: float) -> void:
 	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 	if stick.length() > 0.0 and _can_look():
+		if _talk_glance and stick.length() > 0.3:
+			_let_go_of_face()
 		_look(_turn(stick * STICK_SPEED * delta))
 
 
@@ -194,11 +201,6 @@ func _look(turn: Vector2) -> void:
 		var pitch_limit := deg_to_rad(hiding.look_pitch if hiding else Squint.PEEK_LOOK)
 		yaw = _hide_yaw + clampf(wrapf(yaw - _hide_yaw, -PI, PI), -yaw_limit, yaw_limit)
 		pitch = clampf(pitch, _hide_pitch - pitch_limit, _hide_pitch + pitch_limit)
-	elif talking:
-		var yaw_cone := deg_to_rad(_talk_cone.x)
-		var pitch_cone := deg_to_rad(_talk_cone.y)
-		yaw = _talk_yaw + clampf(wrapf(yaw - _talk_yaw, -PI, PI), -yaw_cone, yaw_cone)
-		pitch = clampf(pitch, _talk_pitch - pitch_cone, _talk_pitch + pitch_cone)
 	rotation.y = yaw
 	head.rotation.x = clampf(pitch, -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
 
@@ -210,7 +212,6 @@ func _physics_process(delta: float) -> void:
 		var turned := wrapf(riding.global_rotation.y - _ride_yaw, -PI, PI)
 		_ride_yaw = riding.global_rotation.y
 		rotation.y += turned
-		_talk_yaw += turned
 		velocity = Vector3.ZERO
 		return
 	if crawling or hiding or _hide_moving or peeking:
@@ -304,24 +305,37 @@ func sight_points() -> Array[Vector3]:
 	return [head_at, chest]
 
 
-## Holds his view on `at` (someone's face): he turns to it and his view
-## narrows, and he can look about only within `cone` (degrees either side).
-func start_talk(at: Vector3, cone: Vector2) -> void:
+## Talking to someone: he turns to `at` (their face) and his view narrows,
+## stays on them for TALK_HOLD seconds (less if he looks away), then widens
+## again and is his: he stands still, and looks where he likes.
+func start_talk(at: Vector3) -> void:
 	talking = true
 	_talk_still = false
 	running = false
-	_talk_cone = cone
 	var to := at - camera.global_position
-	_talk_yaw = atan2(-to.x, -to.z)
-	_talk_pitch = clampf(atan2(to.y, Vector2(to.x, to.z).length()), -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
+	var yaw := atan2(-to.x, -to.z)
+	var pitch := clampf(atan2(to.y, Vector2(to.x, to.z).length()), -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
 	_talk_turning = true
+	_talk_glance = true
 	if _talk_tween:
 		_talk_tween.kill()
 	_talk_tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_talk_tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(_talk_yaw - rotation.y, -PI, PI), TALK_TURN_TIME)
-	_talk_tween.tween_property(head, ^"rotation:x", _talk_pitch, TALK_TURN_TIME)
+	_talk_tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(yaw - rotation.y, -PI, PI), TALK_TURN_TIME)
+	_talk_tween.tween_property(head, ^"rotation:x", pitch, TALK_TURN_TIME)
 	_talk_tween.tween_property(self, ^"zoom", TALK_ZOOM, TALK_TURN_TIME)
 	_talk_tween.chain().tween_callback(func() -> void: _talk_turning = false)
+	_talk_tween.chain().tween_interval(TALK_HOLD)
+	_talk_tween.chain().tween_callback(func() -> void: _talk_glance = false)
+	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
+
+
+## His view comes off their face before its time: he looked away.
+func _let_go_of_face() -> void:
+	_talk_glance = false
+	if _talk_tween:
+		_talk_tween.kill()
+	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
 
 
 ## Lets his view go: the conversation is over, or he walked away.
@@ -330,6 +344,7 @@ func end_talk() -> void:
 		return
 	talking = false
 	_talk_turning = false
+	_talk_glance = false
 	if _talk_tween:
 		_talk_tween.kill()
 	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

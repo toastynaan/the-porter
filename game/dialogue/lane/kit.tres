@@ -61,7 +61,7 @@ Kit: Well? What's it like in there? Did you see the finger? Is it real?
 
 == n1_ask
 * [if not lane_kit_n1_finger] Not yet. -> n1_notyet
-* [if not lane_kit_n1_buyers] (Ask who buys her candles.) -> n1_buyers
+* [if not lane_kit_n1_buyers] Who buys your candles? -> n1_buyers
 
 == n1_notyet [set lane_kit_n1_finger]
 Kit: Not yet! You live there. I'd have seen it the first morning. I'd have touched it.

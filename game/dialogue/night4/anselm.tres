@@ -20,9 +20,9 @@ Anselm: Back again, porter? Sit.
 -> topics
 
 == topics
-* [if not n4_anselm_hear] (Ask what he hears at night.) -> hear
-* [if keys_copied] [if not n4_anselm_keys] (Tell him your keys were copied.) -> keys
-* [if n4_thomas_simon] [if not n4_anselm_simon] (Ask about Brother Simon.) -> simon
+* [if not n4_anselm_hear] What do you hear at night, Brother Anselm? -> hear
+* [if keys_copied] [if not n4_anselm_keys] Someone has copied my keys, brother. -> keys
+* [if n4_thomas_simon] [if not n4_anselm_simon] What do you know of Brother Simon? -> simon
 
 == hear [set n4_anselm_hear]
 Anselm: Feet on the night stair, after Compline, when every brother's abed. More than one pair.

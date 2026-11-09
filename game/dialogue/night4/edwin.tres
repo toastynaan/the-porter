@@ -20,9 +20,9 @@ Edwin: Still here? Good. Stay a bit.
 -> topics
 
 == topics
-* [if not n4_edwin_afraid] (Ask what has frightened him.) -> afraid
-* [if not n4_edwin_fast] (Ask how he's bearing the fast.) -> fast
-* [if not n4_edwin_psalm] (Ask what he's reading.) -> psalm
+* [if not n4_edwin_afraid] What has frightened you, Edwin? -> afraid
+* [if not n4_edwin_fast] How are you bearing the fast? -> fast
+* [if not n4_edwin_psalm] What are you reading? -> psalm
 
 == afraid [set n4_edwin_afraid]
 (He looks over your shoulder into the fog before he answers.)

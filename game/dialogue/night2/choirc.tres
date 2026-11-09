@@ -26,7 +26,7 @@ Piers: Still raining.
 -> topics
 
 == topics
-* [if not n2_choirc_talk] (Ask what the brothers are saying.) -> talk
+* [if not n2_choirc_talk] What are the brothers saying? -> talk
 
 == talk [set n2_choirc_talk]
 -> talk_dead [if died_merchant]

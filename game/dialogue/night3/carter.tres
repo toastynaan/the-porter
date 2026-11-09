@@ -11,9 +11,9 @@ text = "# DRAFT
 == start
 (The carter, walking at his horse's head, the wagon rattling empty behind him.)
 Carter: Porter. I can't stop. I want to be out through Aldgate before they shut it.
-* (Ask about the lane.) -> lane
-* (Ask if he has seen pilgrims on the road.) -> pilgrims
-* (Wish him good night.) -> end
+* How's the lane tonight? -> lane
+* Have you seen any pilgrims on the road? -> pilgrims
+* Good night. Go carefully. -> end
 
 == lane
 Carter: Quiet as a church. Quieter than your church, by what they say.

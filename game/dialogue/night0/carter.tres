@@ -8,8 +8,7 @@ id = &"n0_carter"
 text = "# DRAFT
 # The carter sets the porter down in the lane by the abbey gate at dusk, night 0.
 == start
-(The wagon stops with a jolt. A narrow lane, timber houses leaning over it, and a stone porch with an iron grille.)
-Carter: Here's your abbey. Down you get, brother. I've a horse to stable before dark.
+Carter: (He reins in with a jolt.) Here's your abbey. Down you get, brother. I've a horse to stable before dark.
 * Will you wait while I knock? -> wait
 * Is the gate always shut like this? -> shut
 * God keep you. -> bless

@@ -17,7 +17,7 @@ Piers: Still raining. It always is, in November.
 -> topics
 
 == topics
-* [if not n1_choirc_house] (Ask what the house is like.) -> house
+* [if not n1_choirc_house] What's the house like, brother? -> house
 
 == house [set n1_choirc_house]
 Piers: Quiet. We were thirty once, the old brothers say. Now look at us.

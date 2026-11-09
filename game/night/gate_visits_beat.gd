@@ -9,8 +9,10 @@ extends NightBeat
 ## up the lane with his lantern and knocks; the knock wakes a dozing porter
 ## (who hasn't seen him come: he is at the grille already). No dozing while
 ## someone is at the gate. At the grille they talk (Talk.begin: the porter's
-## view eases in on him), and the porter reads him by looking him over: each
-## VisitorDetail he looks at gives a line and goes into the ledger. He can
+## view turns to him for a moment), he may ask the visitor's question (he
+## says it, and the visitor answers), and the porter reads him by looking him
+## over: each VisitorDetail he looks at gives a line and goes into the
+## ledger. He can
 ## walk away from the grille; the visitor waits, knocking now and then, until
 ## he comes back. Then he chooses:
 ## - Admit: lift the bar, open the gate; the visitor comes in; shut and bar
@@ -29,10 +31,9 @@ const CHILD_KNOCK_DOSE := 50.0
 const READ_ANGLE := 9.0
 const READ_RANGE := 4.0
 const READ_TIME := 0.35
-## At the grille he can look the visitor over, boots to face (degrees either
-## side of the face, yaw and pitch).
-const GRILLE_CONE := Vector2(40.0, 50.0)
 const CHOICES := ["Admit him to the guesthouse", "Turn him away", "Send for the prior"]
+## Not asking the visitor's question: on to what to do with him.
+const DONT_ASK := "(Ask him nothing.)"
 
 @export var visitors: Array[Visitor] = []
 ## When each visitor knocks, in hours (in the order of `visitors`).
@@ -102,13 +103,14 @@ func _receive(v: Visitor) -> void:
 	var pick := -1
 	var asking := not v.question.is_empty() and not GameState.has_flag(GameState.tonight("asked_" + String(v.id)))
 	while asking:
-		Talk.begin(npc, GRILLE_CONE)
+		Talk.begin(npc)
 		await say(v.speaker, v.greeting)
 		_reading = true
 		_read.call(npc, v, noticed)
-		var ask := await Talk.choose(PackedStringArray([v.question, "(Go on.)"]), v.speaker, v.greeting)
+		var ask := await Talk.choose(PackedStringArray([v.question, DONT_ASK]), v.speaker, v.greeting)
 		if ask == 0:
 			GameState.set_flag(GameState.tonight("asked_" + String(v.id)))
+			await say(Talk.PORTER, v.question)
 			for line in v.answer:
 				await say(v.speaker, line)
 		var walked := Talk.left
@@ -120,7 +122,7 @@ func _receive(v: Visitor) -> void:
 			# asks again if he hadn't heard the question out.
 			await _knock_until_answered(KNOCK, 1.4)
 	while pick < 0:
-		Talk.begin(npc, GRILLE_CONE)
+		Talk.begin(npc)
 		await say(v.speaker, v.greeting)
 		_reading = true
 		_read.call(npc, v, noticed)

@@ -17,7 +17,7 @@ Wulfric: The bell, boy. On the mark.
 -> topics
 
 == topics
-* [if not n1_choira_long] (Ask how long he has sung here.) -> long
+* [if not n1_choira_long] How long have you sung here, brother? -> long
 
 == long [set n1_choira_long]
 Wulfric: Forty years. I've seen porters come, and I've seen them go. Most of them go.

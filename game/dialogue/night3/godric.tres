@@ -19,9 +19,9 @@ Abbot Godric: Forgive me. The smoke. A small price for the safety of the house.
 -> topics
 
 == topics
-* [if not n3_godric_demon] (Ask about the demon.) -> demon
-* [if not n3_godric_porter] (Ask how you are doing as porter.) -> porter
-* [if not n3_godric_blessing] (Ask for his blessing.) -> blessing
+* [if not n3_godric_demon] Is there truly a demon in the house, Father Abbot? -> demon
+* [if not n3_godric_porter] How am I doing as porter, Father Abbot? -> porter
+* [if not n3_godric_blessing] Will you bless me, Father Abbot? -> blessing
 
 == demon [set n3_godric_demon]
 Abbot Godric: It has come into our house. I said so before the brothers this morning, and I'll say it again.

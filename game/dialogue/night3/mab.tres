@@ -19,8 +19,8 @@ Mab: Still here? So am I.
 -> topics
 
 == topics
-* [if not n3_mab_saw] (Ask what she has seen.) -> saw
-* [if bread_warned] [if not n3_mab_bread] (Ask if she eats the abbey's bread.) -> bread
+* [if not n3_mab_saw] What have you seen, Mab? -> saw
+* [if bread_warned] [if not n3_mab_bread] Do you eat the abbey's bread, Mab? -> bread
 * [if not n3_mab_alms] (Give her alms.) -> alms
 
 == saw [set n3_mab_saw]

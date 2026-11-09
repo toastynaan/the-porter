@@ -20,9 +20,9 @@ Ranulf: Porter.
 -> topics
 
 == topics
-* [if not n5_ranulf_abbot] (Say the abbot can hardly breathe for the smoke.) -> abbot
-* [if not n5_ranulf_where] (Ask where he was when Thomas was attacked.) -> where
-* [if lane_kit_5] [if not n5_ranulf_candles] (Say Kit told you he bought no candles today.) -> candles
+* [if not n5_ranulf_abbot] The abbot can hardly breathe for the smoke. -> abbot
+* [if not n5_ranulf_where] Where were you when Brother Thomas was attacked? -> where
+* [if lane_kit_5] [if not n5_ranulf_candles] Kit says you bought no candles today, brother. -> candles
 
 == abbot [set n5_ranulf_abbot]
 Ranulf: Then he should breathe deeper. It works on what's in the chest as well as what's in the house.

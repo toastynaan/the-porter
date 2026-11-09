@@ -27,7 +27,7 @@ Wulfric: Still here, boy? Go and ring something.
 -> topics
 
 == topics
-* [if not n2_choira_abbot] (Ask what the abbot is afraid of.) -> abbot
+* [if not n2_choira_abbot] What is the abbot afraid of, brother? -> abbot
 
 == abbot [set n2_choira_abbot]
 Wulfric: Bad dreams. He's had them since Michaelmas. At his age you dream of the grave, and he's earned it.

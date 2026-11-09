@@ -10,9 +10,9 @@ text = "# DRAFT
 == start
 (A woman with a covered basket on her arm, walking fast, her eyes on the cobbles.)
 Margery: Can't stop, brother, I'm sorry. Not with the light going.
-* (Ask where she's hurrying.) -> home
-* (Ask what she's afraid of.) -> afraid
-* (Bless her, and let her go.) [trust margery 5] -> bless
+* Where are you hurrying to? -> home
+* What are you afraid of? -> afraid
+* Go with God, then. [trust margery 5] -> bless
 
 == home
 Margery: Home, by Saint Andrew's. The long way round.

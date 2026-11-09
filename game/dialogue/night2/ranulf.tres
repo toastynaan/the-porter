@@ -20,8 +20,8 @@ Ranulf: You're in my light.
 -> topics
 
 == topics
-* [if not n2_ranulf_bell] (Ask about ringing Matins.) -> bell
-* [if n0_ralph_candles] [if not n2_ranulf_ralph] (Say Ralph the chandler sells him twice what he used to.) -> ralph
+* [if not n2_ranulf_bell] Anything I should know about ringing Matins tonight? -> bell
+* [if n0_ralph_candles] [if not n2_ranulf_ralph] Ralph the chandler says you buy twice the candles you used to. -> ralph
 
 == bell [set n2_ranulf_bell]
 Ranulf: Pull like you mean it. The rope's been stiff with the wet these two nights. It'll feel heavy.

@@ -21,9 +21,9 @@ Simon: Porter.
 -> topics
 
 == topics
-* [if n4_thomas_simon] [if not n4_simon_night] (Ask where he goes at night.) -> night
-* [if not n4_simon_how] (Ask how he's keeping.) -> how
-* [if not n4_simon_warn] (Tell him to keep to the dormitory tonight.) [warn] -> warn
+* [if n4_thomas_simon] [if not n4_simon_night] Where do you go at night, brother? -> night
+* [if not n4_simon_how] How are you keeping, brother? -> how
+* [if not n4_simon_warn] Keep to the dormitory tonight, brother. Bar the door. [warn] -> warn
 
 == night [set n4_simon_night] [trust simon -5]
 (The thread snaps in his fingers.)

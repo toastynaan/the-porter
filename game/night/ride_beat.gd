@@ -1,14 +1,15 @@
 extends NightBeat
 ## The road in (design doc, night 0; docs/prologue.md, "The ride"): on rails,
 ## the carter's wagon drives itself from the fields past the white chapel,
-## through Aldgate, along the close streets and into the lane, about a minute
-## and three quarters. The porter rides at the back and can look about, and
-## talk to the traveller beside him whenever he likes. The RideCues along the
-## road play as the wagon passes them: lines, sounds, a new pace, a stop at
-## the city gate. Early on the carter pulls in to let a cart go by the other
-## way with a covered body on it (the hook), and the traveller talks about it,
-## breaking off whatever he was saying. It ends when the carter sets him down
-## by the abbey gate and drives off down the lane.
+## through Aldgate, along the close streets and into the lane, about two
+## minutes. The porter rides at the back and can look about. The traveller
+## beside him turns to him as they set off, and he can talk to the traveller
+## again whenever he likes. The RideCues along the road play as the wagon
+## passes them: lines, talks, sounds, a new pace, a stop at the city gate.
+## Early on the carter pulls in (his "Whoa" breaks off any talk) to let a
+## cart go by the other way with a covered body on it (the hook), and the
+## traveller talks about it. It ends when the carter sets him down by the
+## abbey gate and drives off down the lane.
 
 ## The wagon (its Seat, TravellerSeat and CarterSeat markers), and the road.
 @export var wagon: Node3D
@@ -186,7 +187,12 @@ func _pass_cues() -> void:
 			cue.add_child(a)
 			a.play()
 			a.finished.connect(a.queue_free)
-		if cue.hold <= 0.0 and not cue.lines.is_empty():
+		if cue.hold <= 0.0 and cue.cut_in:
+			# What was waiting to be said is past now.
+			Talk.interrupt()
+			_queue.clear()
+			_queue.append(cue)
+		elif cue.hold <= 0.0 and (not cue.lines.is_empty() or cue.talk):
 			_queue.append(cue)
 
 
@@ -209,8 +215,9 @@ func _hold_here() -> RideCue:
 	return null
 
 
-## Says the cues' lines in turn, while nobody's talking; drops those the
-## wagon has left behind, and stops one short if a talk begins.
+## Says the cues' lines in turn, and starts their talks, while nobody's
+## talking; drops those the wagon has left behind, and stops one short if a
+## talk begins.
 func _speak() -> void:
 	while _riding:
 		if _queue.is_empty() or _hush or not Talk.quiet():
@@ -221,6 +228,11 @@ func _speak() -> void:
 			continue
 		_speaking = true
 		await _say_unless_talking(cue.lines)
+		if cue.talk and cue.talker and not Talk.talking and not _hush:
+			# Not while he can't talk (the chapter card still up).
+			await until(func() -> bool: return not player().busy() or Talk.talking or _hush)
+			if not Talk.talking and not _hush:
+				await Talk.converse(cue.talk, cue.talker)
 		_speaking = false
 
 

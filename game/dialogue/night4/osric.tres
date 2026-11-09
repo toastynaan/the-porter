@@ -19,9 +19,9 @@ Osric: Still here? There's nothing behind that door but cold pots, porter. I pro
 -> topics
 
 == topics
-* [if not n4_osric_fast] (Ask about the fast.) -> fast
-* [if keys_copied] [if not n4_osric_keys] (Ask who in the house could copy a key.) -> keys
-* [if not n4_osric_oven] (Ask when the bakehouse oven was last lit.) -> oven
+* [if not n4_osric_fast] How long will the fast last, brother? -> fast
+* [if keys_copied] [if not n4_osric_keys] Who in this house could copy a key, brother? -> keys
+* [if not n4_osric_oven] When was the bakehouse oven last lit? -> oven
 
 == fast [set n4_osric_fast]
 Osric: Not a crumb till it leaves us, Father Abbot says, so it finds nothing in us to feed on.

@@ -115,7 +115,7 @@ Margery: My gran fasted every Friday of her life, and the devil took her husband
 -> n4_ask
 
 == n4_ask
-* (Wish her good night.) -> n4_night
+* Good night, Margery. -> n4_night
 
 == n4_night
 Margery: Good night! I'll settle for a night, brother. Never mind good.

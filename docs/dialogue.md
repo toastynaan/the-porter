@@ -1,17 +1,18 @@
 # Conversations (M7)
 
-Look at someone and press E. They turn to you, and your view eases in on their face and narrows. They say their line; you pick one of up to three answers, or walk away. Every line is a placeholder in brackets until the script is written.
+Look at someone (they're outlined) and press E, or they start it themselves (the traveller on the wagon, the carter setting you down, a visitor at the grille). They turn to you, and your view turns to their face for a moment, narrowed; then it's yours again. They say their lines; you pick one of up to three answers and say it, or walk away.
 
 ## How a talk plays
 
-- **The camera.** Your view turns to their face over 0.45 s and narrows by 22° (70° to 48°). You can look about within 30° of their face, so you can still study them. You stand still.
-- **Their lines.** Each shows for its reading time; E skips to the next. The last line stays up while you choose. Each press of E counts once: held down, it skips one line and answers nothing.
-- **Answers.** Up to three, numbered, then "Walk away", dimmer. Pick with the number keys, or the arrow keys and E.
-- **Walking away.** Pick "Walk away", or press any move key: the talk ends at once, your view widens again, and you walk off. They may call something after you. A move key you were already holding when the talk began doesn't count until you let go of it.
+- **The camera.** Your view turns to their face over 0.45 s and narrows by 22° (70° to 48°), stays on them for 1.2 s, then widens again over 0.45 s. Move the mouse or stick and it lets go at once. From then on you look where you like while they talk; you stand still.
+- **Their lines.** Each shows for its reading time; E skips to the next. The last line stays up while you choose. Each press of E counts once: held down, it skips one line and answers nothing. Something said over a talk (a pickup, a voice) shows over it, and when it's over their line shows again.
+- **Answers.** Up to three, numbered, then "Walk away" (on the wagon, "Turn away"), dimmer. Pick with the number keys, or the arrow keys and E. You say the answer you pick: your name, ALRIC, over it, then they reply. An answer in brackets is something you do, not say (give alms, shake your head, say nothing): it shows in italics without the brackets, and you don't say it.
+- **Narration.** A line in brackets is what you see, hear or do. It shows in italics, softer, with no brackets and no name. A bracket in a spoken line ("Osric: (He laughs.) Leave it.") shows as a small italic aside over the name, and the words without it. The ones that describe a sound stand in for it until the sound is made.
+- **Walking away.** Pick "Walk away", or press any move key: the talk ends at once and you walk off. They may call something after you. A move key you were already holding when the talk began doesn't count until you let go of it.
 - **Memory.** Talking to someone sets `talked_<id>`. The next time, they start at their `again` point. Answers can set flags and raise Suspicion, and can be offered only while a flag holds, so a question you've asked can drop off the list.
 - **Time.** The candle clock runs while you talk.
 
-At the gate it's the same: Walter's knock opens a conversation at the grille, with his greeting over the three gate choices (admit, turn away, send for the prior) and "Walk away". There you can look him over from boots to face (40° either side, 50° up and down), and the part of him nearest the middle of your view is the one you read, starting with his face. Walk away and he waits at the grille, knocking now and then, until you come back.
+At the gate it's the same: Walter's knock opens a conversation at the grille, with his greeting over the three gate choices (admit, turn away, send for the prior) and "Walk away". A visitor with a question offers it first: ask it (you say it, and he answers) or "Ask him nothing". Look him over from boots to face while he waits: the part of him nearest the middle of your view is the one you read. Walk away and he waits at the grille, knocking now and then, until you come back.
 
 ## Writing one
 
@@ -20,36 +21,39 @@ Each conversation is a `Conversation` resource, one per person per night (`game/
 ```
 # A note; ignored.
 == start
-Osric: (Placeholder: Osric greets you.)
+(A round brother at the kitchen fire, flour to the elbow.)
+Osric: The porter! At last, a man with an honest appetite.
 -> topics
 
 == again
-Osric: (Placeholder: Osric, still at the fire.)
+Osric: Back again? Smell that.
 -> topics
 
 == topics
-* [if not n3_osric_bread] (Ask about the bread.) -> bread
-* (Ask what is for supper.) -> supper
-* (Wish him good night.) -> end
+* [if not n3_osric_bread] What's this about the bread? -> bread
+* What's for supper, brother? -> supper
+* (Nod, and leave him to it.) -> end
 
 == bread [set n3_osric_bread]
-Osric: (Placeholder: he promises you extra bread.)
+Osric: (He laughs.) Extra for you tonight, porter. A man on the gate needs feeding.
 -> topics
 
 == supper
-Osric: (Placeholder: Osric on tonight's supper.)
+Osric: Pease pottage, and our own bread.
 -> topics
 
 == leave
-Osric: (Placeholder: he calls after you.)
+Osric: Come hungry!
 ```
 
 | Line | Means |
 | --- | --- |
 | `== name` | A point in the talk. It starts at the first point, or at `again` if you've talked to them before |
 | `Name: line` | Someone says a line |
-| `(line)` with no name | What the porter notices |
-| `* answer -> point` | An answer and where it leads: another point, or `end`. Three at most |
+| `Name: (aside) line` | A line with a small aside over the name (how they say it) |
+| `(line)` with no name | Narration: what the porter sees, hears or does |
+| `* answer -> point` | An answer, which he says, and where it leads: another point, or `end`. Three at most |
+| `* (answer) -> point` | An answer he does rather than says (give alms, say nothing) |
 | `-> point` | Goes on to another point with no answer asked |
 | `-> point [if flag]` | Goes there only if the tags hold; a point can list several, and the first that holds is taken (put one with no tags last) |
 | `== leave` | Said as you walk away in the middle of a talk |

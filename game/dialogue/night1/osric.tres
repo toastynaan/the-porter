@@ -20,9 +20,9 @@ Osric: Back again? Smell that. Patience, brother, patience.
 -> topics
 
 == topics
-* [if not n1_osric_supper] (Ask what's for supper.) -> supper
-* [if not n1_osric_bread] (Say you slept through dinner.) -> bread
-* [if d1_asked_sand] [if not n1_osric_beast] (Ask about the beast bled by the well.) -> beast
+* [if not n1_osric_supper] What's for supper, brother? -> supper
+* [if not n1_osric_bread] I slept through dinner. -> bread
+* [if d1_asked_sand] [if not n1_osric_beast] I hear a beast was bled by the well last night. -> beast
 
 == supper [set n1_osric_supper]
 Osric: Pease pottage, with a little bacon in it for them that work nights. That's you.

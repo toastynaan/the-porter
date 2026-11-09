@@ -22,8 +22,8 @@ text = "# DRAFT
 -> topics
 
 == topics
-* [if not n2_cole_take] (Say you'll take the gate after supper.) -> take
-* [if not n2_cole_today] (Ask if anyone came to the gate today.) -> today
+* [if not n2_cole_take] I'll take the gate after supper. -> take
+* [if not n2_cole_today] Did anyone come to the gate today? -> today
 
 == take [set n2_cole_take]
 Cole: After supper.

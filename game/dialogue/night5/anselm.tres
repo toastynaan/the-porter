@@ -21,9 +21,9 @@ Anselm: Not here, I said. Not here.
 -> topics
 
 == topics
-* [if not n5_anselm_tell] (Ask what he has to tell you.) -> tell
-* [if not n5_anselm_heard] (Ask what he heard from the chapter house.) -> heard
-* [if died_edwin] [if not n5_anselm_edwin] (Ask after Edwin.) -> edwin
+* [if not n5_anselm_tell] What do you have to tell me, brother? -> tell
+* [if not n5_anselm_heard] What did you hear from the chapter house? -> heard
+* [if died_edwin] [if not n5_anselm_edwin] Did you know Edwin well, brother? -> edwin
 
 == tell [set n5_anselm_tell]
 Anselm: At Matins. In the church, where the singing covers a man's voice. I'll find you.

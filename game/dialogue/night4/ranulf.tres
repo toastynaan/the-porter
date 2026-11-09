@@ -21,9 +21,9 @@ Ranulf: Porter. Again.
 -> topics
 
 == topics
-* [if not n4_ranulf_incense] (Ask about the incense.) -> incense
-* [if not n4_ranulf_remedy] (Ask about his remedy.) -> remedy
-* [if died_crypt_pilgrim] [if not n4_ranulf_crypt] (Ask what is kept in the crypt.) -> crypt
+* [if not n4_ranulf_incense] Why so much incense, brother? -> incense
+* [if not n4_ranulf_remedy] What is in your remedy, brother? -> remedy
+* [if died_crypt_pilgrim] [if not n4_ranulf_crypt] What is kept in the crypt, brother? -> crypt
 
 == incense [set n4_ranulf_incense]
 Ranulf: Father Abbot has doubled it again. Four times what we burned at Martinmas.

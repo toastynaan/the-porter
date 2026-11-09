@@ -18,8 +18,8 @@ Piers: Still cold.
 -> topics
 
 == topics
-* [if not n5_choirc_talk] (Ask what the brothers are saying.) -> talk
-* [if not n5_choirc_leave] (Ask if he'll leave the abbey.) -> go
+* [if not n5_choirc_talk] What are the brothers saying? -> talk
+* [if not n5_choirc_leave] Will you leave the abbey, brother? -> go
 
 == talk [set n5_choirc_talk]
 Piers: That it took the boy first because he was the youngest. That it walks in the fog. That it's no demon at all.

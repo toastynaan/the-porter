@@ -35,8 +35,8 @@ Anselm: Still there? I can hear you breathing.
 -> topics
 
 == topics
-* [if n1_knock_no_one] [if not n2_anselm_knock] (Tell him about the knock with no one there.) -> knock
-* [if not n2_anselm_lost] (Ask if he ever lost a guest, in his years at the gate.) -> lost
+* [if n1_knock_no_one] [if not n2_anselm_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if not n2_anselm_lost] In your years at the gate, brother, did you ever lose a guest? -> lost
 
 == knock [set n2_anselm_knock]
 (His hands find the arms of his chair and hold on.)

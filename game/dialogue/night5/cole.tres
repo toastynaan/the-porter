@@ -9,9 +9,9 @@ text = "# DRAFT
 # Cole at dusk, keeping the gate (night 5, clear and cold). Lay brothers don't talk (Look and Feel, \"Characters\").
 == start
 (Cole in the open gateway, arms folded. The lane is clear and cold behind him, every lantern sharp. He says nothing.)
-* (Ask if he heard the cry from the chapter house.) -> nothing
-* (Say you'll take the gate after supper.) -> nothing
-* (Wish him good evening.) -> end
+* Did you hear the cry from the chapter house? -> nothing
+* I'll take the gate after supper. -> nothing
+* Good evening, Brother Cole. -> end
 
 == again
 (Cole looks at you, then back at the lane. He says nothing.)

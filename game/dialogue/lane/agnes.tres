@@ -69,7 +69,7 @@ Agnes: And if you've a soul to send away, send them across before the bell. Afte
 
 == n1_ask
 * [if not lane_agnes_n1_cell] They've given me a cell by the gate. -> n1_cell
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n1_cell [set lane_agnes_n1_cell]
 Agnes: By the gate. You'll see who comes, then. Mind you see who goes, too.
@@ -101,8 +101,8 @@ Agnes: A quiet night, for once. Hob says that's when to worry.
 -> n2_ask
 
 == n2_ask
-* [if not lane_agnes_n2_jankin] (Ask her about Jankin.) -> n2_jankin
-* (Ask for an ale.) [drink] -> ale
+* [if not lane_agnes_n2_jankin] Where does Jankin sleep at night? -> n2_jankin
+* An ale, if you would. [drink] -> ale
 
 == n2_jankin [set lane_agnes_n2_jankin]
 Agnes: Jankin? Hob puts him out at the bell, every night God sends. He's soft about everything but his rules.
@@ -136,7 +136,7 @@ Agnes: The rain's stopped, at least. Small mercies.
 
 == n3_ask
 * [if not lane_agnes_n3_afraid] Are you afraid? -> n3_afraid
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n3_afraid [set lane_agnes_n3_afraid]
 Agnes: Of course I'm afraid. I've a lane full of fools to feed. Being afraid doesn't bake the bread.
@@ -157,7 +157,7 @@ Agnes: There's fog coming up off the river tonight. Keep your guests close, brot
 
 == n4_ask
 * [if not lane_agnes_n4_bar] Do you lock your doors at night? -> n4_bar
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n4_bar [set lane_agnes_n4_bar]
 Agnes: Lock them? I bar them, from the inside, every night. Hob has keys, and so did his father, and God knows who else.
@@ -196,7 +196,7 @@ Agnes: You look worse every dusk, brother. Are you sleeping at all?
 
 == n5_ask
 * [if not lane_agnes_n5_pray] Pray for our dead. -> n5_pray
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n5_pray [set lane_agnes_n5_pray]
 Agnes: I've prayed for your dead every night since Martinmas, brother. I'm running out of names.
@@ -211,7 +211,7 @@ Agnes: Whatever it is you've got in there, brother, keep your gate shut on it.
 
 == n6_ask
 * [if not lane_agnes_n6_what] What do you think it is? -> n6_what
-* (Ask for an ale.) [drink] -> ale
+* An ale, if you would. [drink] -> ale
 
 == n6_what [set lane_agnes_n6_what]
 Agnes: I don't think. I bake, and I bar the door, and I don't look out of that top window.

@@ -28,9 +28,9 @@ Godric: You're still here, child? Good. I'd rather not sit alone tonight.
 -> topics
 
 == topics
-* [if not n2_godric_demon] (Ask what troubles him.) -> demon
-* [if n1_knock_no_one] [if not n2_godric_knock] (Tell him about the knock with no one there.) -> knock
-* [if not n2_godric_counsel] (Ask what he'd have you do tonight.) -> counsel
+* [if not n2_godric_demon] What troubles you, Father Abbot? -> demon
+* [if n1_knock_no_one] [if not n2_godric_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if not n2_godric_counsel] What would you have me do tonight, Father Abbot? -> counsel
 
 == demon [set n2_godric_demon]
 Godric: Something has come into this house, brother. I feel it when I pray, like a draught from a door nobody opened.

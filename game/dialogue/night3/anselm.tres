@@ -20,9 +20,9 @@ Anselm: Back again? Nobody else comes twice. Sit.
 -> topics
 
 == topics
-* [if not n3_anselm_bell] (Ask what he meant: \"Don't let them in after the bell.\") -> bell
-* [if not n3_anselm_gate] (Ask him about keeping the gate.) -> gate
-* [if not n3_anselm_eyes] (Ask after his eyes.) -> eyes
+* [if not n3_anselm_bell] What did you mean, don't let them in after the bell? -> bell
+* [if not n3_anselm_gate] Tell me about keeping the gate, brother. -> gate
+* [if not n3_anselm_eyes] How did your eyes go, Brother Anselm? -> eyes
 
 == bell [set n3_anselm_bell]
 (His hand finds your sleeve and grips it. He listens to the room before he speaks.)

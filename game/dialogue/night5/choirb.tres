@@ -19,8 +19,8 @@ Aldo: Still here? Help me count, then.
 -> topics
 
 == topics
-* [if died_fog_brother] [if not n5_choirb_wulfric] (Ask about Wulfric.) -> wulfric
-* [if not n5_choirb_simon] (Ask about Simon.) -> simon
+* [if died_fog_brother] [if not n5_choirb_wulfric] I'm sorry about Brother Wulfric. -> wulfric
+* [if not n5_choirb_simon] What of Brother Simon? -> simon
 
 == wulfric [set n5_choirb_wulfric]
 Aldo: Six years I came in a beat behind him at Matins. Last night there was nothing to come in behind.

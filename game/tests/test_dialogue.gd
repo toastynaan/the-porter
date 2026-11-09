@@ -3,10 +3,15 @@ extends Node
 ## - The script: points, lines, up to three answers, "again" and "leave",
 ##   [if], [set] and [suspicion] tags, and the errors a bad script reports.
 ##   Every conversation under game/dialogue/ reads without errors.
-## - Talking: they turn to him and his view eases in on their face, narrowed;
-##   he looks about only near them; their lines, then the last one stays up
-##   over three answers and "Walk away"; answers set flags and Suspicion, and
-##   asked questions drop off.
+## - Talking: they turn to him and his view turns to their face, narrowed,
+##   for a moment; then it widens and he can look anywhere (looking away lets
+##   go sooner); their lines, then the last one stays up over three answers
+##   and "Walk away"; he says the answer he picks, unless it's in brackets
+##   (something he does); answers set flags and Suspicion, and asked
+##   questions drop off.
+## - Showing lines: narration (in brackets) in italics without its brackets
+##   or a name; an aside it opens with over the name; a line said over a talk
+##   gives the talk's line back when it's over.
 ## - Walking away by moving: the talk ends, his view comes back, they call
 ##   after him. The next talk starts at "again". `interact` skips a line.
 ## - Keys held down (from the playtest): `interact` held skips one line, and
@@ -28,7 +33,7 @@ Osric: (Again.)
 == topics
 * [if not asked_a] Ask A. -> a
 * [if door=open] Ask B. -> b
-* Ask C. -> c
+* (Do C.) -> c
 
 == a [set asked_a] [suspicion 5]
 Osric: (Answer A.)
@@ -116,7 +121,24 @@ func _run() -> void:
 	GameState.set_flag(&"door", &"shut")
 	await _seconds(0.3)
 
-	# Talking: they turn to him, his view eases in on their face.
+	# The way a line shows.
+	_check(Talk.aside("(He laughs.) Leave it.") == ["He laughs.", "Leave it."] and Talk.narration("(He (still) waits.)") == "He (still) waits."
+		and Talk.aside("Inside our wall? (He laughs.) At night?") == ["He laughs.", "Inside our wall? At night?"]
+		and Talk.narration("Osric: no brackets") == "" and Talk.narration("(He laughs.) Leave it.") == ""
+		and Talk.aside("An open (bracket") == ["", "An open (bracket"],
+		"a line in brackets is narration; a bracket in a spoken line is an aside")
+	Talk.say("Osric", "(He looks up.)", 0.5)
+	await get_tree().process_frame
+	_check(Talk._text.text == "He looks up." and not Talk._speaker.visible and Talk._text.has_theme_font_override(&"font"),
+		"narration shows in italics, with no brackets and no name (%s)" % Talk._text.text)
+	await _seconds(0.6)
+	Talk.say("Osric", "(He laughs.) Leave it.", 0.5)
+	await get_tree().process_frame
+	_check(Talk._aside.visible and Talk._aside.text == "He laughs." and Talk._speaker.text == "OSRIC" and Talk._text.text == "Leave it."
+		and not Talk._text.has_theme_font_override(&"font"), "a spoken line's aside shows over the name")
+	await _seconds(0.6)
+
+	# Talking: they turn to him, his view turns to their face for a moment.
 	talker.interact(_player)
 	await _seconds(Player.TALK_TURN_TIME + 0.1)
 	var face := osric.face_position()
@@ -126,24 +148,31 @@ func _run() -> void:
 	_check(ViewCheck.off_centre(_player.camera, face) < 3.0, "and turns to Osric's face (%.1f° off)" % ViewCheck.off_centre(_player.camera, face))
 	var to_porter := _player.global_position - osric.global_position
 	_check((-osric.global_basis.z).angle_to(Vector3(to_porter.x, 0, to_porter.z)) < 0.1, "Osric turns to face him")
-	_player._look(Vector2(3.0, 1.5))
+	await _seconds(Player.TALK_HOLD + Player.TALK_TURN_TIME + 0.1)
+	_check(Talk.talking and _player.zoom < 0.01, "a moment later his view widens again, and the talk goes on (zoom %.1f)" % _player.zoom)
+	_player._look(Vector2(PI * 0.8, 0.0))
 	var off := ViewCheck.off_centre(_player.camera, face)
-	_check(off > 20.0 and off < Talk.TALK_CONE.length() + 1.0, "he can look about, but only near Osric (%.1f° off)" % off)
-	_player._look(Vector2(-3.0, -1.5))
+	_check(Talk.talking and off > 120.0, "he can look anywhere while Osric talks (%.0f° off)" % off)
+	_player._look(Vector2(-PI * 0.8, 0.0))
 	await _choice()
 	_check(_said("(First line.)") and Talk._prompt == ["Osric", "(The question.)"] and GameState.has_flag(&"met") and GameState.has_flag(&"talked_test"),
 		"Osric says his lines; the last stays up over the choice")
-	_check(_offered[-1] == PackedStringArray(["Ask A.", "Ask C.", Talk.WALK_AWAY]),
+	_check(_offered[-1] == PackedStringArray(["Ask A.", "(Do C.)", Talk.WALK_AWAY]),
 		"three answers at most, those whose [if] holds, then Walk away: %s" % [_offered[-1]])
+	var shown: Array = Talk._options.get_children().map(func(l: Label) -> String: return l.text)
+	_check(shown.size() == 3 and shown[1] == "2.  Do C." and (Talk._options.get_child(1) as Label).has_theme_font_override(&"font"),
+		"an answer in brackets shows in italics, without them: %s" % [shown])
 
-	# An answer: its tags, its reply, and it drops off.
+	# An answer: he says it, its tags, its reply, and it drops off.
 	var suspicion := GameState.suspicion
 	_answer = 0
 	await _until(func() -> bool: return _said("(Answer A.)"), 3.0)
 	_answer = -1
+	var asked := Talk.history.find(["Alric", "Ask A."])
+	_check(asked >= 0 and asked < Talk.history.find(["Osric", "(Answer A.)"]), "he says the answer he picks, and Osric answers it")
 	await _choice()
 	_check(GameState.has_flag(&"asked_a") and GameState.suspicion == suspicion + 5, "the answer sets its flag and raises Suspicion")
-	_check(_offered[-1] == PackedStringArray(["Ask C.", Talk.WALK_AWAY]), "asked, it isn't offered again: %s" % [_offered[-1]])
+	_check(_offered[-1] == PackedStringArray(["(Do C.)", Talk.WALK_AWAY]), "asked, it isn't offered again: %s" % [_offered[-1]])
 
 	# Walking away: a move key.
 	Input.action_press(&"move_back")
@@ -160,7 +189,7 @@ func _run() -> void:
 	var leaves := _count_said("(Calls after you.)")
 	talker.interact(_player)
 	await _choice()
-	_check(_said("(Again.)") and _offered[-1] == PackedStringArray(["Ask B.", "Ask C.", Talk.WALK_AWAY]),
+	_check(_said("(Again.)") and _offered[-1] == PackedStringArray(["Ask B.", "(Do C.)", Talk.WALK_AWAY]),
 		"talked to before, it starts at \"again\"; [if door=open] now holds: %s" % [_offered[-1]])
 	_answer = 2
 	await _until(func() -> bool: return not talker.talking, 3.0)
@@ -179,27 +208,51 @@ func _run() -> void:
 	await _seconds(0.5)
 	_check(_said("(Answer C.)") and not _player.talking and _count_said("(Calls after you.)") == leaves,
 		"an answer that leads to end closes the talk; nobody calls after him")
+	_check(not _said("(Do C.)") and not Talk.history.has(["Alric", "Do C."]), "an answer in brackets is done, not said")
+
+	# Looking away while his view is on Osric lets it go at once.
+	talker.conversation = c
+	_player.place(Vector3(-30, 0.05, 8.0), PI)
+	await _seconds(0.2)
+	talker.interact(_player)
+	await _seconds(Player.TALK_TURN_TIME + 0.1)
+	Input.action_press(&"look_right")
+	await _seconds(0.1)
+	Input.action_release(&"look_right")
+	await _seconds(Player.TALK_TURN_TIME + 0.05)
+	_check(Talk.talking and _player.zoom < 0.01, "looking away lets his view off Osric's face before its time (zoom %.1f)" % _player.zoom)
+	await _choice()
+	_answer = 2
+	await _until(func() -> bool: return not talker.talking, 3.0)
+	_answer = -1
+	await _seconds(0.5)
 
 	# `interact` skips a line in a talk; held down, it counts once. A held key
 	# repeats, and in the editor's game window the repeats come as presses.
 	Talk.line_seconds = -1.0
 	var skip_c := Conversation.new()
-	skip_c.text = "== start\nOsric: (A long first line, long enough to take a few seconds to read.)\nOsric: (Second, and long enough to take a few seconds to read.)\nOsric: (Third.)\n-> end\n"
+	skip_c.text = "== start\nOsric: A long first line, long enough to take a few seconds to read.\nOsric: Second, and long enough to take a few seconds to read.\nOsric: Third.\n-> end\n"
 	talker.conversation = skip_c
 	talker.interact(_player)
 	await _seconds(0.3)
+	# Something said over his line (a pickup) gives it back when it's over.
+	Talk.say("", "(Picked up.)", 0.3)
+	await get_tree().process_frame
+	_check(Talk._text.text == "Picked up.", "a line said over the talk shows over it (%s)" % Talk._text.text)
+	await _seconds(0.4)
+	_check(Talk._text.text.begins_with("A long first"), "and when it's over, his line shows again (%s)" % Talk._text.text)
 	_action(&"interact", true)
 	await _seconds(0.2)
-	_check(Talk._text.text.begins_with("(Second"), "interact skips to the next line (%s)" % Talk._text.text)
+	_check(Talk._text.text.begins_with("Second"), "interact skips to the next line (%s)" % Talk._text.text)
 	for i in 8:
 		_action(&"interact", true)
 		await _seconds(0.05)
-	_check(Talk.talking and Talk._text.text.begins_with("(Second"), "held down, it skips no further (%s)" % Talk._text.text)
+	_check(Talk.talking and Talk._text.text.begins_with("Second"), "held down, it skips no further (%s)" % Talk._text.text)
 	_action(&"interact", false)
 	await _seconds(0.1)
 	_action(&"interact", true)
 	await _seconds(0.1)
-	_check(Talk._text.text == "(Third.)", "let go and pressed again, it skips on (%s)" % Talk._text.text)
+	_check(Talk._text.text == "Third.", "let go and pressed again, it skips on (%s)" % Talk._text.text)
 	_action(&"interact", false)
 	await _until(func() -> bool: return not talker.talking, 5.0)
 
@@ -249,7 +302,7 @@ func _run() -> void:
 	next_c.text = "== start\nOsric: (Something else.)\nOsric: (And more.)\n-> end\n"
 	Talk.converse(next_c, osric)
 	await _seconds(0.2)
-	_check(Talk.talking and not talker.talking and Talk._text.text == "(Something else.)"
+	_check(Talk.talking and not talker.talking and Talk._text.text == "Something else."
 		and not Talk.is_choosing() and Talk._options.get_child_count() == 0,
 		"cut short, its choice goes and the next talk opens at once (%s)" % Talk._text.text)
 	await _until(func() -> bool: return not Talk.talking, 8.0)

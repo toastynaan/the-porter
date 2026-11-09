@@ -21,9 +21,9 @@ Thomas: Still here? The supper bell won't be long.
 -> topics
 
 == topics
-* [if n0_saw_killing] [if not n1_thomas_well] (Tell him what you saw from the Keys.) -> well
-* [if not n1_thomas_key] (Ask about the guesthouse key.) -> key
-* [if not n1_thomas_anselm] (Ask after Anselm.) -> anselm
+* [if n0_saw_killing] [if not n1_thomas_well] Last night, from the Keys, I saw a man killed by the well. -> well
+* [if not n1_thomas_key] What should I do with the guesthouse key? -> key
+* [if not n1_thomas_anselm] How is Brother Anselm keeping? -> anselm
 
 == well [set n1_thomas_well]
 (He hears you out without stopping the pestle. Then he stops.)
@@ -56,8 +56,8 @@ Thomas: He frightens easily now, and he talks. Old porters' tales. Don't let him
 
 == anselm_ask
 Thomas: Did he say something to you this morning, after I'd gone?
-* (Tell him what Anselm whispered.) [trust thomas 5] -> anselm_told
-* (Say he only wished you well.) -> anselm_kept
+* He told me not to let them in after the bell. [trust thomas 5] -> anselm_told
+* He only wished me well. -> anselm_kept
 
 == anselm_told [set n1_thomas_whisper=told]
 (He nods slowly, and goes back to his mortar.)
