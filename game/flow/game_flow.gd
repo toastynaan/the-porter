@@ -17,6 +17,9 @@ signal ended(ending: StringName)
 
 enum Mode { TITLE, CARD, PLAYING, ENDING }
 
+## Seconds a chapter card's page takes to fade into the dark.
+const CARD_LEAVE := 0.6
+
 @export var main: Node
 @export var fade: ScreenFade
 @export var chapters: ChapterList
@@ -124,7 +127,19 @@ func start_chapter(i: int, carried: bool) -> void:
 	GameState.begin_chapter(i, chapters.chapters[i].night)
 	GameState.carried = carried
 	await card.show_chapter(chapters.chapters[i])
+	# The page fades into the dark, the chapter loads under black, and its
+	# first beat fades the world in (if it doesn't, this does).
+	fade.color.a = 1.0
+	await card.leave(CARD_LEAVE)
+	await get_tree().process_frame
 	_load_chapter(i)
+	_fade_in_if_left_dark.call()
+
+
+func _fade_in_if_left_dark() -> void:
+	await get_tree().create_timer(1.5).timeout
+	if mode == Mode.PLAYING and fade.color.a > 0.98:
+		fade.fade_to(0.0, 2.0)
 
 
 func _load_chapter(i: int) -> void:

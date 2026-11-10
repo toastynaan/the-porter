@@ -10,15 +10,13 @@ extends Node
 ## them his view eases from one to the next.
 const LOOKS := [
 	[0.0, Vector3(-1.0, 0.03, 0.06)],
-	[6.0, Vector3(-1.0, 0.02, -0.1)],
-	[9.0, Vector3(-0.2, 0.08, 1.0)],
-	[14.0, Vector3(0.35, 0.05, 1.0)],
-	[18.0, Vector3(1.0, 0.0, -0.35)],
-	[24.0, Vector3(1.0, 0.02, -0.25)],
-	[28.0, Vector3(-0.9, 0.05, 0.45)],
-	[34.0, Vector3(-1.0, 0.03, 0.2)],
+	[9.0, Vector3(-1.0, 0.02, -0.1)],
+	[14.0, Vector3(-0.3, 0.08, 1.0)],
+	[19.0, Vector3(0.3, 0.05, 1.0)],
+	[23.0, Vector3(-1.0, 0.03, 0.25)],
+	[44.0, Vector3(-1.0, 0.03, 0.2)],
 ]
-const LENGTH := 34.0
+const LENGTH := 44.0
 
 var _p: Player
 var _t := 0.0
@@ -39,14 +37,21 @@ func _ready() -> void:
 	(night.get_node(^"Hallucinations") as Hallucinations).active = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_p = get_tree().get_first_node_in_group(&"player") as Player
-	# He doesn't answer the traveller: the talk closes itself and the road goes by.
-	Talk.auto_choice = func(options: PackedStringArray) -> int: return options.size() - 1
+	# He turns away from the traveller's hello, and hears him out about the cart.
+	Talk.auto_choice = func(options: PackedStringArray) -> int:
+		return options.size() - 1 if not GameState.has_flag(&"talked_n0_traveller") else -1
 
 
 func _process(delta: float) -> void:
 	if _p == null or _p.riding == null:
 		return
 	_t += delta
+	if _t >= LENGTH:
+		get_tree().quit()
+	# While someone talks to him his view is the game's own (its glance, and
+	# the cart it follows as it goes by).
+	if Talk.talking:
+		return
 	var dir: Vector3 = LOOKS[-1][1]
 	for i in LOOKS.size() - 1:
 		if _t >= float(LOOKS[i][0]) and _t < float(LOOKS[i + 1][0]):
@@ -54,5 +59,3 @@ func _process(delta: float) -> void:
 			dir = (LOOKS[i][1] as Vector3).slerp(LOOKS[i + 1][1] as Vector3, k)
 	_p.rotation.y = atan2(-dir.x, -dir.z)
 	_p.head.rotation.x = atan2(dir.y, Vector2(dir.x, dir.z).length())
-	if _t >= LENGTH:
-		get_tree().quit()

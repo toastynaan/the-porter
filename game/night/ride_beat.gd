@@ -7,8 +7,9 @@ extends NightBeat
 ## again whenever he likes. The RideCues along the road play as the wagon
 ## passes them: lines, talks, sounds, a new pace, a stop at the city gate.
 ## Early on the carter pulls in (his "Whoa" breaks off any talk) to let a
-## cart go by the other way with a covered body on it (the hook), and the
-## traveller talks about it. It ends when the carter sets him down by the
+## cart go by the other way with a covered body on it (the hook): the
+## porter's view goes to the body and follows it by, and the traveller talks
+## about it. The night comes up out of black as the wagon sets off. It ends when the carter sets him down by the
 ## abbey gate and drives off down the lane.
 
 ## The wagon (its Seat, TravellerSeat and CarterSeat markers), and the road.
@@ -32,6 +33,8 @@ extends NightBeat
 @export var set_down: Marker3D
 @export var traveller: Node3D
 @export var carter: Node3D
+## Seconds the night takes to come up out of black as the wagon sets off.
+@export var fade_in := 3.5
 ## Metres the wagon drives on down the lane after it, out of sight.
 @export var drive_off := 45.0
 ## The abbey gate: barred tonight, nobody keeps it; Cole isn't at it.
@@ -84,6 +87,8 @@ func _ready() -> void:
 
 func run() -> void:
 	var p := player()
+	# It opens on black and comes up as the wagon rolls.
+	await fade_to(1.0, 0.0)
 	_points = points(path)
 	_length = _length_of(_points)
 	_gather_cues()
@@ -103,6 +108,7 @@ func run() -> void:
 	_pace = speed
 	_v = _pace * pace_scale
 	_riding = true
+	fade_to(0.0, fade_in / pace_scale)
 	_speak.call()
 	_watch.call()
 	while true:
@@ -276,7 +282,9 @@ func _hook() -> void:
 	if traveller_talk == null:
 		return
 	Talk.interrupt()
-	await Talk.converse(traveller_talk, traveller)
+	# His eyes go to what is on the cart, not to the man beside him.
+	var body: Node3D = body_cart.get_node_or_null(^"ShroudedBody") if is_instance_valid(body_cart) else null
+	await Talk.converse(traveller_talk, traveller, body if body else body_cart)
 
 
 ## Stopped at a cue: once nobody's talking, its lines, then it stands a while.

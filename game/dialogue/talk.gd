@@ -264,11 +264,12 @@ func answer(options: PackedStringArray, speaker := "", text := "") -> int:
 
 
 ## Plays `conversation` with `with` (anyone with face() and face_position(),
-## like a Brother or a VisitorNPC); await it. Each point's lines are said in
+## like a Brother or a VisitorNPC); await it. `watch`: what his eyes go to
+## as it opens, if not their face. Each point's lines are said in
 ## turn; the last comes up with the answers and stays while he chooses; he
 ## says the answer he picks, and they go on.
-func converse(conversation: Conversation, with: Node3D) -> void:
-	if not begin(with):
+func converse(conversation: Conversation, with: Node3D, watch: Node3D = null) -> void:
+	if not begin(with, watch):
 		return
 	var mine := _talk
 	var again := GameState.has_flag(conversation.talked_flag())
@@ -320,9 +321,11 @@ func converse(conversation: Conversation, with: Node3D) -> void:
 
 
 ## Opens a conversation with `with`: they turn to him and stand still, and
-## his view turns to their face for a moment. False if he can't talk now
-## (hiding, stumbling, already talking).
-func begin(with: Node3D) -> bool:
+## his view turns to their face for a moment; or, with `watch`, to that
+## instead, following it for a few seconds (what they are talking about: the
+## cart going by). False if he can't talk now (hiding, stumbling, already
+## talking).
+func begin(with: Node3D, watch: Node3D = null) -> bool:
 	var p := _player()
 	if talking or p == null or p.busy():
 		return false
@@ -334,7 +337,7 @@ func begin(with: Node3D) -> bool:
 	left = false
 	talking_to = with
 	_talk += 1
-	p.start_talk(at)
+	p.start_talk(at, watch)
 	if not p.walked_away.is_connected(_walk_away):
 		p.walked_away.connect(_walk_away)
 	_show_newest()

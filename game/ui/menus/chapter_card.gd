@@ -3,7 +3,9 @@ extends MenuPage
 ## A chapter card (Look and Feel, "UI": a page from the chronicle, with a
 ## decorated initial letter): the night's heading and title, and the
 ## chronicle's few lines about it. It goes on when the porter presses
-## `interact` (or accept, or clicks), or by itself after `seconds`.
+## `interact` (or accept, or clicks), or by itself after `seconds`. It stays
+## up until leave() fades the page into the dark behind it, so the chapter
+## can load under black and not behind a page that has stopped answering.
 
 signal done
 
@@ -72,8 +74,16 @@ func _finish() -> void:
 	if not _open:
 		return
 	_open = false
-	close()
 	done.emit()
+
+
+## Fades the page out over `time` seconds, leaving the dark; then closes. Await it.
+func leave(time: float) -> void:
+	var tween := create_tween()
+	tween.tween_property(page, ^"modulate:a", 0.0, maxf(time, 0.01))
+	await tween.finished
+	close()
+	page.modulate.a = 1.0
 
 
 func _unhandled_input(_event: InputEvent) -> void:

@@ -69,13 +69,13 @@ from_hour = 99.0
 [node name="Road" parent="." instance=ExtResource("road")]
 
 [node name="Wagon" parent="." instance=ExtResource("wagon")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -210, 0, 48.2)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -232, 0, 48.2)
 
 [node name="BodyCart" parent="." instance=ExtResource("body_cart")]
 transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -130, 0, 45.8)
 
 [node name="Traveller" type="Node3D" parent="."]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -210, 0.9, 49.0)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -232, 0.9, 49.0)
 script = ExtResource("figure_gd")
 
 [node name="Look" type="Node3D" parent="Traveller"]
@@ -88,7 +88,7 @@ phases = Array[int]([6])
 conversation = ExtResource("n0_traveller_road")
 
 [node name="WagonCarter" type="Node3D" parent="."]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -212, 0.9, 48.2)
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -234, 0.9, 48.2)
 script = ExtResource("figure_gd")
 
 [node name="Look" type="Node3D" parent="WagonCarter"]

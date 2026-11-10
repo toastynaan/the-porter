@@ -58,6 +58,8 @@ func _run() -> void:
 	await _until(func() -> bool: return pilot.beat() == &"Ride" and pilot.player.riding != null, 5.0)
 	var p := pilot.player
 	_check(GameState.night == 0 and p.riding != null and GameState.has_flag(&"n0_riding"), "New Game: night 0, on the carter's wagon")
+	var fade := _main.get_node(^"UI/Fade") as ScreenFade
+	_check(fade.color.a > 0.8 and not _flow.card.visible, "the card has gone into the dark, and the night opens on black (%.2f)" % fade.color.a)
 	var wagon := night.get_node(^"Wagon") as Node3D
 	var cart := night.get_node(^"BodyCart") as Node3D
 	var talker := (ride.get(&"traveller") as Node3D).get_node(^"Talker") as Talker
@@ -65,10 +67,14 @@ func _run() -> void:
 	# The traveller turns to him as they set off; he is still thinking of an
 	# answer when the carter pulls in.
 	Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
-	await _until(func() -> bool: return Talk.is_choosing(), 10.0)
+	var quiet := 0.0
+	while not Talk.is_choosing() and quiet < 30.0:
+		await get_tree().physics_frame
+		quiet += get_physics_process_delta_time()
 	_check(Talk.talking and GameState.has_flag(&"talked_n0_traveller_road") and not GameState.has_flag(&"talked_n0_traveller")
 		and Talk.history.has(["Traveller", "Evening, brother. Bound for the city, are you?"]),
-		"the traveller turns to him as they set off, and asks him something")
+		"the traveller turns to him on the road, and asks him something")
+	_check(quiet > 5.0 and fade.color.a < 0.05, "after a few quiet seconds of the road (%.1f s), the night come up out of black (%.2f)" % [quiet, fade.color.a])
 	var said_before := Talk.history.size()
 	var closest := INF
 	var elapsed := 0.0
@@ -77,6 +83,8 @@ func _run() -> void:
 	var last := wagon.global_position
 	var paused_ok := false
 	var hooked := false
+	var hooked_at := 0.0
+	var watched := -1.0
 	var parted := false
 	var held_talk := false
 	var waited_at_gate := false
@@ -95,8 +103,12 @@ func _run() -> void:
 			stops.append(at)
 		if not hooked and GameState.has_flag(&"talked_n0_traveller"):
 			hooked = true
+			hooked_at = elapsed
 			parted = Talk.history.slice(said_before).any(func(l: Array) -> bool: return l[1] == "Suit yourself, brother.") \
 				or not Talk.history.slice(said_before).any(func(l: Array) -> bool: return l == ["Carter", "Whoa. Whoa, there. Let him by."])
+		if hooked and watched < 0.0 and elapsed - hooked_at > 1.2:
+			# A moment into it his eyes are on what lies on the cart, not on the traveller.
+			watched = ViewCheck.off_centre(p.camera, (cart.get_node(^"ShroudedBody") as Node3D).global_position)
 			Talk.auto_choice = answer_with
 		if hooked and not paused_ok and at.x > -150.0 and at.x < -140.0:
 			# Paused: the wagon, the cart and the clock wait.
@@ -127,6 +139,7 @@ func _run() -> void:
 	_check(whoa >= 0 and hook_at == whoa + 1, "after the Whoa the next thing said is the cart going by (%s)" % [Talk.history.slice(whoa, hook_at + 1)])
 	_check(hooked and not parted and pulled_in and closest < 4.0 and closest > 2.0,
 		"the carter's Whoa breaks off the talk, he pulls in for the body cart (stopped at %s), it passes close by on his side (%.1f m), and the traveller talks about it" % [str(stops), closest])
+	_check(watched >= 0.0 and watched < 8.0, "as the cart goes by his view goes to the body on it and follows it (%.1f° off)" % watched)
 	_check(paused_ok, "paused, the wagon and the clock wait")
 	var warden := night.get_node(^"RoadFolk/Warden") as Node3D
 	var at_gate := stops.any(func(s: Vector3) -> bool: return absf(s.x - warden.global_position.x) < 1.5)

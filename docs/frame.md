@@ -23,7 +23,7 @@ New Game plays the chapters in order, each opened by its card: night 0 (the Cros
 | Night 5 | The fifth night: The Granary | `game/nights/night5.tscn` |
 | Night 6 | The sixth night: The Hunt | `game/nights/night6.tscn` |
 
-The card is a chronicle page: the heading in small capitals, the title in blackletter, a decorated initial in old-blood red, and a few lines in the chronicler's voice. It goes on when you press E, or by itself after 14 s *(mine)*. The chronicle's dates put night 0 on the eve of Saint Martin, 10 November 1424 *(mine)*, so day 1 is Martinmas and night 6 is the 16th.
+The card is a chronicle page: the heading in small capitals, the title in blackletter, a decorated initial in old-blood red, and a few lines in the chronicler's voice. It goes on when you press E, or by itself after 14 s *(mine)*. Its page then fades into the dark over 0.6 s *(mine)*, the chapter loads under black, and the chapter's first beat brings the world up out of it (waking in the cell, the morning at the inn, the wagon setting off), so the card never sits frozen while the night loads. The chronicle's dates put night 0 on the eve of Saint Martin, 10 November 1424 *(mine)*, so day 1 is Martinmas and night 6 is the 16th.
 
 **Chapter select** starts any chapter with the state a typical playthrough would have reached: each night's Director holds that state (`start_dose`, `start_flags`, `start_suspicion`, `start_count`), the same state the night uses when it's played on its own.
 

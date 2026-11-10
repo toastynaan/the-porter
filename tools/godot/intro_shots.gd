@@ -9,19 +9,19 @@ const OUT := "res://art/_review/intro/"
 ## Each still: its name, metres along the road, the hour, and where he
 ## looks: a point in the world, or a direction from his eyes if `dir`.
 const SHOTS := [
-	{"name": "back_down_the_road", "along": 3.0, "hour": 16.5, "dir": Vector3(-1.0, 0.02, 0.05)},
-	{"name": "ahead_past_the_carter", "along": 3.0, "hour": 16.5, "dir": Vector3(1.0, 0.0, -0.45)},
-	{"name": "the_white_chapel_coming", "along": 6.0, "hour": 16.54, "at": Vector3(-186.0, 4.5, 64.0)},
-	{"name": "the_white_chapel", "along": 24.0, "hour": 16.6, "at": Vector3(-185.0, 4.0, 64.0)},
-	{"name": "the_chapel_behind", "along": 46.0, "hour": 16.72, "at": Vector3(-186.0, 3.5, 62.0)},
-	{"name": "the_fields_north", "along": 36.0, "hour": 16.66, "dir": Vector3(-0.3, 0.0, -1.0)},
-	{"name": "rooks_over_the_oak", "along": 50.0, "hour": 16.75, "at": Vector3(-151.0, 13.0, 27.5)},
-	{"name": "back_from_the_wall", "along": 74.0, "hour": 16.88, "dir": Vector3(-1.0, 0.03, -0.12)},
-	{"name": "the_wall_ahead", "along": 66.0, "hour": 16.84, "dir": Vector3(1.0, 0.06, -0.3)},
+	{"name": "back_down_the_road", "along": 25.0, "hour": 16.5, "dir": Vector3(-1.0, 0.02, 0.05)},
+	{"name": "ahead_past_the_carter", "along": 25.0, "hour": 16.5, "dir": Vector3(1.0, 0.0, -0.45)},
+	{"name": "the_white_chapel_coming", "along": 28.0, "hour": 16.54, "at": Vector3(-186.0, 4.5, 64.0)},
+	{"name": "the_white_chapel", "along": 46.0, "hour": 16.6, "at": Vector3(-185.0, 4.0, 64.0)},
+	{"name": "the_chapel_behind", "along": 68.0, "hour": 16.72, "at": Vector3(-186.0, 3.5, 62.0)},
+	{"name": "the_fields_north", "along": 58.0, "hour": 16.66, "dir": Vector3(-0.3, 0.0, -1.0)},
+	{"name": "rooks_over_the_oak", "along": 72.0, "hour": 16.75, "at": Vector3(-151.0, 13.0, 27.5)},
+	{"name": "back_from_the_wall", "along": 96.0, "hour": 16.88, "dir": Vector3(-1.0, 0.03, -0.12)},
+	{"name": "the_wall_ahead", "along": 88.0, "hour": 16.84, "dir": Vector3(1.0, 0.06, -0.3)},
 	# From outside the wagon: a camera of the tool's own, `cam` metres from the wagon.
-	{"name": "the_wagon_from_the_verge", "along": 20.0, "hour": 16.6, "cam": Vector3(4.5, 1.5, -5.0), "at": Vector3(0.0, 1.1, -1.4)},
-	{"name": "the_wagon_from_behind", "along": 20.0, "hour": 16.6, "cam": Vector3(-1.5, 1.9, 5.5), "at": Vector3(0.0, 1.2, -1.0)},
-	{"name": "the_road_from_above", "along": 30.0, "hour": 16.55, "cam": Vector3(-14.0, 16.0, 30.0), "at": Vector3(2.0, 0.0, -16.0)},
+	{"name": "the_wagon_from_the_verge", "along": 42.0, "hour": 16.6, "cam": Vector3(4.5, 1.5, -5.0), "at": Vector3(0.0, 1.1, -1.4)},
+	{"name": "the_wagon_from_behind", "along": 42.0, "hour": 16.6, "cam": Vector3(-1.5, 1.9, 5.5), "at": Vector3(0.0, 1.2, -1.0)},
+	{"name": "the_road_from_above", "along": 52.0, "hour": 16.55, "cam": Vector3(-14.0, 16.0, 30.0), "at": Vector3(2.0, 0.0, -16.0)},
 ]
 
 var _n := 0
@@ -54,6 +54,8 @@ func _ready() -> void:
 	var clock := _pilot.clock()
 	clock.set_pace(1.0e9, 1.0e9)
 	await _pilot.until(func() -> bool: return p.riding != null, 5.0)
+	# The ride comes up out of black.
+	await get_tree().create_timer(4.5).timeout
 	# The wagon stands where each still wants it.
 	ride.set(&"pace_scale", 0.0001)
 	ride.set(&"_hook_done", true)

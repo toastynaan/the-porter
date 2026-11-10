@@ -273,7 +273,7 @@ transform = Transform3D(-0.9294, 0, 0.3690, 0, 1.0000, 0, -0.3690, 0, -0.9294, -
 editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."
 
 [node name="P0" type="Marker3D" parent="RidePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -210.00, 0.00, 47.00)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 47.00)
 
 [node name="P1" type="Marker3D" parent="RidePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 0.00, 47.00)

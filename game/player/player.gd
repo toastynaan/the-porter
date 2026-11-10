@@ -16,8 +16,8 @@ extends CharacterBody3D
 ## then `interact` to climb out), and stumbles when he stares at the demon
 ## too long. `controls_locked` takes his body away (a capture, a cutscene).
 ## Talking to someone (start_talk, from Talk) he stands still: his view
-## turns to their face and narrows for a moment, then is his again, and a
-## move key walks him away.
+## turns to their face (or to what the talk points him at) and narrows for a
+## moment, then is his again, and a move key walks him away.
 ##
 ## He peeks through a squint (peek(), E again steps back): his eye to the
 ## bars, the view held within its few degrees.
@@ -72,6 +72,8 @@ const HIDE_TIME := 0.7
 const TALK_ZOOM := 22.0
 const TALK_TURN_TIME := 0.45
 const TALK_HOLD := 1.2
+## Seconds it follows something a talk points him at (a cart going by).
+const TALK_WATCH := 3.6
 ## Pixels of mouse movement in one go that take his view off their face early.
 const TALK_LET_GO := 3.0
 
@@ -126,6 +128,8 @@ var _hide_pitch := 0.0
 var _talk_turning := false
 var _talk_glance := false
 var _talk_tween: Tween
+## What a talk has pointed his eyes at; they follow it while the glance lasts.
+var _talk_watch: Node3D
 ## He has let go of the move keys since the talk began.
 var _talk_still := false
 ## The heading of what he rides, last frame.
@@ -186,6 +190,13 @@ func _turn(raw: Vector2) -> Vector2:
 
 
 func _process(delta: float) -> void:
+	if _talk_glance and is_instance_valid(_talk_watch):
+		# His eyes follow what the talk is about.
+		var to := _talk_watch.global_position - camera.global_position
+		var k := 1.0 - exp(-8.0 * delta)
+		rotation.y = lerp_angle(rotation.y, atan2(-to.x, -to.z), k)
+		head.rotation.x = lerp_angle(head.rotation.x, clampf(atan2(to.y, Vector2(to.x, to.z).length()),
+				-deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT)), k)
 	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 	if stick.length() > 0.0 and _can_look():
 		if _talk_glance and stick.length() > 0.3:
@@ -308,30 +319,37 @@ func sight_points() -> Array[Vector3]:
 ## Talking to someone: he turns to `at` (their face) and his view narrows,
 ## stays on them for TALK_HOLD seconds (less if he looks away), then widens
 ## again and is his: he stands still, and looks where he likes.
-func start_talk(at: Vector3) -> void:
+## With `watch`, his view goes to that instead and follows it (as it moves)
+## for TALK_WATCH seconds: what the talk is about.
+func start_talk(at: Vector3, watch: Node3D = null) -> void:
 	talking = true
 	_talk_still = false
 	running = false
-	var to := at - camera.global_position
-	var yaw := atan2(-to.x, -to.z)
-	var pitch := clampf(atan2(to.y, Vector2(to.x, to.z).length()), -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
 	_talk_turning = true
 	_talk_glance = true
+	_talk_watch = watch
 	if _talk_tween:
 		_talk_tween.kill()
 	_talk_tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_talk_tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(yaw - rotation.y, -PI, PI), TALK_TURN_TIME)
-	_talk_tween.tween_property(head, ^"rotation:x", pitch, TALK_TURN_TIME)
+	if watch == null:
+		var to := at - camera.global_position
+		var yaw := atan2(-to.x, -to.z)
+		var pitch := clampf(atan2(to.y, Vector2(to.x, to.z).length()), -deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT))
+		_talk_tween.tween_property(self, ^"rotation:y", rotation.y + wrapf(yaw - rotation.y, -PI, PI), TALK_TURN_TIME)
+		_talk_tween.tween_property(head, ^"rotation:x", pitch, TALK_TURN_TIME)
 	_talk_tween.tween_property(self, ^"zoom", TALK_ZOOM, TALK_TURN_TIME)
 	_talk_tween.chain().tween_callback(func() -> void: _talk_turning = false)
-	_talk_tween.chain().tween_interval(TALK_HOLD)
-	_talk_tween.chain().tween_callback(func() -> void: _talk_glance = false)
+	_talk_tween.chain().tween_interval(TALK_HOLD if watch == null else TALK_WATCH)
+	_talk_tween.chain().tween_callback(func() -> void:
+		_talk_glance = false
+		_talk_watch = null)
 	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
 
 
 ## His view comes off their face before its time: he looked away.
 func _let_go_of_face() -> void:
 	_talk_glance = false
+	_talk_watch = null
 	if _talk_tween:
 		_talk_tween.kill()
 	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -345,6 +363,7 @@ func end_talk() -> void:
 	talking = false
 	_talk_turning = false
 	_talk_glance = false
+	_talk_watch = null
 	if _talk_tween:
 		_talk_tween.kill()
 	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

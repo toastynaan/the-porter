@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # A short film of the start of the road in (night 0), as it plays, to
-# art/_review/intro/intro.mp4: about half a minute at 30 frames a second,
+# art/_review/intro/intro.mp4: about three quarters of a minute at 30 frames a second,
 # 1920x1080, with the game's sound. Opens a window while it records (Godot's
 # movie writer; needs ffmpeg to make the mp4).
 set -eu
