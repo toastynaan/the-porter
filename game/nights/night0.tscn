@@ -56,6 +56,16 @@ seconds_per_hour = 150.0
 kind = 1
 clears_at = 19.0
 
+[node name="Daylight" parent="."]
+editor_description = "The road in begins in the last grey daylight, brighter than the abbey's dusks: the day goes as the wall comes nearer."
+day_sky = 1.0
+day_ambient = 1.5
+day_sun = 0.7
+
+[node name="Cat" parent="."]
+editor_description = "The abbey's cat keeps to the abbey tonight: the porter isn't in it."
+from_hour = 99.0
+
 [node name="Road" parent="." instance=ExtResource("road")]
 
 [node name="Wagon" parent="." instance=ExtResource("wagon")]

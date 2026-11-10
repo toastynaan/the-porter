@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/env_white_chapel.glb" id="model"]
+
+[node name="WhiteChapel" instance=ExtResource("model")]
+editor_description = "The white chapel in the fields outside Aldgate (night 0, the road in), with its yard: a limewashed nave and chancel, a west tower, a north porch toward the road, a walled yard with a gate, a cross and graves. The nave runs along x, the tower at -x; the road side is -z. Built by tools/build/env_white_chapel.py. Candles are lit inside for Vespers: the lights here are what they throw out through the glass."
+
+[node name="NaveLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.6, -4.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 0.7
+omni_range = 5.5
+omni_attenuation = 1.4
+
+[node name="EastLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2, 2.6, 0)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 0.8
+omni_range = 6.0
+omni_attenuation = 1.4
+
+[node name="SouthLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.6, 4.3)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 0.5
+omni_range = 5.0
+omni_attenuation = 1.4

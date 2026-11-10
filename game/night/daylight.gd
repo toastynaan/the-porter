@@ -5,8 +5,10 @@ extends Node
 ## dawn). Day is overcast, flat and grey with no strong shadows (Look and
 ## Feel, "Lighting rules" 6), so daylight raises the sky and the ambient
 ## light in the night's own moonlight colour, with a soft, shadowless light
-## from the low sun's side. The lane's lanterns are lit once it is dark
-## (London's order of 1415).
+## from the low sun's side. The sky itself (game/render/sky.gdshader) is
+## told how much day is left and where the sun went down: flat at night,
+## overcast by day, a strip of dying light at dusk. The lane's lanterns are
+## lit once it is dark (London's order of 1415).
 
 ## Hours over which dusk turns to night, and night to morning.
 @export var dusk := Vector2(16.0, 17.5)
@@ -28,6 +30,7 @@ var _night_sky := 0.0
 var _night_ambient := 0.0
 var _moon_energy := 0.0
 var _sun: DirectionalLight3D
+var _sky: ShaderMaterial
 var _lanterns_lit := true
 
 
@@ -37,6 +40,8 @@ func _ready() -> void:
 	_night_sky = _env.background_energy_multiplier
 	_night_ambient = _env.ambient_light_energy
 	_moon_energy = moon.light_energy
+	if _env.sky:
+		_sky = _env.sky.sky_material as ShaderMaterial
 	_sun = DirectionalLight3D.new()
 	_sun.light_color = moon.light_color
 	_sun.shadow_enabled = false
@@ -59,6 +64,10 @@ func _apply() -> void:
 	# Low in the west at dusk, in the east at dawn.
 	var toward := Vector3(1.0, -0.3, -0.2) if h < 24.0 else Vector3(-1.0, -0.3, 0.2)
 	_sun.basis = Basis.looking_at(toward.normalized())
+	# The sky (game/render/sky.gdshader): its cloud and its strip of last light.
+	if _sky:
+		_sky.set_shader_parameter(&"light", light)
+		_sky.set_shader_parameter(&"glow_dir", -toward)
 	var dark := light < 0.5
 	if street_lanterns and dark != _lanterns_lit:
 		_lanterns_lit = dark

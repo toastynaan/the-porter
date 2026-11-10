@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_tree_thorn.glb" id="model"]
+
+[node name="TreeThorn" instance=ExtResource("model")]
+editor_description = "A wind-bent hawthorn, bare, about 4 m. Only the trunk is solid. Built by tools/build/prop_trees_bare.py."

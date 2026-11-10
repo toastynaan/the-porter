@@ -1,6 +1,42 @@
-# Placeholder assets (M7)
+# Assets
 
-Everything in the world is a placeholder: boxes, cylinders and the greybox figure, in the shared materials. Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. Swap them in any order.
+Most of the world is still a placeholder: boxes, cylinders and the greybox figure, in the shared materials. Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. Swap them in any order. The first real ones are on the road in (night 0); how they're made is below, then the placeholders.
+
+## Real assets: how they're made
+
+Every model is built by a script, and every texture is fetched and finished by one, so anything can be changed and made again.
+
+| Step | What | Where |
+| --- | --- | --- |
+| Textures | `tools/build/tex_fetch.py` downloads the CC0 textures listed in `tools/build/textures.json` from Poly Haven, scales them to 1024 or 512, pulls their colour toward the palette (less saturation, cooler greys), and writes colour, normal and occlusion-roughness maps | `art/tex/tex_<name>_col.jpg`, `_nrm.jpg`, `_orm.jpg`; each credited in `art/credits.csv`. The downloads themselves stay out of the repository (`art/_src/`) |
+| Models | `tools/build.sh <name>` runs `tools/build/<name>.py` in Blender. A script works in the game's own space (metres, +Y up, front at -Z) through `tools/build/porter.py`, and writes one model | `art/models/<name>.glb` |
+| Materials | A model carries material names only. On import each is linked to the material of the same name, so models share materials and textures | `game/world/materials/real/<name>.tres` (linked by `tools/build/link_imports.py`, which `build.sh` runs) |
+| Scenes | A model is placed through a scene of its own, which adds what a model can't carry: lights, scripts, seats | `game/world/props/prop_*.tscn`, `game/world/road/*.tscn`, `game/characters/chr_*.tscn` |
+
+- **Vertex colour** does the grime: materials multiply it in (damp at the foot of a wall, shadow under the eaves, darker twigs). The ground's shader reads it as masks instead.
+- **Collision** is an object named `<Name>-colonly` in the model (Godot makes it a collider on import).
+- **Look at a model on its own:** `tools/model_shots.sh <name>` renders it from two sides to `art/_review/models/`.
+- Close the Godot editor before `tools/build.sh`: it imports with the command-line Godot.
+
+### What's real so far (the road in)
+
+| Model | Built by | What | Scene |
+| --- | --- | --- | --- |
+| `env_road_fields` | `env_road_fields.py` | The ground outside Aldgate: the road, its verges and wet ditches, open fields in ridge and furrow, the chapel's level yard. 240 by 280 m | In `env_road.tscn`, at the origin |
+| `env_road_backdrop` | `env_road_backdrop.py` | The horizon: two ragged bands of far woods round the fields' edges | In `env_road.tscn`, at the origin |
+| `env_white_chapel` | `env_white_chapel.py` | The white chapel: nave, chancel, west tower, north porch, lancets with candle-lit leaded glass; its yard with a rubble wall, a gate, a preaching cross and graves | `game/world/road/env_white_chapel.tscn` (adds the candlelight thrown out through the glass) |
+| `prop_tree_elm`, `_oak`, `_thorn`, `_pollard` | `prop_trees_bare.py` | Bare winter trees, grown by forking: a tall hedgerow elm, a broad field oak, a wind-bent hawthorn, a pollard willow | `game/world/props/prop_tree_<kind>.tscn` |
+| `prop_cart` | `prop_cart.py` | A two-wheeled cart: plank bed, ladder sides, headboard, spoked wheels (their own parts, so they turn), shafts, a stake for a lantern | `game/world/road/prop_cart.tscn` (`CartRoll` turns the wheels and rocks the body) |
+| `chr_horse` | `chr_horse.py` | A bay cart horse in a collar, in parts that turn at their joints; coloured by vertex, shaded per vertex | `game/characters/chr_horse.tscn` (`HorseGait` walks or trots it by how far it's carried, 15 poses a second) |
+| `prop_shrouded_body` | `prop_shrouded_body.py` | A body under sacking | On `prop_body_cart.tscn` |
+
+`prop_wagon.tscn` (the carter's wagon) and `prop_body_cart.tscn` are now the cart, the horse, and their seats; the wagon has a lantern on its stake. The trees along the road are stood on the ground by `tools/build/road_dressing.py` from its list (`tools/build.sh road_dressing`): change the list, not the scene.
+
+Materials in `game/world/materials/real/`: `ground_fields` (its own shader: mud, grass, ploughed soil and stubble blended by the mesh's masks, wheel ruts, standing water that carries the sky), `plaster_white`, `stone_blocks`, `roof_slates`, `wood_medieval`, `wood_cart`, `iron_cart`, `bark`, `grave_earth`, `sacking`, `horse_hide`, `horse_tack`, `far_dark`, `window_dark`, and `window_candle` (leaded glass with candles behind it, never quite still).
+
+## Placeholders
+
+Everything else is a placeholder, as below.
 
 ## How the world is put together
 
@@ -54,8 +90,7 @@ Everything in the world is a placeholder: boxes, cylinders and the greybox figur
 | `prop_garden_bed` | A dug vegetable bed, 1.2 × 4 m, walked over | Gardens, the kitchen beds (12) |
 | `prop_carved_saint` | A carved saint on a plinth, 1.8 m, stone; its head turns at Dose 50+ (`Carving`) | Cloister (4), nave, choir |
 | `prop_sand_patch` | Fresh sand raked over the ground, about 3 m across, a decal | By the well on day 1 |
-| `road/prop_wagon` | The carter's open cart and horse, with seats at the back for the porter and the traveller and one for the carter | Night 0's ride |
-| `road/prop_body_cart` | A cart with a body under sacking | Night 0's ride, the hook |
+| `road/prop_wagon`, `road/prop_body_cart` | Real now: see "What's real so far" | Night 0's ride |
 | `prop_cult_masks` | The cult's masks and habits on their pegs | The crypt passage, night 6 (proof: a costume) |
 | `prop_hoof_soles` | Carved hoof soles on straps, a pair | The crypt passage, night 6 (proof: a costume) |
 | `prop_purse_chest` | An iron-bound chest of pilgrims' purses | The crypt passage, night 6 (proof: a purse) |

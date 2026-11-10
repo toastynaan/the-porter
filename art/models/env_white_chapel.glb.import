@@ -1,0 +1,84 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://3uy0u873cres"
+path="res://.godot/imported/env_white_chapel.glb-e86a0a6548409438c575df35d8e5b97e.scn"
+
+[deps]
+
+source_file="res://art/models/env_white_chapel.glb"
+dest_files=["res://.godot/imported/env_white_chapel.glb-e86a0a6548409438c575df35d8e5b97e.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+mesh_library/create_categories_from_hierarchy=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"grave_earth": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grave_earth.tres",
+"use_external/path": "res://game/world/materials/real/grave_earth.tres"
+},
+"plaster_white": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/plaster_white.tres",
+"use_external/path": "res://game/world/materials/real/plaster_white.tres"
+},
+"roof_slates": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/roof_slates.tres",
+"use_external/path": "res://game/world/materials/real/roof_slates.tres"
+},
+"stone_blocks": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_blocks.tres",
+"use_external/path": "res://game/world/materials/real/stone_blocks.tres"
+},
+"window_candle": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/window_candle.tres",
+"use_external/path": "res://game/world/materials/real/window_candle.tres"
+},
+"window_dark": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
+"use_external/path": "res://game/world/materials/real/window_dark.tres"
+},
+"wood_medieval": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_medieval.tres",
+"use_external/path": "res://game/world/materials/real/wood_medieval.tres"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

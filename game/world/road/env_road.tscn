@@ -9,25 +9,70 @@
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_narrow.tscn" id="h3n"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_2storey_wide.tscn" id="h2w"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_wide.tscn" id="h3w"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_yew.tscn" id="yew"]
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://art/models/env_road_fields.glb" id="fields"]
+[ext_resource type="PackedScene" path="res://art/models/env_road_backdrop.glb" id="backdrop"]
+[ext_resource type="PackedScene" path="res://game/world/road/env_white_chapel.tscn" id="chapel"]
+[ext_resource type="Script" path="res://game/world/road/road_air.gd" id="air"]
+[ext_resource type="Script" path="res://game/world/road/rooks.gd" id="rooks"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_elm.tscn" id="tree_elm"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_oak.tscn" id="tree_oak"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_pollard.tscn" id="tree_pollard"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_thorn.tscn" id="tree_thorn"]
+
+[sub_resource type="FastNoiseLite" id="mist_noise"]
+noise_type = 3
+frequency = 0.035
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture3D" id="mist_wisps"]
+width = 48
+height = 16
+depth = 48
+seamless = true
+noise = SubResource("mist_noise")
+
+[sub_resource type="FogMaterial" id="mist"]
+density = 0.05
+albedo = Color(0.5, 0.54, 0.6, 1)
+height_falloff = 3.0
+edge_fade = 0.35
+density_texture = SubResource("mist_wisps")
 
 [node name="Road" type="Node3D" groups=["placeholder"]]
 editor_description = "Placeholder: the road in on night 0 (design doc, Night 0: The road in). Grey dusk over mud and ruts: the white chapel in the fields, the city wall and Aldgate's dark arch, then close, tall streets, and the turn into the lane by the abbey gate. The wagon drives it on rails along RidePath. Only night 0 uses it."
 
-[node name="Fields" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -204.00, -0.12, 50.00)
-script = ExtResource("block")
-size = Vector3(172, 0.1, 110)
-material = ExtResource("grass")
-surface = "grass"
+[node name="Air" type="Node" parent="."]
+script = ExtResource("air")
 
-[node name="RoadOutside" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -204.00, -0.06, 47.00)
-script = ExtResource("block")
-size = Vector3(172, 0.1, 6)
-material = ExtResource("mud")
-surface = "mud"
+[node name="Fields" parent="." instance=ExtResource("fields")]
+editor_description = "The ground outside the wall: the road, its ditches, and the open fields in ridge and furrow (tools/build/env_road_fields.py). It is built in this scene's own coordinates, so it stays at the origin."
+
+[node name="Backdrop" parent="." instance=ExtResource("backdrop")]
+editor_description = "The horizon of the fields: far woods and hedges round their edges (tools/build/env_road_backdrop.py). Built in this scene's own coordinates, so it stays at the origin."
+
+[node name="WhiteChapel" parent="." instance=ExtResource("chapel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -184, 0.9, 64.5)
+
+[node name="Mist" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -235, 0.5, 47)
+editor_description = "Ground mist lying over the fields and the ditches, in wisps, thickest low down. It shows near the wagon (the volumetric fog's reach); the haze of distance is RoadAir's."
+size = Vector3(230, 2.4, 150)
+material = SubResource("mist")
+
+[node name="Rooks" type="MultiMeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -151, 0, 27.5)
+editor_description = "Rooks wheeling over the great oak north of the road."
+script = ExtResource("rooks")
+
+[node name="RooksFar" type="MultiMeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -292, 0, 50)
+editor_description = "And another flock far back along the road, low, against the last light."
+script = ExtResource("rooks")
+birds = 22
+radius = Vector2(8, 46)
+height = Vector2(3, 15)
+wingspan = 1.2
 
 [node name="RoadInside" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -94.75, -0.29, 47.00)
@@ -69,28 +114,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 5.20, 47.00)
 script = ExtResource("block")
 size = Vector3(4, 3.8, 6)
 material = ExtResource("stone")
-surface = "stone"
-
-[node name="ChapelNave" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 0.00, 62.00)
-script = ExtResource("block")
-size = Vector3(14, 5, 7)
-material = ExtResource("plaster")
-surface = "stone"
-
-[node name="ChapelRoof" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -184.00, 5.00, 62.00)
-script = ExtResource("block")
-size = Vector3(14.6, 3, 7.6)
-material = ExtResource("roof")
-surface = "stone"
-shape = 1
-
-[node name="ChapelTower" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -193.00, 0.00, 62.00)
-script = ExtResource("block")
-size = Vector3(3.5, 10, 3.5)
-material = ExtResource("plaster")
 surface = "stone"
 
 [node name="HouseN0" parent="." instance=ExtResource("h3n")]
@@ -135,35 +158,116 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -109.00, 0.00, 50.20)
 [node name="HouseS6" parent="." instance=ExtResource("h3n")]
 transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -109.00, 0.00, 43.80)
 
-[node name="Yew0" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.418294, 0, -0.908312, 0, 1, 0, 0.908312, 0, -0.418294, -130.28, 0.00, 31.00)
-
-[node name="Yew1" parent="." instance=ExtResource("yew")]
-transform = Transform3D(0.979845, 0, -0.199759, 0, 1, 0, 0.199759, 0, 0.979845, -150.74, 0.00, 60.95)
-
-[node name="Yew2" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.985934, 0, -0.167134, 0, 1, 0, 0.167134, 0, -0.985934, -168.96, 0.00, 36.49)
-
-[node name="Yew3" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.999969, 0, 0.00781843, 0, 1, 0, -0.00781843, 0, -0.999969, -232.00, 0.00, 62.56)
-
-[node name="Yew4" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.132122, 0, 0.991233, 0, 1, 0, -0.991233, 0, -0.132122, -200.83, 0.00, 33.82)
-
-[node name="Yew5" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.819198, 0, -0.57351, 0, 1, 0, 0.57351, 0, -0.819198, -217.59, 0.00, 63.87)
-
-[node name="Yew6" parent="." instance=ExtResource("yew")]
-transform = Transform3D(0.717302, 0, -0.696763, 0, 1, 0, 0.696763, 0, 0.717302, -236.23, 0.00, 32.01)
-
-[node name="Yew7" parent="." instance=ExtResource("yew")]
-transform = Transform3D(-0.931318, 0, -0.364208, 0, 1, 0, 0.364208, 0, -0.931318, -254.74, 0.00, 61.69)
-
-[node name="Yew8" parent="." instance=ExtResource("yew")]
-transform = Transform3D(0.405743, 0, 0.913987, 0, 1, 0, -0.913987, 0, 0.405743, -269.39, 0.00, 31.71)
-
 [node name="GateLamp" parent="." instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -116.30, 3.20, 44.60)
+
+[node name="Trees" type="Node3D" parent="."]
+editor_description = "The trees along the road and out in the fields. tools/build/road_dressing.py stands them on the ground from its list; change the list, not these."
+
+[node name="Thorn0" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(0.0831, 0, 1.0969, 0, 1.1000, 0, -1.0969, 0, 0.0831, -214.50, 0.33, 54.60)
+
+[node name="Pollard1" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.7228, 0, -0.6910, 0, 1.0000, 0, 0.6910, 0, -0.7228, -217.00, 0.09, 40.40)
+
+[node name="Elm2" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-1.0315, 0, -0.1962, 0, 1.0500, 0, 0.1962, 0, -1.0315, -223.00, 0.48, 38.60)
+
+[node name="Oak3" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(1.1426, 0, 0.1303, 0, 1.1500, 0, -0.1303, 0, 1.1426, -231.00, 0.44, 56.40)
+
+[node name="Elm4" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.7094, 0, 0.4682, 0, 0.8500, 0, -0.4682, 0, -0.7094, -239.50, 0.42, 38.90)
+
+[node name="Pollard5" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.2491, 0, -0.8648, 0, 0.9000, 0, 0.8648, 0, 0.2491, -246.00, 0.11, 40.60)
+
+[node name="Elm6" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.6716, 0, 0.6719, 0, 0.9500, 0, -0.6719, 0, -0.6716, -252.00, 0.49, 55.20)
+
+[node name="Pollard7" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.4679, 0, -0.8838, 0, 1.0000, 0, 0.8838, 0, 0.4679, -259.00, 0.08, 53.50)
+
+[node name="Elm8" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(1.1426, 0, 0.1299, 0, 1.1500, 0, -0.1299, 0, 1.1426, -266.00, 0.35, 38.40)
+
+[node name="Thorn9" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.1066, 0, 0.9943, 0, 1.0000, 0, -0.9943, 0, -0.1066, -272.00, 0.35, 54.90)
+
+[node name="Pollard10" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.2686, 0, -1.0667, 0, 1.1000, 0, 1.0667, 0, 0.2686, -276.00, 0.07, 40.50)
+
+[node name="Elm11" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.5173, 0, 0.8558, 0, 1.0000, 0, -0.8558, 0, 0.5173, -292.00, 0.58, 55.60)
+
+[node name="Elm12" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.2555, 0, 0.8630, 0, 0.9000, 0, -0.8630, 0, 0.2555, -297.00, 0.40, 38.20)
+
+[node name="Oak13" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(0.5715, 0, -0.8206, 0, 1.0000, 0, 0.8206, 0, 0.5715, -318.00, 0.20, 37.00)
+
+[node name="Elm14" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.3693, 0, -1.0362, 0, 1.1000, 0, 1.0362, 0, 0.3693, -331.00, 0.11, 56.00)
+
+[node name="Elm15" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.9049, 0, 0.4256, 0, 1.0000, 0, -0.4256, 0, -0.9049, -349.00, 0.23, 38.50)
+
+[node name="Elm16" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-1.1598, 0, -0.3081, 0, 1.2000, 0, 0.3081, 0, -1.1598, -243.00, 0.28, 8.00)
+
+[node name="Elm17" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.6613, 0, 0.7501, 0, 1.0000, 0, -0.7501, 0, 0.6613, -251.00, 0.26, 5.00)
+
+[node name="Oak18" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(0.8517, 0, 0.8454, 0, 1.2000, 0, -0.8454, 0, 0.8517, -205.00, 0.22, -14.00)
+
+[node name="Elm19" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.7004, 0, -0.8482, 0, 1.1000, 0, 0.8482, 0, -0.7004, -282.00, 0.42, -22.00)
+
+[node name="Elm20" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-1.0477, 0, -0.5850, 0, 1.2000, 0, 0.5850, 0, -1.0477, -296.00, 0.47, 96.00)
+
+[node name="Oak21" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(0.1115, 0, 1.0943, 0, 1.1000, 0, -1.0943, 0, 0.1115, -262.00, 0.29, 104.00)
+
+[node name="Elm22" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.3064, 0, 0.9519, 0, 1.0000, 0, -0.9519, 0, -0.3064, -234.00, 0.64, 118.00)
+
+[node name="Elm23" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.2308, 0, 1.0755, 0, 1.1000, 0, -1.0755, 0, 0.2308, -330.00, 0.29, 6.00)
+
+[node name="Pollard24" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.4055, 0, 0.9141, 0, 1.0000, 0, -0.9141, 0, -0.4055, -168.00, 0.08, 40.50)
+
+[node name="Pollard25" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.6433, 0, -0.5555, 0, 0.8500, 0, 0.5555, 0, -0.6433, -161.50, 0.09, 40.70)
+
+[node name="Oak26" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(-1.2558, 0, 0.3361, 0, 1.3000, 0, -0.3361, 0, -1.2558, -151.00, 0.23, 27.50)
+
+[node name="Thorn27" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.6169, 0, 0.7870, 0, 1.0000, 0, -0.7870, 0, -0.6169, -146.00, 0.10, 54.80)
+
+[node name="Elm28" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.0919, 0, -0.9958, 0, 1.0000, 0, 0.9958, 0, 0.0919, -138.00, 0.18, 38.60)
+
+[node name="Thorn29" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.7670, 0, 0.4708, 0, 0.9000, 0, -0.4708, 0, -0.7670, -133.50, 0.15, 55.00)
+
+[node name="Elm30" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.1900, 0, -0.8797, 0, 0.9000, 0, 0.8797, 0, -0.1900, -129.00, 0.22, 56.50)
+
+[node name="Pollard31" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.8946, 0, -0.0984, 0, 0.9000, 0, 0.0984, 0, -0.8946, -126.00, 0.07, 40.60)
+
+[node name="Elm32" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.2408, 0, -1.0733, 0, 1.1000, 0, 1.0733, 0, 0.2408, -160.00, 0.03, 88.00)
+
+[node name="Elm33" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.4803, 0, -1.0449, 0, 1.1500, 0, 1.0449, 0, -0.4803, -141.00, 0.09, 4.00)
+
+[node name="Oak34" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(-0.9294, 0, 0.3690, 0, 1.0000, 0, -0.3690, 0, -0.9294, -176.00, 0.42, -6.00)
 
 [node name="RidePath" type="Node3D" parent="."]
 editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."

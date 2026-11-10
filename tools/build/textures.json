@@ -1,0 +1,47 @@
+{
+  "mud_wet": {
+    "polyhaven": "brown_mud_03",
+    "size": 1024,
+    "saturation": 0.55,
+    "gain": 0.85
+  },
+  "grass_withered": {
+    "polyhaven": "withered_grass",
+    "size": 1024,
+    "saturation": 0.55,
+    "gain": 0.85
+  },
+  "grass_sparse": {
+    "polyhaven": "sparse_grass",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.85
+  },
+  "plaster_white": {
+    "polyhaven": "white_rough_plaster",
+    "size": 1024,
+    "saturation": 0.5
+  },
+  "roof_slates": {
+    "polyhaven": "roof_slates_03",
+    "size": 1024,
+    "saturation": 0.5
+  },
+  "stone_blocks": {
+    "polyhaven": "medieval_blocks_05",
+    "size": 1024,
+    "saturation": 0.5
+  },
+  "wood_medieval": {
+    "polyhaven": "medieval_wood",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 0.9
+  },
+  "bark": {
+    "polyhaven": "bark_willow",
+    "size": 512,
+    "saturation": 0.5,
+    "gain": 0.85
+  }
+}

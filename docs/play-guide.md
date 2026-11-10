@@ -75,3 +75,4 @@ The whole run takes about 4 hours at the clock's normal pace: night 0 about 19 m
 
 - `tools/check.sh` runs every test (about 20 minutes; `test_flow` plays the whole game from New Game).
 - `tools/m<N>_shots.sh` renders each milestone's stills to `art/_review/m<N>/`.
+- `tools/intro_shots.sh` and `tools/intro_film.sh` render stills and a short film of the road in; `tools/build.sh` rebuilds the real models (`docs/assets.md`).

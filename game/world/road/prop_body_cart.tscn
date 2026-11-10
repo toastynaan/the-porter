@@ -1,106 +1,20 @@
 [gd_scene format=3]
 
-[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
-[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="PackedScene" path="res://game/world/road/prop_cart.tscn" id="cart"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_horse.tscn" id="horse"]
+[ext_resource type="PackedScene" path="res://art/models/prop_shrouded_body.glb" id="body"]
 
-[sub_resource type="BoxMesh" id="Mesh_bed"]
-material = ExtResource("oak")
-size = Vector3(1.4, 0.12, 2.6)
+[node name="BodyCart" type="Node3D"]
+editor_description = "A cart going the other way with a covered body on it (night 0's hook: a pilgrim found in the ditch, the third this month). Faces -Z (the horse in front). Origin on the ground under the middle of the bed."
 
-[sub_resource type="BoxMesh" id="Mesh_side"]
-material = ExtResource("oak")
-size = Vector3(0.06, 0.35, 2.6)
+[node name="Cart" parent="." instance=ExtResource("cart")]
 
-[sub_resource type="CylinderMesh" id="Mesh_wheel"]
-material = ExtResource("oak")
-top_radius = 0.45
-bottom_radius = 0.45
-height = 0.08
-radial_segments = 12
-rings = 1
+[node name="Horse" parent="." instance=ExtResource("horse")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.95)
 
-[sub_resource type="BoxMesh" id="Mesh_shaft"]
-material = ExtResource("oak")
-size = Vector3(0.06, 0.06, 2.2)
-
-[sub_resource type="StandardMaterial3D" id="Mat_horse"]
-albedo_color = Color(0.24, 0.17, 0.12, 1)
-
-[sub_resource type="BoxMesh" id="Mesh_horse"]
-material = SubResource("Mat_horse")
-size = Vector3(0.55, 0.75, 1.7)
-
-[sub_resource type="BoxMesh" id="Mesh_neck"]
-material = SubResource("Mat_horse")
-size = Vector3(0.3, 0.7, 0.35)
-
-[sub_resource type="BoxMesh" id="Mesh_leg"]
-material = SubResource("Mat_horse")
-size = Vector3(0.12, 0.85, 0.12)
-
-[sub_resource type="BoxMesh" id="Mesh_shroud"]
-material = ExtResource("sacking")
-size = Vector3(0.55, 0.3, 1.8)
-
-[node name="BodyCart" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a cart going the other way with a covered body on it (night 0's hook: a pilgrim found in the ditch, the third this month). Faces -Z (the horse in front). Origin on the ground at the middle of the cart."
-
-[node name="Bed" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 0.75, 0.00)
-mesh = SubResource("Mesh_bed")
-
-[node name="SideL" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -0.68, 0.95, 0.00)
-mesh = SubResource("Mesh_side")
-
-[node name="SideR" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.68, 0.95, 0.00)
-mesh = SubResource("Mesh_side")
-
-[node name="WheelL" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.78, 0.45, 0.2)
-mesh = SubResource("Mesh_wheel")
-
-[node name="WheelR" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.78, 0.45, 0.2)
-mesh = SubResource("Mesh_wheel")
-
-[node name="ShaftL" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -0.45, 0.75, -2.30)
-mesh = SubResource("Mesh_shaft")
-
-[node name="ShaftR" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.45, 0.75, -2.30)
-mesh = SubResource("Mesh_shaft")
-
-[node name="Horse" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 1.25, -2.60)
-mesh = SubResource("Mesh_horse")
-
-[node name="Neck" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 1.65, -3.45)
-mesh = SubResource("Mesh_neck")
-
-[node name="Leg0" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -0.18, 0.43, -2.00)
-mesh = SubResource("Mesh_leg")
-
-[node name="Leg1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.18, 0.43, -2.00)
-mesh = SubResource("Mesh_leg")
-
-[node name="Leg2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -0.18, 0.43, -3.20)
-mesh = SubResource("Mesh_leg")
-
-[node name="Leg3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.18, 0.43, -3.20)
-mesh = SubResource("Mesh_leg")
-
-[node name="Shroud" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.10, 0.96, 0.10)
-mesh = SubResource("Mesh_shroud")
+[node name="ShroudedBody" parent="." instance=ExtResource("body")]
+transform = Transform3D(0.9962, 0, 0.0872, 0, 1, 0, -0.0872, 0, 0.9962, 0.06, 0.81, 0.15)
+editor_description = "What lies on the bed, under sacking (tools/build/prop_shrouded_body.py)."
 
 [node name="CarterSeat" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 0.87, -1.00)

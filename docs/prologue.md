@@ -47,6 +47,25 @@ Three ales or more in a night (`drank`) and he wakes with a headache: a 0.9-pixe
 
 **The squint scare** (`SquintScare`, night 0 only, once): after the curfew bell, passing outside the south squint within about 4.6 m, alone (nobody of the lane within 12 m *mine*), a shape stands just inside it while its spot is out of his view: the Saint's figure, still. He has seen it once he has looked at the slit from within 3.5 m with a clear line through it; once he looks away it's gone for good (`n0_squint_scare`). If he walks on without seeing it (8 m off), it goes and can come again. The animals go quiet while it's there.
 
+## The look of the road in (first pass: the fields)
+
+The ride's first stretch, from the fields to the foot of the city wall, has its real look. The wall, Aldgate and the streets are still greybox, and so are the people.
+
+- **The sky** (`game/render/sky.gdshader`, driven by `Daylight`): at night the one flat moonlight blue the game has always had; with daylight in it, a low deck of rain cloud drifting over; at dusk a strip of last light along the horizon where the sun went down, pale straw at the rim going to slate, barred with cloud. It is a cold light: purple and rose are kept for the drugged look. Every night's dusk has it, not only this one.
+- **The sun sets behind the wagon.** The porter rides facing back, so he watches the day go over the road he came by, and the city ahead is the dark he is carried into. Night 0's dusk is brighter than the abbey's (`Daylight` on `night0.tscn`: sky 1.0, ambient 1.5, sun 0.7 *mine*), and is all but gone by the lane.
+- **Distance** (`RoadAir`, `game/world/road/road_air.gd`): out in the fields far things fade into the sky they stand against (depth fog from 14 m, whole at 230 m, taking the sky's own colour *mine*). It thins inside the wall and is gone by the turn into the lane; the abbey's nights don't have it.
+- **The ground** (`env_road_fields`): the road two carts wide, with ruts that wander and hold long uneven pools; a grass verge and a wet ditch each side; open fields in ridge and furrow with rain standing in the furrows. All the water lies level and carries the sky, so the last light runs down the ruts.
+- **The white chapel** stands 17 m south of the road in a walled yard, limewashed, candles lit inside for Vespers behind leaded glass.
+- **Trees** stand bare along the road and out in the fields: elms, oaks, hawthorns, pollard willows by the ditches (35 of them, `tools/build/road_dressing.py`). A band of far woods closes the horizon.
+- **Rooks** wheel over the great oak north of the road, and low over the road far back, against the light (`Rooks`).
+- **Ground mist** lies thin over the fields near the wagon (a `FogVolume` in `env_road.tscn`).
+- **The wagon** is a real cart and a bay horse that walks or trots in step with the ground; the carter's lantern hangs on a stake at the headboard. The cart that passes carries a shape under sacking.
+- **The abbey's cat** keeps to the abbey on night 0 (it was following the wagon through the fields).
+
+Fixed with it: the lane's skyline (the city's far roofs, towers and a second city wall, `Skyline` in `street.tscn`) stood across the road in: the wagon drove through four of its blocks, and its far rows stood in the fields outside Aldgate. Everything of it outside the wall, and the two blocks in the roadway, are gone; the city behind the wall keeps its nearer rows and two spires.
+
+`tools/intro_shots.sh` takes stills along the road to `art/_review/intro/` (the wagon stood at set places and hours); `tools/intro_film.sh` films the first half-minute as it plays.
+
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 
 Three, in the precinct wall along the lane: the porter's cell (z −6), the outer court's north (z 6) and south (z 14) *(mine)*. Each is a barred slit a hand's width by a forearm's height (0.18 × 0.5 m) at eye level, splayed to 0.4 m at both faces so an eye at the bars sees a sliver of the other side *(the splay is mine)*.

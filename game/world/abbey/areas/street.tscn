@@ -150,14 +150,6 @@ size = Vector3(12.31, 8.349, 9.21)
 material = ExtResource("roof")
 size = Vector3(12.71, 3.614, 9.61)
 
-[sub_resource type="BoxMesh" id="M43"]
-material = ExtResource("plaster")
-size = Vector3(8.838, 7.554, 6.049)
-
-[sub_resource type="PrismMesh" id="M44"]
-material = ExtResource("roof")
-size = Vector3(9.238, 3.209, 6.449)
-
 [sub_resource type="BoxMesh" id="M45"]
 material = ExtResource("plaster")
 size = Vector3(12.15, 9.404, 8.017)
@@ -278,14 +270,6 @@ size = Vector3(11.59, 11.4, 9.472)
 material = ExtResource("roof")
 size = Vector3(11.99, 2.936, 9.872)
 
-[sub_resource type="BoxMesh" id="M75"]
-material = ExtResource("plaster")
-size = Vector3(10.08, 7.349, 9.805)
-
-[sub_resource type="PrismMesh" id="M76"]
-material = ExtResource("roof")
-size = Vector3(10.48, 3.193, 10.2)
-
 [sub_resource type="BoxMesh" id="M77"]
 material = ExtResource("plaster")
 size = Vector3(13.58, 9.838, 9.917)
@@ -301,214 +285,6 @@ size = Vector3(10.08, 10.25, 10.03)
 [sub_resource type="PrismMesh" id="M80"]
 material = ExtResource("roof")
 size = Vector3(10.48, 3.131, 10.43)
-
-[sub_resource type="BoxMesh" id="M81"]
-material = ExtResource("plaster")
-size = Vector3(12.25, 12.77, 6.892)
-
-[sub_resource type="PrismMesh" id="M82"]
-material = ExtResource("roof")
-size = Vector3(12.65, 3.802, 7.292)
-
-[sub_resource type="BoxMesh" id="M83"]
-material = ExtResource("plaster")
-size = Vector3(10.31, 11.93, 10.48)
-
-[sub_resource type="PrismMesh" id="M84"]
-material = ExtResource("roof")
-size = Vector3(10.71, 3.949, 10.88)
-
-[sub_resource type="BoxMesh" id="M85"]
-material = ExtResource("plaster")
-size = Vector3(10.61, 12.8, 6.205)
-
-[sub_resource type="PrismMesh" id="M86"]
-material = ExtResource("roof")
-size = Vector3(11.01, 2.885, 6.605)
-
-[sub_resource type="BoxMesh" id="M87"]
-material = ExtResource("plaster")
-size = Vector3(10.73, 9.99, 8.518)
-
-[sub_resource type="PrismMesh" id="M88"]
-material = ExtResource("roof")
-size = Vector3(11.13, 3.379, 8.918)
-
-[sub_resource type="BoxMesh" id="M89"]
-material = ExtResource("plaster")
-size = Vector3(10.15, 13.21, 8.679)
-
-[sub_resource type="PrismMesh" id="M90"]
-material = ExtResource("roof")
-size = Vector3(10.55, 2.687, 9.079)
-
-[sub_resource type="BoxMesh" id="M91"]
-material = ExtResource("plaster")
-size = Vector3(13.05, 9.072, 10.36)
-
-[sub_resource type="PrismMesh" id="M92"]
-material = ExtResource("roof")
-size = Vector3(13.45, 3.634, 10.76)
-
-[sub_resource type="BoxMesh" id="M93"]
-material = ExtResource("plaster")
-size = Vector3(8.772, 9.202, 10.29)
-
-[sub_resource type="PrismMesh" id="M94"]
-material = ExtResource("roof")
-size = Vector3(9.172, 2.979, 10.69)
-
-[sub_resource type="BoxMesh" id="M95"]
-material = ExtResource("plaster")
-size = Vector3(9.077, 13.66, 6.012)
-
-[sub_resource type="PrismMesh" id="M96"]
-material = ExtResource("roof")
-size = Vector3(9.477, 3.11, 6.412)
-
-[sub_resource type="BoxMesh" id="M97"]
-material = ExtResource("plaster")
-size = Vector3(12.23, 13.09, 8.099)
-
-[sub_resource type="PrismMesh" id="M98"]
-material = ExtResource("roof")
-size = Vector3(12.63, 3.005, 8.499)
-
-[sub_resource type="BoxMesh" id="M99"]
-material = ExtResource("plaster")
-size = Vector3(13.25, 9.2, 7.058)
-
-[sub_resource type="PrismMesh" id="M100"]
-material = ExtResource("roof")
-size = Vector3(13.65, 3.836, 7.458)
-
-[sub_resource type="BoxMesh" id="M101"]
-material = ExtResource("plaster")
-size = Vector3(13.76, 10.19, 8.029)
-
-[sub_resource type="PrismMesh" id="M102"]
-material = ExtResource("roof")
-size = Vector3(14.16, 3.329, 8.429)
-
-[sub_resource type="BoxMesh" id="M103"]
-material = ExtResource("plaster")
-size = Vector3(10.32, 10.67, 11.45)
-
-[sub_resource type="PrismMesh" id="M104"]
-material = ExtResource("roof")
-size = Vector3(10.72, 3.19, 11.85)
-
-[sub_resource type="BoxMesh" id="M105"]
-material = ExtResource("plaster")
-size = Vector3(12.9, 13.85, 6.578)
-
-[sub_resource type="PrismMesh" id="M106"]
-material = ExtResource("roof")
-size = Vector3(13.3, 3.908, 6.978)
-
-[sub_resource type="BoxMesh" id="M107"]
-material = ExtResource("plaster")
-size = Vector3(12.23, 9.808, 10.67)
-
-[sub_resource type="PrismMesh" id="M108"]
-material = ExtResource("roof")
-size = Vector3(12.63, 2.529, 11.07)
-
-[sub_resource type="BoxMesh" id="M109"]
-material = ExtResource("plaster")
-size = Vector3(11.45, 9.207, 7.502)
-
-[sub_resource type="PrismMesh" id="M110"]
-material = ExtResource("roof")
-size = Vector3(11.85, 3.772, 7.902)
-
-[sub_resource type="BoxMesh" id="M111"]
-material = ExtResource("plaster")
-size = Vector3(8.953, 9.503, 10.55)
-
-[sub_resource type="PrismMesh" id="M112"]
-material = ExtResource("roof")
-size = Vector3(9.353, 2.63, 10.95)
-
-[sub_resource type="BoxMesh" id="M113"]
-material = ExtResource("plaster")
-size = Vector3(11.24, 10.99, 6.123)
-
-[sub_resource type="PrismMesh" id="M114"]
-material = ExtResource("roof")
-size = Vector3(11.64, 2.822, 6.523)
-
-[sub_resource type="BoxMesh" id="M115"]
-material = ExtResource("plaster")
-size = Vector3(9.544, 14.2, 9.647)
-
-[sub_resource type="PrismMesh" id="M116"]
-material = ExtResource("roof")
-size = Vector3(9.944, 2.623, 10.05)
-
-[sub_resource type="BoxMesh" id="M117"]
-material = ExtResource("plaster")
-size = Vector3(11.68, 14.22, 12)
-
-[sub_resource type="PrismMesh" id="M118"]
-material = ExtResource("roof")
-size = Vector3(12.08, 3.291, 12.4)
-
-[sub_resource type="BoxMesh" id="M119"]
-material = ExtResource("plaster")
-size = Vector3(9.744, 11.33, 11.36)
-
-[sub_resource type="PrismMesh" id="M120"]
-material = ExtResource("roof")
-size = Vector3(10.14, 3.767, 11.76)
-
-[sub_resource type="BoxMesh" id="M121"]
-material = ExtResource("plaster")
-size = Vector3(10.62, 13.99, 7.495)
-
-[sub_resource type="PrismMesh" id="M122"]
-material = ExtResource("roof")
-size = Vector3(11.02, 2.774, 7.895)
-
-[sub_resource type="BoxMesh" id="M123"]
-material = ExtResource("plaster")
-size = Vector3(12.29, 10.78, 8.699)
-
-[sub_resource type="PrismMesh" id="M124"]
-material = ExtResource("roof")
-size = Vector3(12.69, 2.704, 9.099)
-
-[sub_resource type="BoxMesh" id="M125"]
-material = ExtResource("plaster")
-size = Vector3(11.85, 14.64, 7.321)
-
-[sub_resource type="PrismMesh" id="M126"]
-material = ExtResource("roof")
-size = Vector3(12.25, 3.019, 7.721)
-
-[sub_resource type="BoxMesh" id="M127"]
-material = ExtResource("plaster")
-size = Vector3(11.67, 13.52, 7.234)
-
-[sub_resource type="PrismMesh" id="M128"]
-material = ExtResource("roof")
-size = Vector3(12.07, 3.062, 7.634)
-
-[sub_resource type="BoxMesh" id="M129"]
-material = ExtResource("plaster")
-size = Vector3(13.04, 15.78, 6.25)
-
-[sub_resource type="PrismMesh" id="M130"]
-material = ExtResource("roof")
-size = Vector3(13.44, 3.818, 6.65)
-
-[sub_resource type="BoxMesh" id="M131"]
-material = ExtResource("plaster")
-size = Vector3(10.97, 13.06, 10.76)
-
-[sub_resource type="PrismMesh" id="M132"]
-material = ExtResource("roof")
-size = Vector3(11.37, 3.704, 11.16)
 
 [sub_resource type="BoxMesh" id="M133"]
 material = ExtResource("plaster")
@@ -662,18 +438,6 @@ size = Vector3(12.97, 8.773, 6.526)
 material = ExtResource("roof")
 size = Vector3(13.37, 2.889, 6.926)
 
-[sub_resource type="BoxMesh" id="M171"]
-material = ExtResource("stone")
-size = Vector3(7, 26, 7)
-
-[sub_resource type="CylinderMesh" id="M172"]
-material = ExtResource("roof")
-top_radius = 0.0
-bottom_radius = 4.34
-height = 34
-radial_segments = 6
-rings = 1
-
 [sub_resource type="BoxMesh" id="M173"]
 material = ExtResource("stone")
 size = Vector3(5, 18, 5)
@@ -698,26 +462,6 @@ height = 14
 radial_segments = 6
 rings = 1
 
-[sub_resource type="BoxMesh" id="M177"]
-material = ExtResource("stone")
-size = Vector3(5, 20, 5)
-
-[sub_resource type="CylinderMesh" id="M178"]
-material = ExtResource("roof")
-top_radius = 0.0
-bottom_radius = 3.1
-height = 18
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="M179"]
-material = ExtResource("roof")
-top_radius = 0.0
-bottom_radius = 3.1
-height = 14
-radial_segments = 6
-rings = 1
-
 [sub_resource type="BoxMesh" id="M180"]
 material = ExtResource("stone")
 size = Vector3(4, 14, 4)
@@ -729,14 +473,6 @@ bottom_radius = 2.48
 height = 12
 radial_segments = 6
 rings = 1
-
-[sub_resource type="BoxMesh" id="M182"]
-material = ExtResource("stone")
-size = Vector3(3, 8, 220)
-
-[sub_resource type="BoxMesh" id="M183"]
-material = ExtResource("stone")
-size = Vector3(10, 14, 12)
 
 [node name="Street" type="Node3D"]
 editor_description = "Proposal: a lane outside the west gate, on the edge of a medieval city (greybox). Lanterns hung outside houses follow the London mayor's order of 1415; hide StreetLanterns for a darker, earlier street."
@@ -1550,16 +1286,6 @@ transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -79.72, 9.94
 cast_shadow = 0
 mesh = SubResource("M42")
 
-[node name="Block15" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -73.42, 3.777, 48.04)
-cast_shadow = 0
-mesh = SubResource("M43")
-
-[node name="Roof15" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -73.42, 9.154, 48.04)
-cast_shadow = 0
-mesh = SubResource("M44")
-
 [node name="Block16" type="MeshInstance3D" parent="Skyline"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -72.69, 4.702, 57.59)
 cast_shadow = 0
@@ -1710,16 +1436,6 @@ transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -106.3, 13, 
 cast_shadow = 0
 mesh = SubResource("M74")
 
-[node name="Block31" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -103.5, 3.675, 43.83)
-cast_shadow = 0
-mesh = SubResource("M75")
-
-[node name="Roof31" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -103.5, 8.949, 43.83)
-cast_shadow = 0
-mesh = SubResource("M76")
-
 [node name="Block32" type="MeshInstance3D" parent="Skyline"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.85, 4.919, 55.01)
 cast_shadow = 0
@@ -1739,266 +1455,6 @@ mesh = SubResource("M79")
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -99.29, 11.85, 61.91)
 cast_shadow = 0
 mesh = SubResource("M80")
-
-[node name="Block34" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -133.6, 6.386, -66.55)
-cast_shadow = 0
-mesh = SubResource("M81")
-
-[node name="Roof34" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -133.6, 14.37, -66.55)
-cast_shadow = 0
-mesh = SubResource("M82")
-
-[node name="Block35" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -140.3, 5.967, -55.95)
-cast_shadow = 0
-mesh = SubResource("M83")
-
-[node name="Roof35" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -140.3, 13.53, -55.95)
-cast_shadow = 0
-mesh = SubResource("M84")
-
-[node name="Block36" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -138.4, 6.399, -45.3)
-cast_shadow = 0
-mesh = SubResource("M85")
-
-[node name="Roof36" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -138.4, 14.4, -45.3)
-cast_shadow = 0
-mesh = SubResource("M86")
-
-[node name="Block37" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.6, 4.995, -36.04)
-cast_shadow = 0
-mesh = SubResource("M87")
-
-[node name="Roof37" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.6, 11.59, -36.04)
-cast_shadow = 0
-mesh = SubResource("M88")
-
-[node name="Block38" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.9, 6.606, -25.85)
-cast_shadow = 0
-mesh = SubResource("M89")
-
-[node name="Roof38" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.9, 14.81, -25.85)
-cast_shadow = 0
-mesh = SubResource("M90")
-
-[node name="Block39" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -142, 4.536, -18.21)
-cast_shadow = 0
-mesh = SubResource("M91")
-
-[node name="Roof39" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -142, 10.67, -18.21)
-cast_shadow = 0
-mesh = SubResource("M92")
-
-[node name="Block40" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -137.6, 4.601, -5.785)
-cast_shadow = 0
-mesh = SubResource("M93")
-
-[node name="Roof40" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -137.6, 10.8, -5.785)
-cast_shadow = 0
-mesh = SubResource("M94")
-
-[node name="Block41" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -139, 6.83, 0.05533)
-cast_shadow = 0
-mesh = SubResource("M95")
-
-[node name="Roof41" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -139, 15.26, 0.05533)
-cast_shadow = 0
-mesh = SubResource("M96")
-
-[node name="Block42" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -133.1, 6.547, 10.15)
-cast_shadow = 0
-mesh = SubResource("M97")
-
-[node name="Roof42" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -133.1, 14.69, 10.15)
-cast_shadow = 0
-mesh = SubResource("M98")
-
-[node name="Block43" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.7, 4.6, 25.82)
-cast_shadow = 0
-mesh = SubResource("M99")
-
-[node name="Roof43" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -135.7, 10.8, 25.82)
-cast_shadow = 0
-mesh = SubResource("M100")
-
-[node name="Block44" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -138.1, 5.093, 33.79)
-cast_shadow = 0
-mesh = SubResource("M101")
-
-[node name="Roof44" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -138.1, 11.79, 33.79)
-cast_shadow = 0
-mesh = SubResource("M102")
-
-[node name="Block45" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -141.6, 5.336, 44.89)
-cast_shadow = 0
-mesh = SubResource("M103")
-
-[node name="Roof45" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -141.6, 12.27, 44.89)
-cast_shadow = 0
-mesh = SubResource("M104")
-
-[node name="Block46" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -141, 6.926, 53.57)
-cast_shadow = 0
-mesh = SubResource("M105")
-
-[node name="Roof46" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -141, 15.45, 53.57)
-cast_shadow = 0
-mesh = SubResource("M106")
-
-[node name="Block47" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -138.1, 4.904, 65.14)
-cast_shadow = 0
-mesh = SubResource("M107")
-
-[node name="Roof47" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -138.1, 11.41, 65.14)
-cast_shadow = 0
-mesh = SubResource("M108")
-
-[node name="Block48" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -185.2, 4.603, -67.16)
-cast_shadow = 0
-mesh = SubResource("M109")
-
-[node name="Roof48" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -185.2, 10.81, -67.16)
-cast_shadow = 0
-mesh = SubResource("M110")
-
-[node name="Block49" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -181.3, 4.751, -52.97)
-cast_shadow = 0
-mesh = SubResource("M111")
-
-[node name="Roof49" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -181.3, 11.1, -52.97)
-cast_shadow = 0
-mesh = SubResource("M112")
-
-[node name="Block50" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -177.9, 5.496, -42.1)
-cast_shadow = 0
-mesh = SubResource("M113")
-
-[node name="Roof50" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -177.9, 12.59, -42.1)
-cast_shadow = 0
-mesh = SubResource("M114")
-
-[node name="Block51" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -178.1, 7.098, -28.97)
-cast_shadow = 0
-mesh = SubResource("M115")
-
-[node name="Roof51" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -178.1, 15.8, -28.97)
-cast_shadow = 0
-mesh = SubResource("M116")
-
-[node name="Block52" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -181.7, 7.11, -22.21)
-cast_shadow = 0
-mesh = SubResource("M117")
-
-[node name="Roof52" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -181.7, 15.82, -22.21)
-cast_shadow = 0
-mesh = SubResource("M118")
-
-[node name="Block53" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -181.2, 5.663, -7.46)
-cast_shadow = 0
-mesh = SubResource("M119")
-
-[node name="Roof53" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -181.2, 12.93, -7.46)
-cast_shadow = 0
-mesh = SubResource("M120")
-
-[node name="Block54" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -178.3, 6.995, 5.917)
-cast_shadow = 0
-mesh = SubResource("M121")
-
-[node name="Roof54" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -178.3, 15.59, 5.917)
-cast_shadow = 0
-mesh = SubResource("M122")
-
-[node name="Block55" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -183, 5.388, 17.27)
-cast_shadow = 0
-mesh = SubResource("M123")
-
-[node name="Roof55" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -183, 12.38, 17.27)
-cast_shadow = 0
-mesh = SubResource("M124")
-
-[node name="Block56" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -175.6, 7.322, 24.5)
-cast_shadow = 0
-mesh = SubResource("M125")
-
-[node name="Roof56" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -175.6, 16.24, 24.5)
-cast_shadow = 0
-mesh = SubResource("M126")
-
-[node name="Block57" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -185.1, 6.762, 38.51)
-cast_shadow = 0
-mesh = SubResource("M127")
-
-[node name="Roof57" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -185.1, 15.12, 38.51)
-cast_shadow = 0
-mesh = SubResource("M128")
-
-[node name="Block58" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -180.9, 7.892, 48.9)
-cast_shadow = 0
-mesh = SubResource("M129")
-
-[node name="Roof58" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -180.9, 17.38, 48.9)
-cast_shadow = 0
-mesh = SubResource("M130")
-
-[node name="Block59" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -183.6, 6.531, 58.79)
-cast_shadow = 0
-mesh = SubResource("M131")
-
-[node name="Roof59" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -183.6, 14.66, 58.79)
-cast_shadow = 0
-mesh = SubResource("M132")
 
 [node name="Block60" type="MeshInstance3D" parent="Skyline"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -0.2988, 3.383, -73.59)
@@ -2190,16 +1646,6 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 107.9, 10.17, 60.4)
 cast_shadow = 0
 mesh = SubResource("M170")
 
-[node name="Tower0" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -150, 13, 40)
-cast_shadow = 0
-mesh = SubResource("M171")
-
-[node name="Spire0" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -150, 43, 40)
-cast_shadow = 0
-mesh = SubResource("M172")
-
 [node name="Tower1" type="MeshInstance3D" parent="Skyline"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -110, 9, -55)
 cast_shadow = 0
@@ -2220,26 +1666,6 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -85, 23, 70)
 cast_shadow = 0
 mesh = SubResource("M176")
 
-[node name="Tower3" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -160, 10, -30)
-cast_shadow = 0
-mesh = SubResource("M177")
-
-[node name="Spire3" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -160, 29, -30)
-cast_shadow = 0
-mesh = SubResource("M178")
-
-[node name="Tower4" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -200, 9, 10)
-cast_shadow = 0
-mesh = SubResource("M173")
-
-[node name="Spire4" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -200, 25, 10)
-cast_shadow = 0
-mesh = SubResource("M179")
-
 [node name="Tower5" type="MeshInstance3D" parent="Skyline"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 90, 7, -80)
 cast_shadow = 0
@@ -2250,12 +1676,3 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 90, 20, -80)
 cast_shadow = 0
 mesh = SubResource("M181")
 
-[node name="CityWall" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -205, 4, 0)
-cast_shadow = 0
-mesh = SubResource("M182")
-
-[node name="CityGate" type="MeshInstance3D" parent="Skyline"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -205, 7, -10)
-cast_shadow = 0
-mesh = SubResource("M183")

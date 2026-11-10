@@ -9,3 +9,5 @@ override.cfg
 # Review renders: regenerate with tools/review.sh
 art/_review/*
 !art/_review/.gdignore
+# Textures as downloaded: tools/build/tex_fetch.py fetches them again
+art/_src/
