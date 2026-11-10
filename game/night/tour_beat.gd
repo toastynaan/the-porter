@@ -45,7 +45,7 @@ func _ready() -> void:
 
 func run() -> void:
 	if Settings.finished:
-		var pick := await Talk.choose(PackedStringArray(["Walk the duties with Thomas", "Skip the tour (you've kept this gate before)"]))
+		var pick := await Talk.choose(PackedStringArray(["(Walk the duties with Thomas.)", "(Skip the tour: you've kept this gate before.)"]))
 		if pick == 1:
 			GameState.set_flag(&"d1_tour_skipped")
 			return
@@ -92,7 +92,7 @@ func _walk_to(m: Vector3) -> void:
 func _by_the_well(p: Player) -> void:
 	if sand == null or p.global_position.distance_to(sand.global_position) > 14.0:
 		return
-	var pick := await Talk.choose(PackedStringArray(["Ask about the sand by the well", "Say nothing"]))
+	var pick := await Talk.answer(PackedStringArray(["What's the sand for, by the well?", "(Say nothing.)"]))
 	if pick == 0:
 		await say("Thomas", "A beast slaughtered for the kitchen, early. They sanded it for the flies. It's nothing.")
 		GameState.set_flag(&"d1_asked_sand")

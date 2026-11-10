@@ -51,7 +51,7 @@ func _corner(p: Player) -> void:
 	_npc.face(p.global_position)
 	for line in demon_lines:
 		await Talk.say("", line)
-	var pick := await Talk.choose(PackedStringArray(["Strike it", "Run"]))
+	var pick := await Talk.choose(PackedStringArray(["(Strike it.)", "(Run.)"]))
 	if pick == 0:
 		GameState.set_flag(&"struck_the_demon")
 		for line in struck_lines:

@@ -9,12 +9,12 @@ extends NightBeat
 ## up the lane with his lantern and knocks; the knock wakes a dozing porter
 ## (who hasn't seen him come: he is at the grille already). No dozing while
 ## someone is at the gate. At the grille they talk (Talk.begin: the porter's
-## view turns to him for a moment), he may ask the visitor's question (he
-## says it, and the visitor answers), and the porter reads him by looking him
-## over: each VisitorDetail he looks at gives a line and goes into the
-## ledger. He can
-## walk away from the grille; the visitor waits, knocking now and then, until
-## he comes back. Then he chooses:
+## view turns to him for a moment): the visitor greets him, he may ask the
+## visitor's question (he says it, and the visitor answers), and then, in
+## the same talk, he chooses what to do with him. All the while the porter
+## reads him by looking him over: each VisitorDetail he looks at gives a
+## line and goes into the ledger. He can walk away from the grille; the
+## visitor waits, knocking now and then, until he comes back. He chooses:
 ## - Admit: lift the bar, open the gate; the visitor comes in; shut and bar
 ##   the gate behind him; he follows the porter to the guesthouse and takes
 ##   the bed the porter shows him; the porter writes him in the ledger.
@@ -31,7 +31,11 @@ const CHILD_KNOCK_DOSE := 50.0
 const READ_ANGLE := 9.0
 const READ_RANGE := 4.0
 const READ_TIME := 0.35
-const CHOICES := ["Admit him to the guesthouse", "Turn him away", "Send for the prior"]
+## What to do with him: things the porter does, so in brackets (italics).
+const ADMIT := "(Admit him to the guesthouse.)"
+const CHOICES := [ADMIT, "(Turn him away.)", "(Send for the prior.)"]
+## At his bed, not warning him.
+const LEAVE_TO_SLEEP := "(Leave him to sleep.)"
 ## Not asking the visitor's question: on to what to do with him.
 const DONT_ASK := "(Ask him nothing.)"
 
@@ -101,36 +105,37 @@ func _receive(v: Visitor) -> void:
 	await _knock_until_answered(KNOCK, 1.4)
 	var noticed: Array[VisitorDetail] = []
 	var pick := -1
-	var asking := not v.question.is_empty() and not GameState.has_flag(GameState.tonight("asked_" + String(v.id)))
-	while asking:
-		Talk.begin(npc)
-		await say(v.speaker, v.greeting)
-		_reading = true
-		_read.call(npc, v, noticed)
-		var ask := await Talk.choose(PackedStringArray([v.question, DONT_ASK]), v.speaker, v.greeting)
-		if ask == 0:
-			GameState.set_flag(GameState.tonight("asked_" + String(v.id)))
-			await say(Talk.PORTER, v.question)
-			for line in v.answer:
-				await say(v.speaker, line)
-		var walked := Talk.left
-		_reading = false
-		Talk.end()
-		asking = ask < 0
-		if walked:
-			# He walked away from the grille; the visitor waits for him, and
-			# asks again if he hadn't heard the question out.
-			await _knock_until_answered(KNOCK, 1.4)
+	var asked_flag := GameState.tonight("asked_" + String(v.id))
+	var may_ask := not v.question.is_empty() and not GameState.has_flag(asked_flag)
+	# One talk for each time he comes to the grille: the greeting, the
+	# question if he asks it, and what to do with him. Walked away from, the
+	# visitor waits, knocking, and greets him again when he's back.
 	while pick < 0:
 		Talk.begin(npc)
-		await say(v.speaker, v.greeting)
 		_reading = true
 		_read.call(npc, v, noticed)
-		pick = await Talk.choose(PackedStringArray(CHOICES), v.speaker, v.greeting)
+		# What the choice stands under: his greeting, or the end of his answer.
+		var under := v.greeting
+		var greeted := false
+		if may_ask:
+			greeted = true
+			var ask := await Talk.ask(PackedStringArray([v.question, DONT_ASK]), v.speaker, v.greeting)
+			may_ask = ask < 0
+			if ask == 0:
+				GameState.set_flag(asked_flag)
+				await Talk.line(Talk.PORTER, v.question, Talk.own_seconds(v.question))
+				for i in v.answer.size() - 1:
+					await Talk.line(v.speaker, v.answer[i])
+				if not v.answer.is_empty():
+					under = v.answer[-1]
+					greeted = false
+		if greeted:
+			pick = await Talk.choose(PackedStringArray(CHOICES), v.speaker, under)
+		else:
+			pick = await Talk.ask(PackedStringArray(CHOICES), v.speaker, under)
 		_reading = false
 		Talk.end()
 		if pick < 0:
-			# He walked away from the grille; the visitor waits for him.
 			await _knock_until_answered(KNOCK, 1.4)
 	match pick:
 		0:

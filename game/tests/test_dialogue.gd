@@ -122,6 +122,7 @@ func _run() -> void:
 	await _seconds(0.3)
 
 	# The way a line shows.
+	var view := Talk.view
 	_check(Talk.aside("(He laughs.) Leave it.") == ["He laughs.", "Leave it."] and Talk.narration("(He (still) waits.)") == "He (still) waits."
 		and Talk.aside("Inside our wall? (He laughs.) At night?") == ["He laughs.", "Inside our wall? At night?"]
 		and Talk.narration("Osric: no brackets") == "" and Talk.narration("(He laughs.) Leave it.") == ""
@@ -129,13 +130,13 @@ func _run() -> void:
 		"a line in brackets is narration; a bracket in a spoken line is an aside")
 	Talk.say("Osric", "(He looks up.)", 0.5)
 	await get_tree().process_frame
-	_check(Talk._text.text == "He looks up." and not Talk._speaker.visible and Talk._text.has_theme_font_override(&"font"),
-		"narration shows in italics, with no brackets and no name (%s)" % Talk._text.text)
+	_check(view.words == "He looks up." and view.narrated and view.speaker.is_empty(),
+		"narration shows in italics, with no brackets and no name (%s)" % view.words)
 	await _seconds(0.6)
 	Talk.say("Osric", "(He laughs.) Leave it.", 0.5)
 	await get_tree().process_frame
-	_check(Talk._aside.visible and Talk._aside.text == "He laughs." and Talk._speaker.text == "OSRIC" and Talk._text.text == "Leave it."
-		and not Talk._text.has_theme_font_override(&"font"), "a spoken line's aside shows over the name")
+	_check(view.aside == "He laughs." and view.speaker == "Osric" and view.words == "Leave it." and not view.narrated,
+		"a spoken line's aside shows beside the name")
 	await _seconds(0.6)
 
 	# Talking: they turn to him, his view turns to their face for a moment.
@@ -159,9 +160,9 @@ func _run() -> void:
 		"Osric says his lines; the last stays up over the choice")
 	_check(_offered[-1] == PackedStringArray(["Ask A.", "(Do C.)", Talk.WALK_AWAY]),
 		"three answers at most, those whose [if] holds, then Walk away: %s" % [_offered[-1]])
-	var shown: Array = Talk._options.get_children().map(func(l: Label) -> String: return l.text)
-	_check(shown.size() == 3 and shown[1] == "2.  Do C." and (Talk._options.get_child(1) as Label).has_theme_font_override(&"font"),
-		"an answer in brackets shows in italics, without them: %s" % [shown])
+	var shown := view.option_texts()
+	_check(shown == PackedStringArray(["Ask A.", "Do C.", Talk.WALK_AWAY]) and not view.option_done(0) and view.option_done(1) and view.option_done(2),
+		"an answer in brackets shows in italics, without them, and so does walking away: %s" % [shown])
 
 	# An answer: he says it, its tags, its reply, and it drops off.
 	var suspicion := GameState.suspicion
@@ -238,21 +239,22 @@ func _run() -> void:
 	# Something said over his line (a pickup) gives it back when it's over.
 	Talk.say("", "(Picked up.)", 0.3)
 	await get_tree().process_frame
-	_check(Talk._text.text == "Picked up.", "a line said over the talk shows over it (%s)" % Talk._text.text)
+	_check(view.heard == "Picked up." and view.words.begins_with("A long first"),
+		"something said meanwhile shows above the talk's line, not in its place (%s / %s)" % [view.heard, view.words])
 	await _seconds(0.4)
-	_check(Talk._text.text.begins_with("A long first"), "and when it's over, his line shows again (%s)" % Talk._text.text)
+	_check(view.heard.is_empty() and view.words.begins_with("A long first"), "and goes when it's over (%s)" % view.heard)
 	_action(&"interact", true)
 	await _seconds(0.2)
-	_check(Talk._text.text.begins_with("Second"), "interact skips to the next line (%s)" % Talk._text.text)
+	_check(view.words.begins_with("Second"), "interact skips to the next line (%s)" % view.words)
 	for i in 8:
 		_action(&"interact", true)
 		await _seconds(0.05)
-	_check(Talk.talking and Talk._text.text.begins_with("Second"), "held down, it skips no further (%s)" % Talk._text.text)
+	_check(Talk.talking and view.words.begins_with("Second"), "held down, it skips no further (%s)" % view.words)
 	_action(&"interact", false)
 	await _seconds(0.1)
 	_action(&"interact", true)
 	await _seconds(0.1)
-	_check(Talk._text.text == "Third.", "let go and pressed again, it skips on (%s)" % Talk._text.text)
+	_check(view.words == "Third.", "let go and pressed again, it skips on (%s)" % view.words)
 	_action(&"interact", false)
 	await _until(func() -> bool: return not talker.talking, 5.0)
 
@@ -302,17 +304,203 @@ func _run() -> void:
 	next_c.text = "== start\nOsric: (Something else.)\nOsric: (And more.)\n-> end\n"
 	Talk.converse(next_c, osric)
 	await _seconds(0.2)
-	_check(Talk.talking and not talker.talking and Talk._text.text == "Something else."
-		and not Talk.is_choosing() and Talk._options.get_child_count() == 0,
-		"cut short, its choice goes and the next talk opens at once (%s)" % Talk._text.text)
+	_check(Talk.talking and not talker.talking and view.words == "Something else."
+		and not Talk.is_choosing() and view.option_texts().is_empty(),
+		"cut short, its choice goes and the next talk opens at once (%s)" % view.words)
 	await _until(func() -> bool: return not Talk.talking, 8.0)
 	_check(_said("(And more.)") and _count_said("(Calls after you.)") == leaves,
 		"the next talk plays out, and nobody calls after him from the first")
+
+	await _answering(talker)
+	await _lines_and_questions(osric)
+	await _standing_still(abbey, osric)
 
 	Talk.auto_choice = Callable()
 	Talk.line_seconds = -1.0
 	print("RESULT: %s" % ("PASS" if _fails == 0 else "FAIL (%d)" % _fails))
 	get_tree().quit(0 if _fails == 0 else 1)
+
+
+## Answering by the keys: a point's last line comes up with its answers at
+## once; the choice takes no key for a moment; the arrows move the answer;
+## `interact` skips a line said over the open choice before it answers.
+func _answering(talker: Talker) -> void:
+	var view := Talk.view
+	Talk.auto_choice = Callable()
+	Talk.line_seconds = -1.0
+	_player.place(Vector3(-30, 0.05, 7.5), PI)
+	await _seconds(0.3)
+	var ask_c := Conversation.new()
+	ask_c.id = &"test_ask"
+	ask_c.text = "== start\nOsric: A first line, long enough to take a few seconds to read.\nOsric: And a question?\n* Yes. -> yes\n* No. -> end\n\n== yes\nOsric: (He nods.)\n-> end\n"
+	talker.conversation = ask_c
+	talker.interact(_player)
+	await _seconds(0.3)
+	await _tap(&"interact")
+	_check(Talk.is_choosing() and view.words == "And a question?" and _said("And a question?")
+		and view.option_texts() == PackedStringArray(["Yes.", "No.", Talk.WALK_AWAY]),
+		"a point's last line comes up with its answers, not before them (%s)" % view.words)
+	await _tap(&"interact")
+	_check(Talk.is_choosing(), "a press as the answers come up answers nothing")
+	await _seconds(Talk.CHOICE_DELAY)
+	await _tap(&"ui_down")
+	var down := Talk.highlighted()
+	await _tap(&"ui_up")
+	await _tap(&"ui_up")
+	_check(down == 1 and Talk.highlighted() == 2, "the arrows move the answer, and wrap round (%d, %d)" % [down, Talk.highlighted()])
+	await _tap(&"ui_down")
+	Talk.say("Gib", "(From the lane.) Ten of the clock.", 5.0)
+	await _seconds(0.1)
+	_check(view.heard == "GIB  (From the lane.) Ten of the clock." and view.words == "And a question?" and Talk.is_choosing(),
+		"something said over an open choice shows above it; the question keeps its place (%s)" % view.heard)
+	await _tap(&"interact")
+	_check(not Talk.is_choosing() and Talk.history.has(["Alric", "Yes."]) and view.speaker == "Alric" and view.words == "Yes.",
+		"interact answers, and he says it (%s)" % view.words)
+	await _until(func() -> bool: return not talker.talking, 8.0)
+	_check(_said("(He nods.)") and not Talk.talking, "and the talk goes on from the answer")
+	await _seconds(0.3)
+	# A number key is meant: it answers as soon as the answers are up.
+	talker.interact(_player)
+	await _seconds(0.3)
+	await _tap(&"interact")
+	var key := InputEventKey.new()
+	key.keycode = KEY_2
+	key.physical_keycode = KEY_2
+	key.pressed = true
+	Input.parse_input_event(key)
+	await _seconds(0.1)
+	_check(not Talk.is_choosing() and Talk.history.has(["Alric", "No."]), "a number key answers at once")
+	key = key.duplicate()
+	key.pressed = false
+	Input.parse_input_event(key)
+	await _until(func() -> bool: return not talker.talking, 8.0)
+	await _seconds(0.3)
+
+
+## Lines over lines, questions over questions, and a beat's own question.
+func _lines_and_questions(osric: Brother) -> void:
+	var view := Talk.view
+	# A line said over another has its place; the older one's time runs on
+	# underneath, and with only a blink left it doesn't flash back.
+	Talk.say("", "(Long.)", 2.0)
+	await _seconds(0.1)
+	Talk.say("", "(Over it.)", 1.7)
+	await _seconds(0.2)
+	_check(view.words == "Over it." and view.heard.is_empty(), "with no talk open, a line said over another has its place (%s)" % view.words)
+	await _seconds(1.55)
+	_check(view.words.is_empty() and Talk.quiet(), "a line with only a blink left doesn't flash back (%s)" % view.words)
+	Talk.say("", "(Long.)", 3.0)
+	await _seconds(0.1)
+	Talk.say("", "(Over it.)", 1.0)
+	await _seconds(1.2)
+	_check(view.words == "Long.", "one with longer left shows again (%s)" % view.words)
+	await _seconds(2.0)
+	# A line from before a talk is heard above it, and gone by its end.
+	Talk.say("", "(Stale.)", 1.0)
+	await _seconds(0.3)
+	Talk.begin(osric)
+	Talk.line("Osric", "Fresh.", 1.5)
+	await _seconds(0.2)
+	_check(view.words == "Fresh." and view.heard == "Stale.", "a line from before a talk moves above the talk's line (%s / %s)" % [view.words, view.heard])
+	await _seconds(1.5)
+	_check(view.words.is_empty() and view.heard.is_empty(), "and doesn't turn up after it (%s)" % view.heard)
+	Talk.end()
+
+	# One question at a time: a second waits for the first to be answered.
+	var picks := []
+	var first := func() -> void:
+		var got := await Talk.choose(PackedStringArray(["(One.)", "(Two.)"]))
+		picks.append(["first", got])
+	var second := func() -> void:
+		var got := await Talk.choose(PackedStringArray(["(Three.)", "(Four.)"]))
+		picks.append(["second", got])
+	first.call()
+	second.call()
+	await _seconds(0.1)
+	_check(Talk.offered() == PackedStringArray(["(One.)", "(Two.)"]) and view.option_texts() == PackedStringArray(["One.", "Two."]),
+		"asked two things at once, the first is up: %s" % [Talk.offered()])
+	Talk.auto_choice = func(o: PackedStringArray) -> int: return 1 if o.has("(One.)") else -1
+	await _seconds(0.1)
+	_check(picks == [["first", 1]] and Talk.offered() == PackedStringArray(["(Three.)", "(Four.)"]),
+		"answered, the second comes up: %s" % [picks])
+	Talk.auto_choice = func(_o: PackedStringArray) -> int: return 0
+	await _seconds(0.1)
+	_check(picks == [["first", 1], ["second", 0]] and not Talk.is_choosing() and view.option_texts().is_empty(), "and is answered in its turn: %s" % [picks])
+
+	# A beat's question: the line just said stays up over the answers, and he
+	# says the answer he picks.
+	_answer = -1
+	Talk.auto_choice = func(_o: PackedStringArray) -> int: return _answer
+	var beat := func() -> void:
+		await Talk.say("Osric", "Well, porter?", 0.3)
+		await Talk.answer(PackedStringArray(["I saw nothing.", "(Say nothing.)"]))
+	beat.call()
+	await _seconds(0.5)
+	_check(Talk.is_choosing() and view.speaker == "Osric" and view.words == "Well, porter?",
+		"a beat's question keeps the line just said up over its answers (%s)" % view.words)
+	_answer = 0
+	await _seconds(0.2)
+	_answer = -1
+	_check(view.speaker == "Alric" and view.words == "I saw nothing.", "and he says the answer he picks (%s: %s)" % [view.speaker, view.words])
+	await _seconds(2.0)
+
+
+## Whoever he's talking to stands still for it and goes on after; if they
+## go, or he's taken away, the talk is cut short.
+func _standing_still(abbey: Node3D, osric: Brother) -> void:
+	osric.place(null)
+	var walker: VisitorNPC = load("res://game/gate/visitor_npc.tscn").instantiate()
+	walker.name = &"Pilgrim"
+	var who := Visitor.new()
+	who.look = load("res://game/characters/chr_pilgrim.tscn")
+	who.lantern = false
+	walker.visitor = who
+	abbey.add_child(walker)
+	walker.global_position = Vector3(-30, 0.05, 5.5)
+	var long_c := Conversation.new()
+	long_c.id = &"test_long"
+	long_c.text = "== start\nPilgrim: A long line, long enough to take a few seconds to read.\nPilgrim: And another just as long, to keep the talk open.\nPilgrim: And a third, as long as the others were.\n-> end\n"
+	await _seconds(0.3)
+	walker.go_to(Vector3(-30, 0.05, -6.0))
+	await _seconds(1.0)
+	_check(walker.velocity.length() > 0.5, "someone walking by (%.1f m/s)" % walker.velocity.length())
+	_player.place(walker.global_position + Vector3(1.4, 0, 0), PI * 0.5)
+	Talk.converse(long_c, walker)
+	await _seconds(0.5)
+	var stood := walker.global_position
+	await _seconds(1.0)
+	_check(Talk.talking and Talk.talking_to == walker and walker.global_position.distance_to(stood) < 0.05,
+		"talked to, he stands still (moved %.2f m)" % walker.global_position.distance_to(stood))
+	Talk.interrupt()
+	await _seconds(1.0)
+	_check(not Talk.talking and walker.global_position.distance_to(stood) > 0.5, "and walks on when it's over (%.2f m)" % walker.global_position.distance_to(stood))
+
+	_player.place(walker.global_position + Vector3(1.4, 0, 0), PI * 0.5)
+	Talk.converse(long_c, walker)
+	await _seconds(0.5)
+	walker.set_present(false)
+	await _seconds(0.1)
+	_check(not Talk.talking and not _player.talking and Talk.view.words.is_empty(), "if they go, the talk is cut short")
+
+	walker.set_present(true, Transform3D(Basis.IDENTITY, Vector3(-30, 0.05, 5.5)))
+	_player.place(Vector3(-28.6, 0.05, 5.5), PI * 0.5)
+	await _seconds(0.3)
+	Talk.converse(long_c, walker)
+	await _seconds(0.5)
+	var open := Talk.talking
+	_player.place(Vector3(-30, 0.05, 5.5 + Talk.GONE + 2.0), 0.0)
+	await _seconds(0.1)
+	_check(open and not Talk.talking and not _player.talking, "and so it is if he's taken %d m away" % roundi(Talk.GONE + 2.0))
+	walker.queue_free()
+	await _seconds(0.3)
+
+
+## Presses `action` and lets go of it, as a tap of a key would.
+func _tap(action: StringName) -> void:
+	_action(action, true)
+	await _seconds(0.05)
+	_action(action, false)
+	await _seconds(0.05)
 
 
 ## Presses (or lets go of) `action`, as a key would.

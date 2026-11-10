@@ -129,7 +129,7 @@ func _run() -> void:
 	Settings.set_value(&"subtitle_size", 0)
 	var small := Settings.subtitle_scale()
 	Settings.set_value(&"subtitle_size", 1)
-	_check(big > 1.0 and small < 1.0 and Settings.changed.is_connected(Talk._layout),
+	_check(big > 1.0 and small < 1.0 and Settings.changed.is_connected(Talk.view.layout),
 		"subtitle sizes, and the subtitles follow the setting (%.1f, %.1f)" % [big, small])
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE))

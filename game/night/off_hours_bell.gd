@@ -128,8 +128,8 @@ func _prior_questions(p: Player) -> void:
 	var npc := _arrive(LOOKS[&"hugh"])
 	await npc.walk_to(p.global_position + (npc.global_position - p.global_position).normalized() * 1.2)
 	npc.face(p.global_position)
-	await Talk.say("Hugh", "The bell, at this hour? Speak, porter. What did you see?")
-	var pick := await Talk.choose(PackedStringArray(["\"Something was after me.\"", "\"I was frightened. It was nothing.\"", "(Say nothing.)"]))
+	var pick := await Talk.answer(PackedStringArray(["Something was after me.", "I was frightened. It was nothing.", "(Say nothing.)"]),
+		"Hugh", "The bell, at this hour? Speak, porter. What did you see?")
 	match pick:
 		0:
 			GameState.set_flag(&"hugh_suspects", int(GameState.get_flag(&"hugh_suspects", 0)) + 1)

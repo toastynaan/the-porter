@@ -68,7 +68,7 @@ func _run() -> void:
 	_pick = 0
 	var to: StringName = await Report.ask(&"demo_pond", "the merchant in the pond")
 	_check(to == &"thomas" and GameState.get_flag(&"reported_demo_pond") == &"thomas" and GameState.suspicion == 0
-		and _offered[-1][0] == "Tell Brother Thomas about the merchant in the pond", "told Thomas: safe now")
+		and _offered[-1][0] == "(Tell Brother Thomas about the merchant in the pond.)", "told Thomas: safe now")
 	Report.at_dusk()
 	_check(GameState.suspicion == Report.THOMAS_LATER, "dangerous later: +5 at the next dusk (%d)" % GameState.suspicion)
 	Report.at_dusk()

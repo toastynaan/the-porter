@@ -23,7 +23,7 @@ static func name_of(id: StringName) -> String:
 
 
 static func choices(what: String) -> PackedStringArray:
-	return PackedStringArray(["Tell Brother Thomas about %s" % what, "Tell the prior", "Tell no one"])
+	return PackedStringArray(["(Tell Brother Thomas about %s.)" % what, "(Tell the prior.)", "(Tell no one.)"])
 
 
 ## Asks him whom to tell about the body `id` ("the merchant in the pond");

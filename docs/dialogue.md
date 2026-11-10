@@ -1,18 +1,35 @@
 # Conversations (M7)
 
-Look at someone (they're outlined) and press E, or they start it themselves (the traveller on the wagon, the carter setting you down, a visitor at the grille). They turn to you, and your view turns to their face for a moment, narrowed; then it's yours again. They say their lines; you pick one of up to three answers and say it, or walk away.
+Look at someone (they're outlined) and press E, or they start it themselves (the traveller on the wagon, the carter setting you down, a visitor at the grille). They turn to you and stand still, and your view turns to their face for a moment, narrowed; then it's yours again. They say their lines; you pick one of up to three answers and say it, or walk away.
 
 ## How a talk plays
 
 - **The camera.** Your view turns to their face over 0.45 s and narrows by 22° (70° to 48°), stays on them for 1.2 s, then widens again over 0.45 s. Move the mouse or stick and it lets go at once. From then on you look where you like while they talk; you stand still.
-- **Their lines.** Each shows for its reading time; E skips to the next. The last line stays up while you choose. Each press of E counts once: held down, it skips one line and answers nothing. Something said over a talk (a pickup, a voice) shows over it, and when it's over their line shows again.
-- **Answers.** Up to three, numbered, then "Walk away" (on the wagon, "Turn away"), dimmer. Pick with the number keys, or the arrow keys and E. You say the answer you pick: your name, ALRIC, over it, then they reply. An answer in brackets is something you do, not say (give alms, shake your head, say nothing): it shows in italics without the brackets, and you don't say it.
-- **Narration.** A line in brackets is what you see, hear or do. It shows in italics, softer, with no brackets and no name. A bracket in a spoken line ("Osric: (He laughs.) Leave it.") shows as a small italic aside over the name, and the words without it. The ones that describe a sound stand in for it until the sound is made.
+- **They stand still too.** Whoever you're talking to stops where they are until the talk is over, then goes on: a passer-by doesn't walk off, a brother doesn't leave for supper while you look away, the lane's people don't go home at the curfew bell in the middle of a line. If they do go (taken out of the world, or more than 6 m off *(mine)*), the talk is cut short.
+- **Their lines.** Each shows for its reading time; E skips to the next. Each press of E counts once: held down, it skips one line and answers nothing.
+- **Answers.** Up to three, numbered, then "Walk away" (on the wagon, "Turn away"), dimmer. A point's last line comes up together with its answers and stays while you choose. Pick with the number keys, or the arrow keys (or the wheel) and E. For 0.4 s after they come up *(mine)* E answers nothing, so the press that skipped the last line can't answer for you; a number key answers at once. You say the answer you pick: your name, ALRIC, over it, then they reply. An answer in brackets is something you do, not say (give alms, shake your head, say nothing): it shows in italics without the brackets, and you don't say it.
+- **Narration.** A line in brackets is what you see, hear or do. It shows in italics, softer, with no brackets and no name. A bracket in a spoken line ("Osric: (He laughs.) Leave it.") shows as an italic aside beside the name, and the words without it. The ones that describe a sound stand in for it until the sound is made.
+- **Heard meanwhile.** Anything said while you're talking or being asked something that isn't part of it (a thing you notice, the supper bell, a voice in the dark) shows small above the talk's line. It never takes the question's place, and E doesn't skip it; it goes when its time is up.
 - **Walking away.** Pick "Walk away", or press any move key: the talk ends at once and you walk off. They may call something after you. A move key you were already holding when the talk began doesn't count until you let go of it.
 - **Memory.** Talking to someone sets `talked_<id>`. The next time, they start at their `again` point. Answers can set flags and raise Suspicion, and can be offered only while a flag holds, so a question you've asked can drop off the list.
 - **Time.** The candle clock runs while you talk.
 
-At the gate it's the same: Walter's knock opens a conversation at the grille, with his greeting over the three gate choices (admit, turn away, send for the prior) and "Walk away". A visitor with a question offers it first: ask it (you say it, and he answers) or "Ask him nothing". Look him over from boots to face while he waits: the part of him nearest the middle of your view is the one you read. Walk away and he waits at the grille, knocking now and then, until you come back.
+At the gate it's one talk each time you come to the grille. Walter's knock opens it: his greeting, with his question under it if he has one ("What's in the bag?", or "Ask him nothing"). Ask, and you say it and he answers; then, in the same talk, the three gate choices (admit, turn away, send for the prior) and "Walk away" come up under the last thing he said. He greets you once. Look him over from boots to face while you choose: the part of him nearest the middle of your view is the one you read, and what you notice shows above his line. Walk away and he waits at the grille, knocking now and then, until you come back.
+
+**Questions outside a talk.** A beat can ask you something with no conversation open (the bread, the remedy, the wine, whom to tell about a body, the prior's question at dawn). The line just said stays up over the answers. What you do is in brackets, so in italics ("Eat the bread." / "Palm the bread."); what you say, you say, as in a talk. One question is open at a time: a second waits for the first to be answered.
+
+## How it looks
+
+One column at the bottom of the screen, in the book face the menus use (EB Garamond), drawn by `game/ui/talk_view.gd`:
+
+- **The name** in small capitals, lantern-coloured; your own name is paler. A line's aside sits beside it in italics.
+- **The line**, centred. Narration is in italics, softer.
+- **The answers** in a block under it, left-aligned and numbered. The one the arrows are on is brighter, with a thin flame-coloured bar and its number lit. Things you do are in italics; "Walk away" stands a little apart, dimmer.
+- **Heard meanwhile**, small, at the top.
+- A soft dark gradient lies under it all, so it reads over a lit wall. The Settings' dark band draws a solid panel instead. The Settings' subtitle size scales everything.
+- Lines and answers fade in and out (0.16 s in, 0.22 s out *mine*). A line already up rises to make room when its answers come up under it; with less motion on, it jumps. The speaker's name stays lit while the same person goes on talking.
+
+`tools/talk_shots.sh` renders it all to `art/_review/talk/`, driven by the real keys.
 
 ## Writing one
 
@@ -52,7 +69,7 @@ Osric: Come hungry!
 | `Name: line` | Someone says a line |
 | `Name: (aside) line` | A line with a small aside over the name (how they say it) |
 | `(line)` with no name | Narration: what the porter sees, hears or does |
-| `* answer -> point` | An answer, which he says, and where it leads: another point, or `end`. Three at most |
+| `* answer -> point` | An answer, which he says, and where it leads: another point, or `end`. Three at most. The point's last line comes up with them |
 | `* (answer) -> point` | An answer he does rather than says (give alms, say nothing) |
 | `-> point` | Goes on to another point with no answer asked |
 | `-> point [if flag]` | Goes there only if the tags hold; a point can list several, and the first that holds is taken (put one with no tags last) |
@@ -78,6 +95,8 @@ Osric: Come hungry!
 **Greetings follow trust:** a talk starts at `start_warm` if they trust him 30 or more, `start_cold` below 0, else `start`; the same for `again_warm`, `again_cold` and `again`, where those points exist.
 
 A point whose answers have all dropped off ends the talk after its lines. `test_dialogue` reads every conversation under `game/dialogue/` and fails on a mistake: an unknown point, a fourth answer, an answer with no `->`, a tag it doesn't know.
+
+**From a beat's script** (`Talk`, `game/dialogue/talk.gd`): `say()` for a line of the night's; `choose()` for a question (it keeps the line just said up over the answers); `ask()` to say a line with answers under it at once; `answer()` for a question whose spoken answer he then says. A beat that opens a talk itself (`begin()` to `end()`, as the gate does) says the talk's own lines with `line()`, so they have the main place and E skips them; `say()` there is something heard meanwhile.
 
 ## Night 3's conversations
 

@@ -66,6 +66,8 @@ static func forgiving() -> bool:
 func on_captured(hunter: Node3D, player: Player) -> void:
 	if busy or player == null:
 		return
+	# Whatever he was saying to someone stops here.
+	Talk.interrupt()
 	# Night 6, after Thomas's wine: he isn't killed. He wakes in a habit.
 	if GameState.night == 6 and GameState.has_flag(&"drank_wine"):
 		busy = true
@@ -100,6 +102,7 @@ func die(cause: StringName, killer: Node3D = null) -> void:
 	if busy or player == null:
 		return
 	dying.emit(cause)
+	Talk.interrupt()
 	busy = true
 	last_cause = cause
 	player.controls_locked = true

@@ -3,7 +3,8 @@ extends NightBeat
 ## prior asks the porter where he was). `people` are put at `marks` (a
 ## Brother by place(), anyone else moved there); the duty flame is over the
 ## first of them until the porter comes within `near`; then their lines,
-## and perhaps one question with three answers. Each answer has its reply
+## and perhaps one question with three answers (the last line stays up over
+## them, and he says the one he picks). Each answer has its reply
 ## and its tags ("set flag=value; trust hugh -5; suspicion 5", as in a
 ## conversation's tags), applied when it's picked.
 
@@ -43,7 +44,7 @@ func run() -> void:
 		GameState.set_flag(GameState.tonight(String(flag)))
 	if answers.is_empty():
 		return
-	var pick := maxi(await Talk.choose(answers), 0)
+	var pick := maxi(await Talk.answer(answers), 0)
 	if pick < answer_tags.size():
 		var tags := PackedStringArray()
 		for t in answer_tags[pick].split(";", false):

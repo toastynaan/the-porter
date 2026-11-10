@@ -4,6 +4,12 @@ extends RefCounted
 ## wants them, counts the brothers, walks the round past the demon, goes down
 ## to the crypt. Times are simulated seconds (tests run at a fixed rate).
 
+const GateVisits := preload("res://game/night/gate_visits_beat.gd")
+## The grille's answers, as the porter is offered them.
+const GATE_ADMIT: String = GateVisits.ADMIT
+const GATE_DONT_ASK: String = GateVisits.DONT_ASK
+const GATE_LEAVE_TO_SLEEP: String = GateVisits.LEAVE_TO_SLEEP
+
 var night: Node
 var player: Player
 var _tree: SceneTree
@@ -325,10 +331,10 @@ func play_night2(answer: Array, joan := 0, sailor := 0, roger := 0) -> void:
 ## set, or the first choice.
 static func gate_aware_choice(answer: Array) -> Callable:
 	return func(options: PackedStringArray) -> int:
-		if options.has("Admit him to the guesthouse"):
+		if options.has(GATE_ADMIT):
 			return answer[0]
 		# Warning a guest at his bed: answer[1] if the test gives one (1: no).
-		if options.has("(Leave him to sleep.)"):
+		if options.has(GATE_LEAVE_TO_SLEEP):
 			return answer[1] if answer.size() > 1 else 0
 		return answer[0] if answer[0] >= 0 else 0
 
@@ -583,14 +589,16 @@ func keep_gate(pick: int, read: Array[StringName], answer: Array, bed := "GuestB
 		if not (n as VisitorNPC).lying and (n as VisitorNPC).visible:
 			npc = n
 	await until(func() -> bool: return Talk.is_choosing(), 5.0)
-	# A visitor with a question: ask him nothing, on to the three choices.
-	if not npc.visitor.question.is_empty():
+	# A visitor with a question: ask him nothing, on to the three choices
+	# (they come up in the same talk, under his greeting).
+	if Talk.offered().has(GATE_DONT_ASK):
 		answer[0] = 1
-		await until(func() -> bool: return not Talk.is_choosing(), 2.0)
+		await until(func() -> bool: return not Talk.offered().has(GATE_DONT_ASK), 2.0)
 		answer[0] = -1
-		await until(func() -> bool: return Talk.is_choosing(), 5.0)
-	# His view is still easing in on the visitor's face.
-	await seconds(Player.TALK_TURN_TIME + 0.05)
+		await until(func() -> bool: return Talk.offered().has(GATE_ADMIT), 5.0)
+	# His view eases in on the visitor's face, and rests there long enough
+	# to read it.
+	await seconds(Player.TALK_TURN_TIME + 0.5)
 	for part in read:
 		face(npc.part_position(part))
 		await seconds(0.6)

@@ -21,7 +21,7 @@ func run() -> void:
 	thomas.remove_from_group(&"glyph_targets")
 	thomas.face(p.global_position)
 	await say_lines(offer_lines)
-	var pick := await Talk.choose(PackedStringArray(["Drink Brother Thomas's wine", "Refuse it"]))
+	var pick := await Talk.choose(PackedStringArray(["(Drink Brother Thomas's wine.)", "(Refuse it.)"]))
 	if pick == 0:
 		Wine.drink()
 		await say_lines(drunk_lines)

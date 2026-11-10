@@ -17,6 +17,8 @@ const REMEDY_DOSE := 15.0
 const REMEDY_TIME := 30.0
 const SEEN_SUSPICION := 5
 const REFUSE_SUSPICION := 5
+## What he does with the bread once he has been warned: in brackets (italics).
+const BREAD_CHOICES := ["(Eat the bread.)", "(Palm the bread.)"]
 
 @export var seat: Marker3D
 ## His place at the table: he sits when he uses it.
@@ -85,7 +87,7 @@ func run() -> void:
 	await bread.wait_for_use()
 	var pick := 0
 	if GameState.has_flag(warned_flag):
-		pick = await Talk.choose(PackedStringArray(["Eat the bread", "Palm the bread"]))
+		pick = await Talk.choose(PackedStringArray(BREAD_CHOICES))
 	bread.visible = false
 	if pick == 0:
 		GameState.set_flag(GameState.tonight("ate_bread"))
@@ -118,7 +120,7 @@ func _remedy(p: Player) -> void:
 	ranulf.face(p.global_position)
 	thomas.face(p.global_position)
 	await say_lines(remedy_lines)
-	var pick := await Talk.choose(PackedStringArray(["Take Brother Ranulf's remedy", "Refuse it"]))
+	var pick := await Talk.choose(PackedStringArray(["(Take Brother Ranulf's remedy.)", "(Refuse it.)"]))
 	if pick == 0:
 		GameState.set_flag(GameState.tonight("took_remedy"))
 		GameState.add_dose(REMEDY_DOSE, REMEDY_TIME)

@@ -11,6 +11,7 @@ Keep the gate: answer the knocks, read who stands at the grille, and let them in
 [b]Crouch[/b]  Ctrl  ·  B
 [b]Lean[/b]  Z and C  ·  the bumpers
 [b]Use, talk, throw[/b]  E or left click  ·  A
+[b]Answer[/b]  1 to 4, or the arrows and E  ·  the pad and A
 [b]Lock, unlock[/b]  R  ·  Y
 [b]Cover the lantern[/b]  F or right click  ·  left trigger
 [b]Hold your breath[/b]  Space  ·  right trigger

@@ -4,7 +4,8 @@ extends CharacterBody3D
 ## grille, follows the porter to the guesthouse, lies down in a bed, or goes
 ## back down the lane. Walks the navmesh at a visitor's pace; his body is a
 ## little slimmer than the navmesh's 0.3 m agent so paths never graze corners.
-## He opens the unlocked doors in his way (a locked one stops him). The markers
+## He opens the unlocked doors in his way (a locked one stops him). While the
+## porter is talking to him (Talk.talking_to) he stands still. The markers
 ## under Parts are what the porter looks at to read him (VisitorDetail.part);
 ## the box and the bag show only if his details mention them.
 
@@ -132,7 +133,10 @@ func _physics_process(delta: float) -> void:
 	if lying:
 		return
 	var goal := _target
-	if _following:
+	# Talking to the porter, he stands where he is; he goes on after.
+	if Talk.talking_to == self:
+		goal = Vector3.INF
+	elif _following:
 		goal = _following.global_position
 		if global_position.distance_to(goal) < FOLLOW_GAP:
 			goal = Vector3.INF

@@ -158,7 +158,7 @@ The night-4 change is deliberate: the rule you trusted turns on you (design pill
 Reading, the ledger, and admitting, refusing or sending for the prior all work as built, plus:
 
 - **Lies.** A visitor's story is in their greeting and answers. Some details you can notice contradict it: a "pilgrim" with no badge and soft hands, a "sailor" with no tar on his hands. Noticing one adds a line, *"(Something doesn't fit: no pilgrim's badge.)"*, and a ledger note. What you do with it is up to you. Each visitor's lies are written into their Visitor resource.
-- **Talking at the grille.** Each knock is a conversation (as built): their greeting stays up over the three choices and "Walk away". Some visitors have one question you can ask first.
+- **Talking at the grille.** Each knock is a conversation (as built): their greeting stays up over the three choices and "Walk away". Some visitors have one question you can ask first; it comes up under the greeting, and the three choices follow in the same talk.
 
 ## Investigation
 
@@ -483,3 +483,10 @@ Added after the run (playtest fixes):
 - Talking, his view turns to their face and narrows for 1.2 s, then widens and is his: he looks anywhere while they talk (looking away lets go at once). The old cone (30° either side, 40° by 50° at the grille) is gone. Someone can start a talk themselves the same way (the traveller as the wagon sets off).
 - He says the answer he picks (ALRIC over it), then they reply; an answer in brackets is something he does, shown in italics and not said. Narration (a line in brackets) shows in italics without brackets or a name. On the wagon the last choice is "Turn away".
 - On the ride the traveller opens the talk as the wagon sets off (pace 2.6 m/s to the wall, from 3.5), and the carter's "Whoa" 6 m before the pull-over breaks off any talk.
+- Talking, third pass (`docs/dialogue.md`): a point's last line comes up together with its answers; E answers nothing for 0.4 s after a choice comes up (a number key answers at once); the arrows wrap, and the wheel moves the answer too; number keys work from the keypad as well.
+- Whoever he's talking to stands still until the talk is over, then goes on. If they go (out of the world, or more than 6 m off), the talk is cut short with no parting line. A capture or a death cuts it short too.
+- Anything said while he's talking or being asked something, that isn't part of it, shows small above the talk's line and never takes the question's place. With no talk or question open, a line said over another has its place, and the older one ends if it has less than 0.6 s left when it's uncovered.
+- One question is open at a time; a second waits. A beat's question keeps the line just said (within 0.3 s) up over its answers.
+- At the grille it's one talk each time he comes to it: the greeting once, the question under it, then the three choices under the visitor's answer. Before, the visitor greeted him again and his view turned again between the question and the choices.
+- Every choice that is something he does is written in brackets and shows in italics: the gate's three, the bread, the remedy, the wine, whom to tell about a body, striking the demon, opening the gate on night 6, the tour. What he says to the prior at night 2's dawn and at the bell, and his question about the sand, he now says aloud ("What's the sand for, by the well?" is new, DRAFT).
+- The look: EB Garamond; the name in lantern-coloured small capitals; answers left-aligned in a centred block with a thin bar on the one the arrows are on; a soft gradient under it; fades of 0.16 s in and 0.22 s out; a line rises over 0.24 s when its answers come up under it.

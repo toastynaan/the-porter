@@ -26,6 +26,9 @@ signal opened(who: StringName)
 @export var mab_lines := PackedStringArray()
 @export var no_proof_lines := PackedStringArray(["Roger: Show me something I can hang them with, porter, and I'll come in."])
 
+## Opening the gate: something he does, so in brackets (italics).
+const OPEN := "(Open the gate.)"
+
 var who := &""
 var npc: VisitorNPC
 
@@ -57,9 +60,7 @@ func _answer() -> void:
 	while is_inside_tree():
 		await grate.wait_for_use()
 		Talk.begin(npc)
-		await Talk.say(npc.visitor.speaker, npc.visitor.greeting)
-		var options := PackedStringArray(["Open the gate", "(Not yet.)"])
-		var pick := await Talk.choose(options, npc.visitor.speaker, npc.visitor.greeting)
+		var pick := await Talk.ask(PackedStringArray([OPEN, "(Not yet.)"]), npc.visitor.speaker, npc.visitor.greeting)
 		Talk.end()
 		if pick != 0:
 			continue

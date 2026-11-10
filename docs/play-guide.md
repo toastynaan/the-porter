@@ -21,7 +21,7 @@ How to play the whole game from the title to an ending, what to try, and where e
 | Cover the lantern, hold your breath | F or right click, Space | LT, RT |
 | Look back | Q | right stick click |
 | Ledger (L again: your notes), satchel | L, I | View, D-pad down |
-| Answers | 1–3, or arrows and E | D-pad and A |
+| Answers | 1–4, or arrows (or the wheel) and E | D-pad and A |
 | Pause | Esc | Menu |
 
 ## What a night asks of you

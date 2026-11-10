@@ -107,7 +107,7 @@ func _run() -> void:
 	_check(p.use_input_override, "seated: he can look but not walk")
 	_pilot.duty("Bread").interact(p)
 	await _pilot.until(func() -> bool: return _pilot.beat() != &"Supper", 10.0)
-	_check(_offered.has(PackedStringArray(["Eat the bread", "Palm the bread"])),
+	_check(_offered.has(PackedStringArray(["(Eat the bread.)", "(Palm the bread.)"])),
 		"warned on night 1, he may palm the bread")
 	_check(GameState.get_flag(&"n3_ate_bread") == true and GameState.get_flag(&"n3_took_remedy") == true,
 		"ate the bread and took Ranulf's remedy")

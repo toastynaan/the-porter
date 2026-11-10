@@ -226,7 +226,7 @@ Almost no HUD. Everything the player needs to know is in the world or in an obje
 | Suspicion | Never shown; NPC behaviour changes instead |
 | Interact prompt | A small dot in the centre. What E would use gets a thin, pale outline while you look at it, within reach |
 | Objectives | The candle-clock marks and the ledger say what's due. A small, dim glyph floats over the one person or thing the current duty needs, seen within about 10 m, and never during a chase or while hiding (a setting turns it off). The lit way to each duty stays |
-| Dialogue | Plain subtitles at the bottom, speaker name in small caps, no portraits. Up to three numbered answers, then "Walk away" |
+| Dialogue | Plain subtitles at the bottom in the book typeface, speaker name in small caps (lantern-coloured), no portraits. Up to three numbered answers under the line, left-aligned, then "Walk away"; the chosen one brighter, with a thin flame-coloured bar. A soft dark gradient under them, no box (`docs/dialogue.md`, "How it looks") |
 
 **Menus and text** use the manuscript style: parchment background, blackletter only for titles, a readable book typeface for everything else. Chapter cards for each night look like a page from the chronicle, with a decorated initial letter. Keep blackletter out of body text; it is hard to read.
 

@@ -67,6 +67,10 @@ func face(point: Vector3) -> void:
 
 
 func _process(delta: float) -> void:
+	# Talking to the porter, he stays where he is: he doesn't walk on with
+	# his routine, or go to his next place while the porter looks away.
+	if Talk.talking_to == self:
+		return
 	if _routine_on:
 		_keep_routine(delta)
 		return
