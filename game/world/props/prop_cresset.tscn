@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_street_cresset.glb" id="model"]
+[ext_resource type="Script" path="res://game/world/props/brazier.gd" id="brazier_gd"]
+
+[node name="Cresset" type="Node3D"]
+script = ExtResource("brazier_gd")
+energy = 3.6
+flicker = 0.45
+bare = true
+editor_description = "A fire basket on an iron bracket out from a wall (tools/build/prop_street.py): the wall is at its z = 0 and the fire hangs 0.55 m out toward -Z. Its light is never still and throws shadows."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -0.75)
+light_color = Color(1, 0.58, 0.28, 1)
+light_energy = 3.6
+shadow_enabled = true
+shadow_bias = 0.08
+omni_range = 13.0
+omni_attenuation = 1.2

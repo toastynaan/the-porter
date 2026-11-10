@@ -84,9 +84,39 @@ From the foot of the wall to the end of the first street. The turn, the lane and
 
 Fixed with it: a plaster wall stood across the road at the end of the street (the lane's `FarEnd`, which closes its bend on other nights), and the wagon drove through it. It and the lane's greybox city blocks west of the bend are in the group `road_in_hides`; `RoadCity` clears them on night 0.
 
-Known: rain falls through roofs (it always has: it is a box of drops over the camera), so it rains in the gate's passage.
-
 `tools/intro_shots.sh` now takes 25 stills, 13 of them of the wall, the gate and the street.
+
+## The look of the road in (third pass: the rain, and the wall, gate and street in detail)
+
+The second pass read as one stone and one house, and its rain as a few white scratches. This pass is about difference: between the wall and the gate, between one house and the next, between a lit wet surface and a dark dry one.
+
+**Rain** (`Weather`, every rainy night, not only this one):
+
+- It is GPU particles now: 16,000 drops *(mine)* born in a slab 12 m over the camera, falling at 11.5 m/s on a gusting wind (`rain_fall.gdshader`).
+- **It stops at roofs.** The drops land on a height field of whatever is under the sky round the camera, so it is dry in the gate's passage, under a jetty, indoors.
+- **It splashes** where it lands: a small crown of spray on the cobbles, the roofs, the wagon.
+- **It shows where light is** (`rain_drop.gdshader`): faint against the sky, gold near a lantern or a fire, brightest with the light behind it. Drops within 2 m of the eye are not drawn.
+- **Standing water is struck:** rings open in the puddles of the street and the fields (`rings()` in the two ground shaders).
+- **Eaves drip:** lines of heavy drops off the street's eaves and the gate's parapets (`Drips` in `env_road.tscn`, `game/world/weather/drips.gd`).
+
+**Surfaces** (`game/world/materials/real/surface.gdshader`, one shader behind the city's stone, plaster, timber and roofs):
+
+- Each material is two surfaces: the wall as built, and what shows where it has failed. Rubble goes to mossed stone, cut stone to rubble where the facing fell, limewash to bare daub, grey plaster to the brick under it, brown oak to silver, red tile to mossed tile. The second shows in ragged patches of its own, and wherever the model asks for it (a vertex's alpha).
+- Long walls are uneven in tone, moss comes up from the ground and lies on ledges, and rain darkens and shines what faces the sky and streaks what does not.
+- Ten more Poly Haven textures (cut stone, mossed stone, old brick, ochre, clay and worn plaster, boards, silvered wood, two roofs), in `art/credits.csv`.
+
+**The wall** gains buttresses of cut stone, arrow slits, and north of the gate a mason's scaffold of lashed poles with a ladder, against a stretch mended in new pale stone *(mine: it is always being mended)*.
+
+**Aldgate** is cut stone now, against the wall's rubble. Added: a timber hoarding round the south tower's top, the scaffold's putlog holes left open in both towers, two sodden banners and lead spouts on the front, a boarded shelter for the watch by the north tower, three heads on pikes over the arch *(mine, with the gibbet: delete `pikes()` from `env_aldgate.py`'s `main` if it is too much)*, and three fire baskets on brackets (`Cressets` in `env_road.tscn`): one each side of the arch, one on the city face.
+
+**The street:**
+
+- Eight houses now (`env_house_timber_a` … `_h`), no two finished alike: limewash, ochre wash, or grey plaster gone to the brick; frames brown, silver or tarred black; tile, mossed tile, plain tile or slate. New: a merchant's house of cut stone under a timber gable (g) and a narrow four-floor house (h). Some have a brick chimney, a pentice roof over the shop, an oriel window, a floor nogged with brick.
+- Things stand about (`Clutter` in `env_road.tscn`, from `tools/build/prop_street.py`): casks and a wash tub, crates and sacks, a handcart tipped on its shafts, a stall shut for the night, stacked firewood, a stone trough and pump, benches, a ladder, posts at the gate corner. All of it is out of the wagon's way and can be moved or deleted by hand.
+
+**What it costs.** Triangles: the gate 6,100 (was 5,300), the wall 9,300 (was 7,900), a house 700 to 1,350, all the street's clutter together 2,900. The whole view from the gate to the end of the street is about 65,000. The surface shader reads thirteen textures a pixel where the old materials read six.
+
+Still greybox: the turn, the lane, the people.
 
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 

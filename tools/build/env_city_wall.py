@@ -14,6 +14,9 @@ is at -z, the city at +z, and the gate fills the gap from x = -9 to 9.
   itself is the ground's: tools/build/env_road_fields.py), with a low
   parapet each side.
 
+- Buttresses of cut stone, arrow slits, and north of the gate a mason's
+  scaffold against a stretch that has been mended in new pale stone.
+
 Collision: the wall, the bastions, the stair, the causeway's parapets.
 
 Run: tools/build.sh env_city_wall
@@ -44,7 +47,10 @@ RUIN = (78.0, 11.0, 3.4)
 CAUSEWAY = (4.3, -18.0, -5.5)
 
 RUBBLE = "stone_rubble"
-ASHLAR = "stone_blocks"
+ASHLAR = "stone_ashlar"
+# Buttresses against the country face, and the mason's scaffold north of the gate (from x, to x).
+BUTTRESSES = (-128.0, -98.0, -84.0, -70.0, -41.0, -27.0, -13.5, 13.5, 27.0, 38.0, 66.0, 94.0, 123.0)
+SCAFFOLD = (15.0, 24.0)
 
 
 def fallen(x):
@@ -120,6 +126,72 @@ def bastion(m, bx, candle, seed):
             cp.loop(m, c, y, 1.1, (math.cos(ang), 0, math.sin(ang)), proud=0.05, width=0.11, cross=False)
 
 
+def buttresses(m):
+    for i, bx in enumerate(BUTTRESSES):
+        tint = cp.stone_tint(0.0, 7.0, seed=30.0 + i, worn=0.5)
+        w = 0.75
+        # Two stages, each with a sloped offset on top.
+        for z_out, y0, y1 in ((OUT_Z - 1.5, FOOT, 3.0), (OUT_Z - 0.85, 3.0, 6.1)):
+            cp.slab(m, (bx - w, y0, z_out), (bx + w, y1, OUT_Z), ASHLAR, tint, faces="xXz", step=1.6)
+            cap = [(bx - w, y1, z_out), (bx + w, y1, z_out), (bx + w, y1 + 0.7, OUT_Z), (bx - w, y1 + 0.7, OUT_Z)]
+            m.poly(cap, ASHLAR, [tint(*q) for q in cap], facing=(0, 1, -1))
+            for s in (-1, 1):
+                m.poly([(bx + s * w, y1, z_out), (bx + s * w, y1, OUT_Z), (bx + s * w, y1 + 0.7, OUT_Z)], ASHLAR, cp.rgba(cp.STONE_DARK),
+                       facing=(s, 0, 0))
+            w -= 0.12
+
+
+def slits(m):
+    x = SOUTH + 9.0
+    while x < NORTH - 5.0:
+        clear = abs(x) > GAP + 3.0 and fallen(x) == 0.0 and all(abs(x - b) > 5.0 for b, _c in BASTIONS) \
+            and all(abs(x - b) > 1.6 for b in BUTTRESSES)
+        if clear:
+            cp.loop(m, (x, OUT_Z), 4.7 + 0.5 * fbm(x, 0.0, 0.3, 1, 5.0), 1.0, (0, 0, -1), proud=0.03, width=0.1, cross=False)
+        x += 11.3
+
+
+def scaffold(m):
+    """Poles lashed together against the wall, two lifts of planks, a
+    ladder: the masons have gone home for the day. The stone behind it is
+    new and pale."""
+    xa, xb = SCAFFOLD
+    pole = lambda k=1.0: (0.42 * k, 0.4 * k, 0.37 * k, 1.0)
+    fresh = lambda x, y, z: (1.08, 1.06, 1.0, 1.0)
+    cp.panel(m, (xa + 1.2, OUT_Z - 0.04), (xb - 1.0, OUT_Z - 0.04), 3.4, WALK - 0.2, (0, 0, -1), ASHLAR, fresh, 2.6, 2.4)
+    xs = cp.steps(xa, xb, 2.4)
+    rows = (OUT_Z - 0.35, OUT_Z - 1.55)
+    for i, x in enumerate(xs):
+        for z in rows:
+            lean = 0.05 * math.sin(i * 2.3 + z)
+            m.tube([(x + lean, -0.4, z), (x - lean, WALK + 0.9 + 0.5 * math.sin(i * 1.7 + z * 3.0), z)], [0.06, 0.045], 5, "wood_frame", pole(0.9 + 0.1 * (i % 2)))
+        for y in (2.3, 4.6, 6.9):
+            m.tube([(x, y - 0.1, rows[0] + 0.2), (x, y - 0.1, rows[1] - 0.25)], [0.045, 0.045], 4, "wood_frame", pole(0.8))
+    for y in (2.3, 4.6, 6.9):
+        for z in rows:
+            m.tube([(xa - 0.3, y + 0.02 * z, z - 0.07), (xb + 0.3, y - 0.02 * z, z - 0.07)], [0.045, 0.04], 4, "wood_frame", pole())
+    for a, b in (((xs[0], 0.0), (xs[1], 2.3)), ((xs[-1], 2.3), (xs[-2], 4.6)), ((xs[1], 4.6), (xs[2], 6.9))):
+        m.tube([(a[0], a[1], rows[1] - 0.09), (b[0], b[1], rows[1] - 0.09)], [0.04, 0.04], 4, "wood_frame", pole(0.85))
+    # Planks on the upper two lifts, not all of them there.
+    for y, bays in ((4.6, (0, 1, 2)), (6.9, (1, 2, 3))):
+        for b in bays:
+            if b + 1 >= len(xs):
+                continue
+            for k, z in enumerate((rows[0] - 0.05, rows[0] - 0.42, rows[0] - 0.79)):
+                if (b + k + int(y)) % 5 == 0:
+                    continue
+                c = 0.44 + 0.08 * ((b * 3 + k) % 3)
+                cp.block(m, (xs[b] - 0.25, y, z - 0.32), (xs[b + 1] + 0.25, y + 0.045, z), "wood_boards", (c, c * 0.96, c * 0.9, 1.0), faces="xXzZyY")
+    # The ladder, from the ground to the first lift of planks.
+    lx = xs[1] + 0.9
+    for dx in (0.0, 0.42):
+        m.tube([(lx - 1.2 + dx, -0.3, rows[1] - 0.8), (lx + 0.5 + dx, 4.9, rows[1])], [0.035, 0.035], 4, "wood_frame", pole(1.1))
+    for i in range(1, 14):
+        k = i / 14.0
+        x0 = lx - 1.2 + 1.7 * k
+        m.tube([(x0, -0.3 + 5.2 * k, rows[1] - 0.8 + 0.8 * k), (x0 + 0.42, -0.3 + 5.2 * k, rows[1] - 0.8 + 0.8 * k)], [0.022, 0.022], 4, "wood_frame", pole(1.0))
+
+
 def stair(m):
     """Up the city side to the walk, south of the gate: twenty steps."""
     n = 20
@@ -175,7 +247,12 @@ def main():
     m = porter.Mesh("Wall")
     wall(m, SOUTH, -GAP, 1.0)
     wall(m, GAP, NORTH, 2.0)
+    buttresses(m)
+    slits(m)
     m.build()
+    sc = porter.Mesh("Scaffold")
+    scaffold(sc)
+    sc.build()
     b = porter.Mesh("Bastions")
     for i, (bx, candle) in enumerate(BASTIONS):
         bastion(b, bx, candle, 3.0 + i)

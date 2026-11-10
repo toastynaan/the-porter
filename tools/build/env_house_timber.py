@@ -1,9 +1,12 @@
 """The timber houses of the streets inside Aldgate (night 0, the road in):
 oak frames with lime-plastered panels between, each upper floor jutting out
 over the one below, tiled roofs with their gables to the street or their
-eaves along it. Six houses, each its own model
-(art/models/env_house_timber_a.glb ... _f.glb), so a street can be made of
-them without two alike standing together.
+eaves along it. Eight houses, each its own model
+(art/models/env_house_timber_a.glb ... _h.glb), so a street can be made of
+them without two alike standing together. No two are finished alike:
+limewash, ochre wash or plaster gone to the brick; frames left brown,
+weathered silver or tarred black; tile, mossed tile, plain tile or slate
+on the roof. One (g) is a merchant's house of stone with a timber gable.
 
 In its own space a house's street front faces -z: its ground floor's face
 is at z = 0, each floor above stands 0.5 m further out, and the house runs
@@ -15,7 +18,9 @@ back to z = 9. The origin is on the ground at the middle of the front.
   shuttered for good and are part of the walls.
 - The whole frame leans a little, each house its own way: they are old.
 - A house may have a hanging sign or an ale-stake, an iron bracket for a
-  lantern (the scene hangs the lamp on it), a smoke louvre on the ridge.
+  lantern (the scene hangs the lamp on it), a smoke louvre on the ridge,
+  a brick chimney, a pentice roof over its shop, an oriel window, a floor
+  nogged with brick.
 
 Collision: a box for each floor.
 
@@ -33,8 +38,17 @@ from porter import fbm, lerp, smoothstep
 
 DEPTH = 9.0
 JETTY = 0.5
-OAK = "wood_medieval"
+OAK = "wood_frame"
+BOARDS = "wood_boards"
+# What the house being built is made of (set by house() from its spec).
 DAUB = "plaster_daub"
+ROOF = "roof_tiles"
+# Its timbers' tone: how light, and its colour.
+TONE = (0.5, (1.0, 0.95, 0.88))
+TONES = {"brown": (0.5, (1.0, 0.95, 0.88)), "silver": (0.66, (0.98, 1.0, 1.0)), "tarred": (0.2, (1.0, 1.0, 1.04)),
+         "dark": (0.34, (1.0, 0.96, 0.9))}
+# What beam() makes: oak, or cut stone round the openings of a stone floor.
+BEAM = [OAK]
 
 # The houses. floors: the height of each; roof: "gable" (gable to the
 # street) or "eaves" (ridge along the street), with `dormer` for a gablet
@@ -44,28 +58,41 @@ DAUB = "plaster_daub"
 # wide shuttered shop front); door: (middle x, width, height).
 HOUSES = {
     "a": dict(width=5.0, floors=(3.0, 2.8, 2.6), roof="gable", frame=("close", "square"), plaster=(0.8, 0.76, 0.66),
-              door=(-1.45, 1.0, 2.05), lean=(0.012, -0.004), lamp=1.9, louvre=False,
+              door=(-1.45, 1.0, 2.05), lean=(0.012, -0.004), lamp=1.9, louvre=False, pentice=True, chimney=1.6,
               windows=(((0.85, 2.0, 1.15, 0.95, "shop"),), ((-1.1, 1.1, 1.2, 0.95, "pane"), (1.1, 1.1, 1.2, 0.95, "pane")),
                        ((0.0, 1.9, 1.1, 0.9, "pane"),)), attic="pane"),
     "b": dict(width=4.4, floors=(2.9, 2.7, 2.7), roof="gable", frame=("brace", "close"), plaster=(0.7, 0.7, 0.68),
-              door=(1.2, 0.95, 2.0), lean=(-0.02, 0.006), sign="board", louvre=True,
+              door=(1.2, 0.95, 2.0), lean=(-0.02, 0.006), sign="board", louvre=True, daub="plaster_worn", tiles="roof_mossy", tone="silver",
               windows=(((-0.75, 1.7, 1.1, 1.0, "shop"),), ((0.0, 1.6, 1.25, 0.9, "pane"),),
                        ((-0.95, 0.9, 1.1, 0.95, "shut"), (0.95, 0.9, 1.1, 0.95, "pane"))), attic="shut"),
-    "c": dict(width=6.0, floors=(3.0, 2.9), roof="eaves", dormer=True, frame=("square",), plaster=(0.78, 0.69, 0.52),
+    "c": dict(width=6.0, floors=(3.0, 2.9), roof="eaves", dormer=True, frame=("square",), plaster=(0.86, 0.82, 0.74),
+              daub="plaster_ochre", tiles="roof_plain", tone="tarred", chimney=-2.2,
               door=(0.0, 1.1, 2.1), lean=(0.008, 0.01), lamp=-2.4, louvre=True,
               windows=(((-1.95, 1.3, 1.1, 1.0, "shut"), (1.95, 1.3, 1.1, 1.0, "pane")),
                        ((-1.9, 1.2, 1.2, 0.95, "pane"), (0.0, 1.0, 1.2, 0.95, "shut"), (1.9, 1.2, 1.2, 0.95, "pane"))), attic="pane"),
     "d": dict(width=5.4, floors=(3.2, 3.0, 2.8), roof="gable", frame=("close", "close"), plaster=(0.84, 0.82, 0.77),
-              door=(-1.6, 1.0, 2.1), lean=(0.018, 0.012), louvre=False,
-              windows=(((0.75, 2.4, 1.2, 0.95, "shop"),), ((0.0, 2.6, 1.3, 0.95, "pane"),),
+              door=(-1.6, 1.0, 2.1), lean=(0.018, 0.012), louvre=False, tone="dark", nogging=(2,),
+              windows=(((0.75, 2.4, 1.2, 0.95, "shop"),), ((0.0, 2.6, 1.3, 0.95, "oriel"),),
                        ((-1.2, 1.0, 1.15, 0.95, "pane"), (1.2, 1.0, 1.15, 0.95, "shut"))), attic="pane"),
     "e": dict(width=6.2, floors=(3.0, 2.8, 2.5), roof="eaves", dormer=False, twin=True, frame=("square", "brace"),
-              plaster=(0.74, 0.7, 0.66), door=(2.05, 1.0, 2.05), lean=(-0.01, 0.014), lamp=-2.6, louvre=False,
+              plaster=(0.8, 0.77, 0.72), door=(2.05, 1.0, 2.05), lean=(-0.01, 0.014), lamp=-2.6, louvre=False,
+              daub="plaster_worn", tiles="roof_mossy", tone="brown", pentice=True,
               windows=(((-1.0, 2.6, 1.15, 0.95, "shop"),), ((-1.6, 1.3, 1.2, 0.95, "pane"), (1.6, 1.3, 1.2, 0.95, "pane")),
                        ((-1.55, 1.1, 1.05, 0.9, "pane"), (1.55, 1.1, 1.05, 0.9, "shut"))), attic="pane"),
-    "f": dict(width=4.8, floors=(3.1, 2.7), roof="gable", frame=("brace",), plaster=(0.8, 0.72, 0.64), stone=True,
-              door=(-1.1, 1.05, 2.1), lean=(-0.014, -0.006), sign="stake", louvre=True,
+    "f": dict(width=4.8, floors=(3.1, 2.7), roof="gable", frame=("brace",), plaster=(0.84, 0.8, 0.72), stone=1,
+              door=(-1.1, 1.05, 2.1), lean=(-0.014, -0.006), sign="stake", louvre=True, daub="plaster_ochre", tiles="roof_slates",
+              tone="silver", chimney=1.5,
               windows=(((1.15, 1.0, 1.0, 1.15, "pane"),), ((0.0, 2.2, 1.25, 0.9, "pane"),)), attic="shut"),
+    # A merchant's house: two floors of cut stone, a timber gable on top.
+    "g": dict(width=5.4, floors=(3.3, 3.1), roof="gable", frame=(), plaster=(0.8, 0.78, 0.74), stone=2, stone_mat="stone_ashlar",
+              door=(1.5, 1.15, 2.3), lean=(0.003, 0.002), louvre=False, tiles="roof_slates", tone="dark", chimney=-1.9, lamp=0.55,
+              windows=(((-1.1, 0.7, 1.3, 1.1, "pane"), (-0.1, 0.7, 1.3, 1.1, "shut")),
+                       ((-1.35, 0.8, 1.5, 0.9, "pane"), (1.35, 0.8, 1.5, 0.9, "pane"))), attic="pane"),
+    # Narrow and tall: four floors on a 4.4 m plot, tarred black.
+    "h": dict(width=4.4, floors=(2.9, 2.6, 2.5, 2.3), roof="gable", frame=("close", "square", "close"), plaster=(0.9, 0.88, 0.84),
+              door=(-1.25, 0.9, 2.0), lean=(0.016, -0.012), louvre=False, tiles="roof_plain", tone="tarred",
+              windows=(((0.7, 1.6, 1.05, 1.0, "shop"),), ((0.0, 1.9, 1.2, 0.9, "pane"),), ((-0.9, 0.9, 1.1, 0.9, "pane"), (0.9, 0.9, 1.1, 0.9, "shut")),
+                       ((0.0, 1.5, 1.0, 0.85, "pane"),)), attic="shut"),
 }
 
 
@@ -79,8 +106,11 @@ class Lean(porter.Mesh):
 
 
 def oak(k=1.0):
-    v = (0.5 + random.uniform(-0.07, 0.07)) * k
-    return (v, v * 0.95, v * 0.88, 1.0)
+    if BEAM[0] != OAK:
+        v = 0.86 + random.uniform(-0.05, 0.05)
+        return (v, v * 0.99, v * 0.95, 1.0)
+    v = (TONE[0] + random.uniform(-0.07, 0.07) * TONE[0] * 2.0) * k
+    return (v * TONE[1][0], v * TONE[1][1], v * TONE[1][2], 1.0)
 
 
 def plaster_tint(base, y0, y1, seed):
@@ -105,12 +135,12 @@ def beam(m, a, b, width, zf, proud=0.05, color=None, out=-1.0):
     px, py = -dy / n * width * 0.5, dx / n * width * 0.5
     z = zf + out * proud
     front = [(a[0] + px, a[1] + py, z), (b[0] + px, b[1] + py, z), (b[0] - px, b[1] - py, z), (a[0] - px, a[1] - py, z)]
-    m.poly(front, OAK, c, facing=(0, 0, out))
+    m.poly(front, BEAM[0], c, facing=(0, 0, out))
     dark = (c[0] * 0.6, c[1] * 0.6, c[2] * 0.6, 1.0)
     for s in (1, -1):
         e = [(a[0] + s * px, a[1] + s * py, z), (b[0] + s * px, b[1] + s * py, z), (b[0] + s * px, b[1] + s * py, zf),
              (a[0] + s * px, a[1] + s * py, zf)]
-        m.poly(e, OAK, dark, facing=(s * px, s * py, 0))
+        m.poly(e, BEAM[0], dark, facing=(s * px, s * py, 0))
 
 
 def side_beam(m, x, a, b, width, s, proud=0.04):
@@ -177,6 +207,20 @@ def window(m, panes, name, cx, w, h, y, zf, kind, lean):
     """A window on a street face: its frame, and either a pane of its own
     (an object, so it can be lit), with mullions, or boarded shutters."""
     xa, xb = cx - w * 0.5, cx + w * 0.5
+    wall = zf
+    if kind == "oriel":
+        # A window built out from the wall on a sloped bracket, under its own little roof.
+        kind = "pane"
+        zf = wall - 0.34
+        c = oak(0.9)
+        ya, yb = y - 0.16, y + h + 0.14
+        for x, s in ((xa - 0.1, -1), (xb + 0.1, 1)):
+            m.poly([(x, ya, wall), (x, ya, zf), (x, yb, zf), (x, yb, wall)], OAK, c, facing=(s, 0, 0))
+        m.poly([(xa - 0.1, ya, zf), (xb + 0.1, ya, zf), (xb - 0.1, ya - 0.42, wall), (xa + 0.1, ya - 0.42, wall)], OAK, oak(0.6), facing=(0, -1, -1))
+        top = [(xa - 0.2, yb - 0.04, zf - 0.12), (xb + 0.2, yb - 0.04, zf - 0.12), (xb + 0.2, yb + 0.3, wall), (xa - 0.2, yb + 0.3, wall)]
+        m.poly(top, ROOF, cp.rgba((0.8, 0.78, 0.76)), [(0.0, 0.0), ((w + 0.4) / 1.8, 0.0), ((w + 0.4) / 1.8, 0.3), (0.0, 0.3)], facing=(0, 1, -1))
+        m.poly(top, OAK, (0.2, 0.2, 0.2, 1.0), facing=(0, -1, 1))
+        m.poly([(xa - 0.1, ya, zf), (xb + 0.1, ya, zf), (xb + 0.1, yb, zf), (xa - 0.1, yb, zf)], OAK, oak(0.7), facing=(0, 0, -1))
     if kind == "pane":
         p = Lean(name)
         p.lean = lean
@@ -193,7 +237,7 @@ def window(m, panes, name, cx, w, h, y, zf, kind, lean):
     else:
         # Boards, a little apart, and two ledges across them.
         board = oak(0.75)
-        m.poly([(xa, y, zf - 0.03), (xb, y, zf - 0.03), (xb, y + h, zf - 0.03), (xa, y + h, zf - 0.03)], OAK, board, facing=(0, 0, -1))
+        m.poly([(xa, y, zf - 0.03), (xb, y, zf - 0.03), (xb, y + h, zf - 0.03), (xa, y + h, zf - 0.03)], BOARDS, board, facing=(0, 0, -1))
         x = xa + 0.2
         while x < xb - 0.05:
             m.poly([(x, y, zf - 0.034), (x + 0.02, y, zf - 0.034), (x + 0.02, y + h, zf - 0.034), (x, y + h, zf - 0.034)], "window_dark",
@@ -207,9 +251,11 @@ def window(m, panes, name, cx, w, h, y, zf, kind, lean):
     for x in (xa - 0.05, xb + 0.05):
         beam(m, (x, y), (x, y + h), 0.11, zf, 0.065)
     if kind == "shop":
-        m.box((xa - 0.05, y - 0.16, zf - 0.42), (xb + 0.05, y - 0.1, zf), OAK, oak(0.8))
+        m.box((xa - 0.05, y - 0.16, zf - 0.42), (xb + 0.05, y - 0.1, zf), BOARDS, oak(0.8))
         for x in (xa + 0.1, xb - 0.1):
             beam(m, (x, y - 0.75), (x, y - 0.16), 0.07, zf - 0.34, 0.0, oak(0.7))
+    if wall != zf:
+        return (xa - 0.22, xb + 0.22, y - 0.6, y + h + 0.32)
     return (xa - 0.1, xb + 0.1, y - 0.12, y + h + 0.12)
 
 
@@ -242,6 +288,11 @@ def side_walls(m, x0, x1, y0, y1, zf, tint):
 
 
 def house(key, spec):
+    global DAUB, ROOF, TONE
+    DAUB = spec.get("daub", "plaster_daub")
+    ROOF = spec.get("tiles", "roof_tiles")
+    TONE = TONES[spec.get("tone", "brown")]
+    BEAM[0] = OAK
     random.seed(ord(key) * 13)
     w = spec["width"]
     x0, x1 = -w * 0.5, w * 0.5
@@ -254,17 +305,27 @@ def house(key, spec):
     y = 0.0
     zf = 0.0
     tops = []
+    stone_floors = int(spec.get("stone", 0))
+    stone_mat = spec.get("stone_mat", "stone_rubble")
     for k, height in enumerate(spec["floors"]):
         y0, y1 = y, y + height
-        zf = -JETTY * k
+        stone = k < stone_floors
+        juts = k > 0 and not stone
+        if juts:
+            zf -= JETTY
+        BEAM[0] = "stone_ashlar" if stone else OAK
         tint = plaster_tint(base, y0, y1, seed + k)
         openings = []
-        stone = k == 0 and spec.get("stone")
         if stone:
-            st = cp.stone_tint(0.0, y1, seed=seed)
-            cp.panel(m, (x0, zf), (x1, zf), y0, y1, (0, 0, -1), "stone_rubble", st, 1.6, 1.2)
+            st = cp.stone_tint(0.0, sum(spec["floors"][:stone_floors]), seed=seed)
+            cp.panel(m, (x0, zf), (x1, zf), y0, y1, (0, 0, -1), stone_mat, st, 1.6, 1.2)
             for x, s in ((x0, -1), (x1, 1)):
-                cp.panel(m, (x, zf), (x, DEPTH), y0, y1, (s, 0, 0), "stone_rubble", st, 2.4, 1.5)
+                cp.panel(m, (x, zf), (x, DEPTH), y0, y1, (s, 0, 0), stone_mat, st, 2.4, 1.5)
+        elif k in spec.get("nogging", ()):
+            # Brick between the timbers instead of daub.
+            brick = plaster_tint((0.95, 0.9, 0.86), y0, y1, seed + k)
+            cp.panel(m, (x0, zf), (x1, zf), y0, y1, (0, 0, -1), "brick_old", brick, 1.3, 1.0)
+            side_walls(m, x0, x1, y0, y1, zf, tint)
         else:
             cp.panel(m, (x0, zf), (x1, zf), y0, y1, (0, 0, -1), DAUB, tint, 1.3, 1.0)
             side_walls(m, x0, x1, y0, y1, zf, tint)
@@ -282,7 +343,7 @@ def house(key, spec):
                 xa, xb = dx - dw * 0.5 + dw * i / planks, dx - dw * 0.5 + dw * (i + 1) / planks
                 c = oak(0.8)
                 d.poly([(xa + 0.008, 0.02, zf - 0.03), (xb - 0.008, 0.02, zf - 0.03), (xb - 0.008, dh, zf - 0.03), (xa + 0.008, dh, zf - 0.03)],
-                       OAK, c, uvs=[(0.0, 0.0), (0.3, 0.0), (0.3, 1.0), (0.0, 1.0)], facing=(0, 0, -1))
+                       BOARDS, c, uvs=[(0.0, 0.0), (0.3, 0.0), (0.3, 1.0), (0.0, 1.0)], facing=(0, 0, -1))
             panes.append(d)
             m.poly([(dx - dw * 0.5, 0.0, zf - 0.02), (dx + dw * 0.5, 0.0, zf - 0.02), (dx + dw * 0.5, dh, zf - 0.02), (dx - dw * 0.5, dh, zf - 0.02)],
                    "window_dark", facing=(0, 0, -1))
@@ -293,15 +354,28 @@ def house(key, spec):
         for i, (cx, ww, wh, sill, kind) in enumerate(spec["windows"][k]):
             openings.append(window(m, panes, "Window%d_%d" % (k, i), cx, ww, wh, y0 + sill, zf, kind, lean))
         if stone:
-            beam(m, (x0, y1 - 0.1), (x1, y1 - 0.1), 0.2, zf, 0.06)
+            # A string course over it, and long-and-short quoins up its corners.
+            beam(m, (x0 - 0.04, y1 - 0.1), (x1 + 0.04, y1 - 0.1), 0.2, zf, 0.07)
+            if stone_mat == "stone_ashlar":
+                q = y0 + 0.1
+                i = 0
+                while q < y1 - 0.5:
+                    long = 0.5 if i % 2 == 0 else 0.3
+                    beam(m, (x0, q + 0.17), (x0 + long, q + 0.17), 0.32, zf, 0.03)
+                    beam(m, (x1 - long, q + 0.17), (x1, q + 0.17), 0.32, zf, 0.03)
+                    q += 0.36
+                    i += 1
         else:
-            pattern = "close" if k == 0 else spec["frame"][k - 1]
+            pattern = "close" if k == 0 else spec["frame"][k - stone_floors - (0 if stone_floors else 1)] if spec["frame"] else "close"
             frame(m, pattern, x0, x1, y0 + (0.4 if k == 0 else 0.0), y1, zf, openings)
-        if k > 0:
+        if juts:
             jetty(m, x0, x1, y0, zf + JETTY, zf)
+        if k == 0 and spec.get("pentice"):
+            pentice(m, spec, y1, zf)
         tops.append((y0, y1, zf))
         y = y1
     top = y
+    BEAM[0] = OAK
     roofs(m, panes, spec, x0, x1, top, zf, base, seed, lean)
     extras(m, spec, x0, x1, tops)
     m.build()
@@ -350,7 +424,7 @@ def roofs(m, panes, spec, x0, x1, top, zf, base, seed, lean):
     if spec["roof"] == "gable":
         peak = top + w * 0.5 * 1.2
         gable_front(m, panes, "Window%d_0" % len(spec["floors"]), x0, x1, top, peak, zf, base, seed, spec.get("attic"), lean)
-        cp.gable_roof(m, x0, x1, zf - 0.32, DEPTH, top, peak, "roof_tiles", tile, along="z", over=0.3, sag=0.16)
+        cp.gable_roof(m, x0, x1, zf - 0.32, DEPTH, top, peak, ROOF, tile, along="z", over=0.3, sag=0.16)
         tint = plaster_tint(base, top, peak, seed + 6.0)
         back = [(x0, top, DEPTH), (x1, top, DEPTH), ((x0 + x1) * 0.5, peak, DEPTH)]
         m.poly(back, DAUB, [tint(*p) for p in back], facing=(0, 0, 1))
@@ -363,12 +437,12 @@ def roofs(m, panes, spec, x0, x1, top, zf, base, seed, lean):
         drop = over * 3.9 / 3.4
         front = [(x0 - 0.3, top - drop, zf - over), (x1 + 0.3, top - drop, zf - over), (x1 + 0.3, peak, rz), (x0 - 0.3, peak, rz)]
         span = math.hypot(3.4 + over, 3.9 + drop)
-        m.poly(front, "roof_tiles", cp.rgba(tile), [(0.0, 0.0), ((w + 0.6) / 1.8, 0.0), ((w + 0.6) / 1.8, span / 1.8), (0.0, span / 1.8)],
+        m.poly(front, ROOF, cp.rgba(tile), [(0.0, 0.0), ((w + 0.6) / 1.8, 0.0), ((w + 0.6) / 1.8, span / 1.8), (0.0, span / 1.8)],
                facing=(0, 1, -1))
-        m.poly(front, "roof_tiles", (0.2, 0.2, 0.2, 1.0), facing=(0, -1, 1))
+        m.poly(front, ROOF, (0.2, 0.2, 0.2, 1.0), facing=(0, -1, 1))
         back = [(x0 - 0.3, peak, rz), (x1 + 0.3, peak, rz), (x1 + 0.3, top - 0.6, DEPTH + 0.3), (x0 - 0.3, top - 0.6, DEPTH + 0.3)]
         span = math.hypot(DEPTH + 0.3 - rz, peak - top + 0.6)
-        m.poly(back, "roof_tiles", cp.rgba(tile, 0.9), [(0.0, 0.0), ((w + 0.6) / 1.8, 0.0), ((w + 0.6) / 1.8, span / 1.8), (0.0, span / 1.8)],
+        m.poly(back, ROOF, cp.rgba(tile, 0.9), [(0.0, 0.0), ((w + 0.6) / 1.8, 0.0), ((w + 0.6) / 1.8, span / 1.8), (0.0, span / 1.8)],
                facing=(0, 1, 1))
         tint = plaster_tint(base, top, peak, seed + 6.0)
         for x, s in ((x0, -1), (x1, 1)):
@@ -391,8 +465,8 @@ def roofs(m, panes, spec, x0, x1, top, zf, base, seed, lean):
             for s, xe in ((-1, xa - 0.25), (1, xb + 0.25)):
                 eave = top - 0.25 * 1.25
                 pts = [(xe, eave, zf - 0.3), (mid, gp, zf - 0.3), (mid, gp, back_z), (xe, eave, zf + 0.1)]
-                m.poly(pts, "roof_tiles", cp.rgba(tile), [(0.0, 0.0), (0.0, 1.0), (1.2, 1.0), (0.3, 0.0)], facing=(s, 1, 0))
-                m.poly(pts, "roof_tiles", (0.2, 0.2, 0.2, 1.0), facing=(-s, -1, 0))
+                m.poly(pts, ROOF, cp.rgba(tile), [(0.0, 0.0), (0.0, 1.0), (1.2, 1.0), (0.3, 0.0)], facing=(s, 1, 0))
+                m.poly(pts, ROOF, (0.2, 0.2, 0.2, 1.0), facing=(-s, -1, 0))
         ridge = (0.0, peak, rz)
     if spec.get("louvre"):
         # A smoke louvre astride the ridge: a little boarded turret with its own roof.
@@ -400,13 +474,47 @@ def roofs(m, panes, spec, x0, x1, top, zf, base, seed, lean):
         m.box((lx - 0.32, ly, lz - 0.32), (lx + 0.32, ly + 0.6, lz + 0.32), OAK, oak(0.6), faces="xXzZ")
         for s in (-1, 1):
             pts = [(lx - 0.45, ly + 0.55, lz + s * 0.45), (lx + 0.45, ly + 0.55, lz + s * 0.45), (lx, ly + 1.0, lz)]
-            m.poly(pts, "roof_tiles", cp.rgba(tile, 0.8), [(0, 0), (0.5, 0), (0.25, 0.4)], facing=(0, 1, s))
+            m.poly(pts, ROOF, cp.rgba(tile, 0.8), [(0, 0), (0.5, 0), (0.25, 0.4)], facing=(0, 1, s))
             pts = [(lx + s * 0.45, ly + 0.55, lz - 0.45), (lx + s * 0.45, ly + 0.55, lz + 0.45), (lx, ly + 1.0, lz)]
-            m.poly(pts, "roof_tiles", cp.rgba(tile, 0.8), [(0, 0), (0.5, 0), (0.25, 0.4)], facing=(s, 1, 0))
+            m.poly(pts, ROOF, cp.rgba(tile, 0.8), [(0, 0), (0.5, 0), (0.25, 0.4)], facing=(s, 1, 0))
+
+
+def pentice(m, spec, y1, zf):
+    """A lean-to roof over the shop front, on two struts, to keep the rain off the goods."""
+    cx, w = spec["windows"][0][0][0], spec["windows"][0][0][1]
+    xa, xb = cx - w * 0.5 - 0.3, cx + w * 0.5 + 0.3
+    hi, lo, out = y1 - 0.35, y1 - 0.95, 1.0
+    pts = [(xa, lo, zf - out), (xb, lo, zf - out), (xb, hi, zf), (xa, hi, zf)]
+    span = math.hypot(out, hi - lo)
+    m.poly(pts, ROOF, cp.rgba((0.78, 0.76, 0.74)), [(0.0, 0.0), ((xb - xa) / 1.8, 0.0), ((xb - xa) / 1.8, span / 1.8), (0.0, span / 1.8)],
+           facing=(0, 1, -1))
+    m.poly(pts, OAK, (0.16, 0.15, 0.15, 1.0), facing=(0, -1, 1))
+    for x in (xa + 0.08, xb - 0.08):
+        m.tube([(x, lo - 0.85, zf - 0.02), (x, lo + 0.02, zf - out + 0.1)], [0.04, 0.04], 4, OAK, oak(0.8))
+        for s in (-1, 1):
+            m.poly([(x, lo, zf - out), (x, hi, zf), (x, lo, zf)], OAK, oak(0.7), facing=(s, 0, 0))
+    m.box((xa, lo - 0.07, zf - out - 0.03), (xb, lo + 0.01, zf - out + 0.05), OAK, oak(0.8), faces="xXzyY")
+
+
+def chimney(m, spec, x0, x1, top):
+    """A brick stack up the side of the house, clear of the ridge."""
+    cx = spec["chimney"]
+    w = x1 - x0
+    peak = top + (w * 0.5 * 1.2 if spec["roof"] == "gable" else 3.9)
+    z = DEPTH * 0.62
+    y_hi = peak + 0.9
+    tint = plaster_tint((0.9, 0.84, 0.8), top, y_hi, 3.0)
+    lo, hi = (cx - 0.42, top - 0.6, z - 0.42), (cx + 0.42, y_hi, z + 0.42)
+    cp.slab(m, lo, hi, "brick_old", tint, faces="xXzZ", step=1.2)
+    cp.block(m, (lo[0] - 0.07, y_hi, lo[2] - 0.07), (hi[0] + 0.07, y_hi + 0.14, hi[2] + 0.07), "brick_old", (0.5, 0.47, 0.45, 1.0))
+    m.poly([(lo[0] + 0.12, y_hi + 0.145, lo[2] + 0.12), (hi[0] - 0.12, y_hi + 0.145, lo[2] + 0.12), (hi[0] - 0.12, y_hi + 0.145, hi[2] - 0.12),
+            (lo[0] + 0.12, y_hi + 0.145, hi[2] - 0.12)], "window_dark", facing=(0, 1, 0))
 
 
 def extras(m, spec, x0, x1, tops):
     iron = (0.5, 0.5, 0.52, 1.0)
+    if "chimney" in spec:
+        chimney(m, spec, x0, x1, tops[-1][1])
     if "lamp" in spec:
         # An iron bracket by the door for a lantern (the scene hangs it): out from the wall, and a stay under it.
         lx = spec["lamp"]

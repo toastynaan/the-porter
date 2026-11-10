@@ -42,20 +42,25 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
+"brick_old": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/brick_old.tres",
+"use_external/path": "res://game/world/materials/real/brick_old.tres"
+},
 "iron_cart": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
 "use_external/path": "res://game/world/materials/real/iron_cart.tres"
 },
-"plaster_daub": {
+"plaster_ochre": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/plaster_daub.tres",
-"use_external/path": "res://game/world/materials/real/plaster_daub.tres"
+"use_external/fallback_path": "res://game/world/materials/real/plaster_ochre.tres",
+"use_external/path": "res://game/world/materials/real/plaster_ochre.tres"
 },
-"roof_tiles": {
+"roof_plain": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/roof_tiles.tres",
-"use_external/path": "res://game/world/materials/real/roof_tiles.tres"
+"use_external/fallback_path": "res://game/world/materials/real/roof_plain.tres",
+"use_external/path": "res://game/world/materials/real/roof_plain.tres"
 },
 "stone_blocks": {
 "use_external/enabled": true,
@@ -67,10 +72,15 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
 "use_external/path": "res://game/world/materials/real/window_dark.tres"
 },
-"wood_medieval": {
+"wood_boards": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/wood_medieval.tres",
-"use_external/path": "res://game/world/materials/real/wood_medieval.tres"
+"use_external/fallback_path": "res://game/world/materials/real/wood_boards.tres",
+"use_external/path": "res://game/world/materials/real/wood_boards.tres"
+},
+"wood_frame": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_frame.tres",
+"use_external/path": "res://game/world/materials/real/wood_frame.tres"
 }
 }
 }

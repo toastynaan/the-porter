@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/street/timber_house.gd" id="house_gd"]
+[ext_resource type="PackedScene" path="res://art/models/env_house_timber_g.glb" id="model"]
+[ext_resource type="Material" path="res://game/world/materials/real/window_horn.tres" id="horn"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+
+[node name="HouseTimberG" type="Node3D"]
+script = ExtResource("house_gd")
+lit_material = ExtResource("horn")
+editor_description = "A timber house of the streets inside Aldgate: a merchant's house, two floors of cut stone under a timber gable, 5.4 m wide, slated, a brick chimney (tools/build/env_house_timber.py). Its street front faces -Z, the ground floor's face at z = 0; it runs back 9 m. Panes named in lit_windows glow (Window<floor>_<n>, Door0: an open door with the fire behind it)."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Lamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 2.66, -0.93)
+editor_description = "The lantern on the house's iron bracket (London's order of 1415)."

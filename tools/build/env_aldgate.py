@@ -16,6 +16,10 @@ that joins it at x = -9 and 9, in the same space.
   passage. Over the arch the city's shield, a weathered saint under a
   canopy, and the windows of the chamber over the gate, candles lit.
 - A tiled roof over the chamber, behind the battlements.
+- What has been hung on it since: a timber hoarding round the south
+  tower's top, the scaffold holes still open in both towers, two wet
+  banners, lead spouts, three heads on pikes over the arch, and a boarded
+  shelter for the watch by the north tower.
 
 Collision: the towers, the turret, the two sides of the passage, and the
 wall over it. The road through stays clear (5.4 m wide, 3.4 m to the
@@ -44,7 +48,8 @@ TOWER_X, TOWER_Z, TOWER_R, TOWER_TOP = 6.9, -0.8, 3.1, 14.5
 TURRET = (8.5, 1.1, 1.15, 17.6, 20.4)
 SIDES = 24
 
-ASHLAR = "stone_blocks"
+ASHLAR = "stone_ashlar"
+BOARDS = "wood_boards"
 RUBBLE = "stone_rubble"
 PALE = (0.9, 0.89, 0.86)
 SOOT = (0.4, 0.39, 0.38)
@@ -157,7 +162,7 @@ def doors(m):
     for s in (-1, 1):
         xa, xb = s * (HALF - 0.05), s * (HALF - 0.17)
         lo, hi = (min(xa, xb), 0.06, -1.55), (max(xa, xb), 4.7, 1.0)
-        cp.block(m, lo, hi, "wood_medieval", oak, faces="xXzZY")
+        cp.block(m, lo, hi, BOARDS, oak, faces="xXzZY")
         face = xb - s * 0.012
         for y in (0.7, 2.3, 3.9):
             m.poly([(face, y, -1.5), (face, y, 0.75), (face, y + 0.13, 0.75), (face, y + 0.13, -1.5)], "iron_cart", iron,
@@ -188,6 +193,19 @@ def tower(m, cx, turret, seed):
         ang = round(ang / (math.tau / SIDES) - 0.5) * (math.tau / SIDES) + math.pi / SIDES
         rr = r * math.cos(math.pi / SIDES)
         cp.loop(m, (cx + math.cos(ang) * rr, cz + math.sin(ang) * rr), y, 1.1, (math.cos(ang), 0, math.sin(ang)), width=0.11, cross=False)
+    # Putlog holes: where the builders' scaffold went in, never filled.
+    step = math.tau / SIDES
+    rr = r * math.cos(step * 0.5) + 0.012
+    for row, y in enumerate((2.9, 4.9, 7.4, 9.3, 12.2)):
+        for i in range(row % 2, SIDES, 3):
+            ang = (i + 0.5) * step
+            if math.sin(ang) > 0.55:
+                continue
+            c, s = math.cos(ang), math.sin(ang)
+            px, pz = cx + c * rr, cz + s * rr
+            ax, az = -s * 0.075, c * 0.075
+            m.poly([(px - ax, y, pz - az), (px + ax, y, pz + az), (px + ax, y + 0.16, pz + az), (px - ax, y + 0.16, pz - az)],
+                   "window_dark", facing=(c, 0, s))
     if turret:
         tx, tz, tr, t_eave, t_point = TURRET
         tt = cp.stone_tint(0.0, t_eave, seed=seed + 4.0)
@@ -207,6 +225,118 @@ def tower(m, cx, turret, seed):
         rr = r * math.cos(math.pi / SIDES)
         cp.lancet(m, (cx + math.cos(ang) * rr, cz + math.sin(ang) * rr), 10.9, 0.42, 1.2, (math.cos(ang), 0, math.sin(ang)),
                   "window_candle", frame=0.12)
+
+
+def hoarding(m, cx, seed):
+    """A timber gallery built out round the country side of a tower's top,
+    for dropping things on whoever is at its foot: boards on brackets, a
+    boarded roof leaning back onto the parapet. Old, and never taken down."""
+    cz, r, top = TOWER_Z, TOWER_R + 0.34, TOWER_TOP
+    arc = (math.pi - 0.42, math.tau + 0.42)
+    sides = SIDES
+    out = r + 1.05
+    floor, eave, back = top + 0.25, top + 2.35, top + 3.3
+    boards = cp.wood_tint((0.85, 0.8, 0.74), seed, 0.42)
+    dark = cp.wood_tint((0.3, 0.29, 0.28), seed, 0.42)
+    cp.drum(m, cx, cz, [floor - 0.16, floor + 0.95], [out, out], sides, BOARDS, boards, arc)
+    cp.drum(m, cx, cz, [floor + 1.5, eave], [out, out], sides, BOARDS, boards, arc)
+    cp.drum(m, cx, cz, [eave - 0.05, back], [out + 0.3, r - 0.5], sides, BOARDS, cp.wood_tint((0.6, 0.58, 0.56), seed + 3.0, 0.5), arc, rise=2.0)
+    # Its underside and the dark inside it.
+    cp.drum(m, cx, cz, [floor - 0.16, floor - 0.161], [r, out], sides, BOARDS, dark, arc)
+    cp.drum(m, cx, cz, [floor + 0.95, floor + 1.5], [out - 0.3, out - 0.3], sides, "window_dark", cp.flat_tint((1.0, 1.0, 1.0)), arc)
+    count = int(round(sides * (arc[1] - arc[0]) / math.tau))
+    for i in range(count + 1):
+        ang = arc[0] + (arc[1] - arc[0]) * i / count
+        c, s = math.cos(ang), math.sin(ang)
+        # A post between each pair of openings, and under every other one a bracket down to the wall.
+        px, pz = cx + c * (out + 0.02), cz + s * (out + 0.02)
+        ax, az = -s * 0.07, c * 0.07
+        m.poly([(px - ax, floor + 0.95, pz - az), (px + ax, floor + 0.95, pz + az), (px + ax, floor + 1.5, pz + az), (px - ax, floor + 1.5, pz - az)],
+               BOARDS, (0.7, 0.66, 0.62, 1.0), facing=(c, 0, s))
+        if i % 2 == 0:
+            a = (cx + c * (TOWER_R + 0.02), floor - 1.5, cz + s * (TOWER_R + 0.02))
+            b = (cx + c * out, floor - 0.16, cz + s * out)
+            for sgn in (-1, 1):
+                m.poly([a, b, (cx + c * r, floor - 0.16, cz + s * r)], BOARDS, (0.55, 0.52, 0.5, 1.0), facing=(-s * sgn, 0, c * sgn))
+    # Its two ends, boarded.
+    for ang, sgn in ((arc[0], -1), (arc[1], 1)):
+        c, s = math.cos(ang), math.sin(ang)
+        pts = [(cx + c * r, floor - 0.16, cz + s * r), (cx + c * out, floor - 0.16, cz + s * out), (cx + c * out, eave, cz + s * out),
+               (cx + c * (r - 0.5), back, cz + s * (r - 0.5))]
+        m.poly(pts, BOARDS, [boards(*q) for q in pts], facing=(-s * sgn, 0, c * sgn))
+
+
+def pikes(m):
+    """Three heads on pikes over the arch. The city leaves them up till they fall."""
+    z = BLOCK[2] - 0.05
+    top = BLOCK[4]
+    for x, h, tilt in ((-1.5, 2.9, 0.06), (0.2, 3.3, -0.03), (1.7, 2.7, 0.1)):
+        foot = (x, top + 0.9, z)
+        tip = (x + tilt * h, top + 0.9 + h, z - 0.12 * h * 0.3)
+        m.tube([foot, tip], [0.035, 0.022], 5, "iron_cart", (0.45, 0.44, 0.44, 1.0))
+        hx, hy, hz = tip
+        skull = [(hx, hy - 0.2, hz), (hx, hy - 0.13, hz), (hx, hy - 0.02, hz), (hx, hy + 0.09, hz), (hx, hy + 0.14, hz)]
+        m.tube(skull, [0.05, 0.1, 0.125, 0.09, 0.02], 6, "painted", (0.085, 0.075, 0.065, 1.0), caps=True, squash=(0.85, 1.0))
+
+
+def banners(m):
+    """Two long cloths hung from the string course either side of the saint, sodden and still."""
+    z0 = BLOCK[2]
+    red = porter.srgb(0.3, 0.07, 0.06)
+    pale = porter.srgb(0.4, 0.38, 0.32)
+    for cx, seed in ((-1.25, 1.0), (1.25, 2.0)):
+        top, foot, half = 9.85, 6.75, 0.34
+        ys = cp.steps(top, foot, 0.52)
+        def at(x, y):
+            sag = 0.1 + 0.05 * math.sin(y * 3.1 + seed * 2.0) + 0.04 * (x - cx) * math.sin(y * 2.0 + seed)
+            return (x, y, z0 - sag)
+        m.box((cx - half - 0.08, top, z0 - 0.2), (cx + half + 0.08, top + 0.05, z0 - 0.15), "wood_cart", (0.3, 0.29, 0.28, 1.0))
+        for i, (ya, yb) in enumerate(zip(ys, ys[1:])):
+            last = i == len(ys) - 2
+            shade = 1.0 - 0.45 * i / len(ys)
+            for xa, xb, col in ((cx - half, cx - 0.09, red), (cx - 0.09, cx + 0.09, pale if 1 <= i <= 3 else red), (cx + 0.09, cx + half, red)):
+                if i == 2:
+                    col = pale
+                c = (col[0] * shade, col[1] * shade, col[2] * shade, 1.0)
+                # The foot is cut to two tails.
+                yl = yb + (0.3 if last and xb > cx - 0.1 and xa < cx + 0.1 else 0.0)
+                pts = [at(xa, ya), at(xb, ya), at(xb, yl if last and xb < cx + half - 0.01 else yb), at(xa, yl if last and xa > cx - half + 0.01 else yb)]
+                m.poly(pts, "painted", c, facing=(0, 0, -1))
+                m.poly(pts, "painted", (c[0] * 0.5, c[1] * 0.5, c[2] * 0.5, 1.0), facing=(0, 0, 1))
+
+
+def spouts(m):
+    """Lead spouts under the parapet, and the dark the water has run down the stone under each."""
+    x0, x1, z0, _z1, top = BLOCK
+    for x in (-3.3, 3.3):
+        cp.block(m, (x - 0.08, top - 0.3, z0 - 1.0), (x + 0.08, top - 0.16, z0 - 0.25), "iron_cart", (0.6, 0.62, 0.66, 1.0))
+        for i, (y_hi, y_lo) in enumerate(((top - 0.9, top - 3.2), (top - 3.2, top - 6.0))):
+            wa, wb = 0.16 + 0.1 * i, 0.26 + 0.1 * i
+            m.poly([(x - wa, y_hi, z0 - 0.015), (x + wa, y_hi, z0 - 0.015), (x + wb, y_lo, z0 - 0.015), (x - wb, y_lo, z0 - 0.015)], ASHLAR,
+                   [(0.3, 0.33, 0.28, 1.0), (0.3, 0.33, 0.28, 1.0), (0.42, 0.44, 0.4, 0.3), (0.42, 0.44, 0.4, 0.3)], facing=(0, 0, -1))
+
+
+def shelter(m):
+    """The watch's shelter by the north tower: three boarded sides, a
+    lean-to roof, a bench, a peg for the lantern."""
+    x0, x1, z0, z1 = 4.75, 6.5, -5.25, -4.0
+    boards = cp.wood_tint((0.82, 0.78, 0.72), 5.0, 0.24)
+    post = (0.34, 0.32, 0.3, 1.0)
+    for x in (x0, x1):
+        for z in (z0, z1):
+            cp.block(m, (x - 0.07, 0.0, z - 0.07), (x + 0.07, 2.2 if z == z0 else 2.75, z + 0.07), "wood_frame", post, faces="xXzZ")
+    cp.panel(m, (x0, z1), (x1, z1), 0.05, 2.7, (0, 0, -1), BOARDS, boards, 2.0, 3.0)
+    cp.panel(m, (x0, z1), (x1, z1), 0.05, 2.7, (0, 0, 1), BOARDS, boards, 2.0, 3.0)
+    for x, s in ((x1, 1), (x1, -1)):
+        pts = [(x, 0.05, z0), (x, 0.05, z1), (x, 2.7, z1), (x, 2.15, z0)]
+        m.poly(pts, BOARDS, [boards(*q) for q in pts], facing=(s, 0, 0))
+    # The roof, boarded, hanging over the front.
+    roof = [(x0 - 0.25, 2.05, z0 - 0.4), (x1 + 0.25, 2.05, z0 - 0.4), (x1 + 0.25, 2.85, z1 + 0.1), (x0 - 0.25, 2.85, z1 + 0.1)]
+    m.poly(roof, BOARDS, [cp.wood_tint((0.6, 0.58, 0.56), 7.0, 0.3)(*q) for q in roof], facing=(0, 1, -0.5))
+    m.poly(roof, BOARDS, (0.16, 0.15, 0.15, 1.0), facing=(0, -1, 0.5))
+    cp.block(m, (x0 + 0.15, 0.42, z1 - 0.42), (x1 - 0.1, 0.48, z1 - 0.05), BOARDS, (0.4, 0.38, 0.36, 1.0), faces="xXzyY")
+    for x in (x0 + 0.3, x1 - 0.25):
+        cp.block(m, (x - 0.04, 0.0, z1 - 0.38), (x + 0.04, 0.42, z1 - 0.1), BOARDS, post, faces="xXz")
 
 
 def prism(name, cx, cz, r, y0, y1, sides=10):
@@ -231,13 +361,18 @@ def main():
     f = porter.Mesh("Fittings")
     portcullis(f)
     doors(f)
+    hoarding(f, -TOWER_X, 4.0)
+    pikes(f)
+    banners(f)
+    spouts(f)
+    shelter(f)
     f.build()
     x0, x1, z0, z1, top = BLOCK
     prism("TowerN", TOWER_X, TOWER_Z, TOWER_R + 0.15, -1.0, TOWER_TOP + 1.8)
     prism("TowerS", -TOWER_X, TOWER_Z, TOWER_R + 0.15, -1.0, TOWER_TOP + 1.8)
     prism("Turret", TURRET[0], TURRET[1], TURRET[2], -1.0, TURRET[3], 8)
     for name, lo, hi in (("PierN", (HALF, -1.0, z0), (x1, top + 1.0, z1)), ("PierS", (x0, -1.0, z0), (-HALF, top + 1.0, z1)),
-                         ("Over", (-HALF, SPRING + RISE, z0), (HALF, top + 1.0, z1))):
+                         ("Over", (-HALF, SPRING + RISE, z0), (HALF, top + 1.0, z1)), ("Shelter", (4.7, 0.0, -4.4), (6.55, 2.6, -3.95))):
         c = porter.Mesh(name + "-colonly")
         c.box(lo, hi, ASHLAR)
         c.build()

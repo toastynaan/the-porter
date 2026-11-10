@@ -52,15 +52,15 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/painted.tres",
 "use_external/path": "res://game/world/materials/real/painted.tres"
 },
-"plaster_daub": {
+"plaster_worn": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/plaster_daub.tres",
-"use_external/path": "res://game/world/materials/real/plaster_daub.tres"
+"use_external/fallback_path": "res://game/world/materials/real/plaster_worn.tres",
+"use_external/path": "res://game/world/materials/real/plaster_worn.tres"
 },
-"roof_tiles": {
+"roof_mossy": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/roof_tiles.tres",
-"use_external/path": "res://game/world/materials/real/roof_tiles.tres"
+"use_external/fallback_path": "res://game/world/materials/real/roof_mossy.tres",
+"use_external/path": "res://game/world/materials/real/roof_mossy.tres"
 },
 "stone_blocks": {
 "use_external/enabled": true,
@@ -72,10 +72,15 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
 "use_external/path": "res://game/world/materials/real/window_dark.tres"
 },
-"wood_medieval": {
+"wood_boards": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/wood_medieval.tres",
-"use_external/path": "res://game/world/materials/real/wood_medieval.tres"
+"use_external/fallback_path": "res://game/world/materials/real/wood_boards.tres",
+"use_external/path": "res://game/world/materials/real/wood_boards.tres"
+},
+"wood_frame": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_frame.tres",
+"use_external/path": "res://game/world/materials/real/wood_frame.tres"
 }
 }
 }

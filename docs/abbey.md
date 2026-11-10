@@ -40,7 +40,7 @@ Gusts are set, never random and never in a chase: the tower stair on night 2, th
 ## Weather (`Weather`, `Footprints`)
 
 Each night sets its `Weather/kind`:
-- **Rain** (nights 1–2): a hunter hears half as far, and his own steps, humming and panting carry half as far to the porter. Rain falls about the porter and drums.
+- **Rain** (nights 1–2): a hunter hears half as far, and his own steps, humming and panting carry half as far to the porter. Rain falls about the porter and drums: it stops at roofs (so not indoors, in the cloister walks or under an arch), splashes where it lands, and shows gold where a light is (docs/prologue.md, "third pass", has how).
 - **Fog** (night 4): sight is 4 m *(mine)* both ways, but an uncovered lantern is a glow a hunter can make out from 14 m *(mine)* and come to look at. The volumetric fog thickens.
 - **Snow** (night 6): outdoors, the porter's and the hunters' steps leave prints for the night (up to 400). A hunter who loses him goes to his freshest print within 12 m of where he lost him.
 

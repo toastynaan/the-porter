@@ -18,11 +18,24 @@
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_d.tscn" id="ht_d"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_e.tscn" id="ht_e"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_f.tscn" id="ht_f"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_g.tscn" id="ht_g"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_h.tscn" id="ht_h"]
 [ext_resource type="PackedScene" path="res://art/models/env_aldgate_street.glb" id="street"]
 [ext_resource type="PackedScene" path="res://art/models/env_city_skyline.glb" id="skyline"]
 [ext_resource type="Script" path="res://game/world/road/road_city.gd" id="city_gd"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_brazier.tscn" id="brazier"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_gibbet.tscn" id="gibbet"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_barrels.glb" id="ps_barrels"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_crates.glb" id="ps_crates"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_handcart.glb" id="ps_handcart"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_stall.glb" id="ps_stall"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_firewood.glb" id="ps_firewood"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_trough.glb" id="ps_trough"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_bench.glb" id="ps_bench"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_ladder.glb" id="ps_ladder"]
+[ext_resource type="PackedScene" path="res://art/models/prop_street_posts.glb" id="ps_posts"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_cresset.tscn" id="cresset"]
+[ext_resource type="Script" path="res://game/world/weather/drips.gd" id="drips_gd"]
 
 [sub_resource type="FastNoiseLite" id="mist_noise"]
 noise_type = 3
@@ -115,7 +128,7 @@ editor_description = "The street inside Aldgate: timber houses close on both sid
 [node name="South0" parent="Houses" instance=ExtResource("ht_d")]
 transform = Transform3D(1.0000, 0, -0.0020, 0, 1, 0, 0.0020, 0, 1.0000, -110.70, 0, 50.29)
 
-[node name="South1" parent="Houses" instance=ExtResource("ht_b")]
+[node name="South1" parent="Houses" instance=ExtResource("ht_h")]
 transform = Transform3D(1.0000, 0, 0.0054, 0, 1, 0, -0.0054, 0, 1.0000, -105.75, 0, 50.27)
 lit_windows = PackedStringArray("Window1_0")
 
@@ -133,7 +146,7 @@ transform = Transform3D(0.9999, 0, 0.0116, 0, 1, 0, -0.0116, 0, 0.9999, -88.60, 
 [node name="South5" parent="Houses" instance=ExtResource("ht_c")]
 transform = Transform3D(1.0000, 0, 0.0068, 0, 1, 0, -0.0068, 0, 1.0000, -83.20, 0, 50.19)
 
-[node name="South6" parent="Houses" instance=ExtResource("ht_d")]
+[node name="South6" parent="Houses" instance=ExtResource("ht_g")]
 transform = Transform3D(0.9998, 0, -0.0175, 0, 1, 0, 0.0175, 0, 0.9998, -77.38, 0, 50.14)
 lit_windows = PackedStringArray("Window1_0")
 
@@ -169,9 +182,94 @@ lit_windows = PackedStringArray("Window1_0", "Window1_1", "Window2_0", "Window3_
 transform = Transform3D(-0.9999, 0, -0.0148, 0, 1, 0, 0.0148, 0, -0.9999, -77.63, 0, 43.83)
 lit_windows = PackedStringArray("Window1_0", "Window2_0", "Window3_0")
 
-[node name="North7" parent="Houses" instance=ExtResource("ht_b")]
+[node name="North7" parent="Houses" instance=ExtResource("ht_h")]
 transform = Transform3D(-0.9999, 0, 0.0122, 0, 1, 0, -0.0122, 0, -0.9999, -72.85, 0, 43.85)
 lit_windows = PackedStringArray("Window1_0")
+
+[node name="Clutter" type="Node3D" parent="."]
+editor_description = "What stands about in the street at dusk (tools/build/prop_street.py), out of the wagon's way: move, turn or delete any of it."
+
+[node name="BarrelsN0" parent="Clutter" instance=ExtResource("ps_barrels")]
+transform = Transform3D(-0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, -0.9986, -108.20, 0.00, 43.90)
+
+[node name="TroughN" parent="Clutter" instance=ExtResource("ps_trough")]
+transform = Transform3D(-1.0000, 0, -0.0000, 0, 1, 0, 0.0000, 0, -1.0000, -101.90, 0.00, 43.90)
+
+[node name="FirewoodN" parent="Clutter" instance=ExtResource("ps_firewood")]
+transform = Transform3D(-0.9994, 0, -0.0349, 0, 1, 0, 0.0349, 0, -0.9994, -99.50, 0.00, 43.92)
+
+[node name="HandcartN" parent="Clutter" instance=ExtResource("ps_handcart")]
+transform = Transform3D(-0.8829, 0, 0.4695, 0, 1, 0, -0.4695, 0, -0.8829, -86.50, 0.00, 45.20)
+
+[node name="StallN" parent="Clutter" instance=ExtResource("ps_stall")]
+transform = Transform3D(-0.9994, 0, 0.0349, 0, 1, 0, -0.0349, 0, -0.9994, -73.60, 0.00, 43.90)
+
+[node name="PostsN" parent="Clutter" instance=ExtResource("ps_posts")]
+transform = Transform3D(-0.9848, 0, 0.1736, 0, 1, 0, -0.1736, 0, -0.9848, -112.70, 0.00, 44.50)
+
+[node name="PostsS" parent="Clutter" instance=ExtResource("ps_posts")]
+transform = Transform3D(0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, 0.9903, -113.00, 0.00, 49.95)
+
+[node name="BenchS0" parent="Clutter" instance=ExtResource("ps_bench")]
+transform = Transform3D(0.9994, 0, -0.0349, 0, 1, 0, 0.0349, 0, 0.9994, -87.30, 0.00, 50.12)
+
+[node name="BenchS1" parent="Clutter" instance=ExtResource("ps_bench")]
+transform = Transform3D(0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, 0.9986, -81.30, 0.00, 50.12)
+
+[node name="LadderS" parent="Clutter" instance=ExtResource("ps_ladder")]
+transform = Transform3D(0.9976, 0, -0.0698, 0, 1, 0, 0.0698, 0, 0.9976, -96.75, 0.00, 50.10)
+
+[node name="CratesS" parent="Clutter" instance=ExtResource("ps_crates")]
+transform = Transform3D(0.9986, 0, -0.0523, 0, 1, 0, 0.0523, 0, 0.9986, -79.30, 0.00, 50.10)
+
+[node name="CratesN" parent="Clutter" instance=ExtResource("ps_crates")]
+transform = Transform3D(-0.9945, 0, -0.1045, 0, 1, 0, 0.1045, 0, -0.9945, -91.60, 0.00, 43.90)
+
+[node name="BarrelsN1" parent="Clutter" instance=ExtResource("ps_barrels")]
+transform = Transform3D(-0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, -0.9903, -80.90, 0.00, 43.92)
+
+[node name="Cressets" type="Node3D" parent="."]
+editor_description = "Fire baskets on the gate: one each side of the arch outside, one on its city face."
+
+[node name="OutNorth" parent="Cressets" instance=ExtResource("cresset")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -120.8, 4.3, 43.05)
+
+[node name="OutSouth" parent="Cressets" instance=ExtResource("cresset")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -120.8, 4.3, 50.95)
+
+[node name="In" parent="Cressets" instance=ExtResource("cresset")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -114.2, 4.5, 50.1)
+
+[node name="Drips" type="Node3D" parent="."]
+editor_description = "Water coming off the eaves along the street and off the gate's parapet (game/world/weather/drips.gd). Each line lies just clear of the edge it drips from."
+
+[node name="EavesSouth" type="GPUParticles3D" parent="Drips"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.0, 8.6, 48.75)
+script = ExtResource("drips_gd")
+length = 41.0
+drop = 9.0
+per_metre = 4.0
+
+[node name="EavesNorth" type="GPUParticles3D" parent="Drips"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.0, 8.6, 45.25)
+script = ExtResource("drips_gd")
+length = 41.0
+drop = 9.0
+per_metre = 4.0
+
+[node name="GateFront" type="GPUParticles3D" parent="Drips"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -121.3, 11.0, 47.0)
+script = ExtResource("drips_gd")
+length = 7.0
+drop = 11.5
+per_metre = 5.0
+
+[node name="GateBack" type="GPUParticles3D" parent="Drips"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -113.95, 11.0, 47.0)
+script = ExtResource("drips_gd")
+length = 7.0
+drop = 11.5
+per_metre = 5.0
 
 [node name="GateLamp" parent="." instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -120.5, 3.05, 44.75)

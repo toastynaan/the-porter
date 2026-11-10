@@ -7,6 +7,9 @@ extends Node3D
 ## The light's strength, and how much of it the flames' unsteadiness takes.
 @export var energy := 3.2
 @export_range(0.0, 1.0) var flicker := 0.35
+## Its own ironwork throws no shadow (a basket's bars so near the flame
+## would stripe the whole wall).
+@export var bare := false
 
 var _noise := FastNoiseLite.new()
 var _t := randf() * 100.0
@@ -19,6 +22,9 @@ func _ready() -> void:
 	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	_noise.frequency = 1.0
 	_rest = light.position
+	if bare:
+		for mesh: Node in find_children("*", "MeshInstance3D", true, false):
+			(mesh as MeshInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _process(delta: float) -> void:

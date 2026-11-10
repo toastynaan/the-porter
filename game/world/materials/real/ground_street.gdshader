@@ -35,6 +35,18 @@ float rut(float side, float at, float wobble) {
 	return 1.0 - smoothstep(rut_half * 0.5, rut_half * 1.6, max(abs(abs(side) - at) + wobble, 0.0));
 }
 
+// Rings where drops strike standing water: one in each cell of a grid, each at its own moment.
+vec2 rings(vec2 p, float t) {
+	vec2 cell = floor(p);
+	vec2 h = fract(sin(vec2(dot(cell, vec2(127.1, 311.7)), dot(cell, vec2(269.5, 183.3)))) * 43758.5453);
+	float age = fract(t + h.x * 7.0);
+	vec2 d = fract(p) - 0.5 - (h - 0.5) * 0.5;
+	float r = length(d);
+	float front = age * 0.42;
+	float wave = sin((r - front) * 60.0) * smoothstep(0.07, 0.0, abs(r - front)) * (1.0 - age);
+	return d / max(r, 0.001) * wave;
+}
+
 void fragment() {
 	vec2 p = world_pos.xz;
 	float big = texture(blotch, p * 0.021).r;
@@ -57,7 +69,8 @@ void fragment() {
 	float water = smoothstep(0.4, 0.6, max(COLOR.a, max(ruts * smoothstep(0.42, 0.58, deep), holes)) + (mid - 0.5) * 0.25);
 	vec2 r1 = texture(blotch, p * 1.7 + vec2(TIME * 0.31, TIME * 0.23)).rg;
 	vec2 r2 = texture(blotch, p * 2.9 - vec2(TIME * 0.27, TIME * 0.35)).gr;
-	vec3 n_water = normalize(vec3((r1 + r2 - 1.0) * 0.1 * rain, 1.0)) * 0.5 + 0.5;
+	vec2 struck = rings(p * 2.7, TIME * 1.25) + rings(p * 4.3 + 7.3, TIME * 1.05 + 0.4) * 0.7;
+	vec3 n_water = normalize(vec3(((r1 + r2 - 1.0) * 0.1 + struck * 0.45) * rain, 1.0)) * 0.5 + 0.5;
 	vec3 n = mix(texture(cobble_nrm, p / cobble_size).rgb, texture(mud_nrm, p / mud_size).rgb, muddy);
 	float mirror = smoothstep(0.7, 1.0, water);
 	ALBEDO = mix(albedo * 0.6, water_color, water * 0.94);

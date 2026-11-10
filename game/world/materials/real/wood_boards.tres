@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/surface.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://game/world/materials/real/blotch_noise.tres" id="2_blotch"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_wood_boards_col.jpg" id="3_a"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_wood_boards_nrm.jpg" id="4_an"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_wood_silver_col.jpg" id="5_b"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_wood_silver_nrm.jpg" id="6_bn"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/col_a = ExtResource("3_a")
+shader_parameter/nrm_a = ExtResource("4_an")
+shader_parameter/col_b = ExtResource("5_b")
+shader_parameter/nrm_b = ExtResource("6_bn")
+shader_parameter/blotch = ExtResource("2_blotch")
+shader_parameter/size_a = 1.6
+shader_parameter/tint_a = Color(0.5, 0.47, 0.44, 1)
+shader_parameter/size_b = 1.5
+shader_parameter/tint_b = Color(0.45, 0.45, 0.45, 1)
+shader_parameter/patches = 0.25
+shader_parameter/patch_size = 1.4
+shader_parameter/uneven = 0.3
+shader_parameter/moss = 0.2
+shader_parameter/moss_height = 0.8
+shader_parameter/rough = 0.85
+shader_parameter/rough_wet = 0.45
+shader_parameter/bump = 1.2
+shader_parameter/wet = 0.55

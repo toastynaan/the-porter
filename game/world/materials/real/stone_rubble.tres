@@ -1,16 +1,27 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="ShaderMaterial" format=3]
 
-[ext_resource type="Texture2D" path="res://art/tex/tex_stone_rubble_col.jpg" id="1_col"]
-[ext_resource type="Texture2D" path="res://art/tex/tex_stone_rubble_nrm.jpg" id="2_nrm"]
+[ext_resource type="Shader" path="res://game/world/materials/real/surface.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://game/world/materials/real/blotch_noise.tres" id="2_blotch"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_rubble_col.jpg" id="3_a"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_rubble_nrm.jpg" id="4_an"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_mossy_col.jpg" id="5_b"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_mossy_nrm.jpg" id="6_bn"]
 
 [resource]
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.62, 0.62, 0.6, 1)
-albedo_texture = ExtResource("1_col")
-roughness = 0.92
-normal_enabled = true
-normal_scale = 1.3
-normal_texture = ExtResource("2_nrm")
-uv1_scale = Vector3(0.3, 0.3, 0.3)
-uv1_triplanar = true
-uv1_world_triplanar = true
+shader = ExtResource("1_shader")
+shader_parameter/col_a = ExtResource("3_a")
+shader_parameter/nrm_a = ExtResource("4_an")
+shader_parameter/col_b = ExtResource("5_b")
+shader_parameter/nrm_b = ExtResource("6_bn")
+shader_parameter/blotch = ExtResource("2_blotch")
+shader_parameter/size_a = 3.3
+shader_parameter/tint_a = Color(0.62, 0.62, 0.62, 1)
+shader_parameter/size_b = 3.0
+shader_parameter/tint_b = Color(0.5, 0.52, 0.46, 1)
+shader_parameter/patches = 0.3
+shader_parameter/patch_size = 7.0
+shader_parameter/uneven = 0.4
+shader_parameter/moss = 0.75
+shader_parameter/moss_height = 3.0
+shader_parameter/bump = 1.3
+shader_parameter/rough_wet = 0.5

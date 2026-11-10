@@ -21,9 +21,12 @@ def rgba(c, k=1.0):
     return (c[0] * k, c[1] * k, c[2] * k, 1.0)
 
 
-def stone_tint(foot, top, clean=STONE, damp=STONE_DAMP, seed=0.0):
+def stone_tint(foot, top, clean=STONE, damp=STONE_DAMP, seed=0.0, worn=0.7):
     """How a stone face is stained, as a function of a point on it: rising
-    damp from `foot`, streaks down from `top`, and slow blotches."""
+    damp from `foot`, streaks down from `top`, and slow blotches. Its
+    alpha asks the material for its second surface (mossed or mended
+    stone: game/world/materials/real/surface.gdshader) in big patches,
+    more of them low down, as much as `worn`."""
     def tint(x, y, z):
         along = x + z
         rise = 1.8 + 1.3 * fbm(along, seed, 0.11, 2, 3.0 + seed)
@@ -32,8 +35,18 @@ def stone_tint(foot, top, clean=STONE, damp=STONE_DAMP, seed=0.0):
         streak = smoothstep(top - 3.2, top - 0.2, y) * smoothstep(-0.1, 0.5, run)
         blot = 0.88 + 0.16 * fbm(along, y, 0.09, 3, 9.0 + seed)
         k = blot * (1.0 - 0.38 * streak)
+        patch = fbm(along, y, 0.07, 3, 21.0 + seed) + 0.3 * wet
         return (lerp(clean[0], damp[0], wet * 0.9) * k, lerp(clean[1], damp[1], wet * 0.9) * k,
-                lerp(clean[2], damp[2], wet * 0.9) * k, 1.0)
+                lerp(clean[2], damp[2], wet * 0.9) * k, 1.0 - worn * smoothstep(0.08, 0.42, patch))
+    return tint
+
+
+def wood_tint(base=(0.5, 0.47, 0.44), seed=0.0, board=0.3):
+    """Boards: each `board` metres along is its own shade, darker toward the foot."""
+    def tint(x, y, z):
+        n = math.floor((x + z) / board)
+        k = 0.82 + 0.3 * ((math.sin(n * 12.9898 + seed) * 43758.5453) % 1.0)
+        return (base[0] * k, base[1] * k, base[2] * k, 1.0)
     return tint
 
 

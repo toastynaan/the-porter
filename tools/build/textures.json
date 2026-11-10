@@ -67,5 +67,65 @@
     "size": 1024,
     "saturation": 0.22,
     "gain": 1.25
+  },
+  "stone_ashlar": {
+    "polyhaven": "medieval_blocks_03",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.95
+  },
+  "stone_mossy": {
+    "polyhaven": "mossy_stone_wall",
+    "size": 1024,
+    "saturation": 0.55,
+    "gain": 1.0
+  },
+  "brick_old": {
+    "polyhaven": "medieval_red_brick",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 0.85
+  },
+  "plaster_ochre": {
+    "polyhaven": "yellow_plaster",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.95
+  },
+  "plaster_clay": {
+    "polyhaven": "clay_plaster",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.9
+  },
+  "plaster_worn": {
+    "polyhaven": "worn_plaster_wall",
+    "size": 1024,
+    "saturation": 0.4,
+    "gain": 1.0
+  },
+  "wood_boards": {
+    "polyhaven": "weathered_planks",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.9
+  },
+  "wood_silver": {
+    "polyhaven": "rough_wood",
+    "size": 1024,
+    "saturation": 0.4,
+    "gain": 0.9
+  },
+  "roof_mossy": {
+    "polyhaven": "roof_tiles_14",
+    "size": 1024,
+    "saturation": 0.55,
+    "gain": 0.95
+  },
+  "roof_plain": {
+    "polyhaven": "clay_roof_tiles_03",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.8
   }
 }
