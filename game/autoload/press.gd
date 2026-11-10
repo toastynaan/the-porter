@@ -5,6 +5,9 @@ extends Node
 ## and opened the talk again as it closed.
 ## Handlers that act on a press ask fresh() (or fresh_key() for a plain key):
 ## a press counts once, and it must be let go before it counts again.
+## A mouse button doesn't repeat, so every click is its own press and always
+## counts: it doesn't wait on the button being seen to come up (in the
+## embedded window that could be missed, and the next clicks did nothing).
 
 ## Per action (or keycode): let go of since its last press.
 var _up := {}
@@ -30,6 +33,10 @@ func fresh(event: InputEvent, action: StringName) -> bool:
 		return _answer[action]
 	if not event.is_action_pressed(action):
 		return false
+	if event is InputEventMouseButton:
+		_asked[action] = event
+		_answer[action] = true
+		return true
 	return _count(action, event)
 
 

@@ -70,12 +70,12 @@ const HIDE_TIME := 0.7
 ## Talking: degrees the view narrows, seconds to turn to their face, and
 ## seconds it stays on them before it's his again.
 const TALK_ZOOM := 22.0
-const TALK_TURN_TIME := 0.45
+const TALK_TURN_TIME := 0.9
 const TALK_HOLD := 1.2
 ## Seconds it follows something a talk points him at (a cart going by).
 const TALK_WATCH := 3.6
-## Pixels of mouse movement in one go that take his view off their face early.
-const TALK_LET_GO := 3.0
+## Pixels of mouse movement, added up, that take his view off their face early.
+const TALK_LET_GO := 24.0
 
 ## Tests and scripted moments drive the player through these instead of the
 ## keyboard: x right, y forward, as from Input.get_vector().
@@ -130,6 +130,8 @@ var _talk_glance := false
 var _talk_tween: Tween
 ## What a talk has pointed his eyes at; they follow it while the glance lasts.
 var _talk_watch: Node3D
+## How far the mouse has pulled against the glance.
+var _talk_pull := 0.0
 ## He has let go of the move keys since the talk began.
 var _talk_still := false
 ## The heading of what he rides, last frame.
@@ -162,9 +164,12 @@ func busy() -> bool:
 func _unhandled_input(event: InputEvent) -> void:
 	var motion := event as InputEventMouseMotion
 	if motion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		if _can_look():
-			if _talk_glance and motion.relative.length() >= TALK_LET_GO:
+		if _talk_glance:
+			# Pulling the mouse takes his view back, even as it is still turning.
+			_talk_pull += motion.relative.length()
+			if _talk_pull >= TALK_LET_GO:
 				_let_go_of_face()
+		if _can_look():
 			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
 	elif Press.fresh(event, &"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
@@ -193,14 +198,14 @@ func _process(delta: float) -> void:
 	if _talk_glance and is_instance_valid(_talk_watch):
 		# His eyes follow what the talk is about.
 		var to := _talk_watch.global_position - camera.global_position
-		var k := 1.0 - exp(-8.0 * delta)
+		var k := 1.0 - exp(-4.5 * delta)
 		rotation.y = lerp_angle(rotation.y, atan2(-to.x, -to.z), k)
 		head.rotation.x = lerp_angle(head.rotation.x, clampf(atan2(to.y, Vector2(to.x, to.z).length()),
 				-deg_to_rad(PITCH_LIMIT), deg_to_rad(PITCH_LIMIT)), k)
 	var stick := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+	if _talk_glance and stick.length() > 0.3:
+		_let_go_of_face()
 	if stick.length() > 0.0 and _can_look():
-		if _talk_glance and stick.length() > 0.3:
-			_let_go_of_face()
 		_look(_turn(stick * STICK_SPEED * delta))
 
 
@@ -327,6 +332,7 @@ func start_talk(at: Vector3, watch: Node3D = null) -> void:
 	running = false
 	_talk_turning = true
 	_talk_glance = true
+	_talk_pull = 0.0
 	_talk_watch = watch
 	if _talk_tween:
 		_talk_tween.kill()
@@ -348,6 +354,7 @@ func start_talk(at: Vector3, watch: Node3D = null) -> void:
 
 ## His view comes off their face before its time: he looked away.
 func _let_go_of_face() -> void:
+	_talk_turning = false
 	_talk_glance = false
 	_talk_watch = null
 	if _talk_tween:

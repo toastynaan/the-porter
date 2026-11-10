@@ -7,7 +7,8 @@ script = ExtResource("1_convo")
 id = &"n0_traveller_road"
 text = "# DRAFT
 # The traveller beside the porter on the carter's wagon, night 0: a wool merchant from Colchester, bound for Cheapside, inside the walls.
-# He turns to the porter himself as the wagon sets off (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
+# He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
+# One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.
 # He says nothing of the abbey until the cart with the body goes by (traveller.tres). The carter's Whoa cuts this talk short, with no parting line.
 # After the cart (talked_n0_traveller) he has told what he knows, and points the porter to the Keys.
 == start
@@ -23,7 +24,7 @@ Traveller: Evening, brother. Bound for the city, are you?
 == porter [set n0_road_porter]
 Traveller: The porter? At the abbey in the lane, by the Cross Keys?
 Traveller: (He looks at you a moment longer than he needs to.) Well. Somebody has to keep the gate.
--> end
+-> topics
 
 == quiet
 Traveller: Not one for talk. Suit yourself, brother. It's a cold way to Aldgate.
@@ -31,6 +32,7 @@ Traveller: Not one for talk. Suit yourself, brother. It's a cold way to Aldgate.
 
 == again
 -> after [if talked_n0_traveller]
+-> spent [if n0_road_porter] [if n0_road_trade] [if n0_road_carter]
 -> still
 
 == still
@@ -45,11 +47,15 @@ Traveller: Brother?
 == trade [set n0_road_trade]
 Traveller: Cheapside, with wool. I buy it cheap in Colchester and sell it dear in London.
 Traveller: Every toll on the road robs me in between.
--> end
+-> topics
 
 == carter [set n0_road_carter]
 Traveller: They shut the city gates at the curfew bell. Be on the wrong side and you sleep in the ditch.
 Traveller: He doesn't care to sleep in a ditch. Not this month.
+-> topics
+
+== spent
+Traveller: (He pulls his hood closer.) Save your breath, brother. It's a cold way to Aldgate yet.
 -> end
 
 == after

@@ -88,8 +88,8 @@ Each duty's lamp is its `lamp` export. Set `open_way` off on a duty to leave its
 | Incense | +25 over 8 s, and at least enough to reach Dose 50; Dose doesn't fall below 50 for the rest of the night | doc +25; floor of 50 is the M0 default |
 | The stranger becomes the dead brother | Dose 50 (he changes only while you aren't looking) | mine: the tier where cultists start rendering as demons |
 | Night 3's starting Dose, from the nights before | 30 | mine (my M4 recommendation; waiting on you) |
-| Talking: the view narrows, turns to their face in | 22° (70° to 48°), 0.45 s | mine |
-| Talking: the view stays on their face, then is his | 1.2 s, then 0.45 s to widen; looking away lets go at once (after the run) | mine |
+| Talking: the view narrows, turns to their face in | 22° (70° to 48°), 0.9 s | mine |
+| Talking: the view stays on their face, then is his | 1.2 s, then 0.9 s to widen; looking away lets go at once (after the run) | mine |
 | Walter's place under the porch | 0.3 m north of the middle of the gate, so the grille's centre stile isn't across his face | mine |
 | Waking pace | 180 s per in-game hour | mechanics (*mine*), for the run's 30–40 minute nights |
 | Dozing pace | 2 s per in-game hour | mine |

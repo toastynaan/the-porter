@@ -60,7 +60,7 @@ const OWN_MIN_SECONDS := 1.5
 ## A line uncovered with less than this left to run ends instead.
 const BLINK := 0.6
 ## Seconds a choice is up before `interact` answers it.
-const CHOICE_DELAY := 0.4
+const CHOICE_DELAY := 0.3
 ## A beat's choice with no line of its own keeps the line that ended within
 ## this many milliseconds up over it.
 const PROMPT_LINGER := 300
