@@ -11,3 +11,5 @@ art/_review/*
 !art/_review/.gdignore
 # Textures as downloaded: tools/build/tex_fetch.py fetches them again
 art/_src/
+# Playtest screen recordings: far over GitHub's 100 MB limit
+docs/*.mov
