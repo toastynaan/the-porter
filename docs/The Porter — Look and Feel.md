@@ -2,7 +2,7 @@
 
 Nov 6, 2026 · @Pahul
 
-**Changes, Nov 10 2026:** the first real assets (the road in's fields: `docs/prologue.md`, "The look of the road in"; how they're made: `docs/assets.md`). The sky is no longer one flat colour by day and dusk; found textures may be downloaded from CC0 libraries (Poly Haven, ambientCG), each logged in `art/credits.csv`.
+**Changes, Nov 10 2026:** the first real assets (the road in's fields: `docs/prologue.md`, "The look of the road in"; how they're made: `docs/assets.md`). The sky is no longer one flat colour by day and dusk; found textures may be downloaded from CC0 libraries (Poly Haven, ambientCG), each logged in `art/credits.csv`. Then the wall, Aldgate and the street inside it (`docs/prologue.md`, "second pass"): on night 0 a cold break in the cloud stands behind the city, so it reads against the sky.
 
 **Changes, Nov 8 2026:** an almost-no HUD (thin outlines on usable things, a faint marker over what the current duty needs); how deaths are shown; the Hungry Saint's look on night 6; the Cross Keys inn, drunkenness, daytime and the squints for the night-0 prologue. See `docs/full-game-run.md`.
 

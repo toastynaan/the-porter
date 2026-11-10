@@ -13,3 +13,4 @@ art/_review/*
 art/_src/
 # Playtest screen recordings: far over GitHub's 100 MB limit
 docs/*.mov
+__pycache__/

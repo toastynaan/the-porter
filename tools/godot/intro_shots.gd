@@ -22,6 +22,20 @@ const SHOTS := [
 	{"name": "the_wagon_from_the_verge", "along": 42.0, "hour": 16.6, "cam": Vector3(4.5, 1.5, -5.0), "at": Vector3(0.0, 1.1, -1.4)},
 	{"name": "the_wagon_from_behind", "along": 42.0, "hour": 16.6, "cam": Vector3(-1.5, 1.9, 5.5), "at": Vector3(0.0, 1.2, -1.0)},
 	{"name": "the_road_from_above", "along": 52.0, "hour": 16.55, "cam": Vector3(-14.0, 16.0, 30.0), "at": Vector3(2.0, 0.0, -16.0)},
+	# The wall and Aldgate. `eye` is a camera of the tool's own at a place in the world.
+	{"name": "the_city_ahead", "along": 62.0, "hour": 16.7, "dir": Vector3(1.0, 0.07, -0.12)},
+	{"name": "aldgate_coming", "along": 97.0, "hour": 16.88, "dir": Vector3(1.0, 0.16, -0.08)},
+	{"name": "aldgate_at_the_stop", "along": 110.5, "hour": 16.92, "dir": Vector3(1.0, 0.42, -0.2)},
+	{"name": "the_warden_side", "along": 110.5, "hour": 16.92, "dir": Vector3(0.8, 0.12, -1.0)},
+	{"name": "the_ditch", "along": 104.0, "hour": 16.9, "dir": Vector3(0.45, -0.12, 1.0)},
+	{"name": "under_the_arch", "along": 119.5, "hour": 16.95, "dir": Vector3(-1.0, 0.08, 0.02)},
+	{"name": "aldgate_behind", "along": 131.0, "hour": 16.98, "dir": Vector3(-1.0, 0.3, 0.0)},
+	{"name": "the_street_in", "along": 127.0, "hour": 16.98, "dir": Vector3(1.0, 0.12, 0.0)},
+	{"name": "the_street_behind", "along": 152.0, "hour": 17.05, "dir": Vector3(-1.0, 0.14, 0.0)},
+	{"name": "aldgate_from_the_verge", "along": 100.0, "hour": 16.88, "eye": Vector3(-141.0, 1.7, 38.5), "at": Vector3(-118.0, 7.5, 47.0)},
+	{"name": "the_wall_northward", "along": 100.0, "hour": 16.88, "eye": Vector3(-137.0, 2.0, 60.0), "at": Vector3(-119.0, 6.0, 10.0)},
+	{"name": "aldgate_from_the_fields", "along": 60.0, "hour": 16.75, "eye": Vector3(-178.0, 2.2, 30.0), "at": Vector3(-118.0, 9.0, 47.0)},
+	{"name": "aldgate_from_inside", "along": 140.0, "hour": 17.0, "eye": Vector3(-104.0, 1.7, 47.6), "at": Vector3(-118.0, 6.0, 47.0)},
 ]
 
 var _n := 0
@@ -72,6 +86,17 @@ func _ready() -> void:
 		GameState.hour = float(shot["hour"])
 		Talk.reset()
 		await get_tree().create_timer(0.7).timeout
+		if shot.has("eye"):
+			var free := Camera3D.new()
+			free.fov = 60.0
+			night.add_child(free)
+			free.global_position = shot["eye"]
+			free.look_at(shot["at"] as Vector3)
+			free.current = true
+			await _shot(String(shot["name"]))
+			p.camera.current = true
+			free.queue_free()
+			continue
 		if shot.has("cam"):
 			# In the wagon's own space (its front is -Z).
 			var wagon := night.get_node(^"Wagon") as Node3D

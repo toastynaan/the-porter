@@ -12,6 +12,11 @@ const LIT := preload("res://game/world/materials/window_lit.tres")
 	set(value):
 		lit_windows = value
 		_light()
+## What a lit pane is made of (left empty: the plain glow).
+@export var lit_material: Material:
+	set(value):
+		lit_material = value
+		_light()
 
 
 func _ready() -> void:
@@ -21,7 +26,8 @@ func _ready() -> void:
 func _light() -> void:
 	if not is_inside_tree():
 		return
-	for child in get_children():
+	# The panes are the house's own children, or inside its model.
+	for child in find_children("*", "MeshInstance3D", true, false):
 		var pane := child as MeshInstance3D
-		if pane and (pane.name.begins_with("Window") or pane.name.begins_with("Door")):
-			pane.material_override = LIT if lit_windows.has(pane.name) else null
+		if pane.name.begins_with("Window") or pane.name.begins_with("Door"):
+			pane.material_override = (lit_material if lit_material else LIT) if lit_windows.has(pane.name) else null

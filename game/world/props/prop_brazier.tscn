@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_brazier.glb" id="model"]
+[ext_resource type="Script" path="res://game/world/props/brazier.gd" id="brazier_gd"]
+
+[sub_resource type="StandardMaterial3D" id="spark_mat"]
+shading_mode = 0
+albedo_color = Color(1, 0.62, 0.22, 1)
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="spark"]
+material = SubResource("spark_mat")
+size = Vector2(0.022, 0.022)
+
+[sub_resource type="Gradient" id="fade"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.7, 0.5, 1, 0.4, 0.1, 0.05, 0)
+
+[node name="Brazier" type="Node3D"]
+script = ExtResource("brazier_gd")
+editor_description = "A watch fire: an iron fire basket on three legs, 1.2 m to the rim (tools/build/prop_brazier.py), its flames, its sparks, and its light, which throws shadows."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
+light_color = Color(1, 0.6, 0.3, 1)
+light_energy = 3.2
+shadow_enabled = true
+shadow_bias = 0.08
+omni_range = 13.0
+omni_attenuation = 1.3
+
+[node name="Sparks" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+cast_shadow = 0
+amount = 16
+lifetime = 2.2
+randomness = 0.6
+mesh = SubResource("spark")
+emission_shape = 1
+emission_sphere_radius = 0.18
+direction = Vector3(0, 1, 0)
+spread = 22.0
+gravity = Vector3(0.25, 0.5, 0)
+initial_velocity_min = 0.7
+initial_velocity_max = 1.9
+color_ramp = SubResource("fade")

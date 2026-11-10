@@ -21,6 +21,10 @@ extends Node
 @export var day_sky := 0.8
 @export var day_ambient := 0.8
 @export var day_sun := 0.4
+## A cold break in the cloud low on one side of the sky while there is
+## daylight (night 0: behind the city). How bright (0: none), and which way.
+@export var sky_break := 0.0
+@export var sky_break_toward := Vector3(1.0, 0.0, 0.0)
 
 ## 1 in daylight, 0 at night.
 var light := 0.0
@@ -68,6 +72,8 @@ func _apply() -> void:
 	if _sky:
 		_sky.set_shader_parameter(&"light", light)
 		_sky.set_shader_parameter(&"glow_dir", -toward)
+		_sky.set_shader_parameter(&"break_strength", sky_break)
+		_sky.set_shader_parameter(&"break_dir", sky_break_toward)
 	var dark := light < 0.5
 	if street_lanterns and dark != _lanterns_lit:
 		_lanterns_lit = dark

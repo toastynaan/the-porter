@@ -925,7 +925,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -59.67, 4.3, 44.02)
 cast_shadow = 0
 mesh = SubResource("M11")
 
-[node name="FarEnd" type="StaticBody3D" parent="Houses/BendNorth"]
+[node name="FarEnd" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -72.5, 0, 47)
 script = ExtResource("block")
 size = Vector3(2, 8, 7)
@@ -1136,322 +1136,322 @@ shape = 1
 [node name="Skyline" type="Node3D" parent="."]
 editor_description = "The city beyond: silhouettes only, no collision or shadows. Cheap; can be merged into one mesh later."
 
-[node name="Block0" type="MeshInstance3D" parent="Skyline"]
+[node name="Block0" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -82.6, 4.806, -68.72)
 cast_shadow = 0
 mesh = SubResource("M13")
 
-[node name="Roof0" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof0" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -82.6, 11.21, -68.72)
 cast_shadow = 0
 mesh = SubResource("M14")
 
-[node name="Block1" type="MeshInstance3D" parent="Skyline"]
+[node name="Block1" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -83.69, 3.358, -58.88)
 cast_shadow = 0
 mesh = SubResource("M15")
 
-[node name="Roof1" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof1" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -83.69, 8.317, -58.88)
 cast_shadow = 0
 mesh = SubResource("M16")
 
-[node name="Block2" type="MeshInstance3D" parent="Skyline"]
+[node name="Block2" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -80.58, 4.931, -50.26)
 cast_shadow = 0
 mesh = SubResource("M17")
 
-[node name="Roof2" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof2" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -80.58, 11.46, -50.26)
 cast_shadow = 0
 mesh = SubResource("M18")
 
-[node name="Block3" type="MeshInstance3D" parent="Skyline"]
+[node name="Block3" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -83.3, 3.999, -42.35)
 cast_shadow = 0
 mesh = SubResource("M19")
 
-[node name="Roof3" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof3" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -83.3, 9.598, -42.35)
 cast_shadow = 0
 mesh = SubResource("M20")
 
-[node name="Block4" type="MeshInstance3D" parent="Skyline"]
+[node name="Block4" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -76.57, 4.057, -36.15)
 cast_shadow = 0
 mesh = SubResource("M21")
 
-[node name="Roof4" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof4" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -76.57, 9.713, -36.15)
 cast_shadow = 0
 mesh = SubResource("M22")
 
-[node name="Block5" type="MeshInstance3D" parent="Skyline"]
+[node name="Block5" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -80.31, 3.305, -26.64)
 cast_shadow = 0
 mesh = SubResource("M23")
 
-[node name="Roof5" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof5" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -80.31, 8.21, -26.64)
 cast_shadow = 0
 mesh = SubResource("M24")
 
-[node name="Block6" type="MeshInstance3D" parent="Skyline"]
+[node name="Block6" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -83.22, 3.888, -22.28)
 cast_shadow = 0
 mesh = SubResource("M25")
 
-[node name="Roof6" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof6" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -83.22, 9.376, -22.28)
 cast_shadow = 0
 mesh = SubResource("M26")
 
-[node name="Block7" type="MeshInstance3D" parent="Skyline"]
+[node name="Block7" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -73.14, 4.301, -15.11)
 cast_shadow = 0
 mesh = SubResource("M27")
 
-[node name="Roof7" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof7" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -73.14, 10.2, -15.11)
 cast_shadow = 0
 mesh = SubResource("M28")
 
-[node name="Block8" type="MeshInstance3D" parent="Skyline"]
+[node name="Block8" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -76.95, 3.946, -6.111)
 cast_shadow = 0
 mesh = SubResource("M29")
 
-[node name="Roof8" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof8" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -76.95, 9.492, -6.111)
 cast_shadow = 0
 mesh = SubResource("M30")
 
-[node name="Block9" type="MeshInstance3D" parent="Skyline"]
+[node name="Block9" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -77.38, 4.895, 0.7467)
 cast_shadow = 0
 mesh = SubResource("M31")
 
-[node name="Roof9" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof9" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -77.38, 11.39, 0.7467)
 cast_shadow = 0
 mesh = SubResource("M32")
 
-[node name="Block10" type="MeshInstance3D" parent="Skyline"]
+[node name="Block10" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -80.35, 3.393, 9.863)
 cast_shadow = 0
 mesh = SubResource("M33")
 
-[node name="Roof10" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof10" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -80.35, 8.386, 9.863)
 cast_shadow = 0
 mesh = SubResource("M34")
 
-[node name="Block11" type="MeshInstance3D" parent="Skyline"]
+[node name="Block11" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -74.31, 4.271, 18.23)
 cast_shadow = 0
 mesh = SubResource("M35")
 
-[node name="Roof11" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof11" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -74.31, 10.14, 18.23)
 cast_shadow = 0
 mesh = SubResource("M36")
 
-[node name="Block12" type="MeshInstance3D" parent="Skyline"]
+[node name="Block12" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -74.53, 3.983, 24.97)
 cast_shadow = 0
 mesh = SubResource("M37")
 
-[node name="Roof12" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof12" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -74.53, 9.567, 24.97)
 cast_shadow = 0
 mesh = SubResource("M38")
 
-[node name="Block13" type="MeshInstance3D" parent="Skyline"]
+[node name="Block13" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -83.36, 3.142, 31.87)
 cast_shadow = 0
 mesh = SubResource("M39")
 
-[node name="Roof13" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof13" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -83.36, 7.883, 31.87)
 cast_shadow = 0
 mesh = SubResource("M40")
 
-[node name="Block14" type="MeshInstance3D" parent="Skyline"]
+[node name="Block14" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -79.72, 4.175, 39.26)
 cast_shadow = 0
 mesh = SubResource("M41")
 
-[node name="Roof14" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof14" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -79.72, 9.949, 39.26)
 cast_shadow = 0
 mesh = SubResource("M42")
 
-[node name="Block16" type="MeshInstance3D" parent="Skyline"]
+[node name="Block16" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -72.69, 4.702, 57.59)
 cast_shadow = 0
 mesh = SubResource("M45")
 
-[node name="Roof16" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof16" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -72.69, 11, 57.59)
 cast_shadow = 0
 mesh = SubResource("M46")
 
-[node name="Block17" type="MeshInstance3D" parent="Skyline"]
+[node name="Block17" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -81.66, 3.368, 63.24)
 cast_shadow = 0
 mesh = SubResource("M47")
 
-[node name="Roof17" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof17" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -81.66, 8.336, 63.24)
 cast_shadow = 0
 mesh = SubResource("M48")
 
-[node name="Block18" type="MeshInstance3D" parent="Skyline"]
+[node name="Block18" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -106.5, 3.707, -66.89)
 cast_shadow = 0
 mesh = SubResource("M49")
 
-[node name="Roof18" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof18" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -106.5, 9.015, -66.89)
 cast_shadow = 0
 mesh = SubResource("M50")
 
-[node name="Block19" type="MeshInstance3D" parent="Skyline"]
+[node name="Block19" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.15, 5.858, -59.76)
 cast_shadow = 0
 mesh = SubResource("M51")
 
-[node name="Roof19" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof19" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.15, 13.32, -59.76)
 cast_shadow = 0
 mesh = SubResource("M52")
 
-[node name="Block20" type="MeshInstance3D" parent="Skyline"]
+[node name="Block20" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -99.25, 5.263, -48.04)
 cast_shadow = 0
 mesh = SubResource("M53")
 
-[node name="Roof20" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof20" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -99.25, 12.13, -48.04)
 cast_shadow = 0
 mesh = SubResource("M54")
 
-[node name="Block21" type="MeshInstance3D" parent="Skyline"]
+[node name="Block21" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -95.53, 5.826, -38.94)
 cast_shadow = 0
 mesh = SubResource("M55")
 
-[node name="Roof21" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof21" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -95.53, 13.25, -38.94)
 cast_shadow = 0
 mesh = SubResource("M56")
 
-[node name="Block22" type="MeshInstance3D" parent="Skyline"]
+[node name="Block22" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -99.64, 4.901, -29.92)
 cast_shadow = 0
 mesh = SubResource("M57")
 
-[node name="Roof22" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof22" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -99.64, 11.4, -29.92)
 cast_shadow = 0
 mesh = SubResource("M58")
 
-[node name="Block23" type="MeshInstance3D" parent="Skyline"]
+[node name="Block23" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -105.2, 5.348, -21.82)
 cast_shadow = 0
 mesh = SubResource("M59")
 
-[node name="Roof23" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof23" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -105.2, 12.3, -21.82)
 cast_shadow = 0
 mesh = SubResource("M60")
 
-[node name="Block24" type="MeshInstance3D" parent="Skyline"]
+[node name="Block24" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -99.77, 3.619, -14.2)
 cast_shadow = 0
 mesh = SubResource("M61")
 
-[node name="Roof24" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof24" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -99.77, 8.838, -14.2)
 cast_shadow = 0
 mesh = SubResource("M62")
 
-[node name="Block25" type="MeshInstance3D" parent="Skyline"]
+[node name="Block25" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -104.7, 4.55, -5.971)
 cast_shadow = 0
 mesh = SubResource("M63")
 
-[node name="Roof25" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof25" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -104.7, 10.7, -5.971)
 cast_shadow = 0
 mesh = SubResource("M64")
 
-[node name="Block26" type="MeshInstance3D" parent="Skyline"]
+[node name="Block26" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.81, 3.529, 0.1939)
 cast_shadow = 0
 mesh = SubResource("M65")
 
-[node name="Roof26" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof26" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.81, 8.658, 0.1939)
 cast_shadow = 0
 mesh = SubResource("M66")
 
-[node name="Block27" type="MeshInstance3D" parent="Skyline"]
+[node name="Block27" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -105.3, 5.163, 12.46)
 cast_shadow = 0
 mesh = SubResource("M67")
 
-[node name="Roof27" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof27" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -105.3, 11.93, 12.46)
 cast_shadow = 0
 mesh = SubResource("M68")
 
-[node name="Block28" type="MeshInstance3D" parent="Skyline"]
+[node name="Block28" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -102.8, 5.207, 20.35)
 cast_shadow = 0
 mesh = SubResource("M69")
 
-[node name="Roof28" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof28" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -102.8, 12.01, 20.35)
 cast_shadow = 0
 mesh = SubResource("M70")
 
-[node name="Block29" type="MeshInstance3D" parent="Skyline"]
+[node name="Block29" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -106.1, 3.752, 26.86)
 cast_shadow = 0
 mesh = SubResource("M71")
 
-[node name="Roof29" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof29" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -106.1, 9.104, 26.86)
 cast_shadow = 0
 mesh = SubResource("M72")
 
-[node name="Block30" type="MeshInstance3D" parent="Skyline"]
+[node name="Block30" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -106.3, 5.698, 35.37)
 cast_shadow = 0
 mesh = SubResource("M73")
 
-[node name="Roof30" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof30" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -106.3, 13, 35.37)
 cast_shadow = 0
 mesh = SubResource("M74")
 
-[node name="Block32" type="MeshInstance3D" parent="Skyline"]
+[node name="Block32" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.85, 4.919, 55.01)
 cast_shadow = 0
 mesh = SubResource("M77")
 
-[node name="Roof32" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof32" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -96.85, 11.44, 55.01)
 cast_shadow = 0
 mesh = SubResource("M78")
 
-[node name="Block33" type="MeshInstance3D" parent="Skyline"]
+[node name="Block33" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -99.29, 5.125, 61.91)
 cast_shadow = 0
 mesh = SubResource("M79")
 
-[node name="Roof33" type="MeshInstance3D" parent="Skyline"]
+[node name="Roof33" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(6.123e-17, 0, -1, 0, 1, 0, 1, 0, 6.123e-17, -99.29, 11.85, 61.91)
 cast_shadow = 0
 mesh = SubResource("M80")
@@ -1646,22 +1646,22 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 107.9, 10.17, 60.4)
 cast_shadow = 0
 mesh = SubResource("M170")
 
-[node name="Tower1" type="MeshInstance3D" parent="Skyline"]
+[node name="Tower1" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -110, 9, -55)
 cast_shadow = 0
 mesh = SubResource("M173")
 
-[node name="Spire1" type="MeshInstance3D" parent="Skyline"]
+[node name="Spire1" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -110, 26, -55)
 cast_shadow = 0
 mesh = SubResource("M174")
 
-[node name="Tower2" type="MeshInstance3D" parent="Skyline"]
+[node name="Tower2" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -85, 8, 70)
 cast_shadow = 0
 mesh = SubResource("M175")
 
-[node name="Spire2" type="MeshInstance3D" parent="Skyline"]
+[node name="Spire2" type="MeshInstance3D" parent="Skyline" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -85, 23, 70)
 cast_shadow = 0
 mesh = SubResource("M176")

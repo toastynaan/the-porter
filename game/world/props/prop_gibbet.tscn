@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_gibbet.glb" id="model"]
+[ext_resource type="Script" path="res://game/world/props/sway.gd" id="sway_gd"]
+
+[node name="Gibbet" type="Node3D"]
+script = ExtResource("sway_gd")
+editor_description = "A gibbet: a timber arm fixed to a wall at the origin, reaching 2.3 m out along -Z, and an iron cage hung under its end with a body in it (tools/build/prop_gibbet.py). The cage swings and turns a little."
+
+[node name="Model" parent="." instance=ExtResource("model")]

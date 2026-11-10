@@ -61,6 +61,8 @@ editor_description = "The road in begins in the last grey daylight, brighter tha
 day_sky = 1.0
 day_ambient = 1.5
 day_sun = 0.7
+sky_break = 2.2
+sky_break_toward = Vector3(1, 0, -0.08)
 
 [node name="Cat" parent="."]
 editor_description = "The abbey's cat keeps to the abbey tonight: the porter isn't in it."

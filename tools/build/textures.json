@@ -43,5 +43,29 @@
     "size": 512,
     "saturation": 0.5,
     "gain": 0.85
+  },
+  "stone_rubble": {
+    "polyhaven": "castle_wall_varriation",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 0.9
+  },
+  "roof_tiles": {
+    "polyhaven": "roof_09",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 0.9
+  },
+  "cobbles": {
+    "polyhaven": "cobblestone_05",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.85
+  },
+  "plaster_daub": {
+    "polyhaven": "worn_mossy_plasterwall",
+    "size": 1024,
+    "saturation": 0.22,
+    "gain": 1.25
   }
 }

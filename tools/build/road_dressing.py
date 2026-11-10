@@ -30,7 +30,8 @@ TREES = [
     ("elm", -296.0, 96.0, 1.2), ("oak", -262.0, 104.0, 1.1), ("elm", -234.0, 118.0, 1.0), ("elm", -330.0, 6.0, 1.1),
     # Between the chapel and the wall.
     ("pollard", -168.0, 40.5, 1.0), ("pollard", -161.5, 40.7, 0.85), ("oak", -151.0, 27.5, 1.3), ("thorn", -146.0, 54.8, 1.0),
-    ("elm", -138.0, 38.6, 1.0), ("thorn", -133.5, 55.0, 0.9), ("elm", -129.0, 56.5, 0.9), ("pollard", -126.0, 40.6, 0.9),
+    ("elm", -138.0, 38.6, 1.0), ("thorn", -141.5, 55.0, 0.9), ("elm", -136.8, 57.4, 0.9), ("pollard", -136.0, 40.3, 0.9),
+    # (None nearer: the city ditch lies under the wall.)
     ("elm", -160.0, 88.0, 1.1), ("elm", -141.0, 4.0, 1.15), ("oak", -176.0, -6.0, 1.0),
 ]
 
@@ -55,8 +56,9 @@ def main():
     kinds = sorted({t[0] for t in TREES})
     resources = "".join('[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_%s.tscn" id="tree_%s"]\n'
                         % (k, k) for k in kinds)
-    first_node = text.index("\n[node ")
-    text = text[:first_node].rstrip("\n") + "\n" + resources + text[first_node:]
+    # With the scene's other resources: they must all come before anything that uses them.
+    last = list(re.finditer(r"(?m)^\[ext_resource [^\n]*\n", text))[-1].end()
+    text = text[:last] + resources + text[last:]
     nodes = ('[node name="Trees" type="Node3D" parent="."]\n'
              'editor_description = "The trees along the road and out in the fields. tools/build/road_dressing.py stands them '
              'on the ground from its list; change the list, not these."\n\n')

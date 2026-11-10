@@ -27,6 +27,14 @@ uniform float glow_strength : hint_range(0.0, 8.0) = 2.2;
 // How high the strip reaches, and how far round the horizon it spreads.
 uniform float glow_height : hint_range(0.02, 0.6) = 0.14;
 uniform float glow_spread : hint_range(0.5, 8.0) = 2.6;
+// A second, cold break in the cloud low on another side of the sky (night 0:
+// behind the city, so its wall and towers stand black against something).
+// None unless Daylight asks for it.
+uniform vec3 break_dir = vec3(1.0, 0.0, 0.0);
+uniform float break_strength : hint_range(0.0, 4.0) = 0.0;
+uniform vec3 break_color : source_color = vec3(0.47, 0.54, 0.66);
+uniform float break_height : hint_range(0.02, 0.6) = 0.24;
+uniform float break_spread : hint_range(0.5, 12.0) = 5.0;
 uniform sampler2D clouds : repeat_enable, filter_linear_mipmap;
 // 0 clear, 1 a solid deck.
 uniform float cloud_cover : hint_range(0.0, 1.0) = 0.7;
@@ -73,6 +81,12 @@ void sky() {
 	strip *= mix(1.0, 0.22, bars);
 	vec3 lit_belly = glow_mid * cover * mid * 0.35;
 	vec3 dusk_sky = overcast * mix(1.0, 0.55, dusk) + (strip * glow_strength + lit_belly) * toward * dusk;
+	// The cold break: a ragged pale band, torn across by the same bars of cloud.
+	vec2 flat_b = normalize(break_dir.xz + vec2(1e-5));
+	float toward_b = pow(max(dot(flat_d, flat_b) * 0.5 + 0.5, 0.0), break_spread);
+	float rise_b = max(h, 0.0) / break_height;
+	float band = exp(-rise_b * rise_b * 1.6) * mix(1.0, 0.25, bars) * mix(1.0, 0.55, cover);
+	dusk_sky += break_color * band * break_strength * toward_b;
 
 	// Just below the horizon the sky carries on as it is at the rim: distant
 	// ground fades into it (the fog takes its colour from here). Further

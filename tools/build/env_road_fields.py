@@ -8,6 +8,8 @@ west to the foot of the city wall, in the road scene's own coordinates
   ridges, running away from the road to north and south. Rain stands in the
   furrows.
 - A low rise on the south side for the white chapel and its yard.
+- The city ditch along the foot of the wall, with water in it; the road
+  crosses on a causeway.
 
 The ground's shader (game/world/materials/real/ground_fields.gdshader) reads
 each vertex's colour as masks: red the road's mud, green grass, blue
@@ -43,6 +45,13 @@ YARD_HALF = (19.0, 10.0)
 YARD_LEVEL = 0.95
 # The wall's outer face, where the ground ends.
 WALL_X = -119.5
+# The city ditch along the foot of the wall: its middle, half its width, its
+# depth, and how far each side of the road's middle the causeway over it
+# reaches (tools/build/env_city_wall.py builds the causeway's sides).
+CITY_DITCH_X = -129.0
+CITY_DITCH_HALF = 5.6
+CITY_DITCH_DEPTH = 2.1
+CAUSEWAY_HALF = 4.5
 WEST_X = -372.0
 
 
@@ -92,6 +101,17 @@ def ground(x, z):
     water = smoothstep(0.55, 0.95, ditch)
     pools = smoothstep(0.5, 0.9, -phase) * strips * smoothstep(-0.45, 0.1, fbm(x, z, 0.035, 2, 7.0))
     water = max(water, pools * (0.55 if fallow else 1.0))
+    # The city ditch under the wall: wide, steep-sided, black water in the
+    # bottom. The road crosses it on a causeway.
+    if d > CAUSEWAY_HALF:
+        across = abs(x - CITY_DITCH_X) / CITY_DITCH_HALF
+        moat = 1.0 - smoothstep(0.3, 1.0, across)
+        if moat > 0.0:
+            h = lerp(h, -CITY_DITCH_DEPTH * (0.9 + 0.1 * fbm(x, z, 0.1, 2, 8.0)), moat)
+            grass = max(grass, moat)
+            ploughed *= 1.0 - moat
+            road *= 1.0 - moat
+            water = max(water * (1.0 - moat), smoothstep(0.6, 0.8, moat))
     return h, (road, grass, ploughed, water)
 
 

@@ -49,7 +49,7 @@ Three ales or more in a night (`drank`) and he wakes with a headache: a 0.9-pixe
 
 ## The look of the road in (first pass: the fields)
 
-The ride's first stretch, from the fields to the foot of the city wall, has its real look. The wall, Aldgate and the streets are still greybox, and so are the people.
+The ride's first stretch, from the fields to the foot of the city wall, has its real look. (The wall, Aldgate and the street inside it came next: the section after this one. The lane, its bends and the people are still greybox.)
 
 - **The sky** (`game/render/sky.gdshader`, driven by `Daylight`): at night the one flat moonlight blue the game has always had; with daylight in it, a low deck of rain cloud drifting over; at dusk a strip of last light along the horizon where the sun went down, pale straw at the rim going to slate, barred with cloud. It is a cold light: purple and rose are kept for the drugged look. Every night's dusk has it, not only this one.
 - **The sun sets behind the wagon.** The porter rides facing back, so he watches the day go over the road he came by, and the city ahead is the dark he is carried into. Night 0's dusk is brighter than the abbey's (`Daylight` on `night0.tscn`: sky 1.0, ambient 1.5, sun 0.7 *mine*), and is all but gone by the lane.
@@ -65,6 +65,28 @@ The ride's first stretch, from the fields to the foot of the city wall, has its 
 Fixed with it: the lane's skyline (the city's far roofs, towers and a second city wall, `Skyline` in `street.tscn`) stood across the road in: the wagon drove through four of its blocks, and its far rows stood in the fields outside Aldgate. Everything of it outside the wall, and the two blocks in the roadway, are gone; the city behind the wall keeps its nearer rows and two spires.
 
 `tools/intro_shots.sh` takes stills along the road to `art/_review/intro/` (the wagon stood at set places and hours); `tools/intro_film.sh` films the first half-minute as it plays.
+
+## The look of the road in (second pass: the wall, Aldgate, the street inside)
+
+From the foot of the wall to the end of the first street. The turn, the lane and the people are still greybox.
+
+- **The city against the sky.** The east is no longer one dark: a cold pale break lies low in the cloud behind the city while there is daylight left (`Daylight.sky_break` on `night0.tscn`, 2.2 *mine*; the sky shader's `break_*`), so the wall, the gate's towers, the church towers and St Paul's stand black against it. It is cold on purpose: the warm light is behind him, and every warm thing ahead is a fire or a candle. Other nights have no break.
+- **The wall** (`env_city_wall`): ragstone rubble laced with bands of old red tile, 8 m to its walk, battlements with merlons missing, half-round bastions, a stretch to the north fallen to half its height. One bastion has a candle in a slit.
+- **The city ditch** lies along the wall's foot, 11 m wide with black water in it (part of `env_road_fields`); the road crosses on a causeway between low parapets. Three trees that stood there moved back from it.
+- **Aldgate** (`env_aldgate`): two round towers and the gate between them, a pointed arch with the portcullis drawn up into it and the doors folded back, a vaulted passage 6.6 m long. Candles are lit in the chamber over the arch and in the south tower. The road through is 5.4 m wide (it was 6).
+- **The warden's post:** a watch fire in an iron basket at the foot of the south tower (`WatchFire`), throwing the wagon's shadow up the gate; a lantern on the north jamb by the warden, another in the passage.
+- **The gibbet** hangs from the south tower over the ditch, in the fire's light: a cage with what is left of a man. Nobody speaks of it. *(Mine: the city showing the road what it does. Take `Gibbet` out of `env_road.tscn` if it is too much.)*
+- **Rooks** wheel about the gate's towers.
+- **Looking back from under the arch** he sees the road he came by and the last light, framed by the vault and the portcullis's teeth. Then the gate is the tower at the end of the street behind him, its windows lit.
+- **The street inside** (`Houses` in `env_road.tscn`): sixteen timber houses close on both sides, no two alike standing together, an alley between two of them on each side. Upper floors jut out until the roofs nearly meet. Windows are lit behind horn and cloth, and now and then somebody passes behind one. Three houses carry a lantern on a bracket. The woman in the doorway stands in an open, lit door.
+- **The street's ground** (`env_aldgate_street`): wet cobbles, mud down the cart track, a kennel with water in it. Lanterns and windows lie along it in pieces.
+- **The skyline** (`env_city_skyline`): roofs and parish churches behind the wall; far off, more towers and St Paul's. The far ones are put away once the wagon nears the lane (`RoadCity.far_until_x`), so the abbey's sky on night 0 is the one it has every night.
+
+Fixed with it: a plaster wall stood across the road at the end of the street (the lane's `FarEnd`, which closes its bend on other nights), and the wagon drove through it. It and the lane's greybox city blocks west of the bend are in the group `road_in_hides`; `RoadCity` clears them on night 0.
+
+Known: rain falls through roofs (it always has: it is a box of drops over the camera), so it rains in the gate's passage.
+
+`tools/intro_shots.sh` now takes 25 stills, 13 of them of the wall, the gate and the street.
 
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 

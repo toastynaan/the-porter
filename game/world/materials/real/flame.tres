@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/flame.gdshader" id="1"]
+
+[sub_resource type="FastNoiseLite" id="n"]
+noise_type = 3
+seed = 8
+frequency = 0.018
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="tex"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("n")
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/noise = SubResource("tex")
