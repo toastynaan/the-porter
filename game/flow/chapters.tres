@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="ChapterList" format=3]
+[gd_resource type="Resource" script_class="ChapterList" format=3 uid="uid://d014xlri4obgu"]
 
-[ext_resource type="Script" path="res://game/flow/chapter.gd" id="1_chapter"]
-[ext_resource type="Script" path="res://game/flow/chapter_list.gd" id="2_list"]
+[ext_resource type="Script" uid="uid://cy6fgvh2h3uat" path="res://game/flow/chapter.gd" id="1_chapter"]
+[ext_resource type="Script" uid="uid://fhpqnygnyhjh" path="res://game/flow/chapter_list.gd" id="2_list"]
 
 [sub_resource type="Resource" id="Chapter_night0"]
 script = ExtResource("1_chapter")
 id = &"night0"
-night = 0
 heading = "The evening before"
 title = "The Cross Keys"
 card = "In the year of grace 1424, on the eve of Saint Martin, a young brother named Alric came into London by the carter's road, sent from a small house in the country to keep the gate of the abbey within the walls. The gate was barred when he came to it, and no one answered, and he lay that night at the Cross Keys across the lane."
@@ -15,7 +14,6 @@ scene = "res://game/nights/night0.tscn"
 [sub_resource type="Resource" id="Chapter_day1"]
 script = ExtResource("1_chapter")
 id = &"day1"
-night = 0
 heading = "The first day"
 title = "The Tour"
 card = "On the feast of Saint Martin the new porter was shown his duties by Brother Thomas, the infirmarian, and by Brother Anselm, who had kept the gate before him until his eyes failed. The day was grey. The chronicle records that nothing was amiss."

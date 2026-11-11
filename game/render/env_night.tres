@@ -1,6 +1,6 @@
-[gd_resource type="Environment" format=3]
+[gd_resource type="Environment" format=3 uid="uid://clh8vmvv03ejr"]
 
-[ext_resource type="Shader" path="res://game/render/sky.gdshader" id="1_sky"]
+[ext_resource type="Shader" uid="uid://bclachvkg6qup" path="res://game/render/sky.gdshader" id="1_sky"]
 
 [sub_resource type="FastNoiseLite" id="cloud_noise"]
 noise_type = 3
@@ -10,15 +10,31 @@ fractal_octaves = 4
 fractal_gain = 0.55
 
 [sub_resource type="NoiseTexture2D" id="clouds"]
-width = 512
-height = 512
+noise = SubResource("cloud_noise")
 seamless = true
 seamless_blend_skirt = 0.25
-noise = SubResource("cloud_noise")
 
 [sub_resource type="ShaderMaterial" id="sky_material"]
 shader = ExtResource("1_sky")
+shader_parameter/light = 0.0
+shader_parameter/glow_dir = Vector3(-1, 0, 0.2)
+shader_parameter/night_color = Color(0.431, 0.498, 0.588, 1)
+shader_parameter/cloud_dark = Color(0.13, 0.15, 0.2, 1)
+shader_parameter/cloud_light = Color(0.42, 0.47, 0.55, 1)
+shader_parameter/glow_rim = Color(0.95, 0.76, 0.47, 1)
+shader_parameter/glow_mid = Color(0.56, 0.5, 0.44, 1)
+shader_parameter/glow_high = Color(0.27, 0.3, 0.36, 1)
+shader_parameter/glow_strength = 2.2
+shader_parameter/glow_height = 0.14
+shader_parameter/glow_spread = 2.6
+shader_parameter/break_dir = Vector3(1, 0, 0)
+shader_parameter/break_strength = 0.0
+shader_parameter/break_color = Color(0.47, 0.54, 0.66, 1)
+shader_parameter/break_height = 0.24
+shader_parameter/break_spread = 5.0
 shader_parameter/clouds = SubResource("clouds")
+shader_parameter/cloud_cover = 0.7
+shader_parameter/wind = Vector2(0.0035, 0.0012)
 
 [sub_resource type="Sky" id="sky"]
 sky_material = SubResource("sky_material")
