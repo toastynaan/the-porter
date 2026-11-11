@@ -1,6 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://art/models/env_white_chapel.glb" id="model"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_yew_real.tscn" id="yew"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 
 [node name="WhiteChapel" instance=ExtResource("model")]
 editor_description = "The white chapel in the fields outside Aldgate (night 0, the road in), with its yard: a limewashed nave and chancel, a west tower, a north porch toward the road, a walled yard with a gate, a cross and graves. The nave runs along x, the tower at -x; the road side is -z. Built by tools/build/env_white_chapel.py. Candles are lit inside for Vespers: the lights here are what they throw out through the glass."
@@ -25,3 +27,15 @@ light_color = Color(1, 0.68, 0.38, 1)
 light_energy = 0.5
 omni_range = 5.0
 omni_attenuation = 1.4
+
+[node name="YewWest" parent="." instance=ExtResource("yew")]
+transform = Transform3D(0.8, 0, 0.6, 0, 1, 0, -0.6, 0, 0.8, -14.5, 0, -4.2)
+editor_description = "The churchyard's yews: the only green out here, and nearly black."
+
+[node name="YewEast" parent="." instance=ExtResource("yew")]
+transform = Transform3D(-0.52, 0, 0.72, 0, 0.85, 0, -0.72, 0, -0.52, 13.5, 0, 0.5)
+
+[node name="PorchLamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.05, 2.05, -5.75)
+editor_description = "A lantern hung in the porch for whoever comes late to Vespers."
+energy = 0.8

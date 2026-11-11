@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_field_shrine.glb" id="model"]
+[ext_resource type="Script" path="res://game/world/props/brazier.gd" id="brazier_gd"]
+
+[node name="Shrine" type="Node3D"]
+script = ExtResource("brazier_gd")
+energy = 0.55
+flicker = 0.5
+bare = true
+editor_description = "A wayside cross with a roofed niche, a candle burning in it (tools/build/prop_field.py). It faces -Z. Somebody still lights it."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.85, -0.3)
+light_color = Color(1, 0.7, 0.4, 1)
+light_energy = 0.55
+omni_range = 4.5
+omni_attenuation = 1.3

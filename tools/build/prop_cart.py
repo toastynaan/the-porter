@@ -95,6 +95,26 @@ def body(m):
     # A stake at the headboard's corner, with an arm to hang a lantern from.
     beam(m, (BED_HALF - 0.02, BED_TOP, z0 + 0.03), (BED_HALF + 0.02, BED_TOP + 1.12, z0 + 0.03), 0.05, 0.05, WORN)
     beam(m, (BED_HALF + 0.02, BED_TOP + 1.08, z0 + 0.03), (BED_HALF + 0.02, BED_TOP + 1.08, z0 + 0.2), 0.035, 0.035, DARK)
+    # Side boards inside the ladders' feet and a low tailboard, so nothing rolls off.
+    for side in (-1, 1):
+        x = side * (BED_HALF - 0.05)
+        m.box((min(x, x + side * 0.02), BED_TOP, z0 + 0.05), (max(x, x + side * 0.02), BED_TOP + 0.2, z1), "wood_cart", DARK, WORN, faces="xXzZY")
+    m.box((-BED_HALF + 0.03, BED_TOP, z1 - 0.02), (BED_HALF - 0.03, BED_TOP + 0.13, z1 + 0.01), "wood_cart", DARK, WORN, faces="xXzZY")
+    # Iron: straps over the frame's ends, a staple and ring at each corner for the ropes.
+    iron = (0.45, 0.44, 0.44, 1.0)
+    for x in (-BED_HALF + 0.1, BED_HALF - 0.1):
+        for z in (z0 - 0.05, z1 + 0.05):
+            m.box((x - 0.055, BED_TOP - 0.18, z - 0.012), (x + 0.055, BED_TOP - 0.04, z + 0.012), "iron_cart", iron)
+    # A bucket slung under the tail on a hook, and a coil of rope over the headboard's corner.
+    m.tube([(0.35, BED_TOP - 0.5, z1 - 0.2), (0.35, BED_TOP - 0.22, z1 - 0.2)], [0.11, 0.14], 7, "wood_cart", WORN, caps=True)
+    m.tube([(0.35, BED_TOP - 0.22, z1 - 0.2), (0.35, BED_TOP - 0.1, z1 - 0.2)], [0.012, 0.012], 3, "iron_cart", iron)
+    coil = [(-BED_HALF - 0.02 + 0.03 * math.cos(a), BED_TOP + 0.36 + 0.16 * math.sin(a), z0 + 0.0 + 0.16 * math.cos(a)) for a in
+            (math.tau * i / 8 for i in range(9))]
+    m.tube(coil, [0.022] * 9, 4, "sacking", (0.5, 0.46, 0.38, 1.0))
+    # Mud thrown up under the bed.
+    for side in (-1, 1):
+        m.poly([(side * (BED_HALF + 0.02), BED_TOP - 0.24, z0 + 0.4), (side * (BED_HALF + 0.02), BED_TOP - 0.24, z1), (side * (BED_HALF + 0.02), BED_TOP - 0.06, z1),
+                (side * (BED_HALF + 0.02), BED_TOP - 0.06, z0 + 0.4)], "wood_cart", [(0.2, 0.18, 0.15, 1.0)] * 2 + [(0.45, 0.42, 0.38, 1.0)] * 2, facing=(side, 0, 0))
     # A prop leg under the front, for when the horse is out of the shafts.
     beam(m, (0.0, BED_TOP - 0.2, z0 + 0.12), (0.0, 0.34, z0 - 0.08), 0.06, 0.06, DARK)
 
@@ -134,6 +154,44 @@ def wheel(name, x):
     return m.build(origin=(x, WHEEL_R, AXLE_Z))
 
 
+def load():
+    """What the carter is bringing in, amidships, clear of where anyone
+    sits: a chest, a cask, sacks, and a canvas roped over the lot."""
+    import random
+    import prop_street as ps
+    ps.BOARDS = ps.OAK = "wood_cart"
+    porter.reset(8)
+    m = porter.Mesh("Load")
+
+    class Lifted:
+        """Sets things down on the bed instead of the ground."""
+        def __getattr__(self, name):
+            return getattr(m, name)
+
+        def poly(self, pts, *a, **k):
+            return m.poly([(p[0], p[1] + BED_TOP, p[2]) for p in pts], *a, **k)
+
+        def tube(self, pts, *a, **k):
+            return m.tube([(p[0], p[1] + BED_TOP, p[2]) for p in pts], *a, **k)
+
+    up = Lifted()
+    ps.crate(up, (-0.12, 0.0, -0.62), (0.5, 0.36, -0.2), 0.08)
+    ps.barrel(up, -0.42, -0.42, r=0.19, h=0.46)
+    ps.sack(up, -0.3, 0.02, r=0.2, length=0.62, turn=0.35)
+    ps.sack(up, 0.28, 0.05, r=0.19, length=0.6, turn=-0.3)
+    ps.sack(up, 0.0, 0.0, y=0.2, r=0.18, length=0.55, turn=1.4, slump=0.5)
+    # The canvas: thrown over the chest's end and roped down.
+    cloth = (0.3, 0.28, 0.24, 1.0)
+    top = [(-0.2, 0.39, -0.66), (0.56, 0.38, -0.66), (0.58, 0.39, -0.16), (-0.18, 0.4, -0.14)]
+    m.poly([(p[0], p[1] + BED_TOP, p[2]) for p in top], "sacking", cloth, facing=(0, 1, 0))
+    for (a, b), n in ((((0.56, -0.66), (0.58, -0.16)), (1, 0, 0)), (((-0.2, -0.66), (0.56, -0.66)), (0, 0, -1))):
+        m.poly([(a[0], BED_TOP + 0.39, a[1]), (b[0], BED_TOP + 0.39, b[1]), (b[0] + n[0] * 0.05, BED_TOP + 0.06, b[1] + n[2] * 0.05),
+                (a[0] + n[0] * 0.05, BED_TOP + 0.12, a[1] + n[2] * 0.05)], "sacking", [cloth, cloth, (0.17, 0.16, 0.14, 1.0), (0.17, 0.16, 0.14, 1.0)], facing=n)
+    m.tube([(-0.2, BED_TOP + 0.41, -0.4), (0.58, BED_TOP + 0.4, -0.4), (0.66, BED_TOP + 0.03, -0.4)], [0.012, 0.012, 0.012], 3, "sacking", (0.5, 0.46, 0.38, 1.0))
+    m.build()
+    porter.export("prop_cart_load")
+
+
 def main():
     porter.reset(3)
     m = porter.Mesh("Cart")
@@ -142,6 +200,7 @@ def main():
     wheel("WheelL", -WHEEL_X)
     wheel("WheelR", WHEEL_X)
     porter.export("prop_cart")
+    load()
 
 
 if __name__ == "__main__":

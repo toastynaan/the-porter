@@ -47,6 +47,11 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
 "use_external/path": "res://game/world/materials/real/iron_cart.tres"
 },
+"sacking": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/sacking.tres",
+"use_external/path": "res://game/world/materials/real/sacking.tres"
+},
 "wood_cart": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/wood_cart.tres",

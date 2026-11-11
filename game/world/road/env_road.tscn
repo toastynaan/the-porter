@@ -3,15 +3,12 @@
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="PackedScene" path="res://art/models/env_road_fields.glb" id="fields"]
 [ext_resource type="PackedScene" path="res://art/models/env_road_backdrop.glb" id="backdrop"]
+[ext_resource type="PackedScene" path="res://art/models/env_road_growth.glb" id="growth"]
 [ext_resource type="PackedScene" path="res://game/world/road/env_white_chapel.tscn" id="chapel"]
 [ext_resource type="Script" path="res://game/world/road/road_air.gd" id="air"]
 [ext_resource type="Script" path="res://game/world/road/rooks.gd" id="rooks"]
 [ext_resource type="PackedScene" path="res://art/models/env_aldgate.glb" id="aldgate"]
 [ext_resource type="PackedScene" path="res://art/models/env_city_wall.glb" id="city_wall"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_elm.tscn" id="tree_elm"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_oak.tscn" id="tree_oak"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_pollard.tscn" id="tree_pollard"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_thorn.tscn" id="tree_thorn"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_a.tscn" id="ht_a"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_b.tscn" id="ht_b"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_c.tscn" id="ht_c"]
@@ -36,6 +33,22 @@
 [ext_resource type="PackedScene" path="res://art/models/prop_street_posts.glb" id="ps_posts"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_cresset.tscn" id="cresset"]
 [ext_resource type="Script" path="res://game/world/weather/drips.gd" id="drips_gd"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_elm.tscn" id="tree_elm"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_oak.tscn" id="tree_oak"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_pollard.tscn" id="tree_pollard"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_snag.tscn" id="tree_snag"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_tree_thorn.tscn" id="tree_thorn"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_bridge.glb" id="field_bridge"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_field_cot.tscn" id="field_cot"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_fence.glb" id="field_fence"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_gate.glb" id="field_gate"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_hedge.glb" id="field_hedge"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_field_mill.tscn" id="field_mill"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_rick.glb" id="field_rick"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_scarecrow.glb" id="field_scarecrow"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_field_shrine.tscn" id="field_shrine"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_stone.glb" id="field_stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_field_wreck.glb" id="field_wreck"]
 
 [sub_resource type="FastNoiseLite" id="mist_noise"]
 noise_type = 3
@@ -64,6 +77,9 @@ script = ExtResource("air")
 
 [node name="Fields" parent="." instance=ExtResource("fields")]
 editor_description = "The ground outside the wall: the road, its ditches, and the open fields in ridge and furrow (tools/build/env_road_fields.py). It is built in this scene's own coordinates, so it stays at the origin."
+
+[node name="Growth" parent="." instance=ExtResource("growth")]
+editor_description = "Dead grass, reeds and docks on the verges, the ditch banks and the fields (tools/build/env_road_growth.py). They bend in the wind."
 
 [node name="Backdrop" parent="." instance=ExtResource("backdrop")]
 editor_description = "The horizon of the fields: far woods and hedges round their edges (tools/build/env_road_backdrop.py). Built in this scene's own coordinates, so it stays at the origin."
@@ -386,6 +402,279 @@ transform = Transform3D(-0.4803, 0, -1.0449, 0, 1.1500, 0, 1.0449, 0, -0.4803, -
 
 [node name="Oak34" parent="Trees" instance=ExtResource("tree_oak")]
 transform = Transform3D(-0.9294, 0, 0.3690, 0, 1.0000, 0, -0.3690, 0, -0.9294, -176.00, 0.42, -6.00)
+
+[node name="Snag35" parent="Trees" instance=ExtResource("tree_snag")]
+transform = Transform3D(0.8692, 0, 0.6742, 0, 1.1000, 0, -0.6742, 0, 0.8692, -189.00, 0.45, 37.20)
+
+[node name="Snag36" parent="Trees" instance=ExtResource("tree_snag")]
+transform = Transform3D(-0.7021, 0, 0.5631, 0, 0.9000, 0, -0.5631, 0, -0.7021, -301.00, 0.65, 61.00)
+
+[node name="Snag37" parent="Trees" instance=ExtResource("tree_snag")]
+transform = Transform3D(-0.3227, 0, -0.9465, 0, 1.0000, 0, 0.9465, 0, -0.3227, -133.50, -0.18, 29.00)
+
+[node name="Snag38" parent="Trees" instance=ExtResource("tree_snag")]
+transform = Transform3D(-0.9116, 0, -0.7804, 0, 1.2000, 0, 0.7804, 0, -0.9116, -246.00, 0.48, 96.00)
+
+[node name="Thorn39" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(0.2205, 0, -0.8726, 0, 0.9000, 0, 0.8726, 0, 0.2205, -203.00, 0.29, 39.40)
+
+[node name="Thorn40" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.3384, 0, 0.9410, 0, 1.0000, 0, -0.9410, 0, -0.3384, -196.50, 0.61, 54.90)
+
+[node name="Pollard41" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.8774, 0, 0.4797, 0, 1.0000, 0, -0.4797, 0, -0.8774, -209.00, 0.09, 53.60)
+
+[node name="Thorn42" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.5236, 0, 0.6048, 0, 0.8000, 0, -0.6048, 0, -0.5236, -226.00, 0.43, 55.30)
+
+[node name="Thorn43" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.6242, 0, 0.9057, 0, 1.1000, 0, -0.9057, 0, -0.6242, -245.00, 0.51, 55.40)
+
+[node name="Pollard44" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.6726, 0, -0.7400, 0, 1.0000, 0, 0.7400, 0, 0.6726, -233.50, 0.13, 40.20)
+
+[node name="Thorn45" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.8854, 0, 0.4649, 0, 1.0000, 0, -0.4649, 0, -0.8854, -283.00, 0.34, 38.70)
+
+[node name="Thorn46" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.0223, 0, -0.8497, 0, 0.8500, 0, 0.8497, 0, -0.0223, -257.00, 0.34, 38.80)
+
+[node name="Pollard47" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.6234, 0, -0.7169, 0, 0.9500, 0, 0.7169, 0, 0.6234, -176.00, 0.10, 40.60)
+
+[node name="Thorn48" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.7847, 0, 0.4408, 0, 0.9000, 0, -0.4408, 0, -0.7847, -157.00, 0.14, 54.60)
+
+[node name="Pollard49" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.1288, 0, 0.8907, 0, 0.9000, 0, -0.8907, 0, -0.1288, -150.50, 0.07, 53.40)
+
+[node name="Thorn50" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.6814, 0, -0.4192, 0, 0.8000, 0, 0.4192, 0, -0.6814, -172.00, 0.25, 39.20)
+
+[node name="Pollard51" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(-0.4164, 0, -0.9092, 0, 1.0000, 0, 0.9092, 0, -0.4164, -131.50, -1.72, 58.00)
+
+[node name="Pollard52" parent="Trees" instance=ExtResource("tree_pollard")]
+transform = Transform3D(0.8609, 0, -0.2624, 0, 0.9000, 0, 0.2624, 0, 0.8609, -133.00, -0.56, 36.00)
+
+[node name="Thorn53" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.6877, 0, -0.7260, 0, 1.0000, 0, 0.7260, 0, -0.6877, -214.50, 0.51, 24.00)
+
+[node name="Thorn54" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.0549, 0, 0.8983, 0, 0.9000, 0, -0.8983, 0, -0.0549, -213.50, 0.35, 6.00)
+
+[node name="Thorn55" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(0.9939, 0, -0.1104, 0, 1.0000, 0, 0.1104, 0, 0.9939, -152.50, 0.21, 84.00)
+
+[node name="Thorn56" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.1200, 0, -0.8920, 0, 0.9000, 0, 0.8920, 0, -0.1200, -151.50, 0.24, 104.00)
+
+[node name="Thorn57" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(-0.9771, 0, 0.2129, 0, 1.0000, 0, -0.2129, 0, -0.9771, -276.50, 0.24, 18.00)
+
+[node name="Elm58" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(-0.4868, 0, -0.7570, 0, 0.9000, 0, 0.7570, 0, -0.4868, -228.00, 0.62, 14.00)
+
+[node name="Oak59" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(0.8517, 0, 0.2909, 0, 0.9000, 0, -0.2909, 0, 0.8517, -234.00, 0.25, 19.00)
+
+[node name="Thorn60" parent="Trees" instance=ExtResource("tree_thorn")]
+transform = Transform3D(1.1364, 0, -0.3854, 0, 1.2000, 0, 0.3854, 0, 1.1364, -224.00, 0.34, 20.00)
+
+[node name="Elm61" parent="Trees" instance=ExtResource("tree_elm")]
+transform = Transform3D(0.9908, 0, -0.1350, 0, 1.0000, 0, 0.1350, 0, 0.9908, -270.00, 0.42, 92.00)
+
+[node name="Oak62" parent="Trees" instance=ExtResource("tree_oak")]
+transform = Transform3D(-0.0021, 0, 0.8000, 0, 0.8000, 0, -0.8000, 0, -0.0021, -257.00, 0.88, 90.00)
+
+[node name="Dressing" type="Node3D" parent="."]
+editor_description = "Hedges, hurdles, gates, the cots and their ricks, the mill, the shrine, the scarecrows (tools/build/prop_field.py). tools/build/road_dressing.py stands them on the ground from its list; change the list, not these."
+
+[node name="Hedge0" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0011, 0, 1.0000, 0, -0.0011, 0, 1.0000, -297.25, 0.54, 55.29)
+
+[node name="Hedge1" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0011, 0, 1.0000, 0, 0.0011, 0, -1.0000, -287.75, 0.56, 55.28)
+
+[node name="Hedge2" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0011, 0, 1.0000, 0, 0.0011, 0, -1.0000, -268.75, 0.42, 55.27)
+
+[node name="Hedge3" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0011, 0, 1.0000, 0, -0.0011, 0, 1.0000, -259.25, 0.45, 55.26)
+
+[node name="Hedge4" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0011, 0, 1.0000, 0, 0.0011, 0, -1.0000, -249.75, 0.52, 55.24)
+
+[node name="Hedge5" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0011, 0, 1.0000, 0, -0.0011, 0, 1.0000, -240.25, 0.47, 55.23)
+
+[node name="Hedge6" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0011, 0, 1.0000, 0, -0.0011, 0, 1.0000, -221.25, 0.47, 55.22)
+
+[node name="Hedge7" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0011, 0, 1.0000, 0, 0.0011, 0, -1.0000, -211.75, 0.51, 55.21)
+
+[node name="Hedge8" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0017, 0, 1.0000, 0, -0.0017, 0, 1.0000, -291.17, 0.37, 38.69)
+
+[node name="Hedge9" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0017, 0, 1.0000, 0, 0.0017, 0, -1.0000, -281.50, 0.37, 38.68)
+
+[node name="Hedge10" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0017, 0, 1.0000, 0, -0.0017, 0, 1.0000, -271.83, 0.36, 38.66)
+
+[node name="Hedge11" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, 0.0017, 0, 1.0000, 0, -0.0017, 0, 1.0000, -252.50, 0.41, 38.62)
+
+[node name="Hedge12" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, -0.0017, 0, 1.0000, 0, 0.0017, 0, -1.0000, -242.83, 0.48, 38.61)
+
+[node name="Hedge13" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -214.00, 0.54, 31.75)
+
+[node name="Hedge14" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.51, 22.25)
+
+[node name="Hedge15" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -214.00, 0.43, 12.75)
+
+[node name="Hedge16" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.36, 3.25)
+
+[node name="Hedge17" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.23, -15.75)
+
+[node name="Hedge18" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -214.00, 0.18, -25.25)
+
+[node name="Hedge19" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -276.00, 0.28, 31.65)
+
+[node name="Hedge20" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -276.00, 0.23, 21.95)
+
+[node name="Hedge21" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -276.00, 0.31, 12.25)
+
+[node name="Hedge22" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -276.00, 0.33, 2.55)
+
+[node name="Hedge23" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, 0.0000, -276.00, 0.44, -7.15)
+
+[node name="Hedge24" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -152.00, 0.24, 63.46)
+
+[node name="Hedge25" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -152.00, 0.30, 73.38)
+
+[node name="Hedge26" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -152.00, 0.25, 83.29)
+
+[node name="Hedge27" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -152.00, 0.25, 103.12)
+
+[node name="Hedge28" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -152.00, 0.24, 113.04)
+
+[node name="Hedge29" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.61, 84.80)
+
+[node name="Hedge30" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -214.00, 0.58, 94.40)
+
+[node name="Hedge31" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.55, 104.00)
+
+[node name="Hedge32" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -214.00, 0.50, 113.60)
+
+[node name="Hedge33" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -214.00, 0.45, 123.20)
+
+[node name="Hedge34" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -338.00, 0.16, 60.80)
+
+[node name="Hedge35" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -338.00, 0.32, 70.40)
+
+[node name="Hedge36" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -338.00, 0.33, 80.00)
+
+[node name="Hedge37" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-0.0000, 0, 1.0000, 0, 1.0000, 0, -1.0000, 0, -0.0000, -338.00, 0.39, 89.60)
+
+[node name="Hedge38" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -338.00, 0.48, 99.20)
+
+[node name="Hedge39" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(1.0000, 0, -0.0026, 0, 1.0000, 0, 0.0026, 0, 1.0000, -195.25, 0.42, 38.91)
+
+[node name="Hedge40" parent="Dressing" instance=ExtResource("field_hedge")]
+transform = Transform3D(-1.0000, 0, 0.0026, 0, 1.0000, 0, -0.0026, 0, -1.0000, -166.75, 0.25, 38.99)
+
+[node name="Gate41" parent="Dressing" instance=ExtResource("field_gate")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -268.00, 0.35, 38.70)
+
+[node name="Gate42" parent="Dressing" instance=ExtResource("field_gate")]
+transform = Transform3D(-1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, -1.0000, -278.50, 0.51, 55.30)
+
+[node name="Fence43" parent="Dressing" instance=ExtResource("field_fence")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -146.50, 0.13, 39.60)
+
+[node name="Fence44" parent="Dressing" instance=ExtResource("field_fence")]
+transform = Transform3D(0.0000, 0, -1.0000, 0, 1.0000, 0, 1.0000, 0, 0.0000, -143.20, 0.20, 36.30)
+
+[node name="Fence45" parent="Dressing" instance=ExtResource("field_fence")]
+transform = Transform3D(-1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, -1.0000, -146.50, 0.16, 33.00)
+
+[node name="Fence46" parent="Dressing" instance=ExtResource("field_fence")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -258.00, 0.73, 73.00)
+
+[node name="Cot47" parent="Dressing" instance=ExtResource("field_cot")]
+transform = Transform3D(0.9945, 0, -0.1045, 0, 1.0000, 0, 0.1045, 0, 0.9945, -262.00, 0.76, 78.00)
+
+[node name="Rick48" parent="Dressing" instance=ExtResource("field_rick")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -252.50, 0.61, 80.50)
+
+[node name="Rick49" parent="Dressing" instance=ExtResource("field_rick")]
+transform = Transform3D(0.7660, 0, -0.6428, 0, 1.0000, 0, 0.6428, 0, 0.7660, -249.60, 0.88, 84.60)
+
+[node name="Rick50" parent="Dressing" instance=ExtResource("field_rick")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -238.00, 0.68, 24.50)
+
+[node name="Cot51" parent="Dressing" instance=ExtResource("field_cot")]
+transform = Transform3D(-0.9903, 0, -0.1392, 0, 1.0000, 0, 0.1392, 0, -0.9903, -206.00, 0.28, 0.00)
+
+[node name="Mill52" parent="Dressing" instance=ExtResource("field_mill")]
+transform = Transform3D(-0.2588, 0, -0.9659, 0, 1.0000, 0, 0.9659, 0, -0.2588, -326.00, 0.47, 16.00)
+
+[node name="Shrine53" parent="Dressing" instance=ExtResource("field_shrine")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -207.50, 0.09, 51.00)
+
+[node name="Stone54" parent="Dressing" instance=ExtResource("field_stone")]
+transform = Transform3D(0.9397, 0, -0.3420, 0, 1.0000, 0, 0.3420, 0, 0.9397, -171.00, 0.06, 43.30)
+
+[node name="Bridge55" parent="Dressing" instance=ExtResource("field_bridge")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -180.80, -0.38, 52.50)
+
+[node name="Wreck56" parent="Dressing" instance=ExtResource("field_wreck")]
+transform = Transform3D(-0.9397, 0, 0.3420, 0, 1.0000, 0, -0.3420, 0, -0.9397, -151.50, -0.25, 41.90)
+
+[node name="Bridge57" parent="Dressing" instance=ExtResource("field_bridge")]
+transform = Transform3D(1.0000, 0, -0.0000, 0, 1.0000, 0, 0.0000, 0, 1.0000, -268.00, -0.41, 41.50)
+
+[node name="Stone58" parent="Dressing" instance=ExtResource("field_stone")]
+transform = Transform3D(-0.9397, 0, 0.3420, 0, 1.0000, 0, -0.3420, 0, -0.9397, -258.00, 0.04, 50.60)
+
+[node name="Scarecrow59" parent="Dressing" instance=ExtResource("field_scarecrow")]
+transform = Transform3D(-0.1736, 0, -0.9848, 0, 1.0000, 0, 0.9848, 0, -0.1736, -197.00, 0.61, 29.00)
+
+[node name="Scarecrow60" parent="Dressing" instance=ExtResource("field_scarecrow")]
+transform = Transform3D(-0.3420, 0, 0.9397, 0, 1.0000, 0, -0.9397, 0, -0.3420, -247.00, 0.92, 67.00)
+
+[node name="Scarecrow61" parent="Dressing" instance=ExtResource("field_scarecrow")]
+transform = Transform3D(0.5000, 0, -0.8660, 0, 1.0000, 0, 0.8660, 0, 0.5000, -165.00, 0.52, 22.00)
 
 [node name="RidePath" type="Node3D" parent="."]
 editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."

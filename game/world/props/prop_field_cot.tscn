@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_field_cot.glb" id="model"]
+
+[node name="Cot" type="Node3D"]
+editor_description = "A field cottage, cob and thatch, 7 by 4.5 m, a lean-to at its east end (tools/build/prop_field.py). Its front faces -Z. One window is lit, and throws a little light on the ground before it."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="WindowLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 1.2, -1.0)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 0.7
+omni_range = 5.0
+omni_attenuation = 1.4

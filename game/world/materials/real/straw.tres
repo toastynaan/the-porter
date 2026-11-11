@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://art/tex/tex_grass_withered_col.jpg" id="1_col"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_grass_withered_nrm.jpg" id="2_nrm"]
+
+[resource]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.62, 0.54, 0.36, 1)
+albedo_texture = ExtResource("1_col")
+roughness = 0.9
+normal_enabled = true
+normal_scale = 1.4
+normal_texture = ExtResource("2_nrm")
+uv1_scale = Vector3(0.8, 0.8, 0.8)
+uv1_triplanar = true
+uv1_world_triplanar = true

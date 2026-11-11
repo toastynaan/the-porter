@@ -47,20 +47,30 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/grave_earth.tres",
 "use_external/path": "res://game/world/materials/real/grave_earth.tres"
 },
-"plaster_white": {
+"iron_cart": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/plaster_white.tres",
-"use_external/path": "res://game/world/materials/real/plaster_white.tres"
+"use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
+"use_external/path": "res://game/world/materials/real/iron_cart.tres"
+},
+"plaster_lime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/plaster_lime.tres",
+"use_external/path": "res://game/world/materials/real/plaster_lime.tres"
 },
 "roof_slates": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/roof_slates.tres",
 "use_external/path": "res://game/world/materials/real/roof_slates.tres"
 },
-"stone_blocks": {
+"stone_ashlar": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/stone_blocks.tres",
-"use_external/path": "res://game/world/materials/real/stone_blocks.tres"
+"use_external/fallback_path": "res://game/world/materials/real/stone_ashlar.tres",
+"use_external/path": "res://game/world/materials/real/stone_ashlar.tres"
+},
+"stone_rubble": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_rubble.tres",
+"use_external/path": "res://game/world/materials/real/stone_rubble.tres"
 },
 "window_candle": {
 "use_external/enabled": true,
@@ -71,6 +81,16 @@ _subresources={
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
 "use_external/path": "res://game/world/materials/real/window_dark.tres"
+},
+"wood_boards": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_boards.tres",
+"use_external/path": "res://game/world/materials/real/wood_boards.tres"
+},
+"wood_frame": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_frame.tres",
+"use_external/path": "res://game/world/materials/real/wood_frame.tres"
 },
 "wood_medieval": {
 "use_external/enabled": true,

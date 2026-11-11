@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_field_mill.glb" id="model"]
+[ext_resource type="Script" path="res://game/world/props/spin.gd" id="spin_gd"]
+
+[node name="Mill" type="Node3D"]
+script = ExtResource("spin_gd")
+editor_description = "A post mill on its trestle (tools/build/prop_field.py), its sails on its -Z face, turning slowly. Meant to be seen far off against the sky."
+
+[node name="Model" parent="." instance=ExtResource("model")]

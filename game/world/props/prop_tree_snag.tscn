@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_tree_snag.glb" id="model"]
+
+[node name="TreeSnag" instance=ExtResource("model")]
+editor_description = "Built by tools/build/prop_trees_bare.py. Only the trunk is solid."

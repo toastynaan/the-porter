@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" path="res://game/world/road/prop_cart.tscn" id="cart"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_horse.tscn" id="horse"]
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://art/models/prop_cart_load.glb" id="load"]
 
 [sub_resource type="BoxShape3D" id="Shape_floor"]
 size = Vector3(1.4, 0.06, 2.6)
@@ -11,6 +12,9 @@ size = Vector3(1.4, 0.06, 2.6)
 editor_description = "The carter's wagon the porter rides in on, night 0: a two-wheeled cart and its horse, a lantern on a pole by the carter. Seats at the back for the porter and the traveller (Seat, TravellerSeat), the carter at the front (CarterSeat). Faces -Z (the horse in front). Origin on the ground under the middle of the bed."
 
 [node name="Cart" parent="." instance=ExtResource("cart")]
+
+[node name="Load" parent="." instance=ExtResource("load")]
+editor_description = "What the carter is bringing in: a chest under a canvas, a cask, sacks (tools/build/prop_cart.py), amidships, clear of the three seats."
 
 [node name="Horse" parent="." instance=ExtResource("horse")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.95)

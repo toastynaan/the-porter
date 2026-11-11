@@ -118,6 +118,23 @@ The second pass read as one stone and one house, and its rain as a few white scr
 
 Still greybox: the turn, the lane, the people.
 
+## The look of the road in (fourth pass: the fields, the chapel, the trees, the wagon)
+
+The fields were bare beside the gate and the street. This pass fills them, and puts small lights out in the dark.
+
+- **Fixed: the chapel had no west wall.** The nave's west end was left open each side of the tower, so the inside of the roof showed. The porch's walls were also one-sided.
+- **The white chapel** is limewash over rubble now (`plaster_lime`: the wash has fallen in patches and moss climbs it). Added: a door ajar with candlelight in the gap, a lantern in the porch, a sanctus bell on the east gable, a cross on the tower, two yews in the yard, and south of the chancel a row of fresh mounds with no markers and one grave dug and left open with the spade in its heap *(mine: the autumn's dead, and nobody says of what)*.
+- **What grows** (`env_road_growth`): dead grass in tufts on the verges and ditch banks, reeds at the water in the ditches and thick along the city ditch, docks and thistles in the fields. It bends in the wind (`growth.gdshader`).
+- **Hedges** along the road in broken lengths and down the edges of the furlongs away from it, with gates in two of the gaps; a fold of wattle hurdles in the north field.
+- **People's places, each with a light or a shape:** a cot with one lit window and its hayricks south of the road, another far to the north; a post mill on the western rise with its sails turning, black against the last light; a wayside shrine by the road with a candle somebody still lights; three scarecrows *(mine)*.
+- **On the road:** a mile stone, planks over the ditch to the chapel's gate, a wrecked cart wheel on the verge.
+- **Trees:** 63, up from 35. New: dead oaks (`prop_tree_snag`), one by the road; more thorns and pollard willows down the ditches and in the hedges; two small copses. The elms carry rooks' nests.
+- **The wagon** carries a load amidships, clear of the three seats: a chest under a roped canvas, a cask, sacks. The cart itself gains side boards and a tailboard, iron straps, a bucket slung under the tail, a coil of rope, mud under the bed.
+
+Everything in the fields is stood on the ground by `tools/build/road_dressing.py` from its two lists (`TREES`, `DRESSING`): change the lists and run it, since it puts back anything moved by hand.
+
+**What it costs.** The grass is 42,000 triangles in five lengths of road. A length of hedge is 500, the mill 650, a cot 340. The trees are the heavy thing, as before: an elm is 10,000 triangles and an oak 9,000, and there are 26 of them; Godot's own mesh LODs thin the far ones.
+
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 
 Three, in the precinct wall along the lane: the porter's cell (z −6), the outer court's north (z 6) and south (z 14) *(mine)*. Each is a barred slit a hand's width by a forearm's height (0.18 × 0.5 m) at eye level, splayed to 0.4 m at both faces so an eye at the bars sees a sliver of the other side *(the splay is mine)*.

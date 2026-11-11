@@ -8,6 +8,11 @@ twigs. Four of them, each its own model:
     prop_tree_thorn    a wind-bent hawthorn, about 5 m
     prop_tree_pollard  a pollard willow by the ditch: a short thick trunk, a
                        knuckle of a head, a spray of straight shoots
+    prop_tree_snag     a dead oak: a great hollow trunk, three broken limbs
+    prop_tree_yew      a churchyard yew, about 7 m: the one evergreen, a
+                       dark mass on a short fluted trunk (material yew)
+
+The elm carries rooks' nests: dark lumps high in its forks.
 
 Trunks are 7-sided, twigs 3-sided. Only the trunk is solid (a "-colonly"
 post). Material: bark. Vertex colour darkens toward the twigs.
@@ -65,8 +70,10 @@ def grow(m, start, direction, length, radius, depth, kind):
         lean = UP * kind["reach"][min(depth, len(kind["reach"]) - 1)] + kind["wind"] * (0.02 * depth)
         d = (d + wander + lean).normalized()
         points.append(points[-1] + d * (length / steps))
+    if depth == kind.get("nest_at", -1):
+        FORKS.append(points[-1].copy())
     last = depth >= kind["depth"]
-    tip = radius * (0.12 if last else kind["taper"])
+    tip = radius * ((kind.get("stub", 0.12)) if last else kind["taper"])
     radii = [porter.lerp(radius, tip, i / steps) for i in range(steps + 1)]
     sides = kind["sides"][min(depth, len(kind["sides"]) - 1)]
     tube(m, points, radii, sides, porter.lerp(1.0, 0.55, depth / max(kind["depth"], 1)))
@@ -84,6 +91,27 @@ def grow(m, start, direction, length, radius, depth, kind):
         grow(m, points[i], child, length * random.uniform(*kind["shrink"]), radii[i] * kind["thin"], depth + 1, kind)
 
 
+FORKS = []
+
+
+def lump(m, at, radius, mat, shade, squash=0.7, sides=6):
+    """A rough ball: a nest, a mass of yew."""
+    rings = []
+    for i, t in enumerate((-1.0, -0.6, 0.0, 0.55, 1.0)):
+        r = radius * math.sqrt(max(1.0 - t * t, 0.0)) * random.uniform(0.85, 1.15)
+        ring = []
+        for s in range(sides):
+            a = math.tau * (s + 0.5 * (i % 2)) / sides
+            k = random.uniform(0.82, 1.18)
+            c = shade * (0.55 + 0.45 * (t * 0.5 + 0.5)) * random.uniform(0.85, 1.1)
+            ring.append(m.vert(at.x + math.cos(a) * r * k, at.y + t * radius * squash, at.z + math.sin(a) * r * k, (c, c, c, 1.0)))
+        rings.append(ring)
+    for a, b in zip(rings, rings[1:]):
+        for s in range(sides):
+            u = (s + 1) % sides
+            m.face((a[s], a[u], b[u], b[s]), mat)
+
+
 def post(name, radius, height):
     """What you walk into: the trunk as a box."""
     c = porter.Mesh(name + "-colonly")
@@ -94,13 +122,16 @@ def post(name, radius, height):
 KINDS = {
     "elm": {"height": 5.2, "radius": 0.34, "depth": 5, "step": 0.55, "wander": 0.09, "taper": 0.62, "thin": 0.62,
             "reach": [0.05, 0.16, 0.2, 0.16, 0.1, 0.06], "wind": Vector((0.3, 0.0, 0.1)), "sides": [7, 6, 5, 4, 3, 3],
-            "forks": [5, 4, 3, 3, 2], "from": 0.4, "angle": (20, 44), "shrink": (0.64, 0.84), "seed": 11},
+            "forks": [5, 4, 3, 3, 2], "from": 0.4, "angle": (20, 44), "shrink": (0.64, 0.84), "seed": 11, "nest_at": 2, "nests": 5},
     "oak": {"height": 3.1, "radius": 0.52, "depth": 5, "step": 0.5, "wander": 0.2, "taper": 0.66, "thin": 0.66,
             "reach": [0.0, 0.02, 0.05, 0.08, 0.06, 0.04], "wind": Vector((0.2, 0.0, 0.0)), "sides": [7, 6, 5, 4, 3, 3],
             "forks": [5, 4, 3, 3, 2], "from": 0.3, "angle": (36, 70), "shrink": (0.7, 0.9), "seed": 23},
     "thorn": {"height": 1.5, "radius": 0.16, "depth": 4, "step": 0.3, "wander": 0.24, "taper": 0.6, "thin": 0.64,
               "reach": [0.0, 0.03, 0.04, 0.02, 0.0], "wind": Vector((2.2, -0.3, 0.6)), "sides": [6, 5, 4, 3, 3],
               "forks": [3, 3, 3, 3], "from": 0.25, "angle": (30, 65), "shrink": (0.6, 0.82), "seed": 37},
+    "snag": {"height": 4.6, "radius": 0.7, "depth": 2, "step": 0.6, "wander": 0.12, "taper": 0.8, "thin": 0.55,
+             "reach": [0.0, -0.02, -0.04], "wind": Vector((0.2, 0.0, 0.1)), "sides": [9, 6, 4],
+             "forks": [3, 2], "from": 0.45, "angle": (45, 80), "shrink": (0.45, 0.7), "seed": 71, "stub": 0.55},
 }
 
 
@@ -111,7 +142,10 @@ def tree(kind_name):
     lean = Vector((random.uniform(-0.06, 0.06), 1.0, random.uniform(-0.06, 0.06)))
     # The root flare: a short thick foot under the trunk.
     tube(m, [Vector((0.0, -0.2, 0.0)), Vector((0.0, 0.25, 0.0))], [kind["radius"] * 1.6, kind["radius"] * 1.05], 7, 1.0)
+    FORKS.clear()
     grow(m, Vector((0.0, 0.2, 0.0)), lean, kind["height"], kind["radius"], 0, kind)
+    for at in random.sample(FORKS, min(kind.get("nests", 0), len(FORKS))):
+        lump(m, at + UP * 0.15, random.uniform(0.3, 0.45), "bark", 0.35, squash=0.55)
     m.build(smooth=True)
     post("Trunk", kind["radius"] * 0.9, kind["height"])
     porter.export("prop_tree_" + kind_name)
@@ -140,6 +174,28 @@ def pollard():
     porter.export("prop_tree_pollard")
 
 
+def yew():
+    porter.reset(83)
+    m = porter.Mesh("Tree")
+    # A short trunk, thick and fluted, forking low.
+    tube(m, [Vector((0.0, -0.2, 0.0)), Vector((0.0, 0.5, 0.0)), Vector((0.05, 1.5, 0.0)), Vector((0.1, 2.4, 0.05))], [0.75, 0.5, 0.42, 0.38], 8, 0.8)
+    for a, tilt in ((0.4, 0.5), (2.6, 0.6), (4.5, 0.45)):
+        d = Vector((math.cos(a) * tilt, 1.0, math.sin(a) * tilt)).normalized()
+        tube(m, [Vector((0.08, 2.0, 0.03)), Vector((0.08, 2.0, 0.03)) + d * 1.4, Vector((0.08, 2.0, 0.03)) + d * 2.6], [0.26, 0.18, 0.1], 5, 0.7)
+    # The mass of it: dark lumps heaped into a broad, ragged cone.
+    for i in range(26):
+        k = i / 25.0
+        a = i * 2.4
+        spread = (1.0 - k) * 2.6 + 0.3
+        at = Vector((math.cos(a) * spread * random.uniform(0.5, 1.0), 2.2 + k * 4.6 + random.uniform(-0.3, 0.3),
+                     math.sin(a) * spread * random.uniform(0.5, 1.0)))
+        lump(m, at, random.uniform(1.0, 1.55) * (1.0 - 0.4 * k), "yew", 1.0, squash=0.75, sides=7)
+    m.build(smooth=False)
+    post("Trunk", 0.5, 2.4)
+    porter.export("prop_tree_yew")
+
+
 for name in KINDS:
     tree(name)
 pollard()
+yew()
