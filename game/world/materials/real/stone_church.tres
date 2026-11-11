@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/surface.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://game/world/materials/real/blotch_noise.tres" id="2_blotch"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_cloister_col.jpg" id="3_a"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_cloister_nrm.jpg" id="4_an"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_mossy_col.jpg" id="5_b"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_stone_mossy_nrm.jpg" id="6_bn"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/col_a = ExtResource("3_a")
+shader_parameter/nrm_a = ExtResource("4_an")
+shader_parameter/col_b = ExtResource("5_b")
+shader_parameter/nrm_b = ExtResource("6_bn")
+shader_parameter/blotch = ExtResource("2_blotch")
+shader_parameter/size_a = 1.9
+shader_parameter/tint_a = Color(0.86, 0.82, 0.74, 1)
+shader_parameter/size_b = 3.0
+shader_parameter/tint_b = Color(0.7, 0.7, 0.62, 1)
+shader_parameter/patches = 0.0
+shader_parameter/patch_size = 4.0
+shader_parameter/uneven = 0.14
+shader_parameter/moss = 0.0
+shader_parameter/moss_height = 1.4
+shader_parameter/wet = 0.0
+shader_parameter/rough = 0.92
+shader_parameter/rough_wet = 0.5
+shader_parameter/bump = 1.1

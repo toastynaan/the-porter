@@ -30,7 +30,22 @@ The greybox plan is unchanged and is still what stops people and what the navmes
 - **`GardenSolids`** (in `nav_source`, not drawn): the basin, the two yews, the hawthorn's trunk and the twelve buttresses. The box edging isn't solid: it is stepped through. The navmesh was rebaked.
 - The `Cloister` marker moved from the garth's middle, where the basin now stands, to (0, 0, -13) on the south walk of the garden.
 
-Still greybox and seen from the garth: the church's and the east range's upper walls and all the roofs. `tools/cloister_shots.sh` renders it.
+Still greybox and seen from the garth: the east range's upper walls and the ranges' roofs. `tools/cloister_shots.sh` renders it.
+
+## The church as built (first look, 2026-11-11)
+
+The greybox plan is unchanged and is still what stops people and what the navmesh is baked from (no solid was added, so the navmesh is the cloister's bake). Its walls, floors and roofs above ground are hidden (each wall piece not visible, the floor and roof blocks `shown = false`) under one model, `Stonework` (`env_church`, `tools/build/env_church.py`). The crypt is still greybox.
+
+- **Height.** The nave and choir are one vessel, 48 m by 7.2 m inside and 16 m to the vault's crown (the greybox ceiling was at 8). The vault springs at 11.2 m from triple shafts that stand on the floor at every bay. The walls run to 17.2 m outside, with a lead roof behind the parapet (ridge 21.8 m). The `NaveRoof` block moved up to 17.2 m.
+- **Walls inside.** Twelve bays of 4 m. A blind arcade along the foot (not in the bays with a door or the night stairs), a string course at 5 m, and above it a two-light traceried window in every bay, sill at 5.6 m and head at 13.4 m. Where the east range stands against the south wall (x over 12) the windows are short and high (sill 9.4 m). The east wall has one window of four lights over the altar; the west wall a blind arch over the tower door.
+- **Windows.** Leaded glass that gives off a faint cold light, with iron saddle bars. They are drawn only: the greybox's small window holes are what hunters see through.
+- **Floor.** Worn flags in the nave; tiles of two colours in the choir, east of the rood beam at x = 8. The crypt stair's well is open as before.
+- **Fittings (drawn only, all above head height).** A rood beam with a cross at 6.6 m; three iron coronas hung at 5.2 m, their candles unlit. No light was added: the sanctuary lamp is still the church's only one.
+- **Tower.** The bell room is skinned to its timber ceiling at 12 m. Outside the tower rises to 30 m: buttresses, a louvred belfry stage, battlements and a short lead spire. Nothing above 12 m can be entered.
+- **Outside.** Buttresses between the bays on the north and east; on the south they start above the cloister and the ranges. The south wall's outer face starts above the cloister's roof (4.8 m) and above the east range (8.6 m).
+- The night stairs, their landing and the crypt stair keep their greybox shapes and take the flags' material.
+
+Still greybox: the stalls, altar, tomb, bell and doors (props), and the crypt. `tools/church_shots.sh` renders it; stills marked `lit` use a lamp the game doesn't have, to judge the stonework.
 
 ## Routes
 
@@ -50,7 +65,7 @@ Other markers: `WakePoint` in the infirmary (where the first capture wakes you),
 
 ## Dimensions used
 
-Walls 4 × 4 × 0.8 m; doorways 0.9 × 2.0 m; the gate 3.0 × 3.4 m; the church and the east range two pieces high (8 m); the tower three (12 m); upper floors at 4 m; the crypt and passage 4 m below ground. Stairs climb 4 m over 6 m.
+Walls 4 × 4 × 0.8 m; doorways 0.9 × 2.0 m; the gate 3.0 × 3.4 m; the church and the east range two pieces high (8 m) and the tower three (12 m) as collision (the church as drawn is 16 m inside and the tower 30 m outside); upper floors at 4 m; the crypt and passage 4 m below ground. Stairs climb 4 m over 6 m.
 
 ## Editing
 
