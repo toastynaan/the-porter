@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_stool.glb" id="model_stool"]
 
-[node name="Stool" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a three-legged stool, 0.45 m high."
+[node name="Stool" type="Node3D"]
+editor_description = "A three-legged stool (tools/build/prop_abbey_court.py), 0.45 m high. The hidden Block is its collision."
 
 [node name="Stool" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.4, 0.45, 0.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_stool")]

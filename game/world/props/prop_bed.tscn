@@ -2,12 +2,27 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/wool.tres" id="wool"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bed.glb" id="model_bed"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bed_slept.glb" id="model_bed_slept"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bed_bare.glb" id="model_bed_bare"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="Bed" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a low straw bed on a wooden frame, 0.9 x 2 m, 0.45 m high. Its head is at -Z."
+[node name="Bed" type="Node3D"]
+editor_description = "A low straw bed in a board frame (tools/build/prop_abbey_court.py), 0.9 x 2 m, 0.45 m high. Its head is at -Z. Model shows one of three by where the bed stands: made, left in a hurry, stripped (set its pick to choose). The hidden Block is its collision."
 
 [node name="Bed" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.9, 0.45, 2)
 material = ExtResource("wool")
 surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(3, 2, 1)
+
+[node name="Bed" parent="Model" instance=ExtResource("model_bed")]
+
+[node name="BedSlept" parent="Model" instance=ExtResource("model_bed_slept")]
+
+[node name="BedBare" parent="Model" instance=ExtResource("model_bed_bare")]

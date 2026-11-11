@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_abbot_seat.glb" id="model_abbot_seat"]
+
+[node name="AbbotSeat" type="Node3D"]
+editor_description = "The abbot's seat in the chapter house (tools/build/prop_abbey_church.py): a high-backed oak chair on a step, 0.94 m wide (along X), 0.9 m deep, 1.8 m to its gable. Its back (+Z) goes against the wall; it faces -Z. The hidden Blocks are its collision."
+
+[node name="AbbotSeatStep" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.94, 0.14, 0.9)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="AbbotSeatBox" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.14)
+script = ExtResource("block")
+size = Vector3(0.94, 0.93, 0.62)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="AbbotSeatBack" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.405)
+script = ExtResource("block")
+size = Vector3(0.94, 1.52, 0.09)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_abbot_seat")]

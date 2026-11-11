@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bench.glb" id="model_bench"]
 
-[node name="Bench" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a plank bench, 2 m long (along X), 0.45 m high. Sat on facing -Z."
+[node name="Bench" type="Node3D"]
+editor_description = "A plank bench on two slab ends (tools/build/prop_abbey_court.py), 2 m long (along X), 0.45 m high. Sat on facing -Z. The hidden Block is its collision."
 
 [node name="Bench" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(2, 0.45, 0.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_bench")]

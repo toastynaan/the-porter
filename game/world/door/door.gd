@@ -27,6 +27,11 @@ const CLOSE_SOUND := preload("res://art/sfx/sfx_door_close.wav")
 const LOCKED_SOUND := preload("res://art/sfx/sfx_door_locked.wav")
 const KEY_SOUND := preload("res://art/sfx/sfx_key_turn.wav")
 const LEAF_THICKNESS := 0.08
+## The oak leaf's model (tools/build/prop_abbey_court.py), made 0.88 x 1.98 m:
+## planks on ledges, strap hinges. It holds a leaf hinged on the left and
+## one hinged on the right.
+const LEAF_MODEL := "res://art/models/prop_door.glb"
+const LEAF_MODEL_SIZE := Vector2(0.88, 1.98)
 
 @export var size := Vector2(0.9, 2.0):
 	set(value):
@@ -64,6 +69,7 @@ var is_open := false
 
 var _leaf: AnimatableBody3D
 var _mesh: MeshInstance3D
+var _model: Node3D
 var _shape: CollisionShape3D
 var _opening: CollisionShape3D
 var _audio: AudioStreamPlayer3D
@@ -113,6 +119,19 @@ func _build() -> void:
 		_mesh.mesh = _grille_mesh(box.size)
 	else:
 		_mesh.mesh = box
+	# A plain oak door shows the model; a grille, or a hidden door in its
+	# wall's material, shows the mesh made here.
+	var oak := not grille and material == null
+	_mesh.visible = not oak
+	if oak and _model == null:
+		_model = (load(LEAF_MODEL) as PackedScene).instantiate()
+		_leaf.add_child(_model)
+	if _model:
+		_model.visible = oak
+		_model.position = _mesh.position
+		_model.scale = Vector3(box.size.x / LEAF_MODEL_SIZE.x, box.size.y / LEAF_MODEL_SIZE.y, 1.0)
+		(_model.get_node(^"HingeLeft") as Node3D).visible = not hinge_right
+		(_model.get_node(^"HingeRight") as Node3D).visible = hinge_right
 	var bs := BoxShape3D.new()
 	bs.size = box.size
 	_shape.shape = bs

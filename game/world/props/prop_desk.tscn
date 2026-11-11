@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_desk.glb" id="model_desk"]
 
-[node name="Desk" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a writing desk, 1.2 x 0.6 m, 0.8 m high. You stand at its -Z side."
+[node name="Desk" type="Node3D"]
+editor_description = "The porter's desk (tools/build/prop_abbey_court.py), 1.2 x 0.6 m, 0.8 m high, open to the side he stands at (-Z), with his ink, quill and tallies. The hidden Block is its collision."
 
 [node name="Desk" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.2, 0.8, 0.6)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_desk")]

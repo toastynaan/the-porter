@@ -109,32 +109,36 @@ look = ExtResource("chr_pilgrim")
 editor_description = "What the crypt passage holds on night 6: the costumes, the purses, the relic (a pig's bone) and the cult's book."
 
 [node name="Mask" type="Node3D" parent="Proof"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0, -3.85, -30.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1, -4.0, -31.56)
 script = ExtResource("pickup_gd")
+size = Vector3(1.7, 1.9, 0.6)
 id = &"n6_mask"
 item = &"mask"
 
 [node name="Look" parent="Proof/Mask" instance=ExtResource("prop_cult_masks")]
 
 [node name="HoofSoles" type="Node3D" parent="Proof"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, -3.85, -30.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, -4.0, -31.15)
 script = ExtResource("pickup_gd")
+size = Vector3(0.45, 0.3, 0.45)
 id = &"n6_hoofs"
 item = &"hoof_soles"
 
 [node name="Look" parent="Proof/HoofSoles" instance=ExtResource("prop_hoof_soles")]
 
 [node name="Purse" type="Node3D" parent="Proof"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, -3.85, -30.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, -4.0, -28.75)
 script = ExtResource("pickup_gd")
+size = Vector3(0.8, 0.6, 0.6)
 id = &"n6_purse"
 item = &"purse"
 
 [node name="Look" parent="Proof/Purse" instance=ExtResource("prop_purse_chest")]
 
 [node name="Relic" type="Node3D" parent="Proof"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.0, -3.0, -31.3)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.7, -4.0, -32.0)
 script = ExtResource("pickup_gd")
+size = Vector3(0.3, 0.4, 0.3)
 id = &"n6_relic"
 item = &"pig_bone"
 

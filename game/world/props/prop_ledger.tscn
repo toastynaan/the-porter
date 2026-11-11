@@ -2,11 +2,15 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/bone.tres" id="bone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_ledger.glb" id="model_ledger"]
 
-[node name="Ledger" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the gate ledger, a bound book lying shut, 0.25 x 0.35 m."
+[node name="Ledger" type="Node3D"]
+editor_description = "The gate ledger (tools/build/prop_abbey_court.py), a bound book lying shut, 0.25 x 0.35 m, its spine at -X. The hidden Block is its collision."
 
 [node name="Ledger" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.25, 0.06, 0.35)
 material = ExtResource("bone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_ledger")]

@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_mortar.glb" id="model_mortar"]
 
-[node name="Mortar" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Thomas's stone mortar, 0.2 m across."
+[node name="Mortar" type="Node3D"]
+editor_description = "The infirmarer's stone mortar (tools/build/prop_abbey_stores.py): 0.2 m across, its pestle standing in it, cut sprigs lying beside it on the table (toward -X and -Z). The hidden Block is its collision."
 
 [node name="Mortar" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.2, 0.15, 0.2)
 shape = 2
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_mortar")]

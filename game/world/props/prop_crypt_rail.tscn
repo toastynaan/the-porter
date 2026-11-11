@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_crypt_rail.glb" id="model_crypt_rail"]
+
+[node name="CryptRail" type="Node3D"]
+editor_description = "The oak rail round the crypt stair's well in the church floor (tools/build/prop_abbey_church.py): posts, a hand rail 0.9 m high, square balusters. The model is in the church scene's own space, so it goes at that scene's origin; church.tscn's Blocks CryptRailS and CryptRailE are its collision."
+
+[node name="Model" parent="." instance=ExtResource("model_crypt_rail")]

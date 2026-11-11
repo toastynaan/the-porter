@@ -2,12 +2,36 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/mud.tres" id="mud"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave.glb" id="model_grave"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave_plain.glb" id="model_grave_plain"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave_sunk.glb" id="model_grave_sunk"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave_slab.glb" id="model_grave_slab"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave_stone.glb" id="model_grave_stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grave_fresh.glb" id="model_grave_fresh"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="Grave" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a grave mound, 2 m long (along X, head to the west), 0.9 m wide."
+[node name="Grave" type="Node3D"]
+editor_description = "A grave, 2 m long (along X, head to the west), 0.9 m wide (tools/build/prop_abbey_yard.py). Model shows one of six by where the grave stands: a grassed mound with a wooden cross leaning; a mound with no marker; a sunken one, its turf fallen in; a stone slab cracked across; a small discoid stone, tilted; fresh dark earth (set its pick to choose). The hidden Block is its collision: the mound only, walked over; the markers are not solid."
 
 [node name="Grave" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(2, 0.3, 0.9)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(4, 5, 3, 2, 3, 1)
+
+[node name="Grave" parent="Model" instance=ExtResource("model_grave")]
+
+[node name="GravePlain" parent="Model" instance=ExtResource("model_grave_plain")]
+
+[node name="GraveSunk" parent="Model" instance=ExtResource("model_grave_sunk")]
+
+[node name="GraveSlab" parent="Model" instance=ExtResource("model_grave_slab")]
+
+[node name="GraveStone" parent="Model" instance=ExtResource("model_grave_stone")]
+
+[node name="GraveFresh" parent="Model" instance=ExtResource("model_grave_fresh")]

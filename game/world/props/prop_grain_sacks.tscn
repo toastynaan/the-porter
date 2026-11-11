@@ -2,12 +2,27 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grain_sacks.glb" id="model_grain_sacks"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grain_sacks_split.glb" id="model_grain_sacks_split"]
+[ext_resource type="PackedScene" path="res://art/models/prop_grain_sacks_gnawed.glb" id="model_grain_sacks_gnawed"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="GrainSacks" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a heap of rye sacks, 1.2 x 0.9 m, 0.8 m high."
+[node name="GrainSacks" type="Node3D"]
+editor_description = "A heap of rye sacks (tools/build/prop_abbey_stores.py): six tied sacks in three rows, 1.2 x 0.9 m, 0.8 m high. Model shows one of three by where it stands: a heap; one sack gnawed open at its -X, +Z corner; one split along its +Z side and its grain run out on the floor. The hidden Block is its collision."
 
 [node name="GrainSacks" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.2, 0.8, 0.9)
 material = ExtResource("sacking")
 surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(2, 1, 1)
+
+[node name="GrainSacks" parent="Model" instance=ExtResource("model_grain_sacks")]
+
+[node name="GrainSacksGnawed" parent="Model" instance=ExtResource("model_grain_sacks_gnawed")]
+
+[node name="GrainSacksSplit" parent="Model" instance=ExtResource("model_grain_sacks_split")]

@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_barrel.glb" id="model_barrel"]
+[ext_resource type="PackedScene" path="res://art/models/prop_barrel_tapped.glb" id="model_barrel_tapped"]
+[ext_resource type="PackedScene" path="res://art/models/prop_barrel_stove.glb" id="model_barrel_stove"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="Barrel" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: an ale barrel standing on end, 0.7 m across, 0.9 m high."
+[node name="Barrel" type="Node3D"]
+editor_description = "An ale cask standing on end (tools/build/prop_abbey_stores.py): 0.7 m across, 0.9 m high, oak staves in withy hoops. Model shows one of three by where it stands: plain; tapped, with a spigot low on its -Z side and a wet floor; its head stove in. The hidden Block is its collision."
 
 [node name="Barrel" type="StaticBody3D" parent="."]
 script = ExtResource("block")
@@ -12,3 +16,14 @@ size = Vector3(0.7, 0.9, 0.7)
 shape = 2
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(4, 1, 1)
+
+[node name="Barrel" parent="Model" instance=ExtResource("model_barrel")]
+
+[node name="BarrelTapped" parent="Model" instance=ExtResource("model_barrel_tapped")]
+
+[node name="BarrelStove" parent="Model" instance=ExtResource("model_barrel_stove")]

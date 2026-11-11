@@ -2,53 +2,64 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_oven.glb" id="model_oven"]
 
-[node name="Oven" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the bakehouse oven, a stone box 2.3 x 2.4 m and 2.4 m high with a mouth on its -Z side big enough to crawl into."
+[node name="Oven" type="Node3D"]
+editor_description = "The bakehouse oven (tools/build/prop_abbey_stores.py): a rubble box 2.4 x 2.3 m and 2.4 m high, its arched mouth on the -Z side, two iron leaves swung back beside it, a peel stood against it, a flue drawn in above it to the wall behind (+Z). Inside is a vaulted chamber he can crawl into, modelled to be seen from within. The hidden Blocks are its collision."
 
 [node name="OvenBase" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(2.4, 0.6, 2.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenBack" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1)
 script = ExtResource("block")
 size = Vector3(2.4, 1.35, 0.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenSideN" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, -0.15)
 script = ExtResource("block")
 size = Vector3(0.4, 1.35, 2)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenSideS" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.6, -0.15)
 script = ExtResource("block")
 size = Vector3(0.4, 1.35, 2)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenFrontN" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.6, -1)
 script = ExtResource("block")
 size = Vector3(0.4, 1.35, 0.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenFrontS" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.6, -1)
 script = ExtResource("block")
 size = Vector3(0.4, 1.35, 0.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenFrontTop" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -1)
 script = ExtResource("block")
 size = Vector3(0.8, 0.65, 0.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="OvenTop" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
 script = ExtResource("block")
 size = Vector3(2.4, 0.4, 2.3)
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_oven")]

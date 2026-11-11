@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_mortar.tscn" id="prop_mortar"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_table.tscn" id="prop_table"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_tree_yew.tscn" id="prop_tree_yew"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_churchyard_cross.tscn" id="prop_churchyard_cross"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihtni"]
 size = Vector3(6, 1.2, 3)
@@ -568,3 +569,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.05, 12)
 
 [node name="Stalk8" type="Marker3D" parent="StalkPoints" unique_id=189044906 groups=["stalk_point"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.05, -20)
+
+[node name="ChurchyardCross" parent="Props" instance=ExtResource("prop_churchyard_cross")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 0, -27.4)

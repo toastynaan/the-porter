@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bell.glb" id="model_bell"]
 
-[node name="Bell" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the abbey bell, 1.2 m across. Hangs in the tower; BellTower plays the bell from here."
+[node name="Bell" type="Node3D"]
+editor_description = "The abbey bell (tools/build/prop_abbey_church.py): bronze, 1.2 m across the mouth, on an oak headstock that lies along Z, its gudgeons carried by two oak hangers that go up to the bell floor's beams (at Z +-0.9, 2.25 m over this scene's origin, which is the bell's mouth). The rope is made fast to the clapper's flight (prop_bell_rope). Hangs in the tower; BellTower plays the bell from here. The hidden Block is its collision."
 
 [node name="Bell" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.2, 1.2, 1.2)
 shape = 2
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_bell")]

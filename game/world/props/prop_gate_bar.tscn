@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_gate_bar.glb" id="model_gate_bar"]
 
-[node name="GateBar" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the oak bar across the gate, 3.4 m long (along Z). On the door layer, like door leaves; AbbeyGate shows and hides it."
+[node name="GateBar" type="Node3D"]
+editor_description = "The oak bar across the gate (tools/build/prop_abbey_court.py), 3.4 m long (along Z), iron-bound. On the door layer, like door leaves; AbbeyGate shows and hides it."
 
 [node name="GateBar" type="StaticBody3D" parent="."]
 script = ExtResource("block")
@@ -12,3 +13,6 @@ size = Vector3(0.14, 0.14, 3.4)
 material = ExtResource("oak")
 surface = "wood"
 collision_layer = 512
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_gate_bar")]

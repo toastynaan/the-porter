@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_lectern.glb" id="model_lectern"]
+
+[node name="Lectern" type="Node3D"]
+editor_description = "The reader's desk in the refectory (tools/build/prop_abbey_church.py): an oak lectern 0.6 m square and 1.3 m high, panelled on three sides, the book left open on its slope. The reader stands at -Z. The hidden Block is its collision."
+
+[node name="Lectern" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.6, 1.3, 0.6)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_lectern")]

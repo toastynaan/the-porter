@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_cellar_closet.glb" id="model_cellar_closet"]
+
+[node name="CellarCloset" type="Node3D"]
+editor_description = "The boarded closet in the granary's corner, over the hidden stair (tools/build/prop_abbey_stores.py): upright oak boards on rails, one broken off at eye height. The model only, in the cellar scene's own coordinates (place it at that scene's origin): its collision is the Closet Blocks in game/world/abbey/areas/cellar.tscn."
+
+[node name="Model" parent="." instance=ExtResource("model_cellar_closet")]

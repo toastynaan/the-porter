@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_hearth_kitchen.glb" id="model_hearth_kitchen"]
+
+[node name="HearthKitchen" type="Node3D"]
+editor_description = "The kitchen's fireplace below its hood (tools/build/prop_abbey_stores.py): rubble jambs under the range's stone cheeks, a sooted fireback, a kerbed hearth with ash, firedogs and burnt logs, a spit across the dogs, a cauldron on a chain from a bar in the flue. 2.4 m wide, 1.2 m deep. It faces -Z (its back, +Z, to the wall). The hidden Block is its collision."
+
+[node name="Hearth" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(2.4, 1, 1.2)
+material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_hearth_kitchen")]

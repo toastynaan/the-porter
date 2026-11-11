@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://art/models/prop_cult_book.glb" id="model_cult_book"]
+
 [sub_resource type="StandardMaterial3D" id="Mat_0"]
 albedo_color = Color(0.25, 0.2, 0.15, 1)
 roughness = 0.9
@@ -16,13 +18,17 @@ roughness = 0.9
 material = SubResource("Mat_1")
 size = Vector3(0.4, 0.06, 0.3)
 
-[node name="CultBook" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the cult's book, open on its stand by the crypt's ring, bound in skin, the torn page's stub at its spine (night 6)."
+[node name="CultBook" type="Node3D"]
+editor_description = "The cult's book, open on its stand by the crypt's ring (tools/build/prop_abbey_yard.py; night 6): bound in pale skin, the stub of a torn-out page standing at its spine, ten candles drawn in a ring on the open page. The origin is the top of the stand, where the book lies: the stand's feet are 0.8 m below it. It is read from -Z. No collision. The old placeholder meshes are hidden."
 
 [node name="Stand" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 mesh = SubResource("Mesh_0")
+visible = false
 
 [node name="Book" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
 mesh = SubResource("Mesh_1")
+visible = false
+
+[node name="Model" parent="." instance=ExtResource("model_cult_book")]

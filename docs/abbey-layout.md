@@ -123,7 +123,24 @@ One pass over all five areas after their first looks, to close gaps and make the
 
 **Solids added.** `ChurchButtresses` in `church.tscn` (in `nav_source`, not drawn): 22 blocks under the feet of the church's and tower's ground-level buttresses, 2.6 m high. The navmesh was rebaked.
 
-**For the props pass** (found here, not done): the warming room's hearth sits under a vault springer at z = -8 and should move to a bay centre before it gets a hood; an abbot's seat and a reader's pulpit front; a churchyard cross on steps near (27, -30); the gate's north leaf swings into the porter's cell; the lane-side half of the gate's apron is a plain block.
+**For the props pass** (found here; see "The props as built" for what was done): the warming room's hearth sits under a vault springer at z = -8; the gate's north leaf swings into the porter's cell; the lane-side half of the gate's apron is a plain block.
+
+## The props as built (first look, 2026-11-11)
+
+Every prop but the trees has a model now (`docs/assets.md`, "The abbey's props"). Collision did not change: each prop's Blocks stay, hidden. What the pass placed or moved:
+
+- **Chapter house:** the abbot's seat on its step against the east wall, under the painted panel, where the first of the three benches was.
+- **Refectory:** a lectern at the east end, the book left open.
+- **Graveyard:** a stone cross on three steps at (36.5, -27.4), between the north graves and the charnel house. The thirty graves are six kinds (a leaning wooden cross, no marker, sunken, a cracked slab, a tilted stone, fresh earth), each set a little askew.
+- **Kitchen and warming room:** dead fires with firedogs in the hearths; a cauldron on its chain and a spit in the kitchen's.
+- **Reredorter:** the long bench with its holes; the middle seat is the open one, over the chute.
+- **Granary corner:** the boarded closet over the hidden stair, with gaps between its boards.
+- **Church:** an oak rail round the crypt stair's well. The cloister's two north saints moved out of the church wall (z -27.7 to -27.3).
+- **Night 6:** the masks hang on the passage's north wall at x -13.1 with a black habit on the last peg; the hoof soles lie on the floor at x -6; the purse chest stands open against the south wall at x 1.1; the silver hand is set down on the crypt floor before the shrine, its palm to the way in.
+
+The navmesh was rebaked for the seat, the lectern and the cross.
+
+**Not done:** the abbey's trees (waiting on reference). The gate's leaves are still the iron grille `door.gd` draws. The candle clock is still a cylinder. A thrown thing is a ball in flight. The warming room's hearth is still under a vault springer; it is a low open hearth, so nothing clashes, but it would need moving to a bay centre before it got a hood. The better skull (`skull` in `prop_abbey_yard.py`, about 215 triangles) has not replaced `dress.skull` in the buildings' niches.
 
 ## Routes
 

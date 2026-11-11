@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_well.glb" id="model_well"]
 
-[node name="Well" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the court well, a round stone kerb 1.6 m across and 0.8 m high."
+[node name="Well" type="Node3D"]
+editor_description = "The court well (tools/build/prop_abbey_court.py): a round stone kerb 1.6 m across and 0.8 m high, a windlass and bucket under a little board roof. The hidden Block is its collision (the kerb only)."
 
 [node name="Well" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.6, 0.8, 1.6)
 shape = 2
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_well")]

@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://art/models/prop_hoof_soles.glb" id="model_hoof_soles"]
+
 [sub_resource type="StandardMaterial3D" id="Mat_0"]
 albedo_color = Color(0.3, 0.22, 0.14, 1)
 roughness = 0.9
@@ -16,13 +18,17 @@ roughness = 0.9
 material = SubResource("Mat_1")
 size = Vector3(0.12, 0.08, 0.26)
 
-[node name="HoofSoles" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: carved wooden hoof soles on leather straps, set out in pairs (night 6, the crypt passage)."
+[node name="HoofSoles" type="Node3D"]
+editor_description = "A pair of carved wooden hoof soles on leather straps (tools/build/prop_abbey_yard.py; night 6, the crypt passage): one standing, one dropped on its side so the cloven hoof shows. On the floor at its origin, about 0.3 m square. No collision. The old placeholder meshes are hidden."
 
 [node name="SoleL" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09, 0.04, 0)
 mesh = SubResource("Mesh_0")
+visible = false
 
 [node name="SoleR" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.04, 0)
 mesh = SubResource("Mesh_1")
+visible = false
+
+[node name="Model" parent="." instance=ExtResource("model_hoof_soles")]

@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_churchyard_cross.glb" id="model_churchyard_cross"]
+
+[node name="ChurchyardCross" type="Node3D"]
+editor_description = "The churchyard cross (tools/build/prop_abbey_yard.py): a stone cross 3.5 m high on three steps 1.8 m square, the steps worn, the head weathered to stumps. Its worn arm points to -X. The hidden Blocks are its collision: the three steps and the shaft."
+
+[node name="Step0" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.8, 0.22, 1.8)
+material = ExtResource("stone")
+shown = false
+
+[node name="Step1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+script = ExtResource("block")
+size = Vector3(1.35, 0.22, 1.35)
+material = ExtResource("stone")
+shown = false
+
+[node name="Step2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
+script = ExtResource("block")
+size = Vector3(0.9, 0.22, 0.9)
+material = ExtResource("stone")
+shown = false
+
+[node name="Shaft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66, 0)
+script = ExtResource("block")
+size = Vector3(0.56, 2.84, 0.56)
+material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_churchyard_cross")]

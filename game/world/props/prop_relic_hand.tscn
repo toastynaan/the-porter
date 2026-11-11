@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://art/models/prop_relic_hand.glb" id="model_relic_hand"]
+
 [sub_resource type="StandardMaterial3D" id="Mat_0"]
 albedo_color = Color(0.75, 0.75, 0.78, 1)
 roughness = 0.9
@@ -16,13 +18,17 @@ roughness = 0.9
 material = SubResource("Mat_1")
 size = Vector3(0.04, 0.08, 0.04)
 
-[node name="RelicHand" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the saint's relic, a silver hand with a glass in its palm; the bone in it is a pig's knuckle (night 6, the crypt)."
+[node name="RelicHand" type="Node3D"]
+editor_description = "The saint's relic (tools/build/prop_abbey_yard.py; night 6, the crypt): a silver hand reliquary 0.31 m high, raised in blessing, with a window in its palm and a small bone behind it (a pig's knuckle). It stands on its origin; the palm and the window face +Z. No collision. The old placeholder meshes are hidden."
 
 [node name="Hand" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 mesh = SubResource("Mesh_0")
+visible = false
 
 [node name="Bone" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0.04)
 mesh = SubResource("Mesh_1")
+visible = false
+
+[node name="Model" parent="." instance=ExtResource("model_relic_hand")]

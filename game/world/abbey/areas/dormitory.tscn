@@ -21,6 +21,9 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_bed_raised.tscn" id="prop_bed_raised"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_bench.tscn" id="prop_bench"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_stool.tscn" id="prop_stool"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_hearth_warming.tscn" id="prop_hearth_warming"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_latrine_seat.tscn" id="prop_latrine_seat"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_abbot_seat.tscn" id="prop_abbot_seat"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nylum"]
 size = Vector3(1.2, 1, 1.4)
@@ -543,9 +546,6 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 18.6, 4.02, 8)
 [node name="DormStool" parent="Props" instance=ExtResource("prop_stool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 4.02, -1)
 
-[node name="ChapterBench0" parent="Props" instance=ExtResource("prop_bench")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.3, 0.05, -22.5)
-
 [node name="ChapterBench1" parent="Props" instance=ExtResource("prop_bench")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.3, 0.05, -20)
 
@@ -557,6 +557,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0.05, -8)
 script = ExtResource("6_4nq6i")
 size = Vector3(0.8, 1, 1.6)
 material = ExtResource("11_uumq8")
+shown = false
 
 [node name="LatrineSeat" type="StaticBody3D" parent="Props" unique_id=1176859827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 4.02, 18.6)
@@ -564,6 +565,7 @@ script = ExtResource("6_4nq6i")
 size = Vector3(6, 0.45, 0.8)
 material = ExtResource("8_r5oup")
 surface = "wood"
+shown = false
 
 [node name="Lights" type="Node3D" parent="." unique_id=308982692]
 
@@ -674,3 +676,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.05, -20)
 
 [node name="Ranges" parent="." instance=ExtResource("rg_model")]
 editor_description = "The east, south and west ranges: walls inside and out, vaults and open roofs, floors, tiled roofs, fittings. Built by tools/build/env_ranges.py from the wall pieces of dormitory.tscn, south_range.tscn and cellar.tscn (rebuild it after moving one); no collision of its own."
+
+[node name="HearthFire" parent="Props" instance=ExtResource("prop_hearth_warming")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19, 0.05, -8)
+
+[node name="LatrineBench" parent="Props" instance=ExtResource("prop_latrine_seat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 4.02, 18.6)
+
+[node name="AbbotSeat" parent="Props" instance=ExtResource("prop_abbot_seat")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 19.13, 0.05, -21.85)

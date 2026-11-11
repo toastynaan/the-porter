@@ -2,11 +2,15 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_reliquary.glb" id="model_reliquary"]
 
-[node name="Reliquary" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the stone shrine holding the relic, 0.8 m square, 1.1 m high."
+[node name="Reliquary" type="Node3D"]
+editor_description = "The crypt's shrine (tools/build/prop_abbey_church.py): a stone plinth 0.8 m square carrying a house-shaped chest of dull gilt copper, 0.5 m long, behind an iron grille; 1.1 m high. The shrine's long side and the grille's locked door are to -X, the way the crypt is come into. The hidden Block is its collision."
 
 [node name="Reliquary" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.8, 1.1, 0.8)
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_reliquary")]

@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_cot.glb" id="model_cot"]
 
-[node name="Cot" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the porter's cot, a plank bed on legs, 0.8 x 2 m, 0.45 m high, with room under it. Its head is at -Z."
+[node name="Cot" type="Node3D"]
+editor_description = "The porter's cot (tools/build/prop_abbey_court.py): a plank bed on posts, 0.8 x 2 m, with room under it. Its head is at -Z. The hidden Blocks are its collision."
 
 [node name="Planks" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
@@ -12,6 +13,7 @@ script = ExtResource("block")
 size = Vector3(0.8, 0.1, 2)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Leg0" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 0, -0.94)
@@ -19,6 +21,7 @@ script = ExtResource("block")
 size = Vector3(0.08, 0.35, 0.08)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Leg1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0, -0.94)
@@ -26,6 +29,7 @@ script = ExtResource("block")
 size = Vector3(0.08, 0.35, 0.08)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Leg2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 0, 0.94)
@@ -33,6 +37,7 @@ script = ExtResource("block")
 size = Vector3(0.08, 0.35, 0.08)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Leg3" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0, 0.94)
@@ -40,3 +45,6 @@ script = ExtResource("block")
 size = Vector3(0.08, 0.35, 0.08)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_cot")]

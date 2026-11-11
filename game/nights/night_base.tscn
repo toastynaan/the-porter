@@ -73,14 +73,15 @@
 [ext_resource type="Resource" path="res://game/dialogue/lane/margery.tres" id="lane_margery"]
 [ext_resource type="Resource" path="res://game/dialogue/lane/mab.tres" id="lane_mab"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_simon.tscn" id="chr_simon"]
+[ext_resource type="PackedScene" path="res://art/models/prop_item_stone.glb" id="item_stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_item_apple.glb" id="item_apple"]
+[ext_resource type="PackedScene" path="res://art/models/prop_item_bread.glb" id="item_bread"]
+[ext_resource type="PackedScene" path="res://art/models/prop_item_cup.glb" id="item_cup"]
+[ext_resource type="PackedScene" path="res://art/models/prop_item_bone.glb" id="item_bone"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_bread"]
 albedo_color = Color(0.54, 0.4, 0.24, 1)
 roughness = 0.9
-
-[sub_resource type="BoxMesh" id="Mesh_bread"]
-material = SubResource("Mat_bread")
-size = Vector3(0.22, 0.09, 0.12)
 
 [sub_resource type="StandardMaterial3D" id="Mat_iron"]
 albedo_color = Color(0.12, 0.11, 0.1, 1)
@@ -109,43 +110,14 @@ height = 1.75
 albedo_color = Color(0.45, 0.16, 0.1, 1)
 roughness = 0.8
 
-[sub_resource type="SphereMesh" id="Mesh_apple"]
-material = SubResource("Mat_apple")
-radius = 0.04
-height = 0.08
-radial_segments = 8
-rings = 4
-
 [sub_resource type="StandardMaterial3D" id="Mat_stone"]
 albedo_color = Color(0.42, 0.41, 0.38, 1)
-
-[sub_resource type="SphereMesh" id="Mesh_stone"]
-material = SubResource("Mat_stone")
-radius = 0.045
-height = 0.07
-radial_segments = 6
-rings = 3
 
 [sub_resource type="StandardMaterial3D" id="Mat_bonething"]
 albedo_color = Color(0.8, 0.76, 0.64, 1)
 
-[sub_resource type="CapsuleMesh" id="Mesh_bone"]
-material = SubResource("Mat_bonething")
-radius = 0.025
-height = 0.16
-radial_segments = 6
-rings = 1
-
 [sub_resource type="StandardMaterial3D" id="Mat_cup"]
 albedo_color = Color(0.35, 0.24, 0.14, 1)
-
-[sub_resource type="CylinderMesh" id="Mesh_cup"]
-material = SubResource("Mat_cup")
-top_radius = 0.04
-bottom_radius = 0.035
-height = 0.09
-radial_segments = 8
-rings = 1
 
 [node name="Night" type="Node3D"]
 editor_description = "The furniture every night shares: the abbey, the brothers and the lane's people at their places, the duties, lamps, marks, the candle clock, the gate and the bell, the hunter and the demon. Each night inherits it (night1.tscn ... night6.tscn) and adds its Director and beats, its conversations and its own things."
@@ -521,9 +493,8 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.8, -1.3)
 script = ExtResource("duty_gd")
 size = Vector3(0.3, 0.15, 0.25)
 
-[node name="Mesh" type="MeshInstance3D" parent="Duties/Bread"]
+[node name="Mesh" parent="Duties/Bread" instance=ExtResource("item_bread")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
-mesh = SubResource("Mesh_bread")
 
 [node name="SupperSeat" type="Area3D" parent="Duties"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
@@ -1032,10 +1003,10 @@ editor_description = "At Matins, from Dose 75, the dead brothers stand in the ch
 editor_description = "Carved saints: from Dose 50 their heads turn to follow the porter while he isn't looking."
 
 [node name="CloisterNW" parent="Carvings" instance=ExtResource("carved_saint")]
-transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -6, 0.05, -27.7)
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -6, 0.05, -27.3)
 
 [node name="CloisterNE" parent="Carvings" instance=ExtResource("carved_saint")]
-transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 6, 0.05, -27.7)
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 6, 0.05, -27.3)
 
 [node name="CloisterSW" parent="Carvings" instance=ExtResource("carved_saint")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0.05, -4.9)
@@ -1092,81 +1063,72 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.02, 25.6)
 script = ExtResource("pickup_gd")
 id = &"apple0"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple0"]
+[node name="Mesh" parent="Windfalls/Apple0" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple1" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2, 0.02, 25.8)
 script = ExtResource("pickup_gd")
 id = &"apple1"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple1"]
+[node name="Mesh" parent="Windfalls/Apple1" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple2" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3, 0.02, 24.3)
 script = ExtResource("pickup_gd")
 id = &"apple2"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple2"]
+[node name="Mesh" parent="Windfalls/Apple2" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple3" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 0.02, 25.7)
 script = ExtResource("pickup_gd")
 id = &"apple3"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple3"]
+[node name="Mesh" parent="Windfalls/Apple3" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple4" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7, 0.02, 31.5)
 script = ExtResource("pickup_gd")
 id = &"apple4"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple4"]
+[node name="Mesh" parent="Windfalls/Apple4" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple5" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8, 0.02, 30.4)
 script = ExtResource("pickup_gd")
 id = &"apple5"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple5"]
+[node name="Mesh" parent="Windfalls/Apple5" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple6" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.02, 31.8)
 script = ExtResource("pickup_gd")
 id = &"apple6"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple6"]
+[node name="Mesh" parent="Windfalls/Apple6" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple7" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9, 0.02, 30.5)
 script = ExtResource("pickup_gd")
 id = &"apple7"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple7"]
+[node name="Mesh" parent="Windfalls/Apple7" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Apple8" type="Node3D" parent="Windfalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3, 0.02, 36.4)
 script = ExtResource("pickup_gd")
 id = &"apple8"
 
-[node name="Mesh" type="MeshInstance3D" parent="Windfalls/Apple8"]
+[node name="Mesh" parent="Windfalls/Apple8" instance=ExtResource("item_apple")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_apple")
 
 [node name="Hunt" type="Node3D" parent="." node_paths=PackedStringArray("routes", "gatehouse", "locks")]
 script = ExtResource("hunt_gd")
@@ -1290,9 +1252,8 @@ script = ExtResource("pickup_gd")
 id = &"stonecourt0"
 item = &"stone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneCourt0"]
+[node name="Mesh" parent="Throwables/StoneCourt0" instance=ExtResource("item_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_stone")
 
 [node name="StoneCourt1" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -26, 0.02, 9)
@@ -1300,9 +1261,8 @@ script = ExtResource("pickup_gd")
 id = &"stonecourt1"
 item = &"stone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneCourt1"]
+[node name="Mesh" parent="Throwables/StoneCourt1" instance=ExtResource("item_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_stone")
 
 [node name="StoneGarth0" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3, 0.02, -14)
@@ -1310,9 +1270,8 @@ script = ExtResource("pickup_gd")
 id = &"stonegarth0"
 item = &"stone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneGarth0"]
+[node name="Mesh" parent="Throwables/StoneGarth0" instance=ExtResource("item_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_stone")
 
 [node name="StoneGarth1" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0.02, -19)
@@ -1320,9 +1279,8 @@ script = ExtResource("pickup_gd")
 id = &"stonegarth1"
 item = &"stone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/StoneGarth1"]
+[node name="Mesh" parent="Throwables/StoneGarth1" instance=ExtResource("item_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_stone")
 
 [node name="CupRefectory0" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.2, 0.8, -1.5)
@@ -1330,9 +1288,8 @@ script = ExtResource("pickup_gd")
 id = &"cuprefectory0"
 item = &"cup"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/CupRefectory0"]
+[node name="Mesh" parent="Throwables/CupRefectory0" instance=ExtResource("item_cup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_cup")
 
 [node name="CupRefectory1" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.6, 0.8, -1.5)
@@ -1340,9 +1297,8 @@ script = ExtResource("pickup_gd")
 id = &"cuprefectory1"
 item = &"cup"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/CupRefectory1"]
+[node name="Mesh" parent="Throwables/CupRefectory1" instance=ExtResource("item_cup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_cup")
 
 [node name="BoneGraveyard0" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 26, 0.02, -8)
@@ -1350,9 +1306,8 @@ script = ExtResource("pickup_gd")
 id = &"bonegraveyard0"
 item = &"bone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/BoneGraveyard0"]
+[node name="Mesh" parent="Throwables/BoneGraveyard0" instance=ExtResource("item_bone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_bone")
 
 [node name="BoneGraveyard1" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.02, -14)
@@ -1360,9 +1315,8 @@ script = ExtResource("pickup_gd")
 id = &"bonegraveyard1"
 item = &"bone"
 
-[node name="Mesh" type="MeshInstance3D" parent="Throwables/BoneGraveyard1"]
+[node name="Mesh" parent="Throwables/BoneGraveyard1" instance=ExtResource("item_bone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
-mesh = SubResource("Mesh_bone")
 
 [node name="RoutineLights" type="Node3D" parent="."]
 editor_description = "Windows lit while a brother is at his routine's stop (lit windows show who's up)."

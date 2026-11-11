@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_latrine_seat.glb" id="model_latrine_seat"]
+
+[node name="LatrineSeat" type="Node3D"]
+editor_description = "The latrine's bench (tools/build/prop_abbey_stores.py): 6 m long (along X), 0.45 m high, 0.8 m deep, five round holes over the drain, boarded stalls. The middle seat's board is off and stood against the back: the way down to the race. It faces -Z. The hidden Block is its collision (the bench only)."
+
+[node name="Seat" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(6, 0.45, 0.8)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_latrine_seat")]

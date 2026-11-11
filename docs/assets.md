@@ -1,6 +1,6 @@
 # Assets
 
-Most of the world is still a placeholder: boxes, cylinders and the greybox figure, in the shared materials. Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. Swap them in any order. The first real ones are on the road in (night 0); how they're made is below, then the placeholders.
+Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. The road in (night 0), the abbey's buildings and the abbey's props are real; the people, the trees in the abbey and a few decals are still placeholders: boxes, cylinders and the greybox figure, in the shared materials. How the real ones are made is below, then the placeholders.
 
 ## Real assets: how they're made
 
@@ -16,6 +16,7 @@ Every model is built by a script, and every texture is fetched and finished by o
 - **Vertex colour** does the grime: materials multiply it in (damp at the foot of a wall, shadow under the eaves, darker twigs). The ground's shader reads it as masks instead.
 - **Collision** is an object named `<Name>-colonly` in the model (Godot makes it a collider on import).
 - **Look at a model on its own:** `tools/model_shots.sh <name>` renders it from two sides to `art/_review/models/`.
+- **Look at a prop on its own:** `tools/prop_studio.sh bed,bench [--fill] [--back]` stands each prop's scene alone on a floor in the dark, lit as the porter's lantern lights it from arm's length, and writes `art/_review/props/<name>.png` (one per variant). `tools/props_shots.sh <group>` takes stills of props where they stand in the abbey, from a list `tools/godot/props_shots_<group>.gd` (`court`, `church`, `stores`, `yard`, `placed`, and `proofs` on night 6).
 - Close the Godot editor before `tools/build.sh`: it imports with the command-line Godot.
 
 ### What's real so far (the road in)
@@ -66,6 +67,25 @@ Dressing (`tools/build/dress.py`, used by all five abbey scripts): soot, runs, d
 
 Materials in `game/world/materials/real/`: `ground_fields` (its own shader: mud, grass, ploughed soil and stubble blended by the mesh's masks, wheel ruts, standing water that carries the sky), `plaster_white`, `stone_blocks`, `roof_slates`, `wood_medieval`, `wood_cart`, `iron_cart`, `bark`, `grave_earth`, `sacking`, `horse_hide`, `horse_tack`, `far_dark`, `window_dark`, and `window_candle` (leaded glass with candles behind it, never quite still). For the city: `stone_rubble` (the wall), `tile_course` (its bands of tile), `roof_tiles`, `plaster_daub`, `painted` (flat colour from the vertices: the shield, the signs), `far_city` (unlit, and the fog leaves it alone), `ground_street` (its own shader: cobbles, mud, ruts, standing water), `window_horn` (a lit window of horn or cloth, with somebody passing behind it now and then), `flame` and `embers` (the watch fire). The city's stone, plaster, timber and roofs share one shader, `surface.gdshader`: two surfaces a material (the wall as built, and what shows where it has failed, in patches of its own and where a vertex's alpha asks), uneven tone over a long wall, moss from the ground up, and rain (dark and shining where it faces the sky, streaked where it does not). Its materials: `stone_rubble`, `stone_ashlar` (the gate), `brick_old`, `plaster_daub`, `plaster_ochre`, `plaster_worn`, `wood_frame`, `wood_boards`, and by UV `roof_tiles`, `roof_mossy`, `roof_plain`. `blotch_noise.tres` is the noise they share. Also on the surface shader: `plaster_lime` (the chapel: limewash over rubble). Plain materials for the fields: `hedge`, `straw`, `yew`.
 
+### The abbey's props (2026-11-11)
+
+Every prop in the abbey but its trees. A prop's scene keeps its `Block`s as hidden collision (`shown = false`) and draws a model over them as `Model`, so hiding spots, navigation and tests are as they were. Where one prop is placed many times, `Model` is a `PropVariant` (`game/world/props/prop_variant.gd`): it holds several models and shows one, picked by where the prop stands, so a row of beds or graves is not a row of copies and each place always gets the same one (`pick` forces one; `weights` sets the odds). Move a prop and its variant may change.
+
+| Script | Props (each `art/models/prop_<name>.glb`) |
+| --- | --- |
+| `prop_abbey_court.py` | `cot`; `bed`, `bed_slept`, `bed_bare` (made, left in a hurry, stripped); `bed_raised`; `desk`; `ledger`; `stool`; `bench`; `table`, `table_set`, `table_jug`; `gate_bar`; `well` (kerb, windlass, bucket, board roof); `woodpile`; `door` (the oak leaf, hinged left and right: `door.gd` shows one and scales it to the doorway); `candle` (a tallow stub in a dish, for `candle.tscn`); `lamp` (a dish in an iron ring on chains, for `lamp.tscn`) |
+| `prop_abbey_church.py` | `choir_stalls` and `_b`, `_c`; `altar`; `tomb_open`; `reliquary`; `bell`; `bell_rope`; `carved_saint` and `_b`, `_c` (three bodies) with `carved_saint_head` under the scene's `Head`, which `Carving` turns; `crypt_rail`; `abbot_seat`; `lectern` |
+| `prop_abbey_stores.py` | `barrel`, `barrel_tapped`, `barrel_stove`; `shelves`; `grain_sacks`, `_gnawed`, `_split`; `oven` (with its chamber); `oven_bones`; `mortar`; `millstone`; `mill_wheel`; `hearth_kitchen`; `hearth_warming`; `latrine_seat`; `cellar_closet` |
+| `prop_abbey_yard.py` | `grave` and `_plain`, `_sunk`, `_slab`, `_stone`, `_fresh`; `charnel_bones`; `garden_bed` and `_cabbage`, `_leeks`, `_beans`; `churchyard_cross`; `item_stone`, `item_cup`, `item_bone`, `item_apple`, `item_bread` (what he picks up, placed in `night_base.tscn`); `cult_masks`, `hoof_soles`, `purse_chest`, `relic_hand`, `cult_book` (night 6's proofs) |
+
+`tools/build/props.py` holds what they share: a `Prop` (a flat-shaded mesh, a smooth one, and parts that move), sawn timber whose grain runs along each board (`beam`, `plank`, `boards`, `slab`, `turned`), iron (`nail`, `strap`, `ring`), `rope`, cloth (`sheet`, `tick`, `blanket`, `heap`), `pot`, `candle`, `book`. One prop of a script is built with `tools/build.sh prop_abbey_court -- bench`.
+
+Their materials: `wood_prop` (grey weathered grain laid on by each face's own UVs, tinted by vertex colour; a door keeps its grain as it swings), `cloth` (vertex colour over a coarse weave), `stone_worn` (jointless worn stone, for slabs and crosses), `grit` (grain, ash, gritstone), `bronze_bell`, `gilt_dull`, `silver_dull`; with `iron_cart`, `painted`, `stone_church`, `grave_earth` and `window_dark` (black, for an inside).
+
+**Colour.** Vertex colours are linear light and the lantern is strong at arm's length. Timber is darkened by its texture, so its tones are 0.4 to 0.7. Everything untextured draws as bright as its numbers: 0.02 is dark cloth, 0.03 undyed wool, 0.06 pale linen, 0.13 wax, the palest thing there is. Anything redder than leather turns orange under the lantern.
+
+**Collision.** The model fits the Blocks: open where they are open (the oven's chamber, the tomb, under the altar and the raised beds). What stands outside them is out of reach or too thin to notice: the well's posts and roof, the stalls' backs above 1.1 m, grave markers, the latrine's partitions, the fallen half of the tomb's lid.
+
 ## Placeholders
 
 Everything else is a placeholder, as below.
@@ -75,7 +95,7 @@ Everything else is a placeholder, as below.
 | Layer | What | Where | To replace it |
 | --- | --- | --- | --- |
 | Kit | Walls, arches, doorways, windows, corners and the gate wall, on the 4 m grid | `game/world/kit/` | Open the kit piece and swap its mesh; every wall made from it changes |
-| Doors | Door leaves, including the gate's grille | `game/world/door/door.tscn` | Same |
+| Doors | Door leaves. The oak leaf is real (`prop_door.glb`); the gate's grille and a hidden door in its wall's material are still drawn by `door.gd` | `game/world/door/door.tscn` | Same |
 | Surfaces | Floors, roofs, stairs, rails, hearths, water: sized `Block`s | `game/world/materials/*.tres` | Replace the material (a tiling texture); every surface that uses it changes |
 | Props | One scene per kind of thing | `game/world/props/prop_*.tscn` | Open the scene, replace its `Block` children with the model and its collision |
 | Houses | One scene per house type in the lane | `game/world/street/env_*.tscn` | Same; keep the `Window*` and `Door*` node names, which `lit_windows` uses |
@@ -89,6 +109,8 @@ Everything else is a placeholder, as below.
 - After changing anything solid, rebake the navmesh (`tools/bake_nav.sh`) and run `tools/check.sh`. The walk test goes through every area, including the gardens.
 
 ## Props
+
+Real since the props pass (see "The abbey's props" above), all but: `prop_tree_apple` and `prop_tree_yew` (the abbey's trees, waiting on reference), `prop_sand_patch` and the blood decals. The table still says what each is and where it is used.
 
 | Scene | What | Where it's used |
 | --- | --- | --- |
@@ -130,11 +152,11 @@ Everything else is a placeholder, as below.
 | `prop_cult_book` | The cult's book open on its stand | By the crypt's ring, night 6 (proof: the book; take it and the rite stops) |
 | `prop_blood_pool`, `prop_blood_spray`, `prop_drag_marks`, `prop_blood_print` | Blood (old blood, #5A1A14), as decals: a pool on the floor, a spray up a wall, drag marks, a boot print | Wherever a death leaves them (`BloodMarks`, `docs/death.md`) |
 
-`candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, already one scene each. The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
+`candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, one scene each, with real models (`prop_candle`, `prop_lamp`). The candle clock on the porter's desk still builds its own cylinder (`CandleClock`). The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
 
-Windfall apples (`Windfalls` in `night_base.tscn`) are small spheres under a `Pickup`; the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`), and so do night 6's flames (`Fire`). The Hungry Saint is `chr_saint` worn by `HungrySaint` (`game/saint/`).
+Windfall apples, throwing stones, cups, bones and the supper bread (`Windfalls`, `Throwables` and `Duties/Bread` in `night_base.tscn`) are the `prop_item_*` models under a `Pickup` or a duty; a thing in flight is still a ball (`Thrown`); the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`), and so do night 6's flames (`Fire`). The Hungry Saint is `chr_saint` worn by `HungrySaint` (`game/saint/`).
 
-**Still built in place** (part of a building, or one of a kind): the kitchen and warming-room hearths, the latrine seat, the plank closet over the hidden stair, the crypt rails, the water in the mill race and fishpond, the bends at each end of the lane, and the skyline.
+**Still built in place** (part of a building, or one of a kind): the water in the mill race and fishpond, the bends at each end of the lane, and the skyline. The hearths, the latrine seat, the plank closet over the hidden stair and the crypt rails are props now (`prop_hearth_kitchen`, `prop_hearth_warming`, `prop_latrine_seat`, `prop_cellar_closet`, `prop_crypt_rail`); the Blocks they replaced stay in their area scenes, hidden, as collision. New in the props pass: `prop_abbot_seat` (chapter house, where a bench was), `prop_lectern` (the refectory's east end), `prop_churchyard_cross` (the graveyard, north of the charnel house).
 
 ## The lane's houses
 

@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_millstone.glb" id="model_millstone"]
 
-[node name="Millstone" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a millstone, 1.4 m across, 0.5 m high."
+[node name="Millstone" type="Node3D"]
+editor_description = "The mill's stones (tools/build/prop_abbey_stores.py): 1.4 m across, 0.5 m high. The bedstone, and the runner lifted off it and turned face up on two battens for dressing, its furrows half cut, the bill and the rynd left on it, meal round its foot. The hidden Block is its collision."
 
 [node name="Millstone" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.4, 0.5, 1.4)
 shape = 2
 material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_millstone")]

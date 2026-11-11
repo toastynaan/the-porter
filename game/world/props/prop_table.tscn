@@ -2,12 +2,27 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_table.glb" id="model_table"]
+[ext_resource type="PackedScene" path="res://art/models/prop_table_set.glb" id="model_table_set"]
+[ext_resource type="PackedScene" path="res://art/models/prop_table_jug.glb" id="model_table_jug"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="Table" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a trestle table, 2 m long (along X), 0.9 m wide, 0.75 m high."
+[node name="Table" type="Node3D"]
+editor_description = "A trestle table (tools/build/prop_abbey_court.py), 2 m long (along X), 0.9 m wide, 0.75 m high. Model shows one of three by where the table stands: bare, a bowl and cup left on it, a jug and a heel of bread (set its pick to choose). The hidden Block is its collision."
 
 [node name="Table" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(2, 0.75, 0.9)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(3, 1, 1)
+
+[node name="Table" parent="Model" instance=ExtResource("model_table")]
+
+[node name="TableSet" parent="Model" instance=ExtResource("model_table_set")]
+
+[node name="TableJug" parent="Model" instance=ExtResource("model_table_jug")]

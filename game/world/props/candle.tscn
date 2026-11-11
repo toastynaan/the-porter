@@ -1,18 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://game/world/props/candle.gd" id="1_candle"]
-
-[sub_resource type="StandardMaterial3D" id="Mat_wax"]
-albedo_color = Color(0.847, 0.788, 0.639, 1)
-roughness = 0.6
-
-[sub_resource type="CylinderMesh" id="Mesh_wax"]
-material = SubResource("Mat_wax")
-top_radius = 0.025
-bottom_radius = 0.028
-height = 0.18
-radial_segments = 8
-rings = 1
+[ext_resource type="PackedScene" path="res://art/models/prop_candle.glb" id="2_model"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_flame"]
 albedo_color = Color(0, 0, 0, 1)
@@ -28,12 +17,10 @@ radial_segments = 6
 rings = 3
 
 [node name="Candle" type="Node3D"]
+editor_description = "A tallow stub in a clay dish (tools/build/prop_abbey_court.py), its flame and its light. It stands on its origin."
 script = ExtResource("1_candle")
 
-[node name="Wax" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
-cast_shadow = 0
-mesh = SubResource("Mesh_wax")
+[node name="Wax" parent="." instance=ExtResource("2_model")]
 
 [node name="Flame" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

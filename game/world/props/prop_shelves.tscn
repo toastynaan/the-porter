@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_shelves.glb" id="model_shelves"]
 
-[node name="Shelves" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: storeroom shelves, 3 m long (along X), 0.5 m deep, 1.8 m high. Open side faces -Z."
+[node name="Shelves" type="Node3D"]
+editor_description = "The cellarer's shelves (tools/build/prop_abbey_stores.py): 3 m long (along X), 0.5 m deep, 1.8 m high, four shelves on posts, loaded with crocks, tied jars, cheeses, baskets, cloth and hung candles. The open side faces -Z; the back is open to the wall. The hidden Block is its collision."
 
 [node name="Shelves" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(3, 1.8, 0.5)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_shelves")]

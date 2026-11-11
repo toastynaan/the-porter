@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://art/models/prop_purse_chest.glb" id="model_purse_chest"]
+
 [sub_resource type="StandardMaterial3D" id="Mat_0"]
 albedo_color = Color(0.28, 0.18, 0.1, 1)
 roughness = 0.9
@@ -24,17 +26,22 @@ roughness = 0.9
 material = SubResource("Mat_2")
 size = Vector3(0.14, 0.1, 0.06)
 
-[node name="PurseChest" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: an iron-bound chest of pilgrims' purses, each with a name inside the flap (night 6, the crypt passage)."
+[node name="PurseChest" type="Node3D"]
+editor_description = "An iron-bound chest of pilgrims' purses (tools/build/prop_abbey_yard.py; night 6, the crypt passage): 0.7 m long (along X), 0.42 m deep, 0.36 m high, its lid thrown back toward +Z (stand it with that side to a wall; it is opened from -Z). One purse has a scallop badge; one has fallen out in front. No collision. The old placeholder meshes are hidden."
 
 [node name="Chest" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = SubResource("Mesh_0")
+visible = false
 
 [node name="Band" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0)
 mesh = SubResource("Mesh_1")
+visible = false
 
 [node name="Purse" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.45, 0)
 mesh = SubResource("Mesh_2")
+visible = false
+
+[node name="Model" parent="." instance=ExtResource("model_purse_chest")]

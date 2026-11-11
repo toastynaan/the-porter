@@ -2,12 +2,27 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_choir_stalls.glb" id="model_choir_stalls"]
+[ext_resource type="PackedScene" path="res://art/models/prop_choir_stalls_b.glb" id="model_choir_stalls_b"]
+[ext_resource type="PackedScene" path="res://art/models/prop_choir_stalls_c.glb" id="model_choir_stalls_c"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="ChoirStalls" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a 4 m run of choir stalls (along X), 0.7 m deep, 1.1 m high. The monks face -Z."
+[node name="ChoirStalls" type="Node3D"]
+editor_description = "A 4 m run of oak choir stalls (tools/build/prop_abbey_church.py), along X, 0.7 m deep: a desk in front (-Z), six seats between shaped arms, a panelled back to 1.5 m, poppy heads on the ends to 1.7 m. The monks face -Z. Model shows one of three by where the run stands: a psalter left open and a misericord tipped up (a face under it); a candle stub run down the desk; bare (set its pick to choose; the weights spread the three over the choir's four runs). On the middle arm is a block for the candle the night scenes stand at the run's middle, 1.1 m up. The hidden Block is its collision, 1.1 m high."
 
 [node name="ChoirStalls" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(4, 1.1, 0.7)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(3, 2, 2)
+
+[node name="ChoirStalls" parent="Model" instance=ExtResource("model_choir_stalls")]
+
+[node name="ChoirStallsB" parent="Model" instance=ExtResource("model_choir_stalls_b")]
+
+[node name="ChoirStallsC" parent="Model" instance=ExtResource("model_choir_stalls_c")]

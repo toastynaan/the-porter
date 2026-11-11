@@ -3,21 +3,24 @@
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
 [ext_resource type="Material" path="res://game/world/materials/wool.tres" id="wool"]
+[ext_resource type="PackedScene" path="res://art/models/prop_altar.glb" id="model_altar"]
 
-[node name="Altar" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the high altar, 2 x 1 m, 1.05 m high, with a cloth hanging to the floor on its -Z side (a hiding spot under it)."
+[node name="Altar" type="Node3D"]
+editor_description = "The high altar (tools/build/prop_abbey_church.py): a stone mensa, 2 x 1 m and 1 m high, on a stone back; open under it behind a dark frontal that hangs round its front (-Z) and ends to a hand above the floor (a hiding spot: he looks out under the hem). A linen over the top, two prickets with unlit tapers, a plain oak cross. The priest stands at -Z. The hidden Blocks are its collision; the cloth's is not solid."
 
 [node name="AltarTop" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 script = ExtResource("block")
 size = Vector3(2, 0.15, 1)
 material = ExtResource("stone")
+shown = false
 
 [node name="AltarBack" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.35)
 script = ExtResource("block")
 size = Vector3(2, 0.85, 0.3)
 material = ExtResource("stone")
+shown = false
 
 [node name="AltarCloth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.52)
@@ -25,3 +28,6 @@ script = ExtResource("block")
 size = Vector3(2.04, 0.85, 0.04)
 material = ExtResource("wool")
 solid = false
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_altar")]

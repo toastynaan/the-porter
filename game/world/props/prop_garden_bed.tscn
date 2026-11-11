@@ -2,12 +2,30 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/mud.tres" id="mud"]
+[ext_resource type="PackedScene" path="res://art/models/prop_garden_bed.glb" id="model_garden_bed"]
+[ext_resource type="PackedScene" path="res://art/models/prop_garden_bed_cabbage.glb" id="model_garden_bed_cabbage"]
+[ext_resource type="PackedScene" path="res://art/models/prop_garden_bed_leeks.glb" id="model_garden_bed_leeks"]
+[ext_resource type="PackedScene" path="res://art/models/prop_garden_bed_beans.glb" id="model_garden_bed_beans"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[node name="GardenBed" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a dug vegetable bed, 1.2 x 4 m (along Z), edged with planks."
+[node name="GardenBed" type="Node3D"]
+editor_description = "A dug vegetable bed, 1.2 x 4 m (along Z), edged with boards on pegs (tools/build/prop_abbey_yard.py), in November. Model shows one of four by where the bed stands: bare ridged earth; cabbage stumps; leeks and lifted onions; bean poles pulled and left (set its pick to choose). The hidden Block is its footprint; it is walked through."
 
 [node name="GardenBed" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(1.2, 0.12, 4)
 material = ExtResource("mud")
 solid = false
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(3, 3, 3, 2)
+
+[node name="GardenBed" parent="Model" instance=ExtResource("model_garden_bed")]
+
+[node name="GardenBedCabbage" parent="Model" instance=ExtResource("model_garden_bed_cabbage")]
+
+[node name="GardenBedLeeks" parent="Model" instance=ExtResource("model_garden_bed_leeks")]
+
+[node name="GardenBedBeans" parent="Model" instance=ExtResource("model_garden_bed_beans")]

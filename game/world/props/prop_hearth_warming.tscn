@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_hearth_warming.glb" id="model_hearth_warming"]
+
+[node name="HearthWarming" type="Node3D"]
+editor_description = "The warming room's hearth (tools/build/prop_abbey_stores.py): low cheeks of cut stone, a sooted fireback, a kerb, ash, firedogs and burnt logs. 1.6 m wide, 0.8 m deep, 1 m high. It faces -Z (its back, +Z, to the wall). The hidden Block is its collision."
+
+[node name="Hearth" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.6, 1, 0.8)
+material = ExtResource("stone")
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_hearth_warming")]

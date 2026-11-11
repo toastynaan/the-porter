@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_barrel.tscn" id="prop_barrel"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_grain_sacks.tscn" id="prop_grain_sacks"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_shelves.tscn" id="prop_shelves"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_cellar_closet.tscn" id="prop_cellar_closet"]
 
 [node name="Cellar" type="Node3D" unique_id=134828452]
 
@@ -330,6 +331,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(0.1, 2.2, 6.2)
 material = ExtResource("12_2i4ku")
 surface = "wood"
+shown = false
 
 [node name="ClosetN" type="StaticBody3D" parent="Props" unique_id=1948859631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8, 0.05, -25.15)
@@ -337,6 +339,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(1.6, 2.2, 0.1)
 material = ExtResource("12_2i4ku")
 surface = "wood"
+shown = false
 
 [node name="ClosetSW" type="StaticBody3D" parent="Props" unique_id=745726730]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.45, 0.05, -18.95)
@@ -344,6 +347,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(0.3, 2.2, 0.1)
 material = ExtResource("12_2i4ku")
 surface = "wood"
+shown = false
 
 [node name="ClosetSE" type="StaticBody3D" parent="Props" unique_id=1277923388]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 0.05, -18.95)
@@ -351,6 +355,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(0.4, 2.2, 0.1)
 material = ExtResource("12_2i4ku")
 surface = "wood"
+shown = false
 
 [node name="ClosetHead" type="StaticBody3D" parent="Props" unique_id=893316566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.85, 2.05, -18.95)
@@ -358,6 +363,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(0.9, 0.2, 0.1)
 material = ExtResource("12_2i4ku")
 surface = "wood"
+shown = false
 
 [node name="Sacks-2730" parent="Props" instance=ExtResource("prop_grain_sacks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.05, -26.4)
@@ -439,3 +445,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.05, -4, -21.85)
 script = ExtResource("5_7r8mi")
 size = Vector3(0.3, 3.7, 5.7)
 shown = false
+
+[node name="Closet" parent="Props" instance=ExtResource("prop_cellar_closet")]

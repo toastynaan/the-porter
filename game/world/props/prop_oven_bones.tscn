@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/bone.tres" id="bone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_oven_bones.glb" id="model_oven_bones"]
 
-[node name="OvenBones" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: pilgrims' bones in the oven ash (night 3, body 3). Placed at the oven's origin."
+[node name="OvenBones" type="Node3D"]
+editor_description = "Pilgrims' bones in the oven (tools/build/prop_abbey_stores.py; night 3, body 3): charred limb bones, ribs and a skull half sunk in a bed of ash on the chamber's floor. Placed at the oven's origin. The hidden Blocks (not solid) mark where they lie."
 
 [node name="OvenBone0" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.6, 0.45)
@@ -12,6 +13,7 @@ script = ExtResource("block")
 size = Vector3(0.08, 0.06, 0.3)
 material = ExtResource("bone")
 solid = false
+shown = false
 
 [node name="OvenBone1" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.564643, 0, 0.825336, 0, 1, 0, -0.825336, 0, -0.564643, -0.1, 0.6, 0.1)
@@ -19,6 +21,7 @@ script = ExtResource("block")
 size = Vector3(0.3, 0.06, 0.08)
 material = ExtResource("bone")
 solid = false
+shown = false
 
 [node name="OvenBone2" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.932039, 0, 0.362358, 0, 1, 0, -0.362358, 0, -0.932039, 0.2, 0.6, -0.25)
@@ -26,3 +29,6 @@ script = ExtResource("block")
 size = Vector3(0.3, 0.06, 0.08)
 material = ExtResource("bone")
 solid = false
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_oven_bones")]

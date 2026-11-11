@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://art/models/prop_cult_masks.glb" id="model_cult_masks"]
+
 [sub_resource type="StandardMaterial3D" id="Mat_0"]
 albedo_color = Color(0.25, 0.2, 0.15, 1)
 roughness = 0.9
@@ -40,25 +42,32 @@ roughness = 0.9
 material = SubResource("Mat_4")
 size = Vector3(0.45, 1.2, 0.1)
 
-[node name="CultMasks" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the cult's masks on their pegs in the crypt passage (night 6): pale wood faces with antler crowns, and black habits."
+[node name="CultMasks" type="Node3D"]
+editor_description = "The cult's masks on a peg board (tools/build/prop_abbey_yard.py; night 6, the crypt passage): three long faces of pale wood with eye holes, no mouth and antlers lashed to the brow (the middle one cracked), and a black habit hung by its hood on the last peg. For a wall: the board's back is at Z = 0, 1.6 m up, 1.6 m long, and everything hangs toward +Z. No collision. The old placeholder meshes are hidden."
 
 [node name="Board" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 mesh = SubResource("Mesh_0")
+visible = false
 
 [node name="Mask0" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.35, 0.06)
 mesh = SubResource("Mesh_1")
+visible = false
 
 [node name="Mask1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0.06)
 mesh = SubResource("Mesh_2")
+visible = false
 
 [node name="Mask2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.35, 0.06)
 mesh = SubResource("Mesh_3")
+visible = false
 
 [node name="Habit" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.12)
 mesh = SubResource("Mesh_4")
+visible = false
+
+[node name="Model" parent="." instance=ExtResource("model_cult_masks")]

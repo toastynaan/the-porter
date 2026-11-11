@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
 [ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+[ext_resource type="PackedScene" path="res://art/models/prop_bell_rope.glb" id="model_bell_rope"]
 
-[node name="BellRope" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the bell rope, 8.6 m from the bell down to the tower floor."
+[node name="BellRope" type="Node3D"]
+editor_description = "The bell rope (tools/build/prop_abbey_church.py): hemp, from the bell's clapper 8.5 m over this scene's origin down to the tower floor 0.75 m under it, with two knots to grip, a turn of it on the floor and its end frayed. The hidden Block is not solid."
 
 [node name="BellRope" type="StaticBody3D" parent="."]
 script = ExtResource("block")
 size = Vector3(0.04, 8.6, 0.04)
 material = ExtResource("sacking")
 solid = false
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_bell_rope")]

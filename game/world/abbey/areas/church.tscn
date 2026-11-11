@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_choir_stalls.tscn" id="prop_choir_stalls"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_reliquary.tscn" id="prop_reliquary"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_tomb_open.tscn" id="prop_tomb_open"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_crypt_rail.tscn" id="prop_crypt_rail"]
 
 [node name="Church" type="Node3D" unique_id=1194119076]
 
@@ -595,6 +596,7 @@ script = ExtResource("5_8a8d7")
 size = Vector3(6, 0.9, 0.12)
 material = ExtResource("13_wvabc")
 surface = "wood"
+shown = false
 
 [node name="CryptRailE" type="StaticBody3D" parent="Props" unique_id=1554682314]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1, 0.05, -34.8)
@@ -602,6 +604,7 @@ script = ExtResource("5_8a8d7")
 size = Vector3(0.12, 0.9, 1.36)
 material = ExtResource("13_wvabc")
 surface = "wood"
+shown = false
 
 [node name="Lights" type="Node3D" parent="." unique_id=144900238]
 
@@ -845,3 +848,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.92, 0, -35.75)
 script = ExtResource("5_8a8d7")
 size = Vector3(1.0, 2.6, 0.9)
 shown = false
+
+[node name="CryptRail" parent="Props" instance=ExtResource("prop_crypt_rail")]

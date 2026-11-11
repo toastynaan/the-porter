@@ -1,49 +1,27 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://game/drug/carving.gd" id="carving_gd"]
-[ext_resource type="Material" path="res://game/world/materials/stone.tres" id="stone"]
+[ext_resource type="PackedScene" path="res://art/models/prop_carved_saint.glb" id="model_carved_saint"]
+[ext_resource type="PackedScene" path="res://art/models/prop_carved_saint_b.glb" id="model_carved_saint_b"]
+[ext_resource type="PackedScene" path="res://art/models/prop_carved_saint_c.glb" id="model_carved_saint_c"]
+[ext_resource type="PackedScene" path="res://art/models/prop_carved_saint_head.glb" id="model_carved_saint_head"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
 
-[sub_resource type="BoxMesh" id="Mesh_plinth"]
-material = ExtResource("stone")
-size = Vector3(0.5, 0.6, 0.5)
-
-[sub_resource type="CylinderMesh" id="Mesh_robe"]
-material = ExtResource("stone")
-top_radius = 0.12
-bottom_radius = 0.2
-height = 1.0
-radial_segments = 8
-rings = 1
-
-[sub_resource type="SphereMesh" id="Mesh_head"]
-material = ExtResource("stone")
-radius = 0.11
-height = 0.24
-radial_segments = 8
-rings = 4
-
-[sub_resource type="BoxMesh" id="Mesh_face"]
-material = ExtResource("stone")
-size = Vector3(0.05, 0.08, 0.06)
-
-[node name="CarvedSaint" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: a carved saint on a plinth, 1.8 m in all, in stone. Faces -Z. From Dose 50 its head turns to follow the porter while he isn't looking (Carving). No collision: it stands out of the way, against a wall."
+[node name="CarvedSaint" type="Node3D"]
+editor_description = "A carved saint in worn stone on a plinth (tools/build/prop_abbey_church.py), 1.8 m in all, its face nearly weathered away. Faces -Z. Model shows one of three bodies by where it stands: hands together, a book held to the breast, a tau staff (set its pick to choose; the weights are set so the six in the abbey come out as two with hands together, three with a book, one with a staff). The head is its own model under Head, which Carving turns: from Dose 50 it follows the porter while he isn't looking. No collision: it stands out of the way, against a wall."
 script = ExtResource("carving_gd")
 
-[node name="Plinth" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-mesh = SubResource("Mesh_plinth")
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(0.59, 5.11, 4.3)
 
-[node name="Robe" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-mesh = SubResource("Mesh_robe")
+[node name="CarvedSaint" parent="Model" instance=ExtResource("model_carved_saint")]
+
+[node name="CarvedSaintB" parent="Model" instance=ExtResource("model_carved_saint_b")]
+
+[node name="CarvedSaintC" parent="Model" instance=ExtResource("model_carved_saint_c")]
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="Skull" type="MeshInstance3D" parent="Head"]
-mesh = SubResource("Mesh_head")
-
-[node name="Nose" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, -0.11)
-mesh = SubResource("Mesh_face")
+[node name="Model" parent="Head" instance=ExtResource("model_carved_saint_head")]
