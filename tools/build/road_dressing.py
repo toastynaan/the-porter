@@ -35,12 +35,12 @@ TREES = [
     # (None nearer: the city ditch lies under the wall.)
     ("elm", -160.0, 88.0, 1.1), ("elm", -141.0, 4.0, 1.15), ("oak", -176.0, -6.0, 1.0),
     # Dead oaks: one by the road, the rooks' tree; others in the fields.
-    ("snag", -189.0, 37.2, 1.1), ("snag", -301.0, 61.0, 0.9), ("snag", -133.5, 29.0, 1.0), ("snag", -246.0, 96.0, 1.2),
+    ("snag", -189.0, 37.2, 1.1), ("snag", -301.0, 61.0, 0.9), ("snag", -138.0, 28.0, 1.0), ("snag", -246.0, 96.0, 1.2),
     # Thorns and willows down the ditches and in the hedges.
     ("thorn", -203.0, 39.4, 0.9), ("thorn", -196.5, 54.9, 1.0), ("pollard", -209.0, 53.6, 1.0), ("thorn", -226.0, 55.3, 0.8),
     ("thorn", -245.0, 55.4, 1.1), ("pollard", -233.5, 40.2, 1.0), ("thorn", -283.0, 38.7, 1.0), ("thorn", -257.0, 38.8, 0.85),
     ("pollard", -176.0, 40.6, 0.95), ("thorn", -157.0, 54.6, 0.9), ("pollard", -150.5, 53.4, 0.9), ("thorn", -172.0, 39.2, 0.8),
-    ("pollard", -131.5, 58.0, 1.0), ("pollard", -133.0, 36.0, 0.9), ("thorn", -214.5, 24.0, 1.0), ("thorn", -213.5, 6.0, 0.9),
+    ("pollard", -136.6, 63.0, 1.0), ("pollard", -136.4, 34.5, 0.9), ("thorn", -214.5, 24.0, 1.0), ("thorn", -213.5, 6.0, 0.9),
     ("thorn", -152.5, 84.0, 1.0), ("thorn", -151.5, 104.0, 0.9), ("thorn", -276.5, 18.0, 1.0),
     # A copse on the north rise, and one behind the cot.
     ("elm", -228.0, 14.0, 0.9), ("oak", -234.0, 19.0, 0.9), ("thorn", -224.0, 20.0, 1.2), ("elm", -270.0, 92.0, 1.0),
