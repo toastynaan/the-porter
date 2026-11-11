@@ -23,78 +23,103 @@
 
 [node name="WestS0_00" parent="Walls" unique_id=1559754355 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -4)
+visible = false
 
 [node name="WestS0_01" parent="Walls" unique_id=325195456 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -4)
+visible = false
 
 [node name="Pier_-200_-40_0" parent="Walls" unique_id=441965885 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -4)
+visible = false
 
 [node name="Pier_-120_-40_0" parent="Walls" unique_id=923793544 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -4)
+visible = false
 
 [node name="WestW0_00" parent="Walls" unique_id=345743063 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -26)
+visible = false
 
 [node name="WestW0_01" parent="Walls" unique_id=1368402584 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -22)
+visible = false
 
 [node name="WestW0_02" parent="Walls" unique_id=2072132973 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -18)
+visible = false
 
 [node name="WestW0_03" parent="Walls" unique_id=999158341 instance=ExtResource("3_lqw11")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -14)
+visible = false
 
 [node name="WestW0_04" parent="Walls" unique_id=1763731284 instance=ExtResource("4_wugbe")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -10)
+visible = false
 
 [node name="WestW0_05" parent="Walls" unique_id=1762095029 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -6)
+visible = false
 
 [node name="WestE0_00" parent="Walls" unique_id=291367943 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -26)
+visible = false
 
 [node name="WestE0_01" parent="Walls" unique_id=636877913 instance=ExtResource("3_lqw11")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -22)
+visible = false
 
 [node name="WestE0_02" parent="Walls" unique_id=1588681868 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -18)
+visible = false
 
 [node name="WestE0_03" parent="Walls" unique_id=4279880 instance=ExtResource("3_lqw11")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -14)
+visible = false
 
 [node name="WestE0_04" parent="Walls" unique_id=1221696911 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -10)
+visible = false
 
 [node name="WestE0_05" parent="Walls" unique_id=943222482 instance=ExtResource("3_lqw11")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -6)
+visible = false
 
 [node name="Pier_-120_-280_0" parent="Walls" unique_id=221424718 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -28)
+visible = false
 
 [node name="GranaryS_00" parent="Walls" unique_id=119810629 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -16)
+visible = false
 
 [node name="GranaryS_01" parent="Walls" unique_id=1334777633 instance=ExtResource("3_lqw11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -16)
+visible = false
 
 [node name="Pier_-200_-160_0" parent="Walls" unique_id=1224744873 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -16)
+visible = false
 
 [node name="Pier_-120_-160_0" parent="Walls" unique_id=1960240680 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -16)
+visible = false
 
 [node name="StoresN_00" parent="Walls" unique_id=2035896104 instance=ExtResource("3_lqw11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -12)
+visible = false
 
 [node name="StoresN_01" parent="Walls" unique_id=1441839859 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -12)
+visible = false
 
 [node name="Pier_-200_-120_0" parent="Walls" unique_id=2051844800 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -12)
+visible = false
 
 [node name="Pier_-120_-120_0" parent="Walls" unique_id=181331336 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
+visible = false
 
 [node name="UnderW_00" parent="Walls" unique_id=1059558164 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, -4, -30)
@@ -215,24 +240,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -0.3, -26.5)
 script = ExtResource("5_7r8mi")
 size = Vector3(8, 0.35, 3)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="CellarFloor_1" type="StaticBody3D" parent="Floors" unique_id=1265197354]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -0.3, -11.5)
 script = ExtResource("5_7r8mi")
 size = Vector3(8, 0.35, 15)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="CellarFloor_2" type="StaticBody3D" parent="Floors" unique_id=1560872850]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.7, -0.3, -22)
 script = ExtResource("5_7r8mi")
 size = Vector3(0.6000004, 0.35, 6)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="CellarFloor_3" type="StaticBody3D" parent="Floors" unique_id=265930962]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.099999, -0.3, -22)
 script = ExtResource("5_7r8mi")
 size = Vector3(6.199999, 0.35, 6)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="PassageFloor_0" type="StaticBody3D" parent="Floors" unique_id=1378708852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -4.35, -30)
@@ -256,6 +285,7 @@ script = ExtResource("5_7r8mi")
 size = Vector3(8.799999, 3.9599996, 24)
 shape = 1
 material = ExtResource("7_0ibg5")
+shown = false
 
 [node name="Stairs" type="Node3D" parent="." unique_id=970375692 groups=["nav_source"]]
 

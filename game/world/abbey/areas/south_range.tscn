@@ -22,90 +22,119 @@
 
 [node name="RefectoryN0_00" parent="Walls" unique_id=1481322699 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -4)
+visible = false
 
 [node name="RefectoryN0_01" parent="Walls" unique_id=2032953944 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+visible = false
 
 [node name="RefectoryN0_02" parent="Walls" unique_id=1008164591 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+visible = false
 
 [node name="RefectoryN0_03" parent="Walls" unique_id=354095854 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+visible = false
 
 [node name="RefectoryN0_04" parent="Walls" unique_id=1730973866 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+visible = false
 
 [node name="RefectoryN0_05" parent="Walls" unique_id=650545874 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -4)
+visible = false
 
 [node name="RefectoryS0_00" parent="Walls" unique_id=1361843357 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 4)
+visible = false
 
 [node name="RefectoryS0_01" parent="Walls" unique_id=105187517 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+visible = false
 
 [node name="RefectoryS0_02" parent="Walls" unique_id=1372108534 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+visible = false
 
 [node name="RefectoryS0_03" parent="Walls" unique_id=1547590529 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+visible = false
 
 [node name="RefectoryS0_04" parent="Walls" unique_id=80452394 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+visible = false
 
 [node name="RefectoryS0_05" parent="Walls" unique_id=927409792 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 4)
+visible = false
 
 [node name="Pier_-120_40_0" parent="Walls" unique_id=1246221010 instance=ExtResource("4_glopw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 4)
+visible = false
 
 [node name="Pier_120_40_0" parent="Walls" unique_id=1639044767 instance=ExtResource("4_glopw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 4)
+visible = false
 
 [node name="RefectoryW0_00" parent="Walls" unique_id=1089046397 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -2)
+visible = false
 
 [node name="RefectoryW0_01" parent="Walls" unique_id=160460538 instance=ExtResource("1_fenyx")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 2)
+visible = false
 
 [node name="KitchenS0_00" parent="Walls" unique_id=346839612 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 4)
+visible = false
 
 [node name="KitchenS0_01" parent="Walls" unique_id=1259662258 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 4)
+visible = false
 
 [node name="Pier_-200_40_0" parent="Walls" unique_id=717390777 instance=ExtResource("4_glopw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 4)
+visible = false
 
 [node name="KitchenW0_00" parent="Walls" unique_id=1094574455 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -2)
+visible = false
 
 [node name="KitchenW0_01" parent="Walls" unique_id=408421260 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 2)
+visible = false
 
 [node name="BakehouseS0_00" parent="Walls" unique_id=594032646 instance=ExtResource("1_fenyx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 12)
+visible = false
 
 [node name="BakehouseS0_01" parent="Walls" unique_id=925587577 instance=ExtResource("3_a7wl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 12)
+visible = false
 
 [node name="Pier_-200_120_0" parent="Walls" unique_id=820285280 instance=ExtResource("4_glopw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 12)
+visible = false
 
 [node name="Pier_-120_120_0" parent="Walls" unique_id=1610366220 instance=ExtResource("4_glopw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+visible = false
 
 [node name="BakehouseW0_00" parent="Walls" unique_id=1026444928 instance=ExtResource("1_fenyx")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 6)
+visible = false
 
 [node name="BakehouseW0_01" parent="Walls" unique_id=117148533 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 10)
+visible = false
 
 [node name="BakehouseE0_00" parent="Walls" unique_id=797099114 instance=ExtResource("2_hyd1l")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 6)
+visible = false
 
 [node name="BakehouseE0_01" parent="Walls" unique_id=1380836233 instance=ExtResource("1_fenyx")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 10)
+visible = false
 
 [node name="Floors" type="Node3D" parent="." unique_id=1120765528 groups=["nav_source"]]
 
@@ -114,12 +143,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 script = ExtResource("5_iyvy8")
 size = Vector3(24, 0.35, 8)
 material = ExtResource("6_k0hgm")
+shown = false
 
 [node name="KitchenFloor_0" type="StaticBody3D" parent="Floors" unique_id=1395029771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -0.3, 4)
 script = ExtResource("5_iyvy8")
 size = Vector3(8, 0.35, 16)
 material = ExtResource("6_k0hgm")
+shown = false
 
 [node name="Roofs" type="Node3D" parent="." unique_id=751311319]
 
@@ -129,6 +160,7 @@ script = ExtResource("5_iyvy8")
 size = Vector3(8.8, 3.96, 24)
 shape = 1
 material = ExtResource("7_jkrbh")
+shown = false
 
 [node name="KitchenRoof" type="StaticBody3D" parent="Roofs" unique_id=109852598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2, 4, 4.2)
@@ -136,6 +168,7 @@ script = ExtResource("5_iyvy8")
 size = Vector3(8.4, 3.7799997, 16.4)
 shape = 1
 material = ExtResource("7_jkrbh")
+shown = false
 
 [node name="Doors" type="Node3D" parent="." unique_id=842039777]
 

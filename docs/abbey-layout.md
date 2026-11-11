@@ -61,6 +61,21 @@ The crypt, the passage under the nave and the foot of the hidden stair are one m
 
 `tools/crypt_shots.sh` renders it; stills marked `torches` light the brackets and those marked `lit` use a plain lamp, neither of which the game has.
 
+## The ranges as built (first look, 2026-11-11)
+
+The east, south and west ranges are one model, `Ranges` in `dormitory.tscn` (`env_ranges`, `tools/build/env_ranges.py`), laid over the greybox of `dormitory.tscn`, `south_range.tscn` and `cellar.tscn`. Their walls, floors and roofs are hidden and keep the collision. No solid was added and the navmesh is unchanged.
+
+The build script reads the wall pieces from the three scenes: each plain, door or window piece gets a face on both sides, with a surround to each opening. **After moving, adding or changing a wall piece in one of those scenes, run `tools/build.sh env_ranges`.** The windows stay open holes, since the porter and the hunters see through them.
+
+- **Heights.** A room with nothing over it is open to its roof: the refectory, kitchen, bakehouse, granary, parlour and stores are 4 m to the wall top and 8 m to the ridge; the dormitory, on the upper floor, is 4 m to the wall top and 8 m to the ridge (12 m above ground). Each has boards, rafters, purlins and a truss every 4 m; the refectory's and dormitory's trusses have curved braces.
+- **Under the dormitory** (its floor is at 3.72 m): the slype is a tunnel vault; the chapter house has two ribbed bays; the warming room two groined bays; the undercroft four. The stair hall and the latrine's ground floor have boarded ceilings.
+- **Walls.** Outside, the cloister's stone. Inside, plaster in the refectory, dormitory, stair hall and parlour; cut stone in the slype, chapter house and warming room; rubble in the undercroft, kitchen, bakehouse, granary, stores and latrines.
+- **Floors.** Two-coloured tiles in the refectory and chapter house; flags in the other ground-floor rooms; boards in the dormitory.
+- **Roofs.** Clay tile, with a chimney stack over the kitchen hearth, the warming room's hearth and the oven.
+- **Fittings (drawn only).** Refectory: oak panelling to 1.5 m, paned cloth hangings. Dormitory: hangings between the windows, a rush runner down the middle. Day stair: a red runner with a gold edge, a hanging on the hall's wall. Chapter house: a blind arcade and a painted panel of three saints. Eight iron brackets with burnt-out torches. No light was added.
+
+Still greybox: every prop (beds, tables, benches, hearths, oven, barrels, doors). `tools/ranges_shots.sh` renders it.
+
 ## Routes
 
 | Route | From → to | Notes |

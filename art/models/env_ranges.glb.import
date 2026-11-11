@@ -1,0 +1,109 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://sgja8jmcb8xn"
+path="res://.godot/imported/env_ranges.glb-d607246ffcb4a963e4ba50729f8cc485.scn"
+
+[deps]
+
+source_file="res://art/models/env_ranges.glb"
+dest_files=["res://.godot/imported/env_ranges.glb-d607246ffcb4a963e4ba50729f8cc485.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+mesh_library/create_categories_from_hierarchy=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"flags_worn": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/flags_worn.tres",
+"use_external/path": "res://game/world/materials/real/flags_worn.tres"
+},
+"iron_cart": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
+"use_external/path": "res://game/world/materials/real/iron_cart.tres"
+},
+"painted": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/painted.tres",
+"use_external/path": "res://game/world/materials/real/painted.tres"
+},
+"plaster_abbey": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/plaster_abbey.tres",
+"use_external/path": "res://game/world/materials/real/plaster_abbey.tres"
+},
+"roof_tiles": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/roof_tiles.tres",
+"use_external/path": "res://game/world/materials/real/roof_tiles.tres"
+},
+"sacking": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/sacking.tres",
+"use_external/path": "res://game/world/materials/real/sacking.tres"
+},
+"stone_church": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_church.tres",
+"use_external/path": "res://game/world/materials/real/stone_church.tres"
+},
+"stone_cloister": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_cloister.tres",
+"use_external/path": "res://game/world/materials/real/stone_cloister.tres"
+},
+"stone_rubble": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_rubble.tres",
+"use_external/path": "res://game/world/materials/real/stone_rubble.tres"
+},
+"window_dark": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
+"use_external/path": "res://game/world/materials/real/window_dark.tres"
+},
+"wood_boards": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_boards.tres",
+"use_external/path": "res://game/world/materials/real/wood_boards.tres"
+},
+"wood_medieval": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/wood_medieval.tres",
+"use_external/path": "res://game/world/materials/real/wood_medieval.tres"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1
