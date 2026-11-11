@@ -76,6 +76,23 @@ The build script reads the wall pieces from the three scenes: each plain, door o
 
 Still greybox: every prop (beds, tables, benches, hearths, oven, barrels, doors). `tools/ranges_shots.sh` renders it.
 
+## The precinct as built (first look, 2026-11-11)
+
+Everything outside the church and the ranges is one model, `Precinct` in `outer_court.tscn` (`env_precinct`, `tools/build/env_precinct.py`): the precinct wall, the ground, and the five buildings that stand apart (porter's cell, guesthouse, charnel house, infirmary, mill). The greybox walls, ground blocks, floors and roofs of `abbey.tscn` (`Grounds`), `outer_court.tscn` and `graveyard_infirmary.tscn` are hidden and keep the collision. No solid was added and the navmesh is unchanged.
+
+The build reads the wall pieces and the ground blocks from those scenes, as the ranges' does. **After moving a wall piece or a ground block, run `tools/build.sh env_precinct`.**
+
+- **Precinct wall.** Rubble inside, with its squints and an arch over the gate; its lane face is the lane's own model. The north, east and south outer faces are made too.
+- **Buildings.** Each is open to a timber roof under clay tiles, 8 m to the ridge. Plaster inside the cell, guesthouse and infirmary; rubble in the charnel house and mill. Flags underfoot, earth in the charnel house. A chimney stack on the guesthouse and the infirmary.
+- **Ground.** Trodden earth in the outer court, with a flagged path from the gate east, then north past the cell to the parlour door. Gravel between the south range and the mill race. Grass in the graveyard, round the infirmary and under the orchard. Tilled rows in the kitchen garden.
+- **Water.** The mill race and the fishpond keep their greybox blocks, with the still-water material and flags on their beds and kerbs.
+
+Still greybox: every prop (graves, yews, well, woodpile, beds, the mill wheel, garden beds, the gate's grille and bar, doors).
+
+**How the walls keep the light out** (ranges and precinct): faces are one-sided, so each wall has an unseen core down its middle, each roof overhangs its walls and gables by 0.5 m, and the inside gables follow the roof's slope. Without these the moon lit streaks across the rooms.
+
+`tools/precinct_shots.sh` renders it.
+
 ## Routes
 
 | Route | From → to | Notes |

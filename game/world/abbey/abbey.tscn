@@ -43,255 +43,339 @@ navigation_mesh = ExtResource("2_ol7df")
 
 [node name="PrecinctN_00" parent="Navigation/Grounds/Walls" unique_id=1846798833 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, -40)
+visible = false
 
 [node name="PrecinctN_01" parent="Navigation/Grounds/Walls" unique_id=1397253469 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -40)
+visible = false
 
 [node name="PrecinctN_02" parent="Navigation/Grounds/Walls" unique_id=121623720 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -40)
+visible = false
 
 [node name="PrecinctN_03" parent="Navigation/Grounds/Walls" unique_id=246125662 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -40)
+visible = false
 
 [node name="PrecinctN_04" parent="Navigation/Grounds/Walls" unique_id=658840904 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -40)
+visible = false
 
 [node name="PrecinctN_05" parent="Navigation/Grounds/Walls" unique_id=21994210 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -40)
+visible = false
 
 [node name="PrecinctN_06" parent="Navigation/Grounds/Walls" unique_id=600423207 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -40)
+visible = false
 
 [node name="PrecinctN_07" parent="Navigation/Grounds/Walls" unique_id=1480974164 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -40)
+visible = false
 
 [node name="PrecinctN_08" parent="Navigation/Grounds/Walls" unique_id=1844158592 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -40)
+visible = false
 
 [node name="PrecinctN_09" parent="Navigation/Grounds/Walls" unique_id=1951973331 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -40)
+visible = false
 
 [node name="PrecinctN_10" parent="Navigation/Grounds/Walls" unique_id=411635210 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -40)
+visible = false
 
 [node name="PrecinctN_11" parent="Navigation/Grounds/Walls" unique_id=1992294436 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -40)
+visible = false
 
 [node name="PrecinctN_12" parent="Navigation/Grounds/Walls" unique_id=1391811900 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -40)
+visible = false
 
 [node name="PrecinctN_13" parent="Navigation/Grounds/Walls" unique_id=1517433419 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -40)
+visible = false
 
 [node name="PrecinctN_14" parent="Navigation/Grounds/Walls" unique_id=2140582718 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -40)
+visible = false
 
 [node name="PrecinctN_15" parent="Navigation/Grounds/Walls" unique_id=483875023 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -40)
+visible = false
 
 [node name="PrecinctN_16" parent="Navigation/Grounds/Walls" unique_id=1332711791 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -40)
+visible = false
 
 [node name="PrecinctN_17" parent="Navigation/Grounds/Walls" unique_id=2004145528 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -40)
+visible = false
 
 [node name="PrecinctN_18" parent="Navigation/Grounds/Walls" unique_id=1197092215 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -40)
+visible = false
 
 [node name="PrecinctN_19" parent="Navigation/Grounds/Walls" unique_id=165462555 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -40)
+visible = false
 
 [node name="Pier_-400_-400_0" parent="Navigation/Grounds/Walls" unique_id=808689980 instance=ExtResource("4_ray55")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -40)
+visible = false
 
 [node name="Pier_400_-400_0" parent="Navigation/Grounds/Walls" unique_id=1959704197 instance=ExtResource("4_ray55")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -40)
+visible = false
 
 [node name="PrecinctS_00" parent="Navigation/Grounds/Walls" unique_id=316701593 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 40)
+visible = false
 
 [node name="PrecinctS_01" parent="Navigation/Grounds/Walls" unique_id=1677566671 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 40)
+visible = false
 
 [node name="PrecinctS_02" parent="Navigation/Grounds/Walls" unique_id=1840508338 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 40)
+visible = false
 
 [node name="PrecinctS_03" parent="Navigation/Grounds/Walls" unique_id=569187976 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 40)
+visible = false
 
 [node name="PrecinctS_04" parent="Navigation/Grounds/Walls" unique_id=891378245 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 40)
+visible = false
 
 [node name="PrecinctS_05" parent="Navigation/Grounds/Walls" unique_id=187513919 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 40)
+visible = false
 
 [node name="PrecinctS_06" parent="Navigation/Grounds/Walls" unique_id=484306745 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 40)
+visible = false
 
 [node name="PrecinctS_07" parent="Navigation/Grounds/Walls" unique_id=1612824633 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 40)
+visible = false
 
 [node name="PrecinctS_08" parent="Navigation/Grounds/Walls" unique_id=1564527752 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 40)
+visible = false
 
 [node name="PrecinctS_09" parent="Navigation/Grounds/Walls" unique_id=189593978 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 40)
+visible = false
 
 [node name="PrecinctS_10" parent="Navigation/Grounds/Walls" unique_id=1572896877 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 40)
+visible = false
 
 [node name="PrecinctS_11" parent="Navigation/Grounds/Walls" unique_id=1313542585 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 40)
+visible = false
 
 [node name="PrecinctS_12" parent="Navigation/Grounds/Walls" unique_id=107681066 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 40)
+visible = false
 
 [node name="PrecinctS_13" parent="Navigation/Grounds/Walls" unique_id=755795885 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 40)
+visible = false
 
 [node name="PrecinctS_14" parent="Navigation/Grounds/Walls" unique_id=1078021848 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 40)
+visible = false
 
 [node name="PrecinctS_15" parent="Navigation/Grounds/Walls" unique_id=410643118 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 40)
+visible = false
 
 [node name="PrecinctS_16" parent="Navigation/Grounds/Walls" unique_id=985697695 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 40)
+visible = false
 
 [node name="PrecinctS_17" parent="Navigation/Grounds/Walls" unique_id=311148877 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 40)
+visible = false
 
 [node name="PrecinctS_18" parent="Navigation/Grounds/Walls" unique_id=979817080 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 40)
+visible = false
 
 [node name="PrecinctS_19" parent="Navigation/Grounds/Walls" unique_id=307406311 instance=ExtResource("3_43vra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 40)
+visible = false
 
 [node name="Pier_-400_400_0" parent="Navigation/Grounds/Walls" unique_id=1703413525 instance=ExtResource("4_ray55")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 40)
+visible = false
 
 [node name="Pier_400_400_0" parent="Navigation/Grounds/Walls" unique_id=384015792 instance=ExtResource("4_ray55")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 40)
+visible = false
 
 [node name="PrecinctW_00" parent="Navigation/Grounds/Walls" unique_id=2043808767 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -38)
+visible = false
 
 [node name="PrecinctW_01" parent="Navigation/Grounds/Walls" unique_id=882861286 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -34)
+visible = false
 
 [node name="PrecinctW_02" parent="Navigation/Grounds/Walls" unique_id=1692997156 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -30)
+visible = false
 
 [node name="PrecinctW_03" parent="Navigation/Grounds/Walls" unique_id=21922280 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -26)
+visible = false
 
 [node name="PrecinctW_04" parent="Navigation/Grounds/Walls" unique_id=1010539803 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -22)
+visible = false
 
 [node name="PrecinctW_05" parent="Navigation/Grounds/Walls" unique_id=1937420996 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -18)
+visible = false
 
 [node name="PrecinctW_06" parent="Navigation/Grounds/Walls" unique_id=1051966988 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -14)
+visible = false
 
 [node name="PrecinctW_07" parent="Navigation/Grounds/Walls" unique_id=1808139415 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -10)
+visible = false
 
 [node name="PrecinctW_08" parent="Navigation/Grounds/Walls" unique_id=1299576912 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -6)
+visible = false
 
 [node name="PrecinctW_09" parent="Navigation/Grounds/Walls" unique_id=36853933 instance=ExtResource("5_lb8pl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, -2)
+visible = false
 
 [node name="PrecinctW_10" parent="Navigation/Grounds/Walls" unique_id=1375047032 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 2)
+visible = false
 
 [node name="PrecinctW_11" parent="Navigation/Grounds/Walls" unique_id=674220176 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 6)
+visible = false
 
 [node name="PrecinctW_12" parent="Navigation/Grounds/Walls" unique_id=347341517 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 10)
+visible = false
 
 [node name="PrecinctW_13" parent="Navigation/Grounds/Walls" unique_id=906038548 instance=ExtResource("22_squint")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 14)
+visible = false
 
 [node name="PrecinctW_14" parent="Navigation/Grounds/Walls" unique_id=1285942981 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 18)
+visible = false
 
 [node name="PrecinctW_15" parent="Navigation/Grounds/Walls" unique_id=455091464 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 22)
+visible = false
 
 [node name="PrecinctW_16" parent="Navigation/Grounds/Walls" unique_id=304534155 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 26)
+visible = false
 
 [node name="PrecinctW_17" parent="Navigation/Grounds/Walls" unique_id=1281368915 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 30)
+visible = false
 
 [node name="PrecinctW_18" parent="Navigation/Grounds/Walls" unique_id=224628628 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 34)
+visible = false
 
 [node name="PrecinctW_19" parent="Navigation/Grounds/Walls" unique_id=198550199 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -40, 0, 38)
+visible = false
 
 [node name="PrecinctE_00" parent="Navigation/Grounds/Walls" unique_id=1934787694 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -38)
+visible = false
 
 [node name="PrecinctE_01" parent="Navigation/Grounds/Walls" unique_id=471054480 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -34)
+visible = false
 
 [node name="PrecinctE_02" parent="Navigation/Grounds/Walls" unique_id=1613612055 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -30)
+visible = false
 
 [node name="PrecinctE_03" parent="Navigation/Grounds/Walls" unique_id=1851338502 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -26)
+visible = false
 
 [node name="PrecinctE_04" parent="Navigation/Grounds/Walls" unique_id=1325436418 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -22)
+visible = false
 
 [node name="PrecinctE_05" parent="Navigation/Grounds/Walls" unique_id=1039689769 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -18)
+visible = false
 
 [node name="PrecinctE_06" parent="Navigation/Grounds/Walls" unique_id=1676161952 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -14)
+visible = false
 
 [node name="PrecinctE_07" parent="Navigation/Grounds/Walls" unique_id=77745710 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -10)
+visible = false
 
 [node name="PrecinctE_08" parent="Navigation/Grounds/Walls" unique_id=1656041309 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -6)
+visible = false
 
 [node name="PrecinctE_09" parent="Navigation/Grounds/Walls" unique_id=384210268 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, -2)
+visible = false
 
 [node name="PrecinctE_10" parent="Navigation/Grounds/Walls" unique_id=1669895204 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 2)
+visible = false
 
 [node name="PrecinctE_11" parent="Navigation/Grounds/Walls" unique_id=148721055 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 6)
+visible = false
 
 [node name="PrecinctE_12" parent="Navigation/Grounds/Walls" unique_id=736398906 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 10)
+visible = false
 
 [node name="PrecinctE_13" parent="Navigation/Grounds/Walls" unique_id=1956116125 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 14)
+visible = false
 
 [node name="PrecinctE_14" parent="Navigation/Grounds/Walls" unique_id=2145293231 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 18)
+visible = false
 
 [node name="PrecinctE_15" parent="Navigation/Grounds/Walls" unique_id=757379947 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 22)
+visible = false
 
 [node name="PrecinctE_16" parent="Navigation/Grounds/Walls" unique_id=975118188 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 26)
+visible = false
 
 [node name="PrecinctE_17" parent="Navigation/Grounds/Walls" unique_id=1405049443 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 30)
+visible = false
 
 [node name="PrecinctE_18" parent="Navigation/Grounds/Walls" unique_id=650586810 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 34)
+visible = false
 
 [node name="PrecinctE_19" parent="Navigation/Grounds/Walls" unique_id=1872115276 instance=ExtResource("3_43vra")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 0, 38)
+visible = false
 
 [node name="Floors" type="Node3D" parent="Navigation/Grounds" unique_id=1427487583 groups=["nav_source"]]
 
@@ -302,6 +386,7 @@ size = Vector3(60, 0.3, 4)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_1" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1514456196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -38)
@@ -310,6 +395,7 @@ size = Vector3(20, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_2" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=681914372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -0.3, -32)
@@ -318,6 +404,7 @@ size = Vector3(12, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_3" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1801127069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, -0.3, -32)
@@ -326,6 +413,7 @@ size = Vector3(12, 0.3, 8)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_4" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=679155123]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, -26)
@@ -334,6 +422,7 @@ size = Vector3(20, 0.3, 4)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_5" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=865719726]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -26)
@@ -342,6 +431,7 @@ size = Vector3(20, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_6" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=232291022]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.3, -20)
@@ -350,6 +440,7 @@ size = Vector3(4, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_7" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=567543868]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, -0.3, -20)
@@ -358,6 +449,7 @@ size = Vector3(4, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_8" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1440161375]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -16)
@@ -366,6 +458,7 @@ size = Vector3(16, 0.3, 16)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_9" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=168788401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -0.3, -20)
@@ -374,6 +467,7 @@ size = Vector3(12, 0.3, 8)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_10" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1050479166]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, -14)
@@ -382,6 +476,7 @@ size = Vector3(20, 0.3, 4)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_11" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=571481091]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, -10)
@@ -390,6 +485,7 @@ size = Vector3(20, 0.3, 12)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_12" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1247715352]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, -0.3, -8)
@@ -398,6 +494,7 @@ size = Vector3(12, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_13" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=520250123]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, -0.3, 4)
@@ -406,6 +503,7 @@ size = Vector3(20, 0.3, 16)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_14" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1017897852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -0.3, 0)
@@ -414,6 +512,7 @@ size = Vector3(4, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_15" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=842586526]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 0)
@@ -422,6 +521,7 @@ size = Vector3(4, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_16" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=684364280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 8)
@@ -430,6 +530,7 @@ size = Vector3(24, 0.3, 8)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_17" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1404801238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, 6)
@@ -438,6 +539,7 @@ size = Vector3(20, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_18" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1465074314]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -0.3, 12)
@@ -446,6 +548,7 @@ size = Vector3(4, 0.3, 8)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_19" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1565427636]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -0.3, 12)
@@ -454,6 +557,7 @@ size = Vector3(8, 0.3, 8)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_20" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1979088867]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -0.3, 14)
@@ -462,6 +566,7 @@ size = Vector3(52, 0.3, 4)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_21" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=889660822]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, -0.3, 18)
@@ -470,6 +575,7 @@ size = Vector3(32, 0.3, 4)
 material = ExtResource("7_6ukdg")
 surface = "mud"
 metadata/surface = "mud"
+shown = false
 
 [node name="Ground_22" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=551543409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 18)
@@ -478,6 +584,7 @@ size = Vector3(4, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_23" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=453395498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 22)
@@ -486,6 +593,7 @@ size = Vector3(80, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_24" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=399824591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -0.3, 30)
@@ -494,6 +602,7 @@ size = Vector3(64, 0.3, 12)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_25" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=1073494254]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, -0.3, 30)
@@ -502,6 +611,7 @@ size = Vector3(4, 0.3, 12)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Ground_26" type="StaticBody3D" parent="Navigation/Grounds/Floors" unique_id=2027422055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 38)
@@ -510,6 +620,7 @@ size = Vector3(80, 0.3, 4)
 material = ExtResource("8_cjnf8")
 surface = "grass"
 metadata/surface = "grass"
+shown = false
 
 [node name="Church" parent="Navigation" unique_id=1194119076 instance=ExtResource("9_6tter")]
 

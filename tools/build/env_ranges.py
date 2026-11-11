@@ -70,6 +70,8 @@ ROOMS = {
 # Walls that are the church's (its south wall), seen from the ranges only:
 # (x, level, kind).
 BORROWED = ((14, 0, "wall"), (18, 0, "wall"), (-18, 0, "wall"), (-14, 0, "wall"), (14, 1, "wall"), (18, 1, "wall_door"))
+# Faces not to make: (along, line, side). env_precinct.py uses these three.
+SKIP = ()
 
 
 def plaster(seed):
@@ -100,7 +102,7 @@ def pieces():
         text = open(os.path.join(ROOT, "game/world/abbey/areas", scene + ".tscn")).read()
         kinds = {i: os.path.basename(p)[:-5] for p, i in re.findall(r'path="res://game/world/kit/([^"]+)" id="([^"]+)"', text)}
         for block in text.split("\n\n"):
-            m = re.match(r'\[node name="[^"]+"[^\]]*parent="Walls"[^\]]*instance=ExtResource\("([^"]+)"\)', block)
+            m = re.match(r'\[node name="[^"]+"[^\]]*parent="(?:[^"]*/)?Walls"[^\]]*instance=ExtResource\("([^"]+)"\)', block)
             tr = re.search(r"transform = Transform3D\(([^)]*)\)", block)
             if not m or not tr or kinds.get(m.group(1)) == "corner":
                 continue
@@ -131,6 +133,8 @@ def cut_of(kind, at, base):
         return (at, 0.31, base + 1.59, base + 2.81)
     if kind == "wall_gate":
         return (at, 1.5, base, base + 3.4)
+    if kind == "wall_squint":
+        return (at, 0.09, base + 1.35, base + 1.85)
     return None
 
 
@@ -145,8 +149,28 @@ def walls(m, tints, outside):
             # s is the side in the world: toward +z (a wall along x) or +x (along z).
             x, z = (at, line + s) if along == "x" else (line + s, at)
             groups.setdefault((along, line, level, s, room_at(x, z, level)), []).append((at, kind))
+    # A core down the middle of every wall, never seen: the faces are one-sided
+    # and meet edge to edge at the corners, so without it the sun and moon get
+    # in through the cracks and through the backs of the inner faces.
+    for along, line, at, level, kind, only in ps:
+        if only:
+            continue
+        base = 4.0 * level
+        a0 = at - 2.0 - (0.0 if (along, line, at - 4, level) in have else F)
+        a1 = at + 2.0 + (0.0 if (along, line, at + 4, level) in have else F)
+        cut = cut_of(kind, at, base)
+        rects = [(a0, a1, base, base + 4.0)]
+        if cut:
+            rects = [(a0, cut[0] - cut[1], base, base + 4.0), (cut[0] + cut[1], a1, base, base + 4.0), (cut[0] - cut[1], cut[0] + cut[1], cut[3], base + 4.0),
+                     (cut[0] - cut[1], cut[0] + cut[1], base, cut[2])]
+        for ua, ub, ya, yb in rects:
+            if ub - ua < 0.01 or yb - ya < 0.01:
+                continue
+            pts = [(ua, ya, line), (ub, ya, line), (ub, yb, line), (ua, yb, line)] if along == "x" else [(line, ya, ua), (line, ya, ub), (line, yb, ub), (line, yb, ua)]
+            for k in (-1, 1):
+                m.poly(pts, "stone_rubble", (0.1, 0.1, 0.1, 1.0), facing=(0, 0, k) if along == "x" else (k, 0, 0))
     for (along, line, level, s, cls), items in groups.items():
-        if cls == "cloister" and level == 0:
+        if (cls == "cloister" and level == 0) or (along, line, s) in SKIP:
             continue
         items.sort()
         runs = [[items[0]]]
@@ -317,25 +341,26 @@ def build():
 
     # Roofs: tile outside, timber inside, gables where they end.
     tile = (0.85, 0.8, 0.76)
-    cp.gable_roof(roof_m, 11.6, 20.4, -28.0, 20.4, 8.0, 12.0, "roof_tiles", tile, along="z", over=0.0)
-    cp.gable_roof(roof_m, -12.0, 12.0, -4.4, 4.4, 4.0, 8.0, "roof_tiles", tile, along="x", over=0.0)
-    cp.gable_roof(roof_m, -20.4, -11.6, -28.0, 12.4, 4.0, 8.0, "roof_tiles", tile, along="z", over=0.0)
+    # (Each stops short where it runs into a taller wall, and overhangs its own gables, so no light gets in at the verge.)
+    cp.gable_roof(roof_m, 11.6, 20.4, -27.5, 20.4, 8.0, 12.0, "roof_tiles", tile, along="z", over=0.5)
+    cp.gable_roof(roof_m, -12.0, 11.5, -4.4, 4.4, 4.0, 8.0, "roof_tiles", tile, along="x", over=0.5)
+    cp.gable_roof(roof_m, -20.4, -11.6, -27.5, 12.4, 4.0, 8.0, "roof_tiles", tile, along="z", over=0.5)
     open_roof(ceil_m, "z", -28.0 + F, 20.0 - F, 16.0, 4.4, 8.0, 12.0, [-24.0 + 4.0 * i for i in range(11)], braced=True)
     open_roof(ceil_m, "x", -12.0 + F, 12.0 - F, 0.0, 4.4, 4.0, 8.0, [-8.0, -4.0, 0.0, 4.0, 8.0], braced=True)
     open_roof(ceil_m, "z", -28.0 + F, -4.0 - F, -16.0, 4.4, 4.0, 8.0, [-24.0, -20.0, -8.0])
     open_roof(ceil_m, "z", -4.0 + F, 12.0 - F, -16.0, 4.4, 4.0, 8.0, [0.0, 8.0])
     dorm_t, west_t, kit_t = tints["dorm"], tints["granary"], tints["kitchen"]
-    gable(wall_m, "z", -28.0 + F, 16.0, 4.0, 8.0, 12.0, 1, dorm_t)
-    gable(wall_m, "z", 12.0 - F, 16.0, 4.0, 8.0, 12.0, -1, dorm_t)
-    gable(wall_m, "z", 12.0 + F, 16.0, 4.0, 8.0, 12.0, 1, tints["latrine1"])
-    gable(wall_m, "z", 20.0 - F, 16.0, 4.0, 8.0, 12.0, -1, tints["latrine1"])
+    gable(wall_m, "z", -28.0 + F, 16.0, 4.4, 8.0, 12.0, 1, dorm_t)
+    gable(wall_m, "z", 12.0 - F, 16.0, 4.4, 8.0, 12.0, -1, dorm_t)
+    gable(wall_m, "z", 12.0 + F, 16.0, 4.4, 8.0, 12.0, 1, tints["latrine1"])
+    gable(wall_m, "z", 20.0 - F, 16.0, 4.4, 8.0, 12.0, -1, tints["latrine1"])
     gable(wall_m, "z", 20.0 + F, 16.0, 4.4, 8.0, 12.0, 1, outside)
-    gable(wall_m, "x", -12.0 + F, 0.0, 4.0, 4.0, 8.0, 1, tints["refectory"])
+    gable(wall_m, "x", -12.0 + F, 0.0, 4.4, 4.0, 8.0, 1, tints["refectory"])
     gable(wall_m, "x", -12.0 - F, 0.0, 4.4, 4.0, 8.0, -1, outside)
-    gable(wall_m, "z", -28.0 + F, -16.0, 4.0, 4.0, 8.0, 1, west_t)
-    gable(wall_m, "z", -4.0 - F, -16.0, 4.0, 4.0, 8.0, -1, tints["stores"])
-    gable(wall_m, "z", -4.0 + F, -16.0, 4.0, 4.0, 8.0, 1, kit_t)
-    gable(wall_m, "z", 12.0 - F, -16.0, 4.0, 4.0, 8.0, -1, tints["bakehouse"])
+    gable(wall_m, "z", -28.0 + F, -16.0, 4.4, 4.0, 8.0, 1, west_t)
+    gable(wall_m, "z", -4.0 - F, -16.0, 4.4, 4.0, 8.0, -1, tints["stores"])
+    gable(wall_m, "z", -4.0 + F, -16.0, 4.4, 4.0, 8.0, 1, kit_t)
+    gable(wall_m, "z", 12.0 - F, -16.0, 4.4, 4.0, 8.0, -1, tints["bakehouse"])
     gable(wall_m, "z", 12.0 + F, -16.0, 4.4, 4.0, 8.0, 1, outside)
     # The east wall of the refectory above its own walls is the east range's.
     st = cp.stone_tint(4.0, 13.0, seed=55.0, worn=0.5)

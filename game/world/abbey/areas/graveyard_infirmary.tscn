@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="Material" path="res://game/world/materials/real/water_still.tres" id="gy_water"]
+[ext_resource type="Material" path="res://game/world/materials/real/flags_worn.tres" id="gy_stone"]
 [ext_resource type="PackedScene" path="res://game/world/kit/wall.tscn" id="1_ayvs0"]
 [ext_resource type="PackedScene" path="res://game/world/kit/corner.tscn" id="2_gai3n"]
 [ext_resource type="PackedScene" path="res://game/world/kit/wall_window.tscn" id="3_f5hnl"]
@@ -34,111 +36,147 @@ size = Vector3(6, 1.2, 3)
 
 [node name="CharnelN0_00" parent="Walls" unique_id=2055676373 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -24)
+visible = false
 
 [node name="CharnelN0_01" parent="Walls" unique_id=1233707685 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -24)
+visible = false
 
 [node name="Pier_320_-240_0" parent="Walls" unique_id=1344875971 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -24)
+visible = false
 
 [node name="Pier_400_-240_0" parent="Walls" unique_id=288622703 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -24)
+visible = false
 
 [node name="CharnelS0_00" parent="Walls" unique_id=967715694 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -16)
+visible = false
 
 [node name="CharnelS0_01" parent="Walls" unique_id=809072666 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -16)
+visible = false
 
 [node name="Pier_320_-160_0" parent="Walls" unique_id=1441915259 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -16)
+visible = false
 
 [node name="Pier_400_-160_0" parent="Walls" unique_id=243361774 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -16)
+visible = false
 
 [node name="CharnelW0_00" parent="Walls" unique_id=632565811 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, -22)
+visible = false
 
 [node name="CharnelW0_01" parent="Walls" unique_id=372817637 instance=ExtResource("4_cddja")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, -18)
+visible = false
 
 [node name="InfirmaryN0_00" parent="Walls" unique_id=318311771 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -4)
+visible = false
 
 [node name="InfirmaryN0_01" parent="Walls" unique_id=1926061585 instance=ExtResource("4_cddja")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -4)
+visible = false
 
 [node name="InfirmaryN0_02" parent="Walls" unique_id=1767929797 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -4)
+visible = false
 
 [node name="Pier_240_-40_0" parent="Walls" unique_id=191446869 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -4)
+visible = false
 
 [node name="Pier_360_-40_0" parent="Walls" unique_id=1125536235 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -4)
+visible = false
 
 [node name="InfirmaryS0_00" parent="Walls" unique_id=88799363 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 4)
+visible = false
 
 [node name="InfirmaryS0_01" parent="Walls" unique_id=1928260811 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 4)
+visible = false
 
 [node name="InfirmaryS0_02" parent="Walls" unique_id=576591051 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 4)
+visible = false
 
 [node name="Pier_240_40_0" parent="Walls" unique_id=1967600872 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 4)
+visible = false
 
 [node name="Pier_360_40_0" parent="Walls" unique_id=449022649 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 4)
+visible = false
 
 [node name="InfirmaryW0_00" parent="Walls" unique_id=509597663 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, -2)
+visible = false
 
 [node name="InfirmaryW0_01" parent="Walls" unique_id=1699165437 instance=ExtResource("4_cddja")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 2)
+visible = false
 
 [node name="InfirmaryE0_00" parent="Walls" unique_id=2033378416 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 0, -2)
+visible = false
 
 [node name="InfirmaryE0_01" parent="Walls" unique_id=495611984 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36, 0, 2)
+visible = false
 
 [node name="MillN0_00" parent="Walls" unique_id=1946174684 instance=ExtResource("4_cddja")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 8)
+visible = false
 
 [node name="MillN0_01" parent="Walls" unique_id=882108853 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 8)
+visible = false
 
 [node name="Pier_240_80_0" parent="Walls" unique_id=1201363676 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 8)
+visible = false
 
 [node name="Pier_320_80_0" parent="Walls" unique_id=732656008 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 8)
+visible = false
 
 [node name="MillS0_00" parent="Walls" unique_id=927182275 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 16)
+visible = false
 
 [node name="MillS0_01" parent="Walls" unique_id=1151385965 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 16)
+visible = false
 
 [node name="Pier_240_160_0" parent="Walls" unique_id=1910340047 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 16)
+visible = false
 
 [node name="Pier_320_160_0" parent="Walls" unique_id=1737232188 instance=ExtResource("2_gai3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 16)
+visible = false
 
 [node name="MillW0_00" parent="Walls" unique_id=1489010631 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 10)
+visible = false
 
 [node name="MillW0_01" parent="Walls" unique_id=1358969252 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, 14)
+visible = false
 
 [node name="MillE0_00" parent="Walls" unique_id=2028165025 instance=ExtResource("3_f5hnl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 10)
+visible = false
 
 [node name="MillE0_01" parent="Walls" unique_id=1215849548 instance=ExtResource("1_ayvs0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32, 0, 14)
+visible = false
 
 [node name="Floors" type="Node3D" parent="." unique_id=260946200 groups=["nav_source"]]
 
@@ -147,67 +185,70 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, -0.3, -20)
 script = ExtResource("5_kwyhn")
 size = Vector3(8, 0.35, 8)
 material = ExtResource("6_5eyse")
+shown = false
 
 [node name="InfirmaryFloor_0" type="StaticBody3D" parent="Floors" unique_id=206990013]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.3, 0)
 script = ExtResource("5_kwyhn")
 size = Vector3(12, 0.35, 8)
 material = ExtResource("6_5eyse")
+shown = false
 
 [node name="MillFloor_0" type="StaticBody3D" parent="Floors" unique_id=391378045]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -0.3, 12)
 script = ExtResource("5_kwyhn")
 size = Vector3(8, 0.35, 8)
 material = ExtResource("6_5eyse")
+shown = false
 
 [node name="RaceBed" type="StaticBody3D" parent="Floors" unique_id=1072670412]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.5, 18)
 script = ExtResource("5_kwyhn")
 size = Vector3(44, 0.3, 3.2)
-material = ExtResource("7_fjpsq")
+material = ExtResource("gy_stone")
 surface = "mud"
 
 [node name="RaceWallN" type="StaticBody3D" parent="Floors" unique_id=585551843]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.2, 16.2)
 script = ExtResource("5_kwyhn")
 size = Vector3(44, 1.2, 0.4)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="RaceWallS" type="StaticBody3D" parent="Floors" unique_id=543857171]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.2, 19.8)
 script = ExtResource("5_kwyhn")
 size = Vector3(44, 1.2, 0.4)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="PondKerbN" type="StaticBody3D" parent="Floors" unique_id=308182237]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.8, 24.2)
 script = ExtResource("5_kwyhn")
 size = Vector3(12, 1.25, 0.4)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="PondKerbS" type="StaticBody3D" parent="Floors" unique_id=1630407481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.8, 35.8)
 script = ExtResource("5_kwyhn")
 size = Vector3(12, 1.25, 0.4)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="PondKerbW" type="StaticBody3D" parent="Floors" unique_id=1344136192]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2, -0.8, 30)
 script = ExtResource("5_kwyhn")
 size = Vector3(0.4, 1.25, 11.2)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="PondKerbE" type="StaticBody3D" parent="Floors" unique_id=517589949]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8, -0.8, 30)
 script = ExtResource("5_kwyhn")
 size = Vector3(0.4, 1.25, 11.2)
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="PondBed" type="StaticBody3D" parent="Floors" unique_id=1812927877]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -1.1, 30)
 script = ExtResource("5_kwyhn")
 size = Vector3(11.2, 0.3, 11.2)
-material = ExtResource("7_fjpsq")
+material = ExtResource("gy_stone")
 surface = "mud"
 
 [node name="Roofs" type="Node3D" parent="." unique_id=1276308719]
@@ -218,6 +259,7 @@ script = ExtResource("5_kwyhn")
 size = Vector3(8.4, 3.7799997, 8.799999)
 shape = 1
 material = ExtResource("9_71cqu")
+shown = false
 
 [node name="InfirmaryRoof" type="StaticBody3D" parent="Roofs" unique_id=1354121640]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30, 4, 0)
@@ -225,6 +267,7 @@ script = ExtResource("5_kwyhn")
 size = Vector3(8.8, 3.96, 12.800001)
 shape = 1
 material = ExtResource("9_71cqu")
+shown = false
 
 [node name="MillRoof" type="StaticBody3D" parent="Roofs" unique_id=1477571264]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28, 4, 12)
@@ -232,6 +275,7 @@ script = ExtResource("5_kwyhn")
 size = Vector3(8.799999, 3.9599996, 8.800001)
 shape = 1
 material = ExtResource("9_71cqu")
+shown = false
 
 [node name="Stairs" type="Node3D" parent="." unique_id=2112140844 groups=["nav_source"]]
 
@@ -241,7 +285,7 @@ script = ExtResource("10_t7s2c")
 rise = 1.2
 run = 2.0
 width = 3.2
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="RaceStepsE" type="StaticBody3D" parent="Stairs" unique_id=306228000]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 34, -1.2, 18)
@@ -249,7 +293,7 @@ script = ExtResource("10_t7s2c")
 rise = 1.2
 run = 2.0
 width = 3.2
-material = ExtResource("8_vj80h")
+material = ExtResource("gy_stone")
 
 [node name="Doors" type="Node3D" parent="." unique_id=670306034]
 
@@ -395,7 +439,7 @@ transform = Transform3D(0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, 0.819152, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -1.06, 18)
 script = ExtResource("5_kwyhn")
 size = Vector3(40, 0.02, 3.2)
-material = ExtResource("16_u6l2u")
+material = ExtResource("gy_water")
 surface = "mud"
 solid = false
 
@@ -403,7 +447,7 @@ solid = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.17, 30)
 script = ExtResource("5_kwyhn")
 size = Vector3(11.2, 0.02, 11.2)
-material = ExtResource("16_u6l2u")
+material = ExtResource("gy_water")
 surface = "mud"
 solid = false
 
