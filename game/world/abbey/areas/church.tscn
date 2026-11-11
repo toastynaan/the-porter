@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://game/world/kit/wall_window.tscn" id="4_8q5jy"]
 [ext_resource type="Script" path="res://game/world/kit/block.gd" id="5_8a8d7"]
 [ext_resource type="PackedScene" path="res://art/models/env_church.glb" id="ch_model"]
+[ext_resource type="PackedScene" path="res://art/models/env_crypt.glb" id="crypt_model"]
 [ext_resource type="Material" path="res://game/world/materials/real/flags_worn.tres" id="ch_flags"]
 [ext_resource type="Material" path="res://game/world/materials/flags.tres" id="6_c2e8w"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="7_0c7cs"]
@@ -396,51 +397,67 @@ visible = false
 
 [node name="CryptN0_00" parent="Walls" unique_id=72059410 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -4, -36)
+visible = false
 
 [node name="CryptN0_01" parent="Walls" unique_id=738639504 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, -4, -36)
+visible = false
 
 [node name="CryptN0_02" parent="Walls" unique_id=1111020201 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -4, -36)
+visible = false
 
 [node name="CryptN0_03" parent="Walls" unique_id=941302837 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -4, -36)
+visible = false
 
 [node name="Pier_120_-360_-40" parent="Walls" unique_id=1173537727 instance=ExtResource("2_cgplf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -4, -36)
+visible = false
 
 [node name="Pier_280_-360_-40" parent="Walls" unique_id=619789875 instance=ExtResource("2_cgplf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -4, -36)
+visible = false
 
 [node name="CryptS0_00" parent="Walls" unique_id=113476358 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -4, -28)
+visible = false
 
 [node name="CryptS0_01" parent="Walls" unique_id=128210022 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, -4, -28)
+visible = false
 
 [node name="CryptS0_02" parent="Walls" unique_id=1573719069 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -4, -28)
+visible = false
 
 [node name="CryptS0_03" parent="Walls" unique_id=81491132 instance=ExtResource("1_38rok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -4, -28)
+visible = false
 
 [node name="Pier_120_-280_-40" parent="Walls" unique_id=1416185885 instance=ExtResource("2_cgplf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -4, -28)
+visible = false
 
 [node name="Pier_280_-280_-40" parent="Walls" unique_id=1679031706 instance=ExtResource("2_cgplf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -4, -28)
+visible = false
 
 [node name="CryptW0_00" parent="Walls" unique_id=1038762668 instance=ExtResource("1_38rok")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, -4, -34)
+visible = false
 
 [node name="CryptW0_01" parent="Walls" unique_id=1037793329 instance=ExtResource("3_egkgj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, -4, -30)
+visible = false
 
 [node name="CryptE0_00" parent="Walls" unique_id=724868683 instance=ExtResource("1_38rok")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28, -4, -34)
+visible = false
 
 [node name="CryptE0_01" parent="Walls" unique_id=413237302 instance=ExtResource("1_38rok")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 28, -4, -30)
+visible = false
 
 [node name="Floors" type="Node3D" parent="." unique_id=1875178436 groups=["nav_source"]]
 
@@ -484,6 +501,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -4.35, -32)
 script = ExtResource("5_8a8d7")
 size = Vector3(16, 0.35, 8)
 material = ExtResource("6_c2e8w")
+shown = false
 
 [node name="Roofs" type="Node3D" parent="." unique_id=886957373]
 
@@ -662,3 +680,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.05, -33.5)
 
 [node name="Stonework" parent="." instance=ExtResource("ch_model")]
 editor_description = "The church's walls inside and out, windows, vault, floor, roof, the tower and the fittings. Built by tools/build/env_church.py; no collision of its own."
+
+[node name="Undercroft" parent="." instance=ExtResource("crypt_model")]
+editor_description = "The crypt, the passage under the nave and the foot of the hidden stair: walls, vaults, floor, torch brackets. Built by tools/build/env_crypt.py; no collision of its own. It reaches into the cellar's ground (cellar.tscn hides its own greybox there)."
+
+[node name="CryptSolids" type="Node3D" parent="." groups=["nav_source"]]
+editor_description = "The wall between the crypt and its stair, not drawn: the model shows it. An arch at each end is open."
+
+[node name="StairWall" type="StaticBody3D" parent="CryptSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0, -4, -34.05)
+script = ExtResource("5_8a8d7")
+size = Vector3(8.38, 3.7, 0.3)
+shown = false
+
+[node name="StairWallW" type="StaticBody3D" parent="CryptSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.615, -4, -34.05)
+script = ExtResource("5_8a8d7")
+size = Vector3(0.39, 3.7, 0.3)
+shown = false
+
+[node name="StairWallE" type="StaticBody3D" parent="CryptSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.385, -4, -34.05)
+script = ExtResource("5_8a8d7")
+size = Vector3(0.39, 3.7, 0.3)
+shown = false
+
+[node name="AlcoveEnd" type="StaticBody3D" parent="CryptSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.35, -4, -34.89)
+script = ExtResource("5_8a8d7")
+size = Vector3(0.3, 3.7, 1.38)
+shown = false

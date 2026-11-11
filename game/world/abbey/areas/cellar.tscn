@@ -8,6 +8,7 @@
 [ext_resource type="Material" path="res://game/world/materials/flags.tres" id="6_as7fp"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="7_0ibg5"]
 [ext_resource type="Script" path="res://game/world/kit/stairs.gd" id="8_ievae"]
+[ext_resource type="Material" path="res://game/world/materials/real/flags_worn.tres" id="pa_flags"]
 [ext_resource type="Material" path="res://game/world/materials/stone.tres" id="9_u5okk"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="10_rreph"]
 [ext_resource type="Material" path="res://game/world/materials/oak.tres" id="12_2i4ku"]
@@ -97,87 +98,115 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
 
 [node name="UnderW_00" parent="Walls" unique_id=1059558164 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, -4, -30)
+visible = false
 
 [node name="UnderW_01" parent="Walls" unique_id=1012354662 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, -4, -26)
+visible = false
 
 [node name="UnderW_02" parent="Walls" unique_id=1549057847 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, -4, -22)
+visible = false
 
 [node name="UnderW_03" parent="Walls" unique_id=257396720 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, -4, -18)
+visible = false
 
 [node name="Pier_-200_-320_-40" parent="Walls" unique_id=1172768457 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -4, -32)
+visible = false
 
 [node name="Pier_-200_-160_-40" parent="Walls" unique_id=689699347 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -4, -16)
+visible = false
 
 [node name="UnderE_00" parent="Walls" unique_id=819725820 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16, -4, -26)
+visible = false
 
 [node name="UnderE_01" parent="Walls" unique_id=1126150691 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16, -4, -22)
+visible = false
 
 [node name="UnderE_02" parent="Walls" unique_id=451875270 instance=ExtResource("1_7moi7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16, -4, -18)
+visible = false
 
 [node name="Pier_-160_-280_-40" parent="Walls" unique_id=1816317571 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -4, -28)
+visible = false
 
 [node name="Pier_-160_-160_-40" parent="Walls" unique_id=275499576 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -4, -16)
+visible = false
 
 [node name="UnderS_00" parent="Walls" unique_id=1229124184 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -4, -16)
+visible = false
 
 [node name="PassN_00" parent="Walls" unique_id=203234364 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -4, -32)
+visible = false
 
 [node name="PassN_01" parent="Walls" unique_id=1340553888 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -4, -32)
+visible = false
 
 [node name="PassN_02" parent="Walls" unique_id=1709835834 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -4, -32)
+visible = false
 
 [node name="PassN_03" parent="Walls" unique_id=1436411328 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -4, -32)
+visible = false
 
 [node name="PassN_04" parent="Walls" unique_id=1861802751 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -4, -32)
+visible = false
 
 [node name="PassN_05" parent="Walls" unique_id=1267304205 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -4, -32)
+visible = false
 
 [node name="PassN_06" parent="Walls" unique_id=330631641 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -4, -32)
+visible = false
 
 [node name="PassN_07" parent="Walls" unique_id=1515789960 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -4, -32)
+visible = false
 
 [node name="Pier_120_-320_-40" parent="Walls" unique_id=985491770 instance=ExtResource("2_dm8po")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -4, -32)
+visible = false
 
 [node name="PassS_00" parent="Walls" unique_id=1304957811 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -4, -28)
+visible = false
 
 [node name="PassS_01" parent="Walls" unique_id=2104159427 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -4, -28)
+visible = false
 
 [node name="PassS_02" parent="Walls" unique_id=971001206 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -4, -28)
+visible = false
 
 [node name="PassS_03" parent="Walls" unique_id=1917115638 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -4, -28)
+visible = false
 
 [node name="PassS_04" parent="Walls" unique_id=102715157 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -4, -28)
+visible = false
 
 [node name="PassS_05" parent="Walls" unique_id=984825218 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -4, -28)
+visible = false
 
 [node name="PassS_06" parent="Walls" unique_id=1880362522 instance=ExtResource("1_7moi7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -4, -28)
+visible = false
 
 [node name="Floors" type="Node3D" parent="." unique_id=583335238 groups=["nav_source"]]
 
@@ -210,12 +239,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -4.35, -30)
 script = ExtResource("5_7r8mi")
 size = Vector3(32, 0.35, 4)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="UnderGranaryFloor_0" type="StaticBody3D" parent="Floors" unique_id=1474163703]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -4.35, -22)
 script = ExtResource("5_7r8mi")
 size = Vector3(4, 0.35, 12)
 material = ExtResource("6_as7fp")
+shown = false
 
 [node name="Roofs" type="Node3D" parent="." unique_id=1438046664]
 
@@ -233,7 +264,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -18.
 script = ExtResource("8_ievae")
 rise = 4.05
 width = 1.0
-material = ExtResource("9_u5okk")
+material = ExtResource("pa_flags")
 
 [node name="Doors" type="Node3D" parent="." unique_id=38501634]
 
@@ -363,3 +394,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, -20)
 
 [node name="Stalk2" type="Marker3D" parent="StalkPoints" unique_id=122459061 groups=["stalk_point"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -4, -30)
+
+[node name="PassageSolids" type="Node3D" parent="." groups=["nav_source"]]
+editor_description = "The walls beside the hidden stair, not drawn: the crypt model (church.tscn, Undercroft) shows them."
+
+[node name="CrossWall" type="StaticBody3D" parent="PassageSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3, -4, -24.85)
+script = ExtResource("5_7r8mi")
+size = Vector3(1.8, 3.7, 0.3)
+shown = false
+
+[node name="StairSide" type="StaticBody3D" parent="PassageSolids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.05, -4, -21.85)
+script = ExtResource("5_7r8mi")
+size = Vector3(0.3, 3.7, 5.7)
+shown = false

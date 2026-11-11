@@ -45,7 +45,21 @@ The greybox plan is unchanged and is still what stops people and what the navmes
 - **Outside.** Buttresses between the bays on the north and east; on the south they start above the cloister and the ranges. The south wall's outer face starts above the cloister's roof (4.8 m) and above the east range (8.6 m).
 - The night stairs, their landing and the crypt stair keep their greybox shapes and take the flags' material.
 
-Still greybox: the stalls, altar, tomb, bell and doors (props), and the crypt. `tools/church_shots.sh` renders it; stills marked `lit` use a lamp the game doesn't have, to judge the stonework.
+Still greybox: the stalls, altar, tomb, bell and doors (props). `tools/church_shots.sh` renders it; stills marked `lit` use a lamp the game doesn't have, to judge the stonework.
+
+## Under the abbey as built (first look, 2026-11-11)
+
+The crypt, the passage under the nave and the foot of the hidden stair are one model, `Undercroft` in `church.tscn` (`env_crypt`, `tools/build/env_crypt.py`), laid over the greybox of `church.tscn` and `cellar.tscn`. Their greybox walls and floors are hidden and keep the collision. Floors are at -4 m; nothing is higher than the floors overhead, 3.7 m up.
+
+- **Crypt.** A vessel 15.2 m by 5.5 m under four low groin vaults with heavy ribs (crown 3.5 m), on stub columns against the walls. A tomb recess in each bay of the south wall and a niche in the east wall behind the reliquary, all cut into the walls' thickness.
+- **The crypt stair's wall (new, solid).** The stair from the choir used to stand open to the crypt along its south side. It now comes down in its own well behind a wall (`CryptSolids` in `church.tscn`): x = 12.4 to 27.6 at z = -34.05, with an arch at each end. The east arch is the way from the stair's foot into the crypt; the west arch opens on a dead-end alcove 3.8 m long.
+- **Passage.** A round tunnel vault 32 m long and 3.4 m high, with an arch on pilasters every 4 m, rubble walls and a doorway into the crypt.
+- **Under the granary (new, solid).** The passage turns south under a groin vault and runs 3.4 m to the foot of the hidden stair. The stair climbs in its own well; the dead space east of it (1.8 m by 8.6 m, which led nowhere) is closed by a wall with a walled-up arch (`PassageSolids` in `cellar.tscn`).
+- **Fittings (drawn only).** Nine iron brackets with burnt-out torches. No light was added: it is as dark down there as before.
+- The navmesh was rebaked for the new walls. Routes and distances are unchanged: both walls only close off drops and dead ends.
+- The model has a lid over the vaults, never seen, so the sun and moon don't light what is under them.
+
+`tools/crypt_shots.sh` renders it; stills marked `torches` light the brackets and those marked `lit` use a plain lamp, neither of which the game has.
 
 ## Routes
 
