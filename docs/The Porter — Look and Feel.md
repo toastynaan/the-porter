@@ -224,6 +224,17 @@ Mood references (street and gate images, Nov 2026): rain-wet streets with lamp p
 - Keep sightlines short indoors and long outdoors. The cloister is the exception: one long view down each walk, interrupted by pillars.
 - Decay increases across nights: more dripped wax, more unlit candles, doors left open, stains that aren't cleaned.
 
+### How the abbey unsettles
+
+The abbey is lived in and working, not a ruin. It is old, damp, under-lit and uneasy. The porter sees what his lantern reaches, so its look is made of shapes at the edge of the light. The rules its dressing follows (`tools/build/dress.py`; what was placed is in `abbey-layout.md`, "The dressing pass"):
+
+1. **Figures at the edge of the light.** A hooded stone figure with nothing in its hood, an effigy, a grotesque: things that read as a person for a second. Each goes where a long view ends, at the turn of a stair, beside a door that must be used, or high above. Never in the path. Few: two to five an area.
+2. **Openings into black.** A dark recess, an empty niche, a grille, a tomb lid ajar, a walled-up door, rather than a flat wall.
+3. **Neglect and damp.** Soot over every flame place, runs under sills and irons, green at wall feet, cracks, cobwebs where nobody goes, leaves in corners.
+4. **One wrong thing a room.** One, and quiet: a figure turned to the wall, a corona hanging crooked, a cross scratched many times into one patch.
+5. **Dark and tall.** High things fade to dark. Nothing is brightened; what glows under the lantern is darkened.
+6. **Period and restraint.** No gore, no blood, nothing out of the 1420s. The place is ordinary and slightly off.
+
 ## UI
 
 Almost no HUD. Everything the player needs to know is in the world or in an object they hold, with two quiet exceptions so a first-time player is never lost: an outline on what you can use, and a faint mark over what your duty needs. Neither may take away from the dark.

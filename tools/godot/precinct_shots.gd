@@ -1,6 +1,6 @@
 extends Node
 ## Stills of the precinct (court, graveyard, outbuildings, gardens) through the full render pipeline,
-## to art/_review/church/ (tools/precinct_shots.sh): night 3 (a clear
+## to art/_review/precinct/ (tools/precinct_shots.sh): night 3 (a clear
 ## night), from a camera of the tool's own, at dusk and after dark. For the
 ## look of the place: the clock stands still and nobody is spoken to. A
 ## still marked `lantern` has the porter standing at the camera with his
@@ -32,6 +32,28 @@ const SHOTS := [
 	{"name": "south_yard", "hour": DAY, "eye": Vector3(-8.0, 1.65, 14.5), "at": Vector3(8.0, 3.0, 4.0), "sun": true},
 	{"name": "north_strip", "hour": DAY, "eye": Vector3(-30.0, 1.65, -38.0), "at": Vector3(10.0, 6.0, -37.0), "sun": true},
 	{"name": "from_above", "hour": DAY, "eye": Vector3(-48.0, 36.0, 44.0), "at": Vector3(0.0, 0.0, -4.0), "sun": true},
+	# The creepy pass (2026-11-11). The contact sheet shows the first thirty stills, so the ten that matter most come first.
+	# "chk": a gap that was closed, lit plainly. "dr": dressing, as the porter meets it with his lantern.
+	{"name": "chk_gate_head", "hour": NIGHT, "eye": Vector3(-36.5, 1.65, -2.0), "at": Vector3(-40.0, 3.4, -2.0), "fill": true},
+	{"name": "chk_gate_from_lane", "hour": NIGHT, "eye": Vector3(-44.5, 1.65, -2.0), "at": Vector3(-40.0, 2.0, -2.0), "fill": true},
+	{"name": "dr_gate_inside", "hour": NIGHT, "eye": Vector3(-35.2, 1.65, -0.6), "at": Vector3(-40.0, 2.7, -2.4), "lantern": true},
+	{"name": "dr_charnel_front", "hour": NIGHT, "eye": Vector3(29.2, 1.65, -19.3), "at": Vector3(31.6, 1.7, -19.3), "lantern": true},
+	{"name": "dr_charnel_roof", "hour": DAY, "eye": Vector3(24.0, 1.65, -12.0), "at": Vector3(35.0, 5.5, -20.0), "sun": true},
+	{"name": "dr_grave_figure", "hour": NIGHT, "eye": Vector3(34.6, 1.65, -35.6), "at": Vector3(35.0, 2.0, -39.6), "lantern": true},
+	{"name": "dr_race_figure", "hour": NIGHT, "eye": Vector3(36.3, 1.65, 18.0), "at": Vector3(39.6, 1.9, 18.0), "lantern": true},
+	{"name": "dr_postern", "hour": NIGHT, "eye": Vector3(4.6, 1.65, -38.2), "at": Vector3(2.0, 1.2, -39.6), "lantern": true},
+	{"name": "dr_court_ruts", "hour": DUSK, "eye": Vector3(-33.9, 1.65, 3.9), "at": Vector3(-32.2, 0.0, 6.5)},
+	{"name": "dr_guest_crosses", "hour": NIGHT, "eye": Vector3(-27.0, 1.65, -21.4), "at": Vector3(-25.7, 1.05, -23.6), "lantern": true},
+	{"name": "chk_gate_jamb", "hour": NIGHT, "eye": Vector3(-39.0, 1.65, -1.2), "at": Vector3(-40.3, 1.5, -3.5), "fill": true},
+	{"name": "chk_gate_threshold", "hour": NIGHT, "eye": Vector3(-38.2, 1.65, -2.0), "at": Vector3(-40.4, 0.0, -2.4), "fill": true},
+	{"name": "chk_race_latrine", "hour": NIGHT, "eye": Vector3(8.0, 1.65, 21.0), "at": Vector3(14.0, 0.2, 18.0), "fill": true},
+	{"name": "dr_cell_figure", "hour": NIGHT, "eye": Vector3(-35.0, 1.65, -0.8), "at": Vector3(-36.7, 1.9, -3.6), "lantern": true},
+	{"name": "dr_charnel_approach", "hour": NIGHT, "eye": Vector3(26.0, 1.65, -17.0), "at": Vector3(32.0, 2.2, -19.6), "lantern": true},
+	{"name": "dr_charnel_bones", "hour": NIGHT, "eye": Vector3(30.5, 1.5, -20.6), "at": Vector3(31.7, 1.28, -20.1), "fill": true},
+	{"name": "dr_charnel_webs", "hour": NIGHT, "eye": Vector3(34.5, 1.65, -19.0), "at": Vector3(39.5, 3.4, -23.5), "fill": true},
+	{"name": "dr_crows_gate", "hour": DUSK, "eye": Vector3(-34.5, 1.65, 3.0), "at": Vector3(-40.0, 4.0, 0.5), "sun": true},
+	{"name": "dr_nook_leaves", "hour": NIGHT, "eye": Vector3(-37.2, 1.65, -17.0), "at": Vector3(-39.3, 0.0, -19.6), "lantern": true},
+	{"name": "dr_puddle", "hour": NIGHT, "eye": Vector3(-33.9, 1.65, 3.9), "at": Vector3(-32.2, 0.0, 6.5), "lantern": true},
 ]
 
 var _n := 0

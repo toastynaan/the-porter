@@ -62,15 +62,30 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/grass_leafy.tres",
 "use_external/path": "res://game/world/materials/real/grass_leafy.tres"
 },
+"grave_earth": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grave_earth.tres",
+"use_external/path": "res://game/world/materials/real/grave_earth.tres"
+},
 "gravel_path": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/gravel_path.tres",
 "use_external/path": "res://game/world/materials/real/gravel_path.tres"
 },
+"grime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grime.tres",
+"use_external/path": "res://game/world/materials/real/grime.tres"
+},
 "growth": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/growth.tres",
 "use_external/path": "res://game/world/materials/real/growth.tres"
+},
+"painted": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/painted.tres",
+"use_external/path": "res://game/world/materials/real/painted.tres"
 },
 "stone_cloister": {
 "use_external/enabled": true,

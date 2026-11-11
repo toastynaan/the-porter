@@ -42,15 +42,30 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
+"cobweb": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/cobweb.tres",
+"use_external/path": "res://game/world/materials/real/cobweb.tres"
+},
 "flags_worn": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/flags_worn.tres",
 "use_external/path": "res://game/world/materials/real/flags_worn.tres"
 },
+"grime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grime.tres",
+"use_external/path": "res://game/world/materials/real/grime.tres"
+},
 "iron_cart": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
 "use_external/path": "res://game/world/materials/real/iron_cart.tres"
+},
+"painted": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/painted.tres",
+"use_external/path": "res://game/world/materials/real/painted.tres"
 },
 "stone_church": {
 "use_external/enabled": true,
@@ -61,6 +76,11 @@ _subresources={
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/stone_rubble.tres",
 "use_external/path": "res://game/world/materials/real/stone_rubble.tres"
+},
+"window_dark": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
+"use_external/path": "res://game/world/materials/real/window_dark.tres"
 },
 "wood_medieval": {
 "use_external/enabled": true,

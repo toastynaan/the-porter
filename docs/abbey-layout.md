@@ -93,6 +93,38 @@ Still greybox: every prop (graves, yews, well, woodpile, beds, the mill wheel, g
 
 `tools/precinct_shots.sh` renders it.
 
+## The dressing pass (2026-11-11)
+
+One pass over all five areas after their first looks, to close gaps and make the place uneasy. The direction is in the Look and Feel ("How the abbey unsettles"). The shared pieces are in `tools/build/dress.py`; each area's build script places its own. Nothing here has collision except the buttress feet, and no light was added.
+
+**Hooded stone figures.** Faceless under the hood, hands in their sleeves. Each stands where a view ends or beside a way the porter must take.
+- Cloister: in a niche at the west end of the north walk; in a niche at the south end of the east walk, turned to the wall with a web across it; two on the west and south parapets against the sky.
+- Church: on a corbel beside the night stairs' upper door; in a niche over the graveyard door; on the rood beam, two attendants beside a figure on the cross; in the niche north of the east window (the south niche is empty).
+- Under the abbey: in a niche at the passage's west end, closing its 32 m view; in a niche facing the foot of the crypt's stair.
+- Ranges: in a niche at the head of the day stair; a bowed reader in a niche over the refectory's tables.
+- Precinct: in the precinct wall beside the porter's cell door, seen first from the gate; in the north wall at the end of the grave aisle; in the east wall facing the top of the mill race's east steps.
+
+**Bones.** Seven ossuary niches in the passage under the nave (five with bones, two empty). Bones behind iron bars in the charnel house's wall, and a skull and crossed bones in its door head. A skull on a bracket over the chapter house door.
+
+**Tombs.** A wall tomb with an effigy and weepers in the church's north wall (bay x = -10). Effigies on two of the crypt's four tombs; a third tomb's lid is swung askew.
+
+**Walled-up openings.** A doorway at the south end of the cloister's west walk; a postern in the precinct's north wall behind the church (x = 2); a door in the undercroft's east wall; the arch by the hidden stair's foot (first look), now with a small cross scratched into its blocking 46 times.
+
+**One wrong thing a room.** The turned figure in the cloister. The church's middle corona hanging low and crooked on three chains. Crosses scratched in the bell room, by the parlour's stores door, by the last guesthouse bed. A dormitory hanging down at one end. Fallen plaster and a crack in the stair hall.
+
+**Neglect, everywhere.** Soot over every torch bracket and rust under it. Runs under sills. Green damp at outdoor and underground wall feet. Cracks, cobwebs, fallen leaves in corners, grave slabs in the cloister's east walk and the church floor, a broken tracery cusp, four broken panes in the church. Moss, a sagging ridge and slipped tiles on the charnel house. Cart ruts and puddles in the outer court. Ten crows on ridges and wall tops. The garden's herb and flower beds are bare earth and dead stalks.
+
+**Gaps closed.**
+- Church: the south wall's outer face east of the dormitory (x = 20.4 to 28.4) was missing from the ground to 8.6 m; it is built, with a surround to the graveyard door, tall windows in bays 22 and 26, and buttresses from the ground. Over the ranges, the south wall's outer face now starts on each roof's line, and the windows there are shorter (sill at 8 m over the west range, 12 m over the dormitory). Thresholds in all five ground-floor doorways.
+- Cloister: every door and window in the walks' back walls has its reveal on the cloister side.
+- Under the abbey: the slots beside both stairs, the soffits under the church's and granary's floor edges, the floors of the tomb recesses.
+- Ranges and precinct: every wall with nothing above it has a top; the three partitions under open roofs (z = -16, -12, 4) run up to the roof; a board shuts the wedge between each wall head and the roof boards; the day stair's and hidden stair's holes have rims; the latrine's floor edge is closed. The west range's and refectory's roofs no longer overhang into the cloister walks (`roof()` in `env_ranges.py` takes an overhang per eave and per end). The build prints an audit of every wall piece.
+- Precinct: the gate's reveal runs through the whole wall and its head is square; flags at its threshold; rough grass beyond the north, east and south walls.
+
+**Solids added.** `ChurchButtresses` in `church.tscn` (in `nav_source`, not drawn): 22 blocks under the feet of the church's and tower's ground-level buttresses, 2.6 m high. The navmesh was rebaked.
+
+**For the props pass** (found here, not done): the warming room's hearth sits under a vault springer at z = -8 and should move to a bay centre before it gets a hood; an abbot's seat and a reader's pulpit front; a churchyard cross on steps near (27, -30); the gate's north leaf swings into the porter's cell; the lane-side half of the gate's apron is a plain block.
+
 ## Routes
 
 | Route | From → to | Notes |

@@ -42,6 +42,11 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
+"cobweb": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/cobweb.tres",
+"use_external/path": "res://game/world/materials/real/cobweb.tres"
+},
 "flags_worn": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/flags_worn.tres",
@@ -51,6 +56,11 @@ _subresources={
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/glass_church.tres",
 "use_external/path": "res://game/world/materials/real/glass_church.tres"
+},
+"grime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grime.tres",
+"use_external/path": "res://game/world/materials/real/grime.tres"
 },
 "iron_cart": {
 "use_external/enabled": true,

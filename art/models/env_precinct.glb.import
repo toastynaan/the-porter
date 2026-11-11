@@ -42,6 +42,11 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
+"cobweb": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/cobweb.tres",
+"use_external/path": "res://game/world/materials/real/cobweb.tres"
+},
 "flags_worn": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/flags_worn.tres",
@@ -62,10 +67,30 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/gravel_path.tres",
 "use_external/path": "res://game/world/materials/real/gravel_path.tres"
 },
+"grime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grime.tres",
+"use_external/path": "res://game/world/materials/real/grime.tres"
+},
+"iron_cart": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/iron_cart.tres",
+"use_external/path": "res://game/world/materials/real/iron_cart.tres"
+},
+"painted": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/painted.tres",
+"use_external/path": "res://game/world/materials/real/painted.tres"
+},
 "plaster_abbey": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/plaster_abbey.tres",
 "use_external/path": "res://game/world/materials/real/plaster_abbey.tres"
+},
+"roof_mossy": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/roof_mossy.tres",
+"use_external/path": "res://game/world/materials/real/roof_mossy.tres"
 },
 "roof_tiles": {
 "use_external/enabled": true,
@@ -86,6 +111,11 @@ _subresources={
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/stone_rubble.tres",
 "use_external/path": "res://game/world/materials/real/stone_rubble.tres"
+},
+"water_still": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/water_still.tres",
+"use_external/path": "res://game/world/materials/real/water_still.tres"
 },
 "window_dark": {
 "use_external/enabled": true,

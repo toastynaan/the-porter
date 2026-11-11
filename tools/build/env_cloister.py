@@ -16,12 +16,20 @@ and -8, four bays of 4 m a side, one bay a side open to the garth; walks
 - BackWalls: the ranges' walls as the walks see them, with a surround to
   each door and window that is in the greybox.
 - Floor: worn flags. Roof: lead, nearly flat, behind the arcade's parapet.
+- Dressing and Figures (drawn only; tools/build/dress.py): a niche at the
+  end of two walks with a hooded figure in it (one stands facing the
+  wall), a walled-up doorway at the end of a third, two small figures on
+  the parapet over the garth, three abbots' grave slabs in the east walk,
+  leaves blown in, damp, runs, a few cobwebs, a crack, one light of
+  tracery broken.
 
 `env_cloister_garth`: gravel walks round and across the garth, a paved
 round at the middle with a conduit basin, four beds edged in clipped box
 (herbs and a yew, a lawn for the hawthorn, late flowers and a yew, a
-lawn), and what still grows there in late autumn. Only the basin and the
-yews are solid, as blocks in cloister.tscn.
+lawn), and what still grows there in late autumn: the planted beds are
+mostly bare earth and dead stalks, the hawthorn's leaves lie under it, the
+basin has a scum and a stain. Only the basin and the yews are solid, as
+blocks in cloister.tscn.
 
 Run: tools/build.sh env_cloister
 """
@@ -33,6 +41,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import porter
 import city_parts as cp
+import dress
 from mathutils import Vector
 from porter import fbm, lerp, smoothstep, srgb
 
@@ -52,14 +61,26 @@ VSPRING, VRISE = 2.7, 1.85
 BACK = -3.58
 # A side's own space: u along it, v out into the garth (the arcade's middle
 # at v = 0, the walk at v < 0). Each maps it into the abbey's, and names its
-# open bay (u) and what is cut through its back wall (u, "door" or "window").
+# open bay (u) and what is cut through its back wall (u, "door" or "window")
+# or into it (a recess: three of the four walks end on a blank wall, and
+# each has one: "niche", "niche_turned" where the figure faces the wall,
+# "blind" for a doorway walled up).
 SIDES = {
     "N": (lambda u, y, v: (u, y, -24.0 + v), -2.0, ((-10.0, "door"), (10.0, "door"))),
-    "S": (lambda u, y, v: (-u, y, -8.0 - v), -2.0, ((2.0, "door"), (6.0, "window"), (-2.0, "window"), (-6.0, "window"))),
-    "W": (lambda u, y, v: (-8.0 + v, y, -16.0 - u), 2.0, ((6.0, "door"), (-2.0, "door"), (-10.0, "door"))),
+    "S": (lambda u, y, v: (-u, y, -8.0 - v), -2.0,
+          ((2.0, "door"), (6.0, "window"), (-2.0, "window"), (-6.0, "window"), (-10.0, "niche_turned"), (10.0, "blind"))),
+    "W": (lambda u, y, v: (-8.0 + v, y, -16.0 - u), 2.0, ((6.0, "door"), (-2.0, "door"), (-10.0, "door"), (10.0, "niche"))),
     "E": (lambda u, y, v: (8.0 - v, y, -16.0 + u), 2.0,
           ((-10.0, "door"), (-2.0, "door"), (2.0, "door"), (10.0, "door"), (-6.0, "window"), (6.0, "window"))),
 }
+# A recess: half its width, its foot, its springing, its rise, its depth
+# (the walls are 0.8 m thick: 0.3 is as deep as one can go).
+NICHE = (0.42, 0.5, 2.0, 0.55, 0.3)
+RECESS = {"niche": NICHE, "niche_turned": NICHE, "blind": (0.6, 0.0, 1.55, 0.7, 0.2)}
+# Fallen leaves, against dress.leaves' own colours (orange-red): browner.
+LEAF = (1.0, 1.0, 1.0)
+# The one bay whose tracery has lost a cusp and a spur: (side, bay).
+BROKEN = ("W", -6.0)
 
 
 class Turned:
@@ -123,8 +144,9 @@ def cusp(t, a, b, tip, v0, v1, color):
         t.poly([(p[0], p[1], v0), (tip[0], tip[1], v0), (tip[0], tip[1], v1), (p[0], p[1], v1)], STONE, color, facing=out)
 
 
-def tracery(t, u0):
-    """Two cusped lights on a middle shaft, and a quatrefoil over them."""
+def tracery(t, u0, broken=False):
+    """Two cusped lights on a middle shaft, and a quatrefoil over them.
+    `broken`: one cusp and one spur have fallen out."""
     v0, v1 = -0.09, 0.09
     c = pale(0.92)
     lift = 0.68
@@ -137,6 +159,8 @@ def tracery(t, u0):
         bar(t, prof, 0.085, v0, v1, c)
         heart = (cx, 2.2)
         for i in (3, 9):
+            if broken and s > 0 and i == 3:
+                continue
             p = prof[i]
             d = math.hypot(heart[0] - p[0], heart[1] - p[1])
             tip = (p[0] + (heart[0] - p[0]) / d * 0.2, p[1] + (heart[1] - p[1]) / d * 0.2)
@@ -147,6 +171,8 @@ def tracery(t, u0):
     ring = [(u0 + math.cos(math.tau * i / 16) * r, yc + math.sin(math.tau * i / 16) * r) for i in range(16)]
     bar(t, ring, 0.08, v0, v1, c, closed=True)
     for k in range(4):
+        if broken and k == 2:
+            continue
         a = math.tau * (k + 0.5) / 4
         da = 0.2
         cusp(t, (u0 + math.cos(a - da) * (r - 0.03), yc + math.sin(a - da) * (r - 0.03)),
@@ -159,7 +185,7 @@ def tracery(t, u0):
         bar(t, [p0, p1], 0.08, v0, v1, c)
 
 
-def bay(t, u0, is_open, tint, first, last):
+def bay(t, u0, is_open, tint, first, last, broken=False):
     """One bay of the arcade."""
     g0, g1 = (-7.6 if first else u0 - 2.0), (7.6 if last else u0 + 2.0)
     w0, w1 = (-8.4 if first else u0 - 2.0), (8.4 if last else u0 + 2.0)
@@ -186,7 +212,7 @@ def bay(t, u0, is_open, tint, first, last):
     cp.slab(t, (u0 - HALF, 0.0, -0.4), (u0 + HALF, 0.6, 0.4), STONE, tint, faces="zZ", step=1.0)
     k = 0.8 + 0.1 * math.sin(u0 * 1.7)
     t.box((u0 - HALF, 0.58, -0.46), (u0 + HALF, 0.68, 0.46), STONE, pale(k), faces="zZyY")
-    tracery(t, u0)
+    tracery(t, u0, broken)
 
 
 def buttress(t, u, tint):
@@ -285,9 +311,41 @@ def vault_bay(t, ua, ub, va, vb, wall_ribs):
     t.tube([(cu, top - 0.3, cv), (cu, top - 0.24, cv), (cu, top - 0.12, cv), (cu, top, cv)], [0.06, 0.17, 0.2, 0.2], 8, STONE, pale(0.7), caps=True)
 
 
+def recess(t, uc, kind, tint, top):
+    """A pointed recess in a back wall, in the wall's thickness: a niche
+    with a sill for a figure, or a doorway long walled up, its blocking
+    set back from the face."""
+    half, foot, spring, rise, depth = RECESS[kind]
+    deep = BACK - depth
+    cp.arch_wall(t, BACK, uc - half, uc + half, foot, top, half, spring, rise, (0, 0, 1), STONE, tint, cx=uc)
+    shade = lambda x, y, z: tuple(q * 0.62 for q in tint(x, y, z)[:3]) + (1.0,)
+    cp.vault(t, deep, BACK, half, spring, rise, STONE, shade, cx=uc, y0=foot, step=depth)
+    prof = [(uc + half, foot)] + cp.arch_profile(half, spring, rise, 8, uc) + [(uc - half, foot)]
+    c = pale(0.84)
+    if kind == "blind":
+        # The blocking: rubble, darker than the wall, and the old threshold under it.
+        dark = lambda x, y, z: tuple(q * 0.5 for q in tint(x, y, z)[:3]) + (1.0,)
+        for (xa, ya), (xb, yb) in zip(prof[1:], prof[2:-1]):
+            pts = [(xa, ya, deep), (xb, yb, deep), (xb, foot, deep), (xa, foot, deep)]
+            t.poly(pts, "stone_rubble", [dark(*q) for q in pts], facing=(0, 0, 1))
+        t.poly([(uc - half, 0.058, deep), (uc + half, 0.058, deep), (uc + half, 0.058, BACK + 0.02), (uc - half, 0.058, BACK + 0.02)], "flags_worn",
+               (0.5, 0.5, 0.48, 1.0), facing=(0, 1, 0))
+        cp.arch_band(t, BACK, half, spring, rise, 0.13, 0.05, (0, 0, 1), STONE, c, cx=uc, y0=0.0)
+        return
+    back = [(x, y, deep) for x, y in prof]
+    t.poly(back, STONE, [shade(*q)[:3] + (1.0,) for q in back], facing=(0, 0, 1))
+    t.poly([(uc - half, foot, deep), (uc + half, foot, deep), (uc + half, foot, BACK), (uc - half, foot, BACK)], STONE, pale(0.7), facing=(0, 1, 0))
+    t.box((uc - half - 0.1, foot - 0.13, BACK), (uc + half + 0.1, foot, BACK + 0.08), STONE, c, faces="xXZyY")
+    cp.arch_band(t, BACK, half, spring, rise, 0.1, 0.05, (0, 0, 1), STONE, c, cx=uc, y0=foot)
+
+
 def back_wall(t, cuts, tint):
-    """A range's wall as the walk sees it, left open at its doors and windows."""
+    """A range's wall as the walk sees it, left open at its doors and
+    windows, each with its reveal back to the wall's middle (where the
+    face of the room behind takes over) and, under a door, the floor
+    through the wall."""
     top = WALL_TOP - 0.2
+    mid = BACK - 0.42
 
     def seg(ua, ub, ya, yb):
         cp.panel(t, (ua, BACK), (ub, BACK), ya, yb, (0, 0, 1), STONE, tint, 1.6, 1.2)
@@ -297,6 +355,14 @@ def back_wall(t, cuts, tint):
 
     u = -11.58
     for uc, kind in sorted(cuts):
+        if kind in RECESS:
+            half, foot = RECESS[kind][:2]
+            seg(u, uc - half, 0.0, top)
+            if foot > 0.0:
+                seg(uc - half, uc + half, 0.0, foot - 0.13)
+            recess(t, uc, kind, tint, top)
+            u = uc + half
+            continue
         hw, y0, y1 = (0.47, 0.0, 2.03) if kind == "door" else (0.31, 1.59, 2.81)
         seg(u, uc - hw, 0.0, top)
         if y0 > 0.0:
@@ -309,6 +375,18 @@ def back_wall(t, cuts, tint):
             a, b = sorted((uc + s * hw, uc + s * (hw + fw)))
             t.box((a, y0, BACK), (b, y1, BACK + 0.07), STONE, c, faces="xXZ")
         t.box((uc - hw - fw, y1, BACK), (uc + hw + fw, y1 + fw, BACK + 0.07), STONE, c, faces="xXZyY")
+        # The reveal: jambs and soffit (and a window's sill) back to the wall's middle.
+        dark = pale(0.6)
+        for s in (-1, 1):
+            a = uc + s * hw
+            t.poly([(a, y0, mid), (a, y1, mid), (a, y1, BACK), (a, y0, BACK)], STONE, dark, facing=(-s, 0, 0))
+        t.poly([(uc - hw, y1, mid), (uc + hw, y1, mid), (uc + hw, y1, BACK), (uc - hw, y1, BACK)], STONE, dark, facing=(0, -1, 0))
+        if kind == "window":
+            t.poly([(uc - hw, y0, mid), (uc + hw, y0, mid), (uc + hw, y0, BACK), (uc - hw, y0, BACK)], STONE, pale(0.8), facing=(0, 1, 0))
+        else:
+            # (The ranges floor theirs too, in the same flags at the same height: the two can't be told apart.)
+            t.poly([(uc - hw, 0.056, mid - 0.42), (uc + hw, 0.056, mid - 0.42), (uc + hw, 0.056, BACK - 0.02), (uc - hw, 0.056, BACK - 0.02)], "flags_worn",
+                   (0.6, 0.6, 0.58, 1.0), facing=(0, 1, 0))
         if kind == "door":
             # A blind arch over the lintel.
             cp.arch_band(t, BACK, hw + fw, y1 + fw, 0.62, 0.12, 0.07, (0, 0, 1), STONE, c, cx=uc, n=6)
@@ -319,6 +397,140 @@ def back_wall(t, cuts, tint):
     seg(u, 11.58, 0.0, top)
 
 
+def grave_slab(m, x0, x1, z, width, seed, worn):
+    """An abbot's grave slab in a walk's floor, head to the west (x0): dark
+    marble, a long cross on steps cut in it and gone pale with dust, `worn`
+    (0..1) by feet. Flat."""
+    y, za, zb = 0.063, z - width * 0.5, z + width * 0.5
+    nx, nz = 8, 3
+    for i in range(nx):
+        for j in range(nz):
+            pts = [(lerp(x0, x1, (i + di) / nx), y, lerp(za, zb, (j + dj) / nz)) for di, dj in ((0, 0), (1, 0), (1, 1), (0, 1))]
+            cols = []
+            for q in pts:
+                k = 0.05 + 0.025 * fbm(q[0] * 2.0, q[2] * 2.0, 1.0, 2, seed) + 0.02 * worn
+                cols.append((k, k, k * 1.08, 1.0))
+            m.poly(pts, "painted", cols, facing=(0, 1, 0))
+    cut = (0.3, 0.29, 0.26, 0.5 * (1.0 - 0.65 * worn))
+    joint = (0.01, 0.01, 0.012, 0.8)
+
+    def line(a, b, w, col):
+        dx, dz = b[0] - a[0], b[1] - a[1]
+        n = math.hypot(dx, dz) or 1.0
+        px, pz = -dz / n * w * 0.5, dx / n * w * 0.5
+        m.poly([(a[0] - px, y + 0.004, a[1] - pz), (a[0] + px, y + 0.004, a[1] + pz), (b[0] + px, y + 0.004, b[1] + pz), (b[0] - px, y + 0.004, b[1] - pz)],
+               dress.GRIME, col, facing=(0, 1, 0))
+
+    for a, b in (((x0, za), (x1, za)), ((x1, za), (x1, zb)), ((x1, zb), (x0, zb)), ((x0, zb), (x0, za))):
+        line(a, b, 0.03, joint)
+    head, foot = x0 + 0.24, x1 - 0.26
+    line((head, z), (foot, z), 0.034, cut)
+    line((head + 0.3, z - 0.21), (head + 0.3, z + 0.21), 0.034, cut)
+    for k, half in enumerate((0.24, 0.17, 0.1)):
+        line((foot - k * 0.07, z - half), (foot - k * 0.07, z + half), 0.034, cut)
+
+
+class Dimmed:
+    """A mesh that takes its colours times `k` and its faces bigger by
+    `grow`: dress.leaves lays small leaves that glow orange-red under the
+    lantern; these are old, brown and wet."""
+
+    def __init__(self, mesh, k=(1.0, 1.0, 1.0), grow=1.0):
+        self.mesh, self.k, self.grow = mesh, k, grow
+
+    def vert(self, x, y, z, color=(1.0, 1.0, 1.0, 1.0), uv=(0.0, 0.0)):
+        return self.mesh.vert(x, y, z, (color[0] * self.k[0], color[1] * self.k[1], color[2] * self.k[2], color[3]), uv)
+
+    def face(self, indices, mat):
+        self.mesh.face(indices, mat)
+
+    def poly(self, points, mat, color=(1.0, 1.0, 1.0, 1.0), uvs=None, facing=None):
+        cx, cz = sum(q[0] for q in points) / len(points), sum(q[2] for q in points) / len(points)
+        points = [(cx + (q[0] - cx) * self.grow, q[1], cz + (q[2] - cz) * self.grow) for q in points]
+        return porter.Mesh.poly(self, points, mat, color, uvs, facing)
+
+
+def turf_or_gravel(x, z):
+    """How high the garth's ground is at (x, z): the beds' domed turf, the
+    paved round, the gravel."""
+    qx, qz = abs(x), abs(z - MID_Z)
+    inside = min(qx - AXIS, qz - AXIS, RING - qx, RING - qz, math.hypot(qx, qz) - ROUND)
+    if inside > 0.0:
+        return 0.035 + 0.06 * smoothstep(0.0, 1.4, inside) + 0.015 * fbm(x, z, 0.8, 2, 3.0)
+    return 0.03 if math.hypot(qx, qz) < ROUND else 0.014
+
+
+def dressing():
+    """What age and neglect have done to the cloister, and who stands in
+    it. Stains and webs are thin faces just proud of the stone; nothing
+    here is solid, so nothing stands in a walking path below 2.3 m: the
+    figures are in the walls' thickness or on the parapet."""
+    d, fig = porter.Mesh("Dressing"), porter.Mesh("Figures")
+    rng = random.Random(41)
+    wet = {"N": 0.3, "S": 0.6, "W": 0.45, "E": 0.45}
+    statue = (0.6, 0.58, 0.53)
+    for i, (name, (place, open_u, cuts)) in enumerate(SIDES.items()):
+        t, f = Turned(d, place), Turned(fig, place)
+        for uc, kind in cuts:
+            if kind in ("niche", "niche_turned"):
+                # A hooded figure in the niche at the walk's end. One of the two has its back to the walk.
+                foot, away = NICHE[1], kind == "niche_turned"
+                dress.figure(f, (uc, foot, BACK - (0.07 if away else 0.12)), math.pi if away else 0.0, 1.62, colour=statue, bowed=0.8)
+            elif kind == "blind":
+                # The wall has moved over the walled-up door.
+                dress.crack(t, (uc + 0.12, RECESS[kind][2] + RECESS[kind][3] + 0.1, BACK), (0, 1), 1.7, seed=5)
+                dress.damp(t, (uc - 0.58, BACK - RECESS[kind][4]), (uc + 0.58, BACK - RECESS[kind][4]), 0.06, (0, 1), 1.0, dress.DARK, 0.6, seed=3.0)
+            elif kind == "window":
+                dress.run(t, (uc + rng.uniform(-0.15, 0.15), 1.49, BACK), (0, 1), 0.36, rng.uniform(0.8, 1.1), dress.DARK, 0.5, seed=uc + i)
+        for u0 in BAYS:
+            if u0 == open_u:
+                continue
+            # Green at the low wall's foot on the garth's side (most on the side that never sees the sun).
+            dress.damp(t, (u0 - 1.62, 0.4), (u0 + 1.62, 0.4), 0.02, (0, 1), 0.56, dress.GREEN, wet[name], seed=i * 10.0 + u0)
+        # Runs down the garth's face from under the string course, clear of the arches.
+        for u0 in rng.sample(BAYS, 3):
+            du = rng.choice((-1, 1)) * rng.uniform(1.0, 1.4)
+            room = 4.2 - cp.arch_height(HALF, SPRING, RISE, abs(du)) - 0.15
+            dress.run(t, (u0 + du, 4.2, 0.4), (0, 1), rng.uniform(0.25, 0.4), min(room, rng.uniform(0.8, 1.3)), dress.DARK, 0.55, seed=u0 + i)
+    # The two on the parapet, over the garth: hooded, looking down (from the
+    # garth they stand against the sky over the west and south ranges' roofs).
+    for name, u in (("W", 4.0), ("S", -4.0)):
+        dress.figure(Turned(fig, SIDES[name][0]), (u, WALL_TOP + 0.13, 0.12), 0.0, 1.5, colour=statue, bowed=1.0)
+        dress.run(Turned(d, SIDES[name][0]), (u, WALL_TOP, 0.4), (0, 1), 0.4, 0.75, dress.DARK, 0.6, seed=u)
+    # Cobwebs, small and tucked away (dress.cobweb is a neat fan: in the
+    # open it looks hung there): where a rib meets the wall in three
+    # places, in the heads of two lights, and one across the niche of the
+    # figure that faces the wall, which nobody has touched.
+    for name, u, side in (("N", 4.0, 1), ("E", -4.0, -1), ("W", -8.4, 1)):
+        dress.cobweb(Turned(d, SIDES[name][0]), (u + side * 0.06, 2.72, BACK + 0.03), (0.0, 0.9, 0.42), (side, 0.25, 0.0), 0.5, seed=int(u) + 9)
+    for name, u0, s in (("N", 6.0, 1), BROKEN + (1,)):
+        dress.cobweb(Turned(d, SIDES[name][0]), (u0 + s * 0.72, 2.9, 0.0), (-0.3, -0.9, 0.0), (0.7, -0.6, 0.0), 0.3, seed=int(u0) + s, sag=0.1)
+    dress.cobweb(Turned(d, SIDES["S"][0]), (-10.0 - NICHE[0], NICHE[2] + 0.1, BACK - 0.02), (0.0, -1.0, 0.0), (0.9, -0.25, 0.0), 0.6, seed=23, sag=0.2)
+
+    # Three abbots' slabs in the east walk's floor, between the two doors.
+    grave_slab(d, 9.05, 11.0, -17.0, 0.8, 3.0, 0.5)
+    grave_slab(d, 8.95, 11.05, -16.05, 0.86, 7.0, 0.15)
+    grave_slab(d, 9.1, 10.95, -15.12, 0.78, 11.0, 0.85)
+
+    # Leaves blown in from the garth (the hawthorn is in its north-east bed):
+    # along the low walls, through the open bays, heaped in the north-east
+    # corner, and at the feet of the two niches, where nobody sweeps.
+    y, leaf = 0.066, Dimmed(d, LEAF, 1.0)
+    dress.leaves(leaf, 0.4, 7.6, -25.2, -24.44, y, 90, 1, toward=(0, 1))
+    dress.leaves(leaf, -3.5, -0.5, -25.9, -24.44, y, 45, 2, toward=(0, 1))
+    dress.leaves(leaf, -3.3, -0.7, -24.4, -23.4, 0.08, 22, 3)
+    dress.leaves(leaf, 8.6, 11.52, -27.5, -24.6, y, 120, 4, toward=(1, -1))
+    dress.leaves(leaf, 8.44, 9.2, -24.0, -15.6, y, 80, 5, toward=(-1, 0))
+    dress.leaves(leaf, 9.2, 10.8, -5.3, -4.5, y, 34, 6, toward=(0, 1))
+    dress.leaves(leaf, -11.5, -10.7, -26.9, -25.1, y, 30, 7, toward=(-1, 0))
+    dress.leaves(leaf, -11.2, -8.8, -5.2, -4.5, y, 26, 8, toward=(0, 1))
+    dress.leaves(leaf, -10.55, -9.45, -4.5, -4.25, 0.07, 14, 11, toward=(0, 1))
+    dress.leaves(leaf, 0.5, 7.5, -23.56, -22.9, 0.024, 80, 9, toward=(0, -1))
+    dress.leaves(leaf, 6.9, 7.56, -23.4, -15.0, 0.024, 80, 10, toward=(1, 0))
+    d.build()
+    fig.build(smooth=True)
+
+
 def arcade():
     porter.reset(301)
     stone, vault, walls = porter.Mesh("Arcade"), porter.Mesh("Vault"), porter.Mesh("BackWalls")
@@ -327,7 +539,7 @@ def arcade():
         t = Turned(stone, place)
         tint = cp.stone_tint(0.0, WALL_TOP, seed=30.0 + i * 7.0, worn=0.3)
         for k, u0 in enumerate(BAYS):
-            bay(t, u0, u0 == open_u, tint, k == 0, k == len(BAYS) - 1)
+            bay(t, u0, u0 == open_u, tint, k == 0, k == len(BAYS) - 1, (name, u0) == BROKEN)
         for u in (-4.0, 0.0, 4.0):
             buttress(t, u, cp.stone_tint(0.0, 4.0, seed=50.0 + i * 3.0 + u, worn=0.9))
             shaft(t, u, -0.48, VSPRING)
@@ -385,12 +597,14 @@ def arcade():
             def at(f, r, y):
                 return (lerp(ax, bx, f) * r, y, -16.0 + lerp(az, bz, f) * r)
             pts = [at(fa, inner, lo), at(fb, inner, lo), at(fb, outer, hi), at(fa, outer, hi)]
-            cols = [(0.8 + 0.25 * fbm(p[0], p[2], 0.3, 2, 2.0),) * 3 + (1.0,) for p in pts]
+            # (Old lead, dull: at 0.8 it was the brightest thing in the abbey from the dormitory's windows.)
+            cols = [(0.42 + 0.18 * fbm(p[0], p[2], 0.3, 2, 2.0),) * 3 + (1.0,) for p in pts]
             roof.poly(pts, "lead_roof", cols, facing=(0, 1, 0))
     tint = cp.stone_tint(4.0, 5.5, seed=90.0, worn=0.6)
     cp.slab(roof, (-12.4, 3.95, -28.0), (-11.6, 5.45, -3.6), STONE, tint, faces="xXZY", step=2.0)
     cp.slab(roof, (-12.4, 3.95, -4.4), (12.0, 5.45, -3.6), STONE, tint, faces="XzZY", step=2.0)
     roof.build()
+    dressing()
     porter.export("env_cloister_arcade")
 
 
@@ -458,15 +672,18 @@ def tuft(m, x, z, size, col, count=(7, 10), y=0.04):
               random.uniform(0.025, 0.05) * (0.7 + size), tuple(c * random.uniform(0.75, 1.1) for c in col))
 
 
-def flower(m, x, z, height):
-    """A late flower: a stalk or two, a pale head on some."""
+def flower(m, x, z, height, heads=0.12):
+    """What is left of a flower in November: a dead stalk or two, some
+    broken over, a browned head still on a few."""
     for _ in range(random.randint(1, 3)):
         yaw = random.uniform(0.0, math.tau)
-        tx, ty, tz = blade(m, x + random.uniform(-0.05, 0.05), 0.04, z + random.uniform(-0.05, 0.05), yaw, random.uniform(0.02, 0.25),
-                           height * random.uniform(0.6, 1.0), 0.03, STALK, 1.0)
-        if random.random() < 0.4:
+        lean = random.uniform(0.02, 0.25) if random.random() < 0.7 else random.uniform(0.5, 1.1)
+        k = random.uniform(0.55, 1.0)
+        tx, ty, tz = blade(m, x + random.uniform(-0.05, 0.05), 0.04, z + random.uniform(-0.05, 0.05), yaw, lean,
+                           height * random.uniform(0.6, 1.0) / (1.0 + lean), 0.03, (STALK[0] * k, STALK[1] * k, STALK[2] * k), 1.0)
+        if random.random() < heads:
             r = random.uniform(0.02, 0.035)
-            k = random.uniform(0.3, 0.6)
+            k = random.uniform(0.16, 0.34)
             col = (PETAL[0] * k, PETAL[1] * k, PETAL[2] * k, 1.0)
             ids = [m.vert(tx + dx * r, ty + 0.01, tz + dz * r, col, (0.5, ty)) for dx, dz in ((-1, 0), (0, -1), (1, 0), (0, 1))]
             m.face(tuple(ids), "growth")
@@ -575,12 +792,15 @@ def garth():
         def bed(qx, qz, sx=sx, sz=sz):
             return sx * qx, MID_Z + sz * qz
 
+        # The two planted beds (herbs, flowers) are dug earth inside their edging; the other two are lawn.
+        planted = sx == sz
+
         def turf(qx, qz, sx=sx, sz=sz):
             x, z = bed(qx, qz)
             inside = min(qx - AXIS, qz - AXIS, RING - qx, RING - qz, math.hypot(qx, qz) - ROUND)
             y = 0.035 + 0.06 * smoothstep(0.0, 1.4, inside) + 0.015 * fbm(x, z, 0.8, 2, 3.0)
             k = 0.78 + 0.3 * fbm(x, z, 0.25, 3, 5.0)
-            return (x, y, z), (k, k, k * 0.95, 1.0)
+            return (x, y, z), (k, k, k * 0.95, 1.0), inside
 
         rows = 6
         for a, b in zip(angles, angles[1:]):
@@ -597,7 +817,9 @@ def garth():
                 if len(quad) > 2 and math.dist(quad[0][0], quad[-1][0]) < 1e-4:
                     quad.pop()
                 if len(quad) > 2:
-                    ground.poly([q[0] for q in quad], "grass_leafy", [q[1] for q in quad], facing=(0, 1, 0))
+                    bare = planted and sum(q[2] for q in quad) / len(quad) > 0.5
+                    cols = [(q[1][0] * 0.5, q[1][0] * 0.47, q[1][0] * 0.42, 1.0) if bare else q[1] for q in quad]
+                    ground.poly([q[0] for q in quad], "grave_earth" if bare else "grass_leafy", cols, facing=(0, 1, 0))
         # Its box edging: the two outer sides, the two inner, and round the paved middle.
         e = 0.2
         reach = math.sqrt((ROUND + e) ** 2 - (AXIS + e) ** 2)
@@ -638,18 +860,21 @@ def garth():
         qx, qz = random.uniform(1.2, 5.6), random.uniform(1.2, 5.6)
         if not in_bed(qx, qz) or math.hypot(qx - 3.4, qz - 3.4) < 0.75:
             continue
-        col = tuple(lerp(HERB[c], GRASS[c], random.uniform(0.0, 0.5)) for c in range(3))
-        tuft(growth, -qx, MID_Z - qz, random.uniform(0.2, 0.42), col)
-        if random.random() < 0.2:
-            flower(growth, -qx, MID_Z - qz, random.uniform(0.4, 0.7))
-    # The flower bed: what is left standing in November, a few white heads still on it.
+        if random.random() < 0.6:
+            col = tuple(lerp(HERB[c], GRASS[c], random.uniform(0.0, 0.5)) for c in range(3))
+            if random.random() < 0.45:
+                col = tuple(lerp(col[c], STALK[c], random.uniform(0.5, 0.9)) for c in range(3))
+            tuft(growth, -qx, MID_Z - qz, random.uniform(0.2, 0.42), col)
+        if random.random() < 0.45:
+            flower(growth, -qx, MID_Z - qz, random.uniform(0.4, 0.75), 0.0)
+    # The flower bed: what is left standing in November, a browned head still on a few.
     for _ in range(210):
         qx, qz = random.uniform(1.2, 5.6), random.uniform(1.2, 5.6)
         if not in_bed(qx, qz) or math.hypot(qx - 3.4, qz - 3.4) < 0.75:
             continue
         flower(growth, qx, MID_Z + qz, random.uniform(0.35, 0.8))
-        if random.random() < 0.45:
-            tuft(growth, qx, MID_Z + qz, random.uniform(0.15, 0.3), GRASS, (4, 6))
+        if random.random() < 0.25:
+            tuft(growth, qx, MID_Z + qz, random.uniform(0.15, 0.3), tuple(lerp(GRASS[c], STALK[c], random.uniform(0.2, 0.8)) for c in range(3)), (4, 6))
     # The two lawns: longer grass against the box, where the scythe doesn't reach.
     for sx, sz in ((1, -1), (-1, 1)):
         for _ in range(150):
@@ -666,6 +891,47 @@ def garth():
             continue
         tuft(growth, x, MID_Z + z, random.uniform(0.1, 0.26), tuple(lerp(GRASS[c], STALK[c], random.uniform(0.0, 0.7)) for c in range(3)), (4, 7), 0.02)
     growth.build()
+
+    # What the season has left: the hawthorn's leaves under it (it stands at
+    # (4.5, -20.4) in cloister.tscn) and blown across the gravel, a scum
+    # round the basin's edge with leaves caught in it, stains down the
+    # basin's sides and green at its foot.
+    litter = porter.Mesh("Litter")
+    leaf = Dimmed(litter, LEAF, 1.0)
+    rng = random.Random(29)
+    for k in range(420):
+        r, a = 3.3 * rng.random() ** 0.9, rng.uniform(0.0, math.tau)
+        x, z = 4.5 + math.cos(a) * r - 0.3 * r, -20.4 + math.sin(a) * r * 0.9
+        if abs(x) > REACH - 0.05 or abs(z - MID_Z) > REACH - 0.05 or math.hypot(x, z - MID_Z) < 1.7:
+            continue
+        on_turf = turf_or_gravel(x, z) > 0.031
+        dress.leaves(leaf, x, x, z, z, turf_or_gravel(x, z) + (0.03 if on_turf else 0.01), 1, 100 + k)
+    for k in range(26):
+        r, a = rng.uniform(0.4, 0.88), rng.uniform(0.0, math.tau) if k % 3 else rng.uniform(0.2, 1.4)
+        dress.leaves(leaf, math.cos(a) * r, math.cos(a) * r, MID_Z + math.sin(a) * r, MID_Z + math.sin(a) * r, 0.607, 1, 400 + k)
+    n = 28
+    for i in range(n):
+        ring = []
+        for a in (math.tau * i / n, math.tau * (i + 1) / n):
+            # (0.93 is the rim's inner edge at its top: the film runs under it to the basin's wall.)
+            reach = 0.1 + 0.3 * max(fbm(math.cos(a) * 1.3, math.sin(a) * 1.3, 1.0, 2, 14.0) + 0.25, 0.0) + (0.22 if 0.2 < a < 1.4 else 0.0)
+            ring.append((a, reach))
+        (a0, w0), (a1, w1) = ring
+        pts = [(math.cos(a0) * 0.97, 0.604, MID_Z + math.sin(a0) * 0.97), (math.cos(a1) * 0.97, 0.604, MID_Z + math.sin(a1) * 0.97),
+               (math.cos(a1) * (0.93 - w1), 0.604, MID_Z + math.sin(a1) * (0.93 - w1)), (math.cos(a0) * (0.93 - w0), 0.604, MID_Z + math.sin(a0) * (0.93 - w0))]
+        scum = (0.13, 0.15, 0.08)
+        litter.poly(pts, dress.GRIME, [scum + (0.75,), scum + (0.75,), scum + (0.0,), scum + (0.0,)], facing=(0, 1, 0))
+    face = 1.2 * math.cos(math.pi / 8)
+    for k in range(8):
+        a, b, mid = math.tau * k / 8, math.tau * (k + 1) / 8, math.tau * (k + 0.5) / 8
+        out = (math.cos(mid), math.sin(mid))
+        dress.damp(litter, (math.cos(a) * 1.2, MID_Z + math.sin(a) * 1.2), (math.cos(b) * 1.2, MID_Z + math.sin(b) * 1.2), 0.2, out, 0.3, dress.GREEN, 0.6,
+                   seed=k * 3.0)
+        if k in (0, 3, 5, 6):
+            off = rng.uniform(-0.25, 0.25)
+            dress.run(litter, (out[0] * face - out[1] * off, 0.66, MID_Z + out[1] * face + out[0] * off), out, rng.uniform(0.22, 0.34), 0.46,
+                      dress.GREEN if k % 2 else dress.DARK, 0.7, seed=k)
+    litter.build()
     porter.export("env_cloister_garth")
 
 

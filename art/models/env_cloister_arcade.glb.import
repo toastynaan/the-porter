@@ -42,20 +42,50 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
+"cobweb": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/cobweb.tres",
+"use_external/path": "res://game/world/materials/real/cobweb.tres"
+},
 "flags_worn": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/flags_worn.tres",
 "use_external/path": "res://game/world/materials/real/flags_worn.tres"
+},
+"grime": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/grime.tres",
+"use_external/path": "res://game/world/materials/real/grime.tres"
 },
 "lead_roof": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/lead_roof.tres",
 "use_external/path": "res://game/world/materials/real/lead_roof.tres"
 },
+"painted": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/painted.tres",
+"use_external/path": "res://game/world/materials/real/painted.tres"
+},
+"stone_church": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_church.tres",
+"use_external/path": "res://game/world/materials/real/stone_church.tres"
+},
 "stone_cloister": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://game/world/materials/real/stone_cloister.tres",
 "use_external/path": "res://game/world/materials/real/stone_cloister.tres"
+},
+"stone_rubble": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/stone_rubble.tres",
+"use_external/path": "res://game/world/materials/real/stone_rubble.tres"
+},
+"window_dark": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://game/world/materials/real/window_dark.tres",
+"use_external/path": "res://game/world/materials/real/window_dark.tres"
 }
 }
 }

@@ -4,7 +4,9 @@ extends Node
 ## night), from a camera of the tool's own, at dusk and after dark. For the
 ## look of the place: the clock stands still and nobody is spoken to. A
 ## still marked `lantern` has the porter standing at the camera with his
-## lantern, as the place is seen in play. Taken at the window's own size.
+## lantern, as the place is seen in play. A still marked `void` is a check
+## for holes, not a look: nothing is shaded and what is not there shows
+## magenta. Taken at the window's own size.
 
 const OUT := "res://art/_review/crypt/"
 const DAY := 15.5
@@ -39,6 +41,28 @@ const SHOTS := [
 	{"name": "stair_up", "hour": NIGHT, "eye": Vector3(25.6, -2.35, -34.85), "at": Vector3(18.0, 0.6, -34.8), "lantern": true},
 	{"name": "stair_down", "hour": NIGHT, "eye": Vector3(18.6, 1.2, -34.8), "at": Vector3(26.0, -3.6, -34.9), "lantern": true},
 	{"name": "west_alcove", "hour": NIGHT, "eye": Vector3(15.0, -2.35, -31.5), "at": Vector3(14.0, -2.6, -35.4), "lantern": true},
+	{"name": "west_end", "hour": NIGHT, "eye": Vector3(-14.2, -2.35, -30.0), "at": Vector3(-19.6, -2.3, -30.0), "lantern": true},
+	{"name": "west_end_near", "hour": NIGHT, "eye": Vector3(-16.4, -2.35, -30.0), "at": Vector3(-19.6, -2.2, -30.0), "lantern": true},
+	{"name": "ossuary", "hour": NIGHT, "eye": Vector3(-3.4, -2.35, -29.6), "at": Vector3(-2.0, -2.9, -31.6), "lantern": true},
+	{"name": "empty_niche", "hour": NIGHT, "eye": Vector3(4.6, -2.35, -29.4), "at": Vector3(6.0, -2.8, -31.6), "lantern": true},
+	{"name": "crosses", "hour": NIGHT, "eye": Vector3(-17.7, -2.35, -27.4), "at": Vector3(-17.35, -2.8, -25.0), "lantern": true},
+	{"name": "stair_figure", "hour": NIGHT, "eye": Vector3(23.6, -2.08, -34.8), "at": Vector3(27.5, -2.6, -34.9), "lantern": true},
+	{"name": "stair_figure_near", "hour": NIGHT, "eye": Vector3(25.4, -2.35, -34.85), "at": Vector3(27.6, -2.4, -34.9), "lantern": true},
+	{"name": "tomb_effigy", "hour": NIGHT, "eye": Vector3(13.4, -2.35, -30.4), "at": Vector3(14.4, -3.4, -28.5), "lantern": true},
+	{"name": "tomb_ajar", "hour": NIGHT, "eye": Vector3(20.9, -2.35, -30.0), "at": Vector3(21.9, -3.4, -28.5), "lantern": true},
+	{"name": "hidden_stair_descent", "hour": NIGHT, "eye": Vector3(-18.8, -2.0, -24.5), "at": Vector3(-18.1, -2.9, -31.5), "lantern": true},
+	{"name": "west_alcove_in", "hour": NIGHT, "eye": Vector3(15.6, -2.35, -34.9), "at": Vector3(12.4, -3.2, -34.9), "lantern": true},
+	{"name": "soot_passage", "hour": NIGHT, "eye": Vector3(-14.6, -2.35, -29.4), "at": Vector3(-14.0, -1.6, -31.5), "lantern": true},
+	{"name": "ring", "hour": NIGHT, "eye": Vector3(18.6, -2.35, -31.8), "at": Vector3(18.1, -3.0, -33.9), "lantern": true},
+	{"name": "stains", "hour": NIGHT, "eye": Vector3(0.6, -2.35, -30.6), "at": Vector3(1.6, -2.7, -28.4), "lantern": true},
+	{"name": "gap_hs_foot", "hour": NIGHT, "eye": Vector3(-18.8, -2.35, -26.0), "at": Vector3(-18.8, -1.0, -19.0), "void": true},
+	{"name": "gap_hs_mid_up", "hour": NIGHT, "eye": Vector3(-18.8, -0.3, -22.0), "at": Vector3(-18.8, 0.9, -19.0), "void": true},
+	{"name": "gap_hs_rim_n", "hour": NIGHT, "eye": Vector3(-18.8, -0.3, -22.0), "at": Vector3(-18.8, 0.0, -25.0), "void": true},
+	{"name": "gap_cs_top", "hour": NIGHT, "eye": Vector3(18.4, 1.7, -34.8), "at": Vector3(24.0, -3.0, -34.8), "void": true},
+	{"name": "gap_cs_rim_n", "hour": NIGHT, "eye": Vector3(21.0, -0.33, -34.6), "at": Vector3(21.6, 0.2, -35.6), "void": true},
+	{"name": "gap_cs_rim_s", "hour": NIGHT, "eye": Vector3(21.0, -0.33, -35.0), "at": Vector3(21.6, 0.2, -34.1), "void": true},
+	{"name": "gap_cs_arch", "hour": NIGHT, "eye": Vector3(22.5, -1.34, -34.8), "at": Vector3(24.0, -0.6, -34.8), "void": true},
+	{"name": "gap_tomb", "hour": NIGHT, "eye": Vector3(13.4, -2.35, -30.4), "at": Vector3(14.4, -3.4, -28.5), "void": true},
 ]
 
 var _n := 0
@@ -86,6 +110,12 @@ func _ready() -> void:
 		night.add_child(lamp)
 		lamp.global_position = at + Vector3(0.0, 0.5, 0.0)
 		torches.append(lamp)
+	# For stills marked `void`: no shading and a magenta nothing, so a hole in the model shows.
+	var void_env := Environment.new()
+	void_env.background_mode = Environment.BG_COLOR
+	void_env.background_color = Color(1.0, 0.0, 1.0)
+	void_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	void_env.ambient_light_color = Color.WHITE
 	var only := ""
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--only="):
@@ -110,7 +140,9 @@ func _ready() -> void:
 		fill.global_position = eye + Vector3(0.0, 0.6, 0.0)
 		for lamp in torches:
 			lamp.visible = shot.get("torches", false)
-		get_viewport().debug_draw = Viewport.DEBUG_DRAW_UNSHADED if shot.get("flat", false) else Viewport.DEBUG_DRAW_DISABLED
+		var void_shot: bool = shot.get("void", false)
+		cam.environment = void_env if void_shot else null
+		get_viewport().debug_draw = Viewport.DEBUG_DRAW_UNSHADED if shot.get("flat", false) or void_shot else Viewport.DEBUG_DRAW_DISABLED
 		var low: bool = shot.get("sun", false)
 		sun.shadow_enabled = low
 		sun.light_color = Color(1.0, 0.78, 0.5) if low else (night.get_node(^"Daylight").get(&"moon") as DirectionalLight3D).light_color

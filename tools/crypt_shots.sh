@@ -12,5 +12,5 @@ mkdir -p "$OUT"
 if [ $# -eq 0 ]; then rm -f "$OUT"/[0-9][0-9]_*.png; fi
 "$GODOT" --path "$ROOT" --windowed --resolution 1920x1080 res://tools/godot/crypt_shots.tscn -- ${1:+--only=$1} 2>&1 | grep -E 'wrote|ERROR|SCRIPT|crypt shots'
 cd "$OUT"
-ffmpeg -y -loglevel error -pattern_type glob -i '[0-9][0-9]_*.png' -vf "scale=640:-2,tile=6x5:padding=4" -frames:v 1 _crypt_sheet.png
+ffmpeg -y -loglevel error -pattern_type glob -i '[0-9][0-9]_*.png' -vf "scale=640:-2,tile=9x8:padding=4" -frames:v 1 _crypt_sheet.png
 echo "wrote $OUT/_crypt_sheet.png"
