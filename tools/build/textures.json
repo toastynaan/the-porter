@@ -127,5 +127,30 @@
     "size": 1024,
     "saturation": 0.5,
     "gain": 0.8
+  },
+  "stone_cloister": {
+    "polyhaven": "large_sandstone_blocks_01",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 1.0,
+    "cool": 0.0
+  },
+  "flags_worn": {
+    "polyhaven": "rock_tile_floor",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.9
+  },
+  "gravel_path": {
+    "polyhaven": "gravel_floor_02",
+    "size": 1024,
+    "saturation": 0.5,
+    "gain": 0.85
+  },
+  "grass_leafy": {
+    "polyhaven": "leafy_grass",
+    "size": 1024,
+    "saturation": 0.6,
+    "gain": 0.8
   }
 }

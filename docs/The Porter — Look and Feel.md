@@ -178,19 +178,28 @@ The real demon is not the costume. It must never look like a man in a mask, so a
 
 ## Environments and materials
 
-The abbey is plain, worn and cramped. It's a working building, not a cathedral: low ceilings, narrow doors, thick walls, small windows.
+The abbey is old, worn and tall. Doors are narrow, walls thick and windows small, but the rooms rise: height is what makes them frightening, because the lantern doesn't reach the roof. (Until 2026-11-11 this read "plain and cramped, low ceilings".)
+
+**Heights.** Tall where nothing is built over a room: the church about 16 m under a vault; the refectory, chapter house, kitchen and infirmary 7 to 8 m, vaulted or open to the roof. A room with a floor over it (under the dormitory) keeps 4 m and is vaulted. The cloister walks are rib-vaulted, 4.55 m at the crown. The plan, the stairs and the hunters' routes don't change.
+
+**Mood references for the abbey (images, Nov 2026).** Take the mood, not the details.
+- *The cloister and its garden:* pointed arcades with tracery on a low wall, rib vaults over the walk, low sun through the arches laying their shadows on the flags; a formal garden of clipped box, gravel walks and a stone basin at the middle.
+- *The church and the tall rooms:* a high dark vault, tall windows, pews, candles massed at the altar, shafts of light in dust.
+- *Under the ground (the crypt, the passage, the undercroft):* low barrel vaults of rough stone, a torch or lamp every few paces, the far end black.
+- *The grand halls:* long candle-lit corridors that repeat to a far door, sconces, hangings, a runner down the middle, a dark floor that shines, a great stair. Built as 1420s work: tapestry and painted panels, not oil paintings; glazed tile, not marble; stone and oak, iron candle beams, not chandeliers. They go on rooms the abbey has: the day stair, the dormitory, the chapter house, the guesthouse. No rooms are added.
 
 **Materials (keep to this list)**
 
 | Material | Where | Look |
 | --- | --- | --- |
-| Rough limestone blocks | Walls, cloister arches | Grey, soot-stained above head height |
+| Limestone | Walls; cut and moulded in the cloister and the church | Warm where a light is on it, grey without; mossed at the foot outdoors, soot-stained above head height indoors |
 | Worn flagstones | Floors, cloister walk | Uneven, dipped where feet have walked for centuries |
 | Dark oak | Doors, beams, choir stalls | Nearly black with age, iron studs and hinges |
 | Lime plaster | Dormitory, infirmary | Off-white, cracked, damp patches |
 | Wool and linen | Bedding, habits, curtains | Heavy, dull, frayed |
 | Beeswax and tallow | Candles everywhere | Drips that build up on surfaces; drips are a clue system |
 | Earth and mud | Graveyard, outer court, the lane | Wet, footprints persist |
+| Clipped box, yew, turf, gravel | The cloister garth | Dark evergreen, formal, a little neglected: weeds in the gravel, dead stalks in the beds |
 | Cobbles | The lane outside the gate, with a gutter down the middle | Uneven, wet, reflecting the lanterns |
 | Bone | Charnel house, crypt | Stacked neatly, which is worse than scattered |
 

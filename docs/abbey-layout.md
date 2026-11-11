@@ -10,7 +10,7 @@ The abbey is one walled square, 80 × 80 m, on a 4 m kit grid. Every building op
 | --- | --- | --- | --- |
 | Outer court | West strip | Gate (west wall: an iron grille under a stone porch; open by day with Cole at it, barred once the porter takes it after supper), the porter's bench beside it, porter's cell, guesthouse, well, woodpile | Under the cot, behind the woodpile |
 | Church | North | Bell tower (west end, 12 m), nave, choir, altar (east end); crypt under the choir | Under the altar cloth, the open tomb |
-| Cloister | Centre | Garth (24 m square with walks) inside arcades; one open bay a side | Behind the piers |
+| Cloister | Centre | Garth (24 m square with walks) inside arcades, a garden in it with a basin at the middle; one open bay a side | Behind the piers |
 | Dormitory (east range) | East of the cloister | Slype, chapter house, day stair, warming room, undercroft; dormitory upstairs; latrine block at the south end | Under three of the beds (north end, middle, south end) |
 | South range | South of the cloister | Refectory, kitchen, bakehouse with the oven | The oven (bones inside) |
 | Cellar (west range) | West of the cloister | Granary (hidden stair), outer parlour passage, stores (cloister door locked) | Grain sacks |
@@ -20,6 +20,17 @@ The abbey is one walled square, 80 × 80 m, on a 4 m kit grid. Every building op
 ## The lane outside the gate
 
 `areas/street.tscn`, outside the west wall, baked into the navmesh (its `Ground`, `Houses` and `GatePorch` nodes are in `nav_source`) so visitors can walk up it and in through the gate. A 6 m lane runs the length of the wall with a gutter down the middle. On its far side is a row of timber houses: gable ends to the lane, upper floors jutting 0.5 m per storey, lit and dark windows, a lantern outside each (`StreetLanterns`). The inn stands opposite the gate. Two alleys end out of sight. At each end the lane turns west into fog. The gate porch holds a lantern over the grille. Three squints, barred slits at eye level, look through the wall between lane and abbey: from the porter's cell (z −6) and from the outer court north and south of the gate (z 6 and 14) (`game/world/kit/wall_squint.tscn`; `docs/prologue.md`). The inn, the Cross Keys, can be entered: a taproom, stairs to a loft of beds, and the porter's room at the top front right with one window over the wall toward the court (`game/world/street/env_inn.tscn`). Before the lane, night 0's road comes in from the west (`game/world/road/env_road.tscn`: fields, the white chapel, the city wall and Aldgate, close houses), far outside the abbey's square. The porch's flagstone apron runs on under the gateway into the court, so the threshold is floor and the navmesh joins the lane to the court (until M6 it stopped at the wall, and visitors couldn't path through). Beyond are rooftops and spires (`Skyline`: meshes only, no collision or shadows; it keeps inside the city wall the road in passes through at x = -118, and clear of that road). Debug key G steps out into the lane and back. `tools/street_shots.sh` renders it.
+
+## The cloister as built (first look, 2026-11-11)
+
+The greybox plan is unchanged and is still what stops people and what the navmesh is baked from; it is hidden (`Walls` not visible, the walks' floor and roof blocks `shown = false`) under two models from `tools/build/env_cloister.py`:
+
+- **`Stonework`** (`env_cloister_arcade`): each bay a pointed arch in two orders on piers with a buttress to the garth; closed bays stand on the 0.6 m wall and hold tracery (two cusped lights and a quatrefoil); the open bay on each side is clear, with a worn step. A rib vault over every bay of the walks and the four corners: it springs at 2.7 m and is 4.55 m at the crown (the greybox roof was at 3.9 m). The ranges' walls as the walks see them, with a stone surround to every door and window the greybox has. Flags on the floor, a lead roof behind a parapet (the arcade wall is 5 m).
+- **`Garden`** (`env_cloister_garth`): a gravel walk round the garth and two across it, a paved round at the middle with an eight-sided conduit basin (still water, a shaft and bowl), and four beds edged in clipped box: herbs in a knot with a yew (north-west), a lawn with a bare hawthorn (north-east), late flowers with a yew (south-east), a lawn (south-west).
+- **`GardenSolids`** (in `nav_source`, not drawn): the basin, the two yews, the hawthorn's trunk and the twelve buttresses. The box edging isn't solid: it is stepped through. The navmesh was rebaked.
+- The `Cloister` marker moved from the garth's middle, where the basin now stands, to (0, 0, -13) on the south walk of the garden.
+
+Still greybox and seen from the garth: the church's and the east range's upper walls and all the roofs. `tools/cloister_shots.sh` renders it.
 
 ## Routes
 

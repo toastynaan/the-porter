@@ -39,9 +39,10 @@ func _run() -> void:
 	var heard := [0]
 	senses.heard.connect(func(_at: Vector3, _source: Node) -> void: heard[0] += 1)
 
-	# Rain: running heard at 12 m in clear air; in rain, half.
-	p.place(Vector3(0.0, 0.05, -16.0), 0.0)
-	h.global_transform = Transform3D(Basis.IDENTITY, Vector3(0.0, 0.05, -24.0))
+	# Rain: running heard at 12 m in clear air; in rain, half. (The line
+	# x = -2 runs through the north open bay and clears the basin and the yew.)
+	p.place(Vector3(-2.0, 0.05, -16.0), 0.0)
+	h.global_transform = Transform3D(Basis.IDENTITY, Vector3(-2.0, 0.05, -24.0))
 	await _pilot.frames(2)
 	weather.kind = Weather.Kind.CLEAR
 	senses.hear(p.global_position, Earshot.RUN, p)
@@ -49,20 +50,22 @@ func _run() -> void:
 	weather.kind = Weather.Kind.RAIN
 	senses.hear(p.global_position, Earshot.RUN, p)
 	_check(heard[0] == 1 and is_equal_approx(Weather.hearing_factor(get_tree()), 0.5), "rain: running 8 m off goes unheard")
-	await _pilot.frames(2)
+	# The range is set in _process, and physics frames can run without one.
+	await get_tree().process_frame
+	await get_tree().process_frame
 	var steps := h.get_node(^"Audio").get_child(0) as AudioStreamPlayer3D
 	_check(is_equal_approx(steps.max_distance, 30.0), "and his own steps carry half as far (%.0f m)" % steps.max_distance)
 
 	# Fog: a lit porter 8 m in front.
-	h.global_transform = Transform3D(Basis(Vector3.UP, PI), Vector3(0.0, 0.05, -24.0))
+	h.global_transform = Transform3D(Basis(Vector3.UP, PI), Vector3(-2.0, 0.05, -24.0))
 	weather.kind = Weather.Kind.CLEAR
 	_check(senses.can_see(p), "clear air: a lit porter 8 m off is seen")
 	weather.kind = Weather.Kind.FOG
 	_check(not senses.can_see(p), "fog: at 8 m he can't be seen")
-	p.place(Vector3(0.0, 0.05, -21.0), 0.0)
+	p.place(Vector3(-2.0, 0.05, -21.0), 0.0)
 	_check(senses.can_see(p), "at 3 m he can")
-	h.global_transform = Transform3D(Basis(Vector3.UP, PI), Vector3(0.0, 0.05, -22.0))
-	p.place(Vector3(0.0, 0.05, -12.0), 0.0)
+	h.global_transform = Transform3D(Basis(Vector3.UP, PI), Vector3(-2.0, 0.05, -22.0))
+	p.place(Vector3(-2.0, 0.05, -12.0), 0.0)
 	await _pilot.frames(2)
 	_check(not senses.can_see(p) and senses.call(&"_glow_in_fog", p), "his lantern is a glow in the fog, 10 m off")
 	Input.action_press(&"cover_lantern")

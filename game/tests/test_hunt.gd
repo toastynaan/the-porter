@@ -77,7 +77,7 @@ func _run() -> void:
 	var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
 	h.wearer = &"osric"
 	night.add_child(h)
-	p.place(Vector3(0.0, 0.05, -16.0), 0.0)
+	p.place(Vector3(-4.5, 0.05, -16.0), 0.0)
 	h.global_position = p.global_position + Vector3(0, 0, 6.0)
 	await _pilot.frames(2)
 	var voice: HunterVoice = h.get_node(^"Voice")
@@ -124,7 +124,7 @@ func _run() -> void:
 		"a stone lands on the flags %.1f m from him" % to_it)
 	_check(listener.state == Hunter.State.INVESTIGATE, "and he goes to look")
 	GameState.satchel.append(&"stone")
-	p.place(Vector3(0.0, 0.05, -16.0), PI)
+	p.place(Vector3(-4.5, 0.05, -16.0), PI)
 	p.head.rotation.x = deg_to_rad(-30.0)
 	thrown = p.throw()
 	listener.reset()
@@ -182,7 +182,7 @@ func _run() -> void:
 	await _pilot.seconds(1.7)
 	Input.action_release(&"cover_lantern")
 	_check(not lantern.out, "covered in time, it stays lit")
-	p.place(Vector3(0, 0.05, -16), 0.0)
+	p.place(Vector3(-4.5, 0.05, -16), 0.0)
 	await _pilot.frames(2)
 	gust.blown = false
 	var hunter2 := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
@@ -190,7 +190,7 @@ func _run() -> void:
 	await _pilot.frames(2)
 	hunter2.global_position = p.global_position + Vector3(0, 0, 10)
 	hunter2.chase()
-	p.place(Vector3(0, 0.05, -16), 0.0)
+	p.place(Vector3(-4.5, 0.05, -16), 0.0)
 	await _pilot.frames(2)
 	p.place(gust.global_position - Vector3(0, 1.45, 0), 0.0)
 	await _pilot.frames(3)
