@@ -32,8 +32,15 @@ func _run() -> void:
 			continue
 		door.locked = false
 		door.set_open(true, true)
+	# Wait for the navigation server to take in the region. It does so on a
+	# rendered frame, and a slow first load can run thirty physics frames
+	# with hardly one of those, so wait on the map itself.
 	for i in 30:
 		await get_tree().physics_frame
+	for i in 600:
+		if NavigationServer3D.map_get_iteration_id(_map) > 0 and not NavigationServer3D.map_get_path(_map, Vector3(0, 0, -13), Vector3(-34, 0, 0), true).is_empty():
+			break
+		await get_tree().process_frame
 	var markers := {}
 	for m in get_tree().get_nodes_in_group(&"area_marker"):
 		markers[String(m.name)] = (m as Node3D).global_position

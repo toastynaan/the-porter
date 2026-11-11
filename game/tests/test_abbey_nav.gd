@@ -21,9 +21,15 @@ func _run() -> void:
 	var abbey: Node3D = load("res://game/world/abbey/abbey.tscn").instantiate()
 	add_child(abbey)
 	_map = (abbey.get_node(^"Navigation") as NavigationRegion3D).get_navigation_map()
-	# Wait for the navigation server to take in the region.
+	# Wait for the navigation server to take in the region. It does so on a
+	# rendered frame, and a slow first load can run thirty physics frames
+	# with hardly one of those, so wait on the map itself.
 	for i in 30:
 		await get_tree().physics_frame
+	for i in 600:
+		if NavigationServer3D.map_get_iteration_id(_map) > 0 and not NavigationServer3D.map_get_path(_map, Vector3(0, 0, -13), Vector3(-34, 0, 0), true).is_empty():
+			break
+		await get_tree().process_frame
 	var region: NavigationRegion3D = abbey.get_node(^"Navigation")
 	var probe := NavigationServer3D.map_get_path(_map, Vector3(0, 0, -16), Vector3(0, 0.05, -32), true)
 	print("  info map iteration %d, regions %d, navmesh polygons %d, closest to garth %s, probe path %d points" % [
