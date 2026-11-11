@@ -10,14 +10,13 @@ is at -z, the city at +z, and the gate fills the gap from x = -9 to 9.
 - Bastions: half-round towers standing out from it every fifty or sixty
   metres. One has a candle in a slit: an anchorite's cell.
 - The stair up to the walk, against the city side, south of the gate.
-- The causeway that carries the road over the city ditch (the ditch
-  itself is the ground's: tools/build/env_road_fields.py), with a low
-  parapet each side.
+  (The road crosses the city ditch on the gate's own bridge:
+  tools/build/env_aldgate_bridge.py.)
 
 - Buttresses of cut stone, arrow slits, and north of the gate a mason's
   scaffold against a stretch that has been mended in new pale stone.
 
-Collision: the wall, the bastions, the stair, the causeway's parapets.
+Collision: the wall, the bastions, the stair.
 
 Run: tools/build.sh env_city_wall
 """
@@ -43,8 +42,6 @@ BASTIONS = ((-112.0, False), (-56.0, True), (52.0, False), (109.0, False))
 BASTION_R, BASTION_TOP = 3.4, 10.3
 # The stretch that has come down: its middle, half its length, how far down.
 RUIN = (78.0, 11.0, 3.4)
-# The causeway over the ditch: half the road's width to the parapet, and its z from and to.
-CAUSEWAY = (4.3, -18.0, -5.5)
 
 RUBBLE = "stone_rubble"
 ASHLAR = "stone_ashlar"
@@ -205,28 +202,10 @@ def stair(m):
     cp.block(m, (x_top, -0.4, IN_Z), (x_top + 1.5, WALK, IN_Z + 1.35), ASHLAR, cp.rgba(cp.STONE, 0.9), faces="XZY")
 
 
-def causeway(m):
-    half, z0, z1 = CAUSEWAY
-    tint = cp.stone_tint(-2.0, 1.4, seed=7.0)
-    for s in (-1, 1):
-        lo = (min(s * half, s * (half + 0.5)), -3.0, z0)
-        hi = (max(s * half, s * (half + 0.5)), 0.85, z1)
-        cp.slab(m, lo, hi, RUBBLE, tint, faces="xXzZ", step=1.8)
-        cp.block(m, (lo[0] - 0.06, 0.85, z0 - 0.06), (hi[0] + 0.06, 1.0, z1), ASHLAR, cp.rgba(cp.STONE, 0.9), faces="xXzyY")
-        # A stone at its end, where the cart wheels strike.
-        cp.block(m, (lo[0] - 0.12, -0.3, z0 - 0.55), (hi[0] + 0.12, 1.25, z0), ASHLAR, cp.rgba(cp.STONE, 0.8), faces="xXzZY")
-    # The bank under the road, between them.
-    earth = cp.rgba((0.3, 0.29, 0.27))
-    m.poly([(-half, 0.0, z0), (half, 0.0, z0), (half, -3.0, z0), (-half, -3.0, z0)], RUBBLE, earth, facing=(0, 0, -1))
-
-
 def colliders():
     boxes = [("WallS", (SOUTH, -1.0, OUT_Z), (-GAP, WALK + 2.0, IN_Z)), ("WallN", (GAP, -1.0, OUT_Z), (NORTH, WALK + 2.0, IN_Z))]
     for i, (bx, _c) in enumerate(BASTIONS):
         boxes.append(("Bastion%d" % i, (bx - BASTION_R, -1.0, OUT_Z - BASTION_R), (bx + BASTION_R, BASTION_TOP + 1.8, OUT_Z)))
-    half, z0, z1 = CAUSEWAY
-    for s, name in ((-1, "ParapetS"), (1, "ParapetN")):
-        boxes.append((name, (min(s * half, s * (half + 0.5)), -1.0, z0 - 0.5), (max(s * half, s * (half + 0.5)), 1.1, z1)))
     for name, lo, hi in boxes:
         c = porter.Mesh(name + "-colonly")
         c.box(lo, hi, RUBBLE)
@@ -259,7 +238,6 @@ def main():
     b.build()
     s = porter.Mesh("Stair")
     stair(s)
-    causeway(s)
     s.build()
     colliders()
     porter.export("env_city_wall")

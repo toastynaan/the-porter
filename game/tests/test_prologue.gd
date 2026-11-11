@@ -90,6 +90,8 @@ func _run() -> void:
 	var waited_at_gate := false
 	var walked := [false]
 	var leave_option := [""]
+	var dark_from := Vector3.ZERO
+	var dark_jump := 0.0
 	while not GameState.has_flag(&"n0_arrived") and elapsed < 300.0:
 		await get_tree().physics_frame
 		elapsed += get_physics_process_delta_time()
@@ -97,6 +99,10 @@ func _run() -> void:
 			break
 		closest = minf(closest, cart.global_position.distance_to(wagon.global_position))
 		var at := wagon.global_position
+		if at.distance_to(last) > 20.0:
+			# The road between the bridge and the lane isn't ridden: it passes in the dark.
+			dark_from = last
+			dark_jump = fade.color.a
 		still = still + get_physics_process_delta_time() if at.distance_to(last) < 0.0001 else 0.0
 		last = at
 		if still >= 0.5 and (stops.is_empty() or stops[-1].distance_to(at) > 1.0):
@@ -146,8 +152,11 @@ func _run() -> void:
 	var warden_spoke := Talk.history.any(func(l: Array) -> bool: return l[0] == "Warden")
 	_check(at_gate and warden_spoke, "the wagon stops at Aldgate, and the warden looks them over")
 	var cues_said := Talk.history.filter(func(l: Array) -> bool: return l[0] == "Carter" or l[0] == "Traveller").size()
-	_check(elapsed > 75.0 and elapsed < 150.0 and cues_said >= 8,
-		"the ride takes about two minutes (%.0f s), with something said along the way (%d lines)" % [elapsed, cues_said])
+	_check(elapsed > 60.0 and elapsed < 150.0 and cues_said >= 8,
+		"the ride takes a minute or two (%.0f s), with something said along the way (%d lines)" % [elapsed, cues_said])
+	_check(dark_jump > 0.95 and absf(dark_from.x + 72.0) < 6.0 and absf(dark_from.z - 47.0) < 2.0 and fade.color.a < 0.05
+		and Talk.history.has(["Carter", "Over the brook, and your lane's the next turning. Nearly there."]),
+		"on the bridge over the brook the night goes dark (%.2f, from %s), and has come up again in the lane (%.2f)" % [dark_jump, str(dark_from), fade.color.a])
 	_check(waited_at_gate and leave_option[0] == Talk.TURN_AWAY, "at the gate the wagon waits until he's done talking (he turns away: %s)" % leave_option[0])
 	await _until(func() -> bool: return GameState.has_flag(&"talked_n0_carter") and not Talk.talking, 30.0)
 	Talk.auto_choice = answer_with

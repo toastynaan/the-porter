@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/water_brook.gdshader" id="1_shader"]
+
+[sub_resource type="FastNoiseLite" id="noise"]
+noise_type = 3
+seed = 3
+frequency = 0.02
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="blotch"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("noise")
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/blotch = SubResource("blotch")

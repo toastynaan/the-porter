@@ -1,5 +1,5 @@
 """The street inside Aldgate (night 0, the road in): the ground from under
-the gate to where the lane's own ground begins, in the road scene's
+the gate to the brook's bank, in the road scene's
 coordinates (game/world/road/env_road.tscn; the street runs along x at
 z = 47).
 
@@ -20,9 +20,12 @@ import porter
 from porter import fbm, smoothstep
 
 ROAD_Z = 47.0
-# From the fields' edge under the gate to the lane's ground, and how far each side of the street.
-WEST_X, EAST_X = -119.5, -71.5
-HALF = 11.0
+# From the fields' edge under the gate to the brook's bank (tools/build/env_city_brook.py), how far each
+# side of the street its ground is made (the houses stand on the rest; the alleys have their own floors,
+# tools/build/env_alley.py), and how far each side it can be walked on.
+WEST_X, EAST_X = -119.5, -80.0
+HALF = 3.5
+WALK = 17.0
 # The house fronts stand this far from the middle.
 FRONT = 3.2
 
@@ -58,7 +61,7 @@ def main():
             m.face((index[(i, j)], index[(i, j + 1)], index[(i + 1, j + 1)], index[(i + 1, j)]), "ground_street")
     m.build(smooth=True)
     c = porter.Mesh("Ground-colonly")
-    c.quad((WEST_X, 0.0, ROAD_Z - HALF), (WEST_X, 0.0, ROAD_Z + HALF), (EAST_X, 0.0, ROAD_Z + HALF), (EAST_X, 0.0, ROAD_Z - HALF), "ground_street")
+    c.quad((WEST_X, 0.0, ROAD_Z - WALK), (WEST_X, 0.0, ROAD_Z + WALK), (EAST_X, 0.0, ROAD_Z + WALK), (EAST_X, 0.0, ROAD_Z - WALK), "ground_street")
     c.build()
     porter.export("env_aldgate_street")
 

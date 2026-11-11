@@ -24,7 +24,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import porter
 from porter import fbm, srgb
-from env_road_fields import (ground, yard_amount, ROAD_Z, ROAD_HALF, DITCH, DITCH_HALF, WALL_X, WEST_X, CITY_DITCH_X,
+from env_road_fields import (ground, moat_at, yard_amount, ROAD_Z, ROAD_HALF, DITCH, DITCH_HALF, WALL_X, WEST_X, CITY_DITCH_X,
                              CITY_DITCH_HALF, CAUSEWAY_HALF)
 
 CHUNK = 42.0
@@ -98,7 +98,7 @@ def scatter(x0, x1):
             continue
         z = ROAD_Z + random.choice((-1, 1)) * d
         in_water = abs(d - DITCH) < DITCH_HALF * 0.45
-        if in_water or (abs(x - CITY_DITCH_X) < CITY_DITCH_HALF and d > CAUSEWAY_HALF):
+        if in_water or moat_at(x, z) > 0.02:
             continue
         if x > WALL_X - 1.0:
             continue
@@ -119,7 +119,7 @@ def scatter(x0, x1):
         x = random.uniform(x0, x1)
         d = 9.0 + abs(random.gauss(0.0, 22.0))
         z = ROAD_Z + random.choice((-1, 1)) * d
-        if d > 70.0 or x > WALL_X - 1.0 or abs(x - CITY_DITCH_X) < CITY_DITCH_HALF:
+        if d > 70.0 or x > WALL_X - 1.0 or moat_at(x, z) > 0.02:
             continue
         _h, mask = ground(x, z)
         if mask[3] > 0.3:

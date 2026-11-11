@@ -9,7 +9,8 @@ west to the foot of the city wall, in the road scene's own coordinates
   furrows.
 - A low rise on the south side for the white chapel and its yard.
 - The city ditch along the foot of the wall, with water in it; the road
-  crosses on a causeway.
+  crosses on a timber bridge with a drawbridge at the gate
+  (tools/build/env_aldgate_bridge.py).
 
 The ground's shader (game/world/materials/real/ground_fields.gdshader) reads
 each vertex's colour as masks: red the road's mud, green grass, blue
@@ -46,12 +47,17 @@ YARD_LEVEL = 0.95
 # The wall's outer face, where the ground ends.
 WALL_X = -119.5
 # The city ditch along the foot of the wall: its middle, half its width, its
-# depth, and how far each side of the road's middle the causeway over it
-# reaches (tools/build/env_city_wall.py builds the causeway's sides).
+# depth.
 CITY_DITCH_X = -129.0
 CITY_DITCH_HALF = 5.6
 CITY_DITCH_DEPTH = 2.1
-CAUSEWAY_HALF = 4.5
+# Before the gate the ditch reaches in to the foot of the arch, so the
+# drawbridge lies over water: half the width of that bay, and where it ends
+# (tools/build/env_aldgate_bridge.py builds the bridge and the bay's stone sides).
+BAY_HALF = 3.2
+BAY_X = -121.2
+# Nothing grows nearer the road's middle than this where it crosses the ditch (the bridge).
+CAUSEWAY_HALF = 3.4
 WEST_X = -372.0
 
 
@@ -60,6 +66,16 @@ def yard_amount(x, z):
     dx = max(abs(x - YARD[0]) - YARD_HALF[0], 0.0)
     dz = max(abs(z - YARD[1]) - YARD_HALF[1], 0.0)
     return 1.0 - smoothstep(0.0, 4.0, math.hypot(dx, dz))
+
+
+def moat_at(x, z):
+    """How far down into the city ditch a point is, 0..1."""
+    moat = 1.0 - smoothstep(0.3, 1.0, abs(x - CITY_DITCH_X) / CITY_DITCH_HALF)
+    if x > CITY_DITCH_X:
+        d = abs(z - ROAD_Z)
+        bay = (1.0 - smoothstep(BAY_HALF - 0.3, BAY_HALF + 0.3, d)) * (1.0 - smoothstep(BAY_X - 0.9, BAY_X, x))
+        moat = max(moat, bay)
+    return moat
 
 
 def ground(x, z):
@@ -102,16 +118,14 @@ def ground(x, z):
     pools = smoothstep(0.5, 0.9, -phase) * strips * smoothstep(-0.45, 0.1, fbm(x, z, 0.035, 2, 7.0))
     water = max(water, pools * (0.55 if fallow else 1.0))
     # The city ditch under the wall: wide, steep-sided, black water in the
-    # bottom. The road crosses it on a causeway.
-    if d > CAUSEWAY_HALF:
-        across = abs(x - CITY_DITCH_X) / CITY_DITCH_HALF
-        moat = 1.0 - smoothstep(0.3, 1.0, across)
-        if moat > 0.0:
-            h = lerp(h, -CITY_DITCH_DEPTH * (0.9 + 0.1 * fbm(x, z, 0.1, 2, 8.0)), moat)
-            grass = max(grass, moat)
-            ploughed *= 1.0 - moat
-            road *= 1.0 - moat
-            water = max(water * (1.0 - moat), smoothstep(0.6, 0.8, moat))
+    # bottom. The road crosses it on a timber bridge.
+    moat = moat_at(x, z)
+    if moat > 0.0:
+        h = lerp(h, -CITY_DITCH_DEPTH * (0.9 + 0.1 * fbm(x, z, 0.1, 2, 8.0)), moat)
+        grass = max(grass, moat)
+        ploughed *= 1.0 - moat
+        road *= 1.0 - moat
+        water = max(water * (1.0 - moat), smoothstep(0.6, 0.8, moat))
     return h, (road, grass, ploughed, water)
 
 

@@ -9,8 +9,10 @@ extends NightBeat
 ## Early on the carter pulls in (his "Whoa" breaks off any talk) to let a
 ## cart go by the other way with a covered body on it (the hook): the
 ## porter's view goes to the body and follows it by, and the traveller talks
-## about it. The night comes up out of black as the wagon sets off. It ends when the carter sets him down by the
-## abbey gate and drives off down the lane.
+## about it. The night comes up out of black as the wagon sets off. On the
+## bridge over the brook, once the talk is done, it goes dark, and comes up
+## again in the lane as the wagon reaches the abbey gate. It ends when the
+## carter sets him down there and drives off down the lane.
 
 ## The wagon (its Seat, TravellerSeat and CarterSeat markers), and the road.
 @export var wagon: Node3D
@@ -35,6 +37,14 @@ extends NightBeat
 @export var carter: Node3D
 ## Seconds the night takes to come up out of black as the wagon sets off.
 @export var fade_in := 3.5
+## Where the night goes dark on the road (the bridge over the brook: the
+## talk of the road is over), and where it comes up again (the lane, as the
+## wagon comes to the abbey gate). The road between isn't ridden.
+@export var dark_at: Marker3D
+@export var light_at: Marker3D
+## Seconds it takes to go dark, stays dark, and takes to come up again.
+@export var dark_fade := 2.5
+@export var dark_hold := 1.2
 ## Metres the wagon drives on down the lane after it, out of sight.
 @export var drive_off := 45.0
 ## The abbey gate: barred tonight, nobody keeps it; Cole isn't at it.
@@ -72,6 +82,9 @@ var _speaking := false
 var _hush := false
 var _held: Array[RideCue] = []
 var _pull_along := INF
+var _dark_along := INF
+var _light_along := INF
+var _crossed := false
 var _pulled_in := false
 var _hook_done := false
 var _cart_along := INF
@@ -97,6 +110,9 @@ func run() -> void:
 		_cart_along = _pull_along + cart_lead
 	else:
 		_hook_done = true
+	if dark_at and light_at:
+		_dark_along = _along_of(dark_at.global_position)
+		_light_along = _along_of(light_at.global_position)
 	GameState.set_flag(&"n0_riding")
 	_seat(p)
 	if AudioOut.enabled():
@@ -117,7 +133,15 @@ func run() -> void:
 		var stop := _next_stop()
 		var d := stop - _along
 		var target := minf(_pace * pace_scale, sqrt(2.0 * accel * maxf(d, 0.0)))
-		_v = move_toward(_v, maxf(target, CREEP * pace_scale), accel * dt)
+		if not _crossed and _along >= _dark_along:
+			if Talk.quiet() and not _speaking and _queue.is_empty():
+				_crossed = true
+				await _through_the_dark()
+				continue
+			# Still talking on the bridge: the carter lets the horse stand.
+			_v = move_toward(_v, 0.0, accel * dt)
+		else:
+			_v = move_toward(_v, maxf(target, CREEP * pace_scale), accel * dt)
 		_along = minf(_along + _v * dt, stop)
 		if not _hook_done:
 			# Pulls in toward the ditch over the last 15 m.
@@ -152,6 +176,30 @@ func run() -> void:
 		await Talk.converse(carter_talk, carter)
 	# The carter drives off down the lane, and the traveller with him.
 	_drive_off.call()
+
+
+## The night goes dark as the wagon rolls on off the bridge, and comes up
+## again in the lane with the gate a little way ahead. What the cues between
+## would have said is left unsaid.
+func _through_the_dark() -> void:
+	_hush = true
+	fade_to(1.0, dark_fade / pace_scale)
+	var left := dark_fade / pace_scale
+	while left > 0.0:
+		var dt := PlayTime.physics(self)
+		left -= dt
+		_along += _v * dt
+		_place(wagon, _along, _side)
+		await PlayTime.physics_frame(self)
+	_along = _light_along
+	_side = SIDE
+	while _next < _cues.size() and _cues[_next].along < _light_along:
+		_next += 1
+	_queue.clear()
+	_place(wagon, _along, _side)
+	await wait(dark_hold / pace_scale)
+	_hush = false
+	fade_to(0.0, dark_fade / pace_scale)
 
 
 ## Seats him and the traveller and the carter on the wagon.

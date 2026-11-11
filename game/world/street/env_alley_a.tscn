@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/env_alley_a.glb" id="model"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+
+[node name="AlleyA" type="Node3D"]
+editor_description = "An alley between two houses of the street inside Aldgate (tools/build/env_alley.py): a room built across it a little way in, and at its end a wall with a low door and a lit window. Its mouth is at z = 0 on the line of the house fronts; it runs back along +z. The lantern is at the far end, so whoever stands in the alley is a shape against it."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Lamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 2.35, 12.55)
+energy = 3.0
+
+[node name="MouthLamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 2.3, 2.03)
+energy = 1.0

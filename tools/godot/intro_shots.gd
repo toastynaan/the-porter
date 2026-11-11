@@ -35,6 +35,21 @@ const SHOTS := [
 	{"name": "aldgate_from_the_verge", "along": 100.0, "hour": 16.88, "eye": Vector3(-141.0, 1.7, 38.5), "at": Vector3(-118.0, 7.5, 47.0)},
 	{"name": "the_wall_northward", "along": 100.0, "hour": 16.88, "eye": Vector3(-137.0, 2.0, 60.0), "at": Vector3(-119.0, 6.0, 10.0)},
 	{"name": "aldgate_from_the_fields", "along": 60.0, "hour": 16.75, "eye": Vector3(-178.0, 2.2, 30.0), "at": Vector3(-118.0, 9.0, 47.0)},
+	# The drawbridge.
+	{"name": "drawbridge_from_the_bank", "along": 90.0, "hour": 16.86, "eye": Vector3(-139.5, 1.5, 53.5), "at": Vector3(-120.0, 4.6, 46.5)},
+	{"name": "drawbridge_from_the_water", "along": 90.0, "hour": 16.86, "eye": Vector3(-131.5, -0.9, 57.0), "at": Vector3(-121.5, 3.4, 46.5)},
+	{"name": "drawbridge_gear", "along": 90.0, "hour": 16.86, "eye": Vector3(-128.5, 2.4, 43.6), "at": Vector3(-120.6, 6.4, 47.6)},
+	{"name": "drawbridge_crossing", "along": 99.0, "hour": 16.88, "dir": Vector3(1.0, 0.3, -0.12)},
+	# The alleys, the brook and the bridge.
+	{"name": "alley_south", "along": 140.0, "hour": 17.0, "eye": Vector3(-96.4, 1.6, 46.4), "at": Vector3(-96.3, 1.5, 60.0)},
+	{"name": "alley_north", "along": 140.0, "hour": 17.0, "eye": Vector3(-101.2, 1.6, 47.8), "at": Vector3(-101.3, 1.5, 34.0)},
+	{"name": "alley_south_from_the_wagon", "along": 139.5, "hour": 17.0, "dir": Vector3(-0.5, 0.0, 1.0)},
+	{"name": "bridge_coming", "along": 150.0, "hour": 17.04, "dir": Vector3(1.0, 0.05, -0.1)},
+	{"name": "bridge_from_the_street", "along": 140.0, "hour": 17.04, "eye": Vector3(-88.0, 1.7, 46.2), "at": Vector3(-76.0, 2.0, 47.3)},
+	{"name": "bridge_looking_back", "along": 156.2, "hour": 17.06, "dir": Vector3(-1.0, 0.1, 0.03)},
+	{"name": "brook_north", "along": 156.2, "hour": 17.06, "dir": Vector3(-0.25, -0.15, -1.0)},
+	{"name": "brook_south", "along": 156.2, "hour": 17.06, "dir": Vector3(0.2, -0.12, 1.0)},
+	{"name": "bridge_from_the_bank", "along": 140.0, "hour": 17.04, "eye": Vector3(-77.6, -1.0, 34.5), "at": Vector3(-76.4, 0.9, 47.0)},
 	{"name": "aldgate_from_inside", "along": 140.0, "hour": 17.0, "eye": Vector3(-104.0, 1.7, 47.6), "at": Vector3(-118.0, 6.0, 47.0)},
 ]
 
@@ -73,6 +88,8 @@ func _ready() -> void:
 	# The wagon stands where each still wants it.
 	ride.set(&"pace_scale", 0.0001)
 	ride.set(&"_hook_done", true)
+	# And the night doesn't go dark on the bridge.
+	ride.set(&"_crossed", true)
 	var only := ""
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--only="):

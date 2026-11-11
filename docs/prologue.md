@@ -8,7 +8,7 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 
 | Beat | What happens | Ends when |
 | --- | --- | --- |
-| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, through Aldgate, along the close streets and into the lane, a little over two minutes. The night opens on black and comes up over 3.5 s *(mine)* as the wagon rolls; the porter sits at the back, looking back down the road, can look about, and turns with the wagon. For the first 8 s nobody speaks. Then the traveller beside him turns to him and asks where he's bound (`n0_traveller_road`); he can talk to the traveller again at any time. The ride's cues play as the wagon passes them (below). About 22 s in the carter's "Whoa" breaks off any talk, and he pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side. The porter's view goes to the body and follows it by for 3.6 s *(mine)*, narrowed (moving the mouse lets go), and the traveller speaks about it (`n0_traveller`: who he was, the third pilgrim this month, all bound for the abbey) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
+| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, over the drawbridge and through Aldgate, along the close street to the bridge over the brook, a minute and a half or so. On the bridge's crown, once nobody is talking and the road's lines are said, the night goes dark over 2.5 s *(mine)*; 1.2 s later it comes up again in the lane, the wagon rolling its last ten metres to the abbey gate (the turn and the lane between aren't ridden). If he is still talking on the bridge the carter lets the horse stand until he's done. The night opens on black and comes up over 3.5 s *(mine)* as the wagon rolls; the porter sits at the back, looking back down the road, can look about, and turns with the wagon. For the first 8 s nobody speaks. Then the traveller beside him turns to him and asks where he's bound (`n0_traveller_road`); he can talk to the traveller again at any time. The ride's cues play as the wagon passes them (below). About 22 s in the carter's "Whoa" breaks off any talk, and he pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side. The porter's view goes to the body and follows it by for 3.6 s *(mine)*, narrowed (moving the mouse lets go), and the traveller speaks about it (`n0_traveller`: who he was, the third pilgrim this month, all bound for the abbey) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
 | `Arrive` | The gate is shut and barred, a lantern over it, and Cole isn't at it. He knocks (the `KnockGate` duty); nobody comes; the duty flame goes to Mab, whose first words send him to the Keys (`n0_mab`) | Mab has spoken to him |
 | `Inn` | The flame goes to Agnes by the fire; the bed answer gives him the room at the top | `n0_room`, or midnight |
 | `Window` | The bed in his room is wanted. Lying down: the cry, and he's at the window over the abbey wall. In the court a man with a lantern is killed by the well by a figure in a black habit, its back to the window, and dragged off toward the cellar. His notes say what he saw, or, if he'd drunk enough to see double, that he isn't sure (`window_killing`, `window_killing_drunk`). At midnight, if he isn't in bed, Agnes sends him up and it plays the same | The body is gone |
@@ -26,8 +26,8 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 | `Shutters` | The first houses | Shutters bang closed above as the wagon passes |
 | `Doorway` | A woman in a doorway | She watches it go by and crosses herself |
 | `Dog` | Farther in | A dog barks behind a door; the traveller says they bar their doors early since the pilgrims |
-| `Turn` | The corner into the lane | "Here's your lane, brother." Pace 2.5 m/s |
-| `Lane` | Halfway down the lane | The traveller: that wall's your abbey; bar your door at night |
+| `Bridge` | The foot of the bridge over the brook | The black water and the lanterns; the carter: over the brook, and your lane's the next turning. Pace 2.2 m/s. The last words of the road: the night goes dark on the crown (`Marks/DarkAt`) |
+| `Lane` | In the lane, just after the light comes back (`Marks/LightAt`) | The traveller: that wall's your abbey; bar your door at night |
 
 The wagon speeds up and slows down at 1.2 m/s² *(mine)*, and its rumble fades as it slows. The body cart starts 40 m past the pull-over and comes on at 2 m/s *(mine)*, waiting 9 m off until the wagon has pulled in. Paused, the ride waits.
 
@@ -72,13 +72,13 @@ From the foot of the wall to the end of the first street. The turn, the lane and
 
 - **The city against the sky.** The east is no longer one dark: a cold pale break lies low in the cloud behind the city while there is daylight left (`Daylight.sky_break` on `night0.tscn`, 2.2 *mine*; the sky shader's `break_*`), so the wall, the gate's towers, the church towers and St Paul's stand black against it. It is cold on purpose: the warm light is behind him, and every warm thing ahead is a fire or a candle. Other nights have no break.
 - **The wall** (`env_city_wall`): ragstone rubble laced with bands of old red tile, 8 m to its walk, battlements with merlons missing, half-round bastions, a stretch to the north fallen to half its height. One bastion has a candle in a slit.
-- **The city ditch** lies along the wall's foot, 11 m wide with black water in it (part of `env_road_fields`); the road crosses on a causeway between low parapets. Three trees that stood there moved back from it.
+- **The city ditch** lies along the wall's foot, 11 m wide with black water in it (part of `env_road_fields`); the road crossed on a causeway between low parapets (now a drawbridge: the fifth pass). Three trees that stood there moved back from it.
 - **Aldgate** (`env_aldgate`): two round towers and the gate between them, a pointed arch with the portcullis drawn up into it and the doors folded back, a vaulted passage 6.6 m long. Candles are lit in the chamber over the arch and in the south tower. The road through is 5.4 m wide (it was 6).
 - **The warden's post:** a watch fire in an iron basket at the foot of the south tower (`WatchFire`), throwing the wagon's shadow up the gate; a lantern on the north jamb by the warden, another in the passage.
 - **The gibbet** hangs from the south tower over the ditch, in the fire's light: a cage with what is left of a man. Nobody speaks of it. *(Mine: the city showing the road what it does. Take `Gibbet` out of `env_road.tscn` if it is too much.)*
 - **Rooks** wheel about the gate's towers.
 - **Looking back from under the arch** he sees the road he came by and the last light, framed by the vault and the portcullis's teeth. Then the gate is the tower at the end of the street behind him, its windows lit.
-- **The street inside** (`Houses` in `env_road.tscn`): sixteen timber houses close on both sides, no two alike standing together, an alley between two of them on each side. Upper floors jut out until the roofs nearly meet. Windows are lit behind horn and cloth, and now and then somebody passes behind one. Three houses carry a lantern on a bracket. The woman in the doorway stands in an open, lit door.
+- **The street inside** (`Houses` in `env_road.tscn`): sixteen timber houses close on both sides (twelve since the brook: the fifth pass), no two alike standing together, an alley between two of them on each side. Upper floors jut out until the roofs nearly meet. Windows are lit behind horn and cloth, and now and then somebody passes behind one. Three houses carry a lantern on a bracket. The woman in the doorway stands in an open, lit door.
 - **The street's ground** (`env_aldgate_street`): wet cobbles, mud down the cart track, a kennel with water in it. Lanterns and windows lie along it in pieces.
 - **The skyline** (`env_city_skyline`): roofs and parish churches behind the wall; far off, more towers and St Paul's. The far ones are put away once the wagon nears the lane (`RoadCity.far_until_x`), so the abbey's sky on night 0 is the one it has every night.
 
@@ -134,6 +134,43 @@ The fields were bare beside the gate and the street. This pass fills them, and p
 Everything in the fields is stood on the ground by `tools/build/road_dressing.py` from its two lists (`TREES`, `DRESSING`): change the lists and run it, since it puts back anything moved by hand.
 
 **What it costs.** The grass is 42,000 triangles in five lengths of road. A length of hedge is 500, the mill 650, a cot 340. The trees are the heavy thing, as before: an elm is 10,000 triangles and an oak 9,000, and there are 26 of them; Godot's own mesh LODs thin the far ones.
+
+## The look of the road in (fifth pass: the drawbridge, the alleys, the brook and its bridge)
+
+**Aldgate's drawbridge** (`env_aldgate_bridge`). The causeway is gone: the city ditch runs through under the road, and reaches in to the foot of the arch.
+
+- **The leaf** lies lowered from the gate's sill to a stone pier: oak boards, iron straps, a kerb each side.
+- **What lifts it:** two beams standing out of slots over the arch, a chain from each tip down to the leaf's outer corners, a spare length hanging, ropes back to the wall, and beside each beam a toothed wheel on the gate's face with its shaft, pinion and crank.
+- **The fixed span** runs on from the pier to the bank on a trestle of three piles, with posts and rails. One length of rail is gone. A lantern hangs from a tall post at the bridgehead.
+- **Stone:** the sill, the bay's sides, the pier with its cutwaters, the bank's abutment and wing walls, rocks along the water, and a raised frame round the arch that the leaf shuts into.
+- The towers' lower arrow loops are crosses now. The warden stands on the leaf.
+
+**The alleys** (`env_alley_a`, `_b`, in the gaps between two houses on each side of the street, now 2.1 m wide):
+
+- **South:** a room built across it from house to house, and at its end a wall with a low door and a lit window.
+- **North:** washing lines, a lean-to, and at its end an archway into a lit yard.
+- Each has a dim lantern at its mouth and a brighter one at its far end, so whoever is in it is a shape against the light.
+- **The people in them** (`RoadFolk/Alleys` in `night0.tscn`, each a `Lurker`, `game/npc/lurker.gd`) are never met. *All mine:*
+  - one in the south alley's mouth who steps back under the room as the wagon comes near;
+  - two at its far end bent over something long under sacking, who straighten and turn;
+  - one standing in the north alley's archway, who turns to keep facing the wagon;
+  - one there with their face to the wall, rocking;
+  - one at the foot of the steps to the brook, at the water, watching the wagon cross.
+- They are the greybox figures, like everyone else: shapes in the dark. Each can be moved, given another `act`, or deleted.
+
+**The brook and its bridge** (`env_city_brook`):
+
+- The street ends at black water 8 m wide between rubble walls. The street has six houses a side now, and one more each side beyond the water.
+- **The bridge:** one low arch of cut stone, hump-backed (0.8 m at the crown), cobbled, a parapet each side between six stone piers. Each pier carries an iron standard and a horn lantern (`BridgeLamps`, `prop_lantern_hung`). *(Mine: the picture this follows has gas lamps; these are what 1420 had.)*
+- **The brook** runs away north and south between houses with their fronts to the water, 26 m each way, to a house built over it on an arch with a lit window. Mist lies on it. Steps go down to it by the bridge; mooring posts stand in it.
+- **The water** (`water_brook.gdshader`) is a moving near-mirror: the lanterns lie on it in broken streaks, and the rain rings it.
+- **This is where the ride's talk ends and the night goes dark** (the `Ride` beat above). He is looking back from the crown: the bridge's lanterns, the whole street, and Aldgate at the end of it.
+
+The lane's two greybox houses that stood where the east bank's houses now stand are cleared on night 0 (`road_in_hides`).
+
+**What it costs.** The drawbridge 5,000 triangles, the brook and its bridge 3,500, an alley 1,000, twelve more houses along the brook about 12,000. Lights: six on the bridge, four in the alleys, one at the bridgehead, none of them casting shadows.
+
+`tools/intro_shots.sh` now takes 38 stills: four of the drawbridge, three of the alleys, six of the brook and its bridge.
 
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 

@@ -30,6 +30,9 @@
 [ext_resource type="Script" path="res://game/night/ride_cue.gd" id="cue_gd"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_warden.tscn" id="chr_warden"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_townswoman.tscn" id="chr_townswoman"]
+[ext_resource type="Script" path="res://game/npc/lurker.gd" id="lurker_gd"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_sailor.tscn" id="chr_sailor"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_lane_woman.tscn" id="chr_lane_woman"]
 [ext_resource type="AudioStream" path="res://art/sfx/sfx_bell.wav" id="sfx_bell"]
 [ext_resource type="AudioStream" path="res://art/sfx/sfx_shutters.wav" id="sfx_shutters"]
 [ext_resource type="AudioStream" path="res://art/sfx/sfx_dog.wav" id="sfx_dog"]
@@ -101,7 +104,7 @@ look = ExtResource("chr_carter")
 editor_description = "People the wagon passes on the road in; the ride's cues turn them to watch it."
 
 [node name="Warden" type="Node3D" parent="RoadFolk"]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -121.5, 0, 44.4)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -121.9, 0.02, 45.05)
 script = ExtResource("figure_gd")
 
 [node name="Look" type="Node3D" parent="RoadFolk/Warden"]
@@ -122,6 +125,76 @@ editor_description = "The firelight in the room behind her, so she stands dark a
 light_color = Color(1, 0.66, 0.36, 1)
 light_energy = 2.0
 omni_range = 4.0
+
+[node name="Alleys" type="Node3D" parent="RoadFolk"]
+editor_description = "People down the alleys and by the brook as the wagon passes (Lurker): never met, seen for a moment against a light. Move them, change what each does (act), or delete any of them."
+
+[node name="Peeper" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.7, 0.05, 51.5)
+script = ExtResource("lurker_gd")
+act = 1
+retreat = Vector3(0.25, 0, 3.4)
+notice = 11.0
+editor_description = "South alley: stands in its mouth, and steps back under the room built across it as the wagon comes near."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/Peeper"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_sailor")
+
+[node name="StooperA" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -96.75, 0.05, 60.7)
+script = ExtResource("lurker_gd")
+act = 3
+notice = 16.0
+editor_description = "South alley, at its far end: bent over something long under sacking; straightens and turns to the wagon."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/StooperA"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_pilgrim")
+
+[node name="StooperB" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.85, 0.05, 62.3)
+script = ExtResource("lurker_gd")
+act = 3
+notice = 13.0
+bend = 0.7
+editor_description = "South alley, at its far end: the other one bent over it."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/StooperB"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_townswoman")
+
+[node name="ArchWatcher" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -101.3, 0.05, 32.6)
+script = ExtResource("lurker_gd")
+act = 0
+notice = 22.0
+editor_description = "North alley: stands in the archway at its end, the yard's light behind them, and turns to keep facing the wagon."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/ArchWatcher"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_stranger")
+
+[node name="Swayer" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -100.55, 0.05, 37.3)
+script = ExtResource("lurker_gd")
+act = 2
+editor_description = "North alley: face to the wall, rocking."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/Swayer"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_lane_woman")
+
+[node name="StairWatcher" type="Node3D" parent="RoadFolk/Alleys"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -79.45, -1.6, 40.0)
+script = ExtResource("lurker_gd")
+act = 0
+notice = 18.0
+editor_description = "At the foot of the steps down to the brook, by the bridge: standing at the water, watching the wagon cross."
+
+[node name="Look" type="Node3D" parent="RoadFolk/Alleys/StairWatcher"]
+script = ExtResource("look_gd")
+look = ExtResource("chr_sailor")
 
 [node name="RideCues" type="Node3D" parent="."]
 editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a talk someone starts, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines and talks wait while the porter talks, and are dropped once the wagon is `keep` metres past; a cue with cut_in breaks off his talk instead (the carter's Whoa)."
@@ -178,25 +251,35 @@ keep = 12.0
 watchers = [NodePath("../../RoadFolk/Townswoman")]
 
 [node name="Dog" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, 50.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92, 0, 50.5)
 script = ExtResource("cue_gd")
 lines = PackedStringArray("Traveller: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
 sound = ExtResource("sfx_dog")
 volume_db = -3.0
 keep = 25.0
 
-[node name="Turn" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 0, 44.5)
+[node name="Bridge" type="Marker3D" parent="RideCues"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Carter: Here's your lane, brother. Nearly there.")
-pace = 2.5
-keep = 15.0
+lines = PackedStringArray("(The street ends at black water. A stone bridge, a lantern on every pier.)", "Carter: Over the brook, and your lane's the next turning. Nearly there.")
+pace = 2.2
+keep = 20.0
+editor_description = "The last words of the road. On the bridge's crown (Marks/DarkAt) the night goes dark once they are said, and comes up again in the lane (Marks/LightAt)."
 
 [node name="Lane" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 11.5)
 script = ExtResource("cue_gd")
 lines = PackedStringArray("Traveller: That wall's your abbey. God keep you, brother. Bar your door at night.")
+pace = 2.2
 keep = 25.0
+
+[node name="DarkAt" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76, 0.8, 47)
+editor_description = "The crown of the bridge over the brook: here, once the talk of the road is done, the night goes dark."
+
+[node name="LightAt" type="Marker3D" parent="Marks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6, 0.05, 14.0)
+editor_description = "Where the night comes up again: in the lane, the wagon rolling its last few yards to the abbey gate and the Keys."
 
 [node name="SetDown" type="Marker3D" parent="Marks"]
 transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -41.9, 0.05, 5.4)
@@ -313,7 +396,7 @@ conversation = ExtResource("n0_ralph")
 script = ExtResource("director_gd")
 night = 0
 
-[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole")]
+[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole", "dark_at", "light_at")]
 script = ExtResource("ride_gd")
 phase = 6
 bell = &"start"
@@ -325,6 +408,8 @@ cues = NodePath("../../RideCues")
 body_cart = NodePath("../../BodyCart")
 pull_over = NodePath("../../Marks/PullOver")
 set_down = NodePath("../../Marks/SetDown")
+dark_at = NodePath("../../Marks/DarkAt")
+light_at = NodePath("../../Marks/LightAt")
 traveller = NodePath("../../Traveller")
 carter = NodePath("../../WagonCarter")
 gate = NodePath("../../AbbeyGate")

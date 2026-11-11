@@ -192,7 +192,7 @@ def tower(m, cx, turret, seed):
         ang = math.radians(a if cx > 0 else -180 - a)
         ang = round(ang / (math.tau / SIDES) - 0.5) * (math.tau / SIDES) + math.pi / SIDES
         rr = r * math.cos(math.pi / SIDES)
-        cp.loop(m, (cx + math.cos(ang) * rr, cz + math.sin(ang) * rr), y, 1.1, (math.cos(ang), 0, math.sin(ang)), width=0.11, cross=False)
+        cp.loop(m, (cx + math.cos(ang) * rr, cz + math.sin(ang) * rr), y, 1.1, (math.cos(ang), 0, math.sin(ang)), width=0.11, cross=y < 9.0)
     # Putlog holes: where the builders' scaffold went in, never filled.
     step = math.tau / SIDES
     rr = r * math.cos(step * 0.5) + 0.012

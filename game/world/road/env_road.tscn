@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://game/world/road/rooks.gd" id="rooks"]
 [ext_resource type="PackedScene" path="res://art/models/env_aldgate.glb" id="aldgate"]
 [ext_resource type="PackedScene" path="res://art/models/env_city_wall.glb" id="city_wall"]
+[ext_resource type="PackedScene" path="res://art/models/env_aldgate_bridge.glb" id="aldgate_bridge"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_a.tscn" id="ht_a"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_b.tscn" id="ht_b"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_c.tscn" id="ht_c"]
@@ -18,6 +19,10 @@
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_g.tscn" id="ht_g"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_h.tscn" id="ht_h"]
 [ext_resource type="PackedScene" path="res://art/models/env_aldgate_street.glb" id="street"]
+[ext_resource type="PackedScene" path="res://art/models/env_city_brook.glb" id="brook"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_lantern_hung.tscn" id="lantern_hung"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_alley_a.tscn" id="alley_a"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_alley_b.tscn" id="alley_b"]
 [ext_resource type="PackedScene" path="res://art/models/env_city_skyline.glb" id="skyline"]
 [ext_resource type="Script" path="res://game/world/road/road_city.gd" id="city_gd"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_brazier.tscn" id="brazier"]
@@ -69,6 +74,13 @@ height_falloff = 3.0
 edge_fade = 0.35
 density_texture = SubResource("mist_wisps")
 
+[sub_resource type="FogMaterial" id="mist_brook"]
+density = 0.22
+albedo = Color(0.5, 0.54, 0.6, 1)
+height_falloff = 1.5
+edge_fade = 0.3
+density_texture = SubResource("mist_wisps")
+
 [node name="Road" type="Node3D" groups=["placeholder"]]
 editor_description = "Placeholder: the road in on night 0 (design doc, Night 0: The road in). Grey dusk over mud and ruts: the white chapel in the fields, the city wall and Aldgate's dark arch, then close, tall streets, and the turn into the lane by the abbey gate. The wagon drives it on rails along RidePath. Only night 0 uses it."
 
@@ -109,11 +121,19 @@ wingspan = 1.2
 
 [node name="CityWall" parent="." instance=ExtResource("city_wall")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -118, 0, 47)
-editor_description = "London's wall each side of Aldgate: bastions, a fallen stretch to the north, the stair to the walk on the city side, and the causeway over the ditch (tools/build/env_city_wall.py). Built in the gate's own space, so it stands where the gate does."
+editor_description = "London's wall each side of Aldgate: bastions, a fallen stretch to the north, and the stair to the walk on the city side (tools/build/env_city_wall.py). Built in the gate's own space, so it stands where the gate does."
 
 [node name="Aldgate" parent="." instance=ExtResource("aldgate")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -118, 0, 47)
 editor_description = "Aldgate: two round towers, the archway between them with its portcullis drawn up and its doors folded back, the chamber over it with candles lit (tools/build/env_aldgate.py). Its front (-Z) is turned to the country."
+
+[node name="AldgateBridge" parent="." instance=ExtResource("aldgate_bridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -118, 0, 47)
+editor_description = "The bridge over the city ditch: the drawbridge's leaf from the gate out to a stone pier, its lifting beams, chains and wheels on the gate's face, and a fixed timber span on to the bank (tools/build/env_aldgate_bridge.py). Built in the gate's own space, so it stands where the gate does."
+
+[node name="BridgeLamp" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -135.35, 2.2, 44.95)
+editor_description = "A lantern on the tall post at the bridge's outer end."
 
 [node name="Skyline" parent="." instance=ExtResource("skyline")]
 script = ExtResource("city_gd")
@@ -139,68 +159,144 @@ height = Vector2(15, 27)
 editor_description = "The ground inside the gate: wet cobbles, mud down the cart track, a kennel down the middle (tools/build/env_aldgate_street.py). Built in this scene's own coordinates, so it stays at the origin."
 
 [node name="Houses" type="Node3D" parent="."]
-editor_description = "The street inside Aldgate: timber houses close on both sides (game/world/street/env_house_timber_*.tscn), with an alley between two of them on each side. Each lists its lit windows."
+editor_description = "The street inside Aldgate: timber houses close on both sides (game/world/street/env_house_timber_*.tscn), an alley between two of them on each side, one more each side beyond the brook, and the houses along the brook's banks with their fronts to the water. Each lists its lit windows."
 
 [node name="South0" parent="Houses" instance=ExtResource("ht_d")]
-transform = Transform3D(1.0000, 0, -0.0020, 0, 1, 0, 0.0020, 0, 1.0000, -110.70, 0, 50.29)
+transform = Transform3D(1.0000, 0, 0.0020, 0, 1, 0, -0.0020, 0, 1.0000, -110.70, 0, 50.29)
 
 [node name="South1" parent="Houses" instance=ExtResource("ht_h")]
-transform = Transform3D(1.0000, 0, 0.0054, 0, 1, 0, -0.0054, 0, 1.0000, -105.75, 0, 50.27)
+transform = Transform3D(1.0000, 0, -0.0050, 0, 1, 0, 0.0050, 0, 1.0000, -105.75, 0, 50.27)
 lit_windows = PackedStringArray("Window1_0")
 
 [node name="South2" parent="Houses" instance=ExtResource("ht_e")]
-transform = Transform3D(1.0000, 0, 0.0040, 0, 1, 0, -0.0040, 0, 1.0000, -100.45, 0, 50.18)
+transform = Transform3D(1.0000, 0, -0.0040, 0, 1, 0, 0.0040, 0, 1.0000, -100.45, 0, 50.18)
 lit_windows = PackedStringArray("Window1_0", "Window1_1")
 
 [node name="South3" parent="Houses" instance=ExtResource("ht_a")]
-transform = Transform3D(1.0000, 0, 0.0012, 0, 1, 0, -0.0012, 0, 1.0000, -93.55, 0, 50.09)
+transform = Transform3D(1.0000, 0, -0.0010, 0, 1, 0, 0.0010, 0, 1.0000, -92.75, 0, 50.09)
 lit_windows = PackedStringArray("Window2_0", "Window3_0")
 
 [node name="South4" parent="Houses" instance=ExtResource("ht_f")]
-transform = Transform3D(0.9999, 0, 0.0116, 0, 1, 0, -0.0116, 0, 0.9999, -88.60, 0, 50.16)
+transform = Transform3D(0.9999, 0, -0.0120, 0, 1, 0, 0.0120, 0, 0.9999, -87.80, 0, 50.16)
 
-[node name="South5" parent="Houses" instance=ExtResource("ht_c")]
-transform = Transform3D(1.0000, 0, 0.0068, 0, 1, 0, -0.0068, 0, 1.0000, -83.20, 0, 50.19)
-
-[node name="South6" parent="Houses" instance=ExtResource("ht_g")]
-transform = Transform3D(0.9998, 0, -0.0175, 0, 1, 0, 0.0175, 0, 0.9998, -77.38, 0, 50.14)
+[node name="South5" parent="Houses" instance=ExtResource("ht_g")]
+transform = Transform3D(0.9999, 0, 0.0120, 0, 1, 0, -0.0120, 0, 0.9999, -82.70, 0, 50.14)
 lit_windows = PackedStringArray("Window1_0")
 
-[node name="South7" parent="Houses" instance=ExtResource("ht_b")]
-transform = Transform3D(1.0000, 0, 0.0026, 0, 1, 0, -0.0026, 0, 1.0000, -72.43, 0, 50.11)
-lit_windows = PackedStringArray("Window2_1")
+[node name="South6" parent="Houses" instance=ExtResource("ht_c")]
+transform = Transform3D(1.0000, 0, -0.0060, 0, 1, 0, 0.0060, 0, 1.0000, -68.60, 0, 50.20)
+lit_windows = PackedStringArray("Window1_2")
 
 [node name="North0" parent="Houses" instance=ExtResource("ht_c")]
-transform = Transform3D(-0.9998, 0, 0.0209, 0, 1, 0, -0.0209, 0, -0.9998, -110.40, 0, 43.73)
+transform = Transform3D(-0.9998, 0, 0.0210, 0, 1, 0, -0.0210, 0, -0.9998, -110.40, 0, 43.73)
 lit_windows = PackedStringArray("Window1_0")
 
 [node name="North1" parent="Houses" instance=ExtResource("ht_a")]
-transform = Transform3D(-1.0000, 0, -0.0054, 0, 1, 0, 0.0054, 0, -1.0000, -104.90, 0, 43.87)
+transform = Transform3D(-1.0000, 0, -0.0050, 0, 1, 0, 0.0050, 0, -1.0000, -104.90, 0, 43.87)
 lit_windows = PackedStringArray("Window2_0", "Window3_0")
 
 [node name="North2" parent="Houses" instance=ExtResource("ht_f")]
-transform = Transform3D(-0.9998, 0, 0.0203, 0, 1, 0, -0.0203, 0, -0.9998, -98.70, 0, 43.78)
+transform = Transform3D(-0.9998, 0, 0.0200, 0, 1, 0, -0.0200, 0, -0.9998, -97.80, 0, 43.78)
 lit_windows = PackedStringArray("Window0_0", "Window1_0")
 
 [node name="North3" parent="Houses" instance=ExtResource("ht_d")]
-transform = Transform3D(-1.0000, 0, 0.0015, 0, 1, 0, -0.0015, 0, -1.0000, -93.55, 0, 43.80)
+transform = Transform3D(-1.0000, 0, 0.0015, 0, 1, 0, -0.0015, 0, -1.0000, -92.65, 0, 43.80)
 lit_windows = PackedStringArray("Window1_0", "Window3_0")
 
 [node name="North4" parent="Houses" instance=ExtResource("ht_b")]
-transform = Transform3D(-0.9999, 0, 0.0130, 0, 1, 0, -0.0130, 0, -0.9999, -88.65, 0, 43.86)
+transform = Transform3D(-0.9999, 0, 0.0130, 0, 1, 0, -0.0130, 0, -0.9999, -87.75, 0, 43.86)
 lit_windows = PackedStringArray("Door0", "Window2_1")
 
-[node name="North5" parent="Houses" instance=ExtResource("ht_e")]
-transform = Transform3D(-0.9999, 0, -0.0153, 0, 1, 0, 0.0153, 0, -0.9999, -83.23, 0, 43.91)
-lit_windows = PackedStringArray("Window1_0", "Window1_1", "Window2_0", "Window3_1")
-
-[node name="North6" parent="Houses" instance=ExtResource("ht_a")]
-transform = Transform3D(-0.9999, 0, -0.0148, 0, 1, 0, 0.0148, 0, -0.9999, -77.63, 0, 43.83)
-lit_windows = PackedStringArray("Window1_0", "Window2_0", "Window3_0")
-
-[node name="North7" parent="Houses" instance=ExtResource("ht_h")]
-transform = Transform3D(-0.9999, 0, 0.0122, 0, 1, 0, -0.0122, 0, -0.9999, -72.85, 0, 43.85)
+[node name="North5" parent="Houses" instance=ExtResource("ht_h")]
+transform = Transform3D(-0.9999, 0, 0.0120, 0, 1, 0, -0.0120, 0, -0.9999, -83.30, 0, 43.85)
 lit_windows = PackedStringArray("Window1_0")
+
+[node name="North6" parent="Houses" instance=ExtResource("ht_e")]
+transform = Transform3D(-1.0000, 0, -0.0100, 0, 1, 0, 0.0100, 0, -1.0000, -68.50, 0, 43.80)
+lit_windows = PackedStringArray("Window1_0", "Window2_0")
+
+[node name="BrookSW0" parent="Houses" instance=ExtResource("ht_d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 62.20)
+lit_windows = PackedStringArray("Window2_0")
+
+[node name="BrookSW1" parent="Houses" instance=ExtResource("ht_h")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 67.20)
+
+[node name="BrookSW2" parent="Houses" instance=ExtResource("ht_b")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 71.70)
+lit_windows = PackedStringArray("Window1_0")
+
+[node name="BrookNW0" parent="Houses" instance=ExtResource("ht_b")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 32.40)
+
+[node name="BrookNW1" parent="Houses" instance=ExtResource("ht_f")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 27.70)
+lit_windows = PackedStringArray("Window1_0")
+
+[node name="BrookNW2" parent="Houses" instance=ExtResource("ht_h")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -80.50, 0, 23.00)
+lit_windows = PackedStringArray("Window3_0")
+
+[node name="BrookSE0" parent="Houses" instance=ExtResource("ht_f")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 62.30)
+lit_windows = PackedStringArray("Window1_0")
+
+[node name="BrookSE1" parent="Houses" instance=ExtResource("ht_b")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 67.00)
+
+[node name="BrookSE2" parent="Houses" instance=ExtResource("ht_d")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 72.00)
+lit_windows = PackedStringArray("Window3_0")
+
+[node name="BrookNE0" parent="Houses" instance=ExtResource("ht_d")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 31.00)
+lit_windows = PackedStringArray("Window1_0")
+
+[node name="BrookNE1" parent="Houses" instance=ExtResource("ht_h")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 26.00)
+
+[node name="BrookNE2" parent="Houses" instance=ExtResource("ht_f")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.50, 0, 21.30)
+lit_windows = PackedStringArray("Window0_0")
+
+[node name="Alleys" type="Node3D" parent="."]
+editor_description = "The alleys off the street (game/world/street/env_alley_*.tscn), each in the gap between two houses. Night 0 puts people in them (RoadFolk in night0.tscn)."
+
+[node name="South" parent="Alleys" instance=ExtResource("alley_a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.3, 0, 50.2)
+
+[node name="North" parent="Alleys" instance=ExtResource("alley_b")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -101.3, 0, 43.8)
+
+[node name="Brook" parent="." instance=ExtResource("brook")]
+editor_description = "The brook that crosses the street, and the stone bridge over it (tools/build/env_city_brook.py). Built in this scene's own coordinates, so it stays at the origin. The night goes dark on the bridge (RideBeat.dark_at)."
+
+[node name="BridgeLamps" type="Node3D" parent="."]
+editor_description = "The light in each of the six lanterns on the bridge's iron standards (the lanterns themselves are part of the bridge's model)."
+
+[node name="Lamp0" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.30, 3.10, 44.75)
+
+[node name="Lamp1" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.30, 3.10, 49.25)
+
+[node name="Lamp2" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.00, 3.75, 44.75)
+
+[node name="Lamp3" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.00, 3.75, 49.25)
+
+[node name="Lamp4" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.70, 3.10, 44.75)
+
+[node name="Lamp5" parent="BridgeLamps" instance=ExtResource("lantern_hung")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.70, 3.10, 49.25)
+
+[node name="BrookMist" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76, -0.7, 47)
+editor_description = "Mist lying on the brook, under the bridge and away between the houses."
+size = Vector3(9.5, 2.6, 54)
+material = SubResource("mist_brook")
 
 [node name="Clutter" type="Node3D" parent="."]
 editor_description = "What stands about in the street at dusk (tools/build/prop_street.py), out of the wagon's way: move, turn or delete any of it."
@@ -209,16 +305,16 @@ editor_description = "What stands about in the street at dusk (tools/build/prop_
 transform = Transform3D(-0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, -0.9986, -108.20, 0.00, 43.90)
 
 [node name="TroughN" parent="Clutter" instance=ExtResource("ps_trough")]
-transform = Transform3D(-1.0000, 0, -0.0000, 0, 1, 0, 0.0000, 0, -1.0000, -101.90, 0.00, 43.90)
+transform = Transform3D(-1.0000, 0, -0.0000, 0, 1, 0, 0.0000, 0, -1.0000, -98.40, 0.00, 43.90)
 
 [node name="FirewoodN" parent="Clutter" instance=ExtResource("ps_firewood")]
-transform = Transform3D(-0.9994, 0, -0.0349, 0, 1, 0, 0.0349, 0, -0.9994, -99.50, 0.00, 43.92)
+transform = Transform3D(-0.9994, 0, -0.0349, 0, 1, 0, 0.0349, 0, -0.9994, -95.60, 0.00, 43.92)
 
 [node name="HandcartN" parent="Clutter" instance=ExtResource("ps_handcart")]
 transform = Transform3D(-0.8829, 0, 0.4695, 0, 1, 0, -0.4695, 0, -0.8829, -86.50, 0.00, 45.20)
 
 [node name="StallN" parent="Clutter" instance=ExtResource("ps_stall")]
-transform = Transform3D(-0.9994, 0, 0.0349, 0, 1, 0, -0.0349, 0, -0.9994, -73.60, 0.00, 43.90)
+transform = Transform3D(-0.9994, 0, 0.0349, 0, 1, 0, -0.0349, 0, -0.9994, -93.30, 0.00, 43.90)
 
 [node name="PostsN" parent="Clutter" instance=ExtResource("ps_posts")]
 transform = Transform3D(-0.9848, 0, 0.1736, 0, 1, 0, -0.1736, 0, -0.9848, -112.70, 0.00, 44.50)
@@ -230,19 +326,19 @@ transform = Transform3D(0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, 0.9903, -113.00,
 transform = Transform3D(0.9994, 0, -0.0349, 0, 1, 0, 0.0349, 0, 0.9994, -87.30, 0.00, 50.12)
 
 [node name="BenchS1" parent="Clutter" instance=ExtResource("ps_bench")]
-transform = Transform3D(0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, 0.9986, -81.30, 0.00, 50.12)
+transform = Transform3D(0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, 0.9986, -83.90, 0.00, 50.12)
 
 [node name="LadderS" parent="Clutter" instance=ExtResource("ps_ladder")]
-transform = Transform3D(0.9976, 0, -0.0698, 0, 1, 0, 0.0698, 0, 0.9976, -96.75, 0.00, 50.10)
+transform = Transform3D(0.9976, 0, -0.0698, 0, 1, 0, 0.0698, 0, 0.9976, -93.50, 0.00, 50.10)
 
 [node name="CratesS" parent="Clutter" instance=ExtResource("ps_crates")]
-transform = Transform3D(0.9986, 0, -0.0523, 0, 1, 0, 0.0523, 0, 0.9986, -79.30, 0.00, 50.10)
+transform = Transform3D(0.9986, 0, -0.0523, 0, 1, 0, 0.0523, 0, 0.9986, -89.90, 0.00, 50.10)
 
 [node name="CratesN" parent="Clutter" instance=ExtResource("ps_crates")]
-transform = Transform3D(-0.9945, 0, -0.1045, 0, 1, 0, 0.1045, 0, -0.9945, -91.60, 0.00, 43.90)
+transform = Transform3D(-0.9945, 0, -0.1045, 0, 1, 0, 0.1045, 0, -0.9945, -90.60, 0.00, 43.90)
 
 [node name="BarrelsN1" parent="Clutter" instance=ExtResource("ps_barrels")]
-transform = Transform3D(-0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, -0.9903, -80.90, 0.00, 43.92)
+transform = Transform3D(-0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, -0.9903, -84.90, 0.00, 43.92)
 
 [node name="Cressets" type="Node3D" parent="."]
 editor_description = "Fire baskets on the gate: one each side of the arch outside, one on its city face."
@@ -260,16 +356,16 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -114.2, 4.5, 50.1)
 editor_description = "Water coming off the eaves along the street and off the gate's parapet (game/world/weather/drips.gd). Each line lies just clear of the edge it drips from."
 
 [node name="EavesSouth" type="GPUParticles3D" parent="Drips"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.0, 8.6, 48.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.8, 8.6, 48.75)
 script = ExtResource("drips_gd")
-length = 41.0
+length = 32.5
 drop = 9.0
 per_metre = 4.0
 
 [node name="EavesNorth" type="GPUParticles3D" parent="Drips"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.0, 8.6, 45.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.8, 8.6, 45.25)
 script = ExtResource("drips_gd")
-length = 41.0
+length = 32.5
 drop = 9.0
 per_metre = 4.0
 
@@ -677,7 +773,7 @@ transform = Transform3D(-0.3420, 0, 0.9397, 0, 1.0000, 0, -0.9397, 0, -0.3420, -
 transform = Transform3D(0.5000, 0, -0.8660, 0, 1.0000, 0, 0.8660, 0, 0.5000, -165.00, 0.52, 22.00)
 
 [node name="RidePath" type="Node3D" parent="."]
-editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close streets, into the lane, down to the abbey gate."
+editor_description = "The wagon's road, in order: from the fields past the chapel, through Aldgate, along the close street, over the bridge (the P4b points climb its hump), into the lane, down to the abbey gate."
 
 [node name="P0" type="Marker3D" parent="RidePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -232.00, 0.00, 47.00)
@@ -693,6 +789,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -118.00, 0.00, 47.00)
 
 [node name="P4" type="Marker3D" parent="RidePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -90.00, 0.00, 47.00)
+
+[node name="P4b0" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -82.00, 0.000, 47.00)
+
+[node name="P4b1" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -80.50, 0.117, 47.00)
+
+[node name="P4b2" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -79.00, 0.400, 47.00)
+
+[node name="P4b3" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -77.50, 0.683, 47.00)
+
+[node name="P4b4" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -76.00, 0.800, 47.00)
+
+[node name="P4b5" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -74.50, 0.683, 47.00)
+
+[node name="P4b6" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -73.00, 0.400, 47.00)
+
+[node name="P4b7" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -71.50, 0.117, 47.00)
+
+[node name="P4b8" type="Marker3D" parent="RidePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -70.00, 0.000, 47.00)
 
 [node name="P5" type="Marker3D" parent="RidePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -62.00, 0.00, 47.00)

@@ -757,26 +757,26 @@ mesh = SubResource("M4")
 
 [node name="BendNorth" type="Node3D" parent="Houses"]
 
-[node name="Far0" type="StaticBody3D" parent="Houses/BendNorth"]
+[node name="Far0" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, 55)
 script = ExtResource("block")
 size = Vector3(6.94, 5.8, 10)
 material = ExtResource("plaster")
 surface = "wood"
 
-[node name="Far0Roof" type="StaticBody3D" parent="Houses/BendNorth"]
+[node name="Far0Roof" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 5.8, 55)
 script = ExtResource("block")
 size = Vector3(7.3, 2.688, 10.3)
 material = ExtResource("roof")
 shape = 1
 
-[node name="Far0Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
+[node name="Far0Window0" type="MeshInstance3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, 49.98)
 cast_shadow = 0
 mesh = SubResource("M11")
 
-[node name="Far0Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
+[node name="Far0Window1" type="MeshInstance3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, 49.98)
 cast_shadow = 0
 mesh = SubResource("M11")
@@ -877,26 +877,26 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -42.27, 4.3, 49.98)
 cast_shadow = 0
 mesh = SubResource("M11")
 
-[node name="Near0" type="StaticBody3D" parent="Houses/BendNorth"]
+[node name="Near0" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, 39)
 script = ExtResource("block")
 size = Vector3(6.94, 8.4, 10)
 material = ExtResource("plaster")
 surface = "wood"
 
-[node name="Near0Roof" type="StaticBody3D" parent="Houses/BendNorth"]
+[node name="Near0Roof" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 8.4, 39)
 script = ExtResource("block")
 size = Vector3(7.3, 2.9, 10.3)
 material = ExtResource("roof")
 shape = 1
 
-[node name="Near0Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
+[node name="Near0Window0" type="MeshInstance3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, 44.02)
 cast_shadow = 0
 mesh = SubResource("M11")
 
-[node name="Near0Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
+[node name="Near0Window1" type="MeshInstance3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, 44.02)
 cast_shadow = 0
 mesh = SubResource("M11")
