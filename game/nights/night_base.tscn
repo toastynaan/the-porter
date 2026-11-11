@@ -448,7 +448,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.15)
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 13, 0.05, -32)
 
 [node name="CryptFoot" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 24.5, -4, -33.8)
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 25.7, -4, -33.2)
 
 [node name="RescuePorter" type="Marker3D" parent="Marks"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 28, 0.05, 2.4)

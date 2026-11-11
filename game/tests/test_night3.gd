@@ -209,7 +209,10 @@ func _run() -> void:
 	_check(GameState.has_flag(&"n3_body3") and _said("(Your hand closes on something in the ash. Smooth, curved, with teeth in it. A jaw.)"), "in the oven, a jaw in the ash (body 3)")
 	var checked := []
 	oven.checked.connect(func(found: bool) -> void: checked.append(found))
-	await _pilot.until(func() -> bool: return hunter.global_position.distance_to(oven.view.global_position) < 8.0, 60.0)
+	# He holds his breath once the hunter is at the oven, not while he is
+	# still coming round the walls to it: a held breath runs out, and the gasp
+	# brings the hunter back for a second look.
+	await _pilot.until(func() -> bool: return hunter.global_position.distance_to(oven.view.global_position) < 4.5, 60.0)
 	Input.action_press(&"hold_breath")
 	await _pilot.until(func() -> bool: return not checked.is_empty(), 12.0)
 	var gone := func() -> bool:
