@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/street/timber_house.gd" id="house_gd"]
+[ext_resource type="PackedScene" path="res://art/models/env_house_lane_r.glb" id="model"]
+[ext_resource type="Material" path="res://game/world/materials/real/window_horn.tres" id="horn"]
+
+[node name="HouseLaneR" type="Node3D"]
+script = ExtResource("house_gd")
+lit_material = ExtResource("horn")
+editor_description = "A house of the lane by the abbey gate: two floors, 6 m wide: cut stone below with a round-headed door, ochre plaster above, twin gablets (tools/build/env_house_timber.py). Its front faces -Z, the ground floor's face at z = 0; it runs back 9 m. Panes named in lit_windows glow. The lane hangs its lantern (StreetLanterns in street.tscn)."
+
+[node name="Model" parent="." instance=ExtResource("model")]

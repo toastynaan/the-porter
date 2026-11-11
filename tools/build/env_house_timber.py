@@ -259,8 +259,28 @@ def window(m, panes, name, cx, w, h, y, zf, kind, lean):
     return (xa - 0.1, xb + 0.1, y - 0.12, y + h + 0.12)
 
 
-def jetty(m, x0, x1, y, z_low, z_high):
-    """The underside of an overhanging floor: the joists' ends showing, and a bracket at each corner."""
+def jetty(m, x0, x1, y, z_low, z_high, big=False):
+    """The underside of an overhanging floor: the joists' ends showing, and a bracket at each corner.
+    `big`: heavy curved braces from low on the wall out to the jetty's edge, one every metre and a half."""
+    if big:
+        n = max(int(round((x1 - x0) / 1.6)), 2)
+        for i in range(n + 1):
+            x = x0 + 0.14 + (x1 - x0 - 0.28) * i / n
+            c = oak(0.8)
+            drop, out = 1.45, z_low - z_high
+            arc = []
+            for j in range(6):
+                t = math.pi * 0.5 * j / 5
+                arc.append((y - 0.2 - drop * (1.0 - math.sin(t)), z_low - out * (1.0 - math.cos(t)) * 0.96))
+            inner = [(yy - 0.17 * math.cos(math.pi * 0.5 * j / 5) * 0.0 - 0.2 * (j / 5.0), zz + 0.2 * (1.0 - j / 5.0)) for j, (yy, zz) in enumerate(arc)]
+            for (ya, za), (yb, zb), (yc, zc), (yd, zd) in zip(arc, arc[1:], inner[1:], inner):
+                for sgn in (-1, 1):
+                    m.poly([(x + sgn * 0.09, ya, za), (x + sgn * 0.09, yb, zb), (x + sgn * 0.09, yc, zc), (x + sgn * 0.09, yd, zd)], OAK, c,
+                           facing=(sgn, 0, 0))
+                m.poly([(x - 0.09, ya, za), (x + 0.09, ya, za), (x + 0.09, yb, zb), (x - 0.09, yb, zb)], OAK, c, facing=(0, -0.5, -1))
+                m.poly([(x - 0.09, yd, zd), (x + 0.09, yd, zd), (x + 0.09, yc, zc), (x - 0.09, yc, zc)], OAK, oak(0.5), facing=(0, 0.5, 1))
+            # The post it springs from, down the wall.
+            m.box((x - 0.1, y - drop - 0.9, z_low - 0.07), (x + 0.1, y - 0.2, z_low), OAK, oak(0.75), faces="xXz")
     under = (0.2, 0.19, 0.18, 1.0)
     m.poly([(x0, y, z_high), (x1, y, z_high), (x1, y, z_low), (x0, y, z_low)], OAK, under, facing=(0, -1, 0))
     n = int((x1 - x0) / 0.52)
@@ -306,13 +326,14 @@ def house(key, spec):
     zf = 0.0
     tops = []
     stone_floors = int(spec.get("stone", 0))
+    jut = spec.get("jetty", JETTY)
     stone_mat = spec.get("stone_mat", "stone_rubble")
     for k, height in enumerate(spec["floors"]):
         y0, y1 = y, y + height
         stone = k < stone_floors
         juts = k > 0 and not stone
         if juts:
-            zf -= JETTY
+            zf -= jut
         BEAM[0] = "stone_ashlar" if stone else OAK
         tint = plaster_tint(base, y0, y1, seed + k)
         openings = []
@@ -350,6 +371,19 @@ def house(key, spec):
             for x in (dx - dw * 0.5 - 0.07, dx + dw * 0.5 + 0.07):
                 beam(m, (x, 0.0), (x, dh + 0.14), 0.15, zf, 0.09)
             beam(m, (dx - dw * 0.5 - 0.14, dh + 0.08), (dx + dw * 0.5 + 0.14, dh + 0.08), 0.17, zf, 0.1)
+            if stone and spec.get("arch"):
+                # A round head over the door: boards in it, and a ring of cut stones round it.
+                r = dw * 0.5
+                fan = [(dx + r * math.cos(math.pi * i / 8), dh + r * math.sin(math.pi * i / 8), zf - 0.03) for i in range(9)]
+                m.poly(fan, BOARDS, oak(0.7), facing=(0, 0, -1))
+                for i in range(7):
+                    a0, a1 = math.pi * i / 7, math.pi * (i + 1) / 7
+                    kk = 0.72 + 0.2 * ((i * 3) % 5) / 4.0
+                    ring = [(dx + rr * math.cos(a), dh + rr * math.sin(a), zf - 0.06) for rr, a in ((r, a0), (r, a1), (r + 0.27, a1), (r + 0.27, a0))]
+                    m.poly(ring, "stone_ashlar", cp.rgba(cp.STONE, kk), facing=(0, 0, -1))
+                openings.append((dx - r - 0.3, dx + r + 0.3, dh, dh + r + 0.3))
+            if spec.get("step"):
+                cp.block(m, (dx - dw * 0.5 - 0.3, -0.05, zf - 0.42), (dx + dw * 0.5 + 0.3, 0.13, zf), "stone_ashlar", cp.rgba(cp.STONE, 0.7), faces="xXzY")
             openings.append((dx - dw * 0.5 - 0.15, dx + dw * 0.5 + 0.15, 0.0, dh + 0.2))
         for i, (cx, ww, wh, sill, kind) in enumerate(spec["windows"][k]):
             openings.append(window(m, panes, "Window%d_%d" % (k, i), cx, ww, wh, y0 + sill, zf, kind, lean))
@@ -369,7 +403,7 @@ def house(key, spec):
             pattern = "close" if k == 0 else spec["frame"][k - stone_floors - (0 if stone_floors else 1)] if spec["frame"] else "close"
             frame(m, pattern, x0, x1, y0 + (0.4 if k == 0 else 0.0), y1, zf, openings)
         if juts:
-            jetty(m, x0, x1, y0, zf + JETTY, zf)
+            jetty(m, x0, x1, y0, zf + jut, zf, big=bool(spec.get("brackets")) and k == stone_floors + (0 if stone_floors else 1))
         if k == 0 and spec.get("pentice"):
             pentice(m, spec, y1, zf)
         tops.append((y0, y1, zf))
@@ -546,11 +580,59 @@ def extras(m, spec, x0, x1, tops):
         m.tube(bush, [0.05, 0.26, 0.22, 0.03], 6, "bark", (0.4, 0.45, 0.32, 1.0))
 
 
+# The lane's houses (the lane by the abbey gate, every night): exactly 6 m or
+# 5 m wide, to stand shoulder to shoulder in the lane's plots. Stone below
+# and timber above, round-headed doors, deep jetties on heavy braces.
+LANE = {
+    # Rubble below, a deep jetty on braces, grey-blue plaster, eaves to the lane.
+    "p": dict(width=6.0, floors=(3.1, 2.8), roof="eaves", dormer=True, frame=("square",), plaster=(0.62, 0.66, 0.7), stone=1,
+              arch=True, step=True, brackets=True, jetty=0.75, door=(-1.7, 1.15, 1.75), lean=(0.01, 0.006), louvre=False,
+              daub="plaster_worn", tiles="roof_mossy", tone="dark", chimney=2.3,
+              windows=(((1.3, 1.1, 1.0, 1.15, "pane"),), ((-1.8, 1.2, 1.25, 0.9, "pane"), (0.1, 1.0, 1.25, 0.9, "shut"), (1.9, 1.2, 1.25, 0.9, "pane"))),
+              attic="pane"),
+    # Three floors, gable to the lane, limewash gone grey, a shop below.
+    "q": dict(width=6.0, floors=(3.0, 2.8, 2.6), roof="gable", frame=("close", "brace"), plaster=(0.82, 0.8, 0.74),
+              brackets=True, jetty=0.6, door=(2.05, 1.0, 2.05), lean=(-0.012, 0.01), louvre=True, tone="brown", pentice=True,
+              windows=(((-0.9, 2.8, 1.15, 0.95, "shop"),), ((-1.5, 1.3, 1.2, 0.95, "pane"), (1.5, 1.3, 1.2, 0.95, "pane")),
+                       ((0.0, 2.2, 1.15, 0.9, "pane"),)), attic="shut"),
+    # Low and wide: cut stone below, one timber floor, twin gablets, ochre.
+    "r": dict(width=6.0, floors=(3.3, 2.9), roof="eaves", dormer=False, twin=True, frame=("brace",), plaster=(0.84, 0.78, 0.66), stone=1,
+              stone_mat="stone_ashlar", arch=True, step=True, jetty=0.5, door=(0.0, 1.25, 1.8), lean=(0.006, -0.008), louvre=False,
+              daub="plaster_ochre", tiles="roof_tiles", tone="tarred", chimney=-2.4,
+              windows=(((-2.0, 0.9, 1.1, 1.2, "pane"), (2.0, 0.9, 1.1, 1.2, "shut")), ((-1.6, 1.4, 1.3, 0.9, "pane"), (1.6, 1.4, 1.3, 0.9, "pane"))),
+              attic="pane"),
+    # Narrow, tall, rubble below, close studding above, a gable.
+    "s": dict(width=5.0, floors=(3.0, 2.7, 2.6), roof="gable", frame=("close", "close"), plaster=(0.78, 0.76, 0.72), stone=1,
+              arch=True, brackets=True, jetty=0.7, door=(1.3, 1.05, 1.7), lean=(0.014, -0.006), louvre=False, tone="silver",
+              tiles="roof_plain",
+              windows=(((-1.0, 1.0, 1.0, 1.2, "pane"),), ((0.0, 2.0, 1.25, 0.9, "pane"),), ((-1.0, 0.9, 1.1, 0.9, "pane"), (1.0, 0.9, 1.1, 0.9, "shut"))),
+              attic="pane"),
+    # Narrow, two floors, eaves with a gablet, grey plaster to the brick.
+    "t": dict(width=5.0, floors=(3.0, 2.9), roof="eaves", dormer=True, frame=("brace",), plaster=(0.72, 0.72, 0.7),
+              jetty=0.5, door=(-1.5, 0.95, 2.05), lean=(-0.016, 0.008), louvre=True, daub="plaster_worn", tiles="roof_mossy", tone="brown",
+              nogging=(1,), windows=(((0.7, 2.0, 1.15, 0.95, "shop"),), ((-1.2, 1.0, 1.2, 0.95, "pane"), (1.2, 1.0, 1.2, 0.95, "pane"))),
+              attic="shut"),
+    # Narrow, three floors, an oriel, tarred frame on white.
+    "u": dict(width=5.0, floors=(3.1, 2.8, 2.5), roof="gable", frame=("square", "close"), plaster=(0.9, 0.88, 0.84),
+              brackets=True, jetty=0.6, door=(-1.55, 0.95, 2.05), lean=(0.008, 0.012), louvre=False, tone="tarred", tiles="roof_slates",
+              chimney=1.7, windows=(((0.75, 1.9, 1.15, 0.95, "shop"),), ((0.0, 2.3, 1.3, 0.95, "oriel"),),
+                                    ((-1.1, 1.0, 1.1, 0.9, "shut"), (1.1, 1.0, 1.1, 0.9, "pane"))), attic="pane"),
+    # Narrow, two floors of cut stone under a timber gable: somebody's money.
+    "v": dict(width=5.0, floors=(3.2, 3.0), roof="gable", frame=(), plaster=(0.8, 0.78, 0.74), stone=2, stone_mat="stone_ashlar",
+              arch=True, step=True, door=(-1.2, 1.1, 1.8), lean=(0.002, 0.003), louvre=False, tiles="roof_slates", tone="dark",
+              windows=(((1.1, 0.8, 1.3, 1.1, "pane"),), ((-1.1, 0.8, 1.5, 0.9, "pane"), (1.1, 0.8, 1.5, 0.9, "pane"))), attic="pane"),
+}
+
+
 def main():
     for key, spec in HOUSES.items():
         porter.reset(40 + ord(key))
         house(key, spec)
         porter.export("env_house_timber_" + key)
+    for key, spec in LANE.items():
+        porter.reset(40 + ord(key))
+        house(key, spec)
+        porter.export("env_house_lane_" + key)
 
 
 if __name__ == "__main__":

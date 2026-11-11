@@ -32,6 +32,13 @@ enum Shape { BOX, GABLE, CYLINDER }
 		solid = value
 		_rebuild()
 
+## Off where a model shows what this is (the lane's cobbles lie over its
+## ground blocks): still solid, still sounds as `surface`, not drawn.
+@export var shown := true:
+	set(value):
+		shown = value
+		_rebuild()
+
 var _mesh: MeshInstance3D
 var _collision: CollisionShape3D
 
@@ -83,5 +90,6 @@ func _rebuild() -> void:
 	mesh.material = material
 	_mesh.mesh = mesh
 	_mesh.position = Vector3(0, size.y * 0.5, 0)
+	_mesh.visible = shown
 	_collision.position = _mesh.position
 	_collision.disabled = not solid

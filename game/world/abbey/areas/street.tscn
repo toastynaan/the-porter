@@ -17,6 +17,22 @@
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_narrow.tscn" id="env_house_3storey_narrow"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_2storey_narrow.tscn" id="env_house_2storey_narrow"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_inn.tscn" id="env_inn"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_p.tscn" id="lane_p"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_q.tscn" id="lane_q"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_r.tscn" id="lane_r"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_s.tscn" id="lane_s"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_t.tscn" id="lane_t"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_u.tscn" id="lane_u"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_v.tscn" id="lane_v"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_a.tscn" id="lane_a"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_lane_c.tscn" id="lane_c"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_d.tscn" id="ht_d"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_house_timber_f.tscn" id="ht_f"]
+[ext_resource type="PackedScene" path="res://game/world/street/env_lane_end.tscn" id="lane_end"]
+[ext_resource type="PackedScene" path="res://art/models/env_lane_ground.glb" id="lane_ground"]
+[ext_resource type="PackedScene" path="res://art/models/env_lane_wall.glb" id="lane_wall"]
+[ext_resource type="Material" path="res://game/world/materials/real/stone_ashlar.tres" id="ashlar"]
+[ext_resource type="Material" path="res://game/world/materials/real/stone_rubble.tres" id="rubble"]
 
 [sub_resource type="BoxMesh" id="M4"]
 material = ExtResource("iron")
@@ -475,9 +491,12 @@ radial_segments = 6
 rings = 1
 
 [node name="Street" type="Node3D"]
-editor_description = "Proposal: a lane outside the west gate, on the edge of a medieval city (greybox). Lanterns hung outside houses follow the London mayor's order of 1415; hide StreetLanterns for a darker, earlier street."
+editor_description = "The lane outside the west gate, on the edge of the city. Its houses, ground and ends have their real look (tools/build/env_house_timber.py, env_lane.py); the gate porch, the Cross Keys and the far skyline are still greybox. Lanterns hung outside houses follow the London mayor's order of 1415; hide StreetLanterns for a darker, earlier street."
 
 [node name="Ground" type="Node3D" parent="." groups=["nav_source"]]
+
+[node name="Cobbles" parent="Ground" instance=ExtResource("lane_ground")]
+editor_description = "The lane's ground as it is seen (tools/build/env_lane.py): cobbles, mud, the kennel. The blocks under it are what is walked on; they aren't drawn."
 
 [node name="Lane" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.4, -0.3, 0)
@@ -485,6 +504,7 @@ script = ExtResource("block")
 size = Vector3(6, 0.3, 102)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
 
 [node name="Kennel" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.4, -0.02, 0)
@@ -493,6 +513,7 @@ size = Vector3(0.35, 0.03, 102)
 material = ExtResource("water")
 surface = "mud"
 solid = false
+shown = false
 
 [node name="BendNorth" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, -0.3, 47)
@@ -500,6 +521,7 @@ script = ExtResource("block")
 size = Vector3(31, 0.3, 6)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
 
 [node name="BendSouth" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, -0.3, -47)
@@ -507,6 +529,7 @@ script = ExtResource("block")
 size = Vector3(31, 0.3, 6)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
 
 [node name="GateApron" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -40.5, -0.28, -2)
@@ -515,31 +538,34 @@ size = Vector3(3.8, 0.3, 4.6)
 material = ExtResource("flags")
 surface = "stone"
 
+[node name="PrecinctFace" parent="." instance=ExtResource("lane_wall")]
+editor_description = "The face the lane sees of the abbey's precinct wall (tools/build/env_lane.py): rubble, a plinth, a coping, buttresses. It lies over the greybox wall in abbey.tscn, which is still what stops people; the gate's porch and the three squints are left clear."
+
 [node name="GatePorch" type="Node3D" parent="." groups=["nav_source"]]
 
 [node name="PierN" type="StaticBody3D" parent="GatePorch"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41, 0, -3.9)
 script = ExtResource("block")
 size = Vector3(1.2, 4.6, 0.8)
-material = ExtResource("stone")
+material = ExtResource("ashlar")
 
 [node name="PierS" type="StaticBody3D" parent="GatePorch"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41, 0, -0.1)
 script = ExtResource("block")
 size = Vector3(1.2, 4.6, 0.8)
-material = ExtResource("stone")
+material = ExtResource("ashlar")
 
 [node name="Lintel" type="StaticBody3D" parent="GatePorch"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41, 3.4, -2)
 script = ExtResource("block")
 size = Vector3(1.2, 1.2, 4.6)
-material = ExtResource("stone")
+material = ExtResource("ashlar")
 
 [node name="Parapet" type="StaticBody3D" parent="GatePorch"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -40.8, 4.6, -2)
 script = ExtResource("block")
 size = Vector3(1.6, 0.5, 5.2)
-material = ExtResource("stone")
+material = ExtResource("ashlar")
 
 [node name="GateLantern" parent="GatePorch" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41.2, 2.95, -2)
@@ -549,9 +575,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41.2, 2.95, -2)
 [node name="StreetLanterns" type="Node3D" parent="."]
 editor_description = "Lanterns hung outside houses on winter nights (London, from 1415). Hide this node for a darker, earlier street."
 
-[node name="House-48" parent="Houses" instance=ExtResource("env_house_3storey_wide")]
+[node name="House-48" parent="Houses" instance=ExtResource("lane_c")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -45)
-lit_windows = PackedStringArray("Window2_1")
+lit_windows = PackedStringArray("Window0_1", "Window1_2")
 
 [node name="LanternHouse-48" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -46.2)
@@ -561,9 +587,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -46.2)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House-42" parent="Houses" instance=ExtResource("env_house_2storey_wide")]
+[node name="House-42" parent="Houses" instance=ExtResource("lane_q")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -39)
-lit_windows = PackedStringArray("Window0_1")
+lit_windows = PackedStringArray("Window1_0", "Window2_0")
 
 [node name="LanternHouse-42" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -40.2)
@@ -573,9 +599,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -40.2)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House-36" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House-36" parent="Houses" instance=ExtResource("lane_s")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -33.5)
-lit_windows = PackedStringArray("Window1_0", "Window2_0")
+lit_windows = PackedStringArray("Window1_0")
 
 [node name="LanternHouse-36" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -34.5)
@@ -585,9 +611,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -34.5)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House-31" parent="Houses" instance=ExtResource("env_house_3storey_wide")]
+[node name="House-31" parent="Houses" instance=ExtResource("lane_r")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -28)
-lit_windows = PackedStringArray("Window0_1", "Window1_0")
+lit_windows = PackedStringArray("Window0_0", "Window1_1")
 
 [node name="LanternHouse-31" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -29.2)
@@ -597,9 +623,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -29.2)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House-25" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House-25" parent="Houses" instance=ExtResource("lane_u")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -22.5)
-lit_windows = PackedStringArray("Window0_1", "Window1_0")
+lit_windows = PackedStringArray("Window1_0", "Window3_0")
 
 [node name="LanternHouse-25" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -23.5)
@@ -615,14 +641,15 @@ script = ExtResource("block")
 size = Vector3(12, 0.3, 2.2)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
 
 [node name="Alley-20End" type="StaticBody3D" parent="Houses"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -57, 0, -19.6)
 script = ExtResource("block")
 size = Vector3(1.2, 7, 3.4)
-material = ExtResource("plaster")
+material = ExtResource("rubble")
 
-[node name="House-18" parent="Houses" instance=ExtResource("env_house_2storey_narrow")]
+[node name="House-18" parent="Houses" instance=ExtResource("lane_t")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -15.5)
 lit_windows = PackedStringArray("Window1_1")
 
@@ -634,9 +661,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -16.5)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House-13" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House-13" parent="Houses" instance=ExtResource("lane_v")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -10.5)
-lit_windows = PackedStringArray("Window2_0", "Window2_1")
+lit_windows = PackedStringArray("Window1_0", "Window1_1")
 
 [node name="LanternHouse-13" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -11.5)
@@ -658,9 +685,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -2)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House4" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House4" parent="Houses" instance=ExtResource("lane_u")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 6.5)
-lit_windows = PackedStringArray("Window0_1", "Window1_0", "Window1_1")
+lit_windows = PackedStringArray("Window1_0", "Window2_1")
 
 [node name="LanternHouse4" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 5.5)
@@ -670,7 +697,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 5.5)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House9" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House9" parent="Houses" instance=ExtResource("lane_a")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 11.5)
 lit_windows = PackedStringArray("Window2_0")
 
@@ -688,16 +715,17 @@ script = ExtResource("block")
 size = Vector3(12, 0.3, 2.2)
 material = ExtResource("mud")
 surface = "mud"
+shown = false
 
 [node name="Alley14End" type="StaticBody3D" parent="Houses"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -57, 0, 14.4)
 script = ExtResource("block")
 size = Vector3(1.2, 7, 3.4)
-material = ExtResource("plaster")
+material = ExtResource("rubble")
 
-[node name="House16" parent="Houses" instance=ExtResource("env_house_2storey_wide")]
+[node name="House16" parent="Houses" instance=ExtResource("lane_p")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 19)
-lit_windows = PackedStringArray("Window0_1")
+lit_windows = PackedStringArray("Window0_0", "Window1_2")
 
 [node name="LanternHouse16" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 17.8)
@@ -707,9 +735,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 17.8)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House22" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House22" parent="Houses" instance=ExtResource("lane_s")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 24.5)
-lit_windows = PackedStringArray("Window2_1")
+lit_windows = PackedStringArray("Window2_0", "Window3_0")
 
 [node name="LanternHouse22" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 23.5)
@@ -719,9 +747,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 23.5)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House27" parent="Houses" instance=ExtResource("env_house_2storey_wide")]
+[node name="House27" parent="Houses" instance=ExtResource("lane_q")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 30)
-lit_windows = PackedStringArray("Window0_1")
+lit_windows = PackedStringArray("Window1_1")
 
 [node name="LanternHouse27" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 28.8)
@@ -731,9 +759,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 28.8)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House33" parent="Houses" instance=ExtResource("env_house_3storey_narrow")]
+[node name="House33" parent="Houses" instance=ExtResource("lane_t")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 35.5)
-lit_windows = PackedStringArray("Window0_1", "Window1_0", "Window2_1")
+lit_windows = PackedStringArray("Window1_0")
 
 [node name="LanternHouse33" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 34.5)
@@ -743,9 +771,9 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 34.5)
 cast_shadow = 0
 mesh = SubResource("M4")
 
-[node name="House38" parent="Houses" instance=ExtResource("env_house_2storey_wide")]
+[node name="House38" parent="Houses" instance=ExtResource("lane_r")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 41)
-lit_windows = PackedStringArray("Window1_1")
+lit_windows = PackedStringArray("Window1_0", "Window2_0")
 
 [node name="LanternHouse38" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 39.8)
@@ -756,382 +784,78 @@ cast_shadow = 0
 mesh = SubResource("M4")
 
 [node name="BendNorth" type="Node3D" parent="Houses"]
+editor_description = "The lane's bend at this end: houses across the lane's end and along the bend, and an archway closing each way on (env_lane_end.tscn): the street is seen going on through it, and nobody gets through."
 
-[node name="Far0" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, 55)
-script = ExtResource("block")
-size = Vector3(6.94, 5.8, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="Far0" parent="Houses/BendNorth" instance=ExtResource("lane_p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.00, 0, 50.00)
 
-[node name="Far0Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 5.8, 55)
-script = ExtResource("block")
-size = Vector3(7.3, 2.688, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="Far1" parent="Houses/BendNorth" instance=ExtResource("lane_c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.00, 0, 50.00)
 
-[node name="Far0Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="Far2" parent="Houses/BendNorth" instance=ExtResource("lane_q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.00, 0, 50.00)
 
-[node name="Far0Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="Far3" parent="Houses/BendNorth" instance=ExtResource("lane_r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.00, 0, 50.00)
 
-[node name="Far1" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61, 0, 55)
-script = ExtResource("block")
-size = Vector3(5.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="Near0" parent="Houses/BendNorth" instance=ExtResource("lane_s")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -68.50, 0, 44.00)
 
-[node name="Far1Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61, 8.4, 55)
-script = ExtResource("block")
-size = Vector3(6.3, 3.044, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="Near1" parent="Houses/BendNorth" instance=ExtResource("lane_u")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -63.50, 0, 44.00)
 
-[node name="Far1Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -62, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="Near2" parent="Houses/BendNorth" instance=ExtResource("ht_d")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -58.30, 0, 44.00)
 
-[node name="Far1Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="EastCorner0" parent="Houses/BendNorth" instance=ExtResource("ht_f")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.40, 0, 42.70)
 
-[node name="Far2" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -55, 0, 55)
-script = ExtResource("block")
-size = Vector3(5.94, 5.8, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="EastCorner1" parent="Houses/BendNorth" instance=ExtResource("lane_t")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.40, 0, 47.60)
 
-[node name="Far2Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -55, 5.8, 55)
-script = ExtResource("block")
-size = Vector3(6.3, 3.063, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="LaneEnd" parent="Houses/BendNorth" instance=ExtResource("lane_end")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.4, 0, 50.0)
 
-[node name="Far2Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="BendEnd" parent="Houses/BendNorth" instance=ExtResource("lane_end")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -71.2, 0, 47.0)
 
-[node name="Far2Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -54, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Far3" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -49, 0, 55)
-script = ExtResource("block")
-size = Vector3(5.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Far3Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -49, 8.4, 55)
-script = ExtResource("block")
-size = Vector3(6.3, 2.922, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Far3Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -50, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Far3Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -48, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Far4" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.2, 0, 55)
-script = ExtResource("block")
-size = Vector3(5.54, 5.8, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Far4Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.2, 5.8, 55)
-script = ExtResource("block")
-size = Vector3(5.9, 2.938, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Far4Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.13, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Far4Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -42.27, 4.3, 49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Near0" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, 39)
-script = ExtResource("block")
-size = Vector3(6.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Near0Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 8.4, 39)
-script = ExtResource("block")
-size = Vector3(7.3, 2.9, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Near0Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, 44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Near0Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, 44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Near1" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60.75, 0, 39)
-script = ExtResource("block")
-size = Vector3(6.44, 5.8, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Near1Roof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60.75, 5.8, 39)
-script = ExtResource("block")
-size = Vector3(6.8, 2.602, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Near1Window0" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61.83, 4.3, 44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Near1Window1" type="MeshInstance3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -59.67, 4.3, 44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="FarEnd" type="StaticBody3D" parent="Houses/BendNorth" groups=["road_in_hides"]]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -72.5, 0, 47)
-script = ExtResource("block")
-size = Vector3(2, 8, 7)
-material = ExtResource("plaster")
-
-[node name="EastCorner" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -34.2, 0, 45.2)
-script = ExtResource("block")
-size = Vector3(12.4, 6, 9.6)
-material = ExtResource("plaster")
-
-[node name="EastCornerRoof" type="StaticBody3D" parent="Houses/BendNorth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -34.2, 6, 45.2)
-script = ExtResource("block")
-size = Vector3(12.7, 2.8, 9.9)
-material = ExtResource("roof")
-shape = 1
 
 [node name="BendSouth" type="Node3D" parent="Houses"]
+editor_description = "The lane's bend at this end: houses across the lane's end and along the bend, and an archway closing each way on (env_lane_end.tscn): the street is seen going on through it, and nobody gets through."
 
-[node name="Far0" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, -55)
-script = ExtResource("block")
-size = Vector3(6.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="Far0" parent="Houses/BendSouth" instance=ExtResource("lane_r")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -68.00, 0, -50.00)
 
-[node name="Far0Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 8.4, -55)
-script = ExtResource("block")
-size = Vector3(7.3, 3.197, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="Far1" parent="Houses/BendSouth" instance=ExtResource("lane_q")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -62.00, 0, -50.00)
 
-[node name="Far0Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
+[node name="Far2" parent="Houses/BendSouth" instance=ExtResource("lane_p")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -56.00, 0, -50.00)
 
-[node name="Far0Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="Far3" parent="Houses/BendSouth" instance=ExtResource("lane_c")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -50.00, 0, -50.00)
 
-[node name="Far1" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61, 0, -55)
-script = ExtResource("block")
-size = Vector3(5.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="Near0" parent="Houses/BendSouth" instance=ExtResource("lane_u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.50, 0, -44.00)
 
-[node name="Far1Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61, 8.4, -55)
-script = ExtResource("block")
-size = Vector3(6.3, 2.846, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="Near1" parent="Houses/BendSouth" instance=ExtResource("lane_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.50, 0, -44.00)
 
-[node name="Far1Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -62, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="Near2" parent="Houses/BendSouth" instance=ExtResource("ht_d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.30, 0, -44.00)
 
-[node name="Far1Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="EastCorner0" parent="Houses/BendSouth" instance=ExtResource("ht_f")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.40, 0, -42.70)
 
-[node name="Far2" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -55, 0, -55)
-script = ExtResource("block")
-size = Vector3(5.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
+[node name="EastCorner1" parent="Houses/BendSouth" instance=ExtResource("lane_t")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.40, 0, -47.60)
 
-[node name="Far2Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -55, 8.4, -55)
-script = ExtResource("block")
-size = Vector3(6.3, 2.764, 10.3)
-material = ExtResource("roof")
-shape = 1
+[node name="LaneEnd" parent="Houses/BendSouth" instance=ExtResource("lane_end")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -43.4, 0, -50.0)
 
-[node name="Far2Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
+[node name="BendEnd" parent="Houses/BendSouth" instance=ExtResource("lane_end")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -71.2, 0, -47.0)
 
-[node name="Far2Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -54, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Far3" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -49, 0, -55)
-script = ExtResource("block")
-size = Vector3(5.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Far3Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -49, 8.4, -55)
-script = ExtResource("block")
-size = Vector3(6.3, 3.153, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Far3Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -50, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Far3Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -48, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Far4" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.2, 0, -55)
-script = ExtResource("block")
-size = Vector3(5.54, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Far4Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.2, 8.4, -55)
-script = ExtResource("block")
-size = Vector3(5.9, 2.898, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Far4Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -44.13, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Far4Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -42.27, 4.3, -49.98)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Near0" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 0, -39)
-script = ExtResource("block")
-size = Vector3(6.94, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Near0Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -67.5, 8.4, -39)
-script = ExtResource("block")
-size = Vector3(7.3, 2.711, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Near0Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -68.67, 4.3, -44.02)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Near0Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -66.33, 4.3, -44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="Near1" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60.75, 0, -39)
-script = ExtResource("block")
-size = Vector3(6.44, 8.4, 10)
-material = ExtResource("plaster")
-surface = "wood"
-
-[node name="Near1Roof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -60.75, 8.4, -39)
-script = ExtResource("block")
-size = Vector3(6.8, 3.075, 10.3)
-material = ExtResource("roof")
-shape = 1
-
-[node name="Near1Window0" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -61.83, 4.3, -44.02)
-cast_shadow = 0
-mesh = SubResource("M12")
-
-[node name="Near1Window1" type="MeshInstance3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -59.67, 4.3, -44.02)
-cast_shadow = 0
-mesh = SubResource("M11")
-
-[node name="FarEnd" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -72.5, 0, -47)
-script = ExtResource("block")
-size = Vector3(2, 8, 7)
-material = ExtResource("plaster")
-
-[node name="EastCorner" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -34.2, 0, -45.2)
-script = ExtResource("block")
-size = Vector3(12.4, 6, 9.6)
-material = ExtResource("plaster")
-
-[node name="EastCornerRoof" type="StaticBody3D" parent="Houses/BendSouth"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -34.2, 6, -45.2)
-script = ExtResource("block")
-size = Vector3(12.7, 2.8, 9.9)
-material = ExtResource("roof")
-shape = 1
 
 [node name="Skyline" type="Node3D" parent="."]
 editor_description = "The city beyond: silhouettes only, no collision or shadows. Cheap; can be merged into one mesh later."

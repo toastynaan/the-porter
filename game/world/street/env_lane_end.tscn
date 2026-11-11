@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/env_lane_end.glb" id="model"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+
+[node name="LaneEnd" type="Node3D"]
+editor_description = "What closes an end of the lane: a house built across the street on an archway (tools/build/env_lane.py). Its mouth is at z = 0, looking out along -Z. The passage is dark; through it the street goes on, lit by the two lanterns here. A wall that isn't seen stops anyone a pace inside the arch."
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="LampNear" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3, 2.7, 13.5)
+energy = 1.6
+
+[node name="LampFar" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 2.6, 27.0)
+energy = 1.4

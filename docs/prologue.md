@@ -174,6 +174,22 @@ Everything in the fields is stood on the ground by `tools/build/road_dressing.py
 
 `tools/intro_shots.sh` now takes 42 stills: four of the drawbridge, three of the alleys, six of the brook and its bridge.
 
+## The look of the lane (first pass: the houses, the ground, the wall, the ends)
+
+The lane outside the abbey gate, on every night. Its plan is unchanged: every door, alley, squint and walking route is where it was, and its navigation was not rebaked.
+
+- **The houses** (`env_house_lane_*.tscn`, nine kinds over the lane's fourteen plots): seven new ones built for the lane (`LANE` in `env_house_timber.py`), exactly 5 or 6 m wide so they stand shoulder to shoulder, and two of the street's. New in them: ground floors of rubble or cut stone with round-headed doors and a step, deep jetties on heavy curved braces, grey-blue and ochre plaster beside the limewash. The lane still hangs each house's lantern (`StreetLanterns`). The curfew still darkens their windows and sends people in at their doors.
+- **The ground** (`env_lane_ground`): cobbles down the lane, round both bends and up the two alleys, mud down the cart track, a kennel with water in it. The greybox blocks under it are still what is walked on and what footsteps sound on; they are no longer drawn (`Block.shown`).
+- **The precinct wall** has a face of rubble on the lane's side (`env_lane_wall`, laid over the greybox wall, which still stops people): a plinth, a weathered coping, eight buttresses of cut stone. The gate's porch and the three squints are left clear. The porch is cut stone now.
+- **The bends** at each end have houses in place of the blocks: four across the lane's end, three along the bend, two at the east corner.
+- **The ends** (`env_lane_end.tscn`, four of them: straight on at each end of the lane, and at the far end of each bend): a house built across the street on an archway. The passage under it is dark. Through it the street goes on: house fronts, lit windows, two lanterns, a church tower against the sky. A wall that isn't seen stops him a pace inside the arch. *(Mine: where each looks to, and that all four are the same piece.)*
+
+**What it costs.** A lane house 650 to 1,500 triangles, the ground 7,500, the wall's face 1,600, an end 1,600. Each end has two small lights; nothing else adds a light.
+
+Still greybox: the Cross Keys, the abbey gate's leaves, the far skyline, the people.
+
+`tools/lane_shots.sh` takes 16 stills of the lane on night 1 to `art/_review/lane/`.
+
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 
 Three, in the precinct wall along the lane: the porter's cell (z −6), the outer court's north (z 6) and south (z 14) *(mine)*. Each is a barred slit a hand's width by a forearm's height (0.18 × 0.5 m) at eye level, splayed to 0.4 m at both faces so an eye at the bars sees a sliver of the other side *(the splay is mine)*.
