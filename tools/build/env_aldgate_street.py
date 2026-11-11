@@ -44,6 +44,30 @@ def ground(x, z):
     return h, (mud, 0.0, 0.0, kennel * smoothstep(-0.2, 0.3, fbm(x, z, 0.12, 2, 7.0) + 0.25))
 
 
+# Beyond the brook the street runs on a little and turns south out of sight:
+# its two lengths, as (x from, x to, z from, z to). The wagon is on it only
+# as the night goes dark (docs/prologue.md).
+BEYOND = ((-72.0, -56.8, 43.8, 50.2), (-63.0, -56.8, 50.2, 64.6))
+
+
+def beyond(m, c):
+    step = 0.55
+    for x0, x1, z0, z1 in BEYOND:
+        nx, nz = int(round((x1 - x0) / step)), int(round((z1 - z0) / step))
+        index = {}
+        for i in range(nx + 1):
+            for j in range(nz + 1):
+                x, z = x0 + (x1 - x0) * i / nx, z0 + (z1 - z0) * j / nz
+                h = 0.02 + 0.015 * fbm(x, z, 0.5, 2, 4.0)
+                mud = smoothstep(-0.25, 0.35, fbm(x, z, 0.2, 2, 5.0))
+                pool = smoothstep(0.15, 0.4, fbm(x, z, 0.16, 2, 7.0))
+                index[(i, j)] = m.vert(x, h - 0.02 * pool, z, (mud, 0.0, 0.0, pool), (x, 7.0))
+        for i in range(nx):
+            for j in range(nz):
+                m.face((index[(i, j)], index[(i, j + 1)], index[(i + 1, j + 1)], index[(i + 1, j)]), "ground_street")
+        c.quad((x0, 0.0, z0), (x0, 0.0, z1), (x1, 0.0, z1), (x1, 0.0, z0), "ground_street")
+
+
 def main():
     porter.reset(3)
     step = 0.5
@@ -62,6 +86,9 @@ def main():
     m.build(smooth=True)
     c = porter.Mesh("Ground-colonly")
     c.quad((WEST_X, 0.0, ROAD_Z - WALK), (WEST_X, 0.0, ROAD_Z + WALK), (EAST_X, 0.0, ROAD_Z + WALK), (EAST_X, 0.0, ROAD_Z - WALK), "ground_street")
+    b = porter.Mesh("Beyond")
+    beyond(b, c)
+    b.build(smooth=True)
     c.build()
     porter.export("env_aldgate_street")
 

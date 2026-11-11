@@ -251,7 +251,7 @@ keep = 12.0
 watchers = [NodePath("../../RoadFolk/Townswoman")]
 
 [node name="Dog" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92, 0, 50.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99, 0, 50.5)
 script = ExtResource("cue_gd")
 lines = PackedStringArray("Traveller: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
 sound = ExtResource("sfx_dog")
@@ -259,12 +259,12 @@ volume_db = -3.0
 keep = 25.0
 
 [node name="Bridge" type="Marker3D" parent="RideCues"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 0, 44.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("(The street ends at black water. A stone bridge, a lantern on every pier.)", "Carter: Over the brook, and your lane's the next turning. Nearly there.")
+lines = PackedStringArray("Carter: Over the brook, and your lane's the next turning. Nearly there.")
 pace = 2.2
-keep = 20.0
-editor_description = "The last words of the road. On the bridge's crown (Marks/DarkAt) the night goes dark once they are said, and comes up again in the lane (Marks/LightAt)."
+keep = 12.0
+editor_description = "The last words of the road. As the wagon comes over the bridge's crown (Marks/DarkAt) the night goes dark, still rolling, and comes up again in the lane (Marks/LightAt)."
 
 [node name="Lane" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 11.5)
@@ -274,8 +274,8 @@ pace = 2.2
 keep = 25.0
 
 [node name="DarkAt" type="Marker3D" parent="Marks"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76, 0.8, 47)
-editor_description = "The crown of the bridge over the brook: here, once the talk of the road is done, the night goes dark."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77, 0.75, 47)
+editor_description = "The crown of the bridge over the brook: from here the night goes dark as the wagon rolls on. If he is still talking, the wagon crawls on until he is done (RideBeat.dawdle)."
 
 [node name="LightAt" type="Marker3D" parent="Marks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6, 0.05, 14.0)
@@ -396,7 +396,7 @@ conversation = ExtResource("n0_ralph")
 script = ExtResource("director_gd")
 night = 0
 
-[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole", "dark_at", "light_at")]
+[node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole", "dark_at", "light_at", "road", "road_folk", "lane_world")]
 script = ExtResource("ride_gd")
 phase = 6
 bell = &"start"
@@ -409,6 +409,9 @@ body_cart = NodePath("../../BodyCart")
 pull_over = NodePath("../../Marks/PullOver")
 set_down = NodePath("../../Marks/SetDown")
 dark_at = NodePath("../../Marks/DarkAt")
+road = NodePath("../../Road")
+road_folk = NodePath("../../RoadFolk")
+lane_world = [NodePath("../../Abbey"), NodePath("../../People"), NodePath("../../Brothers"), NodePath("../../Lamps")]
 light_at = NodePath("../../Marks/LightAt")
 traveller = NodePath("../../Traveller")
 carter = NodePath("../../WagonCarter")

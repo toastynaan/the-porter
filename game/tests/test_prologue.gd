@@ -91,6 +91,11 @@ func _run() -> void:
 	var walked := [false]
 	var leave_option := [""]
 	var dark_from := Vector3.ZERO
+	var warden_x := (night.get_node(^"RoadFolk/Warden") as Node3D).global_position.x
+	var abbey := night.get_node(^"Abbey") as Node3D
+	var lane_hidden := not abbey.visible
+	var moving_into_dark := 0.0
+	var last_step := 0.0
 	var dark_jump := 0.0
 	while not GameState.has_flag(&"n0_arrived") and elapsed < 300.0:
 		await get_tree().physics_frame
@@ -103,6 +108,9 @@ func _run() -> void:
 			# The road between the bridge and the lane isn't ridden: it passes in the dark.
 			dark_from = last
 			dark_jump = fade.color.a
+			moving_into_dark = last_step
+		else:
+			last_step = at.distance_to(last)
 		still = still + get_physics_process_delta_time() if at.distance_to(last) < 0.0001 else 0.0
 		last = at
 		if still >= 0.5 and (stops.is_empty() or stops[-1].distance_to(at) > 1.0):
@@ -147,16 +155,16 @@ func _run() -> void:
 		"the carter's Whoa breaks off the talk, he pulls in for the body cart (stopped at %s), it passes close by on his side (%.1f m), and the traveller talks about it" % [str(stops), closest])
 	_check(watched >= 0.0 and watched < 8.0, "as the cart goes by his view goes to the body on it and follows it (%.1f° off)" % watched)
 	_check(paused_ok, "paused, the wagon and the clock wait")
-	var warden := night.get_node(^"RoadFolk/Warden") as Node3D
-	var at_gate := stops.any(func(s: Vector3) -> bool: return absf(s.x - warden.global_position.x) < 1.5)
+	var at_gate := stops.any(func(s: Vector3) -> bool: return absf(s.x - warden_x) < 1.5)
 	var warden_spoke := Talk.history.any(func(l: Array) -> bool: return l[0] == "Warden")
 	_check(at_gate and warden_spoke, "the wagon stops at Aldgate, and the warden looks them over")
 	var cues_said := Talk.history.filter(func(l: Array) -> bool: return l[0] == "Carter" or l[0] == "Traveller").size()
 	_check(elapsed > 60.0 and elapsed < 150.0 and cues_said >= 8,
 		"the ride takes a minute or two (%.0f s), with something said along the way (%d lines)" % [elapsed, cues_said])
-	_check(dark_jump > 0.95 and absf(dark_from.x + 72.0) < 6.0 and absf(dark_from.z - 47.0) < 2.0 and fade.color.a < 0.05
-		and Talk.history.has(["Carter", "Over the brook, and your lane's the next turning. Nearly there."]),
-		"on the bridge over the brook the night goes dark (%.2f, from %s), and has come up again in the lane (%.2f)" % [dark_jump, str(dark_from), fade.color.a])
+	_check(dark_jump > 0.95 and absf(dark_from.x + 72.0) < 7.0 and absf(dark_from.z - 47.0) < 2.5 and moving_into_dark > 0.005 and fade.color.a < 0.05,
+		"over the bridge the night goes dark with the wagon still rolling (%.2f, from %s, %.3f m a tick), and has come up again in the lane (%.2f)" % [dark_jump, str(dark_from), moving_into_dark, fade.color.a])
+	_check(lane_hidden and abbey.visible and night.get_node_or_null(^"Road") == null and night.get_node_or_null(^"RoadFolk") == null,
+		"the abbey and the lane aren't shown on the road, and in the lane the road and its people are gone")
 	_check(waited_at_gate and leave_option[0] == Talk.TURN_AWAY, "at the gate the wagon waits until he's done talking (he turns away: %s)" % leave_option[0])
 	await _until(func() -> bool: return GameState.has_flag(&"talked_n0_carter") and not Talk.talking, 30.0)
 	Talk.auto_choice = answer_with

@@ -50,6 +50,10 @@ const SHOTS := [
 	{"name": "brook_north", "along": 156.2, "hour": 17.06, "dir": Vector3(-0.25, -0.15, -1.0)},
 	{"name": "brook_south", "along": 156.2, "hour": 17.06, "dir": Vector3(0.2, -0.12, 1.0)},
 	{"name": "bridge_from_the_bank", "along": 140.0, "hour": 17.04, "eye": Vector3(-77.6, -1.0, 34.5), "at": Vector3(-76.4, 0.9, 47.0)},
+	{"name": "bridge_ahead", "along": 154.0, "hour": 17.06, "dir": Vector3(1.0, 0.06, 0.12)},
+	{"name": "the_turn_beyond", "along": 140.0, "hour": 17.06, "eye": Vector3(-69.0, 1.9, 47.6), "at": Vector3(-58.0, 2.2, 52.0)},
+	{"name": "gate_corner_south", "along": 140.0, "hour": 17.0, "eye": Vector3(-110.5, 1.6, 46.5), "at": Vector3(-114.3, 2.0, 51.5)},
+	{"name": "gate_corner_north", "along": 140.0, "hour": 17.0, "eye": Vector3(-110.5, 1.6, 47.5), "at": Vector3(-114.3, 2.0, 42.5)},
 	{"name": "aldgate_from_inside", "along": 140.0, "hour": 17.0, "eye": Vector3(-104.0, 1.7, 47.6), "at": Vector3(-118.0, 6.0, 47.0)},
 ]
 

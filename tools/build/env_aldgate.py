@@ -78,6 +78,15 @@ def gate(m):
     cp.arch_band(m, z1, HALF, SPRING, RISE, 0.3, 0.07, (0, 0, 1), ASHLAR, PALE, y0=0.0)
     cp.panel(m, (x0, z0), (x0, z1), 0.0, top, (-1, 0, 0), ASHLAR, tint)
     cp.panel(m, (x1, z0), (x1, z1), 0.0, top, (1, 0, 0), ASHLAR, tint)
+    # A buttress at each back corner, out to the line of the first houses, so nothing shows between gate and house.
+    for s in (-1, 1):
+        lo = (min(s * 3.25, s * x1), 0.0, z1)
+        hi = (max(s * 3.25, s * x1), 9.6, z1 + 0.95)
+        cp.slab(m, lo, hi, ASHLAR, tint, faces="xXZ", step=1.6)
+        slope = [(lo[0], 9.6, z1 + 0.95), (hi[0], 9.6, z1 + 0.95), (hi[0], 10.5, z1), (lo[0], 10.5, z1)]
+        m.poly(slope, ASHLAR, rgba(PALE, 0.85), facing=(0, 1, 1))
+        for x in (lo[0], hi[0]):
+            m.poly([(x, 9.6, z1), (x, 9.6, z1 + 0.95), (x, 10.5, z1)], ASHLAR, rgba(cp.STONE, 0.8), facing=(x, 0, 0))
     # String courses, and the corbel course the front parapet stands out on.
     for y, deep in ((6.3, 0.09), (9.9, 0.07)):
         cp.block(m, (x0, y, z0 - deep), (x1, y + 0.2, z0), ASHLAR, PALE, faces="zyY")
@@ -372,7 +381,8 @@ def main():
     prism("TowerS", -TOWER_X, TOWER_Z, TOWER_R + 0.15, -1.0, TOWER_TOP + 1.8)
     prism("Turret", TURRET[0], TURRET[1], TURRET[2], -1.0, TURRET[3], 8)
     for name, lo, hi in (("PierN", (HALF, -1.0, z0), (x1, top + 1.0, z1)), ("PierS", (x0, -1.0, z0), (-HALF, top + 1.0, z1)),
-                         ("Over", (-HALF, SPRING + RISE, z0), (HALF, top + 1.0, z1)), ("Shelter", (4.7, 0.0, -4.4), (6.55, 2.6, -3.95))):
+                         ("Over", (-HALF, SPRING + RISE, z0), (HALF, top + 1.0, z1)), ("ButtressN", (3.25, 0.0, z1), (x1, 9.6, z1 + 0.95)),
+                         ("ButtressS", (x0, 0.0, z1), (-3.25, 9.6, z1 + 0.95)), ("Shelter", (4.7, 0.0, -4.4), (6.55, 2.6, -3.95))):
         c = porter.Mesh(name + "-colonly")
         c.box(lo, hi, ASHLAR)
         c.build()

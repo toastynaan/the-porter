@@ -42,6 +42,15 @@ extends NightBeat
 ## wagon comes to the abbey gate). The road between isn't ridden.
 @export var dark_at: Marker3D
 @export var light_at: Marker3D
+## Metres past `dark_at` the wagon may crawl while he is still talking, before it stands.
+@export var dawdle := 9.0
+## The road in itself (env_road.tscn) and the people along it: gone once
+## the night has gone dark. And the abbey and the lane, which aren't shown
+## while he is on the road. The two are never seen together, so the road
+## needn't join the lane.
+@export var road: Node3D
+@export var road_folk: Node3D
+@export var lane_world: Array[Node3D] = []
 ## Seconds it takes to go dark, stays dark, and takes to come up again.
 @export var dark_fade := 2.5
 @export var dark_hold := 1.2
@@ -62,6 +71,8 @@ const PULLED_IN := 1.7
 const CART_SIDE := 1.2
 ## The cart waits this far off until the wagon has pulled in.
 const CART_WAIT := 9.0
+## Its pace past the bridge's crown while he is still talking, m/s.
+const DAWDLE := 0.5
 ## Slowest the wagon rolls toward a stop, so it gets there.
 const CREEP := 0.3
 
@@ -92,6 +103,9 @@ var _rumble: AudioStreamPlayer3D
 
 
 func _ready() -> void:
+	if GameState.has_flag(&"n0_arrived"):
+		# Picked up after the ride: the road is behind him.
+		_leave_the_road.call_deferred()
 	gate.swing.call_deferred(false)
 	gate.show_bar.call_deferred(true)
 	if cole:
@@ -114,6 +128,8 @@ func run() -> void:
 		_dark_along = _along_of(dark_at.global_position)
 		_light_along = _along_of(light_at.global_position)
 	GameState.set_flag(&"n0_riding")
+	for n in lane_world:
+		n.visible = false
 	_seat(p)
 	if AudioOut.enabled():
 		_rumble = AudioStreamPlayer3D.new()
@@ -134,12 +150,12 @@ func run() -> void:
 		var d := stop - _along
 		var target := minf(_pace * pace_scale, sqrt(2.0 * accel * maxf(d, 0.0)))
 		if not _crossed and _along >= _dark_along:
-			if Talk.quiet() and not _speaking and _queue.is_empty():
+			if Talk.quiet() and not _speaking:
 				_crossed = true
 				await _through_the_dark()
 				continue
-			# Still talking on the bridge: the carter lets the horse stand.
-			_v = move_toward(_v, 0.0, accel * dt)
+			# Still talking on the bridge: the horse walks on at a crawl, and stands at the street's end.
+			_v = move_toward(_v, DAWDLE * pace_scale if _along < _dark_along + dawdle else 0.0, accel * dt)
 		else:
 			_v = move_toward(_v, maxf(target, CREEP * pace_scale), accel * dt)
 		_along = minf(_along + _v * dt, stop)
@@ -178,9 +194,10 @@ func run() -> void:
 	_drive_off.call()
 
 
-## The night goes dark as the wagon rolls on off the bridge, and comes up
-## again in the lane with the gate a little way ahead. What the cues between
-## would have said is left unsaid.
+## The night goes dark as the wagon rolls on over the bridge, still moving.
+## In the dark the road is put away and the lane brought out, and the night
+## comes up again there with the gate a little way ahead. What the road's
+## cues hadn't yet said is left unsaid.
 func _through_the_dark() -> void:
 	_hush = true
 	fade_to(1.0, dark_fade / pace_scale)
@@ -191,6 +208,7 @@ func _through_the_dark() -> void:
 		_along += _v * dt
 		_place(wagon, _along, _side)
 		await PlayTime.physics_frame(self)
+	_leave_the_road()
 	_along = _light_along
 	_side = SIDE
 	while _next < _cues.size() and _cues[_next].along < _light_along:
@@ -200,6 +218,16 @@ func _through_the_dark() -> void:
 	await wait(dark_hold / pace_scale)
 	_hush = false
 	fade_to(0.0, dark_fade / pace_scale)
+
+
+## The road and its people go, and the abbey and the lane are there.
+func _leave_the_road() -> void:
+	for n in lane_world:
+		if is_instance_valid(n):
+			n.visible = true
+	for n: Node in [road, road_folk]:
+		if is_instance_valid(n):
+			n.queue_free()
 
 
 ## Seats him and the traveller and the carter on the wagon.

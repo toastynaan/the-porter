@@ -8,7 +8,7 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 
 | Beat | What happens | Ends when |
 | --- | --- | --- |
-| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, over the drawbridge and through Aldgate, along the close street to the bridge over the brook, a minute and a half or so. On the bridge's crown, once nobody is talking and the road's lines are said, the night goes dark over 2.5 s *(mine)*; 1.2 s later it comes up again in the lane, the wagon rolling its last ten metres to the abbey gate (the turn and the lane between aren't ridden). If he is still talking on the bridge the carter lets the horse stand until he's done. The night opens on black and comes up over 3.5 s *(mine)* as the wagon rolls; the porter sits at the back, looking back down the road, can look about, and turns with the wagon. For the first 8 s nobody speaks. Then the traveller beside him turns to him and asks where he's bound (`n0_traveller_road`); he can talk to the traveller again at any time. The ride's cues play as the wagon passes them (below). About 22 s in the carter's "Whoa" breaks off any talk, and he pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side. The porter's view goes to the body and follows it by for 3.6 s *(mine)*, narrowed (moving the mouse lets go), and the traveller speaks about it (`n0_traveller`: who he was, the third pilgrim this month, all bound for the abbey) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
+| `Ride` (the start bell) | On rails: the carter's wagon drives itself from the fields past the white chapel, over the drawbridge and through Aldgate, along the close street to the bridge over the brook, a minute and a half or so. As it comes over the bridge's crown the night goes dark over 2.5 s *(mine)* with the wagon still rolling; 1.2 s later it comes up again in the lane, the wagon rolling its last ten metres to the abbey gate. If he is still talking at the crown the wagon crawls on (0.5 m/s, 9 m at most *mine*) and the dark waits until he's done. **The road and the lane are two places that are never shown together:** the abbey, the lane and their people are hidden for the ride, and in the dark the road scene and its people are removed (`RideBeat.road`, `road_folk`, `lane_world`). So the road doesn't have to join the lane, and neither is drawn while he is in the other. For the first 8 s nobody speaks. Then the traveller beside him turns to him and asks where he's bound (`n0_traveller_road`); he can talk to the traveller again at any time. The ride's cues play as the wagon passes them (below). About 22 s in the carter's "Whoa" breaks off any talk, and he pulls in toward the ditch and stops; a cart with a body under sacking creaks by close on his side. The porter's view goes to the body and follows it by for 3.6 s *(mine)*, narrowed (moving the mouse lets go), and the traveller speaks about it (`n0_traveller`: who he was, the third pilgrim this month, all bound for the abbey) as the wagon goes on. At Aldgate the wagon stops and the warden looks them over by lantern light. At the gate it waits until nobody's talking; the carter sets him down beside it (`n0_carter`) and drives off down the lane | He's in the lane |
 | `Arrive` | The gate is shut and barred, a lantern over it, and Cole isn't at it. He knocks (the `KnockGate` duty); nobody comes; the duty flame goes to Mab, whose first words send him to the Keys (`n0_mab`) | Mab has spoken to him |
 | `Inn` | The flame goes to Agnes by the fire; the bed answer gives him the room at the top | `n0_room`, or midnight |
 | `Window` | The bed in his room is wanted. Lying down: the cry, and he's at the window over the abbey wall. In the court a man with a lantern is killed by the well by a figure in a black habit, its back to the window, and dragged off toward the cellar. His notes say what he saw, or, if he'd drunk enough to see double, that he isn't sure (`window_killing`, `window_killing_drunk`). At midnight, if he isn't in bed, Agnes sends him up and it plays the same | The body is gone |
@@ -26,7 +26,7 @@ The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is gre
 | `Shutters` | The first houses | Shutters bang closed above as the wagon passes |
 | `Doorway` | A woman in a doorway | She watches it go by and crosses herself |
 | `Dog` | Farther in | A dog barks behind a door; the traveller says they bar their doors early since the pilgrims |
-| `Bridge` | The foot of the bridge over the brook | The black water and the lanterns; the carter: over the brook, and your lane's the next turning. Pace 2.2 m/s. The last words of the road: the night goes dark on the crown (`Marks/DarkAt`) |
+| `Bridge` | Ten metres short of the bridge | The carter: over the brook, and your lane's the next turning. Pace 2.2 m/s. The last words of the road: the night goes dark from the crown (`Marks/DarkAt`) |
 | `Lane` | In the lane, just after the light comes back (`Marks/LightAt`) | The traveller: that wall's your abbey; bar your door at night |
 
 The wagon speeds up and slows down at 1.2 m/s² *(mine)*, and its rumble fades as it slows. The body cart starts 40 m past the pull-over and comes on at 2 m/s *(mine)*, waiting 9 m off until the wagon has pulled in. Paused, the ride waits.
@@ -160,17 +160,19 @@ Everything in the fields is stood on the ground by `tools/build/road_dressing.py
 
 **The brook and its bridge** (`env_city_brook`):
 
-- The street ends at black water 8 m wide between rubble walls. The street has six houses a side now, and one more each side beyond the water.
+- The street ends at black water 8 m wide between rubble walls. The street has six houses a side now.
 - **The bridge:** one low arch of cut stone, hump-backed (0.8 m at the crown), cobbled, a parapet each side between six stone piers. Each pier carries an iron standard and a horn lantern (`BridgeLamps`, `prop_lantern_hung`). *(Mine: the picture this follows has gas lamps; these are what 1420 had.)*
 - **The brook** runs away north and south between houses with their fronts to the water, 26 m each way, to a house built over it on an arch with a lit window. Mist lies on it. Steps go down to it by the bridge; mooring posts stand in it.
 - **The water** (`water_brook.gdshader`) is a moving near-mirror: the lanterns lie on it in broken streaks, and the rain rings it.
-- **This is where the ride's talk ends and the night goes dark** (the `Ride` beat above). He is looking back from the crown: the bridge's lanterns, the whole street, and Aldgate at the end of it.
+- **This is where the night goes dark** (the `Ride` beat above). He is looking back from the crown: the bridge's lanterns, the whole street, and Aldgate at the end of it.
 
-The lane's two greybox houses that stood where the east bank's houses now stand are cleared on night 0 (`road_in_hides`).
+**Beyond the bridge** the street runs on 15 m and turns south between houses, with a house across its end, so nothing shows past it. The wagon is on it only as the night goes dark. Nothing of the lane is cleared for the road any more (`road_in_hides` is unused): the lane isn't shown until the road is gone.
+
+**The gate's back corners** have a buttress each, out to the first house, closing the gap that showed what lies behind the houses.
 
 **What it costs.** The drawbridge 5,000 triangles, the brook and its bridge 3,500, an alley 1,000, twelve more houses along the brook about 12,000. Lights: six on the bridge, four in the alleys, one at the bridgehead, none of them casting shadows.
 
-`tools/intro_shots.sh` now takes 38 stills: four of the drawbridge, three of the alleys, six of the brook and its bridge.
+`tools/intro_shots.sh` now takes 42 stills: four of the drawbridge, three of the alleys, six of the brook and its bridge.
 
 ## The squints (`Squint`, `game/world/kit/wall_squint.tscn`)
 
