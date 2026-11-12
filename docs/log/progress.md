@@ -46,3 +46,11 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Feature · 4108852 · The lantern: none on night 0, Anselm gives it on day 1, G puts it away, put away indoors at the Keys.
 - 2026-11-12 · Fix · 128c86c · Night 0 finished: the 14 talks final, and the last scene readable (the view follows the killing; the light goes out of sight with the body).
 - 2026-11-12 · Feature · 533627b · The lane darkens after the curfew bell: lanterns out one by one by eleven, one or two windows lit all night.
+- 2026-11-12 · Feature · 57d1da2 · The game starts fullscreen (a setting, on by default; F11 flips it).
+- 2026-11-12 · Feature · 9545da3 · The night shift wakes at 16:30, as the sun sets.
+- 2026-11-12 · Fix · 9366618 · Review stills and films stay in their window (they were running fullscreen at the screen's size).
+- 2026-11-12 · Feature · 950bdca · The sky dial: a small sun and moon in the top right, no numbers.
+- 2026-11-12 · Art · 0b25923 · The Cross Keys made cozy: oak box beds, a tankard, the floors and rooms dressed.
+- 2026-11-12 · Feature · a5e0959 · At the Keys: sit on any bench or stool, drink the ales on the tables; clicking the bed walks him to the window ("So that's my new home."); upstairs dark.
+- 2026-11-12 · Feature · 271bc05 · People start talks: hails as he passes, and chatter he overhears and can step into.
+- 2026-11-12 · Script · 35b3ec6 · Night 0's talks go back and forth: short turns, a thread each, cross-links, memory, four overheard chatters (draft).
