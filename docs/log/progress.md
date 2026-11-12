@@ -45,3 +45,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Docs · a470f7e · docs/script: each night's map, every conversation's paths, links.md for every flag; tools/script_review.py.
 - 2026-11-12 · Feature · 4108852 · The lantern: none on night 0, Anselm gives it on day 1, G puts it away, put away indoors at the Keys.
 - 2026-11-12 · Fix · 128c86c · Night 0 finished: the 14 talks final, and the last scene readable (the view follows the killing; the light goes out of sight with the body).
+- 2026-11-12 · Feature · 533627b · The lane darkens after the curfew bell: lanterns out one by one by eleven, one or two windows lit all night.
