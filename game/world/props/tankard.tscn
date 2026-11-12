@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/props/tankard.gd" id="1_tankard"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_tankard.glb" id="model"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_ale"]
+albedo_color = Color(0.42, 0.28, 0.1, 1)
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="Mesh_ale"]
+material = SubResource("Mat_ale")
+top_radius = 0.047
+bottom_radius = 0.047
+height = 0.004
+radial_segments = 11
+rings = 1
+
+[node name="Tankard" type="Area3D"]
+script = ExtResource("1_tankard")
+editor_description = "An ale on a table at the Cross Keys (Tankard): drunk with E, then empty until the next night. Cup is a staved oak ale cup with two iron hoops, 15 cm high (tools/build/prop_inn.py, inn_tankard); keep the Ale child (the ale in the cup), which goes when it's drunk."
+
+[node name="Cup" parent="." instance=ExtResource("model")]
+
+[node name="Ale" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
+mesh = SubResource("Mesh_ale")

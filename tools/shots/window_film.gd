@@ -5,7 +5,7 @@ extends Node
 ## empty. Run under Godot's movie writer, so the drag can be watched to the
 ## end: the body should go out of sight, not vanish in view.
 
-const LENGTH := 48.0
+const LENGTH := 60.0
 
 var _t := 0.0
 var _flow: GameFlow

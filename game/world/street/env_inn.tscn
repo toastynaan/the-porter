@@ -25,6 +25,8 @@
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="Material" path="res://game/world/materials/real/window_inn.tres" id="inn_glass"]
 [ext_resource type="Script" path="res://game/player/lantern_away.gd" id="lantern_away"]
+[ext_resource type="Script" path="res://game/world/props/seat.gd" id="seat"]
+[ext_resource type="PackedScene" path="res://game/world/props/tankard.tscn" id="tankard"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_rushes.tscn" id="inn_rushes"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_rushes_strip.tscn" id="inn_rushes_strip"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_sheepskin.tscn" id="inn_sheepskin"]
@@ -427,22 +429,8 @@ energy = 0.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 0.752, 5.3)
 energy = 0.9
 
-[node name="CandleRoom" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32, 6.45, 3.0)
-energy = 0.9
-
-[node name="Light" parent="CandleRoom"]
-omni_range = 4.5
-
 [node name="CandleBarrel" parent="." instance=ExtResource("candle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0.868, 1.6)
-
-[node name="CandleLoft" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62, 3.5, 7.2)
-energy = 0.9
-
-[node name="Light" parent="CandleLoft"]
-omni_range = 4.5
 
 [node name="CandleRing" parent="." instance=ExtResource("inn_ring")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.32, 2.7)
@@ -453,17 +441,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 2.0, 4.57)
 [node name="LampBar" parent="." instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 1.92, 7.4)
 energy = 1.2
-
-[node name="LampLoft" parent="." instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9, 5.3, 2.2)
-energy = 1.3
-
-[node name="LampTop" parent="." instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 8.3, 7.1)
-energy = 1.3
-
-[node name="Light" parent="LampTop"]
-omni_range = 8.0
 
 [node name="Solids" type="Node3D" parent="."]
 editor_description = "Collision for what the rooms' model adds (env_inn_rooms.py): the taproom's two posts and the loft's one, the casks and shelves behind the counter, the logs by the hearth, the loft's chest, the stores at the top."
@@ -555,6 +532,180 @@ editor_description = "Inside the Keys the porter keeps his lantern put away (Lan
 
 [node name="Shape" type="CollisionShape3D" parent="LanternAway"]
 shape = SubResource("Shape_lantern_away")
+
+
+[node name="SeatL" type="Area3D" parent="Bench0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="Bench0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="Bench1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="Bench1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="Bench2" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="Bench2" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="Bench3" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="Bench3" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="Bench4" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="Bench4" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="SettleStair" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="SettleStair" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatL" type="Area3D" parent="SettleWall" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="SeatR" type="Area3D" parent="SettleWall" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolBar0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolBar1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolHearth0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolHearth1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolTable0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolTable1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolBarrel0" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolBarrel1" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Seat" type="Area3D" parent="StoolRoom" node_paths=PackedStringArray("outline")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("seat")
+outline = [NodePath("..")]
+
+
+[node name="Ales" type="Node3D" parent="."]
+editor_description = "Ales on the taproom's tables and the counter (Tankard): drunk with E, sitting or standing; each once a night."
+
+
+[node name="Ale0" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9, 0.752, 1.7)
+
+
+[node name="Ale1" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.25, 0.752, 2.3)
+
+
+[node name="Ale2" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 0.752, 4.55)
+
+
+[node name="Ale3" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 0.752, 4.95)
+
+
+[node name="Ale4" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0.752, 3.25)
+
+
+[node name="Ale5" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0.752, 3.75)
+
+
+[node name="AleBar0" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 1.05, 7.05)
+
+
+[node name="AleBar1" parent="Ales" instance=ExtResource("tankard")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85, 1.05, 7.05)
 
 [node name="Dressing" type="Node3D" parent="."]
 editor_description = "What makes the Keys look lived in (tools/build/prop_inn.py; each its own scene, prop_inn_*.tscn): in the taproom rushes strewn thick by the hearth, a sheepskin, the dog asleep, a pot of pottage, logs, kindling and a pail, a ham, onions and herbs from the beams, trenchers and a jug on the tables, a cask on its side behind the counter, a hat, hood and satchel on pegs, boots at the stair foot; in the loft lodgers' bundles; in the porter's room a chest, a basin on a stool, a towel and a hat on pegs. Kept off the walkways, the stairs, the door, the seats and the ales' places. Only the cask, the basket, the pot, the chest and the washstand have collision."

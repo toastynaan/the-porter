@@ -265,7 +265,7 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 
 **The ride in.** It's on rails: the wagon drives itself from the white chapel through Aldgate to the lane, about two minutes *(mine)*, with something along the way every 10 to 15 seconds. Early on it pulls aside for a cart carrying four covered bodies (the hook). The wagon jolts and sways over the road, and your view with it. You can look about, and talk to the traveller beside you whenever you like; the cart cuts that talk short, and he talks about the dead (a conversation, three answers). At Aldgate the warden stops the wagon, walks up, holds his lantern to your face and talks to you, and walks back. It ends when the carter sets you down.
 
-**Drinking** at the Cross Keys (night 0). It's a conversation answer with Hob or Agnes.
+**Drinking** at the Cross Keys (night 0). It's a conversation answer with Hob or Agnes, or a tankard on a table (E drinks it).
 - Each ale is +1 drink, to 5. You lose 1 an hour, and sleep clears it. *(mine)*
 - Drink affects sight only, like Dose:
 
@@ -276,7 +276,9 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 
 - Day 1 starts with a headache blur until noon if you drank 3 or more. *(mine)*
 
-**Sleeping** at the inn ends night 0. Lying down on the bed in your room triggers the cry and the window. You can stay at the window or not. Then you sleep, and day 1 begins.
+**Sitting.** Benches, settles and stools at the Keys are seats: E sits, E or a move key stands. You can look about and talk while seated.
+
+**Sleeping** at the inn ends night 0. Clicking the bed in your room (it is outlined) starts the scene: you walk to the window, think aloud about the abbey being your new home, hear the cry, and watch the killing. Then you sleep, and day 1 begins.
 
 **The squint scare.** Night 0 only, once. If you walk the lane alone after the curfew bell and pass the south squint, a shape stands still just inside it: too tall, too thin, no horns. It's gone once you've looked away. It's one of the three things never explained before night 6 (it's the Saint).
 

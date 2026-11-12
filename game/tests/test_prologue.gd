@@ -299,9 +299,10 @@ func _run() -> void:
 	var death := night.get_node(^"WindowKilling") as DeathScene
 	p.place(pilot.duty("InnBed").global_position + Vector3(0.0, 0.0, -1.4), 0.0)
 	await pilot.use("InnBed")
-	await _until(func() -> bool: return death.has_played, 10.0)
+	await _until(func() -> bool: return death.has_played, 20.0)
 	_check(death.has_played and p.global_position.distance_to(pilot.mark("TopWindow")) < 0.5,
-		"lying down: the cry, and he's at the window over the abbey wall")
+		"clicking the bed, he walks to the window over the abbey wall")
+	_check(Talk.history.has(["Alric", "So that's my new home."]), "he thinks aloud about his new home, then the cry")
 	await pilot.seconds(1.5)
 	_check(p.zoom > 20.0, "his view narrows on the court and follows what happens there (%.0f°)" % p.zoom)
 	_check(ViewCheck.on_screen(p.camera, [death.global_position + Vector3.UP])

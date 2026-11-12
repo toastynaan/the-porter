@@ -2,7 +2,7 @@ extends Node
 ## Player checks in the greybox abbey, driven through the input actions:
 ## walk 1.4 m/s and run 4 m/s with footsteps and head bob; covering the
 ## lantern (5 m to 1 m); putting it away and taking it out, and a place that
-## keeps it put away; looking back; opening a door by looking at it (and
+## keeps it put away; sitting, drinking an ale, standing up; looking back; opening a door by looking at it (and
 ## the draught guttering the lantern); high Dose guttering it; holding the
 ## breath; crawling under the mill wheel and dropping down the latrine chute.
 ## Run: tools/check.sh
@@ -84,6 +84,32 @@ func _run() -> void:
 	_check(not hand.visible and not HunterSenses.is_lit(_player), "without a lantern (night 0), nothing in his hand, and G does nothing")
 	hand.owned = true
 	await _seconds(0.4)
+
+	# Sit on a seat, drink an ale within reach, stand up with a move key.
+	var stool := Seat.new()
+	_abbey.add_child(stool)
+	stool.global_position = _player.global_position + Vector3(0, 0, -1.2)
+	var ale: Tankard = load("res://game/world/props/tankard.tscn").instantiate()
+	_abbey.add_child(ale)
+	ale.global_position = stool.global_position + Vector3(0, 0.75, -0.45)
+	await _seconds(0.1)
+	stool.interact(_player)
+	await _seconds(0.6)
+	_check(_player.seat == stool and _player.riding == stool and absf(_player.head.position.y - stool.eye_height) < 0.02
+		and _player.global_position.distance_to(stool.global_position) < 0.01, "E on a seat sits him down, his eyes at seated height")
+	var drink_before := GameState.drink
+	ale.interact(_player)
+	_check(GameState.drink > drink_before and not ale.full and not (ale.get_node(^"Ale") as Node3D).visible,
+		"an ale within reach: drunk, and the cup is empty (%.1f)" % GameState.drink)
+	Input.action_press(&"move_forward")
+	await _seconds(0.2)
+	Input.action_release(&"move_forward")
+	await _seconds(0.6)
+	_check(_player.seat == null and _player.riding == null and not stool.occupied
+		and absf(_player.head.position.y - Player.EYE_HEIGHT) < 0.05, "a move key stands him up")
+	GameState.drink = 0.0
+	stool.queue_free()
+	ale.queue_free()
 	Input.action_press(&"look_back")
 	await _seconds(0.5)
 	_check(absf(rad_to_deg(_player.look_back_pivot.rotation.y) - Player.LOOK_BACK_ANGLE) < 1.0, "looks back over the shoulder")

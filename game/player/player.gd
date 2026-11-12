@@ -108,6 +108,10 @@ var riding: Node3D:
 		riding = value
 		if riding:
 			_ride_yaw = riding.global_rotation.y
+## The seat he's sitting on (Seat), or null.
+var seat: Seat
+## He has let go of the move keys since he sat down (a held key doesn't stand him up at once).
+var _seat_still := false
 var _peek_from: Transform3D
 ## What the floor underfoot sounds like.
 var floor_surface := "stone"
@@ -237,6 +241,13 @@ func _physics_process(delta: float) -> void:
 		rotation.y += turned
 		_ride_tilt = _tilt_of(riding)
 		velocity = Vector3.ZERO
+		if seat and not controls_locked and not talking:
+			# A move key stands him up (once he has let go of the one he sat down with).
+			var move := Input.get_vector(&"move_left", &"move_right", &"move_back", &"move_forward")
+			if move.length() < 0.1:
+				_seat_still = true
+			elif _seat_still:
+				stand_up()
 		return
 	_ride_tilt = Vector2.ZERO
 	if crawling or hiding or _hide_moving or peeking:
@@ -614,9 +625,43 @@ func get_up(seconds: float) -> void:
 
 
 ## Puts him at `at` facing `yaw`, standing, with nothing in progress.
+## Sits down on `s` (Seat): his feet at its origin, his eyes at its seated
+## height, facing the way it faces. He can look about and reach what's near.
+func sit_on(s: Seat) -> void:
+	if seat or riding:
+		return
+	place(s.global_position, s.global_rotation.y)
+	seat = s
+	s.occupied = true
+	_seat_still = false
+	running = false
+	crouch_override = false
+	riding = s
+	var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(head, ^"position", Vector3(0.0, s.eye_height, 0.0), 0.45)
+
+
+## Gets up from his seat, a step in front of it.
+func stand_up() -> void:
+	if seat == null:
+		return
+	var s := seat
+	seat = null
+	s.occupied = false
+	riding = null
+	place(s.stand_point(), s.global_rotation.y)
+	var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(head, ^"position", Vector3(0.0, _stand_eye(), 0.0), 0.45)
+
+
 func place(at: Vector3, yaw: float) -> void:
 	if hiding:
 		leave_hiding(true)
+	if seat:
+		# Moved by the night (a scene, a capture): he isn't sitting any more.
+		seat.occupied = false
+		seat = null
+		riding = null
 	peeking = null
 	_hide_moving = false
 	global_position = at
@@ -670,9 +715,9 @@ func _drift() -> void:
 	look_back_pivot.rotation.x = sin(t * 0.31 + 1.0) * 0.02 * k + _ride_tilt.y * ride
 
 
-## How far `seat` tips him, as he faces now: [roll, pitch].
-func _tilt_of(seat: Node3D) -> Vector2:
-	var up := global_basis.inverse() * seat.global_basis.y
+## How far `under` (what he rides) tips him, as he faces now: [roll, pitch].
+func _tilt_of(under: Node3D) -> Vector2:
+	var up := global_basis.inverse() * under.global_basis.y
 	return Vector2(atan2(-up.x, up.y), atan2(up.z, up.y))
 
 
