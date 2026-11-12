@@ -1454,7 +1454,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -43.4, 0.05, 40)
 [node name="LaneSouthEnd" type="Marker3D" parent="Marks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -43.4, 0.05, -40)
 
-[node name="Curfew" type="Node3D" parent="." node_paths=PackedStringArray("houses", "inn_door", "gib", "home", "round_ends", "taproom")]
+[node name="Curfew" type="Node3D" parent="." node_paths=PackedStringArray("houses", "inn_door", "gib", "home", "round_ends", "taproom", "lanterns")]
 script = ExtResource("curfew_gd")
 houses = NodePath("../Abbey/Street/Houses")
 inn_door = NodePath("../Abbey/Street/Houses/Inn/Door")
@@ -1462,4 +1462,5 @@ gib = NodePath("../People/Gib")
 home = NodePath("../Marks/LaneLeave")
 round_ends = [NodePath("../Marks/LaneNorthEnd"), NodePath("../Marks/LaneSouthEnd")]
 taproom = NodePath("../Abbey/Street/Houses/Inn/FireLight")
-editor_description = "The curfew bell at nine: the lane empties, the Keys shuts, windows go dark; then Gib walks the lane calling the hour."
+lanterns = [NodePath("../Abbey/Street/StreetLanterns"), NodePath("../Abbey/Street/Houses/Inn/Outside")]
+editor_description = "The curfew bell at nine: the lane empties, the Keys shuts, windows go dark but for one or two; the lane's lanterns and the inn's door lamps burn out one by one by eleven; then Gib walks the lane calling the hour."

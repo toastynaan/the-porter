@@ -297,7 +297,7 @@ The duty glyph marks each one. Then they take you to your cell, and lying on the
 - **Who's about:** while the gate stands open at dusk, the lane's people are out on their routines: Hob and Agnes at the inn door, Kit selling candles at the gate, Gib lighting the lanterns, Mab begging, the carter and Margery passing.
 - **What they say** changes with the nights. Each person's dusk conversation reads the flags: who died, whom you turned away, what you reported. The rumours run ahead of you: what happens in the abbey is talked about in the lane the next dusk.
 - **The inn** is open at dusk. You can go in, talk and drink (drink works as on night 0).
-- **The curfew bell** rings at nine. The lane empties, and after it only Gib walks the lane, calling the hour every hour (a clock you can hear from inside). If his call stops, something has happened.
+- **The curfew bell** rings at nine. The lane empties, the windows go dark but for one or two, and the lane's lanterns burn out one by one by eleven, so the lane gets darker as the night goes on and faces at the grille are harder to read. After it only Gib walks the lane, calling the hour every hour (a clock you can hear from inside). If his call stops, something has happened.
 - **Lane deaths** happen after curfew, seen through the grille or a squint (the run's spec).
 
 ## Settings and accessibility

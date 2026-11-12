@@ -5,7 +5,8 @@ extends Node
 ##   what they talk about (Hob on night 2: the merchant dead in the fishpond,
 ##   or alive and cursing the porter who locked him in);
 ## - the curfew bell at nine empties the lane (its people go home), shuts the
-##   Cross Keys and the windows go dark through the next hour; then Gib calls
+##   Cross Keys and the windows go dark through the next hour, but for one or
+##   two that stay lit; the lane's lanterns burn out by eleven; Gib calls
 ##   the hour on the hour, until something silences him;
 ## - E at a squint puts his eye to the bars from either side, the view held
 ##   within 25°; a hunter can't see him through it except up close with a
@@ -137,6 +138,7 @@ func _run() -> void:
 	gib.set_present(true, Transform3D(Basis.IDENTITY, Vector3(-43.4, 0.05, 20.0)))
 	var kit: VisitorNPC = night.get_node(^"People/Kit")
 	var lit_before := _lit_houses(night)
+	var lamps_before := curfew.lanterns_lit()
 	GameState.hour = 21.0
 	await _pilot.frames(3)
 	_check(curfew.has_rung and GameState.has_flag(&"n0_curfew"), "nine: the curfew bell")
@@ -148,13 +150,20 @@ func _run() -> void:
 	var half := _lit_houses(night)
 	GameState.hour = 22.05
 	await _pilot.frames(3)
-	_check(lit_before > 0 and half < lit_before and _lit_houses(night) == 0, "windows go dark one by one (%d, %d, %d)" % [lit_before, half, _lit_houses(night)])
+	var kept := curfew.kept.size()
+	_check(lit_before > 0 and half < lit_before and kept >= 1 and kept <= 2 and _lit_houses(night) == kept
+		and curfew.kept.all(func(h: TimberHouse) -> bool: return h.lit_windows.size() == 1),
+		"windows go dark one by one (%d, %d, %d), but for %d that keep one window lit" % [lit_before, half, _lit_houses(night), kept])
+	var lamps_at_ten := curfew.lanterns_lit()
+	_check(lamps_before > 3 and lamps_at_ten > 0 and lamps_at_ten < lamps_before,
+		"the lane's lanterns burn out one by one after the bell (%d, then %d at ten)" % [lamps_before, lamps_at_ten])
 	_check(curfew.calls == [22] and Talk.history.any(func(h: Array) -> bool: return h[0] == "Gib" and String(h[1]).contains("Ten of the clock")),
 		"ten: Gib calls the hour from the lane")
 	curfew.silence()
 	GameState.hour = 23.05
 	await _pilot.frames(3)
 	_check(curfew.calls == [22], "silenced, his calls stop")
+	_check(curfew.lanterns_lit() == 0, "by eleven every lantern in the lane is out (%d)" % curfew.lanterns_lit())
 
 	# The squint scare: after the bell, alone, once.
 	await _pass_squint(p, south)

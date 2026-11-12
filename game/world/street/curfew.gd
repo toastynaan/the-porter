@@ -3,7 +3,12 @@ extends Node3D
 ## The city's curfew (docs/systems/mechanics.md, "The lane at dusk"; design doc,
 ## "Setting"): at nine the curfew bell rings and the lane empties. Its people
 ## (group "lane_people") go home down the lane; the Cross Keys shuts its door;
-## the lane's lit windows go dark one by one through the next hour. After it
+## the lane's lit windows go dark one by one through the next hour, but for
+## one or two that stay lit all night (someone who can't sleep; which, the
+## night decides). The lanterns hung out in the lane and at the inn's door
+## burn out one by one in the two hours after the bell, in an order the night
+## decides, so the lane gets darker as the night goes on; the gate lamp, the
+## porter's, burns on (your rule, 2026-11-12). After it
 ## only Gib the watchman walks the lane with his lantern, calling the hour on
 ## the hour: a clock the porter can hear from inside the walls. If a night
 ## stops him (silence()), his calls stop: something has happened.
@@ -30,6 +35,13 @@ const CALLS := {22: "Ten of the clock, and a cold night.", 23: "Eleven of the cl
 @export var round_ends: Array[Marker3D] = []
 ## Where the Keys' taproom talk comes from while it's open.
 @export var taproom: Node3D
+## What holds the lanterns that burn out after the bell (their Candle
+## children, at any depth): the lane's, and the inn's door lamps.
+@export var lanterns: Array[Node3D] = []
+## Hours after the bell over which they go out, the first to the last. *(mine)*
+@export var lanterns_out := Vector2(0.0, 2.0)
+## How many houses keep a window lit all night (1 to this; the night picks).
+@export var stay_lit := 2
 
 var has_rung := false
 var silenced := false
@@ -40,6 +52,10 @@ var _bell: AudioStreamPlayer
 var _talk: AudioStreamPlayer3D
 var _dark := 0
 var _end := 0
+## Each lantern and the hour it goes out, once the bell has rung.
+var _burn: Array = []
+## The houses that keep a window lit tonight.
+var kept: Array[TimberHouse] = []
 
 
 func _ready() -> void:
@@ -59,6 +75,7 @@ func _ready() -> void:
 			_talk.play.call_deferred()
 	if gib:
 		gib.arrived.connect(_gib_turns)
+	_choose_kept()
 
 
 func _process(_delta: float) -> void:
@@ -70,6 +87,7 @@ func _process(_delta: float) -> void:
 	if not has_rung:
 		return
 	_darken(h)
+	_burn_out(h)
 	var on := floori(h)
 	if on > HOUR and CALLS.has(on) and not calls.has(on) and not silenced:
 		calls.append(on)
@@ -198,5 +216,54 @@ func _darken(h: float) -> void:
 	var list := houses.get_children().filter(func(c: Node) -> bool: return c is TimberHouse)
 	var due := clampi(floori((h - HOUR) / 1.0 * list.size()), 0, list.size())
 	while _dark < due:
-		(list[_dark] as TimberHouse).lit_windows = PackedStringArray()
+		var house := list[_dark] as TimberHouse
+		# Someone who can't sleep: one window stays lit all night.
+		house.lit_windows = house.lit_windows.slice(0, 1) if kept.has(house) else PackedStringArray()
 		_dark += 1
+
+
+## Which houses keep a window lit tonight: one or two of those lit at dusk,
+## not the Keys, the same each time the night is played.
+func _choose_kept() -> void:
+	kept.clear()
+	if houses == null or stay_lit <= 0:
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7919 * (GameState.night + 1)
+	var lit := houses.get_children().filter(func(c: Node) -> bool:
+		return c is TimberHouse and not (c as TimberHouse).lit_windows.is_empty() and c.name != "Inn")
+	var count := mini(1 + rng.randi_range(0, stay_lit - 1), lit.size())
+	for i in count:
+		var pick := rng.randi_range(0, lit.size() - 1)
+		kept.append(lit[pick] as TimberHouse)
+		lit.remove_at(pick)
+
+
+## The lanterns go out one by one after the bell, each at its own hour.
+func _burn_out(h: float) -> void:
+	if _burn.is_empty() and not lanterns.is_empty():
+		_schedule()
+	for b: Array in _burn:
+		var c := b[0] as Candle
+		if is_instance_valid(c) and c.lit and h >= float(b[1]):
+			c.lit = false
+
+
+func _schedule() -> void:
+	var all: Array[Candle] = []
+	for holder in lanterns:
+		if holder:
+			for c in holder.find_children("*", "Candle", true, false):
+				all.append(c as Candle)
+	all.sort_custom(func(a: Candle, b: Candle) -> bool: return str(a.get_path()) < str(b.get_path()))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 104729 * (GameState.night + 1)
+	for c in all:
+		_burn.append([c, HOUR + lerpf(lanterns_out.x, lanterns_out.y, rng.randf())])
+
+
+## The lanterns still burning (for tests and the review).
+func lanterns_lit() -> int:
+	if _burn.is_empty() and not lanterns.is_empty():
+		_schedule()
+	return _burn.filter(func(b: Array) -> bool: return is_instance_valid(b[0]) and (b[0] as Candle).lit).size()

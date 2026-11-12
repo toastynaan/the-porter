@@ -21,7 +21,9 @@ const SHOTS := [
 	{"name": "over_the_roofs", "hour": 17.3, "eye": Vector3(-33.0, 11.0, -22.0), "at": Vector3(-47.0, 3.0, 4.0)},
 	{"name": "early_from_the_gate", "hour": 16.2, "eye": Vector3(-43.6, 1.65, 1.5), "at": Vector3(-44.6, 3.2, 30.0)},
 	{"name": "early_south_end", "hour": 16.2, "eye": Vector3(-43.2, 1.65, -30.0), "at": Vector3(-43.6, 3.4, -50.0)},
+	{"name": "before_the_bell_from_the_gate", "hour": 20.5, "eye": Vector3(-43.6, 1.65, 1.5), "at": Vector3(-44.6, 3.2, 30.0)},
 	{"name": "night_from_the_gate", "hour": 22.0, "eye": Vector3(-43.6, 1.65, 1.5), "at": Vector3(-44.6, 3.2, 30.0)},
+	{"name": "late_from_the_gate", "hour": 23.5, "eye": Vector3(-43.6, 1.65, 1.5), "at": Vector3(-44.6, 3.2, 30.0)},
 	{"name": "night_north_arch", "hour": 22.0, "eye": Vector3(-43.5, 1.65, 42.0), "at": Vector3(-43.4, 2.2, 60.0)},
 	{"name": "night_houses_south", "hour": 22.0, "eye": Vector3(-41.2, 1.65, -8.0), "at": Vector3(-47.0, 3.6, -24.0)},
 ]
