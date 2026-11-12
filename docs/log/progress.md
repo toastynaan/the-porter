@@ -40,3 +40,6 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Faces · 85daf8d · Every spoken line has a face; 20 claims across the nights and the lane.
 - 2026-11-12 · Docs · dce72ae · docs/script: every conversation as a readable page, with faces, claims, trust and Suspicion.
 - 2026-11-12 · Fix · 0388935 · Claims can be mistaken (the prior) or misleading (Thomas pointing at others); the oven badge and the candle ring now write their notes.
+- 2026-11-12 · Script · ae09bfe · Conversations are plain .talk text files, loaded by TalkLoader.
+- 2026-11-12 · Fix · b448bcf · Simon answers the off-hours bell once he's been saved (the bell asked for a flag nothing set).
+- 2026-11-12 · Docs · a470f7e · docs/script: each night's map, every conversation's paths, links.md for every flag; tools/script_review.py.
