@@ -36,3 +36,6 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-11 · Move · 1d0c0f6 · game/ by chapter (chapters/night0 to night6, day1, common) and by system (time, duties, gate, talk, hunting, people, core, dev); world/ and characters/ unchanged. Full suite passes.
 - 2026-11-11 · Move · 86fb323 · docs into design, systems, places and log (progress.md and decisions.md split out); stills tools into tools/shots/, the old milestone ones deleted; README.md and CLAUDE.md added.
 - 2026-11-11 · Fix · e0b716d · The ride reveals nothing of a demon or of men behind the deaths: the traveller keeps the dead, the count and the abbey, and won't say what people say.
+- 2026-11-12 · Faces · 76bf89d · Faces and reading people: the engine (moods, tells, baselines, claims and stances, the placeholder face rig, Describe faces).
+- 2026-11-12 · Faces · 85daf8d · Every spoken line has a face; 20 claims across the nights and the lane.
+- 2026-11-12 · Docs · dce72ae · docs/script: every conversation as a readable page, with faces, claims, trust and Suspicion.
