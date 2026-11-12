@@ -1,37 +1,55 @@
 @id n0_walter
+# DRAFT
 # Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box. A salesman: flattering, never still, and he calls himself Walter. His baseline is amused, with a flick of the brow; his tell is that he stops selling.
+# Hail: from the fire as the porter comes in.
+# He asks which saint keeps the porter, and remembers it (n0_walter_saint = road, home or none). He already knows the porter is the porter, and why he knows is the first thing that should worry him.
 # He knows the abbey's gate well and won't say why. (He supplies the henbane. Nothing here says so.)
 # Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he stops selling for a moment and says herbs for the brothers, no more. Believed, he never says.
-# One talk: the questions left come up again until all are asked; then he turns back to the drinkers (done).
+# Thread: Walter wants a friend on the gate ("a kind eye at your gate", n0_walter_nocoin), and is at it more nights than not. For later nights: he comes to the grille on nights 1 and 3 and can call the porter's promise in.
+# Cross-link: Roger tells the porter to ask the pardoner what he carries in (n0_walter_gate_heard, set by roger.talk too), which opens the gate question here.
+# Overheard: Jankin telling Walter about the wall, and Walter scoffing (chatter_jankin_walter.talk). Asked about it, he stops selling for a line.
+== hail
+(A box rattles on a man's knees, by the fire.)
+Walter {amused, brow}: A brother, in the Keys! Come here, brother. Walter has something for every soul in the house.
+
 == start
+-> hailed_start [if hailed_n0_walter]
+-> first_start
+
+== first_start
 (A plump man in a wine-red cloak, the only colour in the room. The box on his knees rattles when he moves.)
 Walter {amused, brow}: A brother! Come and sit by Walter. Walter has something for every soul in the Keys, and you've a soul, I'll be bound.
--> topics
+-> saint_q
 
-== again
--> done [if n0_walter_box] [if n0_walter_why]
--> again_ask
+== hailed_start
+(The man in the wine-red cloak shifts along the bench to make room, and pats it.)
+Walter {amused}: There. Walter knew you'd come. They always come to Walter.
+-> saint_q
 
-== again_ask
-Walter {amused}: Back to Walter! They always come back.
--> topics
+== saint_q
+Walter {amused, brow}: Now. Which saint keeps you, brother? Every man has one, and Walter has a piece of most of them.
+* Saint Christopher, for the road. -> saint_road
+* The saint of my own house, at home. -> saint_home
+* None in particular, friend. -> saint_none
 
-== topics
--> done [if n0_walter_box] [if n0_walter_why]
--> ask
+== saint_road [set n0_walter_saint=road]
+Walter {glad}: Christopher! But the road's done with you now. Now you want a saint for a gate.
+-> box
 
-== ask
-* [if not n0_walter_box] (Look in his box.) -> box
-* [if not n0_walter_abbey] Do you know the abbey, Walter? -> abbey
-* [if n0_walter_abbey] [if not n0_walter_why] [if not read_n0_walter_gate] What business have you at the abbey gate? -> why
+== saint_home [set n0_walter_saint=home]
+Walter {amused}: A country saint, in a country box. London's saints keep later hours, brother. You'll want one of ours.
+-> box
+
+== saint_none [set n0_walter_saint=none]
+Walter {amused, brow}: None! A porter with no saint, on that gate. Walter can't allow it.
+-> box
 
 == box [set n0_walter_box]
 (He lifts the lid. Little bones, scraps of cloth and a cloudy phial, each on its own bed of wool.)
-Walter {amused}: A tooth of Saint Apollonia, for the toothache. A thread of Our Lady's veil.
-Walter {amused, brow}: And this, a drop of her milk, from Walsingham. A groat to you, since you're in the trade.
+Walter {amused}: A tooth of Saint Apollonia. A thread of Our Lady's veil. And a link of Saint Peter's chain, for a man who keeps a gate.
 * I have no money, Walter. -> nocoin
 * Those aren't holy. [trust walter -5] -> doubt
-* (Shake your head.) -> topics
+* How do you know I keep a gate? -> knows
 
 == nocoin [set n0_walter_nocoin]
 Walter {amused}: No money! Of course. Your vows. Walter forgets.
@@ -44,11 +62,31 @@ Walter {warm}: Keep Walter in your prayers, then, and a kind eye on him at your 
 Walter {amused}: Holy enough for Aldgate. Faith does the rest, brother. Faith always does.
 -> topics
 
-== abbey [set n0_walter_abbey]
-Walter {amused}: Know it? I know every gate in London, and that one best of all.
-Walter {amused, brow}: You'll be the new porter. Don't look so struck, brother. Word gets about, in the trade.
+== knows [set n0_walter_abbey] [set n0_walter_gate_heard]
+Walter {amused, brow}: Word gets about, in the trade. A new porter, young, from the country, one bundle. Don't look so struck.
 Walter {warm}: You and Walter will be friends. Walter's at that gate more nights than not.
 -> topics
+
+== again
+-> done [if n0_walter_abbey] [if n0_walter_why] [if not overheard_n0_chatter_jankin_walter]
+-> done [if n0_walter_abbey] [if n0_walter_why] [if n0_walter_jankin]
+-> again_ask
+
+== again_ask
+Walter {amused}: Back to Walter! They always come back.
+-> topics
+
+== topics
+-> saint_q [if not n0_walter_box]
+-> done [if n0_walter_abbey] [if n0_walter_why] [if not overheard_n0_chatter_jankin_walter]
+-> done [if n0_walter_abbey] [if n0_walter_why] [if n0_walter_jankin]
+-> done [if n0_walter_abbey] [if not n0_walter_gate_heard]
+-> ask
+
+== ask
+* [if not n0_walter_abbey] How do you know I keep a gate? -> knows
+* [if n0_walter_gate_heard] [if not n0_walter_why] What business have you at the abbey gate? -> why
+* [if overheard_n0_chatter_jankin_walter] [if not n0_walter_jankin] You don't believe Jankin, about the wall? -> jankin
 
 == why [set n0_walter_why] [claim n0_walter_gate hiding]
 Walter {amused}: Oh, this and that. Things the brothers can't grow in their own garden.
@@ -67,8 +105,22 @@ Walter {calm}: Herbs, brother. Dried, in little bags, for the brothers who ask f
 Walter {amused, smile}: There. Now you know all Walter knows, and Walter knows nothing.
 -> topics
 
+== jankin [set n0_walter_jankin]
+Walter {amused}: Believe Jankin? Walter would sooner believe the ale.
+(For a moment he stops selling.)
+Walter {calm}: Tell him to drink less, and sleep indoors. That's free.
+-> topics
+
 == done
 (He turns back to the drinkers, and his box.)
+-> done_none [if n0_walter_saint=none]
+-> done_plain
+
+== done_none
+Walter {glad}: Now, Walter has souls to see to. Find yourself a saint, brother, before the gate!
+-> end
+
+== done_plain
 Walter {glad}: Now, Walter has souls to see to. Till the gate, brother!
 -> end
 

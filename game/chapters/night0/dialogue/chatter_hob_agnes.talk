@@ -1,0 +1,12 @@
+@id n0_chatter_hob_agnes
+# DRAFT
+# Overheard at the Cross Keys, night 0 (Chatter): Hob and Agnes about tonight's lodgers: the top room nobody will take, and the Norwich man's bag Hob keeps behind his board. Only the start point is said.
+# Where: the taproom, at Hob's board, Agnes come over from the fire.
+# Picked up by hob.talk (the porter can ask about the bag) and agnes.talk (the porter can ask about the Norwich man).
+== start
+Agnes {grave}: Nobody'll take the top room, Hob. Two asked tonight, and both went back out in the rain.
+Hob {calm}: Then give it the monk. Monks don't look out of windows.
+Agnes {wary}: And that bag behind your board. Three weeks, Hob.
+Hob {grave}: He paid for two nights. A man comes back for a bag like that.
+Agnes {sad}: He went over the way. They don't come back from over the way.
+Hob {angry, jaw}: Not under my roof, Agnes. Not that talk.

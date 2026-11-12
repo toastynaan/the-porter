@@ -1,19 +1,60 @@
 @id n0_hob
+# DRAFT
 # Hob, who keeps the Cross Keys, behind his board, night 0. Blunt and kind. He hears everything said over the ale, and doesn't say any of it is true.
-# His questions: what the lane says about the abbey; when the Keys shuts; who's drinking tonight (once one of the first two is asked). He never runs out: the ale is always there.
-# The ale is always the last answer, and the third while he has two questions left (always, until he's asked: the tests take answer 2 for an ale). Once the abbey and the shutting are asked, "(Nod.)" ends the talk with his line. An ale ends the talk with his own line; the next talk starts at again, so he can have another.
+# Hail: as the porter comes in at the door, he tells him to shut it.
+# He asks whether it's the porter's first time in London, and remembers the answer (n0_hob_london).
+# His questions: what the lane says about the abbey; when the Keys shuts; who's drinking tonight; the lodger's bag, once he knows of it. He never runs out: the ale is always there.
+# The ale is always the last answer, and the third while he has two questions left (always, until he's asked: the tests take answer 2 for an ale, four times running). An ale ends the talk with his own line; the next talk starts at again, so he can have another.
 # Plants the night-2 rule (n0_hob_jankin): he puts Jankin out at closing every night, rain or no.
+# Thread: a Norwich man, Adam, a glover with a cough, lodged three weeks back, paid for two nights, went over the way to see the saint, and slept one. Hob keeps his scrip behind the board and says a man comes back for a bag like that (n0_hob_bag). If the porter promises to tell Adam, should he see him (n0_hob_bag_promise), that's for later nights: Hob asks after him.
+# Cross-links: Hob's talk of the wall (n0_hob_wall) lets the porter ask Jankin about it; Agnes tells him about the bag (n0_agnes_bag), which opens it here.
+# Overheard: Hob and Agnes about the top room and the bag (chatter_hob_agnes.talk).
+== hail
+(A big voice from behind the board.)
+Hob {calm}: Shut the door, brother. You're letting the rain in.
+
 == start
+-> hailed_start [if hailed_n0_hob]
+-> first_start
+
+== first_start
 (A big man behind the board, a cloth over his shoulder. He looks at your habit a long while before your face.)
-Hob {wary}: A brother from over the way, in the Keys. That's new.
-Hob {amused}: Sit where you like. Not on Jankin.
+Hob {wary}: A brother from over the way, in the Keys. That's new. First time in London?
+-> london_q
+
+== hailed_start
+(The big man behind the board watches you shut the door, and nods.)
+Hob {wary}: Better. A brother, in the Keys. That's new. First time in London?
+-> london_q
+
+== london_q
+* First time in any town. -> london_first
+* Does it show? -> london_show
+* An ale, if you would. [drink] -> ale
+
+== london_first [set n0_hob_london]
+Hob {amused}: Any town! Then sit where you like. Not on Jankin. Every soul in here has a story, and I pour while they tell it.
+-> topics
+
+== london_show [set n0_hob_london]
+Hob {amused}: You're wet through and staring at my rafters. Aye, it shows. Sit where you like. Not on Jankin.
 -> topics
 
 == again
+-> again_london [if n0_hob_london]
+-> again_plain
+
+== again_london
+Hob {calm}: Brother. Still looking at my rafters? What'll it be?
+-> topics
+
+== again_plain
 Hob {calm}: Brother. What'll it be?
 -> topics
 
 == topics
+-> topics_bag [if n0_hob_abbey] [if n0_hob_shut] [if n0_agnes_bag] [if not n0_hob_bag]
+-> topics_bag [if n0_hob_abbey] [if n0_hob_shut] [if overheard_n0_chatter_hob_agnes] [if not n0_hob_bag]
 -> topics_last [if n0_hob_abbey] [if n0_hob_shut]
 -> topics_shut [if n0_hob_abbey]
 -> topics_abbey [if n0_hob_shut]
@@ -39,16 +80,35 @@ Hob {calm}: Brother. What'll it be?
 * (Nod.) -> close
 * An ale, if you would. [drink] -> ale
 
+== topics_bag
+* What's the bag behind your board? -> bag
+* (Nod.) -> close
+* An ale, if you would. [drink] -> ale
+
 == abbey [set n0_hob_abbey]
 Hob {calm}: I pour, folk talk. I don't say any of it's true.
 Hob {grave}: Pilgrims go in at that gate and don't come out. Folk say they leave by some back way. I don't know of one.
+* What else do they say? -> abbey_more
+* Do you believe it? -> abbey_believe
+
+== abbey_more [set n0_hob_wall]
 Hob {calm}: Lights moving in there at night, at hours no bell's rung for. And a thing up on the wall with horns, Jankin says.
 Hob {grave}: Jankin says a deal. But I keep my shutters barred on that side.
+-> topics
+
+== abbey_believe
+Hob {cold}: I believe in what I pour and what I'm paid.
+Hob {grave}: And I keep my shutters barred on that side.
 -> topics
 
 == shut [set n0_hob_shut] [set n0_hob_jankin]
 Hob {grave}: At the bell. After it the door's barred, and it stays barred.
 Hob {calm}: Them with a bed go up the stair. Them without go out. Jankin too, every night, rain or no.
+* Even Jankin? -> shut_jankin
+* (Nod.) -> topics
+
+== shut_jankin
+Hob {weary}: Even Jankin. A man who doesn't pay doesn't sleep in the Keys. If I kept him, I'd keep the lane.
 Hob {amused}: If it's a bed you're after, that's Agnes's business. Don't haggle. She'll win.
 -> topics
 
@@ -56,6 +116,22 @@ Hob {amused}: If it's a bed you're after, that's Agnes's business. Don't haggle.
 (He nods round the room, one face at a time.)
 Hob {calm}: Walter, in the red, selling bones. Roger, the ward's bailiff, with the staff. Ralph the chandler, who makes your candles.
 Hob {amused}: And Jankin, who's always here. Mind what you say near Roger. He counts everything.
+-> topics
+
+== bag [set n0_hob_bag]
+(He reaches under the board and sets a pilgrim's scrip on it: good leather, a scallop shell sewn to the flap.)
+Hob {grave}: A Norwich man's. Adam, a glover, with a cough on him. Paid for two nights, went over the way to ask your saint about the cough, and slept one.
+Hob {calm}: Three weeks. Agnes wants it gone. I say a man comes back for a bag like that.
+* If I see him over there, I'll tell him. [set n0_hob_bag_promise] -> bag_promise
+* He's not coming back, Hob. -> bag_gone
+
+== bag_promise
+Hob {warm}: You do that. Adam of Norwich, a cough you can hear across a yard. Tell him Hob's got his bag.
+-> topics
+
+== bag_gone
+(He puts the scrip back under the board, carefully.)
+Hob {angry, jaw}: You and Agnes. It stays where it is.
 -> topics
 
 == close

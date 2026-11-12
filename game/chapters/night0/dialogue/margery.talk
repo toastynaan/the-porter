@@ -1,13 +1,66 @@
 @id n0_margery
-# Margery, a neighbour from by Saint Andrew's, hurrying home with her basket before dark, night 0. Hurried, careful, frightened: she won't stop long, and she won't pass the abbey wall after dark.
-# One talk: she answers what's left until it's all asked, then hurries off (done). Blessing her is a goodbye, and she takes it as one.
+# DRAFT
+# Margery, a neighbour from by Saint Andrew's, hurrying home with her basket before dark, night 0. Hurried, careful, frightened: she won't stop long, and she won't pass the abbey wall after dark. She doesn't call out to anyone.
+# If Kit has his name (n0_kit_name) she greets him by it: the lane passes everything on.
+# She asks where he'll sleep tonight, and remembers it (n0_margery_unsure: she tells him again, going, to make it the Keys).
+# Thread: her daughter's husband, Wat, carts the abbey's rye in from Essex on Thursdays. Once they kept him late unloading, shut the gate on him, and he slept in his cart in their court. He came home at first light and hasn't slept in the dark since; he won't go in past the gate now, and won't say why (n0_margery_wat, n0_margery_wat_saw). For later nights: what Wat saw, a piece at a time.
+# Cross-link: Mab has seen Wat come out (mab.talk, [if n0_margery_wat]).
+# Overheard: Kit and Margery in the lane (chatter_kit_margery.talk). If he heard it, she opens on it.
 == start
+-> overheard_start [if overheard_n0_chatter_kit_margery]
+-> first_start
+
+== first_start
 (A woman with a covered basket on her arm, walking fast, her eyes on the cobbles.)
+-> greet
+
+== greet
+-> greet_named [if n0_kit_name]
+-> greet_plain
+
+== greet_named
+Margery {afraid}: Brother Alric? Kit says that's you. I can't stop, not with the light going.
+-> where_q
+
+== greet_plain
 Margery {afraid}: Can't stop, brother, I'm sorry. Not with the light going.
+-> where_q
+
+== where_q
+Margery {wary}: You'll not be sleeping over there tonight? With the gate shut?
+* No. At the Keys. -> keys
+* I don't know yet. -> unsure
+* Why does it matter? -> matter
+
+== keys [set n0_margery_where]
+Margery {calm}: Good. Agnes keeps a clean bed, and Hob bars a stout door.
+-> topics
+
+== unsure [set n0_margery_where] [set n0_margery_unsure]
+Margery {afraid}: Then make it the Keys. Please. Don't you sleep against that wall.
+-> topics
+
+== matter [set n0_margery_where]
+Margery {afraid, glance}: It doesn't. Only I wouldn't. Even the dogs cross the lane rather than go by it.
+-> topics
+
+== overheard_start [set n0_margery_overheard]
+(The woman with the basket stops short when she sees how near you are.)
+Margery {afraid}: You heard all that. Don't you tell anyone what Wat does. He's a good man. He's only tired.
+* I'll say nothing. [trust margery 5] -> keep_quiet
+* What did he see in there? -> wat_saw
+
+== keep_quiet
+Margery {sad}: Thank you, brother. There's not many would.
+-> after_quiet
+
+== after_quiet
+-> where_q [if not n0_margery_where]
 -> topics
 
 == again
--> done [if n0_margery_home] [if n0_margery_wall]
+-> overheard_start [if overheard_n0_chatter_kit_margery] [if not n0_margery_overheard]
+-> done [if n0_margery_home] [if n0_margery_wat]
 -> again_ask
 
 == again_ask
@@ -15,12 +68,12 @@ Margery {afraid}: You again, brother. Quickly, then.
 -> topics
 
 == topics
--> done [if n0_margery_home] [if n0_margery_wall]
+-> done [if n0_margery_home] [if n0_margery_wat]
 -> ask
 
 == ask
 * [if not n0_margery_home] Where are you hurrying to? -> home
-* [if not n0_margery_wall] What are you afraid of? -> wall
+* [if not n0_margery_wat] Is someone waiting for you? -> family
 * Go with God, then. [trust margery 5] -> bless
 
 == home [set n0_margery_home]
@@ -28,18 +81,40 @@ Margery {afraid}: Home, by Saint Andrew's. I'm Margery. I go the long way round.
 Margery {afraid}: Two streets more, but it doesn't pass that wall.
 -> topics
 
-== wall [set n0_margery_wall]
-Margery {calm, swallow}: Afraid? I'm careful, that's all.
-(Her eyes go to the abbey wall, and away.)
-Margery {afraid}: Even the dogs cross the lane rather than go by it. I don't walk past it after dark. No offence to your habit.
+== family [set n0_margery_wat]
+Margery {warm}: My girl, and her little ones, and her Wat. He carts for your abbey. Rye, from Essex, every Thursday.
+(Her face changes.)
+Margery {afraid}: He won't go in past the gate any more. He leaves the sacks for your lay brothers to carry.
+* Why not? -> wat_saw
+* (Say nothing.) -> topics
+
+== wat_saw [set n0_margery_wat] [set n0_margery_wat_saw]
+Margery {afraid, look away}: He won't say. Once they kept him late unloading, and shut the gate on him, and he slept in his cart in their court.
+Margery {afraid, swallow}: He came home at first light. He's not slept in the dark since. Not one night.
 -> topics
 
 == bless
+-> bless_keys [if n0_margery_unsure]
+-> bless_plain
+
+== bless_keys
+Margery {sad}: And you, brother. The Keys, mind. Not that wall.
+-> end
+
+== bless_plain
 Margery {sad}: And you, brother. God keep you. You'll need keeping, over there.
 -> end
 
 == done
 (She hitches the basket higher on her arm.)
+-> done_keys [if n0_margery_unsure]
+-> done_plain
+
+== done_keys
+Margery {afraid}: I must go. The Keys, brother, mind. God keep you.
+-> end
+
+== done_plain
 Margery {afraid}: I must go, brother. God keep you.
 -> end
 

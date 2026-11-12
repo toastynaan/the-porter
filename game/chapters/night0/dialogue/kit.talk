@@ -1,42 +1,118 @@
 @id n0_kit
+# DRAFT
 # Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter: she asks more than she answers.
-# One talk: the questions left come up again until all are asked; then she's off to sell her last two (done).
+# Hail: she calls her candles at him as he passes.
+# She asks him whether he's the porter, and whether he's seen the saint's finger. She remembers his name if he gives it (n0_kit_name: Margery greets him by it), and whether he had a saint's tooth at home (n0_kit_tooth).
+# Thread: Kit wants to see the saint's finger, and her father won't let her past the abbey gate, not ever, and won't say why. If Alric promises to look for her (n0_kit_promise), she holds him to it: the lane's night 1 opens on it ("Did you see the finger? Is it real?"). The relic is a pig's bone (design doc, "The Hungry Saint").
+# Cross-link: she tells him to ask her father why (n0_kit_forbidden): Ralph's talk then has the question, and his answer (n0_ralph_singing).
+# Overheard: Kit and Margery in the lane, about Margery's son-in-law Wat (chatter_kit_margery.talk). He can step in about it here.
+# For later nights: n0_kit_promise, n0_kit_tooth, n0_kit_name.
+== hail
+(A girl's voice, over the rain.)
+Kit {glad}: Candles! Last of the day! You'll want a candle over there, brother!
+
 == start
+-> hailed_start [if hailed_n0_kit]
+-> first_start
+
+== first_start
 (A girl with a tray of candles on a strap round her neck, her hood up against the rain.)
 Kit {glad}: Candles! Last of the day, two for a farthing. You're a brother. Are you the new porter?
+-> porter_q
+
+== hailed_start
+(The candle girl comes up close, her tray held out of the rain under her cloak.)
+Kit {glad, brow}: You stopped! Nobody stops. You're a brother. Are you the new porter?
+-> porter_q
+
+== porter_q
+* I am. I'm Alric. -> porter
+* Who wants to know? -> who
+* (Nod.) -> porter_nod
+
+== porter [set n0_kit_porter] [set n0_kit_name]
+Kit {glad}: Alric. I knew it! Gib told Margery you were coming, and Margery told the whole lane.
+Kit {amused}: You're younger than Brother Anselm. Everybody's younger than Brother Anselm.
+-> finger
+
+== who [set n0_kit_porter]
+Kit {amused}: Kit does. Ralph the chandler's girl. Every candle in your church, Father made and I carried.
+Kit {glad}: And you are the porter. Gib told Margery you were coming, and Margery told the whole lane.
+-> finger
+
+== porter_nod [set n0_kit_porter]
+Kit {amused}: A nod! Brother Anselm nodded like that. Then he'd buy nothing.
+-> finger
+
+== finger
+Kit {glad, brow}: Have you seen it yet? The saint's finger? They say it's in a glass box, and it moves if you pray hard enough.
+* Not yet. I've not been inside. -> finger_not
+* We had a saint's tooth at home. -> finger_tooth
+* It's only a bone, Kit. -> finger_bone
+
+== finger_not [set n0_kit_finger]
+Kit {pleading}: Then when you do, look close. Is it brown or white? Has it got its nail?
+-> promise
+
+== finger_tooth [set n0_kit_finger] [set n0_kit_tooth]
+Kit {glad}: A tooth! Did it ever do anything? I'd have touched it every day, if I'd been you.
+-> promise
+
+== finger_bone [set n0_kit_finger]
+Kit {wary}: Only a bone! Don't you say that over there. Brother Ranulf would have your ears.
+-> promise
+
+== promise
+Kit {pleading}: Father won't let me past your gate. Not ever. So you'll have to look for me, and tell me.
+* I'll tell you. [set n0_kit_promise] -> promised
+* Why won't he let you in? -> forbidden
+
+== promised [trust kit 5]
+Kit {glad}: You swore. A monk can't take it back. I'll be at your gate tomorrow, and you'll tell me.
+-> topics
+
+== forbidden [set n0_kit_forbidden]
+Kit {wary}: He won't say. He went white as tallow when I asked, and said not ever, and that was all.
+Kit {amused}: You ask him. He's in the Keys. He won't tell you either.
 -> topics
 
 == again
--> done [if n0_kit_porter] [if n0_kit_candles] [if n0_kit_abbey]
--> again_ask
+-> again_promised [if n0_kit_promise]
+-> again_plain
 
-== again_ask
+== again_promised
+Kit {amused}: You again! You swore, mind. The finger. Brown or white.
+-> topics
+
+== again_plain
 Kit {amused}: You came back! Two left, brother. Both for a farthing, and I'll throw in the tray.
 -> topics
 
 == topics
--> done [if n0_kit_porter] [if n0_kit_candles] [if n0_kit_abbey]
+-> finger [if not n0_kit_finger]
+-> done [if n0_kit_candles] [if n0_kit_forbidden] [if not overheard_n0_chatter_kit_margery]
+-> done [if n0_kit_candles] [if n0_kit_forbidden] [if n0_kit_heard]
 -> ask
 
 == ask
-* [if not n0_kit_porter] I'm the new porter. Alric. -> porter
-* [if not n0_kit_candles] Who makes your candles? -> candles
-* [if not n0_kit_abbey] Have you been inside the abbey? -> abbey
-
-== porter [set n0_kit_porter]
-Kit {glad}: I knew it! Everybody knew you were coming. Gib told Margery, and Margery told the lane.
-Kit {amused}: You're younger than Brother Anselm. Well. Everybody's younger than Brother Anselm.
--> topics
+* [if not n0_kit_candles] Who buys the most? -> candles
+* [if not n0_kit_forbidden] Why won't your father let you in? -> forbidden
+* [if overheard_n0_chatter_kit_margery] [if not n0_kit_heard] I couldn't help hearing, about Margery's Wat. -> heard
 
 == candles [set n0_kit_candles]
-Kit {calm}: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like. I'm Kit.
-Kit {calm}: I'm at your gate most dusks with the tray. The brothers buy whatever I've got left.
-Kit {amused}: Brother Ranulf would buy the tray and the strap, if I let him.
+Kit {amused}: Brother Ranulf, your sacrist. He'd buy the tray and the strap, if I let him.
+Kit {calm}: He used to buy two. Father says nobody needs that much light to pray by.
+* What does he want with them? -> candles_what
+* (Nod.) -> topics
+
+== candles_what
+Kit {wary}: I don't ask. You don't ask a sacrist things. He counts them into his sleeve, one by one, and goes in.
+Kit {amused}: You can ask him, though. You live there.
 -> topics
 
-== abbey [set n0_kit_abbey]
-Kit {wary}: Past the gate? Never. Father says I'm not to, not ever.
-Kit {glad}: Is it true there's a saint's finger in a glass box? And lights going about at night? You'll tell me, when you've seen.
+== heard [set n0_kit_heard]
+Kit {ashamed}: I shouldn't have asked about the finger. Margery thinks it's wicked, wanting to see it.
+Kit {wary}: But Wat came out of your gate white as tallow, Father says. And he's a big man, Wat.
 -> topics
 
 == done

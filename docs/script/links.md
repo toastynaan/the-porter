@@ -6,9 +6,9 @@ Who sets each flag or note, and who reads it, across every conversation, scene a
 
 Every flag and note that is read is set somewhere.
 
-<details><summary>Set but never read (177): bookkeeping (talked_, reads), notes that count toward the prior, or loose ends</summary>
+<details><summary>Set but never read (194): bookkeeping (talked_, reads), notes that count toward the prior, or loose ends</summary>
 
-`anselm_henbane`, `bread_warning`, `d1_saw_sand`, `d1_tour_done`, `d1_tour_skipped`, `edwin_comb`, `edwin_missing`, `ergot_rye`, `incense_bag`, `keys_moved`, `knock_no_one`, `lane_kit_n4_look`, `merchant_purse`, `n0_cart_pray`, `n0_cart_what`, `n0_cart_who`, `n0_riding`, `n0_road_alric`, `n0_road_blind`, `n0_road_defend`, `n0_road_family`, `n0_road_inside`, `n0_road_living`, `n0_road_quiet`, `n0_road_sent`, `n0_road_young`, `n0_walter_nocoin`, `n0_warden_cart`, `n0_warden_porter`, `n1_anselm_warned`, `n1_hugh_rule`, `n1_hugh_why`, `n1_thomas_whisper`, `n2_empty_bed`, `n2_hugh_lock`, `n2_lane_quiet`, `n2_roger`, `n2_sailor`, `n3_body3`, `n3_caught`, `n3_seen_in_crypt`, `n3_walter`, `n4_edwin_whisper`, `n4_fast`, `n4_guest`, `n4_hugh_keys`, `n4_hugh_night`, `n4_simon_scrubbing`, `n5_anselm_key`, `n5_body5`, `n5_escaped`, `n5_thomas_simon_told`, `n6_joan`, `n6_knock`, `n6_mab`, `n6_roger`, `oven_badge`, `prior_believes`, `ran_from_the_demon`, `read_n0_roger_count_right`, `read_n0_walter_gate_right`, `read_n1_hugh_gate`, `read_n1_hugh_gate_right`, `read_n1_osric_pig_right`, `read_n1_thomas_beast_right`, `read_n2_anselm_guests_right`, `read_n2_osric_rye_right`, `read_n2_thomas_drowned_right`, `read_n3_hugh_night`, `read_n3_hugh_night_right`, `read_n3_osric_page`, `read_n3_osric_page_right`, `read_n3_thomas_prior`, `read_n3_thomas_prior_right`, `read_n4_hob_walter_right`, `read_n4_ranulf_crypt`, `read_n4_ranulf_crypt_right`, `read_n4_simon_night`, `read_n4_simon_night_right`, `read_n4_thomas_keeps`, `read_n4_thomas_keeps_right`, `read_n5_hugh_porter`, `read_n5_hugh_porter_right`, `read_n5_kit_candles_right`, `read_n5_simon_sent`, `read_n5_simon_sent_right`, `read_n5_thomas_attack`, `read_n5_thomas_attack_right`, `read_n6_hugh_lantern`, `read_n6_hugh_lantern_right`, `refused_wine`, `rite_stopped`, `sailor_knot`, `sand_by_the_well`, `struck_the_demon`, `talked_lane_agnes`, `talked_lane_carter`, `talked_lane_gib`, `talked_lane_hob`, `talked_lane_kit`, `talked_lane_mab`, `talked_lane_margery`, `talked_n0_jankin`, `talked_n0_ralph`, `talked_n0_roger`, `talked_n0_traveller_road`, `talked_n0_walter`, `talked_n0_warden`, `talked_n1_anselm`, `talked_n1_choira`, `talked_n1_choirb`, `talked_n1_choirc`, `talked_n1_cole`, `talked_n1_dunstan`, `talked_n1_edwin`, `talked_n1_godric`, `talked_n1_hugh`, `talked_n1_osric`, `talked_n1_ranulf`, `talked_n1_thomas`, `talked_n1_warner`, `talked_n2_anselm`, `talked_n2_choira`, `talked_n2_choirb`, `talked_n2_choirc`, `talked_n2_cole`, `talked_n2_dunstan`, `talked_n2_edwin`, `talked_n2_godric`, `talked_n2_hugh`, `talked_n2_osric`, `talked_n2_ranulf`, `talked_n2_thomas`, `talked_n3_anselm`, `talked_n3_carter`, `talked_n3_choir_brother`, `talked_n3_cole`, `talked_n3_dunstan`, `talked_n3_edwin`, `talked_n3_godric`, `talked_n3_hugh`, `talked_n3_lane_woman`, `talked_n3_mab`, `talked_n3_osric`, `talked_n3_ranulf`, `talked_n3_thomas`, `talked_n4_anselm`, `talked_n4_choira`, `talked_n4_choirb`, `talked_n4_choirc`, `talked_n4_cole`, `talked_n4_dunstan`, `talked_n4_edwin`, `talked_n4_godric`, `talked_n4_hugh`, `talked_n4_osric`, `talked_n4_ranulf`, `talked_n4_simon`, `talked_n4_thomas`, `talked_n5_anselm`, `talked_n5_choirb`, `talked_n5_choirc`, `talked_n5_cole`, `talked_n5_dunstan`, `talked_n5_godric`, `talked_n5_hugh`, `talked_n5_osric`, `talked_n5_ranulf`, `talked_n5_simon`, `talked_n5_thomas`, `talked_n6_godric`, `talked_n6_hugh`, `talked_n6_simon`, `thomas_custody`, `two_demons`, `window_killing_drunk`, `woke_in_infirmary`
+`anselm_henbane`, `bread_warning`, `d1_saw_sand`, `d1_tour_done`, `d1_tour_skipped`, `edwin_comb`, `edwin_missing`, `ergot_rye`, `incense_bag`, `keys_moved`, `knock_no_one`, `lane_kit_n4_look`, `merchant_purse`, `n0_agnes_fed`, `n0_cart_go`, `n0_cart_pray`, `n0_cart_what`, `n0_cart_who`, `n0_gib_louder`, `n0_hob_bag_promise`, `n0_jankin_comforted`, `n0_jankin_count`, `n0_jankin_trade`, `n0_jankin_warned`, `n0_kit_porter`, `n0_kit_tooth`, `n0_mab_anselm`, `n0_margery_wat_saw`, `n0_ralph_singing`, `n0_riding`, `n0_road_blind`, `n0_road_family`, `n0_road_girls`, `n0_road_inside`, `n0_road_quiet`, `n0_road_sent`, `n0_road_young`, `n0_roger_tally`, `n0_walter_nocoin`, `n0_warden_cart`, `n0_warden_porter`, `n1_anselm_warned`, `n1_hugh_rule`, `n1_hugh_why`, `n1_thomas_whisper`, `n2_empty_bed`, `n2_hugh_lock`, `n2_lane_quiet`, `n2_roger`, `n2_sailor`, `n3_body3`, `n3_caught`, `n3_seen_in_crypt`, `n3_walter`, `n4_edwin_whisper`, `n4_fast`, `n4_guest`, `n4_hugh_keys`, `n4_hugh_night`, `n4_simon_scrubbing`, `n5_anselm_key`, `n5_body5`, `n5_escaped`, `n5_thomas_simon_told`, `n6_joan`, `n6_knock`, `n6_mab`, `n6_roger`, `oven_badge`, `prior_believes`, `ran_from_the_demon`, `read_n0_roger_count_right`, `read_n0_walter_gate`, `read_n0_walter_gate_right`, `read_n1_hugh_gate`, `read_n1_hugh_gate_right`, `read_n1_osric_pig_right`, `read_n1_thomas_beast_right`, `read_n2_anselm_guests_right`, `read_n2_osric_rye_right`, `read_n2_thomas_drowned_right`, `read_n3_hugh_night`, `read_n3_hugh_night_right`, `read_n3_osric_page`, `read_n3_osric_page_right`, `read_n3_thomas_prior`, `read_n3_thomas_prior_right`, `read_n4_hob_walter_right`, `read_n4_ranulf_crypt`, `read_n4_ranulf_crypt_right`, `read_n4_simon_night`, `read_n4_simon_night_right`, `read_n4_thomas_keeps`, `read_n4_thomas_keeps_right`, `read_n5_hugh_porter`, `read_n5_hugh_porter_right`, `read_n5_kit_candles_right`, `read_n5_simon_sent`, `read_n5_simon_sent_right`, `read_n5_thomas_attack`, `read_n5_thomas_attack_right`, `read_n6_hugh_lantern`, `read_n6_hugh_lantern_right`, `refused_wine`, `rite_stopped`, `sailor_knot`, `sand_by_the_well`, `struck_the_demon`, `talked_lane_agnes`, `talked_lane_carter`, `talked_lane_gib`, `talked_lane_hob`, `talked_lane_kit`, `talked_lane_mab`, `talked_lane_margery`, `talked_n0_chatter_hob_agnes`, `talked_n0_chatter_jankin_walter`, `talked_n0_chatter_kit_margery`, `talked_n0_chatter_roger_ralph`, `talked_n0_jankin`, `talked_n0_ralph`, `talked_n0_roger`, `talked_n0_traveller_road`, `talked_n0_walter`, `talked_n0_warden`, `talked_n1_anselm`, `talked_n1_choira`, `talked_n1_choirb`, `talked_n1_choirc`, `talked_n1_cole`, `talked_n1_dunstan`, `talked_n1_edwin`, `talked_n1_godric`, `talked_n1_hugh`, `talked_n1_osric`, `talked_n1_ranulf`, `talked_n1_thomas`, `talked_n1_warner`, `talked_n2_anselm`, `talked_n2_choira`, `talked_n2_choirb`, `talked_n2_choirc`, `talked_n2_cole`, `talked_n2_dunstan`, `talked_n2_edwin`, `talked_n2_godric`, `talked_n2_hugh`, `talked_n2_osric`, `talked_n2_ranulf`, `talked_n2_thomas`, `talked_n3_anselm`, `talked_n3_carter`, `talked_n3_choir_brother`, `talked_n3_cole`, `talked_n3_dunstan`, `talked_n3_edwin`, `talked_n3_godric`, `talked_n3_hugh`, `talked_n3_lane_woman`, `talked_n3_mab`, `talked_n3_osric`, `talked_n3_ranulf`, `talked_n3_thomas`, `talked_n4_anselm`, `talked_n4_choira`, `talked_n4_choirb`, `talked_n4_choirc`, `talked_n4_cole`, `talked_n4_dunstan`, `talked_n4_edwin`, `talked_n4_godric`, `talked_n4_hugh`, `talked_n4_osric`, `talked_n4_ranulf`, `talked_n4_simon`, `talked_n4_thomas`, `talked_n5_anselm`, `talked_n5_choirb`, `talked_n5_choirc`, `talked_n5_cole`, `talked_n5_dunstan`, `talked_n5_godric`, `talked_n5_hugh`, `talked_n5_osric`, `talked_n5_ranulf`, `talked_n5_simon`, `talked_n5_thomas`, `talked_n6_godric`, `talked_n6_hugh`, `talked_n6_simon`, `thomas_custody`, `two_demons`, `window_killing_drunk`, `woke_in_infirmary`
 
 </details>
 
@@ -211,6 +211,36 @@ Every flag and note that is read is set somewhere.
 
 - **Set by:** code: `game/chapters/common/routine/gate_beat.gd`
 - **Read by:** code: `game/chapters/common/routine/gate_beat.gd`; code: `game/chapters/common/routine/wake_beat.gd`; code: `game/gate/gate_bench.gd`
+
+<a id="hailed_n0_gib"></a>
+### `hailed_n0_gib`
+
+- **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
+- **Read by:** Gib the watchman, night0 (`start`)
+
+<a id="hailed_n0_hob"></a>
+### `hailed_n0_hob`
+
+- **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
+- **Read by:** Hob, night0 (`start`)
+
+<a id="hailed_n0_kit"></a>
+### `hailed_n0_kit`
+
+- **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
+- **Read by:** Kit, night0 (`start`)
+
+<a id="hailed_n0_mab"></a>
+### `hailed_n0_mab`
+
+- **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
+- **Read by:** Mab, night0 (`start`)
+
+<a id="hailed_n0_walter"></a>
+### `hailed_n0_walter`
+
+- **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
+- **Read by:** Walter, night0 (`start`)
 
 <a id="hangover"></a>
 ### `hangover`
@@ -798,19 +828,43 @@ Every flag and note that is read is set somewhere.
 ### `n0_agnes_abbey`
 
 - **Set by:** Agnes, night0 (`abbey`)
-- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "What do you know of the abbey?"`)
+- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "What do you know of the abbey?"`)
+
+<a id="n0_agnes_bag"></a>
+### `n0_agnes_bag`
+
+- **Set by:** Agnes, night0 (`abbey_things`)
+- **Read by:** Hob, night0 (`topics`)
+
+<a id="n0_agnes_fed"></a>
+### `n0_agnes_fed`
+
+- **Set by:** Agnes, night0 (`fed`)
+- **Read by:** *nothing*
 
 <a id="n0_agnes_jankin"></a>
 ### `n0_agnes_jankin`
 
 - **Set by:** Agnes, night0 (`jankin`)
-- **Read by:** Agnes, night0 (`topics_late: "Is Jankin always like this?"`)
+- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics_late: "Is Jankin always like this?"`)
+
+<a id="n0_agnes_overheard"></a>
+### `n0_agnes_overheard`
+
+- **Set by:** Agnes, night0 (`overheard`)
+- **Read by:** Agnes, night0 (`topics_close: "I couldn't help hearing, about the Norwich man."`)
 
 <a id="n0_agnes_poured"></a>
 ### `n0_agnes_poured`
 
 - **Set by:** Agnes, night0 (`ale_first`)
 - **Read by:** Agnes, night0 (`ale`)
+
+<a id="n0_agnes_window"></a>
+### `n0_agnes_window`
+
+- **Set by:** Agnes, night0 (`window`)
+- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics_late: "Why will nobody else take the room?"`)
 
 <a id="n0_arrived"></a>
 ### `n0_arrived`
@@ -823,6 +877,12 @@ Every flag and note that is read is set somewhere.
 
 - **Set by:** Traveller, night0 (`abbey`)
 - **Read by:** Traveller, night0 (`rumour`); Traveller, night0 (`rumour_ask: "Why lay it at the abbey's door?"`); Traveller, night0 (`again`)
+
+<a id="n0_cart_go"></a>
+### `n0_cart_go`
+
+- **Set by:** Traveller, night0 (`see_go`); Traveller, night0 (`see_unsure`)
+- **Read by:** *nothing*
 
 <a id="n0_cart_pray"></a>
 ### `n0_cart_pray`
@@ -864,31 +924,61 @@ Every flag and note that is read is set somewhere.
 ### `n0_gib_abbey`
 
 - **Set by:** Gib the watchman, night0 (`abbey`)
-- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "What do you make of the abbey wall?"`)
+- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "What do you make of the abbey wall?"`)
 
-<a id="n0_gib_lanterns"></a>
-### `n0_gib_lanterns`
+<a id="n0_gib_count"></a>
+### `n0_gib_count`
 
-- **Set by:** Gib the watchman, night0 (`lanterns`)
-- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "How long has the lane had lanterns?"`)
+- **Set by:** Gib the watchman, night0 (`count`)
+- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "How many lanterns do you light?"`); Gib the watchman, night0 (`jankin`); Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`ask_late: "Gib says the lantern over your step went out last night."`)
 
-<a id="n0_gib_watch"></a>
-### `n0_gib_watch`
+<a id="n0_gib_jankin"></a>
+### `n0_gib_jankin`
 
-- **Set by:** Gib the watchman, night0 (`watch`)
-- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "What do you do after the bell, friend?"`)
+- **Set by:** Gib the watchman, night0 (`jankin`)
+- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "Jankin says he sleeps out on the chandler's step."`)
+
+<a id="n0_gib_louder"></a>
+### `n0_gib_louder`
+
+- **Set by:** Gib the watchman, night0 (`abbey_inside`)
+- **Read by:** *nothing*
+
+<a id="n0_gib_sleep"></a>
+### `n0_gib_sleep`
+
+- **Set by:** Gib the watchman, night0 (`sleep_dead`); Gib the watchman, night0 (`sleep_light`); Gib the watchman, night0 (`sleep_why`)
+- **Read by:** Gib the watchman, night0 (`topics`)
 
 <a id="n0_hob_abbey"></a>
 ### `n0_hob_abbey`
 
 - **Set by:** Hob, night0 (`abbey`)
+- **Read by:** Hob, night0 (`topics`); Hob, night0 (`topics`); Hob, night0 (`topics`); Hob, night0 (`topics`)
+
+<a id="n0_hob_bag"></a>
+### `n0_hob_bag`
+
+- **Set by:** Hob, night0 (`bag`)
 - **Read by:** Hob, night0 (`topics`); Hob, night0 (`topics`)
+
+<a id="n0_hob_bag_promise"></a>
+### `n0_hob_bag_promise`
+
+- **Set by:** Hob, night0 (`bag: "If I see him over there, I'll tell him."`)
+- **Read by:** *nothing*
 
 <a id="n0_hob_jankin"></a>
 ### `n0_hob_jankin`
 
 - **Set by:** Hob, night0 (`shut`); Hob, night0 (`ale_jankin`)
 - **Read by:** Hob, night0 (`ale_first`)
+
+<a id="n0_hob_london"></a>
+### `n0_hob_london`
+
+- **Set by:** Hob, night0 (`london_first`); Hob, night0 (`london_show`)
+- **Read by:** Hob, night0 (`again`)
 
 <a id="n0_hob_poured"></a>
 ### `n0_hob_poured`
@@ -906,43 +996,115 @@ Every flag and note that is read is set somewhere.
 ### `n0_hob_shut`
 
 - **Set by:** Hob, night0 (`shut`)
-- **Read by:** Hob, night0 (`topics`); Hob, night0 (`topics`)
+- **Read by:** Hob, night0 (`topics`); Hob, night0 (`topics`); Hob, night0 (`topics`); Hob, night0 (`topics`)
+
+<a id="n0_hob_wall"></a>
+### `n0_hob_wall`
+
+- **Set by:** Hob, night0 (`abbey_more`)
+- **Read by:** Jankin, night0 (`topics`)
+
+<a id="n0_jankin_believe"></a>
+### `n0_jankin_believe`
+
+- **Set by:** Jankin, night0 (`devils_yes`); Jankin, night0 (`devils_no`); Jankin, night0 (`devils_quiet`)
+- **Read by:** Jankin, night0 (`topics`); Jankin, night0 (`done`)
+
+<a id="n0_jankin_comforted"></a>
+### `n0_jankin_comforted`
+
+- **Set by:** Jankin, night0 (`wall_down`)
+- **Read by:** *nothing*
+
+<a id="n0_jankin_count"></a>
+### `n0_jankin_count`
+
+- **Set by:** Jankin, night0 (`wall_when`)
+- **Read by:** *nothing*
 
 <a id="n0_jankin_home"></a>
 ### `n0_jankin_home`
 
 - **Set by:** Jankin, night0 (`home`)
-- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`ask: "Where will you sleep tonight?"`)
+- **Read by:** Gib the watchman, night0 (`again`); Gib the watchman, night0 (`topics`); Gib the watchman, night0 (`ask: "Jankin says he sleeps out on the chandler's step."`); Jankin, night0 (`again`); Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`topics`); Jankin, night0 (`ask: "Where will you sleep tonight?"`); Jankin, night0 (`ask_heard: "Where will you sleep tonight?"`); Jankin, night0 (`ask_hob: "Where will you sleep tonight?"`); Jankin, night0 (`ask_late: "Where will you sleep tonight?"`)
+
+<a id="n0_jankin_lantern"></a>
+### `n0_jankin_lantern`
+
+- **Set by:** Jankin, night0 (`lantern`)
+- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`ask_late: "Gib says the lantern over your step went out last night."`)
+
+<a id="n0_jankin_trade"></a>
+### `n0_jankin_trade`
+
+- **Set by:** Jankin, night0 (`who_why`)
+- **Read by:** *nothing*
 
 <a id="n0_jankin_wall"></a>
 ### `n0_jankin_wall`
 
 - **Set by:** Jankin, night0 (`wall`)
-- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`ask: "What do you know of the abbey, friend?"`)
+- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`again`); Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`topics`); Jankin, night0 (`topics`)
+
+<a id="n0_jankin_warned"></a>
+### `n0_jankin_warned`
+
+- **Set by:** Jankin, night0 (`warned`)
+- **Read by:** *nothing*
 
 <a id="n0_jankin_who"></a>
 ### `n0_jankin_who`
 
 - **Set by:** Jankin, night0 (`who`)
-- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`ask: "Who are you, friend?"`)
-
-<a id="n0_kit_abbey"></a>
-### `n0_kit_abbey`
-
-- **Set by:** Kit, night0 (`abbey`)
-- **Read by:** Kit, night0 (`again`); Kit, night0 (`topics`); Kit, night0 (`ask: "Have you been inside the abbey?"`)
+- **Read by:** Jankin, night0 (`again`); Jankin, night0 (`again`); Jankin, night0 (`topics`); Jankin, night0 (`topics`); Jankin, night0 (`ask: "Who are you, friend?"`); Jankin, night0 (`ask_heard: "Who are you, friend?"`); Jankin, night0 (`ask_hob: "Who are you, friend?"`); Jankin, night0 (`ask_late: "Who are you, friend?"`)
 
 <a id="n0_kit_candles"></a>
 ### `n0_kit_candles`
 
 - **Set by:** Kit, night0 (`candles`)
-- **Read by:** Kit, night0 (`again`); Kit, night0 (`topics`); Kit, night0 (`ask: "Who makes your candles?"`)
+- **Read by:** Kit, night0 (`topics`); Kit, night0 (`topics`); Kit, night0 (`ask: "Who buys the most?"`)
+
+<a id="n0_kit_finger"></a>
+### `n0_kit_finger`
+
+- **Set by:** Kit, night0 (`finger_not`); Kit, night0 (`finger_tooth`); Kit, night0 (`finger_bone`)
+- **Read by:** Kit, night0 (`topics`)
+
+<a id="n0_kit_forbidden"></a>
+### `n0_kit_forbidden`
+
+- **Set by:** Kit, night0 (`forbidden`)
+- **Read by:** Kit, night0 (`topics`); Kit, night0 (`topics`); Kit, night0 (`ask: "Why won't your father let you in?"`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Your girl sells them at our gate?"`)
+
+<a id="n0_kit_heard"></a>
+### `n0_kit_heard`
+
+- **Set by:** Kit, night0 (`heard`)
+- **Read by:** Kit, night0 (`topics`); Kit, night0 (`ask: "I couldn't help hearing, about Margery's Wat."`)
+
+<a id="n0_kit_name"></a>
+### `n0_kit_name`
+
+- **Set by:** Kit, night0 (`porter`)
+- **Read by:** Margery, night0 (`greet`)
 
 <a id="n0_kit_porter"></a>
 ### `n0_kit_porter`
 
-- **Set by:** Kit, night0 (`porter`)
-- **Read by:** Kit, night0 (`again`); Kit, night0 (`topics`); Kit, night0 (`ask: "I'm the new porter. Alric."`)
+- **Set by:** Kit, night0 (`porter`); Kit, night0 (`who`); Kit, night0 (`porter_nod`)
+- **Read by:** *nothing*
+
+<a id="n0_kit_promise"></a>
+### `n0_kit_promise`
+
+- **Set by:** Kit, night0 (`promise: "I'll tell you."`)
+- **Read by:** Kit, night0 (`again`)
+
+<a id="n0_kit_tooth"></a>
+### `n0_kit_tooth`
+
+- **Set by:** Kit, night0 (`finger_tooth`)
+- **Read by:** *nothing*
 
 <a id="n0_lay_down"></a>
 ### `n0_lay_down`
@@ -954,19 +1116,37 @@ Every flag and note that is read is set somewhere.
 ### `n0_mab_alms`
 
 - **Set by:** Mab, night0 (`alms`)
-- **Read by:** Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`ask: "(Give her a coin.)"`)
+- **Read by:** Mab, night0 (`again`); Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`topics`); Mab, night0 (`ask: "(Give her a coin.)"`); Mab, night0 (`ask_wat: "(Give her a coin.)"`)
+
+<a id="n0_mab_anselm"></a>
+### `n0_mab_anselm`
+
+- **Set by:** Mab, night0 (`anselm_what`); Mab, night0 (`anselm_where`)
+- **Read by:** *nothing*
 
 <a id="n0_mab_porter"></a>
 ### `n0_mab_porter`
 
 - **Set by:** Mab, night0 (`porter`)
-- **Read by:** Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`ask: "I'm to be their new porter."`)
+- **Read by:** Mab, night0 (`again`); Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`topics`); Mab, night0 (`ask: "I'm to be its porter."`); Mab, night0 (`ask_wat: "I'm to be its porter."`)
 
 <a id="n0_mab_saw"></a>
 ### `n0_mab_saw`
 
 - **Set by:** Mab, night0 (`saw`)
-- **Read by:** Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`ask: "Are you here every night?"`)
+- **Read by:** Mab, night0 (`again`); Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`topics`); Mab, night0 (`ask: "Are you here every night?"`)
+
+<a id="n0_mab_wat"></a>
+### `n0_mab_wat`
+
+- **Set by:** Mab, night0 (`wat`)
+- **Read by:** Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`topics`)
+
+<a id="n0_mab_why"></a>
+### `n0_mab_why`
+
+- **Set by:** Mab, night0 (`why_blind`); Mab, night0 (`why_sent`); Mab, night0 (`why_quiet`)
+- **Read by:** Mab, night0 (`done`); Mab, night0 (`done`)
 
 <a id="n0_margery_home"></a>
 ### `n0_margery_home`
@@ -974,11 +1154,35 @@ Every flag and note that is read is set somewhere.
 - **Set by:** Margery, night0 (`home`)
 - **Read by:** Margery, night0 (`again`); Margery, night0 (`topics`); Margery, night0 (`ask: "Where are you hurrying to?"`)
 
-<a id="n0_margery_wall"></a>
-### `n0_margery_wall`
+<a id="n0_margery_overheard"></a>
+### `n0_margery_overheard`
 
-- **Set by:** Margery, night0 (`wall`)
-- **Read by:** Margery, night0 (`again`); Margery, night0 (`topics`); Margery, night0 (`ask: "What are you afraid of?"`)
+- **Set by:** Margery, night0 (`overheard_start`)
+- **Read by:** Margery, night0 (`again`)
+
+<a id="n0_margery_unsure"></a>
+### `n0_margery_unsure`
+
+- **Set by:** Margery, night0 (`unsure`)
+- **Read by:** Margery, night0 (`bless`); Margery, night0 (`done`)
+
+<a id="n0_margery_wat"></a>
+### `n0_margery_wat`
+
+- **Set by:** Margery, night0 (`family`); Margery, night0 (`wat_saw`)
+- **Read by:** Mab, night0 (`again`); Mab, night0 (`topics`); Mab, night0 (`topics`); Margery, night0 (`again`); Margery, night0 (`topics`); Margery, night0 (`ask: "Is someone waiting for you?"`)
+
+<a id="n0_margery_wat_saw"></a>
+### `n0_margery_wat_saw`
+
+- **Set by:** Margery, night0 (`wat_saw`)
+- **Read by:** *nothing*
+
+<a id="n0_margery_where"></a>
+### `n0_margery_where`
+
+- **Set by:** Margery, night0 (`keys`); Margery, night0 (`unsure`); Margery, night0 (`matter`)
+- **Read by:** Margery, night0 (`after_quiet`)
 
 <a id="n0_past_aldgate"></a>
 ### `n0_past_aldgate`
@@ -990,19 +1194,31 @@ Every flag and note that is read is set somewhere.
 ### `n0_ralph_candles`
 
 - **Set by:** Ralph the chandler, night0 (`candles`)
-- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "Your best customer, friend? How so?"`); Ralph the chandler, night0 (`ask: "How does the sacrist pay you?"`); Brother Ranulf, night2 (`topics: "Ralph the chandler says you buy twice the candles you used to."`)
+- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`topics`); Brother Ranulf, night2 (`topics: "Ralph the chandler says you buy twice the candles you used to."`)
 
 <a id="n0_ralph_coin"></a>
 ### `n0_ralph_coin`
 
 - **Set by:** Ralph the chandler, night0 (`coin`)
-- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "How does the sacrist pay you?"`)
+- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "How does he pay you?"`)
 
 <a id="n0_ralph_kit"></a>
 ### `n0_ralph_kit`
 
-- **Set by:** Ralph the chandler, night0 (`trade`)
-- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "How goes your trade?"`)
+- **Set by:** Ralph the chandler, night0 (`trade_nod`); Ralph the chandler, night0 (`forbid`)
+- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Your girl sells them at our gate?"`)
+
+<a id="n0_ralph_light"></a>
+### `n0_ralph_light`
+
+- **Set by:** Ralph the chandler, night0 (`light_little`); Ralph the chandler, night0 (`light_read`); Ralph the chandler, night0 (`light_never`)
+- **Read by:** Ralph the chandler, night0 (`done`)
+
+<a id="n0_ralph_singing"></a>
+### `n0_ralph_singing`
+
+- **Set by:** Ralph the chandler, night0 (`forbid`)
+- **Read by:** *nothing*
 
 <a id="n0_riding"></a>
 ### `n0_riding`
@@ -1010,11 +1226,17 @@ Every flag and note that is read is set somewhere.
 - **Set by:** code: `game/chapters/night0/ride_beat.gd`
 - **Read by:** *nothing*
 
+<a id="n0_road_afraid"></a>
+### `n0_road_afraid`
+
+- **Set by:** Traveller, night0 (`afraid_yes`); Traveller, night0 (`afraid_no`)
+- **Read by:** Traveller, night0 (`after_spent`)
+
 <a id="n0_road_alric"></a>
 ### `n0_road_alric`
 
 - **Set by:** Traveller, night0 (`alric`)
-- **Read by:** *nothing*
+- **Read by:** Traveller, night0 (`done`); Traveller, night0 (`after`)
 
 <a id="n0_road_ask"></a>
 ### `n0_road_ask`
@@ -1034,28 +1256,22 @@ Every flag and note that is read is set somewhere.
 - **Set by:** Traveller, night0 (`carter`)
 - **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "Why is the carter in such a hurry?"`); Traveller, night0 (`topics_late: "Why is the carter in such a hurry?"`); Traveller, night0 (`again`)
 
-<a id="n0_road_defend"></a>
-### `n0_road_defend`
-
-- **Set by:** Traveller, night0 (`defend`)
-- **Read by:** *nothing*
-
 <a id="n0_road_family"></a>
 ### `n0_road_family`
 
 - **Set by:** Traveller, night0 (`family`)
 - **Read by:** *nothing*
 
+<a id="n0_road_girls"></a>
+### `n0_road_girls`
+
+- **Set by:** Traveller, night0 (`girls`)
+- **Read by:** *nothing*
+
 <a id="n0_road_inside"></a>
 ### `n0_road_inside`
 
 - **Set by:** Traveller, night0 (`inside`)
-- **Read by:** *nothing*
-
-<a id="n0_road_living"></a>
-### `n0_road_living`
-
-- **Set by:** Traveller, night0 (`living`)
 - **Read by:** *nothing*
 
 <a id="n0_road_name"></a>
@@ -1068,7 +1284,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_road_porter`
 
 - **Set by:** Traveller, night0 (`porter`)
-- **Read by:** Traveller, night0 (`count`); Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "I'm to be porter at an abbey inside Aldgate."`); Traveller, night0 (`again`)
+- **Read by:** Traveller, night0 (`count`); Traveller, night0 (`trade_turn`); Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "I'm to be porter at an abbey inside Aldgate."`); Traveller, night0 (`again`)
 
 <a id="n0_road_quiet"></a>
 ### `n0_road_quiet`
@@ -1097,7 +1313,7 @@ Every flag and note that is read is set somewhere.
 <a id="n0_road_trade"></a>
 ### `n0_road_trade`
 
-- **Set by:** Traveller, night0 (`trade`)
+- **Set by:** Traveller, night0 (`quiet`); Traveller, night0 (`trade`)
 - **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "Where are you bound yourself, friend?"`); Traveller, night0 (`again`)
 
 <a id="n0_road_young"></a>
@@ -1109,26 +1325,50 @@ Every flag and note that is read is set somewhere.
 <a id="n0_roger_agreed"></a>
 ### `n0_roger_agreed`
 
-- **Set by:** Roger the bailiff, night0 (`ask: "I'll send you word."`)
-- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`ask: "I'll send you word."`)
+- **Set by:** Roger the bailiff, night0 (`ask: "I'll send you word."`); Roger the bailiff, night0 (`ask_late: "I'll send you word."`)
+- **Read by:** Roger the bailiff, night0 (`again`)
+
+<a id="n0_roger_answered"></a>
+### `n0_roger_answered`
+
+- **Set by:** Roger the bailiff, night0 (`ask: "I'll send you word."`); Roger the bailiff, night0 (`ask: "I keep the gate for the abbey, not the ward."`); Roger the bailiff, night0 (`ask_late: "I'll send you word."`); Roger the bailiff, night0 (`ask_late: "I keep the gate for the abbey, not the ward."`)
+- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`ask: "I'll send you word."`); Roger the bailiff, night0 (`ask: "I keep the gate for the abbey, not the ward."`); Roger the bailiff, night0 (`ask_late: "I'll send you word."`); Roger the bailiff, night0 (`ask_late: "I keep the gate for the abbey, not the ward."`)
 
 <a id="n0_roger_land"></a>
 ### `n0_roger_land`
 
 - **Set by:** Roger the bailiff, night0 (`land`)
-- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`ask: "What does the ward want with the abbey?"`)
+- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`ask_late: "What does the ward want with the abbey?"`)
+
+<a id="n0_roger_letters"></a>
+### `n0_roger_letters`
+
+- **Set by:** Roger the bailiff, night0 (`letters_yes`); Roger the bailiff, night0 (`letters_little`)
+- **Read by:** Roger the bailiff, night0 (`topics`)
+
+<a id="n0_roger_refused"></a>
+### `n0_roger_refused`
+
+- **Set by:** Roger the bailiff, night0 (`ask: "I keep the gate for the abbey, not the ward."`); Roger the bailiff, night0 (`ask_late: "I keep the gate for the abbey, not the ward."`)
+- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`done`)
+
+<a id="n0_roger_tally"></a>
+### `n0_roger_tally`
+
+- **Set by:** Roger the bailiff, night0 (`why_believed`); Roger the bailiff, night0 (`why_pressed`)
+- **Read by:** *nothing*
 
 <a id="n0_roger_why"></a>
 ### `n0_roger_why`
 
 - **Set by:** Roger the bailiff, night0 (`why`)
-- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`ask: "Why do you want to know?"`)
+- **Read by:** Roger the bailiff, night0 (`again`); Roger the bailiff, night0 (`topics`); Roger the bailiff, night0 (`topics`)
 
 <a id="n0_room"></a>
 ### `n0_room`
 
 - **Set by:** Agnes, night0 (`bed`); code: `game/chapters/night0/inn_beat.gd`
-- **Read by:** Agnes, night0 (`again`); Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "Have you a bed for the night, goodwife?"`); code: `game/chapters/night0/inn_beat.gd`
+- **Read by:** Agnes, night0 (`again`); Agnes, night0 (`topics`); Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "A bed, if you have one, goodwife."`); code: `game/chapters/night0/inn_beat.gd`
 
 <a id="n0_saw_killing"></a>
 ### `n0_saw_killing`
@@ -1151,14 +1391,26 @@ Every flag and note that is read is set somewhere.
 <a id="n0_walter_abbey"></a>
 ### `n0_walter_abbey`
 
-- **Set by:** Walter, night0 (`abbey`)
-- **Read by:** Walter, night0 (`ask: "Do you know the abbey, Walter?"`); Walter, night0 (`ask: "What business have you at the abbey gate?"`)
+- **Set by:** Walter, night0 (`knows`)
+- **Read by:** Walter, night0 (`again`); Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`topics`); Walter, night0 (`topics`); Walter, night0 (`ask: "How do you know I keep a gate?"`)
 
 <a id="n0_walter_box"></a>
 ### `n0_walter_box`
 
 - **Set by:** Walter, night0 (`box`)
-- **Read by:** Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`ask: "(Look in his box.)"`)
+- **Read by:** Walter, night0 (`topics`)
+
+<a id="n0_walter_gate_heard"></a>
+### `n0_walter_gate_heard`
+
+- **Set by:** Roger the bailiff, night0 (`walter`); Walter, night0 (`knows`)
+- **Read by:** Walter, night0 (`topics`); Walter, night0 (`ask: "What business have you at the abbey gate?"`)
+
+<a id="n0_walter_jankin"></a>
+### `n0_walter_jankin`
+
+- **Set by:** Walter, night0 (`jankin`)
+- **Read by:** Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`ask: "You don't believe Jankin, about the wall?"`)
 
 <a id="n0_walter_nocoin"></a>
 ### `n0_walter_nocoin`
@@ -1166,11 +1418,17 @@ Every flag and note that is read is set somewhere.
 - **Set by:** Walter, night0 (`nocoin`)
 - **Read by:** *nothing*
 
+<a id="n0_walter_saint"></a>
+### `n0_walter_saint`
+
+- **Set by:** Walter, night0 (`saint_road`); Walter, night0 (`saint_home`); Walter, night0 (`saint_none`)
+- **Read by:** Walter, night0 (`done`)
+
 <a id="n0_walter_why"></a>
 ### `n0_walter_why`
 
 - **Set by:** Walter, night0 (`why`)
-- **Read by:** Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`ask: "What business have you at the abbey gate?"`)
+- **Read by:** Walter, night0 (`again`); Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`topics`); Walter, night0 (`ask: "What business have you at the abbey gate?"`)
 
 <a id="n0_warden_cart"></a>
 ### `n0_warden_cart`
@@ -2294,6 +2552,30 @@ Every flag and note that is read is set somewhere.
 - **Set by:** code: `game/chapters/night3/chase_beat.gd`
 - **Read by:** *nothing*
 
+<a id="overheard_n0_chatter_hob_agnes"></a>
+### `overheard_n0_chatter_hob_agnes`
+
+- **Set by:** family: `game/talk/chatter.gd (built as overheard_<id>)`
+- **Read by:** Agnes, night0 (`topics_close: "I couldn't help hearing, about the Norwich man."`); Hob, night0 (`topics`)
+
+<a id="overheard_n0_chatter_jankin_walter"></a>
+### `overheard_n0_chatter_jankin_walter`
+
+- **Set by:** family: `game/talk/chatter.gd (built as overheard_<id>)`
+- **Read by:** Jankin, night0 (`start`); Jankin, night0 (`topics`); Walter, night0 (`again`); Walter, night0 (`topics`); Walter, night0 (`ask: "You don't believe Jankin, about the wall?"`)
+
+<a id="overheard_n0_chatter_kit_margery"></a>
+### `overheard_n0_chatter_kit_margery`
+
+- **Set by:** family: `game/talk/chatter.gd (built as overheard_<id>)`
+- **Read by:** Kit, night0 (`topics`); Kit, night0 (`ask: "I couldn't help hearing, about Margery's Wat."`); Margery, night0 (`start`); Margery, night0 (`again`)
+
+<a id="overheard_n0_chatter_roger_ralph"></a>
+### `overheard_n0_chatter_roger_ralph`
+
+- **Set by:** family: `game/talk/chatter.gd (built as overheard_<id>)`
+- **Read by:** Ralph the chandler, night0 (`start`); Roger the bailiff, night0 (`start`)
+
 <a id="prior_believes"></a>
 ### `prior_believes`
 
@@ -2328,7 +2610,7 @@ Every flag and note that is read is set somewhere.
 ### `read_n0_walter_gate`
 
 - **Set by:** Walter, night0 (`why`)
-- **Read by:** Walter, night0 (`ask: "What business have you at the abbey gate?"`)
+- **Read by:** *nothing*
 
 <a id="read_n0_walter_gate_right"></a>
 ### `read_n0_walter_gate_right`
@@ -2653,6 +2935,30 @@ Every flag and note that is read is set somewhere.
 
 - **Set by:** the carter, night0 (`(any talk)`); code: `game/chapters/night0/ride_beat.gd`
 - **Read by:** the carter, lane (`start`)
+
+<a id="talked_n0_chatter_hob_agnes"></a>
+### `talked_n0_chatter_hob_agnes`
+
+- **Set by:** Agnes, night0 (`(any talk)`)
+- **Read by:** *nothing*
+
+<a id="talked_n0_chatter_jankin_walter"></a>
+### `talked_n0_chatter_jankin_walter`
+
+- **Set by:** Jankin, night0 (`(any talk)`)
+- **Read by:** *nothing*
+
+<a id="talked_n0_chatter_kit_margery"></a>
+### `talked_n0_chatter_kit_margery`
+
+- **Set by:** Kit, night0 (`(any talk)`)
+- **Read by:** *nothing*
+
+<a id="talked_n0_chatter_roger_ralph"></a>
+### `talked_n0_chatter_roger_ralph`
+
+- **Set by:** Roger the bailiff, night0 (`(any talk)`)
+- **Read by:** *nothing*
 
 <a id="talked_n0_gib"></a>
 ### `talked_n0_gib`

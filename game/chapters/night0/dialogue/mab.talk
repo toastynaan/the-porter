@@ -1,15 +1,37 @@
 @id n0_mab
-# Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn).
-# Alms once (n0_mab_alms): she gives him a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
-# One talk: the questions left come up again until all are asked; then she sends him on (done).
+# DRAFT
+# Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn, set at start whichever way it opens).
+# Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and the flame goes to her (arrive_beat.gd).
+# She asks him why they'd send a boy to keep that gate, and remembers what he said (n0_mab_why = blind, sent or quiet): her closing line uses it.
+# Alms once (n0_mab_alms): a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
+# Thread: Brother Anselm, the old porter, was the only one inside who passed her a word through the bars, most nights for eleven years. The winter before his eyes went he stopped, and stood at the grille after the bell looking out past her. The last thing he said to her: never come in, not if they ask kindly (n0_mab_anselm). For later nights: Anselm (day 1, night 1) can know Mab's name from it; on night 4 she comes inside the gate for the first time.
+# Cross-link: if Margery told him her son-in-law Wat carts the abbey's rye (n0_margery_wat), Mab has seen Wat come out (n0_mab_wat).
+# Answer paths the tests take: 0,0,0 and 2,0,0 (alms first) both end the talk with n0_sent_to_inn set; 2,0,0 gives the bread.
+== hail
+(A wooden clapper knocks by the wall, twice.)
+Mab {wary}: Alms, brother. Alms, for the love of God.
+
 == start [set n0_sent_to_inn]
+-> hailed_start [if hailed_n0_mab]
+-> first_start
+
+== first_start
 (A wooden clapper, knocking. A woman sits against the wall by the gate, her face wrapped to the eyes in grey cloth.)
-Mab {wary}: No use knocking, brother. Nobody will come. Nobody keeps that gate at night, not since old Brother Anselm went blind.
+Mab {wary}: No use knocking, brother. Nobody keeps that gate at night, not since old Brother Anselm went blind.
+-> send
+
+== hailed_start
+(The woman by the wall lowers her clapper. Her face is wrapped to the eyes in grey cloth.)
+Mab {wary}: I could have told you. Nobody keeps that gate at night, not since old Brother Anselm went blind.
+-> send
+
+== send
 Mab {calm}: Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed.
 -> topics
 
 == again
--> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms]
+-> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms] [if not n0_margery_wat]
+-> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms] [if n0_mab_wat]
 -> again_ask
 
 == again_ask
@@ -17,24 +39,68 @@ Mab {wary}: You again, brother. The Keys hasn't moved.
 -> topics
 
 == topics
--> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms]
+-> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms] [if not n0_margery_wat]
+-> done [if n0_mab_porter] [if n0_mab_saw] [if n0_mab_alms] [if n0_mab_wat]
+-> ask_wat [if n0_margery_wat] [if not n0_mab_wat]
 -> ask
 
 == ask
-* [if not n0_mab_porter] I'm to be their new porter. -> porter
+* [if not n0_mab_porter] I'm to be its porter. -> porter
 * [if not n0_mab_saw] Are you here every night? -> saw
+* [if not n0_mab_alms] (Give her a coin.) -> alms
+
+== ask_wat
+* [if not n0_mab_porter] I'm to be its porter. -> porter
+* Margery's son-in-law carts rye to this gate. Wat. -> wat
 * [if not n0_mab_alms] (Give her a coin.) -> alms
 
 == porter [set n0_mab_porter]
 (She looks at you a long while over the cloth.)
-Mab {wary}: Their porter. You're very young.
-Mab {calm}: I'm Mab. You'll be in there, and I'll be out here. We'll see a deal of each other.
+Mab {wary}: Their porter. Why would they send a boy to keep that gate?
+* The old porter went blind. -> why_blind
+* I go where I'm sent. -> why_sent
+* (Say nothing.) -> why_quiet
+
+== why_blind [set n0_mab_why=blind]
+Mab {grave}: Anselm. Aye. Eleven years I've sat by this gate, and he's the only one in there ever passed me a word through the bars.
+-> anselm
+
+== why_sent [set n0_mab_why=sent]
+Mab {calm}: So was the last one. Old Anselm. He passed me a word through the bars most nights, eleven years.
+-> anselm
+
+== why_quiet [set n0_mab_why=quiet]
+Mab {calm}: Close-mouthed. Anselm was the same, his first year. Then he talked to me through the bars most nights, eleven years.
+-> anselm
+
+== anselm
+Mab {grave}: The winter before his eyes went, he stopped. He'd stand at the grille after the bell and look out past me, at nothing.
+* What was he looking for? -> anselm_what
+* Is he still in there? -> anselm_where
+
+== anselm_what [set n0_mab_anselm]
+Mab {wary}: I asked him. He wouldn't say. But the last thing he ever said to me, he said, don't you ever come in, Mab.
+Mab {grave}: Not if they ask you kindly. Not if it snows.
+-> topics
+
+== anselm_where [set n0_mab_anselm]
+Mab {calm}: In their infirmary, they say. I've not heard his voice since Lammas.
+Mab {grave}: The last thing he said to me, he said, don't you ever come in, Mab. Not if they ask you kindly.
 -> topics
 
 == saw [set n0_mab_saw]
 Mab {weary}: Every night God sends. Rain or frost, it's all one to me.
-Mab {wary}: I see everyone who goes in at that gate, and everyone who comes out. Nobody asks me. Who asks a leper anything?
-Mab {grave}: But I'll tell you for nothing, brother. More go in than come out.
+Mab {wary}: I see everyone who goes in at that gate, and everyone who comes out. Nobody asks me.
+* I'm asking. -> saw_asked
+* (Nod.) -> saw_nod
+
+== saw_asked [trust mab 5]
+(She's quiet a moment behind the cloth.)
+Mab {grave}: Then I'll tell you for nothing, brother. More go in than come out.
+-> topics
+
+== saw_nod
+Mab {cold}: No. Nobody does.
 -> topics
 
 == alms [set n0_mab_alms] [item mab_bread] [trust mab 5]
@@ -42,9 +108,36 @@ Mab {grave}: But I'll tell you for nothing, brother. More go in than come out.
 Mab {warm}: God keep you, brother. Here. You'll want something for your supper.
 (She sets a heel of bread on the step between you, wrapped in a cloth, and draws back.)
 Mab {grave}: It's from a baker on Fenchurch Street. I don't eat what comes out of that gate.
+* Why not? -> bread_why
+* (Take it, and thank her.) -> bread_thanks
+
+== bread_why
+Mab {wary}: Because I'm a leper, brother, not a fool. Ask me again when you've eaten in there a week.
+-> topics
+
+== bread_thanks
+Mab {calm}: Eat it tonight. Not tomorrow. Tomorrow they'll feed you.
+-> topics
+
+== wat [set n0_mab_wat]
+Mab {calm}: Wat. Big man, Thursdays, with the rye. He used to whistle at me going in.
+Mab {grave}: The night they shut him in, he came out at first light leading his horse, and never once looked at the wall. He doesn't whistle now.
 -> topics
 
 == done
+-> done_blind [if n0_mab_why=blind]
+-> done_sent [if n0_mab_why=sent]
+-> done_plain
+
+== done_blind
+Mab {calm}: Go on across to the fire, brother. And keep your eyes. The last one didn't.
+-> end
+
+== done_sent
+Mab {calm}: Go on across to the fire, brother. Go where you're sent. I'll be here. I'm always here.
+-> end
+
+== done_plain
 Mab {calm}: Go on across to the fire, brother. I'll be here. I'm always here.
 -> end
 

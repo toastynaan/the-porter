@@ -1,0 +1,12 @@
+@id n0_chatter_jankin_walter
+# DRAFT
+# Overheard at the Cross Keys, night 0 (Chatter): Jankin on his bench telling Walter about the horned thing on the abbey wall, and Walter scoffing. Only the start point is said.
+# Where: the taproom, Jankin's bench by the wall, Walter sitting by him with his box on his knees.
+# Picked up by jankin.talk (he opens on it, and the porter can ask what was on the wall) and walter.talk (the porter can ask whether he believes Jankin; he stops selling for a line).
+== start
+Jankin {drunk}: Horns, Walter. Like a hart's. Up on the abbey wall, against the moon.
+Walter {amused, brow}: A hart, on a wall. Had it wings as well, Jankin?
+Jankin {drunk, blink}: It looked at me. Still as a post. I said good evening.
+Walter {amused}: And it said nothing back, being a chimney.
+Jankin {afraid, still}: Chimneys stay where they're put, Walter. It was gone in the morning.
+Walter {amused, brow}: Then Walter will sell you a scraping of its horn. A groat, for the toothache.

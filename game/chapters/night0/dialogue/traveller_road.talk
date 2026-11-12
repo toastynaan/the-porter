@@ -1,6 +1,9 @@
 @id n0_traveller_road
+# DRAFT
 # The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry and warm, and more frightened than he lets on.
 # He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
+# He asks as much as he answers: where the porter is bound, what takes a monk to London, whether he has anyone at home, whether he's afraid. He remembers the porter's name if he gives it (n0_road_alric) and uses it after the cart, and remembers whether he said he was afraid (n0_road_afraid).
+# Thread: two girls in Colchester who think London's paved with ribbon; he's to bring them some, and his wife made him swear to stop nowhere but an inn he knows. If the porter will pray for them (n0_road_girls), he names them.
 # One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all; then he closes it himself (spent, after_spent).
 # Before the cart he only hints: road talk, men who set out for London and don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.talk says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.
 # After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden.
@@ -15,12 +18,34 @@
 == hello
 Traveller {warm}: Evening, brother. Bound for the city, are you?
 * I'm to be porter at an abbey inside Aldgate. -> porter
-* Where are you bound yourself, friend? -> trade
+* I am. And you, friend? -> trade
 * (Nod.) -> quiet
 
-== quiet [set n0_road_quiet]
-Traveller {amused}: Not one for talk. Then I'll talk for both of us. It keeps the cold out.
--> trade
+== quiet [set n0_road_quiet] [set n0_road_trade]
+Traveller {amused}: Not one for talk. Then I'll talk for both of us. I'm for Cheapside, with wool, three days from Colchester and every one of them wet.
+-> trade_turn
+
+== trade [set n0_road_trade]
+Traveller {amused}: Cheapside, with wool. Three days from Colchester, and every one of them wet.
+-> trade_turn
+
+== trade_turn
+-> trade_back [if n0_road_porter]
+-> trade_ask
+
+== trade_back
+Traveller {warm}: Have you anyone at home, brother? Or is it all brothers, with you?
+-> family_q
+
+== trade_ask
+Traveller {warm}: And what takes a monk to London, in the rain?
+* I'm to be porter at an abbey inside Aldgate. -> porter
+* I go where my abbot sends me. -> sent
+* (Shrug.) -> trade_shrug
+
+== trade_shrug
+Traveller {amused}: A shrug. The Church's whole answer, in one shoulder. My wife would envy it.
+-> topics
 
 == porter [set n0_road_porter]
 Traveller {wary, blink}: The porter? At the abbey in the lane, across from the Cross Keys?
@@ -55,25 +80,28 @@ Traveller {grave}: A saint. Yes. Everyone on this road has heard of the saint.
 Traveller {amused}: Then that's two of you who don't. Three, with me.
 -> topics
 
-== trade [set n0_road_trade]
-Traveller {amused}: Cheapside, with wool. Three days from Colchester, and every one of them wet.
-Traveller {weary}: Every toll on the road robs me. The bridges, the gates, the bishop's men. A sack's half spent before it's sold.
-* Have you family at home? -> family
-* Is it a good living? -> living
-* (Nod.) -> topics
+== family_q
+* My brothers are my family. -> family_brothers
+* (Shake your head.) -> family_none
 
-== living [set n0_road_living]
-(He nods at the sacks behind you.)
-Traveller {amused}: Good enough to grumble about. Those are a winter's bread for my house.
-Traveller {grave}: Which is why I'll sleep inside the walls tonight, and not in some ditch.
--> topics
+== family_brothers
+Traveller {amused}: A house full of men, and not a ribbon among you. I've two girls who think London's paved with ribbon.
+-> family
+
+== family_none
+Traveller {warm}: No. Well, I've a wife, and two girls who think London's paved with ribbon. I'm to bring them some.
+-> family
 
 == family [set n0_road_family]
-Traveller {warm}: A wife, and two girls who think London's paved with ribbon. I'm to bring them some.
 (His face goes quiet.)
 Traveller {sad}: My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories.
 * What stories? -> stories
-* (Nod.) -> topics
+* I'll pray for your girls. -> girls
+
+== girls [set n0_road_girls]
+Traveller {warm}: Alys and Kate. Seven and five. Kate's the loud one.
+Traveller {sad}: Pray they've a father home by Martinmas twelvemonth. That'll do.
+-> topics
 
 == stories [set n0_road_stories]
 Traveller {grave}: Road talk. Men set out for London and don't come home. There are always a few.
@@ -128,10 +156,15 @@ Traveller {weary}: Save your breath, brother. It's a cold way to Aldgate yet.
 
 == after
 -> after_gate [if n0_past_aldgate]
+-> after_cart_named [if n0_road_alric]
 -> after_cart
 
 == after_cart
 Traveller {sad}: Still thinking of that cart, brother? So am I.
+-> after_topics
+
+== after_cart_named
+Traveller {sad}: Still thinking of that cart, Brother Alric? So am I.
 -> after_topics
 
 == after_gate
@@ -148,14 +181,18 @@ Traveller {wary}: He took his time over you, that warden. Most nights they wave 
 * [if not n0_road_ask] Who would know more? -> ask
 
 == think [set n0_road_think]
-Traveller {afraid}: I think men go in at that gate to pray, and nobody sees them come out.
-Traveller {afraid, swallow}: That's all I know, and it's more than I want to.
-* Those are my brothers you speak of. -> defend
+Traveller {afraid}: I think men go in at that gate to pray, and nobody sees them come out. That's all I know.
+Traveller {grave}: You're the one going in, brother. Are you afraid of it?
+* Yes. -> afraid_yes
+* No. It's God's house. -> afraid_no
 * Have you been inside? -> inside
-* (Say nothing.) -> after_topics
 
-== defend [set n0_road_defend]
-Traveller {weary}: I'm speaking of a wall I can't see over. You'll be over it tomorrow. Then you tell me.
+== afraid_yes [set n0_road_afraid=yes]
+Traveller {sad}: Good. A man who's afraid keeps his eyes open. Keep yours open.
+-> after_topics
+
+== afraid_no [set n0_road_afraid=no]
+Traveller {weary}: God's house. I'm speaking of a wall I can't see over. You'll be over it tomorrow. Then you tell me.
 -> after_topics
 
 == inside [set n0_road_inside]
@@ -176,6 +213,14 @@ Traveller {amused}: His wife hears more, and says less.
 
 == after_spent
 (He tries a smile.)
+-> after_spent_no [if n0_road_afraid=no]
+-> after_spent_plain
+
+== after_spent_no
+Traveller {afraid}: I've said more than I meant to. You're not afraid, you said. Hold on to that, brother.
+-> end
+
+== after_spent_plain
 Traveller {afraid}: I've said more than I meant to, brother. It's the cold. It loosens a man.
 -> end
 

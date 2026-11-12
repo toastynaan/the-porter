@@ -1,14 +1,46 @@
 @id n0_jankin
-# Jankin on the bench at the Cross Keys, night 0. A harmless drunk, rambling, full of stories, half of them nonsense. Once, for a moment, he isn't drunk at all (who).
-# He saw a thing with horns on the abbey wall (the horned costume; nothing here says so). He says Hob throws him out at closing every night (the night-2 rule).
-# One talk: the questions left come up again until all are asked; then he runs out of stories (done).
+# DRAFT
+# Jankin on the bench at the Cross Keys, night 0. A harmless drunk, rambling, full of stories, half of them nonsense. Twice, for a moment, he isn't drunk at all.
+# He asks the porter whether he believes in devils, and remembers the answer (n0_jankin_believe = yes, no or quiet).
+# He saw a thing with horns on the abbey wall (the horned costume; nothing here says so). He says Hob throws him out at closing every night and he sleeps on the chandler's step (the night-2 rule).
+# Thread: the thing on the wall comes nearer. He has seen it three times this autumn: at Michaelmas on the church end, at Hallowtide over the gate, last week on the wall across from his own step (n0_jankin_count). If the porter tells him to sleep somewhere else (n0_jankin_warned), he can't: Hob puts him out. For later nights: he is the man killed by the chandler's on night 2 unless Hob keeps him in.
+# Second thread (mine): he was a cooper, the best in Aldgate, and lost his trade. The lane says it was the drink, after his wife died; he won't say why (n0_jankin_trade).
+# Cross-links: Hob's talk of the wall (n0_hob_wall) lets the porter ask him about it; Gib's lantern (n0_gib_count) opens a question here (n0_jankin_lantern); his step (n0_jankin_home) opens one with Gib.
+# Overheard: Jankin telling Walter about the wall (chatter_jankin_walter.talk).
 == start
 (A man slumped on the bench by the wall lifts his cup to you. Most of it goes down his sleeve.)
+-> greet_heard [if overheard_n0_chatter_jankin_walter]
+-> greet
+
+== greet
 Jankin {drunk}: A monk! In the Keys! Hob, the world's ending. I always said it would.
+-> devils
+
+== greet_heard
+Jankin {drunk}: A monk! You heard me. Walter doesn't believe me. Walter believes in groats.
+-> devils
+
+== devils
+Jankin {drunk, blink}: Tell me, brother. Do you believe in devils?
+* I do. -> devils_yes
+* Not in taverns. -> devils_no
+* (Say nothing.) -> devils_quiet
+
+== devils_yes [set n0_jankin_believe=yes]
+Jankin {glad}: He does! Hob, he does! The first man in this house with any sense.
+-> topics
+
+== devils_no [set n0_jankin_believe=no]
+Jankin {amused}: Then you've never drunk in Aldgate. Sit down. I'll learn you.
+-> topics
+
+== devils_quiet [set n0_jankin_believe=quiet]
+Jankin {drunk}: A careful man. Careful men live longest. I'm not careful. Look at me.
 -> topics
 
 == again
--> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home]
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home] [if not n0_gib_count]
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home] [if n0_jankin_lantern]
 -> again_wall [if n0_jankin_wall]
 -> again_plain
 
@@ -21,36 +53,94 @@ Jankin {glad}: Brother! You came back. Nobody comes back to Jankin.
 -> topics
 
 == topics
--> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home]
+-> devils [if not n0_jankin_believe]
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home] [if not n0_gib_count]
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home] [if n0_jankin_lantern]
+-> ask_late [if n0_jankin_wall]
+-> ask_heard [if overheard_n0_chatter_jankin_walter]
+-> ask_hob [if n0_hob_wall]
 -> ask
 
 == ask
-* [if not n0_jankin_wall] What do you know of the abbey, friend? -> wall
+* What do you know of the abbey, friend? -> wall
 * [if not n0_jankin_who] Who are you, friend? -> who
 * [if not n0_jankin_home] Where will you sleep tonight? -> home
 
+== ask_heard
+* I couldn't help hearing. What was on the wall? -> wall
+* [if not n0_jankin_who] Who are you, friend? -> who
+* [if not n0_jankin_home] Where will you sleep tonight? -> home
+
+== ask_hob
+* Hob says you saw something on the abbey wall. -> wall
+* [if not n0_jankin_who] Who are you, friend? -> who
+* [if not n0_jankin_home] Where will you sleep tonight? -> home
+
+== ask_late
+* [if not n0_jankin_who] Who are you, friend? -> who
+* [if not n0_jankin_home] Where will you sleep tonight? -> home
+* [if n0_gib_count] [if not n0_jankin_lantern] Gib says the lantern over your step went out last night. -> lantern
+
 == wall [set n0_jankin_wall]
-Jankin {drunk}: The abbey. I'll tell you about the abbey. I saw a thing on its wall.
-Jankin {drunk, blink}: Up on the top, by the corner, against the moon. Horns on it like a hart's. Still as a post.
+Jankin {drunk}: The wall. Up on the top, against the moon. Horns on it like a hart's. Still as a post.
 Jankin {amused}: I said good evening to it. It never said good evening back. Rude, I call that.
-Jankin {drunk}: Hob says it was the drink. Hob says everything's the drink.
+* When was this? -> wall_when
+* It was the drink, friend. -> wall_drink
+
+== wall_drink
+Jankin {drunk}: Hob says that. Hob says everything's the drink.
+Jankin {drunk, blink}: Three times, though, brother. Can the drink count to three?
+* Three times? -> wall_when
+* (Say nothing.) -> topics
+
+== wall_when [set n0_jankin_count]
+Jankin {drunk}: Michaelmas, it was on the church end. Hallowtide, over the gate.
+(He puts his cup down, and for a moment he doesn't look drunk at all.)
+Jankin {afraid, still}: Last week it was on the wall right across from my step. Looking down at me.
+* Sleep somewhere else tonight. -> warned
+* It won't come down off the wall. -> wall_down
+
+== warned [set n0_jankin_warned]
+Jankin {amused}: Where? Hob puts me out at the bell, and every door in Aldgate's barred by then.
+Jankin {drunk}: Pray for me instead. Monks' prayers are stronger. They're sober.
+-> topics
+
+== wall_down [set n0_jankin_comforted]
+Jankin {drunk}: No. No, it won't. It's a wall thing. It stops on walls.
+Jankin {drunk, glance}: You said that like a man who knows. I'll hold you to it, brother.
 -> topics
 
 == who [set n0_jankin_who]
 Jankin {drunk}: Jankin. I was a cooper once, brother. Best barrels in Aldgate.
-Jankin {sad}: Then my wife died, and I found I liked what goes in a barrel better than the barrel.
-(He looks into his cup, and for a moment he doesn't look drunk at all.)
-Jankin {drunk}: Never mind. Ask me another.
+Jankin {sad}: Then I wasn't.
+* What happened? -> who_why
+* (Nod.) -> topics
+
+== who_why [set n0_jankin_trade]
+(He looks into his cup a long while.)
+Jankin {sad, still}: Ask me another, brother. Ask me about devils. I'm good on devils.
 -> topics
 
 == home [set n0_jankin_home]
 Jankin {drunk}: Tonight? Wherever I fall. Hob throws me out at closing, every night, rain or no.
-Jankin {amused}: Good man, Hob. Big hands. I go out of that door like a sack of meal.
-Jankin {drunk}: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
+Jankin {amused}: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
+-> topics
+
+== lantern [set n0_jankin_lantern]
+Jankin {drunk}: Did it? I'm never awake to see.
+Jankin {afraid, still}: I woke in the dark last night. I thought, Jankin, you're dead. Then I thought, no. Somebody's breathing, and it isn't me.
 -> topics
 
 == done
 (He peers into his cup.)
+-> done_yes [if n0_jankin_believe=yes]
+-> done_plain
+
+== done_yes
+Jankin {drunk}: That's all my stories, brother. You believe in devils. Remember I told you first.
+-> end
+
+== done_plain
 Jankin {drunk}: That's all my stories, brother. Well. Most of them. Come back when I've thought of the rest.
 -> end
 

@@ -1,24 +1,60 @@
 @id n0_gib
+# DRAFT
 # Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell, and walking the lane calling the hour after it (n0_curfew). Old, slow, a watchman: he tells the porter to be indoors before the bell.
+# Hail: before the bell, from up his ladder, as the porter walks under it.
 # His call is a clock the porter will hear from inside the walls: if it stops, something is wrong.
-# One talk: the questions left come up again until all are asked; then he sends him indoors (done, before or after the bell).
+# He asks whether the porter sleeps sound, and remembers it (n0_gib_sleep = sound, light or asked).
+# Thread: Gib counts the lanterns he lights, fourteen, and counts them out again. Last night one went out before the bell, with no wind: the one over the chandler's step, where Jankin sleeps (n0_gib_count). For later nights: the count, night by night; Jankin is killed by the chandler's on night 2 unless kept in.
+# Cross-links: if Jankin said he sleeps on the chandler's step (n0_jankin_home), the porter can say so here (n0_gib_jankin); Gib's count opens a question for Jankin (jankin.talk, [if n0_gib_count]).
+# If the porter says he'll be on the other side of the wall, Gib will call a little louder along his stretch (n0_gib_louder): for later nights.
+== hail
+(A voice from up a short ladder, under the eaves.)
+Gib {weary}: Mind my ladder, brother! Mind it, I said.
+
 == start
 -> start_late [if n0_curfew]
+-> hailed_start [if hailed_n0_gib]
 -> start_early
 
 == start_early
 (An old man on a short ladder under the eaves, coaxing a lantern alight with a taper.)
-Gib {weary}: Mind my ladder, brother. Gib, the watch. A lantern on every house all winter, by the mayor's order.
-Gib {grave}: And you be indoors before the bell. Nine o'clock, and not a breath after.
--> topics
+Gib {weary}: Gib, the watch. A lantern on every house all winter, by the mayor's order.
+-> sleep_q
+
+== hailed_start
+(The old man comes down his ladder a rung at a time, the taper cupped in his hand.)
+Gib {weary}: No harm done. Gib, the watch. A lantern on every house all winter, by the mayor's order.
+-> sleep_q
 
 == start_late
 (An old man with a lantern on a pole, walking slow down the middle of the empty lane.)
-Gib {wary}: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you indoors.
+Gib {wary}: Past the bell, brother, and you in the street. I'm Gib, the watch.
+-> sleep_q
+
+== sleep_q
+Gib {grave}: You'll be the new porter, behind that wall. Do you sleep sound, brother?
+* Like the dead. -> sleep_dead
+* Not in a strange bed. -> sleep_light
+* Why do you ask? -> sleep_why
+
+== sleep_dead [set n0_gib_sleep=sound]
+Gib {wary, shake}: Don't say that. Not on this lane, not after dark.
+Gib {grave}: Sleep light. I call the hour all night under your wall. If you hear me, all's well.
+-> topics
+
+== sleep_light [set n0_gib_sleep=light]
+Gib {warm}: Good. Then you'll hear me. I call the hour all night under your wall.
+Gib {grave}: If you hear me, all's well. If you don't, it isn't.
+-> topics
+
+== sleep_why [set n0_gib_sleep=asked]
+Gib {calm}: Because I call the hour all night under your wall, ten of the clock till first light.
+Gib {grave}: If you hear me, all's well. If you don't, it isn't.
 -> topics
 
 == again
--> done [if n0_gib_watch] [if n0_gib_lanterns] [if n0_gib_abbey]
+-> done [if n0_gib_count] [if n0_gib_abbey] [if not n0_jankin_home]
+-> done [if n0_gib_count] [if n0_gib_abbey] [if n0_gib_jankin]
 -> again_late [if n0_curfew]
 -> again_early
 
@@ -31,29 +67,55 @@ Gib {wary}: You again, and the bell long gone.
 -> topics
 
 == topics
--> done [if n0_gib_watch] [if n0_gib_lanterns] [if n0_gib_abbey]
+-> sleep_q [if not n0_gib_sleep]
+-> done [if n0_gib_count] [if n0_gib_abbey] [if not n0_jankin_home]
+-> done [if n0_gib_count] [if n0_gib_abbey] [if n0_gib_jankin]
 -> ask
 
 == ask
-* [if not n0_gib_watch] What do you do after the bell, friend? -> watch
-* [if not n0_gib_lanterns] How long has the lane had lanterns? -> lanterns
+* [if not n0_gib_count] How many lanterns do you light? -> count
 * [if not n0_gib_abbey] What do you make of the abbey wall? -> abbey
+* [if n0_jankin_home] [if not n0_gib_jankin] Jankin says he sleeps out on the chandler's step. -> jankin
 
-== watch [set n0_gib_watch]
-Gib {calm}: After the bell I walk the lane and call the hour. Ten of the clock, and on till first light.
-Gib {grave}: If you hear me call, all's well. If you don't, it isn't.
+== count [set n0_gib_count]
+Gib {calm}: Fourteen. One on every house, Hallowtide to Candlemas. I count them lit, and I count them out.
+Gib {wary}: Last night one went out before the bell. The one over the chandler's step. There was no wind.
+* A bad wick. -> count_wick
+* What did you do? -> count_did
+
+== count_wick
+Gib {grave}: That's what I said. I said it twice, to be sure.
 -> topics
 
-== lanterns [set n0_gib_lanterns]
-Gib {calm}: Since the year of Agincourt. Every winter, from Hallowtide to Candlemas.
-Gib {amused}: The houses find the candles, and I light them. Saves a few throats, the mayor says.
+== count_did
+Gib {grave}: Lit it again, and stood under it till the bell, like an old fool.
+Gib {afraid}: Nobody came by. I'd have sworn somebody was stood there with me.
 -> topics
 
 == abbey [set n0_gib_abbey]
 (He's slow to answer.)
 Gib {grave}: I walk past that wall every hour of the night, and I don't look at it.
 Gib {wary, swallow}: Thirty years. You hear things over a wall like that. You see lights where there shouldn't be lights.
-Gib {grave}: I call the hour, and I keep walking. You'd do well to learn the same.
+* What kind of things? -> abbey_things
+* I'll be on the other side of it. -> abbey_inside
+
+== abbey_things
+Gib {grave}: A door, at two in the morning. Somebody running. Then quiet, like a held breath.
+Gib {weary}: I call the hour, and I keep walking. You'd do well to learn the same.
+-> topics
+
+== abbey_inside [set n0_gib_louder]
+(He looks at you a while.)
+Gib {sad}: I know, brother. I'll call a little louder, by your stretch.
+-> topics
+
+== jankin [set n0_gib_jankin]
+Gib {warm}: I know it. Every hour I go by, he lifts his head. Is it, Gib, he says. Is it all well?
+-> jankin_lantern [if n0_gib_count]
+-> topics
+
+== jankin_lantern
+Gib {afraid, swallow}: That's his step. Under the lantern that went out.
 -> topics
 
 == done

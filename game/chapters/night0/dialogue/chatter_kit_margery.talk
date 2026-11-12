@@ -1,0 +1,12 @@
+@id n0_chatter_kit_margery
+# DRAFT
+# Overheard in the lane at dusk, night 0 (Chatter): Kit with her tray and Margery with her basket, about Margery's son-in-law Wat, who carts the abbey's rye and won't go in past the gate any more. Only the start point is said. It ends as they notice the porter.
+# Where: the lane, before the curfew bell, near the Keys' door or the chandler's: Margery stopped on her way home, Kit beside her.
+# Picked up by margery.talk (she opens on it) and kit.talk (the porter can step in about Wat).
+== start
+Kit {glad}: Margery! Your Wat brought the rye up this morning, and he never whistled at me. He always whistles.
+Margery {wary}: He doesn't whistle now. Not since they kept him in there overnight.
+Kit {wary, brow}: Inside? Past the gate? What's it like?
+Margery {afraid}: He won't say. He wants a rushlight by the bed all night now, a grown man, and he won't say why.
+Kit {afraid, swallow}: Did he see the finger?
+Margery {afraid, glance}: Hush, Kit. There's a brother.

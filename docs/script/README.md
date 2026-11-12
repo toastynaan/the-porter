@@ -4,7 +4,7 @@ Every conversation in the game, how they link, and what each answer does. Genera
 
 ## Chapters
 
-- [The evening before: The Cross Keys](night0.md): 14 conversations, 5 beats
+- [The evening before: The Cross Keys](night0.md): 18 conversations, 5 beats
 - [The first day: The Tour](day1.md): 0 conversations, 3 beats
 - [The first night: The New Porter](night1.md): 13 conversations, 12 beats
 - [The second night: The Bell](night2.md): 12 conversations, 12 beats
@@ -72,10 +72,14 @@ Changes written into answers (reads change trust too: see the table above).
 - Mab +5: [lane](lane.md), "(Give her alms.)"
 - Mab +5: [lane](lane.md), "(Give her alms.)"
 - Mab +5: [lane](lane.md), "(Give her alms.)"
+- Margery +5: [night0](night0.md), "I'll say nothing."
 - Margery +5: [night0](night0.md), "Go with God, then."
 - Margery +5: [lane](lane.md), "And you, Margery."
 - Roger the bailiff -5: [night0](night0.md), "Who's asking, friend?"
 - Roger the bailiff +5: [night0](night0.md), "I'll send you word."
+- Roger the bailiff -5: [night0](night0.md), "I keep the gate for the abbey, not the ward."
+- Roger the bailiff +5: [night0](night0.md), "I'll send you word."
+- Roger the bailiff -5: [night0](night0.md), "I keep the gate for the abbey, not the ward."
 - Brother Thomas +5: [night1](night1.md), "He told me not to let them in after the bell."
 - Walter -5: [night0](night0.md), "Those aren't holy."
 
@@ -93,7 +97,7 @@ Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 
 
 ### Agnes
 
-Mostly, by chapter: night0 *warm* · lane *grave*.
+Mostly, by chapter: night0 *warm* · lane *warm*.
 
 ### Brother Aldo
 
@@ -105,7 +109,7 @@ Mostly, by chapter: night1 *amused* · night2 *wary* · night4 *weary* · night5
 
 Baseline *weary*. habit *lip* (means nothing from them). blind: read the mouth and throat. starts at trust 20.
 
-Mostly, by chapter: night1 *afraid* · night2 *afraid* · night3 *weary* · night4 *afraid* · night5 *afraid*.
+Mostly, by chapter: night1 *afraid* · night2 *weary* · night3 *weary* · night4 *weary* · night5 *afraid*.
 
 - Claim [`n2_anselm_guests`](night2.md) (hiding): "I don't see anything."
 
@@ -113,7 +117,7 @@ Mostly, by chapter: night1 *afraid* · night2 *afraid* · night3 *weary* · nigh
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *afraid*.
+Mostly, by chapter: night1 *wary*.
 
 ### Brother Edwin
 
@@ -135,7 +139,7 @@ Mostly, by chapter: night1 *glad* · night2 *glad* · night3 *glad* · night4 *g
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *grave* · night5 *grave*.
+Mostly, by chapter: night1 *amused* · night2 *weary* · night4 *grave* · night5 *calm*.
 
 ### Brother Ranulf
 
@@ -186,7 +190,7 @@ Mostly, by chapter: night1 *blank*.
 
 ### Gib the watchman
 
-Mostly, by chapter: night0 *weary* · lane *grave*.
+Mostly, by chapter: night0 *weary* · lane *afraid*.
 
 ### Hob
 
@@ -265,4 +269,4 @@ Mostly, by chapter: night0 *weary*.
 
 ### the carter
 
-Mostly, by chapter: night0 *calm* · night3 *wary* · lane *grave*.
+Mostly, by chapter: night0 *wary* · night3 *wary* · lane *grave*.

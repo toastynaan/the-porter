@@ -1,10 +1,33 @@
 @id n0_agnes
+# DRAFT
 # Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.
 # The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.
-# The ale is always the last answer. Once the bed and the abbey are asked she has one thing more (Jankin), and "(Nod.)" ends the talk with her line.
+# Answer paths the tests take: answer 0 at her first question is the bed; the next question (has he eaten?) has the ale as answer 1. 0,0,0 reaches n0_room.
+# She asks whether he's eaten today, and remembers it (n0_agnes_fed: she fed him; the lane's first dusk opens on whether they're feeding him over there).
+# Thread: the room at the top, whose one window looks toward the abbey. Nobody else will have it. The last lodger up there came down at midnight in his shirt and sat by her fire till light: a lantern going about in their court, by the well. She doesn't look out of that window, and tells him not to (n0_agnes_window). It is the window he sees the killing from. For later nights: the lane's night 6 ("You looked out of it, your first night").
+# Cross-link: she tells him Hob keeps a lodger's bag behind his board (n0_agnes_bag): Hob's talk then has it.
+# Overheard: Hob and Agnes about the top room and the bag (chatter_hob_agnes.talk).
 == start
 (A woman by the fire with her sleeves rolled, stirring a pot. She looks you up and down.)
-Agnes {warm}: Look at you, wet to the skin. Come by the fire before you catch your death.
+Agnes {warm}: Look at you, wet to the skin. Come by the fire. What brings a brother into the Keys?
+* A bed, if you have one, goodwife. -> bed
+* The gate over the way is shut. -> gate
+* An ale, if you would. [drink] -> ale
+
+== gate
+Agnes {grave}: It always is, after dark. Since old Anselm's eyes went there's nobody keeps it.
+Agnes {warm}: So it's a bed you want, and I've the one.
+-> topics
+
+== bed [set n0_room]
+Agnes {calm}: There's the room at the top. Small and cold, and its one window looks toward the abbey. Nobody else will have it.
+Agnes {warm}: A ha'penny, and I'll not haggle with a monk. Have you eaten today?
+* Not since morning. -> fed
+* An ale will do me. [drink] -> ale
+
+== fed [set n0_agnes_fed]
+(She ladles pottage into a bowl and puts it into your hands without asking.)
+Agnes {amused}: Say your grace quick, it's hot. And be in before the curfew bell at nine. After it the Keys is shut.
 -> topics
 
 == again
@@ -20,36 +43,61 @@ Agnes {amused}: Well? Warmer?
 -> topics
 
 == topics
+-> topics_close [if n0_room] [if n0_agnes_abbey] [if n0_agnes_window] [if n0_agnes_jankin]
 -> topics_late [if n0_room] [if n0_agnes_abbey]
 -> topics_first
 
 == topics_first
-* [if not n0_room] Have you a bed for the night, goodwife? -> bed
+* [if not n0_room] A bed, if you have one, goodwife. -> bed
 * [if not n0_agnes_abbey] What do you know of the abbey? -> abbey
 * An ale, if you would. [drink] -> ale
 
 == topics_late
+* [if not n0_agnes_window] Why will nobody else take the room? -> window
 * [if not n0_agnes_jankin] Is Jankin always like this? -> jankin
-* (Nod.) -> close
 * An ale, if you would. [drink] -> ale
 
-== bed [set n0_room]
-Agnes {calm}: There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
-Agnes {amused}: Nobody else will have it. It's yours for a ha'penny, and I'll not haggle with a monk.
-Agnes {grave}: Be in before the curfew bell at nine. After it the Keys is shut, and the street's no place to be.
--> topics
+== topics_close
+* [if overheard_n0_chatter_hob_agnes] [if not n0_agnes_overheard] I couldn't help hearing, about the Norwich man. -> overheard
+* (Nod.) -> close
+* An ale, if you would. [drink] -> ale
 
 == abbey [set n0_agnes_abbey]
 Agnes {cold}: I don't talk about that place under my own roof.
 (She glances at the shutters all the same, and lowers her voice.)
 Agnes {grave}: We've had lodgers go over there to see the relic. Paid me for two nights, and slept one.
-Agnes {grave, swallow}: I don't ask. I strip the bed and let it again.
+* What becomes of their things? -> abbey_things
+* (Say nothing.) -> topics
+
+== abbey_things [set n0_agnes_bag]
+Agnes {grave, swallow}: I strip the bed and let it again. Hob keeps the last one's bag behind his board.
+Agnes {weary}: Says the man will come back for it. Ask him, if you want to hear a grown man be a fool.
+-> topics
+
+== window [set n0_agnes_window]
+Agnes {wary}: They say it's cold. It is cold.
+Agnes {grave, glance}: The last one up there came down at midnight in his shirt, and sat by my fire till light. Said there was a lantern going about in their court, by the well.
+* What did he see? -> window_saw
+* (Say nothing.) -> window_quiet
+
+== window_saw
+Agnes {grave}: He wouldn't say, and I didn't ask. I don't look out of that window, brother.
+Agnes {wary}: Nor should you. Draw the shutter and say your prayers.
+-> topics
+
+== window_quiet
+Agnes {wary}: Draw the shutter, and say your prayers. That's what I'd do.
 -> topics
 
 == jankin [set n0_agnes_jankin]
 (She looks down the bench at him, and her face softens.)
 Agnes {warm}: Jankin? Every night. Hob puts him out at closing, and I put a crust in his pocket first.
 Agnes {sad}: One of these nights it'll be too cold for him out there. You see if it isn't.
+-> topics
+
+== overheard [set n0_agnes_overheard]
+Agnes {weary}: Then you heard Hob being a fool. He liked that Norwich man. They talked about their mothers.
+Agnes {sad}: Nobody comes back from over the way for a bag. I'd burn it, if he'd let me.
 -> topics
 
 == close

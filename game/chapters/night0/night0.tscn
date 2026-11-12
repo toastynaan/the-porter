@@ -48,6 +48,11 @@
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/kit.talk" id="n0_kit"]
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/gib.talk" id="n0_gib"]
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/margery.talk" id="n0_margery"]
+[ext_resource type="Script" path="res://game/talk/chatter.gd" id="chatter_gd"]
+[ext_resource type="Resource" path="res://game/chapters/night0/dialogue/chatter_jankin_walter.talk" id="n0_chatter_jankin_walter"]
+[ext_resource type="Resource" path="res://game/chapters/night0/dialogue/chatter_hob_agnes.talk" id="n0_chatter_hob_agnes"]
+[ext_resource type="Resource" path="res://game/chapters/night0/dialogue/chatter_roger_ralph.talk" id="n0_chatter_roger_ralph"]
+[ext_resource type="Resource" path="res://game/chapters/night0/dialogue/chatter_kit_margery.talk" id="n0_chatter_kit_margery"]
 
 [node name="Night0" instance=ExtResource("base")]
 editor_description = "Night 0, the Cross Keys (design doc, Night 0): the road in through Aldgate on the carter's wagon, the barred gate and Mab, the evening at the inn and the lane, the curfew bell, the squint scare, and the killing seen from the window. It inherits night_base.tscn."
@@ -393,7 +398,7 @@ conversation = ExtResource("n0_roger")
 
 
 [node name="Ralph" parent="People" instance=ExtResource("visitor_npc")]
-transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -53.0, 0.05, -3.4)
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -49.3, 0.05, 1.1)
 visitor = ExtResource("v_ralph")
 
 [node name="Talker" type="Area3D" parent="People/Ralph"]
@@ -401,6 +406,43 @@ script = ExtResource("talker_gd")
 phases = Array[int]([6])
 conversation = ExtResource("n0_ralph")
 
+
+[node name="Chatter" type="Node3D" parent="."]
+editor_description = "People talking among themselves, overheard when he comes near (game/talk/chatter.gd): once a night each."
+
+[node name="JankinWalter" type="Node3D" parent="Chatter" node_paths=PackedStringArray("people")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.35, 0.05, -3.25)
+script = ExtResource("chatter_gd")
+talk = ExtResource("n0_chatter_jankin_walter")
+people = [NodePath("../../People/Jankin"), NodePath("../../People/Walter")]
+radius = 3.5
+lose_at = 6.0
+
+[node name="HobAgnes" type="Node3D" parent="Chatter" node_paths=PackedStringArray("people")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.05, 0.05, 0.3)
+script = ExtResource("chatter_gd")
+talk = ExtResource("n0_chatter_hob_agnes")
+people = [NodePath("../../People/Hob"), NodePath("../../People/Agnes")]
+radius = 3.5
+lose_at = 6.0
+
+[node name="RogerRalph" type="Node3D" parent="Chatter" node_paths=PackedStringArray("people")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.85, 0.05, 0.75)
+script = ExtResource("chatter_gd")
+talk = ExtResource("n0_chatter_roger_ralph")
+people = [NodePath("../../People/Roger"), NodePath("../../People/Ralph")]
+radius = 3.5
+lose_at = 6.0
+
+[node name="KitMargery" type="Node3D" parent="Chatter" node_paths=PackedStringArray("people")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.3, 0.05, -5.3)
+script = ExtResource("chatter_gd")
+talk = ExtResource("n0_chatter_kit_margery")
+people = [NodePath("../../People/Kit"), NodePath("../../People/Woman")]
+together = 3.0
+
+[node name="Walk" parent="People/Woman"]
+leave_hour = 18.5
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
