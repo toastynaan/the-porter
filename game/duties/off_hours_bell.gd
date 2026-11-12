@@ -60,7 +60,8 @@ func _process(_delta: float) -> void:
 static func who_comes() -> StringName:
 	for f in FRIENDS:
 		var alive := not GameState.has_flag(StringName("died_" + String(f)))
-		var met := f != &"simon" or GameState.has_flag(&"saved_simon")
+		# Simon only answers the bell if the porter saved him on night 5.
+		var met: bool = f != &"simon" or GameState.get_flag(&"n5_saved") == &"simon"
 		if alive and met and GameState.trust_of(f) >= FRIEND_TRUST:
 			return f
 	return &"hugh" if GameState.suspicion < PRIOR_BELOW else &"cultist"

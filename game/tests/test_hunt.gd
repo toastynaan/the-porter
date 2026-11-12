@@ -154,6 +154,14 @@ func _run() -> void:
 	_check(bell.last == &"edwin" and p.global_position.distance_to(night.get_node(^"Marks/WakeCell").global_position) < 0.5,
 		"Edwin comes and walks him to his cell")
 	GameState.change_trust(&"edwin", -30)
+	# Simon is a friend only once the porter has saved him (night 5's choice, n5_saved=simon).
+	var simon_trust := GameState.trust_of(&"simon")
+	GameState.change_trust(&"simon", 50 - simon_trust)
+	_check(OffHoursBell.who_comes() == &"hugh", "Simon, never saved, doesn't come however much he trusts him")
+	GameState.set_flag(&"n5_saved", &"simon")
+	_check(OffHoursBell.who_comes() == &"simon", "saved on night 5, Simon comes to the bell")
+	GameState.flags.erase(&"n5_saved")
+	GameState.change_trust(&"simon", simon_trust - 50)
 	_check(OffHoursBell.who_comes() == &"hugh", "with no friend who trusts him 40, below 60 the prior comes")
 	p.place(bell.global_position + Vector3(0.6, 0, 0), 0.0)
 	await bell.ring(p)
