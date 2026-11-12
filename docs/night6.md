@@ -2,7 +2,7 @@
 
 The hunt, the Hungry Saint, the proof, the rite, fire, and the seven endings. The story is the design doc's ("The Hungry Saint", Night 6, Endings); the rules are `docs/mechanics.md`'s ("Night 6"). Numbers marked *mine* are starting values to tune. Every line is DRAFT.
 
-## The night (`game/nights/night6.tscn`, snow)
+## The night (`game/chapters/night6/night6.tscn`, snow)
 
 The routine is gone: no supper, no gate, no duties.
 
@@ -20,7 +20,7 @@ The routine is gone: no supper, no gate, no duties.
 
 **The Demon** (`DemonChoice`): at Dose 75+, from 22:30 *(mine)*, "the demon" comes for him with a light (the prior, coming to help). When it's within 3 m he can strike it, the only time he can (the Demon ending), or run.
 
-## The Hungry Saint (`game/saint/hungry_saint.gd`)
+## The Hungry Saint (`game/demon/hungry_saint.gd`)
 
 It wakes as the rite begins, its strength the count so far:
 

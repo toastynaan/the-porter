@@ -23,8 +23,8 @@ const SETTLE_TIME := 1.5
 
 
 func _ready() -> void:
-	var main: Node = load("res://game/render/main.tscn").instantiate()
-	main.set(&"level", load("res://game/nights/night3.tscn"))
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
+	main.set(&"level", load("res://game/chapters/night3/night3.tscn"))
 	add_child(main)
 	await get_tree().process_frame
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

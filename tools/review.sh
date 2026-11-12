@@ -14,5 +14,5 @@ if [ $# -ge 2 ]; then
 	ARGS+=("--asset=$2")
 fi
 "$GODOT" --path "$ROOT" --windowed --resolution 960x540 \
-	-- --level=res://game/lookdev/lookdev.tscn "${ARGS[@]}"
+	-- --level=res://game/dev/lookdev/lookdev.tscn "${ARGS[@]}"
 ls "$ROOT/art/_review/$ID"

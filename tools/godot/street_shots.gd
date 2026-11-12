@@ -17,7 +17,7 @@ const VIEWS := {
 func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	await _plan()
-	var main: Node = load("res://game/render/main.tscn").instantiate()
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
 	main.set(&"level", load("res://game/world/abbey/abbey.tscn"))
 	add_child(main)
 	await get_tree().process_frame

@@ -31,7 +31,7 @@ func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	GameState.night = 5
 	Talk.line_seconds = 0.05
-	_main = NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	_main = NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(_main)
 	_pilot = NightPilot.new(_main.get(&"current_level"), _check)
 	await _pilot.frames(5)

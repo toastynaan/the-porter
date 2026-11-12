@@ -130,7 +130,7 @@ func _night() -> NightPilot:
 		v.free()
 	NightPilot.fresh_night(TEST_SAVE)
 	GameState.phase = GameState.Phase.KNOCKS
-	var night: Node = load("res://game/nights/night3.tscn").instantiate()
+	var night: Node = load("res://game/chapters/night3/night3.tscn").instantiate()
 	var director := night.get_node(^"Director")
 	for beat in director.get_children():
 		if beat.name != &"Knocks":

@@ -1,6 +1,6 @@
 # Nights 1 to 5 (M13, M14)
 
-The first five nights as built: nights 1 and 2 teach the routine, and from night 3 each night breaks a step of it (the crypt breaks the round on night 3, there's no supper on night 4, night 5 opens with the dilemma). The story is the design doc's night-by-night script; the rules are `docs/mechanics.md`'s. Each night is a scene that inherits `night_base.tscn` (`game/nights/night1.tscn`, `night2.tscn`, `night3.tscn`); its Director runs one beat per child, in order. Every line a beat says is an inspector setting on that beat ("Name: words", or a line in brackets for what the porter notices), and every conversation is a file in `game/dialogue/night<N>/`. All of it is DRAFT. Times marked *mine* are starting values to tune.
+The first five nights as built: nights 1 and 2 teach the routine, and from night 3 each night breaks a step of it (the crypt breaks the round on night 3, there's no supper on night 4, night 5 opens with the dilemma). The story is the design doc's night-by-night script; the rules are `docs/mechanics.md`'s. Each night is a scene that inherits `night_base.tscn` (`game/chapters/night1/night1.tscn`, `night2.tscn`, `night3.tscn`); its Director runs one beat per child, in order. Every line a beat says is an inspector setting on that beat ("Name: words", or a line in brackets for what the porter notices), and every conversation is a file in `game/chapters/night<N>/dialogue/`. All of it is DRAFT. Times marked *mine* are starting values to tune.
 
 ## The shared beats, now set per night
 

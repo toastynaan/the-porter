@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n4_godric"
+text = "# DRAFT
+# Abbot Godric at dusk, in the chapter house (night 4, fog). He has ordered the house to fast and doubled the incense again.
+# Frail, pious and frightened; drugged hardest, he believes. Telling him about the crypt: he'll send Ranulf down to
+# bless it, so the cult hears of it (Suspicion +5).
+== start
+(The chapter house is thick with smoke. The abbot sits in his blanket, a psalter open on his knees, not reading it.)
+Godric: My son. Forgive us, there's no supper tonight. I've ordered the house to fast until it leaves us.
+-> topics
+
+== again
+(The abbot coughs into his sleeve for a long while.)
+Godric: Sit, child. Sit with me a little. I'd rather not be alone in here.
+-> topics
+
+== topics
+* [if not n4_godric_fast] Why have you ordered the fast, Father Abbot? -> fast
+* [if not n4_godric_seen] What have you seen, Father Abbot? -> seen
+* [if died_crypt_pilgrim] [if not n4_godric_crypt] I saw a bound man killed at the altar in the crypt. -> crypt
+
+== fast [set n4_godric_fast]
+Godric: Our Lord said some kinds go out only by prayer and fasting. So we'll pray, and we'll fast.
+Godric: And Ranulf will burn twice what he burned. It shall find nothing in this house to feed on.
+-> topics
+
+== seen [set n4_godric_seen]
+(He looks at the door before he answers.)
+Godric: It came again last night, to the foot of my bed, and counted.
+Godric: It had a brother's face, I think. I couldn't tell you whose.
+Godric: Pray for me, child. I'm too old to be this afraid.
+-> topics
+
+# He'll send Ranulf to bless the crypt: the cult hears of it (Suspicion +5).
+== crypt [set n4_godric_crypt] [suspicion 5]
+(His hand finds his crosier and holds it.)
+Godric: Under the saint's own altar? Then it's in the crypt with our saint. God help us.
+Godric: I'll have Ranulf go down tonight and bless every stone of it. Ranulf will know what to do.
+-> topics
+
+== leave
+Godric: Pray, my son. Pray and fast. It can't abide either.
+"

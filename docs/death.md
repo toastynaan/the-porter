@@ -4,7 +4,7 @@ How people die in front of the porter, what's left after, how he finds bodies an
 
 ## Try it
 
-Run `game/encounters/death_demo.tscn` (F6): night_base with three deaths, a hallucinated one, a body the cult moves, and the cult's book page in the crypt. `test_death` and `test_bodies` play them; `tools/m9_shots.sh` takes stills.
+Run `game/dev/encounters/death_demo.tscn` (F6): night_base with three deaths, a hallucinated one, a body the cult moves, and the cult's book page in the crypt. `test_death` and `test_bodies` play them; `tools/m9_shots.sh` takes stills.
 
 ## A death (`DeathScene`)
 

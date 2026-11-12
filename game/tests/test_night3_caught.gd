@@ -33,7 +33,7 @@ func _run() -> void:
 	GameState.ring_bell(&"matins")
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_options: PackedStringArray) -> int: return 0
-	_main = NightPilot.main_with("res://game/nights/night3.tscn")
+	_main = NightPilot.main_with("res://game/chapters/night3/night3.tscn")
 	add_child(_main)
 	await _start_pilot()
 	var p := _pilot.player

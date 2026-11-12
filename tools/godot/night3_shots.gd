@@ -17,7 +17,7 @@ func _ready() -> void:
 	NightPilot.fresh_night("user://night3_shots_save.tres")
 	Talk.line_seconds = 2.0
 	Talk.auto_choice = func(_options: PackedStringArray) -> int: return _answer if _answer >= 0 else (0 if _auto else -1)
-	var main: Node = NightPilot.main_with("res://game/nights/night3.tscn")
+	var main: Node = NightPilot.main_with("res://game/chapters/night3/night3.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

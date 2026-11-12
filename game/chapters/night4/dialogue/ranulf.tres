@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n4_ranulf"
+text = "# DRAFT
+# Ranulf at dusk, filling the censers in the choir (night 4, fog). Smooth. (He wears the horned costume. Nothing here says so.)
+# The abbot has doubled the incense again; Ranulf wants the porter in the choir at Matins, not by the door (from night 4
+# the door is where a man can keep out of the smoke). His remedy: taken (n3_took_remedy) or refused (n3_refused_remedy).
+# Asking what is kept in the crypt is the wrong question to the wrong brother (Suspicion +10): he knows who ran last night.
+== start
+(Ranulf is filling the censers in the choir from a leather bag. The fog has come in at the west door.)
+Ranulf: Porter. Mind the step. You can't see the floor tonight.
+-> topics
+
+== again
+(He goes on filling the censers. The chain clinks.)
+Ranulf: Porter. Again.
+-> topics
+
+== topics
+* [if not n4_ranulf_incense] Why so much incense, brother? -> incense
+* [if not n4_ranulf_remedy] What is in your remedy, brother? -> remedy
+* [if died_crypt_pilgrim] [if not n4_ranulf_crypt] What is kept in the crypt, brother? -> crypt
+
+== incense [set n4_ranulf_incense]
+Ranulf: Father Abbot has doubled it again. Four times what we burned at Martinmas.
+Ranulf: And your place at Matins is in the choir with us, porter. Not back by the door, where the smoke doesn't reach.
+-> topics
+
+== remedy [set n4_ranulf_remedy]
+-> remedy_took [if n3_took_remedy]
+-> remedy_refused [if n3_refused_remedy]
+-> remedy_plain
+
+== remedy_took
+Ranulf: Did it ease your head? It will, given time. I'll mix you another whenever you like.
+Ranulf: You've only to ask me. Not Thomas. Me.
+-> topics
+
+== remedy_refused
+Ranulf: You wouldn't take it last night. Thomas had a word in your ear. I saw. Thomas has a word for everyone.
+Ranulf: Your head will get worse, porter. Come to me when it does.
+-> topics
+
+== remedy_plain
+Ranulf: For your headaches. A little poppy, a little honey, nothing more. Come to me after Matins, if your head is bad.
+-> topics
+
+# The wrong question to the wrong brother (design doc): Suspicion +10.
+== crypt [set n4_ranulf_crypt] [suspicion 10]
+(The censer stops halfway to its hook.)
+Ranulf: The saint's bones, and the old abbots under them. The stair is kept locked. It's no part of your round.
+Ranulf: If you see a light below, porter, it's mine. I keep candles burning for the dead.
+-> topics
+
+== leave
+Ranulf: In the choir, porter. Not by the door.
+"

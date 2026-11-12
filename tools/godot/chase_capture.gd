@@ -38,8 +38,8 @@ func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--take="):
 			take = TAKES[arg.trim_prefix("--take=")]
-	var main: Node = load("res://game/render/main.tscn").instantiate()
-	main.level = load("res://game/encounters/hunt_demo.tscn")
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
+	main.level = load("res://game/dev/encounters/hunt_demo.tscn")
 	add_child(main)
 	await get_tree().physics_frame
 	for s: Stalker in get_tree().get_nodes_in_group(&"stalkers"):

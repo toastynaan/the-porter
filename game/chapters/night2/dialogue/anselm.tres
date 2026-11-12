@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_anselm"
+text = "# DRAFT
+# Anselm by the infirmary brazier at dusk (night 2). He heard the merchant carried past his door, or heard him leave cursing.
+# The knock with no one there frightens him more than anything; it's new to him. He hints at his guilt and won't tell.
+== start
+(Anselm in his chair by the brazier. He turns his face toward your step before you speak.)
+-> dead [if died_merchant]
+-> lived [if n1_merchant=admitted]
+-> plain
+
+== dead
+Anselm: They carried a man past my door this morning. Wet. I heard it run off him onto the flags.
+(His voice drops.)
+Anselm: Did you lock the door, porter? I told you. I told you to.
+-> topics
+
+== lived
+Anselm: I heard your merchant in the court this morning, cursing you for locking him in.
+(He's nearly smiling.)
+Anselm: Let him curse. Let them all curse you, and go home.
+-> topics
+
+== plain
+Anselm: The porter. You came through your first night. (He reaches for your hand, and holds it a moment.)
+-> topics
+
+== again
+Anselm: Still there? I can hear you breathing.
+-> topics
+
+== topics
+* [if n1_knock_no_one] [if not n2_anselm_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if not n2_anselm_lost] In your years at the gate, brother, did you ever lose a guest? -> lost
+
+== knock [set n2_anselm_knock]
+(His hands find the arms of his chair and hold on.)
+Anselm: And nobody there. In thirty years at that gate I never had that.
+Anselm: Pray, porter. It's all I know to tell you.
+-> topics
+
+== lost [set n2_anselm_lost]
+(A long silence. His hands tighten on the arms of the chair.)
+Anselm: I'm blind, porter. I don't see anything now.
+Anselm: I don't see anything.
+-> topics
+
+== leave
+Anselm: Lock them in, porter.
+"

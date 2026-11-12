@@ -72,7 +72,7 @@ func _ready() -> void:
 	NightPilot.fresh_night("user://intro_shots_save.tres")
 	GameState.night = 0
 	GameState.chapter = 0
-	_main = NightPilot.main_with("res://game/nights/night0.tscn")
+	_main = NightPilot.main_with("res://game/chapters/night0/night0.tscn")
 	add_child(_main)
 	var night: Node = _main.get(&"current_level")
 	var ride := night.get_node(^"Director/Ride")

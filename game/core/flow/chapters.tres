@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="ChapterList" format=3 uid="uid://d014xlri4obgu"]
+
+[ext_resource type="Script" uid="uid://cy6fgvh2h3uat" path="res://game/core/flow/chapter.gd" id="1_chapter"]
+[ext_resource type="Script" uid="uid://fhpqnygnyhjh" path="res://game/core/flow/chapter_list.gd" id="2_list"]
+
+[sub_resource type="Resource" id="Chapter_night0"]
+script = ExtResource("1_chapter")
+id = &"night0"
+heading = "The evening before"
+title = "The Cross Keys"
+card = "In the year of grace 1424, on the eve of Saint Martin, a young brother named Alric came into London by the carter's road, sent from a small house in the country to keep the gate of the abbey within the walls. The gate was barred when he came to it, and no one answered, and he lay that night at the Cross Keys across the lane."
+scene = "res://game/chapters/night0/night0.tscn"
+
+[sub_resource type="Resource" id="Chapter_day1"]
+script = ExtResource("1_chapter")
+id = &"day1"
+heading = "The first day"
+title = "The Tour"
+card = "On the feast of Saint Martin the new porter was shown his duties by Brother Thomas, the infirmarian, and by Brother Anselm, who had kept the gate before him until his eyes failed. The day was grey. The chronicle records that nothing was amiss."
+scene = "res://game/chapters/day1/day1.tscn"
+
+[sub_resource type="Resource" id="Chapter_night1"]
+script = ExtResource("1_chapter")
+id = &"night1"
+night = 1
+heading = "The first night"
+title = "The New Porter"
+card = "That evening, rain from the west. The new porter kept his first night at the gate, and the chronicle has nothing to tell of it but that the house was at peace."
+scene = "res://game/chapters/night1/night1.tscn"
+
+[sub_resource type="Resource" id="Chapter_night2"]
+script = ExtResource("1_chapter")
+id = &"night2"
+night = 2
+heading = "The second night"
+title = "The Bell"
+card = "The twelfth day of November, and rain again. Of this night the chronicle says only that the bell was rung late for Matins, and that in the morning the abbot called the house to prayer against the Enemy."
+scene = "res://game/chapters/night2/night2.tscn"
+
+[sub_resource type="Resource" id="Chapter_night3"]
+script = ExtResource("1_chapter")
+id = &"night3"
+night = 3
+heading = "The third night"
+title = "The Oven"
+card = "The thirteenth day, clear and cold. The sacrist's accounts for this week show a great quantity of candles bought from Ralph the chandler, more than the house had bought in any month before."
+scene = "res://game/chapters/night3/night3.tscn"
+
+[sub_resource type="Resource" id="Chapter_night4"]
+script = ExtResource("1_chapter")
+id = &"night4"
+night = 4
+heading = "The fourth night"
+title = "Edwin"
+card = "The fourteenth day. A fog came up off the river so thick that the brothers could not see one another across the cloister. By the abbot's order the house fasted that evening, against the demon."
+scene = "res://game/chapters/night4/night4.tscn"
+
+[sub_resource type="Resource" id="Chapter_night5"]
+script = ExtResource("1_chapter")
+id = &"night5"
+night = 5
+heading = "The fifth night"
+title = "The Granary"
+card = "The fifteenth day, clear. The prior began an inquiry into the deaths in the house. The chronicle sets down his questions, but not their answers."
+scene = "res://game/chapters/night5/night5.tscn"
+
+[sub_resource type="Resource" id="Chapter_night6"]
+script = ExtResource("1_chapter")
+id = &"night6"
+night = 6
+heading = "The sixth night"
+title = "The Hunt"
+card = "The sixteenth day. Snow. Here the hand changes, and the chronicle of that year is taken up again only at Candlemas, by another brother."
+scene = "res://game/chapters/night6/night6.tscn"
+
+[resource]
+script = ExtResource("2_list")
+chapters = Array[ExtResource("1_chapter")]([SubResource("Chapter_night0"), SubResource("Chapter_day1"), SubResource("Chapter_night1"), SubResource("Chapter_night2"), SubResource("Chapter_night3"), SubResource("Chapter_night4"), SubResource("Chapter_night5"), SubResource("Chapter_night6")])

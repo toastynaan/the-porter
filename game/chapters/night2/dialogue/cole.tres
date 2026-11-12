@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_cole"
+text = "# DRAFT
+# Cole keeping the gate at dusk (night 2). Silent: a word or two at most, and a look.
+# If the merchant drowned, there's pond weed drying on his boots: he helped pull him out, or so it would seem.
+== start
+(Cole in the gate's arch, as he was last night. He looks at you a long moment.)
+-> weed [if died_merchant]
+-> topics
+
+== weed
+(There's green weed from the pond drying on his boots.)
+-> topics
+
+== again
+(Cole looks at you and says nothing.)
+-> topics
+
+== topics
+* [if not n2_cole_take] I'll take the gate after supper. -> take
+* [if not n2_cole_today] Did anyone come to the gate today? -> today
+
+== take [set n2_cole_take]
+Cole: After supper.
+-> topics
+
+== today [set n2_cole_today]
+(He shakes his head once.)
+-> topics
+
+== leave
+(Cole watches you go.)
+"

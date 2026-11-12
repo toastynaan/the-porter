@@ -41,7 +41,7 @@ func _run() -> void:
 	Settings.finished = false
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_options: PackedStringArray) -> int: return _answer[0] if _answer[0] >= 0 else 0
-	_main = load("res://game/render/main.tscn").instantiate()
+	_main = load("res://game/core/render/main.tscn").instantiate()
 	add_child(_main)
 	_flow = _main.get_node(^"Game")
 	_flow.card.seconds = 0.3

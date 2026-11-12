@@ -53,7 +53,7 @@ func _ready() -> void:
 	NightPilot.fresh_night("user://intro_film_save.tres")
 	GameState.night = 0
 	GameState.chapter = 0
-	var main := NightPilot.main_with("res://game/nights/night0.tscn")
+	var main := NightPilot.main_with("res://game/chapters/night0/night0.tscn")
 	add_child(main)
 	var night: Node = main.get(&"current_level")
 	if OS.get_cmdline_user_args().has("--part=gate"):

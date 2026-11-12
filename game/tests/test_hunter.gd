@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func _run() -> void:
-	var demo: Node3D = load("res://game/encounters/hunt_demo.tscn").instantiate()
+	var demo: Node3D = load("res://game/dev/encounters/hunt_demo.tscn").instantiate()
 	(demo.get_node(^"Stalker") as Stalker).active = false
 	add_child(demo)
 	_player = demo.get_node(^"Abbey/Player")

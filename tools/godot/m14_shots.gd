@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func _night4() -> void:
-	var night := await _load(4, "res://game/nights/night4.tscn")
+	var night := await _load(4, "res://game/chapters/night4/night4.tscn")
 	var p := _pilot.player
 	GameState.hour = 16.6
 	var edwin := night.get_node(^"Brothers/Edwin") as Brother
@@ -33,7 +33,7 @@ func _night4() -> void:
 	_say("Edwin", _line(night, "Director/Edwin", "lines"))
 	await _shot("n4_edwin_whispers", 1.2)
 	GameState.hour = 19.0
-	var mab := _visitor(night, "res://game/gate/visitors/mab_n4.tres", _pilot.mark("Porch"))
+	var mab := _visitor(night, "res://game/chapters/night4/visitors/mab_n4.tres", _pilot.mark("Porch"))
 	p.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	_look_at(p, mab.face_position())
 	_say("Mab", (mab.visitor as Visitor).greeting)
@@ -69,7 +69,7 @@ func _night4() -> void:
 	await _shot("n4_edwin_in_the_charnel_house", 1.0)
 	var hunters: Array[Hunter] = []
 	for m in ["Marks/HunterAhead", "Marks/HunterBehind"]:
-		var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+		var h := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 		h.transform = (night.get_node(NodePath(m)) as Marker3D).global_transform
 		night.add_child(h)
 		h.stand_still()
@@ -105,7 +105,7 @@ func _night4() -> void:
 
 
 func _night5() -> void:
-	var night := await _load(5, "res://game/nights/night5.tscn")
+	var night := await _load(5, "res://game/chapters/night5/night5.tscn")
 	var p := _pilot.player
 	GameState.hour = 16.2
 	var thomas := night.get_node(^"Brothers/Thomas") as Brother
@@ -127,7 +127,7 @@ func _night5() -> void:
 	death.turn_to(p.global_position)
 	await _shot("n5_the_masked_man_turns", 0.4)
 	GameState.hour = 20.5
-	var sergeant := _visitor(night, "res://game/gate/visitors/sergeant_n5.tres", _pilot.mark("Porch"))
+	var sergeant := _visitor(night, "res://game/chapters/night5/visitors/sergeant_n5.tres", _pilot.mark("Porch"))
 	p.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	_look_at(p, sergeant.face_position())
 	_say("Sergeant", (sergeant.visitor as Visitor).greeting)
@@ -148,7 +148,7 @@ func _night5() -> void:
 	_look_at(p, grain.global_position + Vector3.UP * 0.4)
 	_say("", _line(night, "Director/Granary", "pilgrim_lines"))
 	await _shot("n5_the_grain", 1.0)
-	var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var h := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	h.transform = (night.get_node(^"Marks/GranaryHunter") as Marker3D).global_transform
 	night.add_child(h)
 	h.stand_still()

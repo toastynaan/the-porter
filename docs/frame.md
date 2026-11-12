@@ -10,18 +10,18 @@ New Game plays the chapters in order, each opened by its card: night 0 (the Cros
 
 ## Chapters
 
-`game/flow/chapters.tres` lists the chapters (`Chapter` resources): an id, the night number, the card's heading and title, the chronicle's paragraph for the card, and the scene. Edit the cards there.
+`game/core/flow/chapters.tres` lists the chapters (`Chapter` resources): an id, the night number, the card's heading and title, the chronicle's paragraph for the card, and the scene. Edit the cards there.
 
 | Chapter | Card | Scene |
 | --- | --- | --- |
-| Night 0 | The evening before: The Cross Keys | `game/nights/night0.tscn` |
-| Day 1 | The first day: The Tour | `game/nights/day1.tscn` |
-| Night 1 | The first night: The New Porter | `game/nights/night1.tscn` |
-| Night 2 | The second night: The Bell | `game/nights/night2.tscn` |
-| Night 3 | The third night: The Oven | `game/nights/night3.tscn` |
-| Night 4 | The fourth night: Edwin | `game/nights/night4.tscn` |
-| Night 5 | The fifth night: The Granary | `game/nights/night5.tscn` |
-| Night 6 | The sixth night: The Hunt | `game/nights/night6.tscn` |
+| Night 0 | The evening before: The Cross Keys | `game/chapters/night0/night0.tscn` |
+| Day 1 | The first day: The Tour | `game/chapters/day1/day1.tscn` |
+| Night 1 | The first night: The New Porter | `game/chapters/night1/night1.tscn` |
+| Night 2 | The second night: The Bell | `game/chapters/night2/night2.tscn` |
+| Night 3 | The third night: The Oven | `game/chapters/night3/night3.tscn` |
+| Night 4 | The fourth night: Edwin | `game/chapters/night4/night4.tscn` |
+| Night 5 | The fifth night: The Granary | `game/chapters/night5/night5.tscn` |
+| Night 6 | The sixth night: The Hunt | `game/chapters/night6/night6.tscn` |
 
 The card is a chronicle page: the heading in small capitals, the title in blackletter, a decorated initial in old-blood red, and a few lines in the chronicler's voice. It goes on when you press E, or by itself after 14 s *(mine)*. Its page then fades into the dark over 0.6 s *(mine)*, the chapter loads under black, and the chapter's first beat brings the world up out of it (waking in the cell, the morning at the inn, the wagon setting off), so the card never sits frozen while the night loads. The chronicle's dates put night 0 on the eve of Saint Martin, 10 November 1424 *(mine)*, so day 1 is Martinmas and night 6 is the 16th.
 
@@ -29,7 +29,7 @@ The card is a chronicle page: the heading in small capitals, the title in blackl
 
 ## Every night shares one scene
 
-`game/nights/night_base.tscn` holds what every night shares: the abbey, the brothers and the lane's people at their places, the duties, lamps and marks, the candle clock, the gate and the bell, the hunter and the demon. Each night inherits it and adds its own `Director` and beats, its conversations (overriding each `Talker`'s `conversation`) and its own things. Night 3 is `night3.tscn`: the base, the Director's eleven beats, the thirteen conversations and the spawn for its quiet save.
+`game/chapters/common/night_base.tscn` holds what every night shares: the abbey, the brothers and the lane's people at their places, the duties, lamps and marks, the candle clock, the gate and the bell, the hunter and the demon. Each night inherits it and adds its own `Director` and beats, its conversations (overriding each `Talker`'s `conversation`) and its own things. Night 3 is `night3.tscn`: the base, the Director's eleven beats, the thirteen conversations and the spawn for its quiet save.
 
 ## What carries over
 
@@ -52,7 +52,7 @@ A save is a snapshot of the whole state (`GameState.snapshot()`) and the name of
 
 ## Menus
 
-All in the manuscript style: parchment pages, blackletter only for titles, EB Garamond for the rest (`game/ui/manuscript.gd`, `game/ui/menus/`).
+All in the manuscript style: parchment pages, blackletter only for titles, EB Garamond for the rest (`game/core/ui/manuscript.gd`, `game/core/ui/menus/`).
 
 - **Pause:** Esc or Start. The night stops (the tree pauses, lines wait, and every beat and scene that counts time stops counting: `PlayTime`) and the mouse is free. Resume, Settings, How to Play, Quit to the Title.
 - **Settings** apply at once and are saved when you leave the page (`user://settings.cfg`, the `Settings` autoload): field of view 60–90°, look sensitivity, invert look, volume, crouch held or toggled, subtitle size (small, medium, large), a dark band behind subtitles, less motion (no head bob, almost no lantern sway, half the stumble), guidance (the duty flame) and a faster clock (off by default: 2 minutes an hour instead of 3) *(mine)*.
@@ -61,8 +61,8 @@ All in the manuscript style: parchment pages, blackletter only for titles, EB Ga
 ## The almost-no HUD
 
 - **The centre dot** stays. It no longer turns into a hand.
-- **The outline:** whatever E would use gets a thin, pale outline while you look at it within reach (2 m). It's drawn over the thing's meshes as a slightly bigger hull (`game/ui/outline.gdshader`), about 2 render pixels thick at any distance. A `Duty` or a `HidingSpot` names the prop it stands for in its `outline` list; a person you can talk to is outlined whole.
-- **The duty glyph:** a small, dim candle flame, about 1° across, over the one person or thing the current duty needs: the nearest wanted `Duty` (or anyone a beat adds to the `glyph_targets` group) within 10 m and in clear view. Never during a chase, while hiding or talking, with the ledger or satchel up, or with guidance off (`game/ui/duty_glyph.gd`).
+- **The outline:** whatever E would use gets a thin, pale outline while you look at it within reach (2 m). It's drawn over the thing's meshes as a slightly bigger hull (`game/core/ui/outline.gdshader`), about 2 render pixels thick at any distance. A `Duty` or a `HidingSpot` names the prop it stands for in its `outline` list; a person you can talk to is outlined whole.
+- **The duty glyph:** a small, dim candle flame, about 1° across, over the one person or thing the current duty needs: the nearest wanted `Duty` (or anyone a beat adds to the `glyph_targets` group) within 10 m and in clear view. Never during a chase, while hiding or talking, with the ledger or satchel up, or with guidance off (`game/core/ui/duty_glyph.gd`).
 
 ## The porter's body
 

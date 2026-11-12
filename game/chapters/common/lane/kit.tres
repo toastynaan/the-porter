@@ -1,0 +1,186 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"lane_kit"
+text = "# DRAFT
+# Kit selling candles at the abbey gate at dusk, nights 1 to 6. She notices the sacrist buying more and more (the crypt's candles; nothing here says so).
+# Her own flags: lane_kit_<night> (talked to her tonight), lane_kit_n<night>_<topic> (asked); lane_kit_n4_look if he promises to look for the candles.
+== start
+-> start_known [if talked_n0_kit]
+-> start_new
+
+== start_known
+Kit: Porter! You're still here. I bet Gib a farthing you'd run.
+-> tonight
+
+== start_new
+(A girl with a tray of candles on a strap round her neck.)
+Kit: Candles, porter? I'm Kit. Ralph the chandler's girl. I'm at your gate most dusks.
+-> tonight
+
+== again
+-> back [if night=1] [if lane_kit_1]
+-> back [if night=2] [if lane_kit_2]
+-> back [if night=3] [if lane_kit_3]
+-> back [if night=4] [if lane_kit_4]
+-> back [if night=5] [if lane_kit_5]
+-> back [if night=6] [if lane_kit_6]
+-> hello
+
+== hello
+Kit: Porter!
+-> tonight
+
+== back
+Kit: You again! You can't buy anything, can you. You're a monk.
+-> ask
+
+== tonight
+-> n1 [if night=1]
+-> n2 [if night=2]
+-> n3 [if night=3]
+-> n4 [if night=4]
+-> n5 [if night=5]
+-> n6 [if night=6]
+
+== ask
+-> n1_ask [if night=1]
+-> n2_ask [if night=2]
+-> n3_ask [if night=3]
+-> n4_ask [if night=4]
+-> n5_ask [if night=5]
+-> n6_ask [if night=6]
+
+# Night 1
+== n1 [set lane_kit_1]
+Kit: Well? What's it like in there? Did you see the finger? Is it real?
+-> n1_ask
+
+== n1_ask
+* [if not lane_kit_n1_finger] Not yet. -> n1_notyet
+* [if not lane_kit_n1_buyers] Who buys your candles? -> n1_buyers
+
+== n1_notyet [set lane_kit_n1_finger]
+Kit: Not yet! You live there. I'd have seen it the first morning. I'd have touched it.
+-> n1_ask
+
+== n1_buyers [set lane_kit_n1_buyers]
+Kit: Brother Ranulf, mostly. He takes the whole tray most dusks now.
+Kit: Father says they used to make one candle last a week over there.
+-> n1_ask
+
+# Night 2
+== n2 [set lane_kit_2]
+Kit: Brother Ranulf took the whole tray again at noon. I had to go back for more, just to have something to stand here with.
+-> n2_pond [if died_merchant]
+-> n2_ask
+
+== n2_pond
+Kit: Is it true about the man in your fishpond? Margery says he was in there all night with his eyes open.
+-> n2_ask
+
+== n2_ask
+* [if not lane_kit_n2_what] What does he want with so many? -> n2_what
+
+== n2_what [set lane_kit_n2_what]
+Kit: I asked him. He said, for the saint.
+Kit: The saint must be awful dark down there, to want all that.
+-> n2_ask
+
+# Night 3
+== n3 [set lane_kit_3]
+Kit: He wants them by the dozen now, Father says. Not by the pound. By the dozen, like eggs.
+-> n3_tower [if died_warner]
+-> n3_ask
+
+== n3_tower
+Kit: Did you really find him? The brother in the tower? Father says I'm not to ask you.
+-> n3_ask
+
+== n3_ask
+* [if died_warner] [if not lane_kit_n3_tower] I did. -> n3_yes
+* [if died_warner] [if not lane_kit_n3_tower] Your father's right. -> n3_hush
+* [if not lane_kit_n3_dozen] What does your father make of it? -> n3_dozen
+
+== n3_yes [set lane_kit_n3_tower]
+(For once, she says nothing at all.)
+Kit: Was he heavy? Sorry. I don't know why I asked that.
+-> n3_ask
+
+== n3_hush [set lane_kit_n3_tower]
+Kit: He always is. It's very tiresome.
+-> n3_ask
+
+== n3_dozen [set lane_kit_n3_dozen]
+Kit: He says it's good for trade and he doesn't like it. Both at once. That's Father.
+-> n3_ask
+
+# Night 4
+== n4 [set lane_kit_4]
+Kit: Eleven extra this week, Father says. On top of the usual. He writes it all down, he can't help it.
+Kit: Where do they put them all? You'd know. You walk round in the night.
+-> n4_ask
+
+== n4_ask
+* [if not lane_kit_n4_where] I don't know. -> n4_dunno
+* [if not lane_kit_n4_where] I'll look. [set lane_kit_n4_look] -> n4_look
+
+== n4_dunno [set lane_kit_n4_where]
+Kit: A porter who doesn't know where the candles go. Father would laugh.
+-> n4_ask
+
+== n4_look [set lane_kit_n4_where]
+Kit: You'll tell me? Promise. Not Father. Just me.
+-> n4_ask
+
+# Night 5
+== n5 [set lane_kit_5]
+Kit: Brother Ranulf didn't come for any candles today. First day since Michaelmas.
+Kit: Father says they must have all they need, now. He said it funny.
+-> n5_dead [if died_edwin]
+-> n5_ask
+
+== n5_dead
+Kit: And Father says another brother's dead. He won't tell me which.
+-> n5_ask
+
+== n5_ask
+* [if died_edwin] [if not lane_kit_n5_q] It was Edwin. -> n5_edwin
+* [if not lane_kit_n5_q] Go home before dark, Kit. -> n5_home
+
+== n5_edwin [set lane_kit_n5_q]
+Kit: Edwin. I didn't know his name.
+(She looks down at the tray.)
+Kit: I should have asked him his name.
+-> n5_ask
+
+== n5_home [set lane_kit_n5_q]
+Kit: I always go home before dark. You sound like Father.
+-> n5_ask
+
+# Night 6
+== n6 [set lane_kit_6]
+Kit: Father's shut the shop and he's on his knees. He never prays. Not even at Easter.
+Kit: You'll be all right, won't you? Porter?
+-> n6_ask
+
+== n6_ask
+* [if not lane_kit_n6_q] Go home, Kit. -> n6_home
+* [if not lane_kit_n6_q] I'll be all right. -> n6_fine
+
+== n6_home [set lane_kit_n6_q]
+Kit: I'm going.
+(She doesn't move.)
+Kit: I'm going.
+-> n6_ask
+
+== n6_fine [set lane_kit_n6_q]
+Kit: You're a terrible liar, porter. For a monk.
+-> n6_ask
+
+== leave
+Kit: See you tomorrow, porter!
+"

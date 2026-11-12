@@ -45,7 +45,7 @@ func _run() -> void:
 	_block(Vector3(13.65, 0, 0), Vector3(0.7, 3.0, 2.0))
 	_player = (load("res://game/player/player.tscn") as PackedScene).instantiate()
 	add_child(_player)
-	_hunter = (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate()
+	_hunter = (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate()
 	_hunter.dormant = true
 	add_child(_hunter)
 	var ear := Ear.new()

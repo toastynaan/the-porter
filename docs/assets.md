@@ -157,7 +157,7 @@ Real since the props pass (see "The abbey's props" above), all but: `prop_tree_a
 
 `candle.tscn` and `lamp.tscn` in the same folder are lights with scripts, one scene each, with real models (`prop_candle`, `prop_lamp`). The candle clock on the porter's desk still builds its own cylinder (`CandleClock`). The crypt's ring of twelve rite candles (`RiteCandles` in `night_base.tscn`) is twelve `candle.tscn`.
 
-Windfall apples, throwing stones, cups, bones and the supper bread (`Windfalls`, `Throwables` and `Duties/Bread` in `night_base.tscn`) are the `prop_item_*` models under a `Pickup` or a duty; a thing in flight is still a ball (`Thrown`); the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`), and so do night 6's flames (`Fire`). The Hungry Saint is `chr_saint` worn by `HungrySaint` (`game/saint/`).
+Windfall apples, throwing stones, cups, bones and the supper bread (`Windfalls`, `Throwables` and `Duties/Bread` in `night_base.tscn`) are the `prop_item_*` models under a `Pickup` or a duty; a thing in flight is still a ball (`Thrown`); the false door, the self-lit candle and the hallucinations build their own pieces in code (`docs/drug.md`), and so do night 6's flames (`Fire`). The Hungry Saint is `chr_saint` worn by `HungrySaint` (`game/demon/`).
 
 **Still built in place** (part of a building, or one of a kind): the water in the mill race and fishpond, the bends at each end of the lane, and the skyline. The hearths, the latrine seat, the plank closet over the hidden stair and the crypt rails are props now (`prop_hearth_kitchen`, `prop_hearth_warming`, `prop_latrine_seat`, `prop_cellar_closet`, `prop_crypt_rail`); the Blocks they replaced stay in their area scenes, hidden, as collision. New in the props pass: `prop_abbot_seat` (chapter house, where a bench was), `prop_lectern` (the refectory's east end), `prop_churchyard_cross` (the graveyard, north of the charnel house).
 
@@ -209,7 +209,7 @@ Each person is one scene in `game/characters/`: the greybox `Figure` (build from
 | `chr_traveller` | The traveller on the wagon: lean, road-worn | A pack |
 | `chr_warden` | The warden at Aldgate on the road in: solid, a dark cloak over a leather jerkin | A tall staff, and a lit lantern |
 | `chr_townswoman` | A woman in a doorway on the road in: a plain dark dress | None |
-| `chr_cat` | The abbey cat, black, 0.45 m, eyes that catch the light (worn by `game/npc/cat.tscn`) | None |
+| `chr_cat` | The abbey cat, black, 0.45 m, eyes that catch the light (worn by `game/people/cat.tscn`) | None |
 | `chr_saint` | The Hungry Saint: about 2.6 m, too thin, bent forward, no horns, unshaded black | None |
 | `chr_body` | A body: the ragdoll rig (`game/ragdoll`) in the victim's colours, standing until it falls (`Corpse`) | None |
 

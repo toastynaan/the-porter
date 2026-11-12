@@ -33,7 +33,7 @@ func _ready() -> void:
 	NightPilot.fresh_night("user://props_shots_save.tres")
 	GameState.night = number
 	GameState.chapter = number + 1
-	var main := NightPilot.main_with("res://game/nights/night%d.tscn" % number)
+	var main := NightPilot.main_with("res://game/chapters/night%d/night%d.tscn" % [number, number])
 	add_child(main)
 	var night: Node = main.get(&"current_level")
 	await get_tree().create_timer(1.0).timeout

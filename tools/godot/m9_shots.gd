@@ -18,7 +18,7 @@ func _ready() -> void:
 	GameState.hour = 22.0
 	Talk.line_seconds = 3.0
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	_main = NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	_main = NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(_main)
 	await get_tree().create_timer(1.0).timeout
 	GameState.hour = 22.0

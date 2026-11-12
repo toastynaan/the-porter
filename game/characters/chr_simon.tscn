@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
 
 [sub_resource type="BoxMesh" id="Mesh_rag"]
 size = Vector3(0.14, 0.03, 0.12)

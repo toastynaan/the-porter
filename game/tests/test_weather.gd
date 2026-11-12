@@ -23,7 +23,7 @@ func _ready() -> void:
 func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	Talk.line_seconds = 0.05
-	var main := NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	var main := NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
 	await _pilot.frames(5)
@@ -31,7 +31,7 @@ func _run() -> void:
 	var p := _pilot.player
 	(night.get_node(^"Hallucinations") as Hallucinations).active = false
 	var weather: Weather = night.get_node(^"Weather")
-	var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var h := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	h.dormant = true
 	night.add_child(h)
 	await _pilot.frames(2)

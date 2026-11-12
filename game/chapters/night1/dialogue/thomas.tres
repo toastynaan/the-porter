@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_thomas"
+text = "# DRAFT
+# Thomas at dusk, at his herbs in the infirmary (night 1). Kind; he goes over the night's routine.
+# The killing seen from the Keys (n0_saw_killing): a dream, or the kitchen's beast being bled. Never the truth.
+# The guesthouse key: truthful, but he leaves locking to the porter and makes it sound unkind.
+# Anselm: an old man who frightens easily. If Anselm warned him on the tour, Thomas asks what he said.
+== start
+(Thomas at his bench, a mortar in his lap, grinding something that smells green. He smiles when he sees you.)
+Thomas: You slept. Good. The first night is the longest; after that your body learns it.
+Thomas: Supper at the bell, then the gate from Cole. Bar it. Matins at the black ring, then your round, then wait for Lauds.
+-> topics
+
+== again
+Thomas: Still here? The supper bell won't be long.
+-> topics
+
+== topics
+* [if n0_saw_killing] [if not n1_thomas_well] Last night, from the Keys, I saw a man killed by the well. -> well
+* [if not n1_thomas_key] What should I do with the guesthouse key? -> key
+* [if not n1_thomas_anselm] How is Brother Anselm keeping? -> anselm
+
+== well [set n1_thomas_well]
+(He hears you out without stopping the pestle. Then he stops.)
+-> well_drunk [if n0_saw_killing=drunk]
+-> well_sober
+
+== well_drunk
+Thomas: You came to us this morning with Agnes's ale still in your eyes. At midnight, in rain, from the top of the Keys?
+Thomas: They bled a beast for the kitchen by the well last night. A lantern, a knife, a thing that kicks.
+Thomas: I'd have dreamed the same. But I'd not carry it to the abbot. He sleeps badly enough as it is.
+-> topics
+
+== well_sober
+Thomas: From the top of the Keys you look down into our court, it's true. At midnight, in the rain, after a day on a cart.
+Thomas: The kitchen bled a beast by the well in the night, so it would hang by morning. A knife over a thing that kicks.
+Thomas: I can see how it looked. I'd not carry it to the abbot, though. He sleeps badly enough as it is.
+-> topics
+
+== key [set n1_thomas_key]
+Thomas: Keep it on your ring with the gate's. Show a guest to his bed, and the rest is your judgement.
+Thomas: Anselm locked them in at night. Some guests took that ill, to be shut up like sheep.
+Thomas: Do as you think best. It's your gate now.
+-> topics
+
+== anselm [set n1_thomas_anselm]
+Thomas: His eyes have gone white, both of them. I keep him here, where it's warm.
+Thomas: He frightens easily now, and he talks. Old porters' tales. Don't let him put them in your head.
+-> anselm_ask [if d1_anselm_warned]
+-> topics
+
+== anselm_ask
+Thomas: Did he say something to you this morning, after I'd gone?
+* He told me not to let them in after the bell. [trust thomas 5] -> anselm_told
+* He only wished me well. -> anselm_kept
+
+== anselm_told [set n1_thomas_whisper=told]
+(He nods slowly, and goes back to his mortar.)
+Thomas: Don't let them in after the bell. Yes. He says it to the walls, most nights. Poor soul.
+-> topics
+
+== anselm_kept [set n1_thomas_whisper=kept]
+(He looks at you a moment longer than he needs to.)
+Thomas: Well. He likes you, then.
+-> topics
+
+== leave
+Thomas: Eat well at supper, brother. You'll be glad of it by Matins.
+"

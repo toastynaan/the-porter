@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n3_hugh"
+text = "# DRAFT
+# Prior Hugh at dusk, on the north walk (night 3). Lean, upright, a scarred jaw; he writes everything on his wax tablet.
+# Harsh, and he suspects the new porter. He asked at dawn where he was in the night; now he asks again. (He's looking into the deaths. Nothing here says so.)
+== start
+(The prior steps out from behind a pillar into your path, his wax tablet open in his hand.)
+Prior Hugh: Porter. This morning I asked you where you were in the night. I'll ask again.
+Prior Hugh: A man who tells the truth tells it the same way twice. Where were you?
+* I'll tell you what I saw, Father Prior. -> told
+* I was at the gate, Father Prior. -> gate
+* What do you want with me, Father Prior? -> wants
+
+== again
+(The prior writes on his wax tablet and doesn't look up.)
+Prior Hugh: I've nothing more for you, porter. Go to your supper.
+-> end
+
+# Telling the prior anything: Suspicion +10, because Ranulf overhears (design doc).
+== told [set n3_told_prior] [suspicion 10]
+(You tell him what you saw in the night: the rope, what fell past you, the rest.)
+(He writes it all on the wax. Behind you, in the church, a door closes softly.)
+Prior Hugh: Tell no one else what you've told me. No one. Now go.
+-> end
+
+== gate
+Prior Hugh: At the gate. All night, at the gate. And yet you were in the tower when Bede came down, and nobody else was.
+Prior Hugh: The porter is first to everything, it seems.
+(He writes one word on the wax, and steps aside to let you pass.)
+-> end
+
+== wants
+Prior Hugh: I want to know who walks this house at night. Since you came to that gate, a brother has hanged in our tower.
+Prior Hugh: I'm not a fool, porter, whatever the abbot believes. Go to your supper. I'll be watching you at it.
+-> end
+
+== leave
+Prior Hugh: Walk away, then. I'll write that down too.
+"

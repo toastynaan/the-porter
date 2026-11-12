@@ -4,7 +4,7 @@ extends RefCounted
 ## wants them, counts the brothers, walks the round past the demon, goes down
 ## to the crypt. Times are simulated seconds (tests run at a fixed rate).
 
-const GateVisits := preload("res://game/night/gate_visits_beat.gd")
+const GateVisits := preload("res://game/chapters/common/routine/gate_visits_beat.gd")
 ## The grille's answers, as the porter is offered them.
 const GATE_ADMIT: String = GateVisits.ADMIT
 const GATE_DONT_ASK: String = GateVisits.DONT_ASK
@@ -27,7 +27,7 @@ static func fresh_night(save_path: String) -> void:
 
 ## main.tscn with `level` to play on its own (no title).
 static func main_with(level_path: String) -> Node:
-	var main: Node = load("res://game/render/main.tscn").instantiate()
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
 	main.set(&"level", load(level_path))
 	return main
 

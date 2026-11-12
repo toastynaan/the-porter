@@ -2,7 +2,7 @@
 
 Night 0 at the Cross Keys and day 1's tour, the squints, and the lane at dusk on every night: its people, what they say, the curfew bell and the watchman. The rules are `docs/mechanics.md`'s ("Night 0 and day 1", "The lane at dusk"); the story is the design doc's. Numbers marked *mine* are starting values to tune.
 
-## Night 0, the Cross Keys (`game/nights/night0.tscn`)
+## Night 0, the Cross Keys (`game/chapters/night0/night0.tscn`)
 
 The clock starts at 16:30 and runs at 150 s an hour *(mine)*, so the ride is grey dusk turning dark, and midnight comes about 19 minutes in. Rain until 19:00. The Director's beats:
 
@@ -51,7 +51,7 @@ Three ales or more in a night (`drank`) and he wakes with a headache: a 0.9-pixe
 
 The ride's first stretch, from the fields to the foot of the city wall, has its real look. (The wall, Aldgate and the street inside it came next: the section after this one. The lane, its bends and the people are still greybox.)
 
-- **The sky** (`game/render/sky.gdshader`, driven by `Daylight`): at night the one flat moonlight blue the game has always had; with daylight in it, a low deck of rain cloud drifting over; at dusk a strip of last light along the horizon where the sun went down, pale straw at the rim going to slate, barred with cloud. It is a cold light: purple and rose are kept for the drugged look. Every night's dusk has it, not only this one.
+- **The sky** (`game/core/render/sky.gdshader`, driven by `Daylight`): at night the one flat moonlight blue the game has always had; with daylight in it, a low deck of rain cloud drifting over; at dusk a strip of last light along the horizon where the sun went down, pale straw at the rim going to slate, barred with cloud. It is a cold light: purple and rose are kept for the drugged look. Every night's dusk has it, not only this one.
 - **The sun sets behind the wagon.** The porter rides facing back, so he watches the day go over the road he came by, and the city ahead is the dark he is carried into. Night 0's dusk is brighter than the abbey's (`Daylight` on `night0.tscn`: sky 1.0, ambient 1.5, sun 0.7 *mine*), and is all but gone by the lane.
 - **Distance** (`RoadAir`, `game/world/road/road_air.gd`): out in the fields far things fade into the sky they stand against (depth fog from 14 m, whole at 230 m, taking the sky's own colour *mine*). It thins inside the wall and is gone by the turn into the lane; the abbey's nights don't have it.
 - **The ground** (`env_road_fields`): the road two carts wide, with ruts that wander and hold long uneven pools; a grass verge and a wet ditch each side; open fields in ridge and furrow with rain standing in the furrows. All the water lies level and carries the sky, so the last light runs down the ruts.
@@ -150,7 +150,7 @@ Everything in the fields is stood on the ground by `tools/build/road_dressing.py
 - **South:** a room built across it from house to house, and at its end a wall with a low door and a lit window.
 - **North:** washing lines, a lean-to, and at its end an archway into a lit yard.
 - Each has a dim lantern at its mouth and a brighter one at its far end, so whoever is in it is a shape against the light.
-- **The people in them** (`RoadFolk/Alleys` in `night0.tscn`, each a `Lurker`, `game/npc/lurker.gd`) are never met. *All mine:*
+- **The people in them** (`RoadFolk/Alleys` in `night0.tscn`, each a `Lurker`, `game/people/lurker.gd`) are never met. *All mine:*
   - one in the south alley's mouth who steps back under the room as the wagon comes near;
   - two at its far end bent over something long under sacking, who straighten and turn;
   - one standing in the north alley's archway, who turns to keep facing the wagon;
@@ -196,7 +196,7 @@ Three, in the precinct wall along the lane: the porter's cell (z −6), the oute
 
 **Peeking:** E at a squint puts his eye 0.12 m from the bars *(mine)*, from whichever side he's on. The view is held within 25° of straight through; E again and he steps back. A hunter sees him through it only by the usual sight rules, so only up close and with his light.
 
-## Day 1, the tour (`game/nights/day1.tscn`)
+## Day 1, the tour (`game/chapters/day1/day1.tscn`)
 
 8:00, overcast, flat grey daylight (day 1's `Daylight`: sky 1.4, ambient 1.7, a shadowless sun 0.6 *mine*).
 
@@ -210,13 +210,13 @@ The tour's lines are DRAFT, in `tour_beat.gd`.
 
 ## The lane at dusk (`night_base.tscn`, every night)
 
-While the gate stands open at dusk: Hob and Agnes at the Keys' door, Kit selling candles, Gib lighting the lanterns, Mab by the gate, the carter and Margery passing. Each has a dusk conversation (`game/dialogue/lane/`) with a branch for each night 1 to 6; the first talk of a night carries what the lane says about the night before (who died, whom he turned away, the rules that would have saved them: `docs/abbey.md`, "The rules for saving people"), a later talk the same night a short line and that night's questions. The Keys is open: an ale every night. Night 3 keeps its own Mab, carter and Margery (`game/dialogue/night3/`).
+While the gate stands open at dusk: Hob and Agnes at the Keys' door, Kit selling candles, Gib lighting the lanterns, Mab by the gate, the carter and Margery passing. Each has a dusk conversation (`game/chapters/common/lane/`) with a branch for each night 1 to 6; the first talk of a night carries what the lane says about the night before (who died, whom he turned away, the rules that would have saved them: `docs/abbey.md`, "The rules for saving people"), a later talk the same night a short line and that night's questions. The Keys is open: an ale every night. Night 3 keeps its own Mab, carter and Margery (`game/chapters/night3/dialogue/`).
 
 **The curfew bell** (`Curfew`) at 21:00: the bell, low; the lane's people out in it walk to the nearest house door (at most 30 s *mine*) and go in, while those indoors stay; the Keys shuts its door; the lane's lit windows go dark one by one through the next hour. Then Gib walks the lane between its ends with his lantern, calling the hour from ten to five ("Ten of the clock, and a cold night.") with a voice from where he is. A night that stops him (`silence()`) stops the calls: something has happened. A night picked up from a save after the bell starts with the lane already empty.
 
 ## Talk
 
-`docs/dialogue.md` has the new parts: jumps that test flags (`-> point [if flag]`), `[if night=N]`, and `[drink]`. Night 0's conversations are in `game/dialogue/night0/` (the traveller on the road and at the body cart, the warden at Aldgate, the carter, Mab, Hob, Agnes, Jankin, Walter, Roger, Ralph, Kit, Gib, Margery), all DRAFT.
+`docs/dialogue.md` has the new parts: jumps that test flags (`-> point [if flag]`), `[if night=N]`, and `[drink]`. Night 0's conversations are in `game/chapters/night0/dialogue/` (the traveller on the road and at the body cart, the warden at Aldgate, the carter, Mab, Hob, Agnes, Jankin, Walter, Roger, Ralph, Kit, Gib, Margery), all DRAFT.
 
 ## Sounds
 
@@ -224,7 +224,7 @@ New placeholders (`tools/build/sfx_placeholders.py`): the wagon rumbling (wheels
 
 ## Tests and tools
 
-- **Test a scene** (debug builds only; `SceneSelect`, `game/ui/menus/scene_select.gd`): the title has a "Test a scene" entry. Pick a chapter, then one of its beats, and the chapter starts at that beat with no card, as a fresh game. From the command line: `-- --from=night0:Arrive`. The beats are read from the chapter's scene, so a new beat is listed as soon as it exists.
+- **Test a scene** (debug builds only; `SceneSelect`, `game/core/ui/menus/scene_select.gd`): the title has a "Test a scene" entry. Pick a chapter, then one of its beats, and the chapter starts at that beat with no card, as a fresh game. From the command line: `-- --from=night0:Arrive`. The beats are read from the chapter's scene, so a new beat is listed as soon as it exists.
   - The beats before the one picked are not played. Each is asked to leave things as it would have (`NightBeat.skipped()`), and the clock is put at the latest hour any of them was due.
   - Night 0's do it properly: from `Arrive` he stands in the lane where the carter sets him down, with the road and the wagon gone; from `Inn`, Mab has sent him on; from `Window`, Agnes has given him the room.
   - Every other beat's `skipped()` does nothing yet, so what an earlier beat would have set up (a flag, a key, a body) may be missing. Add a `skipped()` to a beat when a later one needs what it leaves.

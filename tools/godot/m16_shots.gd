@@ -9,7 +9,7 @@ var _n := 0
 
 func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	var main: Node = load("res://game/render/main.tscn").instantiate()
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
 	add_child(main)
 	await get_tree().create_timer(0.5).timeout
 	var flow: GameFlow = main.get_node(^"Game")

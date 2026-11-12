@@ -30,7 +30,7 @@ func _run() -> void:
 	Settings.finished = false
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_options: PackedStringArray) -> int: return 0
-	_main = load("res://game/render/main.tscn").instantiate()
+	_main = load("res://game/core/render/main.tscn").instantiate()
 	add_child(_main)
 	_flow = _main.get_node(^"Game")
 	await _frames(5)
@@ -40,7 +40,7 @@ func _run() -> void:
 	await _frames(3)
 	var chapters := page.column.get_children().filter(func(c: Node) -> bool: return c is Button and not c.is_queued_for_deletion())
 	_check(page.visible and chapters.size() == _flow.chapters.chapters.size() + 1, "the title's Test a scene lists every chapter (%d)" % (chapters.size() - 1))
-	var beats := SceneSelect.beats_of("res://game/nights/night0.tscn")
+	var beats := SceneSelect.beats_of("res://game/chapters/night0/night0.tscn")
 	_check(beats.map(func(b: Array) -> StringName: return b[0]) == [&"Ride", &"Arrive", &"Inn", &"Window", &"Sleep"] and beats[1][1] == "Knock at the abbey gate",
 		"a chapter's beats are read from its scene, with their duties (%s)" % [beats])
 

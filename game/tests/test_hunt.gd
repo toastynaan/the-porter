@@ -33,7 +33,7 @@ func _run() -> void:
 	GameState.night = 4
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_o: PackedStringArray) -> int: return _pick
-	_main = NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	_main = NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(_main)
 	_pilot = NightPilot.new(_main.get(&"current_level"), _check)
 	await _pilot.frames(5)
@@ -74,7 +74,7 @@ func _run() -> void:
 	GameState.suspicion = 0
 
 	# Voices, from night 4.
-	var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var h := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	h.wearer = &"osric"
 	night.add_child(h)
 	p.place(Vector3(-4.5, 0.05, -16.0), 0.0)
@@ -107,7 +107,7 @@ func _run() -> void:
 	await _pilot.frames(2)
 
 	# Throwing: stone on stone, 8 m off, brings him to look; on grass, 6 m off, not.
-	var listener := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var listener := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	night.add_child(listener)
 	await _pilot.frames(2)
 	GameState.satchel.append(&"stone")
@@ -140,7 +140,7 @@ func _run() -> void:
 
 	# The bell out of hours.
 	var bell: OffHoursBell = night.get_node(^"OffHoursBell")
-	var chaser := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var chaser := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	night.add_child(chaser)
 	await _pilot.frames(2)
 	p.place(bell.global_position + Vector3(0.6, 0, 0), 0.0)
@@ -185,7 +185,7 @@ func _run() -> void:
 	p.place(Vector3(-4.5, 0.05, -16), 0.0)
 	await _pilot.frames(2)
 	gust.blown = false
-	var hunter2 := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var hunter2 := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	night.add_child(hunter2)
 	await _pilot.frames(2)
 	hunter2.global_position = p.global_position + Vector3(0, 0, 10)

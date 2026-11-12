@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_anselm"
+text = "# DRAFT
+# Anselm, the old porter, by the infirmary brazier at dusk (night 1). Blind, guilty and terrified: he hints, never tells.
+# He wants to know the porter remembers his warning from the tour (d1_anselm_warned). If the tour was skipped, he gives it now.
+# Hint: by the old porter who locked the guests in, he meant himself, and he didn't, every night.
+== start
+(The old porter sits by the brazier with a blanket round him. His white eyes are on the door before you're through it.)
+Anselm: That's the porter's step. The keys give you away. I wore them thirty years.
+-> warned [if d1_anselm_warned]
+-> unwarned
+
+== warned
+(He listens to the room a moment, then leans toward you.)
+Anselm: This morning, when we were alone. What I told you. You remember it?
+-> ask
+
+== ask
+* [if not n1_anselm_bell] Don't let them in after the bell. -> bell
+* [if not n1_anselm_locked] You said the old porter locked the guests in. -> locked
+* [if not n1_anselm_why] Why? What happens after the bell? -> why
+
+== bell [set n1_anselm_bell] [trust anselm 5]
+(He lets out his breath.)
+Anselm: Good lad. Say it over when they knock. Say it like a psalm.
+-> ask
+
+== locked [set n1_anselm_locked]
+Anselm: I said the old porter. I meant me.
+Anselm: I locked them in. Most nights. (He turns his face away.) Lock them in, porter. Every night.
+-> ask
+
+== why [set n1_anselm_why]
+(His hand finds your sleeve and holds it.)
+Anselm: Because I did. Don't ask me more. Not here.
+-> ask
+
+== unwarned [set n1_anselm_warned]
+(He listens to the room a moment, then his hand finds your sleeve.)
+Anselm: Don't let them in after the bell. Whatever they tell you.
+Anselm: And lock the guesthouse at night. The old porter always did.
+-> end
+
+== again
+(He turns his face toward you.)
+Anselm: Still here? Go on to your supper. They'll notice if you're late.
+-> ask [if d1_anselm_warned]
+-> end
+
+== leave
+Anselm: After the bell, porter. Remember.
+"

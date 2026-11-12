@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_choirb"
+text = "# DRAFT
+# Brother Aldo, a young brother of the choir, in the nave at dusk (night 1). Background; friendly.
+== start
+(A young brother in the nave, humming a chant under his breath. He stops when he sees you.)
+Aldo: Sorry. Tonight's psalm. I come in a beat behind Wulfric every night, and he never forgives me.
+-> topics
+
+== again
+Aldo: Matins, porter. Ring it loud.
+-> topics
+
+== topics
+* [if not n1_choirb_count] How do I count the brothers at Matins? -> count
+
+== count [set n1_choirb_count]
+Aldo: Count the stalls. An empty one's a man still abed, and it's the porter who goes to fetch him.
+-> end
+
+== leave
+Aldo: Loud, mind. Wulfric's half deaf.
+"

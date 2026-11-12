@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n2_thomas"
+text = "# DRAFT
+# Thomas at dusk, at his herbs in the infirmary (night 2). He opens, quietly, with the prior about the abbey at night
+# (n2_thomas_prior): true, and the prior is innocent. Then the merchant: drowned drunk (his lie), or alive, or turned away.
+# The knock with no one there: boys from the lane. Bede's warning about the bread: Bede fasts and sees things.
+# Telling him about the bread is the wrong brother (Suspicion +5). Bede is already dead; Thomas knows it.
+== start [set n2_thomas_prior]
+(Thomas looks past you at the door before he speaks, and keeps his voice low.)
+Thomas: Brother. I've seen the prior about the abbey at night. In the court, by the guesthouse, long after Compline.
+Thomas: He has no business there at that hour. I don't say what it means. Only, if you see a man in the dark, it may be Hugh.
+-> merchant [if died_merchant]
+-> lived [if n1_merchant=admitted]
+-> refused [if n1_merchant=refused]
+-> topics
+
+== merchant
+-> merchant_thomas [if reported_merchant=thomas]
+-> merchant_prior [if reported_merchant=prior]
+-> merchant_plain
+
+== merchant_thomas
+Thomas: And the merchant. You did right to come to me this morning, and quietly. Ale and a fishpond: no fault of yours.
+-> topics
+
+== merchant_prior
+Thomas: And the merchant. You took him to Hugh, I hear. He'll have made it your doing. It wasn't. The man was drunk.
+-> topics
+
+== merchant_plain
+Thomas: And the merchant. Ale, and a fishpond in the dark. It's no fault of yours, brother. Don't carry him.
+-> topics
+
+== lived
+Thomas: Your merchant left at first light, cursing the porter who locked him in like a sheep. Well. He's alive to curse.
+-> topics
+
+== refused
+Thomas: You turned the merchant away. We receive every guest as Christ, the Rule says. Still, it was your first night.
+-> topics
+
+== again
+(Thomas is back at his mortar.)
+Thomas: Brother. Supper soon.
+-> topics
+
+== topics
+* [if not n2_thomas_why] What would the prior be doing out at night? -> why
+* [if n1_knock_no_one] [if not n2_thomas_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if bread_warned] [if not n2_thomas_bread] Someone warned me not to eat the bread. -> bread
+
+== why [set n2_thomas_why]
+Thomas: I don't know, and I'd rather not guess at a brother's sins.
+Thomas: You're up all night. You'll see more than I do. Watch, that's all I ask.
+-> topics
+
+== knock [set n2_thomas_knock]
+(For a moment he doesn't answer. Then he smiles.)
+Thomas: Boys from the lane, knocking and running. They did it to Anselm for years.
+Thomas: And Mab sleeps more than she lets on. Don't lose sleep over a knock.
+-> topics
+
+== bread [set n2_thomas_bread] [suspicion 5]
+Thomas: Bede, was it? I saw him at your ear.
+Thomas: Bede fasts till he faints, and then he sees things in the rafters. Eat your bread, brother. You need your strength.
+-> topics
+
+== leave
+Thomas: Keep it between us, brother. About the prior.
+"

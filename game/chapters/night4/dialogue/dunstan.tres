@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n4_dunstan"
+text = "# DRAFT
+# Dunstan at dusk, by the woodpile (night 4, fog). Lay brothers don't talk (Look and Feel, \"Characters\").
+== start
+(You hear the axe before you see him: Dunstan, splitting logs in the fog. He stops and looks at you. He says nothing.)
+* Have you seen anyone about, brother? -> nothing
+* Will the fog lift by Matins, do you think? -> nothing
+* Good night, Brother Dunstan. -> end
+
+== again
+(Dunstan looks up from the block. He says nothing.)
+-> end
+
+== nothing
+(He says nothing. He sets a log on the block and looks at you over it until you look away.)
+-> end
+"

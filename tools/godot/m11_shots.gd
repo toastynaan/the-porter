@@ -18,7 +18,7 @@ func _ready() -> void:
 	GameState.night = 4
 	Talk.line_seconds = 3.0
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	_main = NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	_main = NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(_main)
 	await get_tree().create_timer(1.0).timeout
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -66,7 +66,7 @@ func _ready() -> void:
 	GameState.suspicion = 0
 
 	# Osric unmasked.
-	var h := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var h := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	h.wearer = &"osric"
 	night.add_child(h)
 	p.place(Vector3(0.0, 0.05, -16.0), 0.0)
@@ -78,7 +78,7 @@ func _ready() -> void:
 
 	# A stone thrown, a hunter turning to it.
 	GameState.satchel.append(&"stone")
-	var listener := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var listener := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	night.add_child(listener)
 	listener.global_transform = Transform3D(Basis.IDENTITY, Vector3(8.0, 0.05, -24.0))
 	p.place(Vector3(-4.0, 0.05, -26.0), deg_to_rad(-90.0))

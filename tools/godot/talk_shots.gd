@@ -133,7 +133,7 @@ func _load(keep: Array[StringName]) -> Node:
 		await get_tree().process_frame
 	Talk.reset()
 	NightPilot.fresh_night("user://talk_shots_save.tres")
-	_main = NightPilot.main_with("res://game/nights/night3.tscn")
+	_main = NightPilot.main_with("res://game/chapters/night3/night3.tscn")
 	add_child(_main)
 	var night: Node = _main.get(&"current_level")
 	if not keep.is_empty():

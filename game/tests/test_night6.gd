@@ -58,7 +58,7 @@ func _run() -> void:
 		_check(GameState.has_flag(StringName("died_" + who.to_lower())) and not GameState.souls.has(StringName(who.to_lower())),
 			"walking, it takes %s as he comes near (fed to nothing)" % who)
 	saint.global_position = Vector3(-30.0, 0.05, -12.0)
-	var hunter := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var hunter := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	hunter.wearer = &"ranulf"
 	hunter.dormant = true
 	night.add_child(hunter)
@@ -135,7 +135,7 @@ func _start() -> void:
 		GameState.set_flag(f)
 	GameState.count = 7
 	GameState.carried = true
-	var main := NightPilot.main_with("res://game/nights/night6.tscn")
+	var main := NightPilot.main_with("res://game/chapters/night6/night6.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	await get_tree().process_frame

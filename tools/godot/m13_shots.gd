@@ -22,7 +22,7 @@ func _ready() -> void:
 
 
 func _night1() -> void:
-	var night := await _load(1, "res://game/nights/night1.tscn")
+	var night := await _load(1, "res://game/chapters/night1/night1.tscn")
 	var p := _pilot.player
 	# Supper: Bede leans in.
 	_places(night, "Supper")
@@ -33,7 +33,7 @@ func _night1() -> void:
 	await _shot("n1_bede_warns_about_the_bread", 1.0)
 	# The merchant at the grille.
 	GameState.hour = 19.0
-	var merchant := _visitor(night, "res://game/gate/visitors/merchant_n1.tres", _pilot.mark("Porch"))
+	var merchant := _visitor(night, "res://game/chapters/night1/visitors/merchant_n1.tres", _pilot.mark("Porch"))
 	p.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	_look_at(p, merchant.face_position())
 	_say("Merchant", (merchant.visitor as Visitor).greeting)
@@ -78,7 +78,7 @@ func _night1() -> void:
 
 
 func _night2() -> void:
-	var night := await _load(2, "res://game/nights/night2.tscn")
+	var night := await _load(2, "res://game/chapters/night2/night2.tscn")
 	var p := _pilot.player
 	# Supper: Thomas's word in his ear.
 	_places(night, "Supper")
@@ -89,7 +89,7 @@ func _night2() -> void:
 	await _shot("n2_thomas_at_supper", 1.0)
 	# The sailor at the grille.
 	GameState.hour = 21.5
-	var sailor := _visitor(night, "res://game/gate/visitors/sailor_n2.tres", _pilot.mark("Porch"))
+	var sailor := _visitor(night, "res://game/chapters/night2/visitors/sailor_n2.tres", _pilot.mark("Porch"))
 	p.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	_look_at(p, sailor.part_position(&"hands"))
 	await _shot("n2_the_sailor_at_the_grille", 1.0)
@@ -142,7 +142,7 @@ func _night2() -> void:
 
 
 func _night3() -> void:
-	var night := await _load(3, "res://game/nights/night3.tscn")
+	var night := await _load(3, "res://game/chapters/night3/night3.tscn")
 	var p := _pilot.player
 	GameState.hour = 25.0
 	(night.get_node(^"CryptLight") as Node3D).visible = true

@@ -32,7 +32,7 @@ func _ready() -> void:
 				if not SKIP.any(func(s: String) -> bool: return n.begins_with(s)):
 					names.append(n)
 	var world := WorldEnvironment.new()
-	world.environment = (load("res://game/render/env_night.tres") as Environment).duplicate()
+	world.environment = (load("res://game/core/render/env_night.tres") as Environment).duplicate()
 	world.environment.volumetric_fog_enabled = false
 	add_child(world)
 	var ground := MeshInstance3D.new()

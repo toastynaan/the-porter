@@ -18,7 +18,7 @@ shader_type spatial;
 
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
 
-#include "res://game/shaders/psx.gdshaderinc"
+#include "res://game/core/render/psx.gdshaderinc"
 
 uniform vec3 albedo : source_color = vec3(0.8);
 uniform float roughness : hint_range(0.0, 1.0) = 0.75;

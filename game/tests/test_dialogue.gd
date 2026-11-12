@@ -2,7 +2,7 @@ extends Node
 ## Conversations (Talk.converse, Conversation, Talker), in the greybox abbey:
 ## - The script: points, lines, up to three answers, "again" and "leave",
 ##   [if], [set] and [suspicion] tags, and the errors a bad script reports.
-##   Every conversation under game/dialogue/ reads without errors.
+##   Every conversation under game/chapters/ reads without errors.
 ## - Talking: they turn to him and his view turns to their face, narrowed,
 ##   for a moment; then it widens and he can look anywhere (looking away lets
 ##   go sooner); their lines, then the last one stays up over three answers
@@ -99,15 +99,15 @@ func _run() -> void:
 	_check(errors.contains("under a point") and errors.contains("no point called nowhere") and errors.contains("5 answers")
 		and errors.contains("unknown tag [maybe]") and errors.contains("needs ->"),
 		"a bad script says what is wrong: %s" % errors)
-	var files := _conversations("res://game/dialogue")
+	var files := _conversations("res://game/chapters")
 	var broken := files.filter(func(path: String) -> bool: return not (load(path) as Conversation).errors().is_empty())
-	_check(files.size() >= 13 and broken.is_empty(), "every conversation in game/dialogue reads without errors (%d; broken: %s)" % [files.size(), broken])
+	_check(files.size() >= 13 and broken.is_empty(), "every conversation in game/chapters reads without errors (%d; broken: %s)" % [files.size(), broken])
 
 	# Someone to talk to, in the outer court; the porter has his back to him.
 	var abbey: Node3D = load("res://game/world/abbey/abbey.tscn").instantiate()
 	add_child(abbey)
 	_player = abbey.get_node(^"Player")
-	var osric: Brother = load("res://game/npc/brother.tscn").instantiate()
+	var osric: Brother = load("res://game/people/brother.tscn").instantiate()
 	(osric.get_node(^"Look") as CharacterLook).look = load("res://game/characters/chr_osric.tscn")
 	var talker := Talker.new()
 	talker.name = &"Talker"

@@ -40,7 +40,7 @@ func _run() -> void:
 	await _pilot.until(func() -> bool: return GameState.dose >= 39.0, 30.0)
 	_check(GameState.has_flag(&"drank_wine") and GameState.dose >= 39.0, "Thomas's wine: Dose +40 (%.0f)" % GameState.dose)
 	var flow := _pilot.night.get_tree().get_first_node_in_group(&"capture_flow") as CaptureFlow
-	var hunter := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var hunter := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	hunter.dormant = true
 	_pilot.night.add_child(hunter)
 	flow.on_captured(hunter, _pilot.player)
@@ -155,7 +155,7 @@ func _start(flags: Array[StringName], wine: int) -> void:
 		GameState.set_flag(f)
 	GameState.count = 6
 	Talk.history.clear()
-	_main = load("res://game/render/main.tscn").instantiate()
+	_main = load("res://game/core/render/main.tscn").instantiate()
 	add_child(_main)
 	_flow = _main.get_node(^"Game")
 	_flow.card.seconds = 0.2

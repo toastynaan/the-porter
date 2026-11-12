@@ -16,7 +16,7 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	Talk.line_seconds = 30.0
 	Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
-	var night := await _load(6, "res://game/nights/night6.tscn")
+	var night := await _load(6, "res://game/chapters/night6/night6.tscn")
 	var p := _pilot.player
 	GameState.hour = 16.4
 	var anselm := night.get_node(^"Bodies/Anselm") as Node3D
@@ -46,7 +46,7 @@ func _ready() -> void:
 	await _shot("the_cult_in_costume", 1.0)
 	hunt.end()
 	GameState.hour = 20.0
-	var roger := _visitor(night, "res://game/gate/visitors/roger_n6.tres", _pilot.mark("Porch"))
+	var roger := _visitor(night, "res://game/chapters/night6/visitors/roger_n6.tres", _pilot.mark("Porch"))
 	p.place(Vector3(-39.0, 0.05, -2.0), deg_to_rad(90.0))
 	_look_at(p, roger.face_position())
 	_say("Roger", (roger.visitor as Visitor).greeting)

@@ -32,7 +32,7 @@ func _run() -> void:
 	Talk.auto_choice = func(options: PackedStringArray) -> int:
 		_offered.append(options)
 		return _pick
-	var main := NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	var main := NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
 	await _pilot.frames(5)

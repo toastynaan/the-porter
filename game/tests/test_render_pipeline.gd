@@ -13,8 +13,8 @@ func _ready() -> void:
 
 func _run() -> void:
 	GameState.snap_dose(0.0)
-	var main: Node = load("res://game/render/main.tscn").instantiate()
-	main.level = load("res://game/lookdev/lookdev.tscn")
+	var main: Node = load("res://game/core/render/main.tscn").instantiate()
+	main.level = load("res://game/dev/lookdev/lookdev.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	var world: SubViewport = main.get_node(^"World")

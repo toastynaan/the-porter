@@ -17,7 +17,7 @@ Every so often, while he's about, one event the tier allows plays; the tiers sta
 | 50+ (his eyes) | A tall shape at the edge of his view (48° off centre, 7–12 m), gone the moment he looks within 22° of it or after 2.5 s; a face in the grain of the nearest wooden door he isn't looking at, gone once he has stared at it 1.5 s | Carved saints turn their heads to follow him, but only while he isn't looking (`Carving`, six in the abbey) |
 | 75+ (and lies) | Hooves running at him from behind that stop just short; a death in front of him that never happened (a fake `DeathScene`: no body, no blood, no soul once he looks away) | The walls breathe (the whole image swells and settles); the dead stand in the choir at Matins (`DeadInChoir`) |
 
-Gaps between events *(mine)*: 40–70 s at 25+, 30–55 s at 50+, 20–40 s at 75+. Flame bend: from Dose 25, full at 60, up to 0.6 rad *(mine)*. Breathing: from 75, 0.6% of the screen at 100 *(mine)*. Reverb: from 25, 40% wet at 100 *(mine)*. The curves are in `game/render/dose_look.tres`.
+Gaps between events *(mine)*: 40–70 s at 25+, 30–55 s at 50+, 20–40 s at 75+. Flame bend: from Dose 25, full at 60, up to 0.6 rad *(mine)*. Breathing: from 75, 0.6% of the screen at 100 *(mine)*. Reverb: from 25, 40% wet at 100 *(mine)*. The curves are in `game/core/render/dose_look.tres`.
 
 ## The HUD lies once (`FalseDoor`)
 
@@ -57,7 +57,7 @@ A night's round beats call these where the night wants them (M13 to M15):
 - **A light ahead goes out:** the nearest candle ahead of him, 3–16 m off and in view, gutters and goes out. Never a duty's lamp, a lamp lighting the way, or the crypt's count.
 - **Jump scares,** at most one a night: a body drops on a rope 1.6 m in front of him, or a face at the gate's grille. Each is gone once he looks away.
 
-## The abbey cat (`Cat`, `game/npc/cat.tscn`)
+## The abbey cat (`Cat`, `game/people/cat.tscn`)
 
 It follows the porter, keeping 1.8–3.2 m off, trotting to catch up when he's far. Every 35–70 s *(mine)* it stops and stares into the dark for 4 s: at a man standing there if a hunter is within 10 m, at nothing otherwise. When the animals go quiet before the demon, it hisses and bolts 14 m away from him and is gone until the quiet is over.
 

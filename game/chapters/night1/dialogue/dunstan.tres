@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n1_dunstan"
+text = "# DRAFT
+# Dunstan, the lay brother, splitting wood at the woodpile at dusk (night 1). Big and silent: a word at most, and a look.
+== start
+(A big lay brother at the woodpile, splitting logs in the rain. He stops with the axe on the block and looks at you.)
+-> topics
+
+== again
+(Dunstan looks up from the block, then down again.)
+-> topics
+
+== topics
+* [if not n1_dunstan_name] I'm Alric, the new porter. And you, brother? -> name
+* [if not n1_dunstan_help] Let me carry some of that for you. -> help
+
+== name [set n1_dunstan_name]
+Dunstan: Dunstan.
+(He sets the next log on the block.)
+-> topics
+
+== help [set n1_dunstan_help]
+(He shakes his head. He looks at your hands a moment, then splits the log in one stroke.)
+-> topics
+
+== leave
+(The axe comes down behind you.)
+"

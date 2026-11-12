@@ -21,7 +21,7 @@ At the gate it's one talk each time you come to the grille. Walter's knock opens
 
 ## How it looks
 
-One column at the bottom of the screen, in the book face the menus use (EB Garamond), drawn by `game/ui/talk_view.gd`:
+One column at the bottom of the screen, in the book face the menus use (EB Garamond), drawn by `game/talk/talk_view.gd`:
 
 - **The name** in small capitals, lantern-coloured; your own name is paler. A line's aside sits beside it in italics.
 - **The line**, centred. Narration is in italics, softer.
@@ -34,7 +34,7 @@ One column at the bottom of the screen, in the book face the menus use (EB Garam
 
 ## Writing one
 
-Each conversation is a `Conversation` resource, one per person per night (`game/dialogue/night0/` to `night6/`), or one per person for every dusk (`game/dialogue/lane/hob.tres`). All are drafts, and each starts with `# DRAFT`. Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
+Each conversation is a `Conversation` resource, one per person per night (`game/chapters/night0/dialogue/` to `night6/`), or one per person for every dusk (`game/chapters/common/lane/hob.tres`). All are drafts, and each starts with `# DRAFT`. Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
 
 ```
 # A note; ignored.
@@ -95,9 +95,9 @@ Osric: Come hungry!
 
 **Greetings follow trust:** a talk starts at `start_warm` if they trust him 30 or more, `start_cold` below 0, else `start`; the same for `again_warm`, `again_cold` and `again`, where those points exist.
 
-A point whose answers have all dropped off ends the talk after its lines. `test_dialogue` reads every conversation under `game/dialogue/` and fails on a mistake: an unknown point, a fourth answer, an answer with no `->`, a tag it doesn't know.
+A point whose answers have all dropped off ends the talk after its lines. `test_dialogue` reads every conversation under `game/chapters/` and fails on a mistake: an unknown point, a fourth answer, an answer with no `->`, a tag it doesn't know.
 
-**From a beat's script** (`Talk`, `game/dialogue/talk.gd`): `say()` for a line of the night's; `choose()` for a question (it keeps the line just said up over the answers); `ask()` to say a line with answers under it at once; `answer()` for a question whose spoken answer he then says. A beat that opens a talk itself (`begin()` to `end()`, as the gate does) says the talk's own lines with `line()`, so they have the main place and E skips them; `say()` there is something heard meanwhile.
+**From a beat's script** (`Talk`, `game/talk/talk.gd`): `say()` for a line of the night's; `choose()` for a question (it keeps the line just said up over the answers); `ask()` to say a line with answers under it at once; `answer()` for a question whose spoken answer he then says. A beat that opens a talk itself (`begin()` to `end()`, as the gate does) says the talk's own lines with `line()`, so they have the main place and E skips them; `say()` there is something heard meanwhile.
 
 ## Night 3's conversations
 

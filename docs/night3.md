@@ -1,10 +1,10 @@
 # Night 3 in the greybox (M4–M7)
 
-Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. It's the fifth chapter of a New Game (`docs/frame.md`); to play it on its own, choose it in Chapters once you've finished the game, or run `game/nights/night3.tscn` (F6), and you wake in your cell in the late afternoon. Every line and conversation is drafted (DRAFT); `docs/nights.md` has what M13 changed and how the beats are set per night. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
+Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design doc's core loop and night 3 script it. It's the fifth chapter of a New Game (`docs/frame.md`); to play it on its own, choose it in Chapters once you've finished the game, or run `game/chapters/night3/night3.tscn` (F6), and you wake in your cell in the late afternoon. Every line and conversation is drafted (DRAFT); `docs/nights.md` has what M13 changed and how the beats are set per night. Choices take the number keys, or the arrow keys and E. Press L to hold up the ledger.
 
 ## The beats
 
-`game/nights/night3.tscn` holds the night. It inherits `night_base.tscn`, which every night shares (the abbey, the people, the duties, the marks), and adds its `Director`, which runs one beat script per child, in order (`game/night/*_beat.gd`), and its conversations. Each beat waits for the porter to do his duty before it moves on.
+`game/chapters/night3/night3.tscn` holds the night. It inherits `night_base.tscn`, which every night shares (the abbey, the people, the duties, the marks), and adds its `Director`, which runs one beat script per child, in order (the shared routine's in `game/chapters/common/routine/`, night 3's own beats beside its scene), and its conversations. Each beat waits for the porter to do his duty before it moves on.
 
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 ## The candle clock
 
-`game/night/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
+`game/time/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
 
 - **Awake, time runs slowly in real time:** 3 minutes an hour (2 with the faster-clock setting). Dusk to the supper bell is under 4 minutes, and the whole night is within the run's 30–40 minutes if you doze through the waits.
 - **Dozing on the gate bench, it runs fast:** 2 seconds an hour, with the screen nearly black. Whatever needs you wakes you: a knock (the visitor is at the grille already when you wake), the Matins mark, the Lauds bell. You can doze only once you have the gate, while the night is waiting on it (the knocks, before Matins, the small hours), and while no duty is wanted.
@@ -38,17 +38,17 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 ## Dusk and dawn light
 
-`game/night/daylight.gd`. From 16:00 to 17:30 failing daylight fades into night, and from 06:00 to 07:00 grey morning comes up. Day is overcast, flat and grey with no strong shadows (Look and Feel, lighting rule 6), so daylight raises the sky and the ambient light in the night's moonlight colour, with a soft shadowless light from the low sun's side. The lane's lanterns are lit once it is dark. The strength of each is an export on the `Daylight` node.
+`game/time/daylight.gd`. From 16:00 to 17:30 failing daylight fades into night, and from 06:00 to 07:00 grey morning comes up. Day is overcast, flat and grey with no strong shadows (Look and Feel, lighting rule 6), so daylight raises the sky and the ambient light in the night's moonlight colour, with a soft shadowless light from the low sun's side. The lane's lanterns are lit once it is dark. The strength of each is an export on the `Daylight` node.
 
 ## People to talk to
 
-At dusk, look at someone and press E: your view turns to their face for a moment, they say their line, and you pick one of three answers or walk away (see `docs/dialogue.md`). The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk, Dunstan by the woodpile, and the three choir brothers on the south walk, in the nave and on the east walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/npc/talker.gd`) naming their conversation (`game/dialogue/night3/`) and the phases they talk in. Mab can be talked to until the knocks; the brothers only at dusk.
+At dusk, look at someone and press E: your view turns to their face for a moment, they say their line, and you pick one of three answers or walk away (see `docs/dialogue.md`). The brothers stand at their dusk places (`Places/Dusk`): Thomas and Anselm in the infirmary, Osric in the kitchen, Ranulf in the church, Godric in the chapter house, Hugh on the north walk, Edwin on the west walk, Dunstan by the woodpile, and the three choir brothers on the south walk, in the nave and on the east walk. In the lane are Mab, by the gate, and two passers-by, a carter and a woman with a basket, who go home at 17:30. Every line is a placeholder that gives the person's public face from the cast table. Each person has a `Talker` child (`game/talk/talker.gd`) naming their conversation (`game/chapters/night3/dialogue/`) and the phases they talk in. Mab can be talked to until the knocks; the brothers only at dusk.
 
 Everyone wears a character scene from `game/characters/` (see `docs/assets.md`). Night 3 has eleven brothers in the choir: the seven named ones, the three living choir brothers, and the stranger in the dead brother's place. Dunstan, a lay brother, is about only at dusk.
 
 ## Keeping the gate
 
-`game/night/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
+`game/chapters/common/routine/gate_visits_beat.gd`. Visitors are data (`game/gate/visitors/*.tres`, class `Visitor`): a name, a build, a cloak, a greeting, and the details you can notice. Each detail has a part of him (face, body, hands, feet, box, bag), the porter's line, and the words that go into the ledger. Walter's come only from the design doc: plump, a coloured cloak (faded madder red), oily and cheerful, a box of "relics", and on night 3 a bag that smells of the incense.
 
 1. **He comes up the lane.** At his hour (`knock_hours` on the Knocks beat; Walter's is 20:00) Walter walks from the far end of the lane carrying his own lantern and stops under the porch lantern. If you're dozing, he's at the grille when the knock wakes you.
 2. **He knocks.** He knocks until you come to the grille and press E. You talk through the grille: your view turns to his face for a moment, and he greets you, once. Under his greeting you can ask his question ("What's in the bag?") or not; then the choices come up in the same talk.
@@ -66,7 +66,7 @@ To add a visitor, make a new `Visitor` resource and add it to the Knocks beat's 
 
 ## Finding the way
 
-There is no HUD, so the world shows where the next duty is (`game/night/wayfinding.gd`):
+There is no HUD, so the world shows where the next duty is (`game/duties/wayfinding.gd`):
 - **A lamp at the duty.** While a duty is due, its lamp burns: at the gate, in the tower by the bell rope, by each door on the round. The ledger is lit by your cell candle, the sanctuary lamp is the lamp itself, and at dawn a candle stands by the moved keys.
 - **Lit doorways on the way.** The doors on the path from you to the duty are opened, and a lamp hangs over each doorway on the duty's side, so each lit doorway leads to the next. They go out once the duty is done. Doors and lamps you're looking at are left alone, so nothing opens or lights in front of you.
 - **Sound.** You can follow the knocking to the gate, and the Matins chant starts when you ring the bell, so you can follow it to the choir.

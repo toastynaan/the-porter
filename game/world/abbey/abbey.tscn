@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dte0637ju2bhq"]
 
-[ext_resource type="Environment" path="res://game/render/env_night.tres" id="1_n65ch"]
+[ext_resource type="Environment" path="res://game/core/render/env_night.tres" id="1_n65ch"]
 [ext_resource type="NavigationMesh" path="res://game/world/abbey/abbey_nav.res" id="2_ol7df"]
 [ext_resource type="PackedScene" path="res://game/world/kit/wall.tscn" id="3_43vra"]
 [ext_resource type="PackedScene" path="res://game/world/kit/corner.tscn" id="4_ray55"]

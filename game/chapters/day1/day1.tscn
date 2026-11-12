@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://game/chapters/common/night_base.tscn" id="base"]
+[ext_resource type="Script" path="res://game/chapters/common/night_director.gd" id="director_gd"]
+[ext_resource type="Script" path="res://game/chapters/day1/morning_beat.gd" id="morning_gd"]
+[ext_resource type="Script" path="res://game/chapters/day1/tour_beat.gd" id="tour_gd"]
+[ext_resource type="Script" path="res://game/chapters/day1/nap_beat.gd" id="nap_gd"]
+[ext_resource type="Script" path="res://game/duties/duty.gd" id="duty_gd"]
+[ext_resource type="PackedScene" path="res://game/gate/visitor_npc.tscn" id="visitor_npc"]
+[ext_resource type="Resource" path="res://game/chapters/day1/visitors/day1_thomas.tres" id="v_thomas"]
+[ext_resource type="Resource" path="res://game/chapters/day1/visitors/day1_anselm.tres" id="v_anselm"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_sand_patch.tscn" id="sand"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_key"]
+albedo_color = Color(0.2, 0.18, 0.15, 1)
+metallic = 0.7
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="Mesh_key"]
+material = SubResource("Mat_key")
+size = Vector3(0.05, 0.16, 0.02)
+
+[node name="Day1" instance=ExtResource("base")]
+editor_description = "Day 1, the tour (design doc, Day 1): grey morning in the Cross Keys, the abbey gate open, the sand by the well, Thomas and Anselm showing the porter his duties, then the nap to dusk. It inherits night_base.tscn."
+
+[node name="Clock" parent="."]
+start_hour = 8.0
+
+[node name="Daylight" parent="."]
+day_sky = 1.4
+day_ambient = 1.7
+day_sun = 0.6
+
+[node name="Agnes" parent="People"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -54.4, 0.05, -6.0)
+
+[node name="Day1Wake" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -48.0, 6.05, 1.6)
+editor_description = "Where he wakes on day 1: his room at the top of the Cross Keys."
+
+[node name="Day1Meet" type="Marker3D" parent="Marks"]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -37.0, 0.05, 0.5)
+editor_description = "Just inside the gate, where Thomas and Anselm wait."
+
+[node name="TourStops" type="Node3D" parent="Marks"]
+editor_description = "Where Thomas stands at each duty on the tour, in order: the gate, the ledger, the candle clock, the bell, a round stop, the guesthouse."
+
+[node name="S0" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -37.2, 0.05, -0.2)
+
+[node name="S1" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -34.5, 0.05, -9.0)
+
+[node name="S2" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -34.4, 0.05, -10.2)
+
+[node name="S3" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -23.0, 0.05, -30.5)
+
+[node name="S4" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10.2, 0.05, -7.4)
+
+[node name="S5" type="Marker3D" parent="Marks/TourStops"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -33.0, 0.05, -20.4)
+
+[node name="Sand" parent="." instance=ExtResource("sand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28.6, 0.02, 5.6)
+
+[node name="GuestKey" type="Area3D" parent="Duties"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30.6, 0.85, -17.4)
+script = ExtResource("duty_gd")
+size = Vector3(0.4, 0.35, 0.4)
+glyph_height = 0.45
+
+[node name="Mesh" type="MeshInstance3D" parent="Duties/GuestKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("Mesh_key")
+
+[node name="TourThomas" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -36.6, 0.05, 1.4)
+visitor = ExtResource("v_thomas")
+speed = 1.1
+
+[node name="TourAnselm" parent="People" instance=ExtResource("visitor_npc")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -36.4, 0.05, 2.6)
+visitor = ExtResource("v_anselm")
+speed = 1.1
+
+[node name="Director" type="Node" parent="."]
+script = ExtResource("director_gd")
+night = 0
+
+[node name="Morning" type="Node" parent="Director" node_paths=PackedStringArray("wake_at", "gate", "cole", "cole_gate", "agnes", "meet", "sand")]
+script = ExtResource("morning_gd")
+phase = 6
+bell = &"start"
+duty = "Morning: cross the lane to the abbey gate"
+wake_at = NodePath("../../Marks/Day1Wake")
+gate = NodePath("../../AbbeyGate")
+cole = NodePath("../../People/Cole")
+cole_gate = NodePath("../../Marks/ColeGate")
+agnes = NodePath("../../People/Agnes")
+meet = NodePath("../../Marks/Day1Meet")
+sand = NodePath("../../Sand")
+
+[node name="Tour" type="Node" parent="Director" node_paths=PackedStringArray("thomas", "anselm", "stops", "bar_gate", "ledger", "candle_clock", "bell_rope", "round_stop", "guest_bed", "guest_key", "sand", "hide_brothers")]
+script = ExtResource("tour_gd")
+phase = 6
+duty = "The tour: the gate, the ledger, the candle clock, the bell, the round, the guesthouse"
+thomas = NodePath("../../People/TourThomas")
+anselm = NodePath("../../People/TourAnselm")
+stops = NodePath("../../Marks/TourStops")
+bar_gate = NodePath("../../Duties/BarGate")
+ledger = NodePath("../../Duties/Ledger")
+candle_clock = NodePath("../../CandleClock")
+bell_rope = NodePath("../../Duties/BellRope")
+round_stop = NodePath("../../Duties/RoundStops/StoresDoor")
+guest_bed = NodePath("../../Duties/GuestBeds/Bed0")
+guest_key = NodePath("../../Duties/GuestKey")
+sand = NodePath("../../Sand")
+hide_brothers = [NodePath("../../Brothers/Thomas"), NodePath("../../Brothers/Anselm")]
+
+[node name="Nap" type="Node" parent="Director" node_paths=PackedStringArray("cot")]
+script = ExtResource("nap_gd")
+phase = 6
+duty = "Sleep in your cell until dusk"
+cot = NodePath("../../Duties/Sleep")

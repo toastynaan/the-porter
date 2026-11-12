@@ -70,7 +70,7 @@ func _start(flags: Array[StringName]) -> NightPilot:
 		GameState.set_flag(f)
 	GameState.carried = true
 	Talk.history.clear()
-	var main := NightPilot.main_with("res://game/nights/night5.tscn")
+	var main := NightPilot.main_with("res://game/chapters/night5/night5.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	await get_tree().process_frame

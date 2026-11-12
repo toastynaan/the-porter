@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n0_roger"
+text = "# DRAFT
+# Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Hard and transactional.
+# He wants word of any merchant, anyone with money, who goes in at the abbey gate (n0_roger_agreed if the porter says he'll send it). The ward would like the abbey's land.
+== start
+(A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you sat.)
+Roger: You came in on the carter's wagon, in a habit, with one bundle. Who are you?
+* Brother Alric. The abbey's new porter. -> porter
+* Who's asking? [trust roger -5] -> who
+* (Say nothing.) -> silent
+
+== porter
+Roger: The new porter. So they found one at last. I'm Roger, bailiff of this ward.
+-> ask
+
+== who
+Roger: Roger, bailiff of this ward. When I ask, people answer. You'll be their new porter.
+-> ask
+
+== silent
+Roger: A habit, a bundle, and a face that's never seen London. You're their new porter.
+Roger: I'm Roger, bailiff of this ward. It's my business to know who comes into it.
+-> ask
+
+== ask
+Roger: Merchants come to that gate. Pilgrims with fat purses.
+Roger: When one goes in, I'd like to hear of it. His name, and where he's from. That's all.
+-> choice
+
+== again
+-> again_agreed [if n0_roger_agreed]
+-> again_plain
+
+== again_agreed
+Roger: A merchant, a name. You know where I drink.
+-> choice
+
+== again_plain
+Roger: Porter. Thought on what I asked?
+-> choice
+
+== choice
+* [if not n0_roger_why] Why do you want to know? -> why
+* [if not n0_roger_agreed] I'll send you word. [set n0_roger_agreed] [trust roger 5] -> agreed
+* [if not n0_roger_land] What does the ward want with the abbey? -> land
+
+== why [set n0_roger_why]
+Roger: Because men with money go in there, and the ward never hears of them again.
+Roger: Somebody ought to keep count. Your abbey doesn't.
+-> choice
+
+== agreed
+Roger: Good. A porter who keeps count is worth something to the ward. The ward pays its friends.
+-> choice
+
+== land [set n0_roger_land]
+Roger: The ward wants nothing. The ward is patient.
+Roger: That's good land behind your wall. Too good for an abbey that can't keep count of its own guests.
+Roger: If your abbey ever falls on hard times, there are men on the ward who'd put it to better use. Remember who told you.
+-> choice
+
+== leave
+Roger: Think on it, porter. The ward remembers its friends.
+"

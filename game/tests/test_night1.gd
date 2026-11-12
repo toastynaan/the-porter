@@ -67,7 +67,7 @@ func _start() -> NightPilot:
 	# Carried on from the night before: the night's own start state isn't applied.
 	GameState.carried = true
 	Talk.history.clear()
-	var main := NightPilot.main_with("res://game/nights/night1.tscn")
+	var main := NightPilot.main_with("res://game/chapters/night1/night1.tscn")
 	add_child(main)
 	await get_tree().process_frame
 	await get_tree().process_frame

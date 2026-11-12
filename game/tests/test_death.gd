@@ -1,6 +1,6 @@
 extends Node
 ## Deaths (docs/full-game-run.md, "Deaths and bodies"; M9's "each style plays
-## in a test scene"), in game/encounters/death_demo.tscn through main.tscn:
+## in a test scene"), in game/dev/encounters/death_demo.tscn through main.tscn:
 ## an implied death sober (a man in a mask, a cry, a lantern, a body that
 ## falls as a ragdoll and settles, a pool of blood), a gory one drugged (the
 ## demon, blood up the wall), the throat sober (blood flying, a spray); the
@@ -25,7 +25,7 @@ func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	GameState.night = 4
 	Talk.line_seconds = 0.05
-	_main = NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	_main = NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(_main)
 	await _start()
 	var night := _pilot.night

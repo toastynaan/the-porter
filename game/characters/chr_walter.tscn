@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/npc/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
 
 [node name="Walter" type="Node3D" groups=["placeholder"]]
 editor_description = "Placeholder: Walter the pardoner. Plump; oily, cheerful. Coloured cloak (the only saturated colour on any character). His box of relics and his bag are on VisitorNPC, where the porter reads them. Feet at the origin, facing -Z. Face is where the conversation camera looks."

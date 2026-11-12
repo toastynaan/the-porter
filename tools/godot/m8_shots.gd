@@ -16,7 +16,7 @@ func _ready() -> void:
 	Settings.path = "user://m8_shots_settings.cfg"
 	Talk.line_seconds = 2.0
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	_main = load("res://game/render/main.tscn").instantiate()
+	_main = load("res://game/core/render/main.tscn").instantiate()
 	add_child(_main)
 	_flow = _main.get_node(^"Game")
 	_flow.card.seconds = 600.0

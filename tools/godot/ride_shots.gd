@@ -19,7 +19,7 @@ func _ready() -> void:
 	Talk.line_seconds = 2.5
 	Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	_main = NightPilot.main_with("res://game/nights/night0.tscn")
+	_main = NightPilot.main_with("res://game/chapters/night0/night0.tscn")
 	add_child(_main)
 	await get_tree().create_timer(0.5).timeout
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

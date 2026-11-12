@@ -7,7 +7,7 @@ How to play the whole game from the title to an ending, what to try, and where e
 - Open the project in Godot 4.8 and press **F5**. The title screen: New Game, Continue (after a save), Chapters (after you finish once), How to Play, Settings, Quit.
 - **New Game** plays the eight chapters in order, each opened by its chronicle card: night 0, day 1, nights 1 to 6. A whole run is about 4 to 5 hours.
 - **Chapters** (after you've finished once) starts any chapter with the state a typical playthrough would have reached.
-- To play one chapter from the editor, open its scene in `game/nights/` and press **F6**.
+- To play one chapter from the editor, open its scene in `game/chapters/<chapter>/` and press **F6**.
 
 ## Controls
 

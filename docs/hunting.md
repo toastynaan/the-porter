@@ -4,7 +4,7 @@ How the hunter, hiding spots, captures and the demon work in the greybox, and ev
 
 ## Play it
 
-To play night 3, see `docs/night3.md`. To try the hunter and the demon on their own, run `game/encounters/hunt_demo.tscn` (F6 in the editor): the abbey with one hunter on a round of the cloister, church and graveyard, plus the demon stalking you.
+To play night 3, see `docs/night3.md`. To try the hunter and the demon on their own, run `game/dev/encounters/hunt_demo.tscn` (F6 in the editor): the abbey with one hunter on a round of the cloister, church and graveyard, plus the demon stalking you.
 
 | Key | Does |
 | --- | --- |
@@ -21,7 +21,7 @@ To play night 3, see `docs/night3.md`. To try the hunter and the demon on their 
 
 ## The hunter
 
-`game/hunter/hunter.tscn`. The script is `hunter.gd` (states and movement), with `hunter_senses.gd` (sight and hearing) and `hunter_audio.gd` (his sounds) as child nodes.
+`game/hunting/hunter.tscn`. The script is `hunter.gd` (states and movement), with `hunter_senses.gd` (sight and hearing) and `hunter_audio.gd` (his sounds) as child nodes.
 
 | State | What he does |
 | --- | --- |
@@ -55,7 +55,7 @@ He carries a shuttered lantern on his back (*default*; its 3.5 m light is *mine*
 
 ## Hiding
 
-`game/hiding/hiding_spot.gd`. Look at the spot and press E. The camera drops to the spot's `View` marker, look is limited to about ±50°, and the lantern goes under the cloak. Press E again to climb out.
+`game/hunting/hiding_spot.gd`. Look at the spot and press E. The camera drops to the spot's `View` marker, look is limited to about ±50°, and the lantern goes under the cloak. Press E again to climb out.
 
 When a hunter checks a spot you're in:
 - **Breathing:** he finds you.
@@ -90,7 +90,7 @@ Nothing is shown on screen. Breathing turns to panting as stamina runs down. In 
 
 ## Captures
 
-`game/flow/capture_flow.gd`, in `main.tscn`.
+`game/core/flow/capture_flow.gd`, in `main.tscn`.
 
 Since M8 (`docs/frame.md`, "Being caught, and dying"):
 - **The one forgiving capture:** the first, if it comes on night 1 or 2. You black out and wake in the infirmary (the `WakePoint` marker) with +40 Dose eased in, and the cult has taken your satchel but not your keys. The hunters go back to their rounds.

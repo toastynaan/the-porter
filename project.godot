@@ -11,17 +11,17 @@ config_version=5
 [application]
 
 config/name="The Porter"
-run/main_scene="res://game/render/main.tscn"
+run/main_scene="res://game/core/render/main.tscn"
 config/features=PackedStringArray("4.8", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Settings="*res://game/autoload/settings.gd"
-GameState="*res://game/autoload/game_state.gd"
+Settings="*res://game/core/autoload/settings.gd"
+GameState="*res://game/core/autoload/game_state.gd"
 TimeDirector="*res://game/ragdoll/time_director.gd"
-Press="*res://game/autoload/press.gd"
-Talk="*res://game/dialogue/talk.gd"
+Press="*res://game/core/autoload/press.gd"
+Talk="*res://game/talk/talk.gd"
 
 [display]
 

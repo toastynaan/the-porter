@@ -31,7 +31,7 @@ func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	GameState.night = 0
 	Talk.line_seconds = 0.05
-	var main := NightPilot.main_with("res://game/encounters/death_demo.tscn")
+	var main := NightPilot.main_with("res://game/dev/encounters/death_demo.tscn")
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
 	await _pilot.frames(5)
@@ -99,7 +99,7 @@ func _run() -> void:
 	p.call(&"_look", Vector2(1.5, 0.0))
 	_check(absf(rad_to_deg(wrapf(p.rotation.y - yaw, -PI, PI))) <= Squint.PEEK_LOOK + 0.5, "he can look about only 25°")
 	_check(-p.camera.global_basis.z.x < -0.9, "looking out into the lane")
-	var hunter := (load("res://game/hunter/hunter.tscn") as PackedScene).instantiate() as Hunter
+	var hunter := (load("res://game/hunting/hunter.tscn") as PackedScene).instantiate() as Hunter
 	hunter.dormant = true
 	night.add_child(hunter)
 	await _pilot.frames(2)

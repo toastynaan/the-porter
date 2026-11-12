@@ -18,9 +18,9 @@ ground at its origin:
 - churchyard_cross: a stone cross on three steps, 3.5 m high.
 - item_stone, item_cup, item_bone, item_apple, item_bread: what he picks
   up, each about the origin its placeholder mesh has in
-  game/nights/night_base.tscn.
+  game/chapters/common/night_base.tscn.
 - cult_masks, hoof_soles, purse_chest, relic_hand, cult_book: the last
-  night's proofs (game/nights/night6.tscn).
+  night's proofs (game/chapters/night6/night6.tscn).
 
 `skull` is a better skull than dress.skull, with the same arguments.
 

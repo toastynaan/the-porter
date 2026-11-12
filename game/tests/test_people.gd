@@ -52,7 +52,7 @@ func _run() -> void:
 	NightPilot.fresh_night(TEST_SAVE)
 	Talk.line_seconds = 0.05
 	Talk.auto_choice = func(_o: PackedStringArray) -> int: return _pick[0]
-	var main := NightPilot.main_with("res://game/nights/night3.tscn")
+	var main := NightPilot.main_with("res://game/chapters/night3/night3.tscn")
 	add_child(main)
 	_pilot = NightPilot.new(main.get(&"current_level"), _check)
 	_pilot.shorten()

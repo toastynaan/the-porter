@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Conversation" format=3]
+
+[ext_resource type="Script" path="res://game/talk/conversation.gd" id="1_convo"]
+
+[resource]
+script = ExtResource("1_convo")
+id = &"n4_simon"
+text = "# DRAFT
+# Brother Simon at dusk, in the cloister garth on the low wall of the herb beds (night 4, fog). A quiet choir brother; nervous.
+# Not in the cult. Thomas has sent him to do a dirty job tonight (scrubbing blood) and he can't say so.
+# If Thomas has named him (n4_thomas_simon), the porter can ask where he goes at night (trust -5: he takes it badly).
+# Telling him to keep to the dormitory is a warning ([warn]); he takes it badly, and he trusts Thomas more than the porter.
+== start
+(A thin brother on the wall of the herb beds, picking at a thread on his sleeve. He stands too fast when he sees you.)
+Simon: Porter. I was only taking the air. There's not much else to take tonight.
+-> topics
+
+== again
+(Simon is back on the wall, picking at the same thread.)
+Simon: Porter.
+-> topics
+
+== topics
+* [if n4_thomas_simon] [if not n4_simon_night] Where do you go at night, brother? -> night
+* [if not n4_simon_how] How are you keeping, brother? -> how
+* [if not n4_simon_warn] Keep to the dormitory tonight, brother. Bar the door. [warn] -> warn
+
+== night [set n4_simon_night] [trust simon -5]
+(The thread snaps in his fingers.)
+Simon: Who says I go anywhere? I can't sleep. I walk. Is that a sin now, with all the rest?
+(He looks toward the infirmary, then at the ground.)
+-> topics
+
+== how [set n4_simon_how]
+Simon: Hungry. Cold. Afraid, like everyone.
+Simon: I came here to sing, porter. It's all I'm good for. I wish they'd let me only sing.
+-> topics
+
+== warn [set n4_simon_warn]
+(He goes white.)
+Simon: Why would you say that to me? Who told you to say it?
+Simon: I'll go where I'm bid. I'm a brother of this house, not a guest you can lock in.
+Simon: Don't tell anyone you said that to me. Please.
+-> end
+
+== leave
+Simon: God keep you, porter.
+"

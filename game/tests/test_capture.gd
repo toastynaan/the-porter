@@ -27,8 +27,8 @@ func _run() -> void:
 	GameState.night = 1
 	GameState.satchel.assign([&"apple", &"mask"])
 	GameState.snap_dose(10.0)
-	_main = load("res://game/render/main.tscn").instantiate()
-	_main.level = load("res://game/encounters/hunt_demo.tscn")
+	_main = load("res://game/core/render/main.tscn").instantiate()
+	_main.level = load("res://game/dev/encounters/hunt_demo.tscn")
 	add_child(_main)
 	_flow = _main.get_node(^"CaptureFlow")
 	_quiet_demon()
