@@ -1,19 +1,27 @@
 @id n0_kit
-# DRAFT
-# Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter.
+# Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter: she asks more than she answers.
+# One talk: the questions left come up again until all are asked; then she's off to sell her last two (done).
 == start
 (A girl with a tray of candles on a strap round her neck, her hood up against the rain.)
-Kit {glad}: Candles! Last of the day, cheap as dirt. You're a brother. Are you the new one?
+Kit {glad}: Candles! Last of the day, two for a farthing. You're a brother. Are you the new porter?
 -> topics
 
 == again
-Kit {glad}: Two left, brother. Both for a ha'penny, and I'll throw in the tray.
+-> done [if n0_kit_porter] [if n0_kit_candles] [if n0_kit_abbey]
+-> again_ask
+
+== again_ask
+Kit {amused}: You came back! Two left, brother. Both for a farthing, and I'll throw in the tray.
 -> topics
 
 == topics
-* [if not n0_kit_porter] I'm the new porter. -> porter
+-> done [if n0_kit_porter] [if n0_kit_candles] [if n0_kit_abbey]
+-> ask
+
+== ask
+* [if not n0_kit_porter] I'm the new porter. Alric. -> porter
 * [if not n0_kit_candles] Who makes your candles? -> candles
-* [if not n0_kit_abbey] Have you been inside? -> abbey
+* [if not n0_kit_abbey] Have you been inside the abbey? -> abbey
 
 == porter [set n0_kit_porter]
 Kit {glad}: I knew it! Everybody knew you were coming. Gib told Margery, and Margery told the lane.
@@ -21,15 +29,19 @@ Kit {amused}: You're younger than Brother Anselm. Well. Everybody's younger than
 -> topics
 
 == candles [set n0_kit_candles]
-Kit {calm}: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like.
+Kit {calm}: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like. I'm Kit.
 Kit {calm}: I'm at your gate most dusks with the tray. The brothers buy whatever I've got left.
 Kit {amused}: Brother Ranulf would buy the tray and the strap, if I let him.
 -> topics
 
 == abbey [set n0_kit_abbey]
 Kit {wary}: Past the gate? Never. Father says I'm not to, not ever.
-Kit {glad}: Is it true there's a saint's finger in a glass box? And lights at night? You'll tell me, when you've seen.
+Kit {glad}: Is it true there's a saint's finger in a glass box? And lights going about at night? You'll tell me, when you've seen.
 -> topics
+
+== done
+Kit {glad}: Two candles left, and the light going. I'll see you at your gate, porter!
+-> end
 
 == leave
 Kit {glad}: See you at the gate!

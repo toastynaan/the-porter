@@ -1572,7 +1572,8 @@
    "chapter": "night0",
    "notes": [
     "Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.",
-    "The bed answer gives him the room at the top (n0_room). An ale ends the talk; the next talk starts at again."
+    "The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.",
+    "The ale is always the last answer. Once the bed and the abbey are asked she has one thing more (Jankin), and \"(Nod.)\" ends the talk with her line."
    ],
    "points": [
     {
@@ -1665,9 +1666,29 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "topics_late",
+       "tags": [
+        "if n0_room",
+        "if n0_agnes_abbey"
+       ]
+      },
+      {
+       "to": "topics_first",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "topics_first",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
-       "text": "Have you a bed for the night?",
+       "text": "Have you a bed for the night, goodwife?",
        "to": "bed",
        "tags": [
         "if not n0_room"
@@ -1697,6 +1718,40 @@
      "jumps": []
     },
     {
+     "name": "topics_late",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [
+      {
+       "text": "Is Jankin always like this?",
+       "to": "jankin",
+       "tags": [
+        "if not n0_agnes_jankin"
+       ],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "(Nod.)",
+       "to": "close",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "An ale, if you would.",
+       "to": "ale",
+       "tags": [
+        "drink"
+       ],
+       "stance": null,
+       "right": null
+      }
+     ],
+     "jumps": []
+    },
+    {
      "name": "bed",
      "tags": [
       "set n0_room"
@@ -1707,13 +1762,13 @@
        "who": "Agnes",
        "mood": "calm",
        "tells": [],
-       "text": "A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey."
+       "text": "There's the room at the top. It's small and it's cold, and its one window looks toward the abbey."
       },
       {
        "who": "Agnes",
        "mood": "amused",
        "tells": [],
-       "text": "Nobody else will have it. You can have it for a prayer and a ha'penny."
+       "text": "Nobody else will have it. It's yours for a ha'penny, and I'll not haggle with a monk."
       },
       {
        "who": "Agnes",
@@ -1753,7 +1808,7 @@
        "who": "Agnes",
        "mood": "grave",
        "tells": [],
-       "text": "We've had lodgers go over there to see the relic. Paid me for two nights and slept one."
+       "text": "We've had lodgers go over there to see the relic. Paid me for two nights, and slept one."
       },
       {
        "who": "Agnes",
@@ -1768,6 +1823,60 @@
      "jumps": [
       {
        "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "jankin",
+     "tags": [
+      "set n0_agnes_jankin"
+     ],
+     "claim": null,
+     "lines": [
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(She looks down the bench at him, and her face softens.)"
+      },
+      {
+       "who": "Agnes",
+       "mood": "warm",
+       "tells": [],
+       "text": "Jankin? Every night. Hob puts him out at closing, and I put a crust in his pocket first."
+      },
+      {
+       "who": "Agnes",
+       "mood": "sad",
+       "tells": [],
+       "text": "One of these nights it'll be too cold for him out there. You see if it isn't."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "close",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Agnes",
+       "mood": "warm",
+       "tells": [],
+       "text": "Then sit and dry. If you're still down here at midnight, I'll send you up myself."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -1825,16 +1934,16 @@
      "claim": null,
      "lines": [
       {
-       "who": "Agnes",
-       "mood": "wary",
-       "tells": [],
-       "text": "Another? You'll be no use to your abbot in the morning."
-      },
-      {
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(She fills it to the brim anyway.)"
+       "text": "(She fills it to the brim, shaking her head.)"
+      },
+      {
+       "who": "Agnes",
+       "mood": "wary",
+       "tells": [],
+       "text": "You'll be no use to your abbot in the morning."
       }
      ],
      "answers": [],
@@ -1863,12 +1972,14 @@
    ],
    "sets": [
     "n0_agnes_abbey",
+    "n0_agnes_jankin",
     "n0_agnes_poured",
     "n0_room",
     "talked_n0_agnes"
    ],
    "reads": [
     "n0_agnes_abbey",
+    "n0_agnes_jankin",
     "n0_agnes_poured",
     "n0_room"
    ]
@@ -1879,7 +1990,8 @@
    "name": "the carter",
    "chapter": "night0",
    "notes": [
-    "The carter sets the porter down in the lane by the abbey gate at dusk, night 0."
+    "The carter sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).",
+    "Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line."
    ],
    "points": [
     {
@@ -1888,15 +2000,21 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(The carter twists round on his seat as you climb down. The horse stamps in the wet.)"
+      },
+      {
        "who": "Carter",
        "mood": "weary",
        "tells": [],
-       "text": "(He reins in with a jolt.) Here's your abbey. Down you get, brother. I've a horse to stable before dark."
+       "text": "There's your abbey, brother. I've a horse to stable before dark."
       }
      ],
      "answers": [
       {
-       "text": "Will you wait while I knock?",
+       "text": "Will you wait while I knock, friend?",
        "to": "wait",
        "tags": [],
        "stance": null,
@@ -1910,7 +2028,7 @@
        "right": null
       },
       {
-       "text": "God keep you.",
+       "text": "God keep you, friend.",
        "to": "bless",
        "tags": [],
        "stance": null,
@@ -1927,9 +2045,7 @@
       {
        "who": "Carter",
        "mood": "afraid",
-       "tells": [
-        "blink"
-       ],
+       "tells": [],
        "text": "Wait? In this lane, with the light going?"
       },
       {
@@ -2014,13 +2130,7 @@
        "who": "Carter",
        "mood": "angry",
        "tells": [],
-       "text": "I said down you get. Go on with you."
-      },
-      {
-       "who": "",
-       "mood": "",
-       "tells": [],
-       "text": "(He clicks his tongue at the horse.)"
+       "text": "I said down you get. I'm away."
       }
      ],
      "answers": [],
@@ -2058,8 +2168,9 @@
    "name": "Gib the watchman",
    "chapter": "night0",
    "notes": [
-    "Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell,",
-    "and walking the lane calling the hour after it (n0_curfew). He tells the porter to be indoors before the bell."
+    "Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell, and walking the lane calling the hour after it (n0_curfew). Old, slow, a watchman: he tells the porter to be indoors before the bell.",
+    "His call is a clock the porter will hear from inside the walls: if it stops, something is wrong.",
+    "One talk: the questions left come up again until all are asked; then he sends him indoors (done, before or after the bell)."
    ],
    "points": [
     {
@@ -2096,7 +2207,7 @@
        "who": "Gib",
        "mood": "weary",
        "tells": [],
-       "text": "Mind my ladder, brother. A lantern on every house, all winter long. Mayor's order."
+       "text": "Mind my ladder, brother. Gib, the watch. A lantern on every house all winter, by the mayor's order."
       },
       {
        "who": "Gib",
@@ -2122,7 +2233,7 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(An old man with a lantern on a pole, walking the middle of the empty lane.)"
+       "text": "(An old man with a lantern on a pole, walking slow down the middle of the empty lane.)"
       },
       {
        "who": "Gib",
@@ -2146,6 +2257,14 @@
      "lines": [],
      "answers": [],
      "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_gib_watch",
+        "if n0_gib_lanterns",
+        "if n0_gib_abbey"
+       ]
+      },
       {
        "to": "again_late",
        "tags": [
@@ -2187,7 +2306,7 @@
        "who": "Gib",
        "mood": "wary",
        "tells": [],
-       "text": "You again, and the bell long gone. Indoors, brother."
+       "text": "You again, and the bell long gone."
       }
      ],
      "answers": [],
@@ -2203,9 +2322,30 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_gib_watch",
+        "if n0_gib_lanterns",
+        "if n0_gib_abbey"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
-       "text": "What do you do after the bell?",
+       "text": "What do you do after the bell, friend?",
        "to": "watch",
        "tags": [
         "if not n0_gib_watch"
@@ -2245,7 +2385,7 @@
        "who": "Gib",
        "mood": "calm",
        "tells": [],
-       "text": "After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light."
+       "text": "After the bell I walk the lane and call the hour. Ten of the clock, and on till first light."
       },
       {
        "who": "Gib",
@@ -2273,7 +2413,7 @@
        "who": "Gib",
        "mood": "calm",
        "tells": [],
-       "text": "Since the year of Agincourt. A lantern on every house from Hallowtide to Candlemas."
+       "text": "Since the year of Agincourt. Every winter, from Hallowtide to Candlemas."
       },
       {
        "who": "Gib",
@@ -2298,6 +2438,12 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He's slow to answer.)"
+      },
+      {
        "who": "Gib",
        "mood": "grave",
        "tells": [],
@@ -2315,13 +2461,72 @@
        "who": "Gib",
        "mood": "grave",
        "tells": [],
-       "text": "I call the hour and I keep walking. You'd do well to learn the same."
+       "text": "I call the hour, and I keep walking. You'd do well to learn the same."
       }
      ],
      "answers": [],
      "jumps": [
       {
        "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done_late",
+       "tags": [
+        "if n0_curfew"
+       ]
+      },
+      {
+       "to": "done_early",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done_early",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Gib",
+       "mood": "weary",
+       "tells": [],
+       "text": "Well. These lanterns won't light themselves. Indoors before the bell, brother."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done_late",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Gib",
+       "mood": "weary",
+       "tells": [],
+       "text": "That's enough talk for a cold night. Indoors with you, brother."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -2335,7 +2540,7 @@
        "who": "Gib",
        "mood": "weary",
        "tells": [],
-       "text": "Indoors before the bell, mind!"
+       "text": "Get you indoors, brother!"
       }
      ],
      "answers": [],
@@ -2361,8 +2566,9 @@
    "name": "Hob",
    "chapter": "night0",
    "notes": [
-    "Hob, who keeps the Cross Keys, behind his board, night 0. He hears everything said over the ale.",
-    "An ale ends the talk; the next talk starts at again, so he can have another.",
+    "Hob, who keeps the Cross Keys, behind his board, night 0. Blunt and kind. He hears everything said over the ale, and doesn't say any of it is true.",
+    "His questions: what the lane says about the abbey; when the Keys shuts; who's drinking tonight (once one of the first two is asked). He never runs out: the ale is always there.",
+    "The ale is always the last answer, and the third while he has two questions left (always, until he's asked: the tests take answer 2 for an ale). Once the abbey and the shutting are asked, \"(Nod.)\" ends the talk with his line. An ale ends the talk with his own line; the next talk starts at again, so he can have another.",
     "Plants the night-2 rule (n0_hob_jankin): he puts Jankin out at closing every night, rain or no."
    ],
    "points": [
@@ -2407,7 +2613,7 @@
        "who": "Hob",
        "mood": "calm",
        "tells": [],
-       "text": "Brother."
+       "text": "Brother. What'll it be?"
       }
      ],
      "answers": [],
@@ -2423,22 +2629,152 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "topics_last",
+       "tags": [
+        "if n0_hob_abbey",
+        "if n0_hob_shut"
+       ]
+      },
+      {
+       "to": "topics_shut",
+       "tags": [
+        "if n0_hob_abbey"
+       ]
+      },
+      {
+       "to": "topics_abbey",
+       "tags": [
+        "if n0_hob_shut"
+       ]
+      },
+      {
+       "to": "topics_first",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "topics_first",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
        "text": "What does the lane say about the abbey?",
        "to": "abbey",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "When do you shut, friend?",
+       "to": "shut",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "An ale, if you would.",
+       "to": "ale",
        "tags": [
-        "if not n0_hob_abbey"
+        "drink"
+       ],
+       "stance": null,
+       "right": null
+      }
+     ],
+     "jumps": []
+    },
+    {
+     "name": "topics_shut",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [
+      {
+       "text": "When do you shut, friend?",
+       "to": "shut",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "Who's drinking here tonight?",
+       "to": "room",
+       "tags": [
+        "if not n0_hob_room"
        ],
        "stance": null,
        "right": null
       },
       {
-       "text": "Have you a bed for the night?",
-       "to": "bed",
+       "text": "An ale, if you would.",
+       "to": "ale",
        "tags": [
-        "if not n0_hob_bed"
+        "drink"
        ],
+       "stance": null,
+       "right": null
+      }
+     ],
+     "jumps": []
+    },
+    {
+     "name": "topics_abbey",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [
+      {
+       "text": "What does the lane say about the abbey?",
+       "to": "abbey",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "Who's drinking here tonight?",
+       "to": "room",
+       "tags": [
+        "if not n0_hob_room"
+       ],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "An ale, if you would.",
+       "to": "ale",
+       "tags": [
+        "drink"
+       ],
+       "stance": null,
+       "right": null
+      }
+     ],
+     "jumps": []
+    },
+    {
+     "name": "topics_last",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [
+      {
+       "text": "Who's drinking here tonight?",
+       "to": "room",
+       "tags": [
+        "if not n0_hob_room"
+       ],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "(Nod.)",
+       "to": "close",
+       "tags": [],
        "stance": null,
        "right": null
       },
@@ -2477,7 +2813,7 @@
        "who": "Hob",
        "mood": "calm",
        "tells": [],
-       "text": "Lights in the church at night, when the brothers should be abed. And a thing on the wall with horns, Jankin says."
+       "text": "Lights moving in there at night, at hours no bell's rung for. And a thing up on the wall with horns, Jankin says."
       },
       {
        "who": "Hob",
@@ -2495,33 +2831,34 @@
      ]
     },
     {
-     "name": "bed",
+     "name": "shut",
      "tags": [
-      "set n0_hob_bed"
+      "set n0_hob_shut",
+      "set n0_hob_jankin"
      ],
      "claim": null,
      "lines": [
       {
        "who": "Hob",
-       "mood": "amused",
+       "mood": "grave",
        "tells": [],
-       "text": "Beds are Agnes's business. Ask her, and don't haggle. She'll win."
+       "text": "At the bell. After it the door's barred, and it stays barred."
       },
       {
        "who": "Hob",
-       "mood": "grave",
+       "mood": "calm",
        "tells": [],
-       "text": "We take in anyone who comes before the bell. After it the door's barred, and it stays barred."
+       "text": "Them with a bed go up the stair. Them without go out. Jankin too, every night, rain or no."
+      },
+      {
+       "who": "Hob",
+       "mood": "amused",
+       "tells": [],
+       "text": "If it's a bed you're after, that's Agnes's business. Don't haggle. She'll win."
       }
      ],
      "answers": [],
      "jumps": [
-      {
-       "to": "bed_jankin",
-       "tags": [
-        "if not n0_hob_jankin"
-       ]
-      },
       {
        "to": "topics",
        "tags": []
@@ -2529,23 +2866,55 @@
      ]
     },
     {
-     "name": "bed_jankin",
+     "name": "room",
      "tags": [
-      "set n0_hob_jankin"
+      "set n0_hob_room"
      ],
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He nods round the room, one face at a time.)"
+      },
+      {
        "who": "Hob",
        "mood": "calm",
        "tells": [],
-       "text": "Them without a bed go out at closing. Jankin too, every night, rain or no."
+       "text": "Walter, in the red, selling bones. Roger, the ward's bailiff, with the staff. Ralph the chandler, who makes your candles."
+      },
+      {
+       "who": "Hob",
+       "mood": "amused",
+       "tells": [],
+       "text": "And Jankin, who's always here. Mind what you say near Roger. He counts everything."
       }
      ],
      "answers": [],
      "jumps": [
       {
        "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "close",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Hob",
+       "mood": "amused",
+       "tells": [],
+       "text": "Go and sit, then. You're making the place look holy."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -2643,16 +3012,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He pours it, slower than before.)"
+      },
+      {
        "who": "Hob",
        "mood": "wary",
        "tells": [],
        "text": "That's three, brother. Go steady. Agnes won't carry you up the stair."
-      },
-      {
-       "who": "",
-       "mood": "",
-       "tells": [],
-       "text": "(He pours it all the same.)"
       }
      ],
      "answers": [],
@@ -2672,7 +3041,13 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(He fills your cup again without a word.)"
+       "text": "(He fills your cup again.)"
+      },
+      {
+       "who": "Hob",
+       "mood": "calm",
+       "tells": [],
+       "text": "There. Drink it sitting down."
       }
      ],
      "answers": [],
@@ -2701,17 +3076,19 @@
    ],
    "sets": [
     "n0_hob_abbey",
-    "n0_hob_bed",
     "n0_hob_jankin",
     "n0_hob_poured",
+    "n0_hob_room",
+    "n0_hob_shut",
     "talked_n0_hob"
    ],
    "reads": [
     "drank",
     "n0_hob_abbey",
-    "n0_hob_bed",
     "n0_hob_jankin",
-    "n0_hob_poured"
+    "n0_hob_poured",
+    "n0_hob_room",
+    "n0_hob_shut"
    ]
   },
   "game/chapters/night0/dialogue/jankin.talk": {
@@ -2720,8 +3097,9 @@
    "name": "Jankin",
    "chapter": "night0",
    "notes": [
-    "Jankin on the bench at the Cross Keys, night 0. A harmless drunk, full of stories, half of them nonsense.",
-    "He says Hob throws him out at closing every night (the night-2 rule)."
+    "Jankin on the bench at the Cross Keys, night 0. A harmless drunk, rambling, full of stories, half of them nonsense. Once, for a moment, he isn't drunk at all (who).",
+    "He saw a thing with horns on the abbey wall (the horned costume; nothing here says so). He says Hob throws him out at closing every night (the night-2 rule).",
+    "One talk: the questions left come up again until all are asked; then he runs out of stories (done)."
    ],
    "points": [
     {
@@ -2738,9 +3116,7 @@
       {
        "who": "Jankin",
        "mood": "drunk",
-       "tells": [
-        "blink"
-       ],
+       "tells": [],
        "text": "A monk! In the Keys! Hob, the world's ending. I always said it would."
       }
      ],
@@ -2759,6 +3135,14 @@
      "lines": [],
      "answers": [],
      "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_jankin_wall",
+        "if n0_jankin_who",
+        "if n0_jankin_home"
+       ]
+      },
       {
        "to": "again_wall",
        "tags": [
@@ -2798,7 +3182,7 @@
      "lines": [
       {
        "who": "Jankin",
-       "mood": "drunk",
+       "mood": "glad",
        "tells": [],
        "text": "Brother! You came back. Nobody comes back to Jankin."
       }
@@ -2816,9 +3200,30 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_jankin_wall",
+        "if n0_jankin_who",
+        "if n0_jankin_home"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
-       "text": "What do you know of the abbey?",
+       "text": "What do you know of the abbey, friend?",
        "to": "wall",
        "tags": [
         "if not n0_jankin_wall"
@@ -2913,6 +3318,12 @@
        "mood": "",
        "tells": [],
        "text": "(He looks into his cup, and for a moment he doesn't look drunk at all.)"
+      },
+      {
+       "who": "Jankin",
+       "mood": "drunk",
+       "tells": [],
+       "text": "Never mind. Ask me another."
       }
      ],
      "answers": [],
@@ -2958,6 +3369,32 @@
      ]
     },
     {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He peers into his cup.)"
+      },
+      {
+       "who": "Jankin",
+       "mood": "drunk",
+       "tells": [],
+       "text": "That's all my stories, brother. Well. Most of them. Come back when I've thought of the rest."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
+       "tags": []
+      }
+     ]
+    },
+    {
      "name": "leave",
      "tags": [],
      "claim": null,
@@ -2991,7 +3428,8 @@
    "name": "Kit",
    "chapter": "night0",
    "notes": [
-    "Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter."
+    "Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter: she asks more than she answers.",
+    "One talk: the questions left come up again until all are asked; then she's off to sell her last two (done)."
    ],
    "points": [
     {
@@ -3009,7 +3447,7 @@
        "who": "Kit",
        "mood": "glad",
        "tells": [],
-       "text": "Candles! Last of the day, cheap as dirt. You're a brother. Are you the new one?"
+       "text": "Candles! Last of the day, two for a farthing. You're a brother. Are you the new porter?"
       }
      ],
      "answers": [],
@@ -3024,12 +3462,33 @@
      "name": "again",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_kit_porter",
+        "if n0_kit_candles",
+        "if n0_kit_abbey"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Kit",
-       "mood": "glad",
+       "mood": "amused",
        "tells": [],
-       "text": "Two left, brother. Both for a ha'penny, and I'll throw in the tray."
+       "text": "You came back! Two left, brother. Both for a farthing, and I'll throw in the tray."
       }
      ],
      "answers": [],
@@ -3045,9 +3504,30 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_kit_porter",
+        "if n0_kit_candles",
+        "if n0_kit_abbey"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
-       "text": "I'm the new porter.",
+       "text": "I'm the new porter. Alric.",
        "to": "porter",
        "tags": [
         "if not n0_kit_porter"
@@ -3065,7 +3545,7 @@
        "right": null
       },
       {
-       "text": "Have you been inside?",
+       "text": "Have you been inside the abbey?",
        "to": "abbey",
        "tags": [
         "if not n0_kit_abbey"
@@ -3115,7 +3595,7 @@
        "who": "Kit",
        "mood": "calm",
        "tells": [],
-       "text": "Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like."
+       "text": "Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like. I'm Kit."
       },
       {
        "who": "Kit",
@@ -3155,13 +3635,33 @@
        "who": "Kit",
        "mood": "glad",
        "tells": [],
-       "text": "Is it true there's a saint's finger in a glass box? And lights at night? You'll tell me, when you've seen."
+       "text": "Is it true there's a saint's finger in a glass box? And lights going about at night? You'll tell me, when you've seen."
       }
      ],
      "answers": [],
      "jumps": [
       {
        "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Kit",
+       "mood": "glad",
+       "tells": [],
+       "text": "Two candles left, and the light going. I'll see you at your gate, porter!"
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -3200,8 +3700,9 @@
    "name": "Mab",
    "chapter": "night0",
    "notes": [
-    "Mab, a leper, begging by the barred abbey gate at dusk, night 0. Her first lines send him to the Cross Keys (n0_sent_to_inn).",
-    "Alms once (n0_mab_alms): she gives him a heel of Fenchurch Street bread."
+    "Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn).",
+    "Alms once (n0_mab_alms): she gives him a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.",
+    "One talk: the questions left come up again until all are asked; then she sends him on (done)."
    ],
    "points": [
     {
@@ -3221,13 +3722,7 @@
        "who": "Mab",
        "mood": "wary",
        "tells": [],
-       "text": "No use knocking, brother. Stand off a little. Nobody will come."
-      },
-      {
-       "who": "Mab",
-       "mood": "wary",
-       "tells": [],
-       "text": "Nobody keeps that gate at night. Not since old Brother Anselm went blind. They bar it at dusk, and that's that."
+       "text": "No use knocking, brother. Nobody will come. Nobody keeps that gate at night, not since old Brother Anselm went blind."
       },
       {
        "who": "Mab",
@@ -3248,12 +3743,33 @@
      "name": "again",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_mab_porter",
+        "if n0_mab_saw",
+        "if n0_mab_alms"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Mab",
-       "mood": "calm",
+       "mood": "wary",
        "tells": [],
-       "text": "Still here, brother? The Keys is just across. They'll have the fire lit."
+       "text": "You again, brother. The Keys hasn't moved."
       }
      ],
      "answers": [],
@@ -3266,6 +3782,27 @@
     },
     {
      "name": "topics",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_mab_porter",
+        "if n0_mab_saw",
+        "if n0_mab_alms"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
      "tags": [],
      "claim": null,
      "lines": [],
@@ -3289,7 +3826,7 @@
        "right": null
       },
       {
-       "text": "(Give her alms.)",
+       "text": "(Give her a coin.)",
        "to": "alms",
        "tags": [
         "if not n0_mab_alms"
@@ -3308,12 +3845,6 @@
      "claim": null,
      "lines": [
       {
-       "who": "Mab",
-       "mood": "wary",
-       "tells": [],
-       "text": "Their porter."
-      },
-      {
        "who": "",
        "mood": "",
        "tells": [],
@@ -3321,9 +3852,15 @@
       },
       {
        "who": "Mab",
-       "mood": "sad",
+       "mood": "wary",
        "tells": [],
-       "text": "You're very young. Well. You'll be in there, and I'll be out here. We'll see a deal of each other."
+       "text": "Their porter. You're very young."
+      },
+      {
+       "who": "Mab",
+       "mood": "calm",
+       "tells": [],
+       "text": "I'm Mab. You'll be in there, and I'll be out here. We'll see a deal of each other."
       }
      ],
      "answers": [],
@@ -3351,13 +3888,7 @@
        "who": "Mab",
        "mood": "wary",
        "tells": [],
-       "text": "I see everyone who goes in at that gate, and everyone who comes out."
-      },
-      {
-       "who": "Mab",
-       "mood": "sad",
-       "tells": [],
-       "text": "Nobody asks me. Who asks a leper anything?"
+       "text": "I see everyone who goes in at that gate, and everyone who comes out. Nobody asks me. Who asks a leper anything?"
       },
       {
        "who": "Mab",
@@ -3387,7 +3918,7 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(You drop a penny of your road money in the bowl at her feet.)"
+       "text": "(You drop a penny in the bowl at her feet.)"
       },
       {
        "who": "Mab",
@@ -3412,6 +3943,26 @@
      "jumps": [
       {
        "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Mab",
+       "mood": "calm",
+       "tells": [],
+       "text": "Go on across to the fire, brother. I'll be here. I'm always here."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -3451,7 +4002,8 @@
    "name": "Margery",
    "chapter": "night0",
    "notes": [
-    "Margery, a neighbour, hurrying home with her basket before dark, night 0. Nervous; she won't stop long."
+    "Margery, a neighbour from by Saint Andrew's, hurrying home with her basket before dark, night 0. Hurried, careful, frightened: she won't stop long, and she won't pass the abbey wall after dark.",
+    "One talk: she answers what's left until it's all asked, then hurries off (done). Blessing her is a goodbye, and she takes it as one."
    ],
    "points": [
     {
@@ -3468,24 +4020,99 @@
       {
        "who": "Margery",
        "mood": "afraid",
-       "tells": [
-        "blink"
-       ],
+       "tells": [],
        "text": "Can't stop, brother, I'm sorry. Not with the light going."
       }
      ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_margery_home",
+        "if n0_margery_wall"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Margery",
+       "mood": "afraid",
+       "tells": [],
+       "text": "You again, brother. Quickly, then."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "topics",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_margery_home",
+        "if n0_margery_wall"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
        "text": "Where are you hurrying to?",
        "to": "home",
-       "tags": [],
+       "tags": [
+        "if not n0_margery_home"
+       ],
        "stance": null,
        "right": null
       },
       {
        "text": "What are you afraid of?",
-       "to": "afraid",
-       "tags": [],
+       "to": "wall",
+       "tags": [
+        "if not n0_margery_wall"
+       ],
        "stance": null,
        "right": null
       },
@@ -3503,33 +4130,37 @@
     },
     {
      "name": "home",
-     "tags": [],
+     "tags": [
+      "set n0_margery_home"
+     ],
      "claim": null,
      "lines": [
       {
        "who": "Margery",
        "mood": "afraid",
        "tells": [],
-       "text": "Home, by Saint Andrew's. The long way round."
+       "text": "Home, by Saint Andrew's. I'm Margery. I go the long way round."
       },
       {
        "who": "Margery",
        "mood": "afraid",
        "tells": [],
-       "text": "Two streets more, but it doesn't go past that wall."
+       "text": "Two streets more, but it doesn't pass that wall."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "topics",
        "tags": []
       }
      ]
     },
     {
-     "name": "afraid",
-     "tags": [],
+     "name": "wall",
+     "tags": [
+      "set n0_margery_wall"
+     ],
      "claim": null,
      "lines": [
       {
@@ -3550,13 +4181,13 @@
        "who": "Margery",
        "mood": "afraid",
        "tells": [],
-       "text": "I don't walk past that wall after dark. Not for anybody. No offence to your habit."
+       "text": "Even the dogs cross the lane rather than go by it. I don't walk past it after dark. No offence to your habit."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -3582,21 +4213,21 @@
      ]
     },
     {
-     "name": "again",
+     "name": "done",
      "tags": [],
      "claim": null,
      "lines": [
       {
-       "who": "Margery",
-       "mood": "afraid",
-       "tells": [],
-       "text": "Brother, I said I can't stop!"
-      },
-      {
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(She's already past you.)"
+       "text": "(She hitches the basket higher on her arm.)"
+      },
+      {
+       "who": "Margery",
+       "mood": "afraid",
+       "tells": [],
+       "text": "I must go, brother. God keep you."
       }
      ],
      "answers": [],
@@ -3624,9 +4255,14 @@
     }
    ],
    "sets": [
+    "n0_margery_home",
+    "n0_margery_wall",
     "talked_n0_margery"
    ],
-   "reads": []
+   "reads": [
+    "n0_margery_home",
+    "n0_margery_wall"
+   ]
   },
   "game/chapters/night0/dialogue/ralph.talk": {
    "id": "n0_ralph",
@@ -3634,8 +4270,9 @@
    "name": "Ralph the chandler",
    "chapter": "night0",
    "notes": [
-    "Ralph the chandler at the Cross Keys, night 0. He makes the abbey's candles; his daughter Kit sells them.",
-    "The sacrist has bought far more candles since about Michaelmas, and pays in coin the abbey never used to have."
+    "Ralph the chandler at the Cross Keys, night 0. He makes the abbey's candles; his daughter Kit sells them. A careful tradesman who notices numbers.",
+    "The sacrist has bought twice the wax since about Michaelmas, and pays in silver the abbey never used to have (n0_ralph_candles: night 2's Ranulf answers to it).",
+    "One talk: the questions left come up again until all are asked; then he goes back to his ale (done)."
    ],
    "points": [
     {
@@ -3668,6 +4305,27 @@
      "name": "again",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_ralph_candles",
+        "if n0_ralph_coin",
+        "if n0_ralph_kit"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Ralph",
@@ -3689,9 +4347,30 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_ralph_candles",
+        "if n0_ralph_coin",
+        "if n0_ralph_kit"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
-       "text": "How do you mean?",
+       "text": "Your best customer, friend? How so?",
        "to": "candles",
        "tags": [
         "if not n0_ralph_candles"
@@ -3738,13 +4417,13 @@
        "who": "Ralph",
        "mood": "calm",
        "tells": [],
-       "text": "Your sacrist, Brother Ranulf, buys more than he ever did. Twice what he bought at Easter, and more again."
+       "text": "At Easter your sacrist, Brother Ranulf, bought a dozen pound of wax a month. Since Michaelmas, two dozen, and more."
       },
       {
        "who": "Ralph",
        "mood": "wary",
        "tells": [],
-       "text": "Since about Michaelmas. I asked him once what they burn them all for. He didn't say."
+       "text": "I asked him once what they burn it all for. He didn't say."
       }
      ],
      "answers": [],
@@ -3766,7 +4445,7 @@
        "who": "Ralph",
        "mood": "calm",
        "tells": [],
-       "text": "In coin. Good silver, on the nail, and he doesn't haggle."
+       "text": "In silver. On the nail, and he doesn't haggle."
       },
       {
        "who": "Ralph",
@@ -3820,6 +4499,26 @@
      ]
     },
     {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Ralph",
+       "mood": "calm",
+       "tells": [],
+       "text": "That's all I know, brother, and more than a chandler ought to say. Good night to you."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
+       "tags": []
+      }
+     ]
+    },
+    {
      "name": "leave",
      "tags": [],
      "claim": null,
@@ -3853,9 +4552,10 @@
    "name": "Roger the bailiff",
    "chapter": "night0",
    "notes": [
-    "Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Hard and transactional.",
+    "Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Officious, counting, cold: he has counted the porter before he sits down.",
     "He wants word of any merchant, anyone with money, who goes in at the abbey gate (n0_roger_agreed if the porter says he'll send it). The ward would like the abbey's land.",
-    "Claims: n0_roger_count (hiding): why he wants the names. True as far as it goes; he leaves out the land. Pressed, he hints at it."
+    "Claims: n0_roger_count (hiding): why he wants the names. True as far as it goes; he leaves out the land. Pressed, he hints at it.",
+    "One talk: after he has asked his favour, the questions left come up again until all are asked; then he dismisses him (done). Not agreeing is allowed: the offer stays open and he walks away."
    ],
    "points": [
     {
@@ -3867,7 +4567,7 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you sat.)"
+       "text": "(A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you came in.)"
       },
       {
        "who": "Roger",
@@ -3878,14 +4578,14 @@
      ],
      "answers": [
       {
-       "text": "Brother Alric. The abbey's new porter.",
+       "text": "Brother Alric, the abbey's new porter.",
        "to": "porter",
        "tags": [],
        "stance": null,
        "right": null
       },
       {
-       "text": "Who's asking?",
+       "text": "Who's asking, friend?",
        "to": "who",
        "tags": [
         "trust roger -5"
@@ -3918,7 +4618,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "ask",
+       "to": "favour",
        "tags": []
       }
      ]
@@ -3938,7 +4638,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "ask",
+       "to": "favour",
        "tags": []
       }
      ]
@@ -3964,13 +4664,13 @@
      "answers": [],
      "jumps": [
       {
-       "to": "ask",
+       "to": "favour",
        "tags": []
       }
      ]
     },
     {
-     "name": "ask",
+     "name": "favour",
      "tags": [],
      "claim": null,
      "lines": [
@@ -3990,7 +4690,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -4002,6 +4702,14 @@
      "lines": [],
      "answers": [],
      "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_roger_why",
+        "if n0_roger_agreed",
+        "if n0_roger_land"
+       ]
+      },
       {
        "to": "again_agreed",
        "tags": [
@@ -4029,7 +4737,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -4049,13 +4757,34 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
     },
     {
-     "name": "choice",
+     "name": "topics",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_roger_why",
+        "if n0_roger_agreed",
+        "if n0_roger_land"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
      "tags": [],
      "claim": null,
      "lines": [],
@@ -4156,7 +4885,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -4167,10 +4896,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He looks at you a while.)"
+      },
+      {
        "who": "Roger",
        "mood": "cold",
        "tells": [],
-       "text": "(He looks at you a while.) You're not as green as your habit."
+       "text": "You're not as green as your habit."
       },
       {
        "who": "Roger",
@@ -4182,7 +4917,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -4202,7 +4937,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
        "tags": []
       }
      ]
@@ -4238,7 +4973,27 @@
      "answers": [],
      "jumps": [
       {
-       "to": "choice",
+       "to": "topics",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Roger",
+       "mood": "cold",
+       "tells": [],
+       "text": "That's all I wanted, porter. One merchant, one name. I'll know where to find you."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
        "tags": []
       }
      ]
@@ -4280,11 +5035,11 @@
    "name": "Traveller",
    "chapter": "night0",
    "notes": [
-    "The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.tres is that talk) and turns to it.",
-    "Four pilgrims under sacking, found in the ditch by the white chapel: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.",
+    "The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.talk is that talk) and turns to it. It opens on him, not on a greeting: they have been talking all the way from the fields.",
+    "Four pilgrims under sacking, found in the ditch: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.",
     "The ride reveals nothing of what or who is behind it: no demon, no men, no robbery. Only the dead, the count, the abbey, and a man too frightened to say what people say.",
     "If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him.",
-    "What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.tres, after)."
+    "One talk: the questions left come up again until all are asked; then he watches the cart go and closes it (done). What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.talk, after)."
    ],
    "points": [
     {
@@ -4329,7 +5084,7 @@
        "right": null
       },
       {
-       "text": "(Cross yourself, and pray for them.)",
+       "text": "(Cross yourself.)",
        "to": "pray",
        "tags": [],
        "stance": null,
@@ -4349,7 +5104,7 @@
        "who": "Traveller",
        "mood": "sad",
        "tells": [],
-       "text": "Pilgrims, by the badges on their hats. Nobody knows them. Nobody ever knows them."
+       "text": "Pilgrims, by the badges on their hats. Nobody knows them. Nobody ever does."
       },
       {
        "who": "Traveller",
@@ -4377,7 +5132,7 @@
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "Found in the ditch by the white chapel, the carter says. Laid out side by side, neat as you like."
+       "text": "Found in the ditch, the carter says. All four together, in the one ditch."
       },
       {
        "who": "Traveller",
@@ -4385,7 +5140,7 @@
        "tells": [
         "blink"
        ],
-       "text": "Not a mark on them. Not one. As if they'd lain down there to sleep."
+       "text": "Not a mark on them. As if they'd lain down there to sleep."
       }
      ],
      "answers": [],
@@ -4407,7 +5162,7 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(You say the words for the dead under your breath. The traveller watches you do it, and his lips move with yours.)"
+       "text": "(You say the words for the dead under your breath. The traveller's lips move with yours.)"
       },
       {
        "who": "Traveller",
@@ -4452,7 +5207,7 @@
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "That makes seven this month, on this road alone. And every one of them bound for your abbey, to see the saint."
+       "text": "That makes seven this month, on this road alone. Every one of them bound for your abbey, to see the saint."
       }
      ],
      "answers": [],
@@ -4497,7 +5252,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "rumour_done",
+       "to": "done",
        "tags": [
         "if n0_cart_abbey",
         "if n0_cart_say",
@@ -4566,12 +5321,18 @@
        "text": "Then a week on, a month on, they turn up in a ditch outside the walls. Like those."
       },
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He crosses himself.)"
+      },
+      {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [
         "swallow"
        ],
-       "text": "(He crosses himself.) I don't say how. I don't know how. Nobody does."
+       "text": "I don't say how. I don't know how. Nobody does."
       }
      ],
      "answers": [],
@@ -4590,18 +5351,24 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He opens his mouth, and shuts it again.)"
+      },
+      {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [
         "blink"
        ],
-       "text": "(He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight."
+       "text": "People say a good many things, brother. None of them in daylight."
       },
       {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [],
-       "text": "You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you."
+       "text": "You'll hear it all at the Keys tonight. I'd rather not be the one who told you."
       }
      ],
      "answers": [],
@@ -4635,7 +5402,7 @@
      ]
     },
     {
-     "name": "rumour_done",
+     "name": "done",
      "tags": [],
      "claim": null,
      "lines": [
@@ -4649,7 +5416,7 @@
        "who": "Traveller",
        "mood": "sad",
        "tells": [],
-       "text": "Pray they keep you better than they kept those, brother."
+       "text": "God keep you better than He kept those, brother."
       }
      ],
      "answers": [],
@@ -4664,18 +5431,39 @@
      "name": "again",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_cart_abbey",
+        "if n0_cart_say",
+        "if n0_cart_see"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "Nearly at the wall. Keep your hood up, brother."
+       "text": "I can still see that cart, brother. Ask, if you want to."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "rumour_ask",
        "tags": []
       }
      ]
@@ -4687,9 +5475,9 @@
      "lines": [
       {
        "who": "Traveller",
-       "mood": "weary",
+       "mood": "sad",
        "tells": [],
-       "text": "Suit yourself. You'll see soon enough."
+       "text": "Look away, then. I wish I could."
       }
      ],
      "answers": [],
@@ -4718,11 +5506,11 @@
    "name": "Traveller",
    "chapter": "night0",
    "notes": [
-    "The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry, warm, more frightened than he lets on.",
+    "The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry and warm, and more frightened than he lets on.",
     "He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.",
-    "One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.",
-    "Before the cart he only hints at the abbey: road talk, men who don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.tres says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.",
-    "After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, whether he's been inside, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden."
+    "One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all; then he closes it himself (spent, after_spent).",
+    "Before the cart he only hints: road talk, men who set out for London and don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.talk says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.",
+    "After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden."
    ],
    "points": [
     {
@@ -4738,6 +5526,26 @@
         "if talked_n0_traveller"
        ]
       },
+      {
+       "to": "meet",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "meet",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(The man on the seat beside you, a merchant by his good wet cloak, has watched the road go by in silence. Now he turns to you.)"
+      }
+     ],
+     "answers": [],
+     "jumps": [
       {
        "to": "hello",
        "tags": []
@@ -4765,14 +5573,14 @@
        "right": null
       },
       {
-       "text": "Where are you bound yourself?",
+       "text": "Where are you bound yourself, friend?",
        "to": "trade",
        "tags": [],
        "stance": null,
        "right": null
       },
       {
-       "text": "(Nod, and say nothing.)",
+       "text": "(Nod.)",
        "to": "quiet",
        "tags": [],
        "stance": null,
@@ -4792,19 +5600,13 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Not one for talk. (He blows into his hands.) Then I'll talk for both of us. It keeps the cold out."
-      },
-      {
-       "who": "Traveller",
-       "mood": "weary",
-       "tells": [],
-       "text": "Wool, for Cheapside. Twelve days on the road from Colchester, and every one of them wet."
+       "text": "Not one for talk. Then I'll talk for both of us. It keeps the cold out."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "topics",
+       "to": "trade",
        "tags": []
       }
      ]
@@ -4822,19 +5624,19 @@
        "tells": [
         "blink"
        ],
-       "text": "The porter? At the abbey in the lane, by the Cross Keys?"
+       "text": "The porter? At the abbey in the lane, across from the Cross Keys?"
+      },
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He looks at you a moment longer than he needs to.)"
       },
       {
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "(He looks at you a moment longer than he needs to.) Well. Somebody has to keep the gate."
-      },
-      {
-       "who": "Traveller",
-       "mood": "grave",
-       "tells": [],
-       "text": "You look young for it. They give that work to old men, mostly. Men with nothing left to want."
+       "text": "Well. Somebody has to keep the gate. You look young for it, though."
       }
      ],
      "answers": [
@@ -4846,7 +5648,7 @@
        "right": null
       },
       {
-       "text": "The old porter went blind. They needed someone.",
+       "text": "The old porter went blind.",
        "to": "blind",
        "tags": [],
        "stance": null,
@@ -4873,7 +5675,7 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Nineteen. (He laughs, not unkindly.) At nineteen I was sure I'd be rich by thirty."
+       "text": "Nineteen. At nineteen I was sure I'd be rich by thirty."
       },
       {
        "who": "Traveller",
@@ -4898,10 +5700,10 @@
      "claim": null,
      "lines": [
       {
-       "who": "Traveller",
-       "mood": "grave",
+       "who": "",
+       "mood": "",
        "tells": [],
-       "text": "Blind, was he. (He's quiet a moment.) Years on a gate, watching who comes in after dark."
+       "text": "(He's quiet a moment.)"
       },
       {
        "who": "Traveller",
@@ -4909,7 +5711,7 @@
        "tells": [
         "swallow"
        ],
-       "text": "I'd not want to know what a man sees, all those years. Maybe the eyes just give up."
+       "text": "Years on a gate, watching who comes in after dark. Maybe the eyes just give up."
       }
      ],
      "answers": [],
@@ -4931,18 +5733,18 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Obedience. My father wanted that of me, and I gave him a wool trade instead."
+       "text": "Obedience. My father wanted that of me, and got a wool trade instead."
       },
       {
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "Your abbot, now. Does he know the house he's sending you to?"
+       "text": "Does your abbot know the house he's sending you to?"
       }
      ],
      "answers": [
       {
-       "text": "He says it's a holy house. It has a saint.",
+       "text": "He says it's a holy house, with a saint.",
        "to": "holy",
        "tags": [],
        "stance": null,
@@ -4973,7 +5775,7 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(He says it the way a man says the name of a dog that bit him.)"
+       "text": "(He says it the way a man names a dog that once bit him.)"
       }
      ],
      "answers": [],
@@ -4993,7 +5795,7 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Then that's two of you. Three, with me."
+       "text": "Then that's two of you who don't. Three, with me."
       }
      ],
      "answers": [],
@@ -5015,23 +5817,16 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Cheapside, with wool. I buy it cheap in Colchester and sell it dear in London."
+       "text": "Cheapside, with wool. Three days from Colchester, and every one of them wet."
       },
       {
        "who": "Traveller",
        "mood": "weary",
        "tells": [],
-       "text": "Every toll on the road robs me in between. The bridges, the gates, the bishop's men. A sack's half sold before it's sold."
+       "text": "Every toll on the road robs me. The bridges, the gates, the bishop's men. A sack's half spent before it's sold."
       }
      ],
      "answers": [
-      {
-       "text": "Is it a good living?",
-       "to": "living",
-       "tags": [],
-       "stance": null,
-       "right": null
-      },
       {
        "text": "Have you family at home?",
        "to": "family",
@@ -5040,7 +5835,14 @@
        "right": null
       },
       {
-       "text": "(Let him grumble.)",
+       "text": "Is it a good living?",
+       "to": "living",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "(Nod.)",
        "to": "topics",
        "tags": [],
        "stance": null,
@@ -5057,10 +5859,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He nods at the sacks behind you.)"
+      },
+      {
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Good enough to complain about. (He pats the bale under him.) This is a winter's bread for my house."
+       "text": "Good enough to grumble about. Those are a winter's bread for my house."
       },
       {
        "who": "Traveller",
@@ -5091,10 +5899,16 @@
        "text": "A wife, and two girls who think London's paved with ribbon. I'm to bring them some."
       },
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(His face goes quiet.)"
+      },
+      {
        "who": "Traveller",
        "mood": "sad",
        "tells": [],
-       "text": "(His face goes quiet.) My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories too."
+       "text": "My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories."
       }
      ],
      "answers": [
@@ -5126,7 +5940,13 @@
        "who": "Traveller",
        "mood": "grave",
        "tells": [],
-       "text": "Road talk. Men who set out for London and don't come home. There are always some."
+       "text": "Road talk. Men set out for London and don't come home. There are always a few."
+      },
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He glances at the carter's back.)"
       },
       {
        "who": "Traveller",
@@ -5134,7 +5954,7 @@
        "tells": [
         "glance"
        ],
-       "text": "(He glances at the carter's back.) More, this year. Ask him why he whips his horse when the light goes."
+       "text": "More, this year. Ask him why he whips his horse when the light goes."
       }
      ],
      "answers": [],
@@ -5192,19 +6012,19 @@
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "And you're brother something, and you'll tell me if you like. I'll not press a monk."
+       "text": "And you're Brother Something, and you'll tell me if you like. I'll not press a monk."
       }
      ],
      "answers": [
       {
-       "text": "Alric.",
+       "text": "I'm Alric.",
        "to": "alric",
        "tags": [],
        "stance": null,
        "right": null
       },
       {
-       "text": "(Smile, and leave it.)",
+       "text": "(Smile.)",
        "to": "topics",
        "tags": [],
        "stance": null,
@@ -5224,7 +6044,7 @@
        "who": "Traveller",
        "mood": "warm",
        "tells": [],
-       "text": "Alric. (He tries it.) Well, Brother Alric. I'll pray for you, if you'll pray for my wool."
+       "text": "Alric. Well, Brother Alric. I'll pray for you, if you'll pray for my wool."
       }
      ],
      "answers": [],
@@ -5281,7 +6101,7 @@
        "right": null
       },
       {
-       "text": "Where are you bound yourself?",
+       "text": "Where are you bound yourself, friend?",
        "to": "trade",
        "tags": [
         "if not n0_road_trade"
@@ -5290,7 +6110,7 @@
        "right": null
       },
       {
-       "text": "Is the carter always in such a hurry?",
+       "text": "Why is the carter in such a hurry?",
        "to": "carter",
        "tags": [
         "if not n0_road_carter"
@@ -5308,7 +6128,7 @@
      "lines": [],
      "answers": [
       {
-       "text": "I never asked your name.",
+       "text": "I never asked your name, friend.",
        "to": "name",
        "tags": [
         "if not n0_road_name"
@@ -5317,7 +6137,7 @@
        "right": null
       },
       {
-       "text": "Is the carter always in such a hurry?",
+       "text": "Why is the carter in such a hurry?",
        "to": "carter",
        "tags": [
         "if not n0_road_carter"
@@ -5372,10 +6192,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He shifts on his seat.)"
+      },
+      {
        "who": "Traveller",
        "mood": "warm",
        "tells": [],
-       "text": "Brother? (He shifts on the sacks.) Go on, ask. It shortens the road."
+       "text": "Go on, brother, ask. It shortens the road."
       }
      ],
      "answers": [],
@@ -5392,10 +6218,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He pulls his hood closer.)"
+      },
+      {
        "who": "Traveller",
        "mood": "weary",
        "tells": [],
-       "text": "(He pulls his hood closer.) Save your breath, brother. It's a cold way to Aldgate yet."
+       "text": "Save your breath, brother. It's a cold way to Aldgate yet."
       }
      ],
      "answers": [],
@@ -5410,6 +6242,25 @@
      "name": "after",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "after_gate",
+       "tags": [
+        "if n0_past_aldgate"
+       ]
+      },
+      {
+       "to": "after_cart",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "after_cart",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Traveller",
@@ -5420,12 +6271,6 @@
      ],
      "answers": [],
      "jumps": [
-      {
-       "to": "after_gate",
-       "tags": [
-        "if n0_past_aldgate"
-       ]
-      },
       {
        "to": "after_topics",
        "tags": []
@@ -5441,7 +6286,7 @@
        "who": "Traveller",
        "mood": "wary",
        "tells": [],
-       "text": "(He watches the gate's light go small behind you.) He took his time over you, that warden. Most nights they wave a monk through."
+       "text": "He took his time over you, that warden. Most nights they wave a monk through."
       }
      ],
      "answers": [],
@@ -5528,12 +6373,12 @@
        "tells": [
         "swallow"
        ],
-       "text": "That's all I know, and it's more than I want to. I'd call it a reason to keep walking."
+       "text": "That's all I know, and it's more than I want to."
       }
      ],
      "answers": [
       {
-       "text": "Those are my brothers you're talking about.",
+       "text": "Those are my brothers you speak of.",
        "to": "defend",
        "tags": [],
        "stance": null,
@@ -5567,7 +6412,7 @@
        "who": "Traveller",
        "mood": "weary",
        "tells": [],
-       "text": "I'm talking about a wall I can't see over. (He shrugs.) You'll be over it tomorrow. Then you tell me."
+       "text": "I'm speaking of a wall I can't see over. You'll be over it tomorrow. Then you tell me."
       }
      ],
      "answers": [],
@@ -5589,13 +6434,13 @@
        "who": "Traveller",
        "mood": "calm",
        "tells": [],
-       "text": "Once, at Lent, to see the saint. A finger in a glass box, and more candles than I've seen in my life."
+       "text": "Once, at Lent, to see the saint. A finger in a glass box, and more candles than I'd seen in my life."
       },
       {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [],
-       "text": "And cold. Cold in there like the bottom of a well. I said my prayer and I didn't stay."
+       "text": "And cold in there, like the bottom of a well. I said my prayer and I didn't stay."
       }
      ],
      "answers": [],
@@ -5614,18 +6459,24 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He opens his mouth, and shuts it again.)"
+      },
+      {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [
         "blink"
        ],
-       "text": "(He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight."
+       "text": "People say a good many things, brother. None of them in daylight."
       },
       {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [],
-       "text": "You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you."
+       "text": "You'll hear it all at the Keys tonight. I'd rather not be the one who told you."
       }
      ],
      "answers": [],
@@ -5647,13 +6498,13 @@
        "who": "Traveller",
        "mood": "calm",
        "tells": [],
-       "text": "The inn across the lane from the abbey gate. The Cross Keys."
+       "text": "The Cross Keys, across the lane from your gate. Buy the landlord an ale and he'll talk till the candle's out."
       },
       {
        "who": "Traveller",
        "mood": "amused",
        "tells": [],
-       "text": "Buy the landlord an ale and he'll talk till the candle's out. His wife hears more, and says less."
+       "text": "His wife hears more, and says less."
       }
      ],
      "answers": [],
@@ -5670,10 +6521,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He tries a smile.)"
+      },
+      {
        "who": "Traveller",
        "mood": "afraid",
        "tells": [],
-       "text": "I've said more than I meant to, brother. (He tries a smile.) It's the cold. It loosens a man."
+       "text": "I've said more than I meant to, brother. It's the cold. It loosens a man."
       }
      ],
      "answers": [],
@@ -5739,9 +6596,10 @@
    "name": "Walter",
    "chapter": "night0",
    "notes": [
-    "Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box.",
+    "Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box. A salesman: flattering, never still, and he calls himself Walter. His baseline is amused, with a flick of the brow; his tell is that he stops selling.",
     "He knows the abbey's gate well and won't say why. (He supplies the henbane. Nothing here says so.)",
-    "Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he says herbs for the brothers, no more."
+    "Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he stops selling for a moment and says herbs for the brothers, no more. Believed, he never says.",
+    "One talk: the questions left come up again until all are asked; then he turns back to the drinkers (done)."
    ],
    "points": [
     {
@@ -5776,6 +6634,26 @@
      "name": "again",
      "tags": [],
      "claim": null,
+     "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_walter_box",
+        "if n0_walter_why"
+       ]
+      },
+      {
+       "to": "again_ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again_ask",
+     "tags": [],
+     "claim": null,
      "lines": [
       {
        "who": "Walter",
@@ -5797,6 +6675,26 @@
      "tags": [],
      "claim": null,
      "lines": [],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "done",
+       "tags": [
+        "if n0_walter_box",
+        "if n0_walter_why"
+       ]
+      },
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
      "answers": [
       {
        "text": "(Look in his box.)",
@@ -5808,7 +6706,7 @@
        "right": null
       },
       {
-       "text": "Do you know the abbey?",
+       "text": "Do you know the abbey, Walter?",
        "to": "abbey",
        "tags": [
         "if not n0_walter_abbey"
@@ -5858,22 +6756,9 @@
        "text": "And this, a drop of her milk, from Walsingham. A groat to you, since you're in the trade."
       }
      ],
-     "answers": [],
-     "jumps": [
-      {
-       "to": "buy",
-       "tags": []
-      }
-     ]
-    },
-    {
-     "name": "buy",
-     "tags": [],
-     "claim": null,
-     "lines": [],
      "answers": [
       {
-       "text": "I have no money.",
+       "text": "I have no money, Walter.",
        "to": "nocoin",
        "tags": [],
        "stance": null,
@@ -5919,9 +6804,9 @@
       },
       {
        "who": "Walter",
-       "mood": "amused",
+       "mood": "warm",
        "tells": [],
-       "text": "Keep Walter in your prayers, then, and keep a kind eye on him at your gate. We'll call it square."
+       "text": "Keep Walter in your prayers, then, and a kind eye on him at your gate. We'll call it square."
       }
      ],
      "answers": [],
@@ -5938,12 +6823,6 @@
      "claim": null,
      "lines": [
       {
-       "who": "Walter",
-       "mood": "amused",
-       "tells": [],
-       "text": "Holy enough for Aldgate."
-      },
-      {
        "who": "",
        "mood": "",
        "tells": [],
@@ -5953,7 +6832,7 @@
        "who": "Walter",
        "mood": "amused",
        "tells": [],
-       "text": "Faith does the rest, brother. Faith always does."
+       "text": "Holy enough for Aldgate. Faith does the rest, brother. Faith always does."
       }
      ],
      "answers": [],
@@ -5989,7 +6868,7 @@
        "who": "Walter",
        "mood": "warm",
        "tells": [],
-       "text": "You and I will be friends. I'm at that gate more nights than not."
+       "text": "You and Walter will be friends. Walter's at that gate more nights than not."
       }
      ],
      "answers": [],
@@ -6066,12 +6945,6 @@
         "brow"
        ],
        "text": "Spoken like a porter! Walter knew you had sense."
-      },
-      {
-       "who": "",
-       "mood": "",
-       "tells": [],
-       "text": "(He turns back to the drinkers and his box.)"
       }
      ],
      "answers": [],
@@ -6117,6 +6990,32 @@
      ]
     },
     {
+     "name": "done",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(He turns back to the drinkers, and his box.)"
+      },
+      {
+       "who": "Walter",
+       "mood": "glad",
+       "tells": [],
+       "text": "Now, Walter has souls to see to. Till the gate, brother!"
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
+       "tags": []
+      }
+     ]
+    },
+    {
      "name": "leave",
      "tags": [],
      "claim": null,
@@ -6154,8 +7053,9 @@
    "name": "Warden",
    "chapter": "night0",
    "notes": [
-    "The warden at Aldgate, night 0. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines).",
-    "A gatekeeper talking to a gatekeeper: blunt, tired, and he has seen the dead come out past his gate this month."
+    "The warden at Aldgate, night 0. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines): that is the talk's closing line, so his own last answer can end it.",
+    "A gatekeeper talking to a gatekeeper: blunt and tired. He lifts the sacking on every cart that passes his gate, and has counted the dead this month. Nothing he says names a demon or men behind the deaths.",
+    "His one question asked (or a nod), the talk ends."
    ],
    "points": [
     {
@@ -6173,12 +7073,12 @@
        "who": "Warden",
        "mood": "weary",
        "tells": [],
-       "text": "A monk. Young, too. Where are you bound, brother?"
+       "text": "A monk, and a young one. Where are you bound, brother?"
       }
      ],
      "answers": [
       {
-       "text": "The abbey in the lane. I'm to be its porter.",
+       "text": "To the abbey in the lane. I'm to be its porter.",
        "to": "porter",
        "tags": [],
        "stance": null,
@@ -6192,7 +7092,7 @@
        "right": null
       },
       {
-       "text": "(Squint into the light, and say nothing.)",
+       "text": "(Say nothing.)",
        "to": "silent",
        "tags": [],
        "stance": null,
@@ -6209,10 +7109,16 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(The lantern doesn't move.)"
+      },
+      {
        "who": "Warden",
        "mood": "cold",
        "tells": [],
-       "text": "The porter. (The lantern doesn't move.) The old one went blind, I heard."
+       "text": "The porter. The old one went blind, I heard."
       },
       {
        "who": "Warden",
@@ -6231,7 +7137,7 @@
       },
       {
        "text": "I don't know yet.",
-       "to": "dunno",
+       "to": "unsure",
        "tags": [],
        "stance": null,
        "right": null
@@ -6248,19 +7154,19 @@
        "who": "Warden",
        "mood": "grave",
        "tells": [],
-       "text": "Good. Shut it, and don't open it to knocking after dark. Not for a pilgrim, not for a friend. Not for anyone."
+       "text": "Good. Bar it at the bell, and don't open it to a knock till it's light. Not for anyone."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "ask",
        "tags": []
       }
      ]
     },
     {
-     "name": "dunno",
+     "name": "unsure",
      "tags": [],
      "claim": null,
      "lines": [
@@ -6268,13 +7174,13 @@
        "who": "Warden",
        "mood": "grave",
        "tells": [],
-       "text": "Then learn it quick. (He lowers his voice.) Trouble doesn't climb walls, brother. It knocks."
+       "text": "Then learn that before you learn anything else. Bar it at the bell, and keep it barred till it's light."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "ask",
        "tags": []
       }
      ]
@@ -6285,24 +7191,30 @@
      "claim": null,
      "lines": [
       {
+       "who": "",
+       "mood": "",
+       "tells": [],
+       "text": "(His mouth goes thin.)"
+      },
+      {
        "who": "Warden",
        "mood": "wary",
        "tells": [
         "lip"
        ],
-       "text": "(His mouth goes thin.) Pilgrim?"
+       "text": "Pilgrim?"
       }
      ],
      "answers": [
       {
-       "text": "No. A brother of the house, sent to keep its gate.",
+       "text": "No. I'm sent to keep its gate.",
        "to": "porter",
        "tags": [],
        "stance": null,
        "right": null
       },
       {
-       "text": "Just a monk.",
+       "text": "Just a monk, friend.",
        "to": "plain",
        "tags": [],
        "stance": null,
@@ -6320,13 +7232,13 @@
        "who": "Warden",
        "mood": "cold",
        "tells": [],
-       "text": "Just a monk. (He looks a moment longer.) There's no such thing in this city, brother."
+       "text": "Just a monk. There's no such thing in this city, brother."
       }
      ],
      "answers": [],
      "jumps": [
       {
-       "to": "end",
+       "to": "ask",
        "tags": []
       }
      ]
@@ -6340,13 +7252,84 @@
        "who": "Warden",
        "mood": "amused",
        "tells": [],
-       "text": "Light in your eyes? It's meant to be. A man's face tells me more than his mouth."
+       "text": "Light in your eyes? It's meant to be. A face tells me more than a mouth does."
       },
       {
        "who": "Warden",
        "mood": "grave",
        "tells": [],
-       "text": "Yours says you've never slept inside a city wall. Mind you wake up inside one."
+       "text": "Yours says you've never slept inside a city wall."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "ask",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "ask",
+     "tags": [],
+     "claim": null,
+     "lines": [],
+     "answers": [
+      {
+       "text": "You saw the cart with the dead, warden?",
+       "to": "cart",
+       "tags": [],
+       "stance": null,
+       "right": null
+      },
+      {
+       "text": "(Nod.)",
+       "to": "end",
+       "tags": [],
+       "stance": null,
+       "right": null
+      }
+     ],
+     "jumps": []
+    },
+    {
+     "name": "cart",
+     "tags": [
+      "set n0_warden_cart"
+     ],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Warden",
+       "mood": "weary",
+       "tells": [],
+       "text": "I see every cart, brother. I lift the sacking, and I count."
+      },
+      {
+       "who": "Warden",
+       "mood": "grave",
+       "tells": [],
+       "text": "Seven this month. Most of them came in at this gate on their own feet, to see your saint."
+      }
+     ],
+     "answers": [],
+     "jumps": [
+      {
+       "to": "end",
+       "tags": []
+      }
+     ]
+    },
+    {
+     "name": "again",
+     "tags": [],
+     "claim": null,
+     "lines": [
+      {
+       "who": "Warden",
+       "mood": "weary",
+       "tells": [],
+       "text": "I've seen you, brother. Go on through."
       }
      ],
      "answers": [],
@@ -6374,6 +7357,7 @@
     }
    ],
    "sets": [
+    "n0_warden_cart",
     "n0_warden_porter",
     "talked_n0_warden"
    ],
@@ -31654,6 +32638,30 @@
     }
    ]
   },
+  "has_lantern": {
+   "set": [
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/common/night_director.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/day1/tour_beat.gd"
+    }
+   ],
+   "read": [
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/common/night_director.gd"
+    }
+   ]
+  },
   "hud_lie_told": {
    "set": [
     {
@@ -33589,7 +34597,31 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/agnes.talk",
      "chapter": "night0",
-     "where": "topics: \"What do you know of the abbey?\""
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/agnes.talk",
+     "chapter": "night0",
+     "where": "topics_first: \"What do you know of the abbey?\""
+    }
+   ]
+  },
+  "n0_agnes_jankin": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/agnes.talk",
+     "chapter": "night0",
+     "where": "jankin"
+    }
+   ],
+   "read": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/agnes.talk",
+     "chapter": "night0",
+     "where": "topics_late: \"Is Jankin always like this?\""
     }
    ]
   },
@@ -33656,6 +34688,12 @@
      "talk": "game/chapters/night0/dialogue/traveller.talk",
      "chapter": "night0",
      "where": "rumour_ask: \"Why lay it at the abbey's door?\""
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/traveller.talk",
+     "chapter": "night0",
+     "where": "again"
     }
    ]
   },
@@ -33700,6 +34738,12 @@
     },
     {
      "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/traveller.talk",
+     "chapter": "night0",
+     "where": "again"
+    },
+    {
+     "kind": "talk",
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
      "where": "after_topics"
@@ -33733,6 +34777,12 @@
      "talk": "game/chapters/night0/dialogue/traveller.talk",
      "chapter": "night0",
      "where": "rumour_ask: \"I'll see for myself what's there.\""
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/traveller.talk",
+     "chapter": "night0",
+     "where": "again"
     }
    ]
   },
@@ -33785,6 +34835,12 @@
      "talk": "game/chapters/night0/dialogue/gib.talk",
      "chapter": "night0",
      "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "done"
     }
    ]
   },
@@ -33802,7 +34858,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/gib.talk",
      "chapter": "night0",
-     "where": "topics: \"What do you make of the abbey wall?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "ask: \"What do you make of the abbey wall?\""
     }
    ]
   },
@@ -33820,7 +34888,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/gib.talk",
      "chapter": "night0",
-     "where": "topics: \"How long has the lane had lanterns?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "ask: \"How long has the lane had lanterns?\""
     }
    ]
   },
@@ -33838,7 +34918,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/gib.talk",
      "chapter": "night0",
-     "where": "topics: \"What do you do after the bell?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/gib.talk",
+     "chapter": "night0",
+     "where": "ask: \"What do you do after the bell, friend?\""
     }
    ]
   },
@@ -33856,25 +34948,13 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/hob.talk",
      "chapter": "night0",
-     "where": "topics: \"What does the lane say about the abbey?\""
-    }
-   ]
-  },
-  "n0_hob_bed": {
-   "set": [
+     "where": "topics"
+    },
     {
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/hob.talk",
      "chapter": "night0",
-     "where": "bed"
-    }
-   ],
-   "read": [
-    {
-     "kind": "talk",
-     "talk": "game/chapters/night0/dialogue/hob.talk",
-     "chapter": "night0",
-     "where": "topics: \"Have you a bed for the night?\""
+     "where": "topics"
     }
    ]
   },
@@ -33884,7 +34964,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/hob.talk",
      "chapter": "night0",
-     "where": "bed_jankin"
+     "where": "shut"
     },
     {
      "kind": "talk",
@@ -33894,12 +34974,6 @@
     }
    ],
    "read": [
-    {
-     "kind": "talk",
-     "talk": "game/chapters/night0/dialogue/hob.talk",
-     "chapter": "night0",
-     "where": "bed"
-    },
     {
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/hob.talk",
@@ -33926,6 +35000,60 @@
     }
    ]
   },
+  "n0_hob_room": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "room"
+    }
+   ],
+   "read": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "topics_shut: \"Who's drinking here tonight?\""
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "topics_abbey: \"Who's drinking here tonight?\""
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "topics_last: \"Who's drinking here tonight?\""
+    }
+   ]
+  },
+  "n0_hob_shut": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "shut"
+    }
+   ],
+   "read": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/hob.talk",
+     "chapter": "night0",
+     "where": "topics"
+    }
+   ]
+  },
   "n0_jankin_home": {
    "set": [
     {
@@ -33940,7 +35068,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/jankin.talk",
      "chapter": "night0",
-     "where": "topics: \"Where will you sleep tonight?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "ask: \"Where will you sleep tonight?\""
     }
    ]
   },
@@ -33964,7 +35104,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/jankin.talk",
      "chapter": "night0",
-     "where": "topics: \"What do you know of the abbey?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "ask: \"What do you know of the abbey, friend?\""
     }
    ]
   },
@@ -33982,7 +35134,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/jankin.talk",
      "chapter": "night0",
-     "where": "topics: \"Who are you, friend?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/jankin.talk",
+     "chapter": "night0",
+     "where": "ask: \"Who are you, friend?\""
     }
    ]
   },
@@ -34000,7 +35164,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/kit.talk",
      "chapter": "night0",
-     "where": "topics: \"Have you been inside?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "ask: \"Have you been inside the abbey?\""
     }
    ]
   },
@@ -34018,7 +35194,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/kit.talk",
      "chapter": "night0",
-     "where": "topics: \"Who makes your candles?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "ask: \"Who makes your candles?\""
     }
    ]
   },
@@ -34036,7 +35224,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/kit.talk",
      "chapter": "night0",
-     "where": "topics: \"I'm the new porter.\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/kit.talk",
+     "chapter": "night0",
+     "where": "ask: \"I'm the new porter. Alric.\""
     }
    ]
   },
@@ -34078,7 +35278,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/mab.talk",
      "chapter": "night0",
-     "where": "topics: \"(Give her alms.)\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "ask: \"(Give her a coin.)\""
     }
    ]
   },
@@ -34096,7 +35308,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/mab.talk",
      "chapter": "night0",
-     "where": "topics: \"I'm to be their new porter.\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "ask: \"I'm to be their new porter.\""
     }
    ]
   },
@@ -34114,7 +35338,79 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/mab.talk",
      "chapter": "night0",
-     "where": "topics: \"Are you here every night?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/mab.talk",
+     "chapter": "night0",
+     "where": "ask: \"Are you here every night?\""
+    }
+   ]
+  },
+  "n0_margery_home": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "home"
+    }
+   ],
+   "read": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "ask: \"Where are you hurrying to?\""
+    }
+   ]
+  },
+  "n0_margery_wall": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "wall"
+    }
+   ],
+   "read": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/margery.talk",
+     "chapter": "night0",
+     "where": "ask: \"What are you afraid of?\""
     }
    ]
   },
@@ -34150,13 +35446,25 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/ralph.talk",
      "chapter": "night0",
-     "where": "topics: \"How do you mean?\""
+     "where": "again"
     },
     {
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/ralph.talk",
      "chapter": "night0",
-     "where": "topics: \"How does the sacrist pay you?\""
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "ask: \"Your best customer, friend? How so?\""
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "ask: \"How does the sacrist pay you?\""
     },
     {
      "kind": "talk",
@@ -34180,7 +35488,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/ralph.talk",
      "chapter": "night0",
-     "where": "topics: \"How does the sacrist pay you?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "ask: \"How does the sacrist pay you?\""
     }
    ]
   },
@@ -34198,7 +35518,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/ralph.talk",
      "chapter": "night0",
-     "where": "topics: \"How goes your trade?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/ralph.talk",
+     "chapter": "night0",
+     "where": "ask: \"How goes your trade?\""
     }
    ]
   },
@@ -34279,13 +35611,13 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
-     "where": "topics_early: \"Is the carter always in such a hurry?\""
+     "where": "topics_early: \"Why is the carter in such a hurry?\""
     },
     {
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
-     "where": "topics_late: \"Is the carter always in such a hurry?\""
+     "where": "topics_late: \"Why is the carter in such a hurry?\""
     },
     {
      "kind": "talk",
@@ -34359,7 +35691,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
-     "where": "topics_late: \"I never asked your name.\""
+     "where": "topics_late: \"I never asked your name, friend.\""
     },
     {
      "kind": "talk",
@@ -34513,7 +35845,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
-     "where": "topics_early: \"Where are you bound yourself?\""
+     "where": "topics_early: \"Where are you bound yourself, friend?\""
     },
     {
      "kind": "talk",
@@ -34540,7 +35872,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/roger.talk",
      "chapter": "night0",
-     "where": "choice: \"I'll send you word.\""
+     "where": "ask: \"I'll send you word.\""
     }
    ],
    "read": [
@@ -34554,7 +35886,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/roger.talk",
      "chapter": "night0",
-     "where": "choice: \"I'll send you word.\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "ask: \"I'll send you word.\""
     }
    ]
   },
@@ -34572,7 +35916,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/roger.talk",
      "chapter": "night0",
-     "where": "choice: \"What does the ward want with the abbey?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "ask: \"What does the ward want with the abbey?\""
     }
    ]
   },
@@ -34590,7 +35946,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/roger.talk",
      "chapter": "night0",
-     "where": "choice: \"Why do you want to know?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/roger.talk",
+     "chapter": "night0",
+     "where": "ask: \"Why do you want to know?\""
     }
    ]
   },
@@ -34620,7 +35988,13 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/agnes.talk",
      "chapter": "night0",
-     "where": "topics: \"Have you a bed for the night?\""
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/agnes.talk",
+     "chapter": "night0",
+     "where": "topics_first: \"Have you a bed for the night, goodwife?\""
     },
     {
      "kind": "code",
@@ -34722,13 +36096,13 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/walter.talk",
      "chapter": "night0",
-     "where": "topics: \"Do you know the abbey?\""
+     "where": "ask: \"Do you know the abbey, Walter?\""
     },
     {
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/walter.talk",
      "chapter": "night0",
-     "where": "topics: \"What business have you at the abbey gate?\""
+     "where": "ask: \"What business have you at the abbey gate?\""
     }
    ]
   },
@@ -34746,7 +36120,19 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/walter.talk",
      "chapter": "night0",
-     "where": "topics: \"(Look in his box.)\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/walter.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/walter.talk",
+     "chapter": "night0",
+     "where": "ask: \"(Look in his box.)\""
     }
    ]
   },
@@ -34775,9 +36161,32 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/walter.talk",
      "chapter": "night0",
-     "where": "topics: \"What business have you at the abbey gate?\""
+     "where": "again"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/walter.talk",
+     "chapter": "night0",
+     "where": "topics"
+    },
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/walter.talk",
+     "chapter": "night0",
+     "where": "ask: \"What business have you at the abbey gate?\""
     }
    ]
+  },
+  "n0_warden_cart": {
+   "set": [
+    {
+     "kind": "talk",
+     "talk": "game/chapters/night0/dialogue/warden.talk",
+     "chapter": "night0",
+     "where": "cart"
+    }
+   ],
+   "read": []
   },
   "n0_warden_porter": {
    "set": [
@@ -38344,7 +39753,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/roger.talk",
      "chapter": "night0",
-     "where": "choice: \"Why do you want to know?\""
+     "where": "ask: \"Why do you want to know?\""
     }
    ]
   },
@@ -38373,7 +39782,7 @@
      "kind": "talk",
      "talk": "game/chapters/night0/dialogue/walter.talk",
      "chapter": "night0",
-     "where": "topics: \"What business have you at the abbey gate?\""
+     "where": "ask: \"What business have you at the abbey gate?\""
     }
    ]
   },

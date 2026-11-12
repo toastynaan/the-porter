@@ -1,46 +1,51 @@
 @id n0_roger
-# DRAFT
-# Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Hard and transactional.
+# Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Officious, counting, cold: he has counted the porter before he sits down.
 # He wants word of any merchant, anyone with money, who goes in at the abbey gate (n0_roger_agreed if the porter says he'll send it). The ward would like the abbey's land.
 # Claims: n0_roger_count (hiding): why he wants the names. True as far as it goes; he leaves out the land. Pressed, he hints at it.
+# One talk: after he has asked his favour, the questions left come up again until all are asked; then he dismisses him (done). Not agreeing is allowed: the offer stays open and he walks away.
 == start
-(A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you sat.)
+(A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you came in.)
 Roger {cold}: You came in on the carter's wagon, in a habit, with one bundle. Who are you?
-* Brother Alric. The abbey's new porter. -> porter
-* Who's asking? [trust roger -5] -> who
+* Brother Alric, the abbey's new porter. -> porter
+* Who's asking, friend? [trust roger -5] -> who
 * (Say nothing.) -> silent
 
 == porter
 Roger {calm}: The new porter. So they found one at last. I'm Roger, bailiff of this ward.
--> ask
+-> favour
 
 == who
 Roger {cold}: Roger, bailiff of this ward. When I ask, people answer. You'll be their new porter.
--> ask
+-> favour
 
 == silent
 Roger {calm}: A habit, a bundle, and a face that's never seen London. You're their new porter.
 Roger {calm}: I'm Roger, bailiff of this ward. It's my business to know who comes into it.
--> ask
+-> favour
 
-== ask
+== favour
 Roger {calm}: Merchants come to that gate. Pilgrims with fat purses.
 Roger {calm}: When one goes in, I'd like to hear of it. His name, and where he's from. That's all.
--> choice
+-> topics
 
 == again
+-> done [if n0_roger_why] [if n0_roger_agreed] [if n0_roger_land]
 -> again_agreed [if n0_roger_agreed]
 -> again_plain
 
 == again_agreed
 Roger {calm}: A merchant, a name. You know where I drink.
--> choice
+-> topics
 
 == again_plain
 Roger {wary}: Porter. Thought on what I asked?
--> choice
+-> topics
 
-== choice
+== topics
+-> done [if n0_roger_why] [if n0_roger_agreed] [if n0_roger_land]
+-> ask
+
+== ask
 * [if not n0_roger_why] [if not read_n0_roger_count] Why do you want to know? -> why
 * [if not n0_roger_agreed] I'll send you word. [set n0_roger_agreed] [trust roger 5] -> agreed
 * [if not n0_roger_land] What does the ward want with the abbey? -> land
@@ -53,22 +58,27 @@ Roger {calm, lip}: Somebody ought to keep count. Your abbey doesn't.
 
 == why_believed
 Roger {calm}: Then we understand each other. Names, porter. That's all I ask.
--> choice
+-> topics
 
 == why_pressed
-Roger {cold}: (He looks at you a while.) You're not as green as your habit.
+(He looks at you a while.)
+Roger {cold}: You're not as green as your habit.
 Roger {calm}: A house that loses its guests can lose other things. The ward keeps count of those as well.
--> choice
+-> topics
 
 == agreed
 Roger {warm}: Good. A porter who keeps count is worth something to the ward. The ward pays its friends.
--> choice
+-> topics
 
 == land [set n0_roger_land]
 Roger {calm, lip}: The ward wants nothing. The ward is patient.
 Roger {cold}: That's good land behind your wall. Too good for an abbey that can't keep count of its own guests.
 Roger {cold}: If your abbey ever falls on hard times, there are men on the ward who'd put it to better use. Remember who told you.
--> choice
+-> topics
+
+== done
+Roger {cold}: That's all I wanted, porter. One merchant, one name. I'll know where to find you.
+-> end
 
 == leave
 Roger {calm}: Think on it, porter. The ward remembers its friends.

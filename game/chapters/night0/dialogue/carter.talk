@@ -1,14 +1,15 @@
 @id n0_carter
-# DRAFT
-# The carter sets the porter down in the lane by the abbey gate at dusk, night 0.
+# The carter sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).
+# Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line.
 == start
-Carter {weary}: (He reins in with a jolt.) Here's your abbey. Down you get, brother. I've a horse to stable before dark.
-* Will you wait while I knock? -> wait
+(The carter twists round on his seat as you climb down. The horse stamps in the wet.)
+Carter {weary}: There's your abbey, brother. I've a horse to stable before dark.
+* Will you wait while I knock, friend? -> wait
 * Is the gate always shut like this? -> shut
-* God keep you. -> bless
+* God keep you, friend. -> bless
 
 == wait
-Carter {afraid, blink}: Wait? In this lane, with the light going?
+Carter {afraid}: Wait? In this lane, with the light going?
 (He spits over the wheel.)
 Carter {wary}: No, brother. Knock all you like. I'll not be here to see it.
 -> end
@@ -24,8 +25,7 @@ Carter {grave}: And you. You'll want Him more than I will.
 -> end
 
 == again
-Carter {angry}: I said down you get. Go on with you.
-(He clicks his tongue at the horse.)
+Carter {angry}: I said down you get. I'm away.
 -> end
 
 == leave

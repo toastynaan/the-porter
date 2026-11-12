@@ -74,7 +74,7 @@ Changes written into answers (reads change trust too: see the table above).
 - Mab +5: [lane](lane.md), "(Give her alms.)"
 - Margery +5: [night0](night0.md), "Go with God, then."
 - Margery +5: [lane](lane.md), "And you, Margery."
-- Roger the bailiff -5: [night0](night0.md), "Who's asking?"
+- Roger the bailiff -5: [night0](night0.md), "Who's asking, friend?"
 - Roger the bailiff +5: [night0](night0.md), "I'll send you word."
 - Brother Thomas +5: [night1](night1.md), "He told me not to let them in after the bell."
 - Walter -5: [night0](night0.md), "Those aren't holy."
@@ -89,7 +89,7 @@ Mostly, by chapter: night3 *sad*.
 
 Baseline *weary*.
 
-Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *afraid* · night5 *weary* · night6 *weary*.
+Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *grave* · night5 *weary* · night6 *weary*.
 
 ### Agnes
 
@@ -119,7 +119,7 @@ Mostly, by chapter: night1 *afraid*.
 
 Baseline *warm*. habit *brow* (means nothing from them). starts at trust 50.
 
-Mostly, by chapter: night1 *glad* · night2 *amused* · night3 *glad* · night4 *afraid*.
+Mostly, by chapter: night1 *glad* · night2 *amused* · night3 *warm* · night4 *afraid*.
 
 ### Brother Osric
 
@@ -135,7 +135,7 @@ Mostly, by chapter: night1 *glad* · night2 *glad* · night3 *glad* · night4 *g
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *grave* · night5 *calm*.
+Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *grave* · night5 *grave*.
 
 ### Brother Ranulf
 
@@ -170,7 +170,7 @@ Mostly, by chapter: night1 *warm* · night2 *warm* · night3 *warm* · night4 *w
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *amused*.
+Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *sad*.
 
 ### Cole
 
@@ -186,7 +186,7 @@ Mostly, by chapter: night1 *blank*.
 
 ### Gib the watchman
 
-Mostly, by chapter: night0 *grave* · lane *afraid*.
+Mostly, by chapter: night0 *weary* · lane *grave*.
 
 ### Hob
 
@@ -239,7 +239,7 @@ Mostly, by chapter: night1 *cold* · night2 *cold* · night3 *cold* · night4 *c
 
 ### Ralph the chandler
 
-Mostly, by chapter: night0 *wary*.
+Mostly, by chapter: night0 *calm*.
 
 ### Roger the bailiff
 
@@ -249,7 +249,7 @@ Mostly, by chapter: night0 *calm* · night6 *amused*.
 
 ### Traveller
 
-Mostly, by chapter: night0 *grave*.
+Mostly, by chapter: night0 *afraid*.
 
 ### Walter
 
@@ -261,7 +261,7 @@ Mostly, by chapter: night0 *amused*.
 
 ### Warden
 
-Mostly, by chapter: night0 *grave*.
+Mostly, by chapter: night0 *weary*.
 
 ### the carter
 

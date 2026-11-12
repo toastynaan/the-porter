@@ -1,31 +1,46 @@
 @id n0_margery
-# DRAFT
-# Margery, a neighbour, hurrying home with her basket before dark, night 0. Nervous; she won't stop long.
+# Margery, a neighbour from by Saint Andrew's, hurrying home with her basket before dark, night 0. Hurried, careful, frightened: she won't stop long, and she won't pass the abbey wall after dark.
+# One talk: she answers what's left until it's all asked, then hurries off (done). Blessing her is a goodbye, and she takes it as one.
 == start
 (A woman with a covered basket on her arm, walking fast, her eyes on the cobbles.)
-Margery {afraid, blink}: Can't stop, brother, I'm sorry. Not with the light going.
-* Where are you hurrying to? -> home
-* What are you afraid of? -> afraid
+Margery {afraid}: Can't stop, brother, I'm sorry. Not with the light going.
+-> topics
+
+== again
+-> done [if n0_margery_home] [if n0_margery_wall]
+-> again_ask
+
+== again_ask
+Margery {afraid}: You again, brother. Quickly, then.
+-> topics
+
+== topics
+-> done [if n0_margery_home] [if n0_margery_wall]
+-> ask
+
+== ask
+* [if not n0_margery_home] Where are you hurrying to? -> home
+* [if not n0_margery_wall] What are you afraid of? -> wall
 * Go with God, then. [trust margery 5] -> bless
 
-== home
-Margery {afraid}: Home, by Saint Andrew's. The long way round.
-Margery {afraid}: Two streets more, but it doesn't go past that wall.
--> end
+== home [set n0_margery_home]
+Margery {afraid}: Home, by Saint Andrew's. I'm Margery. I go the long way round.
+Margery {afraid}: Two streets more, but it doesn't pass that wall.
+-> topics
 
-== afraid
+== wall [set n0_margery_wall]
 Margery {calm, swallow}: Afraid? I'm careful, that's all.
 (Her eyes go to the abbey wall, and away.)
-Margery {afraid}: I don't walk past that wall after dark. Not for anybody. No offence to your habit.
--> end
+Margery {afraid}: Even the dogs cross the lane rather than go by it. I don't walk past it after dark. No offence to your habit.
+-> topics
 
 == bless
 Margery {sad}: And you, brother. God keep you. You'll need keeping, over there.
 -> end
 
-== again
-Margery {afraid}: Brother, I said I can't stop!
-(She's already past you.)
+== done
+(She hitches the basket higher on her arm.)
+Margery {afraid}: I must go, brother. God keep you.
 -> end
 
 == leave

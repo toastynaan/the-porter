@@ -58,6 +58,8 @@ const FAKE_UNSEEN := 1.0
 ## The victim carries a lit lantern: the struggle is shapes against its light,
 ## then it falls from his hand, rolls, and burns low on the ground.
 @export var lantern := false
+## How bright his lantern burns (brighter where it must be seen from afar).
+@export var lantern_energy := 1.6
 ## Which way the body falls, in this node's frame (-Z: forward, away from
 ## the killer behind him); m/s.
 @export var fall_push := Vector3(0.0, 0.0, -1.6)
@@ -127,10 +129,16 @@ func play() -> void:
 
 
 ## The killer drags the body to `to` (night 0: toward the cellar), at a
-## walk, leaving drag marks, and both are gone there. Await it.
-func drag_to(to: Vector3, speed := 1.0) -> void:
+## walk, leaving drag marks, and both are gone there. Await it. With
+## `carry_light`, he takes up the victim's dropped lantern and carries it
+## low as he goes, so a watcher far off sees the light and the shapes go.
+func drag_to(to: Vector3, speed := 1.0, carry_light := false) -> void:
 	if killer == null or body == null:
 		return
+	if carry_light and _flame and is_instance_valid(_flame):
+		_flame.reparent(killer, false)
+		_flame.position = Vector3(0.35, 0.55, -0.2)
+		create_tween().tween_property(_flame, ^"light_energy", lantern_energy * 0.9, 0.6)
 	killer.set_meta(&"stays", true)
 	var from := body.centre()
 	_mark(&"drag", Transform3D(Basis.looking_at((to - from) * Vector3(1, 0, 1), Vector3.UP), from * Vector3(1, 0, 1) + Vector3(0, global_position.y, 0)))
@@ -305,7 +313,7 @@ func _drop_lantern() -> void:
 	if _flame:
 		_flame.reparent(lamp, false)
 		_flame.position = Vector3.ZERO
-		create_tween().tween_property(_flame, ^"light_energy", 0.5, 2.5)
+		create_tween().tween_property(_flame, ^"light_energy", lantern_energy * 0.4, 2.5)
 	var roll := create_tween()
 	roll.tween_property(lamp, ^"position", Vector3(0.9, 0.07, -0.9), 1.6).set_ease(Tween.EASE_OUT)
 	roll.parallel().tween_property(lamp, ^"rotation:x", 7.0, 1.6).set_ease(Tween.EASE_OUT)
@@ -318,8 +326,8 @@ func _drop_lantern() -> void:
 func _light_lantern() -> void:
 	_flame = OmniLight3D.new()
 	_flame.light_color = Color(0.95, 0.62, 0.32)
-	_flame.light_energy = 1.6
-	_flame.omni_range = 7.0
+	_flame.light_energy = lantern_energy
+	_flame.omni_range = 7.0 * maxf(1.0, sqrt(lantern_energy / 1.6))
 	_flame.shadow_enabled = true
 	add_child(_flame)
 	_flame.position = Vector3(0.3, 0.95, -0.15)

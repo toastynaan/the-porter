@@ -72,10 +72,11 @@ sequenceDiagram
 
 [`agnes.talk`](../../game/chapters/night0/dialogue/agnes.talk) · id `n0_agnes`
 
-Moods through the talk: warm → amused → calm → amused → grave → cold → grave → warm → wary → warm
+Moods through the talk: warm → amused → calm → amused → grave → cold → grave → warm → sad → warm → wary → warm
 
 > Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.
-> The bed answer gives him the room at the top (n0_room). An ale ends the talk; the next talk starts at again.
+> The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.
+> The ale is always the last answer. Once the bed and the abbey are asked she has one thing more (Jankin), and "(Nod.)" ends the talk with her line.
 
 **Read elsewhere:** [`n0_room`](links.md#n0_room), [`talked_n0_agnes`](links.md#talked_n0_agnes)
 
@@ -88,11 +89,15 @@ flowchart TD
   p_again_room["<b>again_room</b><br/>Agnes: Your room's made up, brother. Top of the stair, as fa…"]
   p_again_plain["<b>again_plain</b><br/>Agnes: Well? Warmer?"]
   p_topics["<b>topics</b>"]
-  p_bed["<b>bed</b><br/>Agnes: A bed. There's the room at the top. It's small and it…<br/><i>sets n0_room</i>"]
+  p_topics_first["<b>topics_first</b>"]
+  p_topics_late["<b>topics_late</b>"]
+  p_bed["<b>bed</b><br/>Agnes: There's the room at the top. It's small and it's cold…<br/><i>sets n0_room</i>"]
   p_abbey["<b>abbey</b><br/>Agnes: I don't talk about that place under my own roof.<br/><i>sets n0_agnes_abbey</i>"]
+  p_jankin["<b>jankin</b><br/>Agnes: Jankin? Every night. Hob puts him out at closing, and…<br/><i>sets n0_agnes_jankin</i>"]
+  p_close["<b>close</b><br/>Agnes: Then sit and dry. If you're still down here at midnig…"]
   p_ale["<b>ale</b>"]
   p_ale_first["<b>ale_first</b><br/>Agnes: Drink it slow. It's stronger than what your country b…<br/><i>sets n0_agnes_poured</i>"]
-  p_ale_more["<b>ale_more</b><br/>Agnes: Another? You'll be no use to your abbot in the mornin…"]
+  p_ale_more["<b>ale_more</b><br/>Agnes: You'll be no use to your abbot in the morning."]
   p_leave["<b>leave</b><br/>Agnes: Before nine, mind!"]
   end_((end))
   p_start -.-> p_topics
@@ -100,11 +105,18 @@ flowchart TD
   p_again -.-> p_again_plain
   p_again_room -.-> p_topics
   p_again_plain -.-> p_topics
-  p_topics -->|"Have you a bed for the night?<br/>if not n0_room"| p_bed
-  p_topics -->|"What do you know of the abbey?<br/>if not n0_agnes_abbey"| p_abbey
-  p_topics -->|"An ale, if you would."| p_ale
+  p_topics -.->|"if n0_room, n0_agnes_abbey"| p_topics_late
+  p_topics -.-> p_topics_first
+  p_topics_first -->|"Have you a bed for the night, goodwif…<br/>if not n0_room"| p_bed
+  p_topics_first -->|"What do you know of the abbey?<br/>if not n0_agnes_abbey"| p_abbey
+  p_topics_first -->|"An ale, if you would."| p_ale
+  p_topics_late -->|"Is Jankin always like this?<br/>if not n0_agnes_jankin"| p_jankin
+  p_topics_late -->|"(Nod.)"| p_close
+  p_topics_late -->|"An ale, if you would."| p_ale
   p_bed -.-> p_topics
   p_abbey -.-> p_topics
+  p_jankin -.-> p_topics
+  p_close -.-> end_
   p_ale -.->|"if n0_agnes_poured"| p_ale_more
   p_ale -.-> p_ale_first
   p_ale_first -.-> end_
@@ -146,15 +158,26 @@ flowchart TD
 
 #### `topics`
 
-1. Have you a bed for the night? → `bed` · only if not `n0_room`
+- → `topics_late` if `n0_room`, `n0_agnes_abbey`
+- → `topics_first`
+
+#### `topics_first`
+
+1. Have you a bed for the night, goodwife? → `bed` · only if not `n0_room`
 2. What do you know of the abbey? → `abbey` · only if not `n0_agnes_abbey`
+3. An ale, if you would. → `ale` · he drinks an ale
+
+#### `topics_late`
+
+1. Is Jankin always like this? → `jankin` · only if not `n0_agnes_jankin`
+2. (Nod.) → `close`
 3. An ale, if you would. → `ale` · he drinks an ale
 
 #### `bed`
 *sets `n0_room`*
 
-- **Agnes** *calm*: A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
-- **Agnes** *amused*: Nobody else will have it. You can have it for a prayer and a ha'penny.
+- **Agnes** *calm*: There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
+- **Agnes** *amused*: Nobody else will have it. It's yours for a ha'penny, and I'll not haggle with a monk.
 - **Agnes** *grave*: Be in before the curfew bell at nine. After it the Keys is shut, and the street's no place to be.
 
 - → `topics`
@@ -164,10 +187,25 @@ flowchart TD
 
 - **Agnes** *cold*: I don't talk about that place under my own roof.
 - *She glances at the shutters all the same, and lowers her voice.*
-- **Agnes** *grave*: We've had lodgers go over there to see the relic. Paid me for two nights and slept one.
+- **Agnes** *grave*: We've had lodgers go over there to see the relic. Paid me for two nights, and slept one.
 - **Agnes** *grave, swallow*: I don't ask. I strip the bed and let it again.
 
 - → `topics`
+
+#### `jankin`
+*sets `n0_agnes_jankin`*
+
+- *She looks down the bench at him, and her face softens.*
+- **Agnes** *warm*: Jankin? Every night. Hob puts him out at closing, and I put a crust in his pocket first.
+- **Agnes** *sad*: One of these nights it'll be too cold for him out there. You see if it isn't.
+
+- → `topics`
+
+#### `close`
+
+- **Agnes** *warm*: Then sit and dry. If you're still down here at midnight, I'll send you up myself.
+
+- → `end`
 
 #### `ale`
 
@@ -184,8 +222,8 @@ flowchart TD
 
 #### `ale_more`
 
-- **Agnes** *wary*: Another? You'll be no use to your abbot in the morning.
-- *She fills it to the brim anyway.*
+- *She fills it to the brim, shaking her head.*
+- **Agnes** *wary*: You'll be no use to your abbot in the morning.
 
 - → `end`
 
@@ -202,7 +240,8 @@ flowchart TD
 
 Moods through the talk: weary → afraid → wary → calm → grave → angry → calm
 
-> The carter sets the porter down in the lane by the abbey gate at dusk, night 0.
+> The carter sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).
+> Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line.
 
 **Read elsewhere:** [`talked_n0_carter`](links.md#talked_n0_carter)
 
@@ -210,16 +249,16 @@ Moods through the talk: weary → afraid → wary → calm → grave → angry �
 
 ```mermaid
 flowchart TD
-  p_start["<b>start</b><br/>Carter: (He reins in with a jolt.) Here's your abbey. Down yo…"]
+  p_start["<b>start</b><br/>Carter: There's your abbey, brother. I've a horse to stable b…"]
   p_wait["<b>wait</b><br/>Carter: Wait? In this lane, with the light going?"]
   p_shut["<b>shut</b><br/>Carter: Couldn't say. I don't stop here."]
   p_bless["<b>bless</b><br/>Carter: And you. You'll want Him more than I will."]
-  p_again["<b>again</b><br/>Carter: I said down you get. Go on with you."]
+  p_again["<b>again</b><br/>Carter: I said down you get. I'm away."]
   p_leave["<b>leave</b><br/>Carter: Mind your bundle, brother."]
   end_((end))
-  p_start -->|"Will you wait while I knock?"| p_wait
+  p_start -->|"Will you wait while I knock, friend?"| p_wait
   p_start -->|"Is the gate always shut like this?"| p_shut
-  p_start -->|"God keep you."| p_bless
+  p_start -->|"God keep you, friend."| p_bless
   p_wait -.-> end_
   p_shut -.-> end_
   p_bless -.-> end_
@@ -235,15 +274,16 @@ flowchart TD
 
 #### `start`
 
-- **Carter** *weary*: (He reins in with a jolt.) Here's your abbey. Down you get, brother. I've a horse to stable before dark.
+- *The carter twists round on his seat as you climb down. The horse stamps in the wet.*
+- **Carter** *weary*: There's your abbey, brother. I've a horse to stable before dark.
 
-1. Will you wait while I knock? → `wait`
+1. Will you wait while I knock, friend? → `wait`
 2. Is the gate always shut like this? → `shut`
-3. God keep you. → `bless`
+3. God keep you, friend. → `bless`
 
 #### `wait`
 
-- **Carter** *afraid, blink*: Wait? In this lane, with the light going?
+- **Carter** *afraid*: Wait? In this lane, with the light going?
 - *He spits over the wheel.*
 - **Carter** *wary*: No, brother. Knock all you like. I'll not be here to see it.
 
@@ -265,8 +305,7 @@ flowchart TD
 
 #### `again` (the next time)
 
-- **Carter** *angry*: I said down you get. Go on with you.
-- *He clicks his tongue at the horse.*
+- **Carter** *angry*: I said down you get. I'm away.
 
 - → `end`
 
@@ -283,8 +322,9 @@ flowchart TD
 
 Moods through the talk: weary → grave → wary → weary → wary → calm → grave → calm → amused → grave → wary → grave → weary
 
-> Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell,
-> and walking the lane calling the hour after it (n0_curfew). He tells the porter to be indoors before the bell.
+> Gib, the old night watchman, night 0: lighting the lanterns along the lane (the mayor's order) before the bell, and walking the lane calling the hour after it (n0_curfew). Old, slow, a watchman: he tells the porter to be indoors before the bell.
+> His call is a clock the porter will hear from inside the walls: if it stops, something is wrong.
+> One talk: the questions left come up again until all are asked; then he sends him indoors (done, before or after the bell).
 
 **Reads from elsewhere:** [`n0_curfew`](links.md#n0_curfew)
 **Read elsewhere:** [`talked_n0_gib`](links.md#talked_n0_gib)
@@ -294,31 +334,42 @@ Moods through the talk: weary → grave → wary → weary → wary → calm →
 ```mermaid
 flowchart TD
   p_start["<b>start</b>"]
-  p_start_early["<b>start_early</b><br/>Gib: Mind my ladder, brother. A lantern on every house, al…"]
+  p_start_early["<b>start_early</b><br/>Gib: Mind my ladder, brother. Gib, the watch. A lantern on…"]
   p_start_late["<b>start_late</b><br/>Gib: Past the bell, brother, and you in the street. I'm Gi…"]
   p_again["<b>again</b>"]
   p_again_early["<b>again_early</b><br/>Gib: Still out, brother? Not long to the bell now."]
-  p_again_late["<b>again_late</b><br/>Gib: You again, and the bell long gone. Indoors, brother."]
+  p_again_late["<b>again_late</b><br/>Gib: You again, and the bell long gone."]
   p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_watch["<b>watch</b><br/>Gib: After the bell I walk the lane and call the hour. Ten…<br/><i>sets n0_gib_watch</i>"]
-  p_lanterns["<b>lanterns</b><br/>Gib: Since the year of Agincourt. A lantern on every house…<br/><i>sets n0_gib_lanterns</i>"]
+  p_lanterns["<b>lanterns</b><br/>Gib: Since the year of Agincourt. Every winter, from Hallo…<br/><i>sets n0_gib_lanterns</i>"]
   p_abbey["<b>abbey</b><br/>Gib: I walk past that wall every hour of the night, and I…<br/><i>sets n0_gib_abbey</i>"]
-  p_leave["<b>leave</b><br/>Gib: Indoors before the bell, mind!"]
+  p_done["<b>done</b>"]
+  p_done_early["<b>done_early</b><br/>Gib: Well. These lanterns won't light themselves. Indoors…"]
+  p_done_late["<b>done_late</b><br/>Gib: That's enough talk for a cold night. Indoors with you…"]
+  p_leave["<b>leave</b><br/>Gib: Get you indoors, brother!"]
   end_((end))
   p_start -.->|"if n0_curfew"| p_start_late
   p_start -.-> p_start_early
   p_start_early -.-> p_topics
   p_start_late -.-> p_topics
+  p_again -.->|"if n0_gib_watch, n0_gib_lanterns, n0_gib_a…"| p_done
   p_again -.->|"if n0_curfew"| p_again_late
   p_again -.-> p_again_early
   p_again_early -.-> p_topics
   p_again_late -.-> p_topics
-  p_topics -->|"What do you do after the bell?<br/>if not n0_gib_watch"| p_watch
-  p_topics -->|"How long has the lane had lanterns?<br/>if not n0_gib_lanterns"| p_lanterns
-  p_topics -->|"What do you make of the abbey wall?<br/>if not n0_gib_abbey"| p_abbey
+  p_topics -.->|"if n0_gib_watch, n0_gib_lanterns, n0_gib_a…"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"What do you do after the bell, friend?<br/>if not n0_gib_watch"| p_watch
+  p_ask -->|"How long has the lane had lanterns?<br/>if not n0_gib_lanterns"| p_lanterns
+  p_ask -->|"What do you make of the abbey wall?<br/>if not n0_gib_abbey"| p_abbey
   p_watch -.-> p_topics
   p_lanterns -.-> p_topics
   p_abbey -.-> p_topics
+  p_done -.->|"if n0_curfew"| p_done_late
+  p_done -.-> p_done_early
+  p_done_early -.-> end_
+  p_done_late -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
@@ -338,20 +389,21 @@ flowchart TD
 #### `start_early`
 
 - *An old man on a short ladder under the eaves, coaxing a lantern alight with a taper.*
-- **Gib** *weary*: Mind my ladder, brother. A lantern on every house, all winter long. Mayor's order.
+- **Gib** *weary*: Mind my ladder, brother. Gib, the watch. A lantern on every house all winter, by the mayor's order.
 - **Gib** *grave*: And you be indoors before the bell. Nine o'clock, and not a breath after.
 
 - → `topics`
 
 #### `start_late`
 
-- *An old man with a lantern on a pole, walking the middle of the empty lane.*
+- *An old man with a lantern on a pole, walking slow down the middle of the empty lane.*
 - **Gib** *wary*: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you indoors.
 
 - → `topics`
 
 #### `again` (the next time)
 
+- → `done` if `n0_gib_watch`, `n0_gib_lanterns`, `n0_gib_abbey`
 - → `again_late` if `n0_curfew`
 - → `again_early`
 
@@ -363,20 +415,25 @@ flowchart TD
 
 #### `again_late`
 
-- **Gib** *wary*: You again, and the bell long gone. Indoors, brother.
+- **Gib** *wary*: You again, and the bell long gone.
 
 - → `topics`
 
 #### `topics`
 
-1. What do you do after the bell? → `watch` · only if not `n0_gib_watch`
+- → `done` if `n0_gib_watch`, `n0_gib_lanterns`, `n0_gib_abbey`
+- → `ask`
+
+#### `ask`
+
+1. What do you do after the bell, friend? → `watch` · only if not `n0_gib_watch`
 2. How long has the lane had lanterns? → `lanterns` · only if not `n0_gib_lanterns`
 3. What do you make of the abbey wall? → `abbey` · only if not `n0_gib_abbey`
 
 #### `watch`
 *sets `n0_gib_watch`*
 
-- **Gib** *calm*: After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light.
+- **Gib** *calm*: After the bell I walk the lane and call the hour. Ten of the clock, and on till first light.
 - **Gib** *grave*: If you hear me call, all's well. If you don't, it isn't.
 
 - → `topics`
@@ -384,7 +441,7 @@ flowchart TD
 #### `lanterns`
 *sets `n0_gib_lanterns`*
 
-- **Gib** *calm*: Since the year of Agincourt. A lantern on every house from Hallowtide to Candlemas.
+- **Gib** *calm*: Since the year of Agincourt. Every winter, from Hallowtide to Candlemas.
 - **Gib** *amused*: The houses find the candles, and I light them. Saves a few throats, the mayor says.
 
 - → `topics`
@@ -392,15 +449,33 @@ flowchart TD
 #### `abbey`
 *sets `n0_gib_abbey`*
 
+- *He's slow to answer.*
 - **Gib** *grave*: I walk past that wall every hour of the night, and I don't look at it.
 - **Gib** *wary, swallow*: Thirty years. You hear things over a wall like that. You see lights where there shouldn't be lights.
-- **Gib** *grave*: I call the hour and I keep walking. You'd do well to learn the same.
+- **Gib** *grave*: I call the hour, and I keep walking. You'd do well to learn the same.
 
 - → `topics`
 
+#### `done`
+
+- → `done_late` if `n0_curfew`
+- → `done_early`
+
+#### `done_early`
+
+- **Gib** *weary*: Well. These lanterns won't light themselves. Indoors before the bell, brother.
+
+- → `end`
+
+#### `done_late`
+
+- **Gib** *weary*: That's enough talk for a cold night. Indoors with you, brother.
+
+- → `end`
+
 #### `leave` (if he walks away)
 
-- **Gib** *weary*: Indoors before the bell, mind!
+- **Gib** *weary*: Get you indoors, brother!
 
 </details>
 
@@ -409,10 +484,11 @@ flowchart TD
 
 [`hob.talk`](../../game/chapters/night0/dialogue/hob.talk) · id `n0_hob`
 
-Moods through the talk: wary → amused → calm → grave → calm → grave → amused → grave → calm → warm → amused → wary → calm
+Moods through the talk: wary → amused → calm → grave → calm → grave → calm → amused → calm → amused → warm → amused → wary → calm
 
-> Hob, who keeps the Cross Keys, behind his board, night 0. He hears everything said over the ale.
-> An ale ends the talk; the next talk starts at again, so he can have another.
+> Hob, who keeps the Cross Keys, behind his board, night 0. Blunt and kind. He hears everything said over the ale, and doesn't say any of it is true.
+> His questions: what the lane says about the abbey; when the Keys shuts; who's drinking tonight (once one of the first two is asked). He never runs out: the ale is always there.
+> The ale is always the last answer, and the third while he has two questions left (always, until he's asked: the tests take answer 2 for an ale). Once the abbey and the shutting are asked, "(Nod.)" ends the talk with his line. An ale ends the talk with his own line; the next talk starts at again, so he can have another.
 > Plants the night-2 rule (n0_hob_jankin): he puts Jankin out at closing every night, rain or no.
 
 **Reads from elsewhere:** [`drank`](links.md#drank)
@@ -423,27 +499,45 @@ Moods through the talk: wary → amused → calm → grave → calm → grave �
 ```mermaid
 flowchart TD
   p_start["<b>start</b><br/>Hob: A brother from over the way, in the Keys. That's new."]
-  p_again["<b>again</b><br/>Hob: Brother."]
+  p_again["<b>again</b><br/>Hob: Brother. What'll it be?"]
   p_topics["<b>topics</b>"]
+  p_topics_first["<b>topics_first</b>"]
+  p_topics_shut["<b>topics_shut</b>"]
+  p_topics_abbey["<b>topics_abbey</b>"]
+  p_topics_last["<b>topics_last</b>"]
   p_abbey["<b>abbey</b><br/>Hob: I pour, folk talk. I don't say any of it's true.<br/><i>sets n0_hob_abbey</i>"]
-  p_bed["<b>bed</b><br/>Hob: Beds are Agnes's business. Ask her, and don't haggle.…<br/><i>sets n0_hob_bed</i>"]
-  p_bed_jankin["<b>bed_jankin</b><br/>Hob: Them without a bed go out at closing. Jankin too, eve…<br/><i>sets n0_hob_jankin</i>"]
+  p_shut["<b>shut</b><br/>Hob: At the bell. After it the door's barred, and it stays…<br/><i>sets n0_hob_shut, sets n0_hob_jankin</i>"]
+  p_room["<b>room</b><br/>Hob: Walter, in the red, selling bones. Roger, the ward's…<br/><i>sets n0_hob_room</i>"]
+  p_close["<b>close</b><br/>Hob: Go and sit, then. You're making the place look holy."]
   p_ale["<b>ale</b>"]
   p_ale_first["<b>ale_first</b><br/>Hob: A ha'penny. Or a prayer for my mother, God rest her.…<br/><i>sets n0_hob_poured</i>"]
   p_ale_jankin["<b>ale_jankin</b><br/>Hob: Mind Jankin doesn't drink it. I put him out at closin…<br/><i>sets n0_hob_jankin</i>"]
   p_ale_third["<b>ale_third</b><br/>Hob: That's three, brother. Go steady. Agnes won't carry y…"]
-  p_ale_more["<b>ale_more</b><br/><i>He fills your cup again without a word.</i>"]
+  p_ale_more["<b>ale_more</b><br/>Hob: There. Drink it sitting down."]
   p_leave["<b>leave</b><br/>Hob: Bell's at nine, brother."]
   end_((end))
   p_start -.-> p_topics
   p_again -.-> p_topics
-  p_topics -->|"What does the lane say about the abbe…<br/>if not n0_hob_abbey"| p_abbey
-  p_topics -->|"Have you a bed for the night?<br/>if not n0_hob_bed"| p_bed
-  p_topics -->|"An ale, if you would."| p_ale
+  p_topics -.->|"if n0_hob_abbey, n0_hob_shut"| p_topics_last
+  p_topics -.->|"if n0_hob_abbey"| p_topics_shut
+  p_topics -.->|"if n0_hob_shut"| p_topics_abbey
+  p_topics -.-> p_topics_first
+  p_topics_first -->|"What does the lane say about the abbe…"| p_abbey
+  p_topics_first -->|"When do you shut, friend?"| p_shut
+  p_topics_first -->|"An ale, if you would."| p_ale
+  p_topics_shut -->|"When do you shut, friend?"| p_shut
+  p_topics_shut -->|"Who's drinking here tonight?<br/>if not n0_hob_room"| p_room
+  p_topics_shut -->|"An ale, if you would."| p_ale
+  p_topics_abbey -->|"What does the lane say about the abbe…"| p_abbey
+  p_topics_abbey -->|"Who's drinking here tonight?<br/>if not n0_hob_room"| p_room
+  p_topics_abbey -->|"An ale, if you would."| p_ale
+  p_topics_last -->|"Who's drinking here tonight?<br/>if not n0_hob_room"| p_room
+  p_topics_last -->|"(Nod.)"| p_close
+  p_topics_last -->|"An ale, if you would."| p_ale
   p_abbey -.-> p_topics
-  p_bed -.->|"if not n0_hob_jankin"| p_bed_jankin
-  p_bed -.-> p_topics
-  p_bed_jankin -.-> p_topics
+  p_shut -.-> p_topics
+  p_room -.-> p_topics
+  p_close -.-> end_
   p_ale -.->|"if not n0_hob_poured"| p_ale_first
   p_ale -.->|"if drank=3"| p_ale_third
   p_ale -.-> p_ale_more
@@ -471,14 +565,39 @@ flowchart TD
 
 #### `again` (the next time)
 
-- **Hob** *calm*: Brother.
+- **Hob** *calm*: Brother. What'll it be?
 
 - → `topics`
 
 #### `topics`
 
-1. What does the lane say about the abbey? → `abbey` · only if not `n0_hob_abbey`
-2. Have you a bed for the night? → `bed` · only if not `n0_hob_bed`
+- → `topics_last` if `n0_hob_abbey`, `n0_hob_shut`
+- → `topics_shut` if `n0_hob_abbey`
+- → `topics_abbey` if `n0_hob_shut`
+- → `topics_first`
+
+#### `topics_first`
+
+1. What does the lane say about the abbey? → `abbey`
+2. When do you shut, friend? → `shut`
+3. An ale, if you would. → `ale` · he drinks an ale
+
+#### `topics_shut`
+
+1. When do you shut, friend? → `shut`
+2. Who's drinking here tonight? → `room` · only if not `n0_hob_room`
+3. An ale, if you would. → `ale` · he drinks an ale
+
+#### `topics_abbey`
+
+1. What does the lane say about the abbey? → `abbey`
+2. Who's drinking here tonight? → `room` · only if not `n0_hob_room`
+3. An ale, if you would. → `ale` · he drinks an ale
+
+#### `topics_last`
+
+1. Who's drinking here tonight? → `room` · only if not `n0_hob_room`
+2. (Nod.) → `close`
 3. An ale, if you would. → `ale` · he drinks an ale
 
 #### `abbey`
@@ -486,26 +605,34 @@ flowchart TD
 
 - **Hob** *calm*: I pour, folk talk. I don't say any of it's true.
 - **Hob** *grave*: Pilgrims go in at that gate and don't come out. Folk say they leave by some back way. I don't know of one.
-- **Hob** *calm*: Lights in the church at night, when the brothers should be abed. And a thing on the wall with horns, Jankin says.
+- **Hob** *calm*: Lights moving in there at night, at hours no bell's rung for. And a thing up on the wall with horns, Jankin says.
 - **Hob** *grave*: Jankin says a deal. But I keep my shutters barred on that side.
 
 - → `topics`
 
-#### `bed`
-*sets `n0_hob_bed`*
+#### `shut`
+*sets `n0_hob_shut`, sets `n0_hob_jankin`*
 
-- **Hob** *amused*: Beds are Agnes's business. Ask her, and don't haggle. She'll win.
-- **Hob** *grave*: We take in anyone who comes before the bell. After it the door's barred, and it stays barred.
-
-- → `bed_jankin` if not `n0_hob_jankin`
-- → `topics`
-
-#### `bed_jankin`
-*sets `n0_hob_jankin`*
-
-- **Hob** *calm*: Them without a bed go out at closing. Jankin too, every night, rain or no.
+- **Hob** *grave*: At the bell. After it the door's barred, and it stays barred.
+- **Hob** *calm*: Them with a bed go up the stair. Them without go out. Jankin too, every night, rain or no.
+- **Hob** *amused*: If it's a bed you're after, that's Agnes's business. Don't haggle. She'll win.
 
 - → `topics`
+
+#### `room`
+*sets `n0_hob_room`*
+
+- *He nods round the room, one face at a time.*
+- **Hob** *calm*: Walter, in the red, selling bones. Roger, the ward's bailiff, with the staff. Ralph the chandler, who makes your candles.
+- **Hob** *amused*: And Jankin, who's always here. Mind what you say near Roger. He counts everything.
+
+- → `topics`
+
+#### `close`
+
+- **Hob** *amused*: Go and sit, then. You're making the place look holy.
+
+- → `end`
 
 #### `ale`
 
@@ -532,14 +659,15 @@ flowchart TD
 
 #### `ale_third`
 
+- *He pours it, slower than before.*
 - **Hob** *wary*: That's three, brother. Go steady. Agnes won't carry you up the stair.
-- *He pours it all the same.*
 
 - → `end`
 
 #### `ale_more`
 
-- *He fills your cup again without a word.*
+- *He fills your cup again.*
+- **Hob** *calm*: There. Drink it sitting down.
 
 - → `end`
 
@@ -554,10 +682,11 @@ flowchart TD
 
 [`jankin.talk`](../../game/chapters/night0/dialogue/jankin.talk) · id `n0_jankin`
 
-Moods through the talk: drunk → amused → drunk → sad → drunk → amused → drunk
+Moods through the talk: drunk → glad → drunk → amused → drunk → sad → drunk → amused → drunk
 
-> Jankin on the bench at the Cross Keys, night 0. A harmless drunk, full of stories, half of them nonsense.
-> He says Hob throws him out at closing every night (the night-2 rule).
+> Jankin on the bench at the Cross Keys, night 0. A harmless drunk, rambling, full of stories, half of them nonsense. Once, for a moment, he isn't drunk at all (who).
+> He saw a thing with horns on the abbey wall (the horned costume; nothing here says so). He says Hob throws him out at closing every night (the night-2 rule).
+> One talk: the questions left come up again until all are asked; then he runs out of stories (done).
 
 ### Every path
 
@@ -568,22 +697,28 @@ flowchart TD
   p_again_wall["<b>again_wall</b><br/>Jankin: Did I tell you about the thing on the wall? I did. It…"]
   p_again_plain["<b>again_plain</b><br/>Jankin: Brother! You came back. Nobody comes back to Jankin."]
   p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_wall["<b>wall</b><br/>Jankin: The abbey. I'll tell you about the abbey. I saw a thi…<br/><i>sets n0_jankin_wall</i>"]
   p_who["<b>who</b><br/>Jankin: Jankin. I was a cooper once, brother. Best barrels in…<br/><i>sets n0_jankin_who</i>"]
   p_home["<b>home</b><br/>Jankin: Tonight? Wherever I fall. Hob throws me out at closin…<br/><i>sets n0_jankin_home</i>"]
+  p_done["<b>done</b><br/>Jankin: That's all my stories, brother. Well. Most of them. C…"]
   p_leave["<b>leave</b><br/>Jankin: Pray for me, brother! Somebody ought to."]
   end_((end))
   p_start -.-> p_topics
+  p_again -.->|"if n0_jankin_wall, n0_jankin_who, n0_janki…"| p_done
   p_again -.->|"if n0_jankin_wall"| p_again_wall
   p_again -.-> p_again_plain
   p_again_wall -.-> p_topics
   p_again_plain -.-> p_topics
-  p_topics -->|"What do you know of the abbey?<br/>if not n0_jankin_wall"| p_wall
-  p_topics -->|"Who are you, friend?<br/>if not n0_jankin_who"| p_who
-  p_topics -->|"Where will you sleep tonight?<br/>if not n0_jankin_home"| p_home
+  p_topics -.->|"if n0_jankin_wall, n0_jankin_who, n0_janki…"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"What do you know of the abbey, friend?<br/>if not n0_jankin_wall"| p_wall
+  p_ask -->|"Who are you, friend?<br/>if not n0_jankin_who"| p_who
+  p_ask -->|"Where will you sleep tonight?<br/>if not n0_jankin_home"| p_home
   p_wall -.-> p_topics
   p_who -.-> p_topics
   p_home -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
@@ -598,12 +733,13 @@ flowchart TD
 #### `start`
 
 - *A man slumped on the bench by the wall lifts his cup to you. Most of it goes down his sleeve.*
-- **Jankin** *drunk, blink*: A monk! In the Keys! Hob, the world's ending. I always said it would.
+- **Jankin** *drunk*: A monk! In the Keys! Hob, the world's ending. I always said it would.
 
 - → `topics`
 
 #### `again` (the next time)
 
+- → `done` if `n0_jankin_wall`, `n0_jankin_who`, `n0_jankin_home`
 - → `again_wall` if `n0_jankin_wall`
 - → `again_plain`
 
@@ -615,13 +751,18 @@ flowchart TD
 
 #### `again_plain`
 
-- **Jankin** *drunk*: Brother! You came back. Nobody comes back to Jankin.
+- **Jankin** *glad*: Brother! You came back. Nobody comes back to Jankin.
 
 - → `topics`
 
 #### `topics`
 
-1. What do you know of the abbey? → `wall` · only if not `n0_jankin_wall`
+- → `done` if `n0_jankin_wall`, `n0_jankin_who`, `n0_jankin_home`
+- → `ask`
+
+#### `ask`
+
+1. What do you know of the abbey, friend? → `wall` · only if not `n0_jankin_wall`
 2. Who are you, friend? → `who` · only if not `n0_jankin_who`
 3. Where will you sleep tonight? → `home` · only if not `n0_jankin_home`
 
@@ -641,6 +782,7 @@ flowchart TD
 - **Jankin** *drunk*: Jankin. I was a cooper once, brother. Best barrels in Aldgate.
 - **Jankin** *sad*: Then my wife died, and I found I liked what goes in a barrel better than the barrel.
 - *He looks into his cup, and for a moment he doesn't look drunk at all.*
+- **Jankin** *drunk*: Never mind. Ask me another.
 
 - → `topics`
 
@@ -653,6 +795,13 @@ flowchart TD
 
 - → `topics`
 
+#### `done`
+
+- *He peers into his cup.*
+- **Jankin** *drunk*: That's all my stories, brother. Well. Most of them. Come back when I've thought of the rest.
+
+- → `end`
+
 #### `leave` (if he walks away)
 
 - **Jankin** *drunk*: Pray for me, brother! Somebody ought to.
@@ -664,9 +813,10 @@ flowchart TD
 
 [`kit.talk`](../../game/chapters/night0/dialogue/kit.talk) · id `n0_kit`
 
-Moods through the talk: glad → amused → calm → amused → wary → glad
+Moods through the talk: glad → amused → glad → amused → calm → amused → wary → glad
 
-> Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter.
+> Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter: she asks more than she answers.
+> One talk: the questions left come up again until all are asked; then she's off to sell her last two (done).
 
 **Read elsewhere:** [`talked_n0_kit`](links.md#talked_n0_kit)
 
@@ -674,26 +824,35 @@ Moods through the talk: glad → amused → calm → amused → wary → glad
 
 ```mermaid
 flowchart TD
-  p_start["<b>start</b><br/>Kit: Candles! Last of the day, cheap as dirt. You're a bro…"]
-  p_again["<b>again</b><br/>Kit: Two left, brother. Both for a ha'penny, and I'll thro…"]
+  p_start["<b>start</b><br/>Kit: Candles! Last of the day, two for a farthing. You're…"]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Kit: You came back! Two left, brother. Both for a farthing…"]
   p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_porter["<b>porter</b><br/>Kit: I knew it! Everybody knew you were coming. Gib told M…<br/><i>sets n0_kit_porter</i>"]
   p_candles["<b>candles</b><br/>Kit: Father makes them and I sell them. Ralph the chandler…<br/><i>sets n0_kit_candles</i>"]
   p_abbey["<b>abbey</b><br/>Kit: Past the gate? Never. Father says I'm not to, not eve…<br/><i>sets n0_kit_abbey</i>"]
+  p_done["<b>done</b><br/>Kit: Two candles left, and the light going. I'll see you a…"]
   p_leave["<b>leave</b><br/>Kit: See you at the gate!"]
   end_((end))
   p_start -.-> p_topics
-  p_again -.-> p_topics
-  p_topics -->|"I'm the new porter.<br/>if not n0_kit_porter"| p_porter
-  p_topics -->|"Who makes your candles?<br/>if not n0_kit_candles"| p_candles
-  p_topics -->|"Have you been inside?<br/>if not n0_kit_abbey"| p_abbey
+  p_again -.->|"if n0_kit_porter, n0_kit_candles, n0_kit_a…"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_topics
+  p_topics -.->|"if n0_kit_porter, n0_kit_candles, n0_kit_a…"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"I'm the new porter. Alric.<br/>if not n0_kit_porter"| p_porter
+  p_ask -->|"Who makes your candles?<br/>if not n0_kit_candles"| p_candles
+  p_ask -->|"Have you been inside the abbey?<br/>if not n0_kit_abbey"| p_abbey
   p_porter -.-> p_topics
   p_candles -.-> p_topics
   p_abbey -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_leave leave
 ```
 
@@ -702,21 +861,31 @@ flowchart TD
 #### `start`
 
 - *A girl with a tray of candles on a strap round her neck, her hood up against the rain.*
-- **Kit** *glad*: Candles! Last of the day, cheap as dirt. You're a brother. Are you the new one?
+- **Kit** *glad*: Candles! Last of the day, two for a farthing. You're a brother. Are you the new porter?
 
 - → `topics`
 
 #### `again` (the next time)
 
-- **Kit** *glad*: Two left, brother. Both for a ha'penny, and I'll throw in the tray.
+- → `done` if `n0_kit_porter`, `n0_kit_candles`, `n0_kit_abbey`
+- → `again_ask`
+
+#### `again_ask`
+
+- **Kit** *amused*: You came back! Two left, brother. Both for a farthing, and I'll throw in the tray.
 
 - → `topics`
 
 #### `topics`
 
-1. I'm the new porter. → `porter` · only if not `n0_kit_porter`
+- → `done` if `n0_kit_porter`, `n0_kit_candles`, `n0_kit_abbey`
+- → `ask`
+
+#### `ask`
+
+1. I'm the new porter. Alric. → `porter` · only if not `n0_kit_porter`
 2. Who makes your candles? → `candles` · only if not `n0_kit_candles`
-3. Have you been inside? → `abbey` · only if not `n0_kit_abbey`
+3. Have you been inside the abbey? → `abbey` · only if not `n0_kit_abbey`
 
 #### `porter`
 *sets `n0_kit_porter`*
@@ -729,7 +898,7 @@ flowchart TD
 #### `candles`
 *sets `n0_kit_candles`*
 
-- **Kit** *calm*: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like.
+- **Kit** *calm*: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like. I'm Kit.
 - **Kit** *calm*: I'm at your gate most dusks with the tray. The brothers buy whatever I've got left.
 - **Kit** *amused*: Brother Ranulf would buy the tray and the strap, if I let him.
 
@@ -739,9 +908,15 @@ flowchart TD
 *sets `n0_kit_abbey`*
 
 - **Kit** *wary*: Past the gate? Never. Father says I'm not to, not ever.
-- **Kit** *glad*: Is it true there's a saint's finger in a glass box? And lights at night? You'll tell me, when you've seen.
+- **Kit** *glad*: Is it true there's a saint's finger in a glass box? And lights going about at night? You'll tell me, when you've seen.
 
 - → `topics`
+
+#### `done`
+
+- **Kit** *glad*: Two candles left, and the light going. I'll see you at your gate, porter!
+
+- → `end`
 
 #### `leave` (if he walks away)
 
@@ -754,10 +929,11 @@ flowchart TD
 
 [`mab.talk`](../../game/chapters/night0/dialogue/mab.talk) · id `n0_mab` · baseline *wary* · starts at trust 0
 
-Moods through the talk: wary → calm → wary → sad → weary → wary → sad → grave → warm → grave → wary
+Moods through the talk: wary → calm → wary → calm → weary → wary → grave → warm → grave → calm → wary
 
-> Mab, a leper, begging by the barred abbey gate at dusk, night 0. Her first lines send him to the Cross Keys (n0_sent_to_inn).
-> Alms once (n0_mab_alms): she gives him a heel of Fenchurch Street bread.
+> Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn).
+> Alms once (n0_mab_alms): she gives him a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
+> One talk: the questions left come up again until all are asked; then she sends him on (done).
 
 **Read elsewhere:** [`n0_sent_to_inn`](links.md#n0_sent_to_inn), [`talked_n0_mab`](links.md#talked_n0_mab)
 
@@ -765,26 +941,35 @@ Moods through the talk: wary → calm → wary → sad → weary → wary → sa
 
 ```mermaid
 flowchart TD
-  p_start["<b>start</b><br/>Mab: No use knocking, brother. Stand off a little. Nobody…<br/><i>sets n0_sent_to_inn</i>"]
-  p_again["<b>again</b><br/>Mab: Still here, brother? The Keys is just across. They'll…"]
+  p_start["<b>start</b><br/>Mab: No use knocking, brother. Nobody will come. Nobody ke…<br/><i>sets n0_sent_to_inn</i>"]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Mab: You again, brother. The Keys hasn't moved."]
   p_topics["<b>topics</b>"]
-  p_porter["<b>porter</b><br/>Mab: Their porter.<br/><i>sets n0_mab_porter</i>"]
+  p_ask["<b>ask</b>"]
+  p_porter["<b>porter</b><br/>Mab: Their porter. You're very young.<br/><i>sets n0_mab_porter</i>"]
   p_saw["<b>saw</b><br/>Mab: Every night God sends. Rain or frost, it's all one to…<br/><i>sets n0_mab_saw</i>"]
   p_alms["<b>alms</b><br/>Mab: God keep you, brother. Here. You'll want something fo…<br/><i>sets n0_mab_alms, gives mab_bread, trust Mab +5</i>"]
+  p_done["<b>done</b><br/>Mab: Go on across to the fire, brother. I'll be here. I'm…"]
   p_leave["<b>leave</b><br/>Mab: Mind the lane after the bell, brother."]
   end_((end))
   p_start -.-> p_topics
-  p_again -.-> p_topics
-  p_topics -->|"I'm to be their new porter.<br/>if not n0_mab_porter"| p_porter
-  p_topics -->|"Are you here every night?<br/>if not n0_mab_saw"| p_saw
-  p_topics -->|"(Give her alms.)<br/>if not n0_mab_alms"| p_alms
+  p_again -.->|"if n0_mab_porter, n0_mab_saw, n0_mab_alms"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_topics
+  p_topics -.->|"if n0_mab_porter, n0_mab_saw, n0_mab_alms"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"I'm to be their new porter.<br/>if not n0_mab_porter"| p_porter
+  p_ask -->|"Are you here every night?<br/>if not n0_mab_saw"| p_saw
+  p_ask -->|"(Give her a coin.)<br/>if not n0_mab_alms"| p_alms
   p_porter -.-> p_topics
   p_saw -.-> p_topics
   p_alms -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_leave leave
 ```
 
@@ -794,30 +979,39 @@ flowchart TD
 *sets `n0_sent_to_inn`*
 
 - *A wooden clapper, knocking. A woman sits against the wall by the gate, her face wrapped to the eyes in grey cloth.*
-- **Mab** *wary*: No use knocking, brother. Stand off a little. Nobody will come.
-- **Mab** *wary*: Nobody keeps that gate at night. Not since old Brother Anselm went blind. They bar it at dusk, and that's that.
+- **Mab** *wary*: No use knocking, brother. Nobody will come. Nobody keeps that gate at night, not since old Brother Anselm went blind.
 - **Mab** *calm*: Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed.
 
 - → `topics`
 
 #### `again` (the next time)
 
-- **Mab** *calm*: Still here, brother? The Keys is just across. They'll have the fire lit.
+- → `done` if `n0_mab_porter`, `n0_mab_saw`, `n0_mab_alms`
+- → `again_ask`
+
+#### `again_ask`
+
+- **Mab** *wary*: You again, brother. The Keys hasn't moved.
 
 - → `topics`
 
 #### `topics`
 
+- → `done` if `n0_mab_porter`, `n0_mab_saw`, `n0_mab_alms`
+- → `ask`
+
+#### `ask`
+
 1. I'm to be their new porter. → `porter` · only if not `n0_mab_porter`
 2. Are you here every night? → `saw` · only if not `n0_mab_saw`
-3. (Give her alms.) → `alms` · only if not `n0_mab_alms`
+3. (Give her a coin.) → `alms` · only if not `n0_mab_alms`
 
 #### `porter`
 *sets `n0_mab_porter`*
 
-- **Mab** *wary*: Their porter.
 - *She looks at you a long while over the cloth.*
-- **Mab** *sad*: You're very young. Well. You'll be in there, and I'll be out here. We'll see a deal of each other.
+- **Mab** *wary*: Their porter. You're very young.
+- **Mab** *calm*: I'm Mab. You'll be in there, and I'll be out here. We'll see a deal of each other.
 
 - → `topics`
 
@@ -825,8 +1019,7 @@ flowchart TD
 *sets `n0_mab_saw`*
 
 - **Mab** *weary*: Every night God sends. Rain or frost, it's all one to me.
-- **Mab** *wary*: I see everyone who goes in at that gate, and everyone who comes out.
-- **Mab** *sad*: Nobody asks me. Who asks a leper anything?
+- **Mab** *wary*: I see everyone who goes in at that gate, and everyone who comes out. Nobody asks me. Who asks a leper anything?
 - **Mab** *grave*: But I'll tell you for nothing, brother. More go in than come out.
 
 - → `topics`
@@ -834,12 +1027,18 @@ flowchart TD
 #### `alms`
 *sets `n0_mab_alms`, gives `mab_bread`, **trust Mab +5***
 
-- *You drop a penny of your road money in the bowl at her feet.*
+- *You drop a penny in the bowl at her feet.*
 - **Mab** *warm*: God keep you, brother. Here. You'll want something for your supper.
 - *She sets a heel of bread on the step between you, wrapped in a cloth, and draws back.*
 - **Mab** *grave*: It's from a baker on Fenchurch Street. I don't eat what comes out of that gate.
 
 - → `topics`
+
+#### `done`
+
+- **Mab** *calm*: Go on across to the fire, brother. I'll be here. I'm always here.
+
+- → `end`
 
 #### `leave` (if he walks away)
 
@@ -854,7 +1053,8 @@ flowchart TD
 
 Moods through the talk: afraid → calm → afraid → sad → afraid
 
-> Margery, a neighbour, hurrying home with her basket before dark, night 0. Nervous; she won't stop long.
+> Margery, a neighbour from by Saint Andrew's, hurrying home with her basket before dark, night 0. Hurried, careful, frightened: she won't stop long, and she won't pass the abbey wall after dark.
+> One talk: she answers what's left until it's all asked, then hurries off (done). Blessing her is a goodbye, and she takes it as one.
 
 **Read elsewhere:** [`talked_n0_margery`](links.md#talked_n0_margery)
 
@@ -863,23 +1063,34 @@ Moods through the talk: afraid → calm → afraid → sad → afraid
 ```mermaid
 flowchart TD
   p_start["<b>start</b><br/>Margery: Can't stop, brother, I'm sorry. Not with the light go…"]
-  p_home["<b>home</b><br/>Margery: Home, by Saint Andrew's. The long way round."]
-  p_afraid["<b>afraid</b><br/>Margery: Afraid? I'm careful, that's all."]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Margery: You again, brother. Quickly, then."]
+  p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
+  p_home["<b>home</b><br/>Margery: Home, by Saint Andrew's. I'm Margery. I go the long w…<br/><i>sets n0_margery_home</i>"]
+  p_wall["<b>wall</b><br/>Margery: Afraid? I'm careful, that's all.<br/><i>sets n0_margery_wall</i>"]
   p_bless["<b>bless</b><br/>Margery: And you, brother. God keep you. You'll need keeping,…"]
-  p_again["<b>again</b><br/>Margery: Brother, I said I can't stop!"]
+  p_done["<b>done</b><br/>Margery: I must go, brother. God keep you."]
   p_leave["<b>leave</b><br/>Margery: God keep you!"]
   end_((end))
-  p_start -->|"Where are you hurrying to?"| p_home
-  p_start -->|"What are you afraid of?"| p_afraid
-  p_start -->|"Go with God, then."| p_bless
-  p_home -.-> end_
-  p_afraid -.-> end_
+  p_start -.-> p_topics
+  p_again -.->|"if n0_margery_home, n0_margery_wall"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_topics
+  p_topics -.->|"if n0_margery_home, n0_margery_wall"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"Where are you hurrying to?<br/>if not n0_margery_home"| p_home
+  p_ask -->|"What are you afraid of?<br/>if not n0_margery_wall"| p_wall
+  p_ask -->|"Go with God, then."| p_bless
+  p_home -.-> p_topics
+  p_wall -.-> p_topics
   p_bless -.-> end_
-  p_again -.-> end_
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_leave leave
 ```
 
@@ -888,26 +1099,48 @@ flowchart TD
 #### `start`
 
 - *A woman with a covered basket on her arm, walking fast, her eyes on the cobbles.*
-- **Margery** *afraid, blink*: Can't stop, brother, I'm sorry. Not with the light going.
+- **Margery** *afraid*: Can't stop, brother, I'm sorry. Not with the light going.
 
-1. Where are you hurrying to? → `home`
-2. What are you afraid of? → `afraid`
+- → `topics`
+
+#### `again` (the next time)
+
+- → `done` if `n0_margery_home`, `n0_margery_wall`
+- → `again_ask`
+
+#### `again_ask`
+
+- **Margery** *afraid*: You again, brother. Quickly, then.
+
+- → `topics`
+
+#### `topics`
+
+- → `done` if `n0_margery_home`, `n0_margery_wall`
+- → `ask`
+
+#### `ask`
+
+1. Where are you hurrying to? → `home` · only if not `n0_margery_home`
+2. What are you afraid of? → `wall` · only if not `n0_margery_wall`
 3. Go with God, then. → `bless` · **trust Margery +5**
 
 #### `home`
+*sets `n0_margery_home`*
 
-- **Margery** *afraid*: Home, by Saint Andrew's. The long way round.
-- **Margery** *afraid*: Two streets more, but it doesn't go past that wall.
+- **Margery** *afraid*: Home, by Saint Andrew's. I'm Margery. I go the long way round.
+- **Margery** *afraid*: Two streets more, but it doesn't pass that wall.
 
-- → `end`
+- → `topics`
 
-#### `afraid`
+#### `wall`
+*sets `n0_margery_wall`*
 
 - **Margery** *calm, swallow*: Afraid? I'm careful, that's all.
 - *Her eyes go to the abbey wall, and away.*
-- **Margery** *afraid*: I don't walk past that wall after dark. Not for anybody. No offence to your habit.
+- **Margery** *afraid*: Even the dogs cross the lane rather than go by it. I don't walk past it after dark. No offence to your habit.
 
-- → `end`
+- → `topics`
 
 #### `bless`
 
@@ -915,10 +1148,10 @@ flowchart TD
 
 - → `end`
 
-#### `again` (the next time)
+#### `done`
 
-- **Margery** *afraid*: Brother, I said I can't stop!
-- *She's already past you.*
+- *She hitches the basket higher on her arm.*
+- **Margery** *afraid*: I must go, brother. God keep you.
 
 - → `end`
 
@@ -933,10 +1166,11 @@ flowchart TD
 
 [`ralph.talk`](../../game/chapters/night0/dialogue/ralph.talk) · id `n0_ralph`
 
-Moods through the talk: warm → calm → wary → calm → wary → amused → warm → amused
+Moods through the talk: warm → calm → wary → calm → wary → amused → warm → calm → amused
 
-> Ralph the chandler at the Cross Keys, night 0. He makes the abbey's candles; his daughter Kit sells them.
-> The sacrist has bought far more candles since about Michaelmas, and pays in coin the abbey never used to have.
+> Ralph the chandler at the Cross Keys, night 0. He makes the abbey's candles; his daughter Kit sells them. A careful tradesman who notices numbers.
+> The sacrist has bought twice the wax since about Michaelmas, and pays in silver the abbey never used to have (n0_ralph_candles: night 2's Ranulf answers to it).
+> One talk: the questions left come up again until all are asked; then he goes back to his ale (done).
 
 **Read elsewhere:** [`n0_ralph_candles`](links.md#n0_ralph_candles)
 
@@ -945,25 +1179,34 @@ Moods through the talk: warm → calm → wary → calm → wary → amused → 
 ```mermaid
 flowchart TD
   p_start["<b>start</b><br/>Ralph: From the abbey, are you? Then you're my best customer…"]
-  p_again["<b>again</b><br/>Ralph: Brother. Tell your sacrist I've wax enough for whatev…"]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Ralph: Brother. Tell your sacrist I've wax enough for whatev…"]
   p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_candles["<b>candles</b><br/>Ralph: Ralph, chandler. Every candle in that church came out…<br/><i>sets n0_ralph_candles</i>"]
-  p_coin["<b>coin</b><br/>Ralph: In coin. Good silver, on the nail, and he doesn't hag…<br/><i>sets n0_ralph_coin</i>"]
+  p_coin["<b>coin</b><br/>Ralph: In silver. On the nail, and he doesn't haggle.<br/><i>sets n0_ralph_coin</i>"]
   p_trade["<b>trade</b><br/>Ralph: Wax for the altar, tallow for the rest. It's a living…<br/><i>sets n0_ralph_kit</i>"]
+  p_done["<b>done</b><br/>Ralph: That's all I know, brother, and more than a chandler…"]
   p_leave["<b>leave</b><br/>Ralph: Good night, brother. Pray for the price of wax."]
   end_((end))
   p_start -.-> p_topics
-  p_again -.-> p_topics
-  p_topics -->|"How do you mean?<br/>if not n0_ralph_candles"| p_candles
-  p_topics -->|"How does the sacrist pay you?<br/>if n0_ralph_candles, not n0_ralph_coin"| p_coin
-  p_topics -->|"How goes your trade?<br/>if not n0_ralph_kit"| p_trade
+  p_again -.->|"if n0_ralph_candles, n0_ralph_coin, n0_ral…"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_topics
+  p_topics -.->|"if n0_ralph_candles, n0_ralph_coin, n0_ral…"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"Your best customer, friend? How so?<br/>if not n0_ralph_candles"| p_candles
+  p_ask -->|"How does the sacrist pay you?<br/>if n0_ralph_candles, not n0_ralph_coin"| p_coin
+  p_ask -->|"How goes your trade?<br/>if not n0_ralph_kit"| p_trade
   p_candles -.-> p_topics
   p_coin -.-> p_topics
   p_trade -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_leave leave
 ```
 
@@ -978,13 +1221,23 @@ flowchart TD
 
 #### `again` (the next time)
 
+- → `done` if `n0_ralph_candles`, `n0_ralph_coin`, `n0_ralph_kit`
+- → `again_ask`
+
+#### `again_ask`
+
 - **Ralph** *warm*: Brother. Tell your sacrist I've wax enough for whatever he wants.
 
 - → `topics`
 
 #### `topics`
 
-1. How do you mean? → `candles` · only if not `n0_ralph_candles`
+- → `done` if `n0_ralph_candles`, `n0_ralph_coin`, `n0_ralph_kit`
+- → `ask`
+
+#### `ask`
+
+1. Your best customer, friend? How so? → `candles` · only if not `n0_ralph_candles`
 2. How does the sacrist pay you? → `coin` · only if `n0_ralph_candles`, not `n0_ralph_coin`
 3. How goes your trade? → `trade` · only if not `n0_ralph_kit`
 
@@ -992,15 +1245,15 @@ flowchart TD
 *sets `n0_ralph_candles`*
 
 - **Ralph** *calm*: Ralph, chandler. Every candle in that church came out of my shop.
-- **Ralph** *calm*: Your sacrist, Brother Ranulf, buys more than he ever did. Twice what he bought at Easter, and more again.
-- **Ralph** *wary*: Since about Michaelmas. I asked him once what they burn them all for. He didn't say.
+- **Ralph** *calm*: At Easter your sacrist, Brother Ranulf, bought a dozen pound of wax a month. Since Michaelmas, two dozen, and more.
+- **Ralph** *wary*: I asked him once what they burn it all for. He didn't say.
 
 - → `topics`
 
 #### `coin`
 *sets `n0_ralph_coin`*
 
-- **Ralph** *calm*: In coin. Good silver, on the nail, and he doesn't haggle.
+- **Ralph** *calm*: In silver. On the nail, and he doesn't haggle.
 - **Ralph** *wary*: That abbey hadn't two pennies to rub together. Everybody knew it. Now it's silver.
 - **Ralph** *wary, swallow*: I don't ask where a man of God gets his silver. I'm a chandler. I sell candles.
 
@@ -1013,6 +1266,12 @@ flowchart TD
 - **Ralph** *warm*: My girl Kit sells them in the lane. She's at your gate most dusks with her tray. Be kind to her.
 
 - → `topics`
+
+#### `done`
+
+- **Ralph** *calm*: That's all I know, brother, and more than a chandler ought to say. Good night to you.
+
+- → `end`
 
 #### `leave` (if he walks away)
 
@@ -1027,9 +1286,10 @@ flowchart TD
 
 Moods through the talk: cold → calm → cold → calm → wary → grave → calm → cold → calm → warm → calm → cold → calm
 
-> Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Hard and transactional.
+> Roger, bailiff of the ward, drinking at the Cross Keys, night 0. Officious, counting, cold: he has counted the porter before he sits down.
 > He wants word of any merchant, anyone with money, who goes in at the abbey gate (n0_roger_agreed if the porter says he'll send it). The ward would like the abbey's land.
 > Claims: n0_roger_count (hiding): why he wants the names. True as far as it goes; he leaves out the land. Pressed, he hints at it.
+> One talk: after he has asked his favour, the questions left come up again until all are asked; then he dismisses him (done). Not agreeing is allowed: the offer stays open and he walks away.
 
 ### Every path
 
@@ -1039,38 +1299,44 @@ flowchart TD
   p_porter["<b>porter</b><br/>Roger: The new porter. So they found one at last. I'm Roger,…"]
   p_who["<b>who</b><br/>Roger: Roger, bailiff of this ward. When I ask, people answe…"]
   p_silent["<b>silent</b><br/>Roger: A habit, a bundle, and a face that's never seen Londo…"]
-  p_ask["<b>ask</b><br/>Roger: Merchants come to that gate. Pilgrims with fat purses."]
+  p_favour["<b>favour</b><br/>Roger: Merchants come to that gate. Pilgrims with fat purses."]
   p_again["<b>again</b>"]
   p_again_agreed["<b>again_agreed</b><br/>Roger: A merchant, a name. You know where I drink."]
   p_again_plain["<b>again_plain</b><br/>Roger: Porter. Thought on what I asked?"]
-  p_choice["<b>choice</b>"]
+  p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_why{{"<b>why</b><br/>Roger: Because men with money go in there, and the ward neve…<br/><i>sets n0_roger_why</i><br/>⚖ claim: hiding"}}
   p_why_believed["<b>why_believed</b><br/>Roger: Then we understand each other. Names, porter. That's…"]
-  p_why_pressed["<b>why_pressed</b><br/>Roger: (He looks at you a while.) You're not as green as you…"]
+  p_why_pressed["<b>why_pressed</b><br/>Roger: You're not as green as your habit."]
   p_agreed["<b>agreed</b><br/>Roger: Good. A porter who keeps count is worth something to…"]
   p_land["<b>land</b><br/>Roger: The ward wants nothing. The ward is patient.<br/><i>sets n0_roger_land</i>"]
+  p_done["<b>done</b><br/>Roger: That's all I wanted, porter. One merchant, one name.…"]
   p_leave["<b>leave</b><br/>Roger: Think on it, porter. The ward remembers its friends."]
   end_((end))
-  p_start -->|"Brother Alric. The abbey's new porter."| p_porter
-  p_start -->|"Who's asking?"| p_who
+  p_start -->|"Brother Alric, the abbey's new porter."| p_porter
+  p_start -->|"Who's asking, friend?"| p_who
   p_start -->|"(Say nothing.)"| p_silent
-  p_porter -.-> p_ask
-  p_who -.-> p_ask
-  p_silent -.-> p_ask
-  p_ask -.-> p_choice
+  p_porter -.-> p_favour
+  p_who -.-> p_favour
+  p_silent -.-> p_favour
+  p_favour -.-> p_topics
+  p_again -.->|"if n0_roger_why, n0_roger_agreed, n0_roger…"| p_done
   p_again -.->|"if n0_roger_agreed"| p_again_agreed
   p_again -.-> p_again_plain
-  p_again_agreed -.-> p_choice
-  p_again_plain -.-> p_choice
-  p_choice -->|"Why do you want to know?<br/>if not n0_roger_why, not read_n0_roger_cou…"| p_why
-  p_choice -->|"I'll send you word.<br/>if not n0_roger_agreed"| p_agreed
-  p_choice -->|"What does the ward want with the abbe…<br/>if not n0_roger_land"| p_land
+  p_again_agreed -.-> p_topics
+  p_again_plain -.-> p_topics
+  p_topics -.->|"if n0_roger_why, n0_roger_agreed, n0_roger…"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"Why do you want to know?<br/>if not n0_roger_why, not read_n0_roger_cou…"| p_why
+  p_ask -->|"I'll send you word.<br/>if not n0_roger_agreed"| p_agreed
+  p_ask -->|"What does the ward want with the abbe…<br/>if not n0_roger_land"| p_land
   p_why -->|"[believe]<br/>Then we want the same thing, you and…"| p_why_believed
   p_why -->|"[press]<br/>A bailiff, keeping count of pilgrims…"| p_why_pressed
-  p_why_believed -.-> p_choice
-  p_why_pressed -.-> p_choice
-  p_agreed -.-> p_choice
-  p_land -.-> p_choice
+  p_why_believed -.-> p_topics
+  p_why_pressed -.-> p_topics
+  p_agreed -.-> p_topics
+  p_land -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
@@ -1079,49 +1345,50 @@ flowchart TD
   class p_again_plain again
   class p_why claim
   class p_leave leave
-  linkStyle 14 stroke:#a8433a,stroke-width:2px
-  linkStyle 15 stroke:#3f7d4c,stroke-width:2px
+  linkStyle 17 stroke:#a8433a,stroke-width:2px
+  linkStyle 18 stroke:#3f7d4c,stroke-width:2px
 ```
 
 <details><summary>Every line</summary>
 
 #### `start`
 
-- *A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you sat.*
+- *A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you came in.*
 - **Roger** *cold*: You came in on the carter's wagon, in a habit, with one bundle. Who are you?
 
-1. Brother Alric. The abbey's new porter. → `porter`
-2. Who's asking? → `who` · **trust Roger the bailiff -5**
+1. Brother Alric, the abbey's new porter. → `porter`
+2. Who's asking, friend? → `who` · **trust Roger the bailiff -5**
 3. (Say nothing.) → `silent`
 
 #### `porter`
 
 - **Roger** *calm*: The new porter. So they found one at last. I'm Roger, bailiff of this ward.
 
-- → `ask`
+- → `favour`
 
 #### `who`
 
 - **Roger** *cold*: Roger, bailiff of this ward. When I ask, people answer. You'll be their new porter.
 
-- → `ask`
+- → `favour`
 
 #### `silent`
 
 - **Roger** *calm*: A habit, a bundle, and a face that's never seen London. You're their new porter.
 - **Roger** *calm*: I'm Roger, bailiff of this ward. It's my business to know who comes into it.
 
-- → `ask`
+- → `favour`
 
-#### `ask`
+#### `favour`
 
 - **Roger** *calm*: Merchants come to that gate. Pilgrims with fat purses.
 - **Roger** *calm*: When one goes in, I'd like to hear of it. His name, and where he's from. That's all.
 
-- → `choice`
+- → `topics`
 
 #### `again` (the next time)
 
+- → `done` if `n0_roger_why`, `n0_roger_agreed`, `n0_roger_land`
 - → `again_agreed` if `n0_roger_agreed`
 - → `again_plain`
 
@@ -1129,15 +1396,20 @@ flowchart TD
 
 - **Roger** *calm*: A merchant, a name. You know where I drink.
 
-- → `choice`
+- → `topics`
 
 #### `again_plain`
 
 - **Roger** *wary*: Porter. Thought on what I asked?
 
-- → `choice`
+- → `topics`
 
-#### `choice`
+#### `topics`
+
+- → `done` if `n0_roger_why`, `n0_roger_agreed`, `n0_roger_land`
+- → `ask`
+
+#### `ask`
 
 1. Why do you want to know? → `why` · only if not `n0_roger_why`, not `read_n0_roger_count`
 2. I'll send you word. → `agreed` · only if not `n0_roger_agreed` · sets `n0_roger_agreed` · **trust Roger the bailiff +5**
@@ -1158,20 +1430,21 @@ flowchart TD
 
 - **Roger** *calm*: Then we understand each other. Names, porter. That's all I ask.
 
-- → `choice`
+- → `topics`
 
 #### `why_pressed`
 
-- **Roger** *cold*: (He looks at you a while.) You're not as green as your habit.
+- *He looks at you a while.*
+- **Roger** *cold*: You're not as green as your habit.
 - **Roger** *calm*: A house that loses its guests can lose other things. The ward keeps count of those as well.
 
-- → `choice`
+- → `topics`
 
 #### `agreed`
 
 - **Roger** *warm*: Good. A porter who keeps count is worth something to the ward. The ward pays its friends.
 
-- → `choice`
+- → `topics`
 
 #### `land`
 *sets `n0_roger_land`*
@@ -1180,7 +1453,13 @@ flowchart TD
 - **Roger** *cold*: That's good land behind your wall. Too good for an abbey that can't keep count of its own guests.
 - **Roger** *cold*: If your abbey ever falls on hard times, there are men on the ward who'd put it to better use. Remember who told you.
 
-- → `choice`
+- → `topics`
+
+#### `done`
+
+- **Roger** *cold*: That's all I wanted, porter. One merchant, one name. I'll know where to find you.
+
+- → `end`
 
 #### `leave` (if he walks away)
 
@@ -1193,13 +1472,13 @@ flowchart TD
 
 [`traveller.talk`](../../game/chapters/night0/dialogue/traveller.talk) · id `n0_traveller`
 
-Moods through the talk: afraid → sad → grave → afraid → grave → afraid → grave → afraid → grave → sad → grave → weary
+Moods through the talk: afraid → sad → grave → afraid → grave → afraid → grave → afraid → grave → sad → grave → sad
 
-> The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.tres is that talk) and turns to it.
-> Four pilgrims under sacking, found in the ditch by the white chapel: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.
+> The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.talk is that talk) and turns to it. It opens on him, not on a greeting: they have been talking all the way from the fields.
+> Four pilgrims under sacking, found in the ditch: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.
 > The ride reveals nothing of what or who is behind it: no demon, no men, no robbery. Only the dead, the count, the abbey, and a man too frightened to say what people say.
 > If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him.
-> What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.tres, after).
+> One talk: the questions left come up again until all are asked; then he watches the cart go and closes it (done). What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.talk, after).
 
 **Reads from elsewhere:** [`n0_road_porter`](links.md#n0_road_porter)
 **Read elsewhere:** [`n0_cart_say`](links.md#n0_cart_say), [`talked_n0_traveller`](links.md#talked_n0_traveller)
@@ -1210,23 +1489,24 @@ Moods through the talk: afraid → sad → grave → afraid → grave → afraid
 flowchart TD
   p_start["<b>start</b><br/>Traveller: Whoa. Look at that."]
   p_who["<b>who</b><br/>Traveller: Pilgrims, by the badges on their hats. Nobody knows t…<br/><i>sets n0_cart_who</i>"]
-  p_what["<b>what</b><br/>Traveller: Found in the ditch by the white chapel, the carter sa…<br/><i>sets n0_cart_what</i>"]
+  p_what["<b>what</b><br/>Traveller: Found in the ditch, the carter says. All four togethe…<br/><i>sets n0_cart_what</i>"]
   p_pray["<b>pray</b><br/>Traveller: Say one for yourself while you're at it.<br/><i>sets n0_cart_pray</i>"]
   p_count["<b>count</b>"]
-  p_count_porter["<b>count_porter</b><br/>Traveller: That makes seven this month, on this road alone. And…"]
+  p_count_porter["<b>count_porter</b><br/>Traveller: That makes seven this month, on this road alone. Ever…"]
   p_count_plain["<b>count_plain</b><br/>Traveller: That makes seven this month, on this road alone. The…"]
   p_rumour["<b>rumour</b>"]
   p_rumour_ask["<b>rumour_ask</b>"]
   p_abbey["<b>abbey</b><br/>Traveller: They go in at that gate to see the saint. Nobody sees…<br/><i>sets n0_cart_abbey</i>"]
-  p_say["<b>say</b><br/>Traveller: (He opens his mouth, and shuts it again.) People say…<br/><i>sets n0_cart_say</i>"]
+  p_say["<b>say</b><br/>Traveller: People say a good many things, brother. None of them…<br/><i>sets n0_cart_say</i>"]
   p_see["<b>see</b><br/>Traveller: You will, brother. That's what worries me.<br/><i>sets n0_cart_see</i>"]
-  p_rumour_done["<b>rumour_done</b><br/>Traveller: Pray they keep you better than they kept those, broth…"]
-  p_again["<b>again</b><br/>Traveller: Nearly at the wall. Keep your hood up, brother."]
-  p_leave["<b>leave</b><br/>Traveller: Suit yourself. You'll see soon enough."]
+  p_done["<b>done</b><br/>Traveller: God keep you better than He kept those, brother."]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Traveller: I can still see that cart, brother. Ask, if you want…"]
+  p_leave["<b>leave</b><br/>Traveller: Look away, then. I wish I could."]
   end_((end))
   p_start -->|"God rest them. Who were they?"| p_who
   p_start -->|"What happened to them?"| p_what
-  p_start -->|"(Cross yourself, and pray for them.)"| p_pray
+  p_start -->|"(Cross yourself.)"| p_pray
   p_who -.-> p_count
   p_what -.-> p_count
   p_pray -.-> p_count
@@ -1234,7 +1514,7 @@ flowchart TD
   p_count -.-> p_count_plain
   p_count_porter -.-> p_rumour
   p_count_plain -.-> p_rumour
-  p_rumour -.->|"if n0_cart_abbey, n0_cart_say, n0_cart_see"| p_rumour_done
+  p_rumour -.->|"if n0_cart_abbey, n0_cart_say, n0_cart_see"| p_done
   p_rumour -.-> p_rumour_ask
   p_rumour_ask -->|"Why lay it at the abbey's door?<br/>if not n0_cart_abbey"| p_abbey
   p_rumour_ask -->|"What do people say?<br/>if not n0_cart_say"| p_say
@@ -1242,12 +1522,15 @@ flowchart TD
   p_abbey -.-> p_rumour
   p_say -.-> p_rumour
   p_see -.-> p_rumour
-  p_rumour_done -.-> end_
-  p_again -.-> end_
+  p_done -.-> end_
+  p_again -.->|"if n0_cart_abbey, n0_cart_say, n0_cart_see"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_rumour_ask
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_leave leave
 ```
 
@@ -1261,12 +1544,12 @@ flowchart TD
 
 1. God rest them. Who were they? → `who`
 2. What happened to them? → `what`
-3. (Cross yourself, and pray for them.) → `pray`
+3. (Cross yourself.) → `pray`
 
 #### `who`
 *sets `n0_cart_who`*
 
-- **Traveller** *sad*: Pilgrims, by the badges on their hats. Nobody knows them. Nobody ever knows them.
+- **Traveller** *sad*: Pilgrims, by the badges on their hats. Nobody knows them. Nobody ever does.
 - **Traveller** *sad*: Men from the shires who saved a year to see a saint, and nobody here to ask after them.
 
 - → `count`
@@ -1274,15 +1557,15 @@ flowchart TD
 #### `what`
 *sets `n0_cart_what`*
 
-- **Traveller** *grave*: Found in the ditch by the white chapel, the carter says. Laid out side by side, neat as you like.
-- **Traveller** *afraid, blink*: Not a mark on them. Not one. As if they'd lain down there to sleep.
+- **Traveller** *grave*: Found in the ditch, the carter says. All four together, in the one ditch.
+- **Traveller** *afraid, blink*: Not a mark on them. As if they'd lain down there to sleep.
 
 - → `count`
 
 #### `pray`
 *sets `n0_cart_pray`*
 
-- *You say the words for the dead under your breath. The traveller watches you do it, and his lips move with yours.*
+- *You say the words for the dead under your breath. The traveller's lips move with yours.*
 - **Traveller** *grave*: Say one for yourself while you're at it.
 
 - → `count`
@@ -1294,7 +1577,7 @@ flowchart TD
 
 #### `count_porter`
 
-- **Traveller** *grave*: That makes seven this month, on this road alone. And every one of them bound for your abbey, to see the saint.
+- **Traveller** *grave*: That makes seven this month, on this road alone. Every one of them bound for your abbey, to see the saint.
 
 - → `rumour`
 
@@ -1307,7 +1590,7 @@ flowchart TD
 
 #### `rumour`
 
-- → `rumour_done` if `n0_cart_abbey`, `n0_cart_say`, `n0_cart_see`
+- → `done` if `n0_cart_abbey`, `n0_cart_say`, `n0_cart_see`
 - → `rumour_ask`
 
 #### `rumour_ask`
@@ -1321,15 +1604,17 @@ flowchart TD
 
 - **Traveller** *afraid*: They go in at that gate to see the saint. Nobody sees them come out.
 - **Traveller** *grave*: Then a week on, a month on, they turn up in a ditch outside the walls. Like those.
-- **Traveller** *afraid, swallow*: (He crosses himself.) I don't say how. I don't know how. Nobody does.
+- *He crosses himself.*
+- **Traveller** *afraid, swallow*: I don't say how. I don't know how. Nobody does.
 
 - → `rumour`
 
 #### `say`
 *sets `n0_cart_say`*
 
-- **Traveller** *afraid, blink*: (He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight.
-- **Traveller** *afraid*: You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you.
+- *He opens his mouth, and shuts it again.*
+- **Traveller** *afraid, blink*: People say a good many things, brother. None of them in daylight.
+- **Traveller** *afraid*: You'll hear it all at the Keys tonight. I'd rather not be the one who told you.
 
 - → `rumour`
 
@@ -1340,22 +1625,27 @@ flowchart TD
 
 - → `rumour`
 
-#### `rumour_done`
+#### `done`
 
 - *The cart's lantern goes small down the road behind you. The traveller doesn't take his eyes off it.*
-- **Traveller** *sad*: Pray they keep you better than they kept those, brother.
+- **Traveller** *sad*: God keep you better than He kept those, brother.
 
 - → `end`
 
 #### `again` (the next time)
 
-- **Traveller** *grave*: Nearly at the wall. Keep your hood up, brother.
+- → `done` if `n0_cart_abbey`, `n0_cart_say`, `n0_cart_see`
+- → `again_ask`
 
-- → `end`
+#### `again_ask`
+
+- **Traveller** *grave*: I can still see that cart, brother. Ask, if you want to.
+
+- → `rumour_ask`
 
 #### `leave` (if he walks away)
 
-- **Traveller** *weary*: Suit yourself. You'll see soon enough.
+- **Traveller** *sad*: Look away, then. I wish I could.
 
 </details>
 
@@ -1364,13 +1654,13 @@ flowchart TD
 
 [`traveller_road.talk`](../../game/chapters/night0/dialogue/traveller_road.talk) · id `n0_traveller_road`
 
-Moods through the talk: warm → amused → weary → wary → grave → amused → warm → grave → amused → grave → amused → weary → amused → grave → warm → sad → grave → afraid → calm → afraid → warm → amused → warm → weary → sad → wary → afraid → weary → calm → afraid → calm → amused → afraid → weary
+Moods through the talk: warm → amused → wary → grave → amused → warm → grave → amused → grave → amused → weary → amused → grave → warm → sad → grave → afraid → calm → afraid → warm → amused → warm → weary → sad → wary → afraid → weary → calm → afraid → calm → amused → afraid → weary
 
-> The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry, warm, more frightened than he lets on.
+> The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry and warm, and more frightened than he lets on.
 > He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
-> One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.
-> Before the cart he only hints at the abbey: road talk, men who don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.tres says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.
-> After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, whether he's been inside, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden.
+> One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all; then he closes it himself (spent, after_spent).
+> Before the cart he only hints: road talk, men who set out for London and don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.talk says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.
+> After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden.
 
 **Reads from elsewhere:** [`n0_past_aldgate`](links.md#n0_past_aldgate), [`talked_n0_traveller`](links.md#talked_n0_traveller)
 **Read elsewhere:** [`n0_cart_say`](links.md#n0_cart_say), [`n0_road_porter`](links.md#n0_road_porter)
@@ -1380,73 +1670,76 @@ Moods through the talk: warm → amused → weary → wary → grave → amused 
 ```mermaid
 flowchart TD
   p_start["<b>start</b>"]
+  p_meet["<b>meet</b><br/><i>The man on the seat beside you, a merchant by his goo…</i>"]
   p_hello["<b>hello</b><br/>Traveller: Evening, brother. Bound for the city, are you?"]
-  p_quiet["<b>quiet</b><br/>Traveller: Not one for talk. (He blows into his hands.) Then I'l…<br/><i>sets n0_road_quiet</i>"]
-  p_porter["<b>porter</b><br/>Traveller: The porter? At the abbey in the lane, by the Cross Ke…<br/><i>sets n0_road_porter</i>"]
-  p_young["<b>young</b><br/>Traveller: Nineteen. (He laughs, not unkindly.) At nineteen I wa…<br/><i>sets n0_road_young</i>"]
-  p_blind["<b>blind</b><br/>Traveller: Blind, was he. (He's quiet a moment.) Years on a gate…<br/><i>sets n0_road_blind</i>"]
-  p_sent["<b>sent</b><br/>Traveller: Obedience. My father wanted that of me, and I gave hi…<br/><i>sets n0_road_sent</i>"]
+  p_quiet["<b>quiet</b><br/>Traveller: Not one for talk. Then I'll talk for both of us. It k…<br/><i>sets n0_road_quiet</i>"]
+  p_porter["<b>porter</b><br/>Traveller: The porter? At the abbey in the lane, across from the…<br/><i>sets n0_road_porter</i>"]
+  p_young["<b>young</b><br/>Traveller: Nineteen. At nineteen I was sure I'd be rich by thirt…<br/><i>sets n0_road_young</i>"]
+  p_blind["<b>blind</b><br/>Traveller: Years on a gate, watching who comes in after dark. Ma…<br/><i>sets n0_road_blind</i>"]
+  p_sent["<b>sent</b><br/>Traveller: Obedience. My father wanted that of me, and got a woo…<br/><i>sets n0_road_sent</i>"]
   p_holy["<b>holy</b><br/>Traveller: A saint. Yes. Everyone on this road has heard of the…"]
-  p_unknown["<b>unknown</b><br/>Traveller: Then that's two of you. Three, with me."]
-  p_trade["<b>trade</b><br/>Traveller: Cheapside, with wool. I buy it cheap in Colchester an…<br/><i>sets n0_road_trade</i>"]
-  p_living["<b>living</b><br/>Traveller: Good enough to complain about. (He pats the bale unde…<br/><i>sets n0_road_living</i>"]
+  p_unknown["<b>unknown</b><br/>Traveller: Then that's two of you who don't. Three, with me."]
+  p_trade["<b>trade</b><br/>Traveller: Cheapside, with wool. Three days from Colchester, and…<br/><i>sets n0_road_trade</i>"]
+  p_living["<b>living</b><br/>Traveller: Good enough to grumble about. Those are a winter's br…<br/><i>sets n0_road_living</i>"]
   p_family["<b>family</b><br/>Traveller: A wife, and two girls who think London's paved with r…<br/><i>sets n0_road_family</i>"]
-  p_stories["<b>stories</b><br/>Traveller: Road talk. Men who set out for London and don't come…<br/><i>sets n0_road_stories</i>"]
+  p_stories["<b>stories</b><br/>Traveller: Road talk. Men set out for London and don't come home…<br/><i>sets n0_road_stories</i>"]
   p_carter["<b>carter</b><br/>Traveller: They shut the city gates at the curfew bell. Be on th…<br/><i>sets n0_road_carter</i>"]
   p_name["<b>name</b><br/>Traveller: Will Fuller. Will, to anyone who's shared a wet cart…<br/><i>sets n0_road_name</i>"]
-  p_alric["<b>alric</b><br/>Traveller: Alric. (He tries it.) Well, Brother Alric. I'll pray…<br/><i>sets n0_road_alric</i>"]
+  p_alric["<b>alric</b><br/>Traveller: Alric. Well, Brother Alric. I'll pray for you, if you…<br/><i>sets n0_road_alric</i>"]
   p_topics["<b>topics</b>"]
   p_topics_early["<b>topics_early</b>"]
   p_topics_late["<b>topics_late</b>"]
   p_again["<b>again</b>"]
-  p_still["<b>still</b><br/>Traveller: Brother? (He shifts on the sacks.) Go on, ask. It sho…"]
-  p_spent["<b>spent</b><br/>Traveller: (He pulls his hood closer.) Save your breath, brother…"]
-  p_after["<b>after</b><br/>Traveller: Still thinking of that cart, brother? So am I."]
-  p_after_gate["<b>after_gate</b><br/>Traveller: (He watches the gate's light go small behind you.) He…"]
+  p_still["<b>still</b><br/>Traveller: Go on, brother, ask. It shortens the road."]
+  p_spent["<b>spent</b><br/>Traveller: Save your breath, brother. It's a cold way to Aldgate…"]
+  p_after["<b>after</b>"]
+  p_after_cart["<b>after_cart</b><br/>Traveller: Still thinking of that cart, brother? So am I."]
+  p_after_gate["<b>after_gate</b><br/>Traveller: He took his time over you, that warden. Most nights t…"]
   p_after_topics["<b>after_topics</b>"]
   p_after_ask["<b>after_ask</b>"]
   p_think["<b>think</b><br/>Traveller: I think men go in at that gate to pray, and nobody se…<br/><i>sets n0_road_think</i>"]
-  p_defend["<b>defend</b><br/>Traveller: I'm talking about a wall I can't see over. (He shrugs…<br/><i>sets n0_road_defend</i>"]
+  p_defend["<b>defend</b><br/>Traveller: I'm speaking of a wall I can't see over. You'll be ov…<br/><i>sets n0_road_defend</i>"]
   p_inside["<b>inside</b><br/>Traveller: Once, at Lent, to see the saint. A finger in a glass…<br/><i>sets n0_road_inside</i>"]
-  p_say["<b>say</b><br/>Traveller: (He opens his mouth, and shuts it again.) People say…<br/><i>sets n0_cart_say</i>"]
-  p_ask["<b>ask</b><br/>Traveller: The inn across the lane from the abbey gate. The Cros…<br/><i>sets n0_road_ask</i>"]
-  p_after_spent["<b>after_spent</b><br/>Traveller: I've said more than I meant to, brother. (He tries a…"]
+  p_say["<b>say</b><br/>Traveller: People say a good many things, brother. None of them…<br/><i>sets n0_cart_say</i>"]
+  p_ask["<b>ask</b><br/>Traveller: The Cross Keys, across the lane from your gate. Buy t…<br/><i>sets n0_road_ask</i>"]
+  p_after_spent["<b>after_spent</b><br/>Traveller: I've said more than I meant to, brother. It's the col…"]
   p_leave["<b>leave</b><br/>Traveller: Suit yourself, brother."]
   end_((end))
   p_start -.->|"if talked_n0_traveller"| p_after
-  p_start -.-> p_hello
+  p_start -.-> p_meet
+  p_meet -.-> p_hello
   p_hello -->|"I'm to be porter at an abbey inside A…"| p_porter
-  p_hello -->|"Where are you bound yourself?"| p_trade
-  p_hello -->|"(Nod, and say nothing.)"| p_quiet
-  p_quiet -.-> p_topics
+  p_hello -->|"Where are you bound yourself, friend?"| p_trade
+  p_hello -->|"(Nod.)"| p_quiet
+  p_quiet -.-> p_trade
   p_porter -->|"I'm nineteen. Old enough."| p_young
-  p_porter -->|"The old porter went blind. They neede…"| p_blind
+  p_porter -->|"The old porter went blind."| p_blind
   p_porter -->|"I go where my abbot sends me."| p_sent
   p_young -.-> p_topics
   p_blind -.-> p_topics
-  p_sent -->|"He says it's a holy house. It has a s…"| p_holy
+  p_sent -->|"He says it's a holy house, with a sai…"| p_holy
   p_sent -->|"I don't think he knows it at all."| p_unknown
   p_holy -.-> p_topics
   p_unknown -.-> p_topics
-  p_trade -->|"Is it a good living?"| p_living
   p_trade -->|"Have you family at home?"| p_family
-  p_trade -->|"(Let him grumble.)"| p_topics
+  p_trade -->|"Is it a good living?"| p_living
+  p_trade -->|"(Nod.)"| p_topics
   p_living -.-> p_topics
   p_family -->|"What stories?"| p_stories
   p_family -->|"(Nod.)"| p_topics
   p_stories -.-> p_topics
   p_carter -.-> p_topics
-  p_name -->|"Alric."| p_alric
-  p_name -->|"(Smile, and leave it.)"| p_topics
+  p_name -->|"I'm Alric."| p_alric
+  p_name -->|"(Smile.)"| p_topics
   p_alric -.-> p_topics
   p_topics -.->|"if n0_road_porter, n0_road_trade, n0_road_…"| p_spent
   p_topics -.->|"if n0_road_porter, n0_road_trade"| p_topics_late
   p_topics -.-> p_topics_early
   p_topics_early -->|"I'm to be porter at an abbey inside A…<br/>if not n0_road_porter"| p_porter
-  p_topics_early -->|"Where are you bound yourself?<br/>if not n0_road_trade"| p_trade
-  p_topics_early -->|"Is the carter always in such a hurry?<br/>if not n0_road_carter"| p_carter
-  p_topics_late -->|"I never asked your name.<br/>if not n0_road_name"| p_name
-  p_topics_late -->|"Is the carter always in such a hurry?<br/>if not n0_road_carter"| p_carter
+  p_topics_early -->|"Where are you bound yourself, friend?<br/>if not n0_road_trade"| p_trade
+  p_topics_early -->|"Why is the carter in such a hurry?<br/>if not n0_road_carter"| p_carter
+  p_topics_late -->|"I never asked your name, friend.<br/>if not n0_road_name"| p_name
+  p_topics_late -->|"Why is the carter in such a hurry?<br/>if not n0_road_carter"| p_carter
   p_topics_late -->|"What's different about this year?<br/>if not n0_road_stories"| p_stories
   p_again -.->|"if talked_n0_traveller"| p_after
   p_again -.->|"if n0_road_porter, n0_road_trade, n0_road_…"| p_spent
@@ -1454,14 +1747,15 @@ flowchart TD
   p_still -.-> p_topics
   p_spent -.-> end_
   p_after -.->|"if n0_past_aldgate"| p_after_gate
-  p_after -.-> p_after_topics
+  p_after -.-> p_after_cart
+  p_after_cart -.-> p_after_topics
   p_after_gate -.-> p_after_topics
   p_after_topics -.->|"if n0_road_think, n0_cart_say, n0_road_ask"| p_after_spent
   p_after_topics -.-> p_after_ask
   p_after_ask -->|"What do you think goes on in that abb…<br/>if not n0_road_think"| p_think
   p_after_ask -->|"What do people say about it?<br/>if not n0_cart_say"| p_say
   p_after_ask -->|"Who would know more?<br/>if not n0_road_ask"| p_ask
-  p_think -->|"Those are my brothers you're talking…"| p_defend
+  p_think -->|"Those are my brothers you speak of."| p_defend
   p_think -->|"Have you been inside?"| p_inside
   p_think -->|"(Say nothing.)"| p_after_topics
   p_defend -.-> p_after_topics
@@ -1481,6 +1775,12 @@ flowchart TD
 #### `start`
 
 - → `after` if `talked_n0_traveller`
+- → `meet`
+
+#### `meet`
+
+- *The man on the seat beside you, a merchant by his good wet cloak, has watched the road go by in silence. Now he turns to you.*
+
 - → `hello`
 
 #### `hello`
@@ -1488,32 +1788,31 @@ flowchart TD
 - **Traveller** *warm*: Evening, brother. Bound for the city, are you?
 
 1. I'm to be porter at an abbey inside Aldgate. → `porter`
-2. Where are you bound yourself? → `trade`
-3. (Nod, and say nothing.) → `quiet`
+2. Where are you bound yourself, friend? → `trade`
+3. (Nod.) → `quiet`
 
 #### `quiet`
 *sets `n0_road_quiet`*
 
-- **Traveller** *amused*: Not one for talk. (He blows into his hands.) Then I'll talk for both of us. It keeps the cold out.
-- **Traveller** *weary*: Wool, for Cheapside. Twelve days on the road from Colchester, and every one of them wet.
+- **Traveller** *amused*: Not one for talk. Then I'll talk for both of us. It keeps the cold out.
 
-- → `topics`
+- → `trade`
 
 #### `porter`
 *sets `n0_road_porter`*
 
-- **Traveller** *wary, blink*: The porter? At the abbey in the lane, by the Cross Keys?
-- **Traveller** *grave*: (He looks at you a moment longer than he needs to.) Well. Somebody has to keep the gate.
-- **Traveller** *grave*: You look young for it. They give that work to old men, mostly. Men with nothing left to want.
+- **Traveller** *wary, blink*: The porter? At the abbey in the lane, across from the Cross Keys?
+- *He looks at you a moment longer than he needs to.*
+- **Traveller** *grave*: Well. Somebody has to keep the gate. You look young for it, though.
 
 1. I'm nineteen. Old enough. → `young`
-2. The old porter went blind. They needed someone. → `blind`
+2. The old porter went blind. → `blind`
 3. I go where my abbot sends me. → `sent`
 
 #### `young`
 *sets `n0_road_young`*
 
-- **Traveller** *amused*: Nineteen. (He laughs, not unkindly.) At nineteen I was sure I'd be rich by thirty.
+- **Traveller** *amused*: Nineteen. At nineteen I was sure I'd be rich by thirty.
 - **Traveller** *warm*: I'm forty-one, and sat in the back of a cart in the rain. Keep your vows, brother. They're cheaper than wool.
 
 - → `topics`
@@ -1521,47 +1820,48 @@ flowchart TD
 #### `blind`
 *sets `n0_road_blind`*
 
-- **Traveller** *grave*: Blind, was he. (He's quiet a moment.) Years on a gate, watching who comes in after dark.
-- **Traveller** *grave, swallow*: I'd not want to know what a man sees, all those years. Maybe the eyes just give up.
+- *He's quiet a moment.*
+- **Traveller** *grave, swallow*: Years on a gate, watching who comes in after dark. Maybe the eyes just give up.
 
 - → `topics`
 
 #### `sent`
 *sets `n0_road_sent`*
 
-- **Traveller** *amused*: Obedience. My father wanted that of me, and I gave him a wool trade instead.
-- **Traveller** *grave*: Your abbot, now. Does he know the house he's sending you to?
+- **Traveller** *amused*: Obedience. My father wanted that of me, and got a wool trade instead.
+- **Traveller** *grave*: Does your abbot know the house he's sending you to?
 
-1. He says it's a holy house. It has a saint. → `holy`
+1. He says it's a holy house, with a saint. → `holy`
 2. I don't think he knows it at all. → `unknown`
 
 #### `holy`
 
 - **Traveller** *grave*: A saint. Yes. Everyone on this road has heard of the saint.
-- *He says it the way a man says the name of a dog that bit him.*
+- *He says it the way a man names a dog that once bit him.*
 
 - → `topics`
 
 #### `unknown`
 
-- **Traveller** *amused*: Then that's two of you. Three, with me.
+- **Traveller** *amused*: Then that's two of you who don't. Three, with me.
 
 - → `topics`
 
 #### `trade`
 *sets `n0_road_trade`*
 
-- **Traveller** *amused*: Cheapside, with wool. I buy it cheap in Colchester and sell it dear in London.
-- **Traveller** *weary*: Every toll on the road robs me in between. The bridges, the gates, the bishop's men. A sack's half sold before it's sold.
+- **Traveller** *amused*: Cheapside, with wool. Three days from Colchester, and every one of them wet.
+- **Traveller** *weary*: Every toll on the road robs me. The bridges, the gates, the bishop's men. A sack's half spent before it's sold.
 
-1. Is it a good living? → `living`
-2. Have you family at home? → `family`
-3. (Let him grumble.) → `topics`
+1. Have you family at home? → `family`
+2. Is it a good living? → `living`
+3. (Nod.) → `topics`
 
 #### `living`
 *sets `n0_road_living`*
 
-- **Traveller** *amused*: Good enough to complain about. (He pats the bale under him.) This is a winter's bread for my house.
+- *He nods at the sacks behind you.*
+- **Traveller** *amused*: Good enough to grumble about. Those are a winter's bread for my house.
 - **Traveller** *grave*: Which is why I'll sleep inside the walls tonight, and not in some ditch.
 
 - → `topics`
@@ -1570,7 +1870,8 @@ flowchart TD
 *sets `n0_road_family`*
 
 - **Traveller** *warm*: A wife, and two girls who think London's paved with ribbon. I'm to bring them some.
-- **Traveller** *sad*: (His face goes quiet.) My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories too.
+- *His face goes quiet.*
+- **Traveller** *sad*: My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories.
 
 1. What stories? → `stories`
 2. (Nod.) → `topics`
@@ -1578,8 +1879,9 @@ flowchart TD
 #### `stories`
 *sets `n0_road_stories`*
 
-- **Traveller** *grave*: Road talk. Men who set out for London and don't come home. There are always some.
-- **Traveller** *afraid, glance*: (He glances at the carter's back.) More, this year. Ask him why he whips his horse when the light goes.
+- **Traveller** *grave*: Road talk. Men set out for London and don't come home. There are always a few.
+- *He glances at the carter's back.*
+- **Traveller** *afraid, glance*: More, this year. Ask him why he whips his horse when the light goes.
 
 - → `topics`
 
@@ -1595,15 +1897,15 @@ flowchart TD
 *sets `n0_road_name`*
 
 - **Traveller** *warm*: Will Fuller. Will, to anyone who's shared a wet cart with me.
-- **Traveller** *amused*: And you're brother something, and you'll tell me if you like. I'll not press a monk.
+- **Traveller** *amused*: And you're Brother Something, and you'll tell me if you like. I'll not press a monk.
 
-1. Alric. → `alric`
-2. (Smile, and leave it.) → `topics`
+1. I'm Alric. → `alric`
+2. (Smile.) → `topics`
 
 #### `alric`
 *sets `n0_road_alric`*
 
-- **Traveller** *warm*: Alric. (He tries it.) Well, Brother Alric. I'll pray for you, if you'll pray for my wool.
+- **Traveller** *warm*: Alric. Well, Brother Alric. I'll pray for you, if you'll pray for my wool.
 
 - → `topics`
 
@@ -1616,13 +1918,13 @@ flowchart TD
 #### `topics_early`
 
 1. I'm to be porter at an abbey inside Aldgate. → `porter` · only if not `n0_road_porter`
-2. Where are you bound yourself? → `trade` · only if not `n0_road_trade`
-3. Is the carter always in such a hurry? → `carter` · only if not `n0_road_carter`
+2. Where are you bound yourself, friend? → `trade` · only if not `n0_road_trade`
+3. Why is the carter in such a hurry? → `carter` · only if not `n0_road_carter`
 
 #### `topics_late`
 
-1. I never asked your name. → `name` · only if not `n0_road_name`
-2. Is the carter always in such a hurry? → `carter` · only if not `n0_road_carter`
+1. I never asked your name, friend. → `name` · only if not `n0_road_name`
+2. Why is the carter in such a hurry? → `carter` · only if not `n0_road_carter`
 3. What's different about this year? → `stories` · only if not `n0_road_stories`
 
 #### `again` (the next time)
@@ -1633,26 +1935,32 @@ flowchart TD
 
 #### `still`
 
-- **Traveller** *warm*: Brother? (He shifts on the sacks.) Go on, ask. It shortens the road.
+- *He shifts on his seat.*
+- **Traveller** *warm*: Go on, brother, ask. It shortens the road.
 
 - → `topics`
 
 #### `spent`
 
-- **Traveller** *weary*: (He pulls his hood closer.) Save your breath, brother. It's a cold way to Aldgate yet.
+- *He pulls his hood closer.*
+- **Traveller** *weary*: Save your breath, brother. It's a cold way to Aldgate yet.
 
 - → `end`
 
 #### `after`
 
+- → `after_gate` if `n0_past_aldgate`
+- → `after_cart`
+
+#### `after_cart`
+
 - **Traveller** *sad*: Still thinking of that cart, brother? So am I.
 
-- → `after_gate` if `n0_past_aldgate`
 - → `after_topics`
 
 #### `after_gate`
 
-- **Traveller** *wary*: (He watches the gate's light go small behind you.) He took his time over you, that warden. Most nights they wave a monk through.
+- **Traveller** *wary*: He took his time over you, that warden. Most nights they wave a monk through.
 
 - → `after_topics`
 
@@ -1671,46 +1979,48 @@ flowchart TD
 *sets `n0_road_think`*
 
 - **Traveller** *afraid*: I think men go in at that gate to pray, and nobody sees them come out.
-- **Traveller** *afraid, swallow*: That's all I know, and it's more than I want to. I'd call it a reason to keep walking.
+- **Traveller** *afraid, swallow*: That's all I know, and it's more than I want to.
 
-1. Those are my brothers you're talking about. → `defend`
+1. Those are my brothers you speak of. → `defend`
 2. Have you been inside? → `inside`
 3. (Say nothing.) → `after_topics`
 
 #### `defend`
 *sets `n0_road_defend`*
 
-- **Traveller** *weary*: I'm talking about a wall I can't see over. (He shrugs.) You'll be over it tomorrow. Then you tell me.
+- **Traveller** *weary*: I'm speaking of a wall I can't see over. You'll be over it tomorrow. Then you tell me.
 
 - → `after_topics`
 
 #### `inside`
 *sets `n0_road_inside`*
 
-- **Traveller** *calm*: Once, at Lent, to see the saint. A finger in a glass box, and more candles than I've seen in my life.
-- **Traveller** *afraid*: And cold. Cold in there like the bottom of a well. I said my prayer and I didn't stay.
+- **Traveller** *calm*: Once, at Lent, to see the saint. A finger in a glass box, and more candles than I'd seen in my life.
+- **Traveller** *afraid*: And cold in there, like the bottom of a well. I said my prayer and I didn't stay.
 
 - → `after_topics`
 
 #### `say`
 *sets `n0_cart_say`*
 
-- **Traveller** *afraid, blink*: (He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight.
-- **Traveller** *afraid*: You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you.
+- *He opens his mouth, and shuts it again.*
+- **Traveller** *afraid, blink*: People say a good many things, brother. None of them in daylight.
+- **Traveller** *afraid*: You'll hear it all at the Keys tonight. I'd rather not be the one who told you.
 
 - → `after_topics`
 
 #### `ask`
 *sets `n0_road_ask`*
 
-- **Traveller** *calm*: The inn across the lane from the abbey gate. The Cross Keys.
-- **Traveller** *amused*: Buy the landlord an ale and he'll talk till the candle's out. His wife hears more, and says less.
+- **Traveller** *calm*: The Cross Keys, across the lane from your gate. Buy the landlord an ale and he'll talk till the candle's out.
+- **Traveller** *amused*: His wife hears more, and says less.
 
 - → `after_topics`
 
 #### `after_spent`
 
-- **Traveller** *afraid*: I've said more than I meant to, brother. (He tries a smile.) It's the cold. It loosens a man.
+- *He tries a smile.*
+- **Traveller** *afraid*: I've said more than I meant to, brother. It's the cold. It loosens a man.
 
 - → `end`
 
@@ -1725,38 +2035,44 @@ flowchart TD
 
 [`walter.talk`](../../game/chapters/night0/dialogue/walter.talk) · id `n0_walter` · baseline *amused*, habit *brow*
 
-Moods through the talk: amused → warm → amused → glad → calm → amused → glad
+Moods through the talk: amused → warm → amused → warm → amused → glad → calm → amused → glad
 
-> Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box.
+> Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box. A salesman: flattering, never still, and he calls himself Walter. His baseline is amused, with a flick of the brow; his tell is that he stops selling.
 > He knows the abbey's gate well and won't say why. (He supplies the henbane. Nothing here says so.)
-> Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he says herbs for the brothers, no more.
+> Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he stops selling for a moment and says herbs for the brothers, no more. Believed, he never says.
+> One talk: the questions left come up again until all are asked; then he turns back to the drinkers (done).
 
 ### Every path
 
 ```mermaid
 flowchart TD
   p_start["<b>start</b><br/>Walter: A brother! Come and sit by Walter. Walter has somethi…"]
-  p_again["<b>again</b><br/>Walter: Back to Walter! They always come back."]
+  p_again["<b>again</b>"]
+  p_again_ask["<b>again_ask</b><br/>Walter: Back to Walter! They always come back."]
   p_topics["<b>topics</b>"]
+  p_ask["<b>ask</b>"]
   p_box["<b>box</b><br/>Walter: A tooth of Saint Apollonia, for the toothache. A thre…<br/><i>sets n0_walter_box</i>"]
-  p_buy["<b>buy</b>"]
   p_nocoin["<b>nocoin</b><br/>Walter: No money! Of course. Your vows. Walter forgets.<br/><i>sets n0_walter_nocoin</i>"]
-  p_doubt["<b>doubt</b><br/>Walter: Holy enough for Aldgate."]
+  p_doubt["<b>doubt</b><br/>Walter: Holy enough for Aldgate. Faith does the rest, brother…"]
   p_abbey["<b>abbey</b><br/>Walter: Know it? I know every gate in London, and that one be…<br/><i>sets n0_walter_abbey</i>"]
   p_why{{"<b>why</b><br/>Walter: Oh, this and that. Things the brothers can't grow in…<br/><i>sets n0_walter_why</i><br/>⚖ claim: hiding"}}
   p_why_believed["<b>why_believed</b><br/>Walter: Spoken like a porter! Walter knew you had sense."]
   p_why_pressed["<b>why_pressed</b><br/>Walter: Herbs, brother. Dried, in little bags, for the brothe…"]
+  p_done["<b>done</b><br/>Walter: Now, Walter has souls to see to. Till the gate, broth…"]
   p_leave["<b>leave</b><br/>Walter: Walter will see you at the gate, brother!"]
   end_((end))
   p_start -.-> p_topics
-  p_again -.-> p_topics
-  p_topics -->|"(Look in his box.)<br/>if not n0_walter_box"| p_box
-  p_topics -->|"Do you know the abbey?<br/>if not n0_walter_abbey"| p_abbey
-  p_topics -->|"What business have you at the abbey g…<br/>if n0_walter_abbey, not n0_walter_why, not…"| p_why
-  p_box -.-> p_buy
-  p_buy -->|"I have no money."| p_nocoin
-  p_buy -->|"Those aren't holy."| p_doubt
-  p_buy -->|"(Shake your head.)"| p_topics
+  p_again -.->|"if n0_walter_box, n0_walter_why"| p_done
+  p_again -.-> p_again_ask
+  p_again_ask -.-> p_topics
+  p_topics -.->|"if n0_walter_box, n0_walter_why"| p_done
+  p_topics -.-> p_ask
+  p_ask -->|"(Look in his box.)<br/>if not n0_walter_box"| p_box
+  p_ask -->|"Do you know the abbey, Walter?<br/>if not n0_walter_abbey"| p_abbey
+  p_ask -->|"What business have you at the abbey g…<br/>if n0_walter_abbey, not n0_walter_why, not…"| p_why
+  p_box -->|"I have no money, Walter."| p_nocoin
+  p_box -->|"Those aren't holy."| p_doubt
+  p_box -->|"(Shake your head.)"| p_topics
   p_nocoin -.-> p_topics
   p_doubt -.-> p_topics
   p_abbey -.-> p_topics
@@ -1764,14 +2080,16 @@ flowchart TD
   p_why -->|"[press]<br/>What things, Walter? I'm the one who'…"| p_why_pressed
   p_why_believed -.-> p_topics
   p_why_pressed -.-> p_topics
+  p_done -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
   class p_again again
+  class p_again_ask again
   class p_why claim
   class p_leave leave
-  linkStyle 12 stroke:#a8433a,stroke-width:2px
-  linkStyle 13 stroke:#3f7d4c,stroke-width:2px
+  linkStyle 15 stroke:#a8433a,stroke-width:2px
+  linkStyle 16 stroke:#3f7d4c,stroke-width:2px
 ```
 
 <details><summary>Every line</summary>
@@ -1785,14 +2103,24 @@ flowchart TD
 
 #### `again` (the next time)
 
+- → `done` if `n0_walter_box`, `n0_walter_why`
+- → `again_ask`
+
+#### `again_ask`
+
 - **Walter** *amused*: Back to Walter! They always come back.
 
 - → `topics`
 
 #### `topics`
 
+- → `done` if `n0_walter_box`, `n0_walter_why`
+- → `ask`
+
+#### `ask`
+
 1. (Look in his box.) → `box` · only if not `n0_walter_box`
-2. Do you know the abbey? → `abbey` · only if not `n0_walter_abbey`
+2. Do you know the abbey, Walter? → `abbey` · only if not `n0_walter_abbey`
 3. What business have you at the abbey gate? → `why` · only if `n0_walter_abbey`, not `n0_walter_why`, not `read_n0_walter_gate`
 
 #### `box`
@@ -1802,11 +2130,7 @@ flowchart TD
 - **Walter** *amused*: A tooth of Saint Apollonia, for the toothache. A thread of Our Lady's veil.
 - **Walter** *amused, brow*: And this, a drop of her milk, from Walsingham. A groat to you, since you're in the trade.
 
-- → `buy`
-
-#### `buy`
-
-1. I have no money. → `nocoin`
+1. I have no money, Walter. → `nocoin`
 2. Those aren't holy. → `doubt` · **trust Walter -5**
 3. (Shake your head.) → `topics`
 
@@ -1815,15 +2139,14 @@ flowchart TD
 
 - **Walter** *amused*: No money! Of course. Your vows. Walter forgets.
 - *He shuts the lid gently, as if on something sleeping.*
-- **Walter** *amused*: Keep Walter in your prayers, then, and keep a kind eye on him at your gate. We'll call it square.
+- **Walter** *warm*: Keep Walter in your prayers, then, and a kind eye on him at your gate. We'll call it square.
 
 - → `topics`
 
 #### `doubt`
 
-- **Walter** *amused*: Holy enough for Aldgate.
 - *He is still smiling.*
-- **Walter** *amused*: Faith does the rest, brother. Faith always does.
+- **Walter** *amused*: Holy enough for Aldgate. Faith does the rest, brother. Faith always does.
 
 - → `topics`
 
@@ -1832,7 +2155,7 @@ flowchart TD
 
 - **Walter** *amused*: Know it? I know every gate in London, and that one best of all.
 - **Walter** *amused, brow*: You'll be the new porter. Don't look so struck, brother. Word gets about, in the trade.
-- **Walter** *warm*: You and I will be friends. I'm at that gate more nights than not.
+- **Walter** *warm*: You and Walter will be friends. Walter's at that gate more nights than not.
 
 - → `topics`
 
@@ -1851,7 +2174,6 @@ flowchart TD
 #### `why_believed`
 
 - **Walter** *glad, brow*: Spoken like a porter! Walter knew you had sense.
-- *He turns back to the drinkers and his box.*
 
 - → `topics`
 
@@ -1862,6 +2184,13 @@ flowchart TD
 - **Walter** *amused, smile*: There. Now you know all Walter knows, and Walter knows nothing.
 
 - → `topics`
+
+#### `done`
+
+- *He turns back to the drinkers, and his box.*
+- **Walter** *glad*: Now, Walter has souls to see to. Till the gate, brother!
+
+- → `end`
 
 #### `leave` (if he walks away)
 
@@ -1874,38 +2203,47 @@ flowchart TD
 
 [`warden.talk`](../../game/chapters/night0/dialogue/warden.talk) · id `n0_warden`
 
-Moods through the talk: weary → cold → weary → grave → wary → cold → amused → grave → cold
+Moods through the talk: weary → cold → weary → grave → wary → cold → amused → grave → weary → grave → weary → cold
 
-> The warden at Aldgate, night 0. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines).
-> A gatekeeper talking to a gatekeeper: blunt, tired, and he has seen the dead come out past his gate this month.
+> The warden at Aldgate, night 0. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines): that is the talk's closing line, so his own last answer can end it.
+> A gatekeeper talking to a gatekeeper: blunt and tired. He lifts the sacking on every cart that passes his gate, and has counted the dead this month. Nothing he says names a demon or men behind the deaths.
+> His one question asked (or a nod), the talk ends.
 
 ### Every path
 
 ```mermaid
 flowchart TD
-  p_start["<b>start</b><br/>Warden: A monk. Young, too. Where are you bound, brother?"]
-  p_porter["<b>porter</b><br/>Warden: The porter. (The lantern doesn't move.) The old one w…<br/><i>sets n0_warden_porter</i>"]
-  p_shuts["<b>shuts</b><br/>Warden: Good. Shut it, and don't open it to knocking after da…"]
-  p_dunno["<b>dunno</b><br/>Warden: Then learn it quick. (He lowers his voice.) Trouble d…"]
-  p_abbey["<b>abbey</b><br/>Warden: (His mouth goes thin.) Pilgrim?"]
-  p_plain["<b>plain</b><br/>Warden: Just a monk. (He looks a moment longer.) There's no s…"]
-  p_silent["<b>silent</b><br/>Warden: Light in your eyes? It's meant to be. A man's face te…"]
+  p_start["<b>start</b><br/>Warden: A monk, and a young one. Where are you bound, brother?"]
+  p_porter["<b>porter</b><br/>Warden: The porter. The old one went blind, I heard.<br/><i>sets n0_warden_porter</i>"]
+  p_shuts["<b>shuts</b><br/>Warden: Good. Bar it at the bell, and don't open it to a knoc…"]
+  p_unsure["<b>unsure</b><br/>Warden: Then learn that before you learn anything else. Bar i…"]
+  p_abbey["<b>abbey</b><br/>Warden: Pilgrim?"]
+  p_plain["<b>plain</b><br/>Warden: Just a monk. There's no such thing in this city, brot…"]
+  p_silent["<b>silent</b><br/>Warden: Light in your eyes? It's meant to be. A face tells me…"]
+  p_ask["<b>ask</b>"]
+  p_cart["<b>cart</b><br/>Warden: I see every cart, brother. I lift the sacking, and I…<br/><i>sets n0_warden_cart</i>"]
+  p_again["<b>again</b><br/>Warden: I've seen you, brother. Go on through."]
   p_leave["<b>leave</b><br/>Warden: Look away all you like. I've seen what I need."]
   end_((end))
-  p_start -->|"The abbey in the lane. I'm to be its…"| p_porter
+  p_start -->|"To the abbey in the lane. I'm to be i…"| p_porter
   p_start -->|"To the abbey in the lane."| p_abbey
-  p_start -->|"(Squint into the light, and say nothi…"| p_silent
+  p_start -->|"(Say nothing.)"| p_silent
   p_porter -->|"It will now."| p_shuts
-  p_porter -->|"I don't know yet."| p_dunno
-  p_shuts -.-> end_
-  p_dunno -.-> end_
-  p_abbey -->|"No. A brother of the house, sent to k…"| p_porter
-  p_abbey -->|"Just a monk."| p_plain
-  p_plain -.-> end_
-  p_silent -.-> end_
+  p_porter -->|"I don't know yet."| p_unsure
+  p_shuts -.-> p_ask
+  p_unsure -.-> p_ask
+  p_abbey -->|"No. I'm sent to keep its gate."| p_porter
+  p_abbey -->|"Just a monk, friend."| p_plain
+  p_plain -.-> p_ask
+  p_silent -.-> p_ask
+  p_ask -->|"You saw the cart with the dead, warde…"| p_cart
+  p_ask -->|"(Nod.)"| end_
+  p_cart -.-> end_
+  p_again -.-> end_
   classDef claim fill:#f3e3b5,stroke:#9a6b1a,color:#2b2116
   classDef again fill:#e3e8ef,stroke:#5b6b80,color:#1c2430
   classDef leave fill:#eee,stroke:#999,color:#333,stroke-dasharray: 3 3
+  class p_again again
   class p_leave leave
 ```
 
@@ -1914,50 +2252,71 @@ flowchart TD
 #### `start`
 
 - *He holds his lantern up to your face, and looks at you a long moment.*
-- **Warden** *weary*: A monk. Young, too. Where are you bound, brother?
+- **Warden** *weary*: A monk, and a young one. Where are you bound, brother?
 
-1. The abbey in the lane. I'm to be its porter. → `porter`
+1. To the abbey in the lane. I'm to be its porter. → `porter`
 2. To the abbey in the lane. → `abbey`
-3. (Squint into the light, and say nothing.) → `silent`
+3. (Say nothing.) → `silent`
 
 #### `porter`
 *sets `n0_warden_porter`*
 
-- **Warden** *cold*: The porter. (The lantern doesn't move.) The old one went blind, I heard.
+- *The lantern doesn't move.*
+- **Warden** *cold*: The porter. The old one went blind, I heard.
 - **Warden** *weary*: You'll keep your gate and I'll keep mine. Mine shuts at the curfew bell. Does yours?
 
 1. It will now. → `shuts`
-2. I don't know yet. → `dunno`
+2. I don't know yet. → `unsure`
 
 #### `shuts`
 
-- **Warden** *grave*: Good. Shut it, and don't open it to knocking after dark. Not for a pilgrim, not for a friend. Not for anyone.
+- **Warden** *grave*: Good. Bar it at the bell, and don't open it to a knock till it's light. Not for anyone.
 
-- → `end`
+- → `ask`
 
-#### `dunno`
+#### `unsure`
 
-- **Warden** *grave*: Then learn it quick. (He lowers his voice.) Trouble doesn't climb walls, brother. It knocks.
+- **Warden** *grave*: Then learn that before you learn anything else. Bar it at the bell, and keep it barred till it's light.
 
-- → `end`
+- → `ask`
 
 #### `abbey`
 
-- **Warden** *wary, lip*: (His mouth goes thin.) Pilgrim?
+- *His mouth goes thin.*
+- **Warden** *wary, lip*: Pilgrim?
 
-1. No. A brother of the house, sent to keep its gate. → `porter`
-2. Just a monk. → `plain`
+1. No. I'm sent to keep its gate. → `porter`
+2. Just a monk, friend. → `plain`
 
 #### `plain`
 
-- **Warden** *cold*: Just a monk. (He looks a moment longer.) There's no such thing in this city, brother.
+- **Warden** *cold*: Just a monk. There's no such thing in this city, brother.
 
-- → `end`
+- → `ask`
 
 #### `silent`
 
-- **Warden** *amused*: Light in your eyes? It's meant to be. A man's face tells me more than his mouth.
-- **Warden** *grave*: Yours says you've never slept inside a city wall. Mind you wake up inside one.
+- **Warden** *amused*: Light in your eyes? It's meant to be. A face tells me more than a mouth does.
+- **Warden** *grave*: Yours says you've never slept inside a city wall.
+
+- → `ask`
+
+#### `ask`
+
+1. You saw the cart with the dead, warden? → `cart`
+2. (Nod.) → `end`
+
+#### `cart`
+*sets `n0_warden_cart`*
+
+- **Warden** *weary*: I see every cart, brother. I lift the sacking, and I count.
+- **Warden** *grave*: Seven this month. Most of them came in at this gate on their own feet, to see your saint.
+
+- → `end`
+
+#### `again` (the next time)
+
+- **Warden** *weary*: I've seen you, brother. Go on through.
 
 - → `end`
 

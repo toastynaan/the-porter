@@ -48,6 +48,7 @@
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/kit.talk" id="n0_kit"]
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/gib.talk" id="n0_gib"]
 [ext_resource type="Resource" path="res://game/chapters/night0/dialogue/margery.talk" id="n0_margery"]
+[ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
 
 [node name="Night0" instance=ExtResource("base")]
 editor_description = "Night 0, the Cross Keys (design doc, Night 0): the road in through Aldgate on the carter's wagon, the barred gate and Mab, the evening at the inn and the lane, the curfew bell, the squint scare, and the killing seen from the window. It inherits night_base.tscn."
@@ -319,8 +320,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -49.0, 6.05, 2.6)
 script = ExtResource("duty_gd")
 size = Vector3(1.0, 0.7, 2.1)
 
+[node name="Rushlight" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.3, 6.05, 1.6)
+editor_description = "A rushlight by the bed in his room at the top of the Keys: on night 0 he has no lantern of his own, and the room is otherwise black."
+
 [node name="WindowKilling" type="Node3D" parent="."]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -29.0, 0.05, 6.5)
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -25.5, 0.05, 5.5)
 script = ExtResource("death_gd")
 id = &"night0_guest"
 victim_look = ExtResource("chr_pilgrim")
@@ -328,7 +333,8 @@ appearance = {"skin": Color(0.72, 0.6, 0.5, 1), "shirt": Color(0.36, 0.3, 0.22, 
 killer_scene = ExtResource("chr_stranger")
 rite = false
 lantern = true
-editor_description = "The killing seen from the window: a guest of the abbey, by the well; a figure in a black habit, its back to the window. Before the six nights: it feeds nothing."
+lantern_energy = 3.0
+editor_description = "The killing seen from the window: a guest of the abbey, by the well (on its far side from the window: nearer, the abbey wall's coping hides the court's ground from the porter's room); a figure in a black habit, its back to the window. Before the six nights: it feeds nothing."
 
 [node name="SquintScare" type="Node3D" parent="." node_paths=PackedStringArray("squint", "stand")]
 script = ExtResource("scare_gd")
@@ -401,6 +407,7 @@ conversation = ExtResource("n0_ralph")
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
+porter_lantern = false
 night = 0
 
 [node name="Ride" type="Node" parent="Director" node_paths=PackedStringArray("wagon", "path", "cues", "body_cart", "pull_over", "set_down", "traveller", "carter", "gate", "cole", "dark_at", "light_at", "road", "road_folk", "lane_world")]

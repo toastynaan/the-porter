@@ -15,6 +15,11 @@ extends NightBeat
 ## Where the killer drags the body (toward the cellar).
 @export var drag_to: Marker3D
 @export var midnight := 24.0
+## How far forward of `window` he stands: right at the opening, so the court
+## fills the view and not the shutters.
+@export var lean_in := 0.45
+## Degrees his view narrows as it follows the killing (talks narrow 22).
+@export var narrow := 38.0
 
 
 func run() -> void:
@@ -32,18 +37,32 @@ func run() -> void:
 	p.controls_locked = true
 	await fade_to(0.6, 1.0)
 	await say("", "(You lie down. The bed smells of other men. Then, outside, a cry, and it stops short.)")
-	p.place(window.global_position, window.global_rotation.y)
-	p.head.rotation.x = deg_to_rad(-16.0)
+	var forward := -window.global_basis.z
+	p.place(window.global_position + forward * lean_in, window.global_rotation.y)
+	# His eyes go to the court and follow what happens there; moving the
+	# mouse lets go, as in a talk.
+	var gaze := Node3D.new()
+	add_child(gaze)
+	gaze.global_position = death.global_position + Vector3.UP
+	p.look_at_scene(gaze, narrow)
+	var follow := func() -> void:
+		while is_instance_valid(gaze):
+			if is_instance_valid(death.killer):
+				gaze.global_position = death.killer.global_position + Vector3.UP * 0.9
+			await PlayTime.physics_frame(self)
+	follow.call()
 	await fade_to(0.0, 0.8)
 	p.controls_locked = false
 	await say("", "(From the window you can see over the abbey wall, into the court.)")
 	await death.play()
 	await wait(1.2)
-	await death.drag_to(drag_to.global_position)
+	await death.drag_to(drag_to.global_position, 1.0, true)
 	var drunk := DoseDriver.drunk_amount() > 0.0
 	GameState.note(&"window_killing_drunk" if drunk else &"window_killing")
 	GameState.set_flag(&"n0_saw_killing", &"drunk" if drunk else &"sober")
 	await say("", "(Gone, toward the cellar. The court is empty again. Nobody comes.)")
+	p.stop_looking()
+	gaze.queue_free()
 
 
 ## Agnes sends him up to bed: midnight, and he's still about.

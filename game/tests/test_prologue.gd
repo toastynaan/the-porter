@@ -60,6 +60,8 @@ func _run() -> void:
 	await _until(func() -> bool: return pilot.beat() == &"Ride" and pilot.player.riding != null, 5.0)
 	var p := pilot.player
 	_check(GameState.night == 0 and p.riding != null and GameState.has_flag(&"n0_riding"), "New Game: night 0, on the carter's wagon")
+	_check(not p.lantern_hand.owned and not p.lantern_hand.visible and not GameState.has_flag(&"has_lantern"),
+		"he comes to London without a lantern")
 	var fade := _main.get_node(^"UI/Fade") as ScreenFade
 	_check(fade.color.a > 0.8 and not _flow.card.visible, "the card has gone into the dark, and the night opens on black (%.2f)" % fade.color.a)
 	var wagon := night.get_node(^"Wagon") as Node3D
@@ -300,6 +302,8 @@ func _run() -> void:
 	await _until(func() -> bool: return death.has_played, 10.0)
 	_check(death.has_played and p.global_position.distance_to(pilot.mark("TopWindow")) < 0.5,
 		"lying down: the cry, and he's at the window over the abbey wall")
+	await pilot.seconds(1.5)
+	_check(p.zoom > 20.0, "his view narrows on the court and follows what happens there (%.0f°)" % p.zoom)
 	_check(ViewCheck.on_screen(p.camera, [death.global_position + Vector3.UP])
 		and ViewCheck.clear(p, p.camera.global_position, death.global_position + Vector3.UP), "the killing is in his view, through the window")
 	await _until(func() -> bool: return pilot.beat() == &"Sleep", 120.0)
@@ -328,6 +332,9 @@ func _run() -> void:
 	p.place(pilot.mark("Day1Meet"), deg_to_rad(90.0))
 	await _until(func() -> bool: return pilot.beat() == &"Tour", 10.0)
 	_check(GameState.has_flag(&"d1_saw_sand"), "the sand by the well")
+	await _until(func() -> bool: return p.lantern_hand.owned, 20.0)
+	_check(p.lantern_hand.owned and p.lantern_hand.showing() and GameState.has_flag(&"has_lantern")
+		and _said_by("Anselm", "The porter's light."), "Anselm gives him the porter's lantern; it's in his hand")
 	var tour := night.get_node(^"Director/Tour")
 	for path in ["BarGate", "Ledger", "", "BellRope", "RoundStops/StoresDoor", "GuestBeds/Bed0", "GuestKey"]:
 		if path.is_empty():
@@ -403,3 +410,8 @@ func _check(ok: bool, what: String) -> void:
 	print(("  ok   " if ok else "  FAIL ") + what)
 	if not ok:
 		_fails += 1
+
+
+## A line `who` said that begins with `start`.
+func _said_by(who: String, start: String) -> bool:
+	return Talk.history.any(func(l: Array) -> bool: return l[0] == who and str(l[1]).contains(start))

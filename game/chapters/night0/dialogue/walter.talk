@@ -1,49 +1,53 @@
 @id n0_walter
-# DRAFT
-# Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box.
+# Walter the pardoner at the Cross Keys, night 0, selling relics to the drinkers out of a rattling box. A salesman: flattering, never still, and he calls himself Walter. His baseline is amused, with a flick of the brow; his tell is that he stops selling.
 # He knows the abbey's gate well and won't say why. (He supplies the henbane. Nothing here says so.)
-# Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he says herbs for the brothers, no more.
+# Claims: n0_walter_gate (hiding): what his business at the abbey gate is. Pressed, he stops selling for a moment and says herbs for the brothers, no more. Believed, he never says.
+# One talk: the questions left come up again until all are asked; then he turns back to the drinkers (done).
 == start
 (A plump man in a wine-red cloak, the only colour in the room. The box on his knees rattles when he moves.)
 Walter {amused, brow}: A brother! Come and sit by Walter. Walter has something for every soul in the Keys, and you've a soul, I'll be bound.
 -> topics
 
 == again
+-> done [if n0_walter_box] [if n0_walter_why]
+-> again_ask
+
+== again_ask
 Walter {amused}: Back to Walter! They always come back.
 -> topics
 
 == topics
+-> done [if n0_walter_box] [if n0_walter_why]
+-> ask
+
+== ask
 * [if not n0_walter_box] (Look in his box.) -> box
-* [if not n0_walter_abbey] Do you know the abbey? -> abbey
+* [if not n0_walter_abbey] Do you know the abbey, Walter? -> abbey
 * [if n0_walter_abbey] [if not n0_walter_why] [if not read_n0_walter_gate] What business have you at the abbey gate? -> why
 
 == box [set n0_walter_box]
 (He lifts the lid. Little bones, scraps of cloth and a cloudy phial, each on its own bed of wool.)
 Walter {amused}: A tooth of Saint Apollonia, for the toothache. A thread of Our Lady's veil.
 Walter {amused, brow}: And this, a drop of her milk, from Walsingham. A groat to you, since you're in the trade.
--> buy
-
-== buy
-* I have no money. -> nocoin
+* I have no money, Walter. -> nocoin
 * Those aren't holy. [trust walter -5] -> doubt
 * (Shake your head.) -> topics
 
 == nocoin [set n0_walter_nocoin]
 Walter {amused}: No money! Of course. Your vows. Walter forgets.
 (He shuts the lid gently, as if on something sleeping.)
-Walter {amused}: Keep Walter in your prayers, then, and keep a kind eye on him at your gate. We'll call it square.
+Walter {warm}: Keep Walter in your prayers, then, and a kind eye on him at your gate. We'll call it square.
 -> topics
 
 == doubt
-Walter {amused}: Holy enough for Aldgate.
 (He is still smiling.)
-Walter {amused}: Faith does the rest, brother. Faith always does.
+Walter {amused}: Holy enough for Aldgate. Faith does the rest, brother. Faith always does.
 -> topics
 
 == abbey [set n0_walter_abbey]
 Walter {amused}: Know it? I know every gate in London, and that one best of all.
 Walter {amused, brow}: You'll be the new porter. Don't look so struck, brother. Word gets about, in the trade.
-Walter {warm}: You and I will be friends. I'm at that gate more nights than not.
+Walter {warm}: You and Walter will be friends. Walter's at that gate more nights than not.
 -> topics
 
 == why [set n0_walter_why] [claim n0_walter_gate hiding]
@@ -55,7 +59,6 @@ Walter {amused, still}: Holy business, brother. Nothing a porter need trouble hi
 
 == why_believed
 Walter {glad, brow}: Spoken like a porter! Walter knew you had sense.
-(He turns back to the drinkers and his box.)
 -> topics
 
 == why_pressed
@@ -63,6 +66,11 @@ Walter {glad, brow}: Spoken like a porter! Walter knew you had sense.
 Walter {calm}: Herbs, brother. Dried, in little bags, for the brothers who ask for them. A pardoner carries what he's asked to carry.
 Walter {amused, smile}: There. Now you know all Walter knows, and Walter knows nothing.
 -> topics
+
+== done
+(He turns back to the drinkers, and his box.)
+Walter {glad}: Now, Walter has souls to see to. Till the gate, brother!
+-> end
 
 == leave
 Walter {glad}: Walter will see you at the gate, brother!

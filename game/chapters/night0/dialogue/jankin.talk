@@ -1,13 +1,14 @@
 @id n0_jankin
-# DRAFT
-# Jankin on the bench at the Cross Keys, night 0. A harmless drunk, full of stories, half of them nonsense.
-# He says Hob throws him out at closing every night (the night-2 rule).
+# Jankin on the bench at the Cross Keys, night 0. A harmless drunk, rambling, full of stories, half of them nonsense. Once, for a moment, he isn't drunk at all (who).
+# He saw a thing with horns on the abbey wall (the horned costume; nothing here says so). He says Hob throws him out at closing every night (the night-2 rule).
+# One talk: the questions left come up again until all are asked; then he runs out of stories (done).
 == start
 (A man slumped on the bench by the wall lifts his cup to you. Most of it goes down his sleeve.)
-Jankin {drunk, blink}: A monk! In the Keys! Hob, the world's ending. I always said it would.
+Jankin {drunk}: A monk! In the Keys! Hob, the world's ending. I always said it would.
 -> topics
 
 == again
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home]
 -> again_wall [if n0_jankin_wall]
 -> again_plain
 
@@ -16,11 +17,15 @@ Jankin {drunk}: Did I tell you about the thing on the wall? I did. It's still tr
 -> topics
 
 == again_plain
-Jankin {drunk}: Brother! You came back. Nobody comes back to Jankin.
+Jankin {glad}: Brother! You came back. Nobody comes back to Jankin.
 -> topics
 
 == topics
-* [if not n0_jankin_wall] What do you know of the abbey? -> wall
+-> done [if n0_jankin_wall] [if n0_jankin_who] [if n0_jankin_home]
+-> ask
+
+== ask
+* [if not n0_jankin_wall] What do you know of the abbey, friend? -> wall
 * [if not n0_jankin_who] Who are you, friend? -> who
 * [if not n0_jankin_home] Where will you sleep tonight? -> home
 
@@ -35,6 +40,7 @@ Jankin {drunk}: Hob says it was the drink. Hob says everything's the drink.
 Jankin {drunk}: Jankin. I was a cooper once, brother. Best barrels in Aldgate.
 Jankin {sad}: Then my wife died, and I found I liked what goes in a barrel better than the barrel.
 (He looks into his cup, and for a moment he doesn't look drunk at all.)
+Jankin {drunk}: Never mind. Ask me another.
 -> topics
 
 == home [set n0_jankin_home]
@@ -42,6 +48,11 @@ Jankin {drunk}: Tonight? Wherever I fall. Hob throws me out at closing, every ni
 Jankin {amused}: Good man, Hob. Big hands. I go out of that door like a sack of meal.
 Jankin {drunk}: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
 -> topics
+
+== done
+(He peers into his cup.)
+Jankin {drunk}: That's all my stories, brother. Well. Most of them. Come back when I've thought of the rest.
+-> end
 
 == leave
 Jankin {drunk}: Pray for me, brother! Somebody ought to.

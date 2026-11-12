@@ -1,7 +1,7 @@
 @id n0_agnes
-# DRAFT
 # Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.
-# The bed answer gives him the room at the top (n0_room). An ale ends the talk; the next talk starts at again.
+# The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.
+# The ale is always the last answer. Once the bed and the abbey are asked she has one thing more (Jankin), and "(Nod.)" ends the talk with her line.
 == start
 (A woman by the fire with her sleeves rolled, stirring a pot. She looks you up and down.)
 Agnes {warm}: Look at you, wet to the skin. Come by the fire before you catch your death.
@@ -20,22 +20,41 @@ Agnes {amused}: Well? Warmer?
 -> topics
 
 == topics
-* [if not n0_room] Have you a bed for the night? -> bed
+-> topics_late [if n0_room] [if n0_agnes_abbey]
+-> topics_first
+
+== topics_first
+* [if not n0_room] Have you a bed for the night, goodwife? -> bed
 * [if not n0_agnes_abbey] What do you know of the abbey? -> abbey
 * An ale, if you would. [drink] -> ale
 
+== topics_late
+* [if not n0_agnes_jankin] Is Jankin always like this? -> jankin
+* (Nod.) -> close
+* An ale, if you would. [drink] -> ale
+
 == bed [set n0_room]
-Agnes {calm}: A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
-Agnes {amused}: Nobody else will have it. You can have it for a prayer and a ha'penny.
+Agnes {calm}: There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
+Agnes {amused}: Nobody else will have it. It's yours for a ha'penny, and I'll not haggle with a monk.
 Agnes {grave}: Be in before the curfew bell at nine. After it the Keys is shut, and the street's no place to be.
 -> topics
 
 == abbey [set n0_agnes_abbey]
 Agnes {cold}: I don't talk about that place under my own roof.
 (She glances at the shutters all the same, and lowers her voice.)
-Agnes {grave}: We've had lodgers go over there to see the relic. Paid me for two nights and slept one.
+Agnes {grave}: We've had lodgers go over there to see the relic. Paid me for two nights, and slept one.
 Agnes {grave, swallow}: I don't ask. I strip the bed and let it again.
 -> topics
+
+== jankin [set n0_agnes_jankin]
+(She looks down the bench at him, and her face softens.)
+Agnes {warm}: Jankin? Every night. Hob puts him out at closing, and I put a crust in his pocket first.
+Agnes {sad}: One of these nights it'll be too cold for him out there. You see if it isn't.
+-> topics
+
+== close
+Agnes {warm}: Then sit and dry. If you're still down here at midnight, I'll send you up myself.
+-> end
 
 == ale
 -> ale_more [if n0_agnes_poured]
@@ -47,8 +66,8 @@ Agnes {warm}: Drink it slow. It's stronger than what your country brothers brew.
 -> end
 
 == ale_more
-Agnes {wary}: Another? You'll be no use to your abbot in the morning.
-(She fills it to the brim anyway.)
+(She fills it to the brim, shaking her head.)
+Agnes {wary}: You'll be no use to your abbot in the morning.
 -> end
 
 == leave
