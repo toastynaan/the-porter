@@ -35,3 +35,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-11 · Fix · 788cf09 · The ride, from your notes: four bodies on the cart; both carts jolt and sway over the road and the porter's view with them; the traveller's talk deeper (a name, a family, the dead tied to the abbey); the warden talks to him with the lantern up.
 - 2026-11-11 · Move · 1d0c0f6 · game/ by chapter (chapters/night0 to night6, day1, common) and by system (time, duties, gate, talk, hunting, people, core, dev); world/ and characters/ unchanged. Full suite passes.
 - 2026-11-11 · Move · 86fb323 · docs into design, systems, places and log (progress.md and decisions.md split out); stills tools into tools/shots/, the old milestone ones deleted; README.md and CLAUDE.md added.
+- 2026-11-11 · Fix · e0b716d · The ride reveals nothing of a demon or of men behind the deaths: the traveller keeps the dead, the count and the abbey, and won't say what people say.
