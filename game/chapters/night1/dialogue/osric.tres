@@ -9,37 +9,60 @@ text = "# DRAFT
 # Osric, the cellarer, at the kitchen fire at dusk (night 1). Jolly; he feeds you. He promises extra bread at supper (n1_osric_bread).
 # If Thomas told the porter about the beast bled by the well (d1_asked_sand), he can ask Osric about it:
 # Osric backs the lie, and the cult notes the porter's curiosity (Suspicion +5, the wrong question to the wrong brother).
+# Claims: n1_osric_pig (lie: a man was killed by the well on night 0, and Osric started the killings; confront with window_killing).
 == start
 (A round brother at the kitchen fire, sleeves rolled, flour to the elbow. He beams at you.)
-Osric: The porter! At last, a man with an honest appetite. I'm Osric, cellarer.
-Osric: Everything you eat in this house goes through my hands.
+Osric {glad}: The porter! At last, a man with an honest appetite. I'm Osric, cellarer.
+Osric {glad}: Everything you eat in this house goes through my hands.
 -> topics
 
 == again
-Osric: Back again? Smell that. Patience, brother, patience.
+Osric {amused}: Back again? Smell that. Patience, brother, patience.
 -> topics
 
 == topics
 * [if not n1_osric_supper] What's for supper, brother? -> supper
 * [if not n1_osric_bread] I slept through dinner. -> bread
-* [if d1_asked_sand] [if not n1_osric_beast] I hear a beast was bled by the well last night. -> beast
+* [if d1_asked_sand] [if not n1_osric_beast] [if not read_n1_osric_pig] I hear a beast was bled by the well last night. -> beast
 
 == supper [set n1_osric_supper]
-Osric: Pease pottage, with a little bacon in it for them that work nights. That's you.
-Osric: And bread, our own, baked this morning. Rye from our own granary. Nothing bought in.
+Osric {glad}: Pease pottage, with a little bacon in it for them that work nights. That's you.
+Osric {glad}: And bread, our own, baked this morning. Rye from our own granary. Nothing bought in.
 -> topics
 
 == bread [set n1_osric_bread]
-Osric: Slept through dinner? We can't have that. A porter who's hungry nods at his post.
-Osric: I'll see you have the heel of the loaf at supper, and a second piece after. Eat it all, mind.
+Osric {glad}: Slept through dinner? We can't have that. A porter who's hungry nods at his post.
+Osric {glad, smile}: I'll see you have the heel of the loaf at supper, and a second piece after. Eat it all, mind.
 -> topics
 
 == beast [set n1_osric_beast] [suspicion 5]
-Osric: The pig? Aye, that was mine to do. I bled him by the well, where there's water to sluice the stones.
+-> n1_osric_pig
+
+== n1_osric_pig [claim n1_osric_pig lie]
+Osric {glad, smile}: The pig? Aye, that was mine to do. I bled him by the well, where there's water to sluice the stones.
+* [believe] A pig. I'll look for him in the pottage. -> pig_believed
+* [press] A pig, at midnight? In the rain? -> pig_pressed
+* [confront window_killing] I saw it from the Keys, brother. It was no pig. -> pig_broken
+
+== pig_believed
+Osric {glad}: In the pottage, and the bacon in it. Every bit of him.
+-> pig_end
+
+== pig_pressed
+Osric {glad}: When else? Bleed a pig at Prime and he won't hang by Prime.
+-> pig_end
+
+== pig_end
 (He goes on kneading, and doesn't look up.)
-Osric: (He laughs, a beat late.) Leave the kitchen's mess to the kitchen, brother, and I'll leave your gate to you.
+Osric {amused}: (He laughs, a beat late.) Leave the kitchen's mess to the kitchen, brother, and I'll leave your gate to you.
+-> topics
+
+== pig_broken
+(The smile comes too fast, and goes.)
+Osric {wary}: From the Keys? In the rain, over a wall?
+Osric {glad, smile}: (He laughs, too loud.) A pig screams like a Christian when the knife goes in, brother. Ask any butcher in Eastcheap.
 -> topics
 
 == leave
-Osric: Come hungry! The bell won't be long!
+Osric {glad}: Come hungry! The bell won't be long!
 "

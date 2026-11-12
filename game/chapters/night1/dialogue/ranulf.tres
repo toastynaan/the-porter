@@ -11,11 +11,11 @@ text = "# DRAFT
 # Hidden: he wears the horned costume; the relic is a pig's bone; the incense doses the choir.
 == start
 (The sacrist at the candle stand in the nave, trimming wicks with small shears. He doesn't stop.)
-Ranulf: The porter. Ranulf, sacrist. The bell is mine. The ringing of it is yours. Don't be late with it.
+Ranulf {grave}: The porter. Ranulf, sacrist. The bell is mine. The ringing of it is yours. Don't be late with it.
 -> topics
 
 == again
-Ranulf: Something else?
+Ranulf {grave}: Something else?
 -> topics
 
 == topics
@@ -24,20 +24,20 @@ Ranulf: Something else?
 * [if not n1_ranulf_incense] What's the incense for? -> incense
 
 == candles [set n1_ranulf_candles]
-Ranulf: Wax on the altar, tallow everywhere else. Every one is counted.
-Ranulf: If you find a lamp out on your round, light it from the sanctuary lamp and tell me. Not the prior. Me.
+Ranulf {grave}: Wax on the altar, tallow everywhere else. Every one is counted.
+Ranulf {grave}: If you find a lamp out on your round, light it from the sanctuary lamp and tell me. Not the prior. Me.
 -> topics
 
 == relic [set n1_ranulf_relic]
-Ranulf: The saint's finger, in the silver hand on the altar. Pilgrims may kiss the glass.
-Ranulf: I keep the key to it. Nobody opens it. Nobody needs to.
+Ranulf {grave}: The saint's finger, in the silver hand on the altar. Pilgrims may kiss the glass.
+Ranulf {grave, glance}: I keep the key to it. Nobody opens it. Nobody needs to.
 -> topics
 
 == incense [set n1_ranulf_incense]
-Ranulf: At Matins I cense the choir. Breathe it in. It's the prayers going up.
-Ranulf: And it's good for the chest, in this damp.
+Ranulf {calm, glance}: At Matins I cense the choir. Breathe it in. It's the prayers going up.
+Ranulf {grave}: And it's good for the chest, in this damp.
 -> topics
 
 == leave
-Ranulf: The black ring, porter. Not after it.
+Ranulf {grave}: The black ring, porter. Not after it.
 "

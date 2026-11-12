@@ -24,7 +24,7 @@ signal opened(who: StringName)
 @export var roger_lines := PackedStringArray()
 @export var joan_lines := PackedStringArray()
 @export var mab_lines := PackedStringArray()
-@export var no_proof_lines := PackedStringArray(["Roger: Show me something I can hang them with, porter, and I'll come in."])
+@export var no_proof_lines := PackedStringArray(["Roger {cold}: Show me something I can hang them with, porter, and I'll come in."])
 
 ## Opening the gate: something he does, so in brackets (italics).
 const OPEN := "(Open the gate.)"

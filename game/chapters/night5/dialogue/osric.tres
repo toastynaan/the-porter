@@ -11,7 +11,7 @@ text = "# DRAFT
 # Where he was last night: the wrong question (Suspicion +5). Saying he saw his face: Suspicion +15, and Osric ends the talk.
 == start
 (Osric is at the kitchen fire, flour to the elbow, the smell of new bread all round him. He beams at you.)
-Osric: The porter! The fast's done, God be thanked. Bread tonight, and I've kept the heel back for you.
+Osric {glad}: The porter! The fast's done, God be thanked. Bread tonight, and I've kept the heel back for you.
 -> mask [if osric_mask]
 -> topics
 
@@ -20,7 +20,7 @@ Osric: The porter! The fast's done, God be thanked. Bread tonight, and I've kept
 -> topics
 
 == again
-Osric: Back again? You can smell it. Patience, porter. Not till the bell.
+Osric {glad}: Back again? You can smell it. Patience, porter. Not till the bell.
 -> topics
 
 == topics
@@ -29,24 +29,24 @@ Osric: Back again? You can smell it. Patience, porter. Not till the bell.
 * [if osric_mask] [if not n5_osric_face] I saw your face in the fog last night, brother. -> face
 
 == fast [set n5_osric_fast]
-Osric: Father Abbot lifted it after Prime. A night and a day of nothing, and half the house couldn't stand at Lauds.
-Osric: Eat tonight, porter. All of it. You'll want your strength.
+Osric {glad}: Father Abbot lifted it after Prime. A night and a day of nothing, and half the house couldn't stand at Lauds.
+Osric {glad, smile}: Eat tonight, porter. All of it. You'll want your strength.
 -> topics
 
 # The wrong question to the wrong brother (design doc): Suspicion +5.
 == where [set n5_osric_where] [suspicion 5]
-Osric: Abed, in the dormitory, listening to my belly. Like every Christian in the house. Where else would I be?
+Osric {glad, smile}: Abed, in the dormitory, listening to my belly. Like every Christian in the house. Where else would I be?
 (He goes on kneading.)
-Osric: Ask the brother in the next bed. He'll tell you how I snore.
+Osric {amused}: Ask the brother in the next bed. He'll tell you how I snore.
 -> topics
 
 # Accusing a cultist to his face: Suspicion +15.
 == face [set n5_osric_face] [suspicion 15]
 (He laughs, a big warm laugh. The dough under his hands doesn't stop.)
-Osric: My face? In the fog? Porter, you've been fasting. A hungry man sees faces in his porridge.
-Osric: Eat your bread tonight. All of it. You'll see clearer for it.
+Osric {amused, smile}: My face? In the fog? Porter, you've been fasting. A hungry man sees faces in his porridge.
+Osric {glad}: Eat your bread tonight. All of it. You'll see clearer for it.
 -> end
 
 == leave
-Osric: The heel's yours, porter! Don't be late!
+Osric {glad}: The heel's yours, porter! Don't be late!
 "

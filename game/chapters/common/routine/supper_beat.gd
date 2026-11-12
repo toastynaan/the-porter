@@ -41,9 +41,9 @@ const WATCHED_FROM := 30
 ## Said once he's seated ("Name: words", or a line in brackets).
 @export var seated_lines := PackedStringArray(["(Supper in the refectory with the brothers.)"])
 ## Osric serving.
-@export var serve_lines := PackedStringArray(["Osric: Bread and ale, brother."])
+@export var serve_lines := PackedStringArray(["Osric {glad}: Bread and ale, brother."])
 @export var eat_lines := PackedStringArray(["(The bread tastes bitter.)"])
-@export var palm_seen_lines := PackedStringArray(["Osric: Not hungry, brother? There's no shame in a good appetite."])
+@export var palm_seen_lines := PackedStringArray(["Osric {glad, smile}: Not hungry, brother? There's no shame in a good appetite."])
 ## Who warns him about the bread after he has eaten (night 1: Bede), and
 ## what he says; it sets `warned_flag` and writes the clue.
 @export var warner: Brother
@@ -55,8 +55,8 @@ const WATCHED_FROM := 30
 @export var aside_unless := &""
 ## Ranulf's offer and Thomas's warning, when there's a remedy tonight.
 @export var remedy_lines := PackedStringArray([
-	"Ranulf: You keep rubbing your eyes, brother. The new ones always get the headaches. A little of this in your ale, and you'll sleep.",
-	"Thomas: (Quietly, so only you hear.) Not his physic. Not that one. Trust me."])
+	"Ranulf {grave, glance}: You keep rubbing your eyes, brother. The new ones always get the headaches. A little of this in your ale, and you'll sleep.",
+	"Thomas {warm}: (Quietly, so only you hear.) Not his physic. Not that one. Trust me."])
 @export var end_lines := PackedStringArray(["(Supper ends. Go and take the gate from Cole.)"])
 @export_group("")
 
@@ -129,8 +129,8 @@ func _remedy(p: Player) -> void:
 		GameState.set_flag(GameState.tonight("refused_remedy"))
 		GameState.raise_suspicion(REFUSE_SUSPICION)
 		GameState.change_trust(&"thomas", 5)
-		await say("Ranulf", "As you like.")
-		await say("Thomas", "(Softly.) Good.")
+		await say("Ranulf {cold}", "As you like.")
+		await say("Thomas {warm, nod}", "(Softly.) Good.")
 
 
 func _osric_turns() -> void:

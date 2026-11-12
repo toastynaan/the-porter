@@ -144,10 +144,10 @@ thomas = NodePath("../../Brothers/Thomas")
 watcher = NodePath("../../Brothers/Hugh")
 aside_by = NodePath("../../Brothers/Thomas")
 seated_lines = PackedStringArray()
-serve_lines = PackedStringArray("(Osric sets down your bread and ale, and the extra heel again.)", "Osric: The heel for the porter. I keep it back special.")
+serve_lines = PackedStringArray("(Osric sets down your bread and ale, and the extra heel again.)", "Osric {glad, smile}: The heel for the porter. I keep it back special.")
 eat_lines = PackedStringArray("(Dark and sour. It sits heavy in you.)")
-palm_seen_lines = PackedStringArray("Osric: (From the hatch, smiling.) Not hungry, porter? I'll keep an eye on you. Can't have you wasting away.")
-aside_lines = PackedStringArray("Thomas: (Low, under the reading.) I've seen the prior about the house at night, Alric. Places he has no business being.", "Thomas: Say nothing. Only keep your eyes open.")
+palm_seen_lines = PackedStringArray("Osric {glad}: (From the hatch, smiling.) Not hungry, porter? I'll keep an eye on you. Can't have you wasting away.")
+aside_lines = PackedStringArray("Thomas {grave}: (Low, under the reading.) I've seen the prior about the house at night, Alric. Places he has no business being.", "Thomas {grave, nod}: Say nothing. Only keep your eyes open.")
 aside_unless = &"n2_thomas_prior"
 
 [node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
@@ -161,7 +161,7 @@ relieve = NodePath("../../Duties/RelieveCole")
 shut_gate = NodePath("../../Duties/ShutGate")
 bar_duty = NodePath("../../Duties/BarGate")
 ledger = NodePath("../../Duties/Ledger")
-relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole: Yours.")
+relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole {blank}: Yours.")
 
 [node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate")]
 script = ExtResource("visits_gd")
@@ -185,7 +185,7 @@ shut_gate = NodePath("../../Duties/ShutGate")
 ledger = NodePath("../../Duties/Ledger")
 beds = NodePath("../../Duties/GuestBeds")
 gate = NodePath("../../AbbeyGate")
-prior_lines = PackedStringArray("Hugh: Stand aside, porter. I'll see him to a bed myself.", "Hugh: (To the visitor.) This way. Keep close, and touch nothing.")
+prior_lines = PackedStringArray("Hugh {cold}: Stand aside, porter. I'll see him to a bed myself.", "Hugh {cold, jaw}: (To the visitor.) This way. Keep close, and touch nothing.")
 
 [node name="Lane" type="Node" parent="Director" node_paths=PackedStringArray("grate", "death", "curfew")]
 script = ExtResource("lane_gd")
@@ -262,9 +262,9 @@ phase = 5
 duty = "Lauds: the abbot, in the court"
 people = [NodePath("../../Brothers/Godric"), NodePath("../../Brothers/Hugh")]
 marks = [NodePath("../../Marks/GodricDawn"), NodePath("../../Marks/HughDawn")]
-lines = PackedStringArray("Godric: Brothers. A demon has come into this house. Brother Bede is dead of it, and I will not pretend otherwise.", "Godric: From today, incense at every office, twice the measure, until it is driven out. Pray, and keep together.", "(As the brothers go, the prior's hand closes on your arm and draws you aside.)", "Hugh: A word, porter. Where were you in the night? All of it, hour by hour.")
+lines = PackedStringArray("Godric {afraid}: Brothers. A demon has come into this house. Brother Bede is dead of it, and I will not pretend otherwise.", "Godric {grave}: From today, incense at every office, twice the measure, until it is driven out. Pray, and keep together.", "(As the brothers go, the prior's hand closes on your arm and draws you aside.)", "Hugh {cold, jaw}: A word, porter. Where were you in the night? All of it, hour by hour.")
 answers = PackedStringArray("At the gate all night, and on my round.", "I rang the bell, and I found Brother Bede.", "(Tell him everything you saw.)")
-replies = PackedStringArray("Hugh: The gate and the round. So everyone was where they should be, and still a brother hangs.", "Hugh: You found him. You always seem to be first, porter. I'll remember that.", "Hugh: (He writes it all on his wax before he speaks.) Tell no one else what you've told me. No one.")
+replies = PackedStringArray("Hugh {cold}: The gate and the round. So everyone was where they should be, and still a brother hangs.", "Hugh {cold, jaw}: You found him. You always seem to be first, porter. I'll remember that.", "Hugh {grave}: (He writes it all on his wax before he speaks.) Tell no one else what you've told me. No one.")
 answer_tags = PackedStringArray("set n2_told_hugh=gate", "set n2_told_hugh=round", "set n2_told_hugh=thomas; trust hugh -5")
 
 [node name="Dawn" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "cole_gate", "hand_over", "cell", "keys_on_hook", "sleep")]

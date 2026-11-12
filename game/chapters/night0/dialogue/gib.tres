@@ -14,13 +14,13 @@ text = "# DRAFT
 
 == start_early
 (An old man on a short ladder under the eaves, coaxing a lantern alight with a taper.)
-Gib: Mind my ladder, brother. A lantern on every house, all winter long. Mayor's order.
-Gib: And you be indoors before the bell. Nine o'clock, and not a breath after.
+Gib {weary}: Mind my ladder, brother. A lantern on every house, all winter long. Mayor's order.
+Gib {grave}: And you be indoors before the bell. Nine o'clock, and not a breath after.
 -> topics
 
 == start_late
 (An old man with a lantern on a pole, walking the middle of the empty lane.)
-Gib: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you indoors.
+Gib {wary}: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you indoors.
 -> topics
 
 == again
@@ -28,11 +28,11 @@ Gib: Past the bell, brother, and you in the street. I'm Gib, the watch. Get you 
 -> again_early
 
 == again_early
-Gib: Still out, brother? Not long to the bell now.
+Gib {weary}: Still out, brother? Not long to the bell now.
 -> topics
 
 == again_late
-Gib: You again, and the bell long gone. Indoors, brother.
+Gib {wary}: You again, and the bell long gone. Indoors, brother.
 -> topics
 
 == topics
@@ -41,21 +41,21 @@ Gib: You again, and the bell long gone. Indoors, brother.
 * [if not n0_gib_abbey] What do you make of the abbey wall? -> abbey
 
 == watch [set n0_gib_watch]
-Gib: After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light.
-Gib: If you hear me call, all's well. If you don't, it isn't.
+Gib {calm}: After the bell I walk the lane and call the hour. Ten o'clock and all's well, and on till the light.
+Gib {grave}: If you hear me call, all's well. If you don't, it isn't.
 -> topics
 
 == lanterns [set n0_gib_lanterns]
-Gib: Since the year of Agincourt. A lantern on every house from Hallowtide to Candlemas.
-Gib: The houses find the candles, and I light them. Saves a few throats, the mayor says.
+Gib {calm}: Since the year of Agincourt. A lantern on every house from Hallowtide to Candlemas.
+Gib {amused}: The houses find the candles, and I light them. Saves a few throats, the mayor says.
 -> topics
 
 == abbey [set n0_gib_abbey]
-Gib: I walk past that wall every hour of the night, and I don't look at it.
-Gib: Thirty years. You hear things over a wall like that. You see lights where there shouldn't be lights.
-Gib: I call the hour and I keep walking. You'd do well to learn the same.
+Gib {grave}: I walk past that wall every hour of the night, and I don't look at it.
+Gib {wary, swallow}: Thirty years. You hear things over a wall like that. You see lights where there shouldn't be lights.
+Gib {grave}: I call the hour and I keep walking. You'd do well to learn the same.
 -> topics
 
 == leave
-Gib: Indoors before the bell, mind!
+Gib {weary}: Indoors before the bell, mind!
 "

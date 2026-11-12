@@ -11,12 +11,12 @@ text = "# DRAFT
 # If Thomas has named Simon (n4_thomas_simon), Anselm says there's no harm in Simon, and stops himself.
 == start
 (Anselm in his chair. The fog has got into the infirmary and hangs about the brazier.)
-Anselm: Fog. I can smell it. Wet stone and the river. A man could walk right past you in it.
+Anselm {weary}: Fog. I can smell it. Wet stone and the river. A man could walk right past you in it.
 -> topics
 
 == again
 (His milky eyes settle on a place just beside your face.)
-Anselm: Back again, porter? Sit.
+Anselm {weary}: Back again, porter? Sit.
 -> topics
 
 == topics
@@ -25,23 +25,23 @@ Anselm: Back again, porter? Sit.
 * [if n4_thomas_simon] [if not n4_anselm_simon] What do you know of Brother Simon? -> simon
 
 == hear [set n4_anselm_hear]
-Anselm: Feet on the night stair, after Compline, when every brother's abed. More than one pair.
-Anselm: They walk alike. Like men who've walked together a long while.
-Anselm: I lie still, and I say my beads, and I don't call out. God forgive me, I never call out.
+Anselm {afraid}: Feet on the night stair, after Compline, when every brother's abed. More than one pair.
+Anselm {afraid, swallow}: They walk alike. Like men who've walked together a long while.
+Anselm {sad, lip}: I lie still, and I say my beads, and I don't call out. God forgive me, I never call out.
 -> topics
 
 == keys [set n4_anselm_keys]
 (He laughs, with nothing in it.)
-Anselm: Copied. There were always more keys to that gate than there were porters, boy.
-Anselm: If you've a guest you want to keep, tell him to bar his door from inside. A bar has no key.
+Anselm {weary}: Copied. There were always more keys to that gate than there were porters, boy.
+Anselm {grave}: If you've a guest you want to keep, tell him to bar his door from inside. A bar has no key.
 -> topics
 
 == simon [set n4_anselm_simon]
-Anselm: Simon? He brings me my broth when Thomas is busy. He talks to me about his mother in Kent.
-Anselm: There's no harm in Simon. Whoever told you different, ask yourself why they...
+Anselm {warm}: Simon? He brings me my broth when Thomas is busy. He talks to me about his mother in Kent.
+Anselm {afraid, swallow}: There's no harm in Simon. Whoever told you different, ask yourself why they...
 (He stops, and turns his face to the wall.)
 -> topics
 
 == leave
-Anselm: Bar it at the bell, porter.
+Anselm {grave}: Bar it at the bell, porter.
 "

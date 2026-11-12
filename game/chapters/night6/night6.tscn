@@ -239,7 +239,7 @@ director = NodePath("../Director")
 demon = NodePath("../Demon")
 knock = NodePath("../Director/Knock")
 race_exit = NodePath("../Marks/RaceExit")
-lines = {&"demon": PackedStringArray("(Grey light, and your head clear at last. The thing at your feet is a man in a prior's habit, his lantern on its side beside him, burned out.)", "(It's Hugh. His hand is still open toward you, and there's nothing in it.)"), &"rising": PackedStringArray("(The gate stands open. It goes out under the porch, stooping to clear the arch, and it doesn't hurry.)", "(Its tracks go away up the lane in the new snow, long and narrow and far apart, toward the lights of the city.)"), &"fire": PackedStringArray("(You hold the lantern to it and wait. A brown scorch, a thread of smoke, then the flame takes, and runs upward faster than you can step back.)"), &"gate": PackedStringArray("(You lift the bar and swing the gate back. Roger looks at what you hold up to him, then waves his men in past you, torches high, into the snow of the court.)", "Roger: (Looking past you at the church, the granary, the long roofs white with snow.) That'll do, porter. That'll do very well."), &"witness": PackedStringArray("(Down the steps into the race. The water takes you to the waist, and the cold of it stops your breath.)", "(Where the race runs out under the wall the arch comes down almost to the water. You duck under, her hand knotted in the back of your habit, and come up in the snow at the bottom of the lane.)"), &"broken_rite": PackedStringArray("(Grey light comes up over the snow. Somewhere in the city a bell rings for Lauds, then another, then all of them.)", "(Nothing comes. The abbey's bell never rings, and the snow goes on falling on the tracks in the court until they're gone.)")}
+lines = {&"demon": PackedStringArray("(Grey light, and your head clear at last. The thing at your feet is a man in a prior's habit, his lantern on its side beside him, burned out.)", "(It's Hugh. His hand is still open toward you, and there's nothing in it.)"), &"rising": PackedStringArray("(The gate stands open. It goes out under the porch, stooping to clear the arch, and it doesn't hurry.)", "(Its tracks go away up the lane in the new snow, long and narrow and far apart, toward the lights of the city.)"), &"fire": PackedStringArray("(You hold the lantern to it and wait. A brown scorch, a thread of smoke, then the flame takes, and runs upward faster than you can step back.)"), &"gate": PackedStringArray("(You lift the bar and swing the gate back. Roger looks at what you hold up to him, then waves his men in past you, torches high, into the snow of the court.)", "Roger {amused}: (Looking past you at the church, the granary, the long roofs white with snow.) That'll do, porter. That'll do very well."), &"witness": PackedStringArray("(Down the steps into the race. The water takes you to the waist, and the cold of it stops your breath.)", "(Where the race runs out under the wall the arch comes down almost to the water. You duck under, her hand knotted in the back of your habit, and come up in the snow at the bottom of the lane.)"), &"broken_rite": PackedStringArray("(Grey light comes up over the snow. Somewhere in the city a bell rings for Lauds, then another, then all of them.)", "(Nothing comes. The abbey's bell never rings, and the snow goes on falling on the tracks in the court until they're gone.)")}
 
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
@@ -274,9 +274,9 @@ phase = 6
 duty = "Thomas, with a cup"
 thomas = NodePath("../../Brothers/Thomas")
 at = NodePath("../../Marks/ThomasWine")
-offer_lines = PackedStringArray("Thomas: (Holding out a steaming cup.) Hot wine, Alric, with spice in it. For the cold. You've had nothing all day.", "Thomas: Go on, all of it, while it's hot. (He sits down where he can watch you drink.)")
+offer_lines = PackedStringArray("Thomas {warm}: (Holding out a steaming cup.) Hot wine, Alric, with spice in it. For the cold. You've had nothing all day.", "Thomas {warm, still}: Go on, all of it, while it's hot. (He sits down where he can watch you drink.)")
 drunk_lines = PackedStringArray("(It's sweet and scalding. Under the spice it tastes of the bread, and of the incense, and of something under both that you've never tasted.)", "(Thomas takes the empty cup out of your hands, and smiles.)")
-refused_lines = PackedStringArray("(You push the cup away. For a moment the face over it isn't one you know: still, and cold, and measuring you.)", "Thomas: (Then he smiles, the same as always.) As you like, Alric. I'll leave it here, in case you change your mind.")
+refused_lines = PackedStringArray("(You push the cup away. For a moment the face over it isn't one you know: still, and cold, and measuring you.)", "Thomas {warm}: (Then he smiles, the same as always.) As you like, Alric. I'll leave it here, in case you change your mind.")
 
 [node name="Hunt" type="Node" parent="Director" node_paths=PackedStringArray("hunt")]
 script = ExtResource("hunt_gd")
@@ -307,7 +307,7 @@ mab_lines = PackedStringArray("(A dry clack at the grille: a leper's clapper. Ma
 script = ExtResource("lines_gd")
 phase = 2
 at_hour = 21.0
-lines = PackedStringArray("Hugh: (He holds his lantern up to your face.) Your eyes are black to the rims. You're full of it, brother, whatever they've fed you.")
+lines = PackedStringArray("Hugh {grave}: (He holds his lantern up to your face.) Your eyes are black to the rims. You're full of it, brother, whatever they've fed you.")
 min_dose = 75.0
 
 [node name="Rite" type="Node" parent="Director" node_paths=PackedStringArray("victim", "thomas", "thomas_at", "book", "saint")]
@@ -325,7 +325,7 @@ book = NodePath("../../Proof/Book")
 saint = NodePath("../../Saint")
 rite_lines = PackedStringArray("(The crypt is full of light. The candles burn in their ring on the floor, and inside the ring a man lies bound hand and foot, his face turned toward the stair.)", "(At the altar stands a man in a black habit, his hood back, reading aloud from the book in a voice you know. Thomas.)")
 freed_lines = PackedStringArray("(The last cord gives. He's up and stumbling for the stair without a word, and his bare feet slap away into the dark.)")
-book_lines = PackedStringArray("(You take the book off the altar. It's heavier than it looks, and warm, as if a hand had only now left it.)", "Thomas: (A shout, in a voice you've never heard from him.) Alric! Put it back! You don't know what you're holding!")
+book_lines = PackedStringArray("(You take the book off the altar. It's heavier than it looks, and warm, as if a hand had only now left it.)", "Thomas {angry}: (A shout, in a voice you've never heard from him.) Alric! Put it back! You don't know what you're holding!")
 done_lines = PackedStringArray("(It's Matins, and no bell rings for it. Inside the ring the bound man cries out once, and Thomas closes the book.)", "(Every candle in the ring flares up at once, tall and still, and all the flames lean one way: toward the dark under the altar.)")
 silence_lines = PackedStringArray("(The wind drops. The rooks in the tower go quiet. Your lantern sinks low, though nothing touches it.)", "(Something stands ahead of you that wasn't there. Too tall, too thin, bent forward as if the roof were too low for it, and no horns. You've seen it before, through the squint.)", "(Then it moves. Slowly, in plain sight, toward you, and your lantern light falls into it and shows nothing.)")
 

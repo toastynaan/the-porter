@@ -50,7 +50,7 @@ func run() -> void:
 func _sent_up(p: Player) -> void:
 	p.controls_locked = true
 	await fade_to(1.0, 0.8)
-	await say("Agnes", "Up you go, brother. I'll not have you sleeping on my benches.")
+	await say("Agnes {weary}", "Up you go, brother. I'll not have you sleeping on my benches.")
 	p.place(bed.global_position + Vector3(0.0, 0.0, 0.0), 0.0)
 	await fade_to(0.0, 0.6)
 	p.controls_locked = false

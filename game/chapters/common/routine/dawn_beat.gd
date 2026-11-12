@@ -26,7 +26,7 @@ extends NightBeat
 @export var sleep: Duty
 ## Of the night's Dose, the part still in him when he wakes at dusk.
 @export var sleep_keeps := 0.5
-@export var cole_lines := PackedStringArray(["Cole: (Takes the gate without a word, and opens it for the day.)"])
+@export var cole_lines := PackedStringArray(["Cole {blank}: (Takes the gate without a word, and opens it for the day.)"])
 @export var keys_lines := PackedStringArray(["(Your keys. Someone has moved them.)"])
 @export var sleep_line := "(You sleep through the day.)"
 ## Night 4: someone has been in his cell. Said as he comes into it; the

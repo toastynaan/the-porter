@@ -10,11 +10,11 @@ text = "# DRAFT
 # What the brothers say now (and what some say quietly), and whether he'll leave: he has nowhere to go.
 == start
 (Brother Piers on the east walk, his breath smoking in the cold. He's looking at the chapter house door.)
-Piers: Clear tonight. You can see every star. I'd sooner have the fog back.
+Piers {grave}: Clear tonight. You can see every star. I'd sooner have the fog back.
 -> topics
 
 == again
-Piers: Still cold.
+Piers {calm}: Still cold.
 -> topics
 
 == topics
@@ -22,16 +22,16 @@ Piers: Still cold.
 * [if not n5_choirc_leave] Will you leave the abbey, brother? -> go
 
 == talk [set n5_choirc_talk]
-Piers: That it took the boy first because he was the youngest. That it walks in the fog. That it's no demon at all.
+Piers {grave}: That it took the boy first because he was the youngest. That it walks in the fog. That it's no demon at all.
 (He looks at you.)
-Piers: Nobody says that last one loudly.
+Piers {wary}: Nobody says that last one loudly.
 -> topics
 
 == go [set n5_choirc_leave]
-Piers: And go where? I've been in this house since I was nine. Outside that gate I'm a shaved head and no trade.
-Piers: I'll stay. I'll keep a candle lit.
+Piers {sad}: And go where? I've been in this house since I was nine. Outside that gate I'm a shaved head and no trade.
+Piers {weary}: I'll stay. I'll keep a candle lit.
 -> topics
 
 == leave
-Piers: Keep warm, porter.
+Piers {calm}: Keep warm, porter.
 "

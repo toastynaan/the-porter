@@ -9,6 +9,7 @@ text = "# DRAFT
 # Osric at the kitchen fire at dusk (night 2). Jolly; he carried the drowned merchant (he handles the bodies).
 # He noticed whether the porter ate his bread last night (n1_ate_bread). Asking what's in the bread, once warned,
 # is the wrong question to the wrong brother (Suspicion +5), and ends the talk on his question.
+# Claims: n2_osric_rye (hiding: the rye is the abbey's own, and it carries the ergot the cult doses the house with).
 == start
 (Osric at the kitchen fire again, red-faced from it. He waves a ladle at you.)
 -> dead [if died_merchant]
@@ -16,37 +17,49 @@ text = "# DRAFT
 -> left
 
 == dead
-Osric: A sad morning's work. I helped carry that merchant out of the pond, heavy as wet barley. Not kitchen talk.
+Osric {sad, smile}: A sad morning's work. I helped carry that merchant out of the pond, heavy as wet barley. Not kitchen talk.
 -> ate [if n1_ate_bread]
 -> left
 
 == ate
-Osric: You cleared your trencher last night! That's a porter I like.
+Osric {glad}: You cleared your trencher last night! That's a porter I like.
 -> topics
 
 == left
-Osric: You left your bread last night, brother. My bread! (He laughs, but his eyes stay on you.)
-Osric: Tonight you'll eat it, or I'll know why.
+Osric {glad}: You left your bread last night, brother. My bread! (He laughs, but his eyes stay on you.)
+Osric {amused}: Tonight you'll eat it, or I'll know why.
 -> topics
 
 == again
-Osric: Back for a taste? Not till the bell.
+Osric {glad}: Back for a taste? Not till the bell.
 -> topics
 
 == topics
 * [if not n2_osric_supper] What's for supper, brother? -> supper
-* [if bread_warned] [if not n2_osric_bread] What's in the bread, brother? -> bread
+* [if bread_warned] [if not n2_osric_bread] [if not read_n2_osric_rye] What's in the bread, brother? -> bread
 
 == supper [set n2_osric_supper]
-Osric: Eels, stewed, if the eelman got through the rain. He did. And the bread, with a heel put by for you.
+Osric {glad}: Eels, stewed, if the eelman got through the rain. He did. And the bread, with a heel put by for you.
 -> topics
 
 == bread [set n2_osric_bread] [suspicion 5]
-Osric: In my bread? Rye and salt and water and my own two hands. Rye from our own granary.
+-> n2_osric_rye
+
+== n2_osric_rye [claim n2_osric_rye hiding]
+Osric {glad, smile}: In my bread? Rye and salt and water and my own two hands. Rye from our own granary.
+* [believe] Then I'll eat it, brother, and gladly. -> rye_believed
+* [press] Nothing else in it, brother? Nothing at all? -> rye_pressed
+
+== rye_believed
+Osric {glad}: That's the porter I like. The heel's put by for you, mind.
+(He goes back to his kneading.)
+-> end
+
+== rye_pressed
 (He keeps smiling. He has stopped kneading.)
-Osric: Who's been talking to you about my bread, brother?
+Osric {wary}: Who's been talking to you about my bread, brother?
 -> end
 
 == leave
-Osric: Come hungry, mind!
+Osric {glad}: Come hungry, mind!
 "

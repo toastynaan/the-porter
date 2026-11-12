@@ -11,21 +11,22 @@ text = "# DRAFT
 # key from the rye; two kinds), the gate (Cole holds it and won't open), Roger (a bad bargain, maybe the only one).
 # With the thomas_sent_simon note he joins Anselm's death to Thomas. He warns that a lantern looking for the porter
 # may be his. (At Dose 75+ he is the demon who corners the porter with a light. Nothing here says so.)
+# Claims: n6_hugh_lantern (true): a lantern looking for the porter tonight may be his.
 == start
 (The prior is at your door with a lantern, snow on his hood. He looks as if he hasn't slept since he let you go.)
-Hugh: Up, porter. No bell tonight, no supper. The abbot is sick in his bed and doesn't know what day it is.
-Hugh: Anselm is dead. Henbane packed into his mouth like straw. Somebody heard him talk.
+Hugh {cold}: Up, porter. No bell tonight, no supper. The abbot is sick in his bed and doesn't know what day it is.
+Hugh {grave, jaw}: Anselm is dead. Henbane packed into his mouth like straw. Somebody heard him talk.
 -> thomas [if thomas_sent_simon]
 -> topics
 
 == thomas
-Hugh: Henbane, in the infirmary, and only Thomas keeps that key. And Simon says Thomas sent him to scrub the blood.
-Hugh: I'm not blind, porter. Only slow.
+Hugh {cold, jaw}: Henbane, in the infirmary, and only Thomas keeps that key. And Simon says Thomas sent him to scrub the blood.
+Hugh {grave}: I'm not blind, porter. Only slow.
 -> topics
 
 == again
 (The prior is trimming his lantern's wick with a thumbnail. He doesn't look up.)
-Hugh: Well? We haven't the night to stand here.
+Hugh {cold}: Well? We haven't the night to stand here.
 -> topics
 
 == topics
@@ -34,20 +35,33 @@ Hugh: Well? We haven't the night to stand here.
 * [if not n6_hugh_roger] Will Roger help us, Father Prior? -> roger
 
 == proof [set n6_hugh_proof]
-Hugh: That key you pulled out of the rye opens the closet in the granary. The stair behind it goes down under the nave.
-Hugh: Whatever they keep, they keep down there. Bring up two kinds of thing, not two of a kind. One proves nothing.
+Hugh {cold}: That key you pulled out of the rye opens the closet in the granary. The stair behind it goes down under the nave.
+Hugh {grave}: Whatever they keep, they keep down there. Bring up two kinds of thing, not two of a kind. One proves nothing.
 -> topics
 
 == gate [set n6_hugh_gate]
-Hugh: Cole has the gate, and Cole won't open it. Not for you, not for me. Not for the abbot, if he could stand.
-Hugh: I'll be about the court with a light. If a lantern comes looking for you tonight, it may be mine. Look before you run.
+Hugh {cold}: Cole has the gate, and Cole won't open it. Not for you, not for me. Not for the abbot, if he could stand.
+-> n6_hugh_lantern
+
+# He comes looking for the porter with a light to help him (design doc, Endings, \"The Demon\"): true.
+== n6_hugh_lantern [claim n6_hugh_lantern true]
+Hugh {cold, jaw}: I'll be about the court with a light. If a lantern comes looking for you tonight, it may be mine. Look before you run.
+* [believe] I'll look, Father Prior. -> lantern_believed
+* [press] And how would I know it's yours, in the dark? -> lantern_pressed
+
+== lantern_believed
+Hugh {grave}: Good. Then we may both see Lauds.
+-> topics
+
+== lantern_pressed
+Hugh {cold, jaw}: By looking. I've said it once, porter.
 -> topics
 
 == roger [set n6_hugh_roger]
-Hugh: Roger's men have been in the Keys since noon. He's wanted this ground since before I was prior.
-Hugh: Give him proof and he'll hang them, and take the house for his trouble. A bad bargain. It may be the only one left.
+Hugh {cold}: Roger's men have been in the Keys since noon. He's wanted this ground since before I was prior.
+Hugh {grave}: Give him proof and he'll hang them, and take the house for his trouble. A bad bargain. It may be the only one left.
 -> topics
 
 == leave
-Hugh: Keep off the open garth, porter. In this snow they'll follow your feet.
+Hugh {cold}: Keep off the open garth, porter. In this snow they'll follow your feet.
 "

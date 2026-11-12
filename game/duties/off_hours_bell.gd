@@ -133,11 +133,11 @@ func _prior_questions(p: Player) -> void:
 	match pick:
 		0:
 			GameState.set_flag(&"hugh_suspects", int(GameState.get_flag(&"hugh_suspects", 0)) + 1)
-			await Talk.say("Hugh", "Something. Always something, in this house, and never anyone. Go back to your gate.")
+			await Talk.say("Hugh {cold, jaw}", "Something. Always something, in this house, and never anyone. Go back to your gate.")
 		1:
-			await Talk.say("Hugh", "Then don't wake the house for nothing again.")
+			await Talk.say("Hugh {angry}", "Then don't wake the house for nothing again.")
 		_:
-			await Talk.say("Hugh", "(He looks at you a long time, and writes on his tablet.)")
+			await Talk.say("Hugh {cold}", "(He looks at you a long time, and writes on his tablet.)")
 	npc.queue_free()
 
 

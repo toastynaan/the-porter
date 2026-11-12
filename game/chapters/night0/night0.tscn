@@ -210,7 +210,7 @@ talker = NodePath("../../Traveller")
 [node name="WhiteChapel" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -193, 6, 62)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("(The bell of the white chapel, ringing for Vespers.)", "Carter: Vespers already. Hup! We'll be in before they shut the gate.")
+lines = PackedStringArray("(The bell of the white chapel, ringing for Vespers.)", "Carter {wary}: Vespers already. Hup! We'll be in before they shut the gate.")
 sound = ExtResource("sfx_bell")
 volume_db = -4.0
 keep = 25.0
@@ -218,7 +218,7 @@ keep = 25.0
 [node name="Whoa" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -174, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Carter: Easy, easy. Let him by.")
+lines = PackedStringArray("Carter {wary}: Easy, easy. Let him by.")
 keep = 12.0
 
 [node name="Wall" type="Marker3D" parent="RideCues"]
@@ -232,7 +232,7 @@ keep = 12.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.5, 0, 44.4)
 script = ExtResource("cue_gd")
 editor_description = "The wagon stops and the traveller breaks off whatever he was saying to greet the warden (cut_in). The warden walks up with the last of the lines, holds his lantern up to the porter's face and talks to him (talk: warden.tres), and walks back to his place (parting_lines). Sets n0_past_aldgate as the wagon goes on."
-lines = PackedStringArray("Traveller: Evening, warden. God keep the gate.", "Warden: In or out, carter? We shut at the curfew bell, and we open for no one after it.", "Carter: In, warden. Two for the city.", "Warden: Let's have a look at you, then.")
+lines = PackedStringArray("Traveller {warm}: Evening, warden. God keep the gate.", "Warden {weary}: In or out, carter? We shut at the curfew bell, and we open for no one after it.", "Carter {calm}: In, warden. Two for the city.", "Warden {wary}: Let's have a look at you, then.")
 pace = 3.2
 hold = 1.0
 watchers = [NodePath("../../RoadFolk/Warden")]
@@ -240,7 +240,7 @@ cut_in = true
 inspector = NodePath("../../RoadFolk/Warden")
 talk = ExtResource("n0_warden")
 talker = NodePath("../../RoadFolk/Warden")
-parting_lines = PackedStringArray("Warden: You're good. Go on, and God go with you.")
+parting_lines = PackedStringArray("Warden {calm}: You're good. Go on, and God go with you.")
 flag = &"n0_past_aldgate"
 
 [node name="Shutters" type="Marker3D" parent="RideCues"]
@@ -260,7 +260,7 @@ watchers = [NodePath("../../RoadFolk/Townswoman")]
 [node name="Dog" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99, 0, 50.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Traveller: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
+lines = PackedStringArray("Traveller {grave}: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
 sound = ExtResource("sfx_dog")
 volume_db = -3.0
 keep = 25.0
@@ -268,7 +268,7 @@ keep = 25.0
 [node name="Bridge" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Carter: Over the brook, and your lane's the next turning. Nearly there.")
+lines = PackedStringArray("Carter {calm}: Over the brook, and your lane's the next turning. Nearly there.")
 pace = 2.2
 keep = 12.0
 editor_description = "The last words of the road. As the wagon comes over the bridge's crown (Marks/DarkAt) the night goes dark, still rolling, and comes up again in the lane (Marks/LightAt)."
@@ -276,7 +276,7 @@ editor_description = "The last words of the road. As the wagon comes over the br
 [node name="Lane" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 11.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Traveller: That wall's your abbey. God keep you, brother. Bar your door at night.")
+lines = PackedStringArray("Traveller {grave}: That wall's your abbey. God keep you, brother. Bar your door at night.")
 pace = 2.2
 keep = 25.0
 

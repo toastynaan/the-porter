@@ -35,5 +35,6 @@ speaker = "Walter"
 look = ExtResource("look")
 ledger_name = "Walter the pardoner"
 greeting = "Good evening, brother porter! Walter the pardoner, known at this gate since before you were breeched, so don't keep Walter standing in the wet."
+greeting_face = "amused, brow"
 details = Array[ExtResource("2_detail")]([SubResource("Detail_face"), SubResource("Detail_body"), SubResource("Detail_hands"), SubResource("Detail_box")])
 flag = &"n1_walter"

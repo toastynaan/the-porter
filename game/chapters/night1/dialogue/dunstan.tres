@@ -20,7 +20,7 @@ text = "# DRAFT
 * [if not n1_dunstan_help] Let me carry some of that for you. -> help
 
 == name [set n1_dunstan_name]
-Dunstan: Dunstan.
+Dunstan {blank}: Dunstan.
 (He sets the next log on the block.)
 -> topics
 

@@ -13,13 +13,13 @@ text = "# DRAFT
 # (He is the rite's last soul at Matins if the cult takes him. Nothing here says so.)
 == start
 (Brother Simon is crouched in the dark at the back of the nave, his hood up. He's on his feet before you can speak.)
-Simon: Porter. They're all out. I watched them go past the door in their horns, and not one of them was hurrying.
-Simon: They'll come for me again tonight. I know it. Let me help you. I can't sit here and wait for it.
+Simon {afraid}: Porter. They're all out. I watched them go past the door in their horns, and not one of them was hurrying.
+Simon {pleading}: They'll come for me again tonight. I know it. Let me help you. I can't sit here and wait for it.
 -> topics
 
 == again
 (Simon is back in the dark, hugging himself, watching the door.)
-Simon: Something went by while you were gone. I didn't look.
+Simon {afraid, look down}: Something went by while you were gone. I didn't look.
 -> topics
 
 == topics
@@ -28,22 +28,22 @@ Simon: Something went by while you were gone. I didn't look.
 * [if n6_simon_with=follow] Wait for me here, Brother Simon. [wait] -> wait
 
 == passage [set n6_simon_passage] [note crypt_candles]
-Simon: Thomas sent me down there with candles, twice since Michaelmas. A door in the granary closet that looks like the planks.
-Simon: Then a stair, and a long passage under the nave. Pegs on the wall with things hung on them, and a chest. I didn't look.
-Simon: I set the candles in the ring by the altar, as I was told. More of them were lit each time.
-Simon: The last time, he said only one more now. I didn't ask him one more what.
+Simon {afraid, look down}: Thomas sent me down there with candles, twice since Michaelmas. A door in the granary closet that looks like the planks.
+Simon {afraid}: Then a stair, and a long passage under the nave. Pegs on the wall with things hung on them, and a chest. I didn't look.
+Simon {ashamed}: I set the candles in the ring by the altar, as I was told. More of them were lit each time.
+Simon {afraid, swallow}: The last time, he said only one more now. I didn't ask him one more what.
 -> topics
 
 == follow [set n6_simon_with=follow]
 (He swallows, and pushes back his hood.)
-Simon: I'll come. I know that stair in the dark. Only don't leave me anywhere alone.
+Simon {afraid}: I'll come. I know that stair in the dark. Only don't leave me anywhere alone.
 -> end
 
 == wait [set n6_simon_with=wait]
 (He tries to smile, and can't.)
-Simon: Here, then. I'll keep to the dark. Come back for me, porter.
+Simon {sad}: Here, then. I'll keep to the dark. Come back for me, porter.
 -> end
 
 == leave
-Simon: Porter? Don't be long. Please.
+Simon {pleading}: Porter? Don't be long. Please.
 "

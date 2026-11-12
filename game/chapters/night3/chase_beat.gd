@@ -23,8 +23,8 @@ const BONES_AFTER := 1.5
 @export var rescue_porter: Marker3D
 @export var rescue_thomas: Marker3D
 @export var bones_lines := PackedStringArray(["(Your hand closes on something in the ash. A jaw.)"])
-@export var rescue_lines := PackedStringArray(["Thomas: (Pulls you into the infirmary and hides you.)"])
-@export var caught_lines := PackedStringArray(["Thomas: (Over you as you wake.)"])
+@export var rescue_lines := PackedStringArray(["Thomas {grave}: (Pulls you into the infirmary and hides you.)"])
+@export var caught_lines := PackedStringArray(["Thomas {warm}: (Over you as you wake.)"])
 
 var _woke := false
 var _audio: AudioStreamPlayer3D

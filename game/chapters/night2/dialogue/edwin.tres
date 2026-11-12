@@ -16,22 +16,22 @@ text = "# DRAFT
 
 == dead
 (Edwin catches your sleeve the moment he sees you.)
-Edwin: Did you see him? The merchant, in the fishpond? I wasn't let look.
-Edwin: Brother Osric carried him off before Prime. He said a drowned man's no sight for a novice.
+Edwin {afraid}: Did you see him? The merchant, in the fishpond? I wasn't let look.
+Edwin {sad}: Brother Osric carried him off before Prime. He said a drowned man's no sight for a novice.
 -> topics
 
 == lived
-Edwin: Your merchant went off this morning cursing you all the way to the gate! For locking him in!
-Edwin: I've never heard a man swear like it, and I've been to Billingsgate.
+Edwin {glad}: Your merchant went off this morning cursing you all the way to the gate! For locking him in!
+Edwin {amused}: I've never heard a man swear like it, and I've been to Billingsgate.
 -> topics
 
 == plain
-Edwin: You're alive! I mean, of course you are. How was it? Was it long?
-Edwin: Brother Wulfric says the first night's the longest, and then they get longer.
+Edwin {glad}: You're alive! I mean, of course you are. How was it? Was it long?
+Edwin {amused, brow}: Brother Wulfric says the first night's the longest, and then they get longer.
 -> topics
 
 == again
-Edwin: Still here? Me too. I'm meant to be in the church.
+Edwin {amused}: Still here? Me too. I'm meant to be in the church.
 -> topics
 
 == topics
@@ -40,20 +40,20 @@ Edwin: Still here? Me too. I'm meant to be in the church.
 * [if not n2_edwin_talk] What are the brothers saying today? -> talk
 
 == knock [set n2_edwin_knock]
-Edwin: And nobody there? (He's gone pale, and he's trying not to be.)
-Edwin: Boys from the lane. It'll have been boys. Won't it?
+Edwin {afraid, swallow}: And nobody there? (He's gone pale, and he's trying not to be.)
+Edwin {afraid}: Boys from the lane. It'll have been boys. Won't it?
 -> topics
 
 == walter [set n2_edwin_walter]
-Edwin: A pardoner! Did he have a feather from the Archangel's wing? They always have a feather.
-Edwin: Brother Hugh says pardoners are thieves with Latin. I'd still like to see the feather.
+Edwin {glad, brow}: A pardoner! Did he have a feather from the Archangel's wing? They always have a feather.
+Edwin {amused}: Brother Hugh says pardoners are thieves with Latin. I'd still like to see the feather.
 -> topics
 
 == talk [set n2_edwin_talk]
-Edwin: That Father Abbot had bad dreams. He told the chapter this morning, and asked us all to pray for the house.
-Edwin: Brother Hugh says it's the rain. Brother Ranulf says the incense isn't thick enough at Matins.
+Edwin {grave}: That Father Abbot had bad dreams. He told the chapter this morning, and asked us all to pray for the house.
+Edwin {amused}: Brother Hugh says it's the rain. Brother Ranulf says the incense isn't thick enough at Matins.
 -> topics
 
 == leave
-Edwin: See you at supper! I'm reading again!
+Edwin {glad}: See you at supper! I'm reading again!
 "

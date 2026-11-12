@@ -11,13 +11,13 @@ text = "# DRAFT
 # Hint: by the old porter who locked the guests in, he meant himself, and he didn't, every night.
 == start
 (The old porter sits by the brazier with a blanket round him. His white eyes are on the door before you're through it.)
-Anselm: That's the porter's step. The keys give you away. I wore them thirty years.
+Anselm {weary}: That's the porter's step. The keys give you away. I wore them thirty years.
 -> warned [if d1_anselm_warned]
 -> unwarned
 
 == warned
 (He listens to the room a moment, then leans toward you.)
-Anselm: This morning, when we were alone. What I told you. You remember it?
+Anselm {afraid}: This morning, when we were alone. What I told you. You remember it?
 -> ask
 
 == ask
@@ -27,31 +27,31 @@ Anselm: This morning, when we were alone. What I told you. You remember it?
 
 == bell [set n1_anselm_bell] [trust anselm 5]
 (He lets out his breath.)
-Anselm: Good lad. Say it over when they knock. Say it like a psalm.
+Anselm {warm}: Good lad. Say it over when they knock. Say it like a psalm.
 -> ask
 
 == locked [set n1_anselm_locked]
-Anselm: I said the old porter. I meant me.
-Anselm: I locked them in. Most nights. (He turns his face away.) Lock them in, porter. Every night.
+Anselm {ashamed, lip}: I said the old porter. I meant me.
+Anselm {ashamed, swallow}: I locked them in. Most nights. (He turns his face away.) Lock them in, porter. Every night.
 -> ask
 
 == why [set n1_anselm_why]
 (His hand finds your sleeve and holds it.)
-Anselm: Because I did. Don't ask me more. Not here.
+Anselm {afraid}: Because I did. Don't ask me more. Not here.
 -> ask
 
 == unwarned [set n1_anselm_warned]
 (He listens to the room a moment, then his hand finds your sleeve.)
-Anselm: Don't let them in after the bell. Whatever they tell you.
-Anselm: And lock the guesthouse at night. The old porter always did.
+Anselm {afraid}: Don't let them in after the bell. Whatever they tell you.
+Anselm {weary, swallow}: And lock the guesthouse at night. The old porter always did.
 -> end
 
 == again
 (He turns his face toward you.)
-Anselm: Still here? Go on to your supper. They'll notice if you're late.
+Anselm {weary}: Still here? Go on to your supper. They'll notice if you're late.
 -> ask [if d1_anselm_warned]
 -> end
 
 == leave
-Anselm: After the bell, porter. Remember.
+Anselm {afraid}: After the bell, porter. Remember.
 "

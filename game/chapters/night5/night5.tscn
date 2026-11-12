@@ -185,9 +185,9 @@ reach_thomas = NodePath("../../Duties/ReachThomas")
 reach_simon = NodePath("../../Duties/ReachSimon")
 lines = PackedStringArray("(Thomas lies on the chapter house floor, blood on his face, trying to rise. Across the room a masked man has Brother Simon down against the stone bench, a knife at his throat.)", "(There's time to reach one of them. Only one.)")
 thomas_lines = PackedStringArray("(You go down on your knees by Thomas. Behind you, one quick stroke, and blood flies across the last of the light.)", "(Simon folds against the bench. The masked man straightens over him, turns, and looks at you for a long moment.)", "(Then he steps back through the slype door, and is gone.)")
-thomas_after = PackedStringArray("Thomas: (Holding his side, his breath short.) It came at us out of nowhere, Alric. I tried to pull it off him. God forgive me, I couldn't.", "Thomas: Help me up. And don't go after it. Promise me.")
+thomas_after = PackedStringArray("Thomas {pained, still}: (Holding his side, his breath short.) It came at us out of nowhere, Alric. I tried to pull it off him. God forgive me, I couldn't.", "Thomas {warm}: Help me up. And don't go after it. Promise me.")
 simon_lines = PackedStringArray("(You throw yourself at the masked man and drag him off Simon. He tears free, and is out through the slype door and gone.)", "(Simon lies against the bench, gasping, his hands at his throat. They come away with only a little blood.)", "(Behind you Thomas gets to his feet, slowly, blood down his face and one arm held tight against his side.)")
-simon_tells = PackedStringArray("Simon: (Low, his eyes on Thomas.) The blood on the flags last night. Brother Thomas sent me to scrub it. He said it was for the good of the house, and to tell no one.", "Simon: Whose blood was it, porter? He wouldn't say.")
+simon_tells = PackedStringArray("Simon {afraid}: (Low, his eyes on Thomas.) The blood on the flags last night. Brother Thomas sent me to scrub it. He said it was for the good of the house, and to tell no one.", "Simon {ashamed, look down}: Whose blood was it, porter? He wouldn't say.")
 
 [node name="Supper" type="Node" parent="Director" node_paths=PackedStringArray("seat", "seat_duty", "bread", "osric", "thomas", "watcher", "aside_by")]
 script = ExtResource("supper_gd")
@@ -204,10 +204,10 @@ thomas = NodePath("../../Brothers/Thomas")
 watcher = NodePath("../../Brothers/Hugh")
 aside_by = NodePath("../../Brothers/Thomas")
 seated_lines = PackedStringArray()
-serve_lines = PackedStringArray("(Osric sets down your bread and ale, and the extra heel beside them. He smiles, the same smile as every night.)", "Osric: The heel for the porter. A day's fast, and look at you. Eat up.")
+serve_lines = PackedStringArray("(Osric sets down your bread and ale, and the extra heel beside them. He smiles, the same smile as every night.)", "Osric {glad}: The heel for the porter. A day's fast, and look at you. Eat up.")
 eat_lines = PackedStringArray("(The bread is bitter tonight. The taste stays at the back of your tongue.)")
-palm_seen_lines = PackedStringArray("Osric: (From the hatch, smiling.) Not hungry, porter? I'll keep an eye on you. Can't have you wasting away.")
-aside_lines = PackedStringArray("(Thomas leans over, his arm bound, and tilts your face to the candle. He looks into one eye, then the other, for a long time.)", "Thomas: Eat, Alric. All of it. You'll need your strength tonight.")
+palm_seen_lines = PackedStringArray("Osric {glad, smile}: (From the hatch, smiling.) Not hungry, porter? I'll keep an eye on you. Can't have you wasting away.")
+aside_lines = PackedStringArray("(Thomas leans over, his arm bound, and tilts your face to the candle. He looks into one eye, then the other, for a long time.)", "Thomas {warm}: Eat, Alric. All of it. You'll need your strength tonight.")
 
 [node name="Gate" type="Node" parent="Director" node_paths=PackedStringArray("gate", "cole", "cole_off", "relieve", "shut_gate", "bar_duty", "ledger")]
 script = ExtResource("gate_gd")
@@ -220,7 +220,7 @@ relieve = NodePath("../../Duties/RelieveCole")
 shut_gate = NodePath("../../Duties/ShutGate")
 bar_duty = NodePath("../../Duties/BarGate")
 ledger = NodePath("../../Duties/Ledger")
-relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole: Yours.")
+relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole {blank}: Yours.")
 
 [node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate")]
 script = ExtResource("visits_gd")
@@ -244,7 +244,7 @@ shut_gate = NodePath("../../Duties/ShutGate")
 ledger = NodePath("../../Duties/Ledger")
 beds = NodePath("../../Duties/GuestBeds")
 gate = NodePath("../../AbbeyGate")
-prior_lines = PackedStringArray("Hugh: Stand aside, porter. I'll see him to a bed myself.", "Hugh: (To the visitor.) This way. Keep close, and touch nothing.")
+prior_lines = PackedStringArray("Hugh {cold}: Stand aside, porter. I'll see him to a bed myself.", "Hugh {cold}: (To the visitor.) This way. Keep close, and touch nothing.")
 
 [node name="Bell" type="Node" parent="Director" node_paths=PackedStringArray("rope", "tower")]
 script = ExtResource("bell_gd")
@@ -272,7 +272,7 @@ phase = 3
 duty = "Anselm, beside you"
 people = [NodePath("../../Brothers/Anselm")]
 marks = [NodePath("../../Marks/AnselmChoir")]
-lines = PackedStringArray("(A thin hand finds your sleeve in the smoke and holds on. Anselm, his blind eyes wide.)", "Anselm: The key to the crypt passage. It's in the granary, under the rye. Go now, while they're all looking at him.")
+lines = PackedStringArray("(A thin hand finds your sleeve in the smoke and holds on. Anselm, his blind eyes wide.)", "Anselm {afraid, swallow}: The key to the crypt passage. It's in the granary, under the rye. Go now, while they're all looking at him.")
 flag = &"anselm_key"
 
 [node name="Granary" type="Node" parent="Director" node_paths=PackedStringArray("grain", "body", "passage", "locks", "hunter_at", "chute", "sergeant_death")]
@@ -316,9 +316,9 @@ people = [NodePath("../../Brothers/Hugh"), NodePath("../../Brothers/ChoirB"), No
 marks = [NodePath("../../Marks/HughArrest"), NodePath("../../Marks/ArrestA"), NodePath("../../Marks/ArrestB")]
 thomas = NodePath("../../Brothers/Thomas")
 thomas_at = NodePath("../../Marks/ThomasArrest")
-arrest_lines = PackedStringArray("(At first light the prior is waiting at the gate, two brothers at his back. They take your arms.)", "Hugh: Brother Alric, I'm holding you for the killings in this house. Every one of them since you came to that gate.", "Hugh: If you have anything to show me, show it now, porter. I won't ask twice.")
-believed_lines = PackedStringArray("Hugh: (He looks a long time at what you've shown him, then at his wax.) Let go of him. Go to your beds, both of you.", "Hugh: I've been watching the wrong man, porter. Tonight I'll stand with you, whatever comes.")
-custody_lines = PackedStringArray("Hugh: That's all? It isn't enough. You'll be held until I'm sure of you.", "Thomas: (Crossing the court, his arm bound.) Prior, look at his eyes. He's sick. He's been seeing things for days. Give him to me. I'll keep him in the infirmary and answer for him myself.", "Hugh: Into your care, then, brother. Yours. If he walks out of it, it's on your head.")
+arrest_lines = PackedStringArray("(At first light the prior is waiting at the gate, two brothers at his back. They take your arms.)", "Hugh {cold, jaw}: Brother Alric, I'm holding you for the killings in this house. Every one of them since you came to that gate.", "Hugh {cold}: If you have anything to show me, show it now, porter. I won't ask twice.")
+believed_lines = PackedStringArray("Hugh {grave}: (He looks a long time at what you've shown him, then at his wax.) Let go of him. Go to your beds, both of you.", "Hugh {grave, jaw}: I've been watching the wrong man, porter. Tonight I'll stand with you, whatever comes.")
+custody_lines = PackedStringArray("Hugh {cold}: That's all? It isn't enough. You'll be held until I'm sure of you.", "Thomas {warm}: (Crossing the court, his arm bound.) Prior, look at his eyes. He's sick. He's been seeing things for days. Give him to me. I'll keep him in the infirmary and answer for him myself.", "Hugh {cold, jaw}: Into your care, then, brother. Yours. If he walks out of it, it's on your head.")
 
 [node name="Sergeant" type="Node" parent="Director"]
 script = ExtResource("lines_gd")

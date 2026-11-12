@@ -14,15 +14,15 @@ text = "# DRAFT
 -> plain
 
 == dead
-Piers: A man drowned in our fishpond. I'll not eat the carp this side of Easter.
+Piers {grave}: A man drowned in our fishpond. I'll not eat the carp this side of Easter.
 -> topics
 
 == plain
-Piers: Rain again. The cloister drain's choked. It'll be over our shoes by Matins.
+Piers {weary}: Rain again. The cloister drain's choked. It'll be over our shoes by Matins.
 -> topics
 
 == again
-Piers: Still raining.
+Piers {weary}: Still raining.
 -> topics
 
 == topics
@@ -33,13 +33,13 @@ Piers: Still raining.
 -> talk_plain
 
 == talk_dead
-Piers: That Thomas says he drowned drunk, so he drowned drunk. (He doesn't smile.) Thomas is never wrong about the dead.
+Piers {cold}: That Thomas says he drowned drunk, so he drowned drunk. (He doesn't smile.) Thomas is never wrong about the dead.
 -> end
 
 == talk_plain
-Piers: That the abbot's dreaming badly, and Bede's gone off sulking again. Nothing new.
+Piers {weary}: That the abbot's dreaming badly, and Bede's gone off sulking again. Nothing new.
 -> end
 
 == leave
-Piers: Keep dry, porter.
+Piers {calm}: Keep dry, porter.
 "

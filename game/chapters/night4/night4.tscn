@@ -166,7 +166,7 @@ phase = 6
 duty = "Dusk: Edwin is waiting for you"
 people = [NodePath("../../Brothers/Edwin")]
 marks = [NodePath("../../Marks/EdwinDusk")]
-lines = PackedStringArray("(Edwin comes up out of the fog at your elbow and takes your sleeve. He's white to the lips, and for once he isn't talking.)", "Edwin: I've seen its face, Alric. The demon's. As close as I am to you.", "Edwin: Not here. After Matins, at your gate. I'll tell you all of it then, I swear.")
+lines = PackedStringArray("(Edwin comes up out of the fog at your elbow and takes your sleeve. He's white to the lips, and for once he isn't talking.)", "Edwin {afraid}: I've seen its face, Alric. The demon's. As close as I am to you.", "Edwin {afraid, glance}: Not here. After Matins, at your gate. I'll tell you all of it then, I swear.")
 flag = &"edwin_whisper"
 
 [node name="Thomas" type="Node" parent="Director" node_paths=PackedStringArray("people", "marks")]
@@ -175,7 +175,7 @@ phase = 6
 duty = "Dusk: Thomas, by the gate"
 people = [NodePath("../../Brothers/Thomas")]
 marks = [NodePath("../../Marks/ThomasDusk")]
-lines = PackedStringArray("Thomas: (Low, falling into step beside you in the fog.) I've seen Brother Simon out at night, Alric. Long after Compline, when he should be abed.", "Thomas: Down on his knees in the cloister, at an hour nobody prays. Watch him. And say nothing.")
+lines = PackedStringArray("Thomas {grave}: (Low, falling into step beside you in the fog.) I've seen Brother Simon out at night, Alric. Long after Compline, when he should be abed.", "Thomas {warm, still}: Down on his knees in the cloister, at an hour nobody prays. Watch him. And say nothing.")
 flag = &"thomas_simon"
 
 [node name="Fast" type="Node" parent="Director"]
@@ -197,7 +197,7 @@ relieve = NodePath("../../Duties/RelieveCole")
 shut_gate = NodePath("../../Duties/ShutGate")
 bar_duty = NodePath("../../Duties/BarGate")
 ledger = NodePath("../../Duties/Ledger")
-relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole: Yours.")
+relieve_lines = PackedStringArray("(Cole takes his hand off the gate and steps back to let you have it.)", "Cole {blank}: Yours.")
 
 [node name="Knocks" type="Node" parent="Director" node_paths=PackedStringArray("lane_start", "lane_leave", "porch", "inside", "prior_from", "grate", "bar_duty", "open_gate", "shut_gate", "ledger", "beds", "gate")]
 script = ExtResource("visits_gd")
@@ -221,7 +221,7 @@ shut_gate = NodePath("../../Duties/ShutGate")
 ledger = NodePath("../../Duties/Ledger")
 beds = NodePath("../../Duties/GuestBeds")
 gate = NodePath("../../AbbeyGate")
-prior_lines = PackedStringArray("Hugh: Stand aside, porter. I'll see him to a bed myself.", "Hugh: (To the visitor.) This way. Keep close, and touch nothing.")
+prior_lines = PackedStringArray("Hugh {cold}: Stand aside, porter. I'll see him to a bed myself.", "Hugh {cold}: (To the visitor.) This way. Keep close, and touch nothing.")
 
 [node name="EdwinDies" type="Node" parent="Director" node_paths=PackedStringArray("body")]
 script = ExtResource("offstage_gd")
@@ -276,7 +276,7 @@ also_dead = Array[StringName]([&"died_choira"])
 death_lines = PackedStringArray("(A man cries out in the fog a few steps ahead of you, and the cry stops short.)", "(Brother Wulfric lies on the flags of the walk, his old eyes open on the fog.)", "(His lantern is still rolling. It rocks to a stop against his hand, and the flame stands up again.)")
 arriver = NodePath("../../Brothers/Hugh")
 arriver_at = NodePath("../../Marks/HughKneels")
-arriver_lines = PackedStringArray("(Steps in the fog. The prior comes out of the white, sees the body, and kneels by it without a word.)", "(When he gets up, the cuff of his sleeve is dark and wet with blood.)", "Hugh: Stand back from him, porter. And keep your hands where I can see them.")
+arriver_lines = PackedStringArray("(Steps in the fog. The prior comes out of the white, sees the body, and kneels by it without a word.)", "(When he gets up, the cuff of his sleeve is dark and wet with blood.)", "Hugh {cold, jaw}: Stand back from him, porter. And keep your hands where I can see them.")
 note = &"prior_sleeve"
 
 [node name="Guest" type="Node" parent="Director" node_paths=PackedStringArray("death", "at")]
@@ -287,7 +287,7 @@ visitor = ExtResource("guest")
 death = NodePath("../../GuestDeath")
 at = NodePath("../../Marks/GuestDoor")
 death_lines = PackedStringArray("(The guesthouse door stands open. Your guest lies across his bed, opened from the throat down, and the blood is still running off the blanket.)", "(The cuts are no beast's. Long and even, laid in rows and crossed, the same mark over and over, as if someone had been writing on him.)")
-barred_lines = PackedStringArray("(The guesthouse door won't give. It's barred from inside.)", "Pilgrim: (Through the door, high and shaking.) Somebody tried this door an hour since, and called me by my name. I've a knife in my hand, and I'll not lift the bar for anyone till it's light.")
+barred_lines = PackedStringArray("(The guesthouse door won't give. It's barred from inside.)", "Pilgrim {afraid}: (Through the door, high and shaking.) Somebody tried this door an hour since, and called me by my name. I've a knife in my hand, and I'll not lift the bar for anyone till it's light.")
 
 [node name="Charnel" type="Node" parent="Director" node_paths=PackedStringArray("body")]
 script = ExtResource("find_gd")
@@ -295,7 +295,7 @@ phase = 4
 duty = "The round: the charnel house"
 body = NodePath("../../Bodies/Edwin")
 lines = PackedStringArray("(In the charnel house, laid out straight among the piled bones with his hands folded on his breast: Edwin.)", "(His habit is torn open. Across his chest run rows of fine, close cuts, as if the teeth of a comb had been dragged through him.)")
-drugged_lines = PackedStringArray("Edwin: (Sitting up among the bones, his folded hands falling open.) You're late, Alric. I waited for you after Matins.", "Edwin: I saw its face. You've eaten bread from its hand. So have I.")
+drugged_lines = PackedStringArray("Edwin {blank}: (Sitting up among the bones, his folded hands falling open.) You're late, Alric. I waited for you after Matins.", "Edwin {blank}: I saw its face. You've eaten bread from its hand. So have I.")
 
 [node name="Hunters" type="Node" parent="Director" node_paths=PackedStringArray("ahead", "behind")]
 script = ExtResource("two_gd")
@@ -312,7 +312,7 @@ phase = 4
 duty = "The cloister: someone on his knees on the flags"
 people = [NodePath("../../Brothers/Simon")]
 marks = [NodePath("../../Marks/SimonScrubbing")]
-lines = PackedStringArray("(Brother Simon is on his knees on the cloister flags, scrubbing at a dark stain. The water in his bucket is red.)", "(He sees your lantern and pushes the rag behind his back.)", "Simon: It's wine. Only wine, somebody spilled it. Please, porter. You didn't see me here.")
+lines = PackedStringArray("(Brother Simon is on his knees on the cloister flags, scrubbing at a dark stain. The water in his bucket is red.)", "(He sees your lantern and pushes the rag behind his back.)", "Simon {pleading}: It's wine. Only wine, somebody spilled it. Please, porter. You didn't see me here.")
 flag = &"simon_scrubbing"
 note = &"simon_blood"
 

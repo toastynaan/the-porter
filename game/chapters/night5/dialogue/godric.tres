@@ -11,12 +11,12 @@ text = "# DRAFT
 # send for the bishop. (He collapses from the smoke at Matins tonight. Nothing here says so.)
 == start
 (The abbot kneels by the dark stain on the chapter house floor, lips moving. He coughs till he has to hold the bench.)
-Godric: My son. No, leave me. I'll pray here, where it happened.
+Godric {sad}: My son. No, leave me. I'll pray here, where it happened.
 -> topics
 
 == again
 (The abbot hasn't moved. His breath rattles.)
-Godric: Still here, child? Pray with me, then, or let me pray.
+Godric {weary}: Still here, child? Pray with me, then, or let me pray.
 -> topics
 
 == topics
@@ -25,25 +25,25 @@ Godric: Still here, child? Pray with me, then, or let me pray.
 * [if not n5_godric_bishop] Will you send for the bishop, Father Abbot? -> bishop
 
 == dead [set n5_godric_dead]
-Godric: I've said their names at every office today. Edwin, who read so badly at table. Wulfric, here before me.
+Godric {sad}: I've said their names at every office today. Edwin, who read so badly at table. Wulfric, here before me.
 -> dead_simon [if died_simon]
 -> topics
 
 == dead_simon
-Godric: And Simon, here. On these stones. In my own chapter house.
+Godric {sad, swallow}: And Simon, here. On these stones. In my own chapter house.
 -> topics
 
 == incense [set n5_godric_incense]
-Godric: Less? It's all that stands between this house and it.
+Godric {afraid}: Less? It's all that stands between this house and it.
 (He coughs into his sleeve, and looks at what he's coughed.)
-Godric: Ranulf says more. I'll give it more.
+Godric {weary}: Ranulf says more. I'll give it more.
 -> topics
 
 == bishop [set n5_godric_bishop]
-Godric: And tell him a demon walks in my house? He'd shut our doors and send our saint to Canterbury.
-Godric: No. We'll bear it ourselves, as Our Lord bore it. God hasn't forgotten us.
+Godric {grave}: And tell him a demon walks in my house? He'd shut our doors and send our saint to Canterbury.
+Godric {grave}: No. We'll bear it ourselves, as Our Lord bore it. God hasn't forgotten us.
 -> topics
 
 == leave
-Godric: Count us at Matins, my son. All that are left.
+Godric {weary}: Count us at Matins, my son. All that are left.
 "

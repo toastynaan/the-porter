@@ -11,11 +11,11 @@ text = "# DRAFT
 # dead on the chapter house floor (died_simon), or alive and hiding at the back of the church.
 == start
 (Brother Aldo in the nave, setting out the psalters. There are more empty stalls than full ones now.)
-Aldo: Porter. I keep setting out too many. I count them, and then I count them again.
+Aldo {weary}: Porter. I keep setting out too many. I count them, and then I count them again.
 -> topics
 
 == again
-Aldo: Still here? Help me count, then.
+Aldo {weary}: Still here? Help me count, then.
 -> topics
 
 == topics
@@ -23,8 +23,8 @@ Aldo: Still here? Help me count, then.
 * [if not n5_choirb_simon] What of Brother Simon? -> simon
 
 == wulfric [set n5_choirb_wulfric]
-Aldo: Six years I came in a beat behind him at Matins. Last night there was nothing to come in behind.
-Aldo: I sang it alone, and flat. He'd have hated it.
+Aldo {sad}: Six years I came in a beat behind him at Matins. Last night there was nothing to come in behind.
+Aldo {sad, swallow}: I sang it alone, and flat. He'd have hated it.
 -> topics
 
 == simon [set n5_choirb_simon]
@@ -32,13 +32,13 @@ Aldo: I sang it alone, and flat. He'd have hated it.
 -> simon_alive
 
 == simon_dead
-Aldo: His bed was next to mine. I've put his blanket over it, so I don't have to see it empty.
+Aldo {sad}: His bed was next to mine. I've put his blanket over it, so I don't have to see it empty.
 -> topics
 
 == simon_alive
-Aldo: He's at the back of the church with his knees drawn up, like a child. He won't come into the choir, or say why.
+Aldo {grave}: He's at the back of the church with his knees drawn up, like a child. He won't come into the choir, or say why.
 -> topics
 
 == leave
-Aldo: Count us tonight, porter. Count carefully.
+Aldo {grave}: Count us tonight, porter. Count carefully.
 "

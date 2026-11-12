@@ -10,12 +10,12 @@ text = "# DRAFT
 # Night 3 keeps its own; the other nights are game/chapters/common/lane/mab.tres. Alms once (n3_mab_alms): a heel of Fenchurch Street bread.
 == start
 (Mab sits against the wall by the gate, her clapper in her lap, her face wrapped to the eyes.)
-Mab: Porter. You look worse every night. I say it kindly.
+Mab {warm}: Porter. You look worse every night. I say it kindly.
 -> topics
 
 == again
 (She knocks her clapper once against the stones.)
-Mab: Still here? So am I.
+Mab {wary}: Still here? So am I.
 -> topics
 
 == topics
@@ -24,20 +24,20 @@ Mab: Still here? So am I.
 * [if not n3_mab_alms] (Give her alms.) -> alms
 
 == saw [set n3_mab_saw]
-Mab: Everyone who goes in at that gate, and everyone who comes out. Nobody asks me.
-Mab: Last night something walked the lane after the bell. Taller than a man. It came from the corner of your wall.
-Mab: And the rooks came off your tower before Matins, all at once, screaming. Before your bell, porter. Not after.
+Mab {wary}: Everyone who goes in at that gate, and everyone who comes out. Nobody asks me.
+Mab {afraid}: Last night something walked the lane after the bell. Taller than a man. It came from the corner of your wall.
+Mab {afraid}: And the rooks came off your tower before Matins, all at once, screaming. Before your bell, porter. Not after.
 -> topics
 
 == bread [set n3_mab_bread]
-Mab: Theirs? Never. Not a crumb in eleven years, and I've been hungry enough to eat straw.
-Mab: Somebody's told you something about it. I can see it on you.
-Mab: Good. Then I don't have to.
+Mab {cold}: Theirs? Never. Not a crumb in eleven years, and I've been hungry enough to eat straw.
+Mab {wary}: Somebody's told you something about it. I can see it on you.
+Mab {grave}: Good. Then I don't have to.
 -> topics
 
 == alms [set n3_mab_alms] [item mab_bread] [trust mab 5]
 (You drop a coin in the bowl at her feet.)
-Mab: God keep you, porter. Here. It's not theirs. A baker on Fenchurch Street makes it.
+Mab {warm}: God keep you, porter. Here. It's not theirs. A baker on Fenchurch Street makes it.
 (She sets a heel of bread on the step between you, wrapped in a cloth, and draws back.)
 -> topics
 "

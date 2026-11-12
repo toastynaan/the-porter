@@ -14,7 +14,7 @@ extends NightBeat
 @export var bar_duty: Duty
 @export var ledger: Duty
 ## Cole handing him the gate.
-@export var relieve_lines := PackedStringArray(["Cole: (Says nothing. He leaves you the gate.)"])
+@export var relieve_lines := PackedStringArray(["Cole {blank}: (Says nothing. He leaves you the gate.)"])
 
 
 func _ready() -> void:

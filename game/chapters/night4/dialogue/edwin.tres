@@ -11,12 +11,12 @@ text = "# DRAFT
 # Nothing here says so.) The lines work whether or not the whisper has come yet.
 == start
 (Edwin on the west walk, his book hugged to his chest. He jumps when you come out of the fog, then laughs too loudly.)
-Edwin: Alric! Don't come up on a man like that. Not in this.
+Edwin {afraid}: Alric! Don't come up on a man like that. Not in this.
 -> topics
 
 == again
 (Edwin hasn't moved. He's watching the fog at the end of the walk.)
-Edwin: Still here? Good. Stay a bit.
+Edwin {afraid}: Still here? Good. Stay a bit.
 -> topics
 
 == topics
@@ -26,8 +26,8 @@ Edwin: Still here? Good. Stay a bit.
 
 == afraid [set n4_edwin_afraid]
 (He looks over your shoulder into the fog before he answers.)
-Edwin: Not here. Not now. After Matins, I swear it. I'll come to your gate and tell you everything.
-Edwin: Somebody's always listening in this house, Alric. Even in the fog. Especially in the fog.
+Edwin {afraid, glance}: Not here. Not now. After Matins, I swear it. I'll come to your gate and tell you everything.
+Edwin {afraid}: Somebody's always listening in this house, Alric. Even in the fog. Especially in the fog.
 -> topics
 
 == fast [set n4_edwin_fast]
@@ -35,18 +35,18 @@ Edwin: Somebody's always listening in this house, Alric. Even in the fog. Especi
 -> fast_plain
 
 == fast_bread
-Edwin: I left my bread last night, like we said. And now there's none to leave. I'm so hungry I could eat my book.
+Edwin {warm}: I left my bread last night, like we said. And now there's none to leave. I'm so hungry I could eat my book.
 -> topics
 
 == fast_plain
-Edwin: No supper! I'm so hungry I could eat my book. Psalms and all.
+Edwin {glad}: No supper! I'm so hungry I could eat my book. Psalms and all.
 -> topics
 
 == psalm [set n4_edwin_psalm]
-Edwin: The same as ever. Psalm ninety, the one we sing at Compline. You shall not fear the terror of the night.
-Edwin: I've said it a hundred times since None. It isn't working.
+Edwin {weary}: The same as ever. Psalm ninety, the one we sing at Compline. You shall not fear the terror of the night.
+Edwin {afraid}: I've said it a hundred times since None. It isn't working.
 -> topics
 
 == leave
-Edwin: After Matins, Alric. At your gate. Don't forget.
+Edwin {pleading}: After Matins, Alric. At your gate. Don't forget.
 "

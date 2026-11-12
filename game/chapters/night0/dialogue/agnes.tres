@@ -10,7 +10,7 @@ text = "# DRAFT
 # The bed answer gives him the room at the top (n0_room). An ale ends the talk; the next talk starts at again.
 == start
 (A woman by the fire with her sleeves rolled, stirring a pot. She looks you up and down.)
-Agnes: Look at you, wet to the skin. Come by the fire before you catch your death.
+Agnes {warm}: Look at you, wet to the skin. Come by the fire before you catch your death.
 -> topics
 
 == again
@@ -18,11 +18,11 @@ Agnes: Look at you, wet to the skin. Come by the fire before you catch your deat
 -> again_plain
 
 == again_room
-Agnes: Your room's made up, brother. Top of the stair, as far as it goes.
+Agnes {warm}: Your room's made up, brother. Top of the stair, as far as it goes.
 -> topics
 
 == again_plain
-Agnes: Well? Warmer?
+Agnes {amused}: Well? Warmer?
 -> topics
 
 == topics
@@ -31,16 +31,16 @@ Agnes: Well? Warmer?
 * An ale, if you would. [drink] -> ale
 
 == bed [set n0_room]
-Agnes: A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
-Agnes: Nobody else will have it. You can have it for a prayer and a ha'penny.
-Agnes: Be in before the curfew bell at nine. After it the Keys is shut, and the street's no place to be.
+Agnes {calm}: A bed. There's the room at the top. It's small and it's cold, and its one window looks toward the abbey.
+Agnes {amused}: Nobody else will have it. You can have it for a prayer and a ha'penny.
+Agnes {grave}: Be in before the curfew bell at nine. After it the Keys is shut, and the street's no place to be.
 -> topics
 
 == abbey [set n0_agnes_abbey]
-Agnes: I don't talk about that place under my own roof.
+Agnes {cold}: I don't talk about that place under my own roof.
 (She glances at the shutters all the same, and lowers her voice.)
-Agnes: We've had lodgers go over there to see the relic. Paid me for two nights and slept one.
-Agnes: I don't ask. I strip the bed and let it again.
+Agnes {grave}: We've had lodgers go over there to see the relic. Paid me for two nights and slept one.
+Agnes {grave, swallow}: I don't ask. I strip the bed and let it again.
 -> topics
 
 == ale
@@ -49,14 +49,14 @@ Agnes: I don't ask. I strip the bed and let it again.
 
 == ale_first [set n0_agnes_poured]
 (She fills a cup from the jug and puts it into your hands.)
-Agnes: Drink it slow. It's stronger than what your country brothers brew.
+Agnes {warm}: Drink it slow. It's stronger than what your country brothers brew.
 -> end
 
 == ale_more
-Agnes: Another? You'll be no use to your abbot in the morning.
+Agnes {wary}: Another? You'll be no use to your abbot in the morning.
 (She fills it to the brim anyway.)
 -> end
 
 == leave
-Agnes: Before nine, mind!
+Agnes {warm}: Before nine, mind!
 "

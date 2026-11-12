@@ -10,18 +10,18 @@ text = "# DRAFT
 # Night 3 keeps its own; the other nights are game/chapters/common/lane/margery.tres. She names herself, in case he never met her.
 == start
 (A woman with a covered basket on her arm, walking fast.)
-Margery: Margery, brother, from by Saint Andrew's, if you've forgotten. I'm not stopping. Not this week.
+Margery {wary}: Margery, brother, from by Saint Andrew's, if you've forgotten. I'm not stopping. Not this week.
 * Where are you off to in such a hurry, Margery? -> home
 * What does the lane say about the abbey? -> abbey
 * Good night, Margery. -> end
 
 == home
-Margery: Home, where else? Before Gib lights the lanterns, with the door barred and the shutters too.
-Margery: My husband laughs at me for it. He can laugh from behind a barred door.
+Margery {afraid}: Home, where else? Before Gib lights the lanterns, with the door barred and the shutters too.
+Margery {amused}: My husband laughs at me for it. He can laugh from behind a barred door.
 -> end
 
 == abbey
-Margery: That a holy brother hanged himself in your bell tower. Or the devil hanged him, your abbot says.
-Margery: Devil or rope, brother, he's dead all the same. And I'm late.
+Margery {wary}: That a holy brother hanged himself in your bell tower. Or the devil hanged him, your abbot says.
+Margery {afraid}: Devil or rope, brother, he's dead all the same. And I'm late.
 -> end
 "

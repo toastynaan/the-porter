@@ -10,14 +10,15 @@ text = "# DRAFT
 # The abbot has doubled the incense again; Ranulf wants the porter in the choir at Matins, not by the door (from night 4
 # the door is where a man can keep out of the smoke). His remedy: taken (n3_took_remedy) or refused (n3_refused_remedy).
 # Asking what is kept in the crypt is the wrong question to the wrong brother (Suspicion +10): he knows who ran last night.
+# Claims: n4_ranulf_crypt (lie): the light below is candles for the dead. The cult lights one for each soul fed to the rite.
 == start
 (Ranulf is filling the censers in the choir from a leather bag. The fog has come in at the west door.)
-Ranulf: Porter. Mind the step. You can't see the floor tonight.
+Ranulf {grave}: Porter. Mind the step. You can't see the floor tonight.
 -> topics
 
 == again
 (He goes on filling the censers. The chain clinks.)
-Ranulf: Porter. Again.
+Ranulf {cold}: Porter. Again.
 -> topics
 
 == topics
@@ -26,8 +27,8 @@ Ranulf: Porter. Again.
 * [if died_crypt_pilgrim] [if not n4_ranulf_crypt] What is kept in the crypt, brother? -> crypt
 
 == incense [set n4_ranulf_incense]
-Ranulf: Father Abbot has doubled it again. Four times what we burned at Martinmas.
-Ranulf: And your place at Matins is in the choir with us, porter. Not back by the door, where the smoke doesn't reach.
+Ranulf {grave}: Father Abbot has doubled it again. Four times what we burned at Martinmas.
+Ranulf {cold}: And your place at Matins is in the choir with us, porter. Not back by the door, where the smoke doesn't reach.
 -> topics
 
 == remedy [set n4_ranulf_remedy]
@@ -36,26 +37,43 @@ Ranulf: And your place at Matins is in the choir with us, porter. Not back by th
 -> remedy_plain
 
 == remedy_took
-Ranulf: Did it ease your head? It will, given time. I'll mix you another whenever you like.
-Ranulf: You've only to ask me. Not Thomas. Me.
+Ranulf {grave, glance}: Did it ease your head? It will, given time. I'll mix you another whenever you like.
+Ranulf {cold}: You've only to ask me. Not Thomas. Me.
 -> topics
 
 == remedy_refused
-Ranulf: You wouldn't take it last night. Thomas had a word in your ear. I saw. Thomas has a word for everyone.
-Ranulf: Your head will get worse, porter. Come to me when it does.
+Ranulf {cold}: You wouldn't take it last night. Thomas had a word in your ear. I saw. Thomas has a word for everyone.
+Ranulf {grave}: Your head will get worse, porter. Come to me when it does.
 -> topics
 
 == remedy_plain
-Ranulf: For your headaches. A little poppy, a little honey, nothing more. Come to me after Matins, if your head is bad.
+Ranulf {grave, glance}: For your headaches. A little poppy, a little honey, nothing more. Come to me after Matins, if your head is bad.
 -> topics
 
 # The wrong question to the wrong brother (design doc): Suspicion +10.
-== crypt [set n4_ranulf_crypt] [suspicion 10]
+== crypt [set n4_ranulf_crypt] [suspicion 10] [claim n4_ranulf_crypt lie]
 (The censer stops halfway to its hook.)
-Ranulf: The saint's bones, and the old abbots under them. The stair is kept locked. It's no part of your round.
-Ranulf: If you see a light below, porter, it's mine. I keep candles burning for the dead.
+Ranulf {grave}: The saint's bones, and the old abbots under them. The stair is kept locked. It's no part of your round.
+Ranulf {grave, glance}: If you see a light below, porter, it's mine. I keep candles burning for the dead.
+* [believe] God rest them, then. -> crypt_believed
+* [press] Candles for abbots two hundred years dead, brother? Every night? -> crypt_pressed
+* [confront crypt_book] I found a page by the altar below. Ten candles in a ring, and a soul for each. -> crypt_broken
+
+== crypt_believed
+Ranulf {grave}: Amen. Keep to your round, porter, and leave the dead to me.
+-> topics
+
+== crypt_pressed
+Ranulf {cold}: Every night. The dead are owed their light. That is the sacrist's business, not the porter's.
+(He hangs the censer, and turns his back on you.)
+-> topics
+
+== crypt_broken
+(The chain goes still in his hand. His eyes go to the altar steps, and come back.)
+Ranulf {cold, glance}: Old books are full of old foolishness. Whatever you picked up down there, it belongs to the church.
+Ranulf {cold}: Bring it to me, porter. Don't show it about.
 -> topics
 
 == leave
-Ranulf: In the choir, porter. Not by the door.
+Ranulf {cold}: In the choir, porter. Not by the door.
 "

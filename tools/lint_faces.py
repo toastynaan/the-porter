@@ -19,8 +19,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def _consts():
     faces = open(os.path.join(ROOT, "game/people/faces.gd")).read()
-    moods = re.findall(r'&"([a-z ]+)"', re.search(r"const MOODS[^\]]+\]", faces).group(0))
-    tells = re.findall(r'&"([a-z ]+)"', re.search(r"const TELLS[^\]]+\]", faces).group(0))
+    moods = re.findall(r'&"([a-z ]+)"', re.search(r"const MOODS[^=]*=\s*\[[^\]]+\]", faces).group(0))
+    tells = re.findall(r'&"([a-z ]+)"', re.search(r"const TELLS[^=]*=\s*\[[^\]]+\]", faces).group(0))
     clues = re.findall(r'^\s*&"([a-z0-9_]+)":', open(os.path.join(ROOT, "game/story/clues.gd")).read(), re.M)
     return set(moods), set(tells), set(clues)
 
@@ -112,10 +112,17 @@ def lint_conversation(path, text, first=1):
     return errors, missing
 
 
+# Scene properties whose strings are labels, not speech ("Dusk: the road into London").
+NOT_SPEECH = ("duty", "editor_description", "title", "heading", "card", "text")
+
+
 def lint_scene(path, text):
     errors, missing = [], []
     for m in re.finditer(r'"([A-Z][A-Za-z]+(?: [A-Z][a-z]+)?)\s*(\{[^}]*\})?: [^"]+"', text):
         n = text.count("\n", 0, m.start()) + 1
+        key = text[text.rfind("\n", 0, m.start()) + 1:m.start()].split("=")[0].strip()
+        if key in NOT_SPEECH:
+            continue
         if m.group(2):
             for e in face_errors(m.group(2)):
                 errors.append("%d: %s" % (n, e))
@@ -142,6 +149,12 @@ def main():
             body = m.group(1).replace('\\"', '"') if m else ""
             first = text.count("\n", 0, m.start(1)) + 1 if m else 1
             errors, missing = lint_conversation(rel, body, first)
+            # A bare " inside the text ends Godot's string there: the rest is lost.
+            if m:
+                bare = re.search(r'(?<!\\)"', m.group(1))
+                if bare:
+                    n = text.count("\n", 0, m.start(1) + bare.start()) + 1
+                    errors.append("%d: a \" inside the text must be written \\\"" % n)
         elif f.endswith(".tscn"):
             errors, missing = lint_scene(rel, text)
         else:

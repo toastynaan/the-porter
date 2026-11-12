@@ -50,8 +50,8 @@ func run() -> void:
 			GameState.set_flag(&"d1_tour_skipped")
 			return
 	var p := player()
-	await say("Thomas", "Brother Alric. I'm Thomas, the infirmarian. This is Brother Anselm, who kept the gate before you.")
-	await say("Anselm", "Kept it till my eyes went. Thomas will show you. I'll listen.")
+	await say("Thomas {warm, nod}", "Brother Alric. I'm Thomas, the infirmarian. This is Brother Anselm, who kept the gate before you.")
+	await say("Anselm {weary}", "Kept it till my eyes went. Thomas will show you. I'll listen.")
 	var duties: Array = [bar_gate, ledger, candle_clock, bell_rope, round_stop, guest_bed]
 	var markers := points(stops)
 	for i in duties.size():
@@ -70,14 +70,14 @@ func run() -> void:
 	if not GameState.keys.has(&"guesthouse"):
 		GameState.keys.append(&"guesthouse")
 	await say("", "(The guesthouse key, heavy and cold, on your ring with the gate's.)")
-	await say("Anselm", "(He tells Thomas to go on; he'll find his own way.)")
-	await say("Thomas", "I'll see you at supper, brother. Sleep first. The nights are long.")
+	await say("Anselm {weary}", "(He tells Thomas to go on; he'll find his own way.)")
+	await say("Thomas {warm}", "I'll see you at supper, brother. Sleep first. The nights are long.")
 	thomas.go_to(markers[-1] + Vector3(20.0, 0.0, 0.0))
 	await wait(1.5)
 	anselm.face(p.global_position)
-	await say("Anselm", "(He grips your sleeve, and lowers his voice.) Don't let them in after the bell. Whatever they tell you. Don't let them in.")
+	await say("Anselm {afraid, swallow}", "(He grips your sleeve, and lowers his voice.) Don't let them in after the bell. Whatever they tell you. Don't let them in.")
 	GameState.set_flag(&"d1_anselm_warned")
-	await say("Anselm", "The old porter locked the guests in at night. Remember that.")
+	await say("Anselm {afraid, lip}", "The old porter locked the guests in at night. Remember that.")
 	GameState.set_flag(&"d1_tour_done")
 
 
@@ -94,6 +94,6 @@ func _by_the_well(p: Player) -> void:
 		return
 	var pick := await Talk.answer(PackedStringArray(["What's the sand for, by the well?", "(Say nothing.)"]))
 	if pick == 0:
-		await say("Thomas", "A beast slaughtered for the kitchen, early. They sanded it for the flies. It's nothing.")
+		await say("Thomas {warm, still}", "A beast slaughtered for the kitchen, early. They sanded it for the flies. It's nothing.")
 		GameState.set_flag(&"d1_asked_sand")
 		GameState.note(&"sand_by_the_well")

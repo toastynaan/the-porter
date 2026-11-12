@@ -12,11 +12,11 @@ text = "# DRAFT
 # the wrong question to the wrong brother (Suspicion +5).
 == start
 (Ranulf is up a ladder at the candle beam, fitting new candles. He looks down at you and doesn't come down.)
-Ranulf: Porter.
+Ranulf {grave}: Porter.
 -> topics
 
 == again
-Ranulf: You're in my light.
+Ranulf {cold}: You're in my light.
 -> topics
 
 == topics
@@ -24,16 +24,16 @@ Ranulf: You're in my light.
 * [if n0_ralph_candles] [if not n2_ranulf_ralph] Ralph the chandler says you buy twice the candles you used to. -> ralph
 
 == bell [set n2_ranulf_bell]
-Ranulf: Pull like you mean it. The rope's been stiff with the wet these two nights. It'll feel heavy.
-Ranulf: Ring the full peal. The abbot takes a short one for an omen, and he's had omens enough this week.
+Ranulf {grave, glance}: Pull like you mean it. The rope's been stiff with the wet these two nights. It'll feel heavy.
+Ranulf {grave}: Ring the full peal. The abbot takes a short one for an omen, and he's had omens enough this week.
 -> topics
 
 == ralph [set n2_ranulf_ralph] [suspicion 5]
 (He stops, a candle in each hand, and looks down at you a long moment.)
-Ranulf: Ralph talks a great deal for a man who's paid on the nail.
-Ranulf: A church in winter eats candles, porter. So does a house that prays more than it used to.
+Ranulf {cold}: Ralph talks a great deal for a man who's paid on the nail.
+Ranulf {grave, glance}: A church in winter eats candles, porter. So does a house that prays more than it used to.
 -> topics
 
 == leave
-Ranulf: The full peal, porter.
+Ranulf {grave}: The full peal, porter.
 "

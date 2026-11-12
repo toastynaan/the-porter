@@ -15,12 +15,12 @@ text = "# DRAFT
 -> start_new
 
 == start_known
-Agnes: There's my lodger. They're feeding you over there, I hope?
+Agnes {warm}: There's my lodger. They're feeding you over there, I hope?
 -> tonight
 
 == start_new
 (A woman in the inn's doorway, shaking out a cloth.)
-Agnes: You'll be the new porter. I'm Agnes. Hob's wife, God help me.
+Agnes {amused}: You'll be the new porter. I'm Agnes. Hob's wife, God help me.
 -> tonight
 
 == again
@@ -33,11 +33,11 @@ Agnes: You'll be the new porter. I'm Agnes. Hob's wife, God help me.
 -> hello
 
 == hello
-Agnes: Brother.
+Agnes {calm}: Brother.
 -> tonight
 
 == back
-Agnes: Back again? You'll wear out my step.
+Agnes {amused}: Back again? You'll wear out my step.
 -> ask
 
 == tonight
@@ -58,13 +58,13 @@ Agnes: Back again? You'll wear out my step.
 
 == ale
 (She fetches a cup from inside and puts it into your hands.)
-Agnes: The Keys is open, brother. Drink it slow.
+Agnes {warm}: The Keys is open, brother. Drink it slow.
 -> end
 
 # Night 1: nothing yet. The rule: send them to the Keys before the bell.
 == n1 [set lane_agnes_1]
-Agnes: Your room's still there if they turn you out. I've not let it.
-Agnes: And if you've a soul to send away, send them across before the bell. After it, the door's barred to God himself.
+Agnes {warm}: Your room's still there if they turn you out. I've not let it.
+Agnes {grave}: And if you've a soul to send away, send them across before the bell. After it, the door's barred to God himself.
 -> n1_ask
 
 == n1_ask
@@ -72,7 +72,7 @@ Agnes: And if you've a soul to send away, send them across before the bell. Afte
 * An ale, if you would. [drink] -> ale
 
 == n1_cell [set lane_agnes_n1_cell]
-Agnes: By the gate. You'll see who comes, then. Mind you see who goes, too.
+Agnes {wary}: By the gate. You'll see who comes, then. Mind you see who goes, too.
 -> n1_ask
 
 # Night 2: about night 1. Where the merchant slept, if he was turned away.
@@ -83,21 +83,21 @@ Agnes: By the gate. You'll see who comes, then. Mind you see who goes, too.
 -> n2_quiet
 
 == n2_slept
-Agnes: The merchant you turned away slept upstairs here. Grumbled all night. Better grumbling than in that place.
-Agnes: Send them to us before the bell, brother, and there's always a bed.
+Agnes {amused}: The merchant you turned away slept upstairs here. Grumbled all night. Better grumbling than in that place.
+Agnes {warm, nod}: Send them to us before the bell, brother, and there's always a bed.
 -> n2_ask
 
 == n2_door
-Agnes: Your merchant came hammering on our door after the bell. Hob wouldn't unbar it. Rules are rules.
-Agnes: He sat in our doorway till the light, cursing us. Lucky, Gib says. Send them before nine, brother.
+Agnes {grave}: Your merchant came hammering on our door after the bell. Hob wouldn't unbar it. Rules are rules.
+Agnes {grave}: He sat in our doorway till the light, cursing us. Lucky, Gib says. Send them before nine, brother.
 -> n2_ask
 
 == n2_pond
-Agnes: That poor man in your pond. He had good fur on his cloak at your gate, Mab says. Did they bury him in it?
+Agnes {sad}: That poor man in your pond. He had good fur on his cloak at your gate, Mab says. Did they bury him in it?
 -> n2_ask
 
 == n2_quiet
-Agnes: A quiet night, for once. Hob says that's when to worry.
+Agnes {wary}: A quiet night, for once. Hob says that's when to worry.
 -> n2_ask
 
 == n2_ask
@@ -105,8 +105,8 @@ Agnes: A quiet night, for once. Hob says that's when to worry.
 * An ale, if you would. [drink] -> ale
 
 == n2_jankin [set lane_agnes_n2_jankin]
-Agnes: Jankin? Hob puts him out at the bell, every night God sends. He's soft about everything but his rules.
-Agnes: If you want Jankin kept in, ask Hob, not me. He might, for you.
+Agnes {amused}: Jankin? Hob puts him out at the bell, every night God sends. He's soft about everything but his rules.
+Agnes {warm}: If you want Jankin kept in, ask Hob, not me. He might, for you.
 -> n2_ask
 
 # Night 3: about night 2. Someone turned away after the bell, killed in the lane; or Jankin.
@@ -117,21 +117,21 @@ Agnes: If you want Jankin kept in, ask Hob, not me. He might, for you.
 -> n3_plain
 
 == n3_turned
-Agnes: Turned away after the bell, poor soul, and the Keys was shut. They found him in the gutter.
-Agnes: Send them to us before nine, brother. Before nine, and we'll take them in.
+Agnes {sad}: Turned away after the bell, poor soul, and the Keys was shut. They found him in the gutter.
+Agnes {pleading}: Send them to us before nine, brother. Before nine, and we'll take them in.
 -> n3_ask
 
 == n3_jankin
-Agnes: Hob hasn't said a word since they carried Jankin off. Not one.
+Agnes {sad}: Hob hasn't said a word since they carried Jankin off. Not one.
 (She looks back into the dark of the inn.)
 -> n3_ask
 
 == n3_kept
-Agnes: Jankin's still asleep under my table. Hob kept him in, for you. Don't tell him I said it was kind.
+Agnes {warm}: Jankin's still asleep under my table. Hob kept him in, for you. Don't tell him I said it was kind.
 -> n3_ask
 
 == n3_plain
-Agnes: The rain's stopped, at least. Small mercies.
+Agnes {weary}: The rain's stopped, at least. Small mercies.
 -> n3_ask
 
 == n3_ask
@@ -139,7 +139,7 @@ Agnes: The rain's stopped, at least. Small mercies.
 * An ale, if you would. [drink] -> ale
 
 == n3_afraid [set lane_agnes_n3_afraid]
-Agnes: Of course I'm afraid. I've a lane full of fools to feed. Being afraid doesn't bake the bread.
+Agnes {angry}: Of course I'm afraid. I've a lane full of fools to feed. Being afraid doesn't bake the bread.
 -> n3_ask
 
 # Night 4: about night 3. A lodger who went in and wasn't seen again. Fog coming.
@@ -148,11 +148,11 @@ Agnes: Of course I'm afraid. I've a lane full of fools to feed. Being afraid doe
 -> n4_fog
 
 == n4_pilgrim
-Agnes: That pilgrim who lodged with us and went in at your gate. His bed's still made. I can't bring myself to strip it.
+Agnes {sad, swallow}: That pilgrim who lodged with us and went in at your gate. His bed's still made. I can't bring myself to strip it.
 -> n4_fog
 
 == n4_fog
-Agnes: There's fog coming up off the river tonight. Keep your guests close, brother.
+Agnes {grave}: There's fog coming up off the river tonight. Keep your guests close, brother.
 -> n4_ask
 
 == n4_ask
@@ -160,8 +160,8 @@ Agnes: There's fog coming up off the river tonight. Keep your guests close, brot
 * An ale, if you would. [drink] -> ale
 
 == n4_bar [set lane_agnes_n4_bar]
-Agnes: Lock them? I bar them, from the inside, every night. Hob has keys, and so did his father, and God knows who else.
-Agnes: A key's only as good as the hands it's been in. A bar is mine.
+Agnes {wary}: Lock them? I bar them, from the inside, every night. Hob has keys, and so did his father, and God knows who else.
+Agnes {grave}: A key's only as good as the hands it's been in. A bar is mine.
 -> n4_ask
 
 # Night 5: about night 4. The guest killed behind a locked door, or the guest who barred it himself.
@@ -171,13 +171,13 @@ Agnes: A key's only as good as the hands it's been in. A bar is mine.
 -> n5_rest
 
 == n5_guest_dead
-Agnes: They say the guesthouse door was locked, and it made no difference. Whoever goes in there has keys.
-Agnes: If a guest of yours must stay, tell him to bar it from inside.
+Agnes {afraid}: They say the guesthouse door was locked, and it made no difference. Whoever goes in there has keys.
+Agnes {pleading}: If a guest of yours must stay, tell him to bar it from inside.
 -> n5_rest
 
 == n5_guest_lived
-Agnes: Your guest last night barred his own door, he says, and sat up with a knife till dawn.
-Agnes: He's gone home to Kent, and he won't be back.
+Agnes {grave}: Your guest last night barred his own door, he says, and sat up with a knife till dawn.
+Agnes {weary}: He's gone home to Kent, and he won't be back.
 -> n5_rest
 
 == n5_rest
@@ -185,13 +185,13 @@ Agnes: He's gone home to Kent, and he won't be back.
 -> n5_plain
 
 == n5_edwin
-Agnes: And a boy. They say a boy of yours was laid out in the bone house.
+Agnes {sad}: And a boy. They say a boy of yours was laid out in the bone house.
 (She crosses herself.)
-Agnes: God rest him. He was somebody's son.
+Agnes {sad, swallow}: God rest him. He was somebody's son.
 -> n5_ask
 
 == n5_plain
-Agnes: You look worse every dusk, brother. Are you sleeping at all?
+Agnes {sad}: You look worse every dusk, brother. Are you sleeping at all?
 -> n5_ask
 
 == n5_ask
@@ -199,14 +199,14 @@ Agnes: You look worse every dusk, brother. Are you sleeping at all?
 * An ale, if you would. [drink] -> ale
 
 == n5_pray [set lane_agnes_n5_pray]
-Agnes: I've prayed for your dead every night since Martinmas, brother. I'm running out of names.
+Agnes {weary}: I've prayed for your dead every night since Martinmas, brother. I'm running out of names.
 -> n5_ask
 
 # Night 6: snow.
 == n6 [set lane_agnes_6]
-Agnes: Snow.
+Agnes {afraid}: Snow.
 (She pulls her shawl tight and looks at the abbey wall.)
-Agnes: Whatever it is you've got in there, brother, keep your gate shut on it.
+Agnes {afraid}: Whatever it is you've got in there, brother, keep your gate shut on it.
 -> n6_ask
 
 == n6_ask
@@ -214,10 +214,10 @@ Agnes: Whatever it is you've got in there, brother, keep your gate shut on it.
 * An ale, if you would. [drink] -> ale
 
 == n6_what [set lane_agnes_n6_what]
-Agnes: I don't think. I bake, and I bar the door, and I don't look out of that top window.
-Agnes: You looked out of it, your first night. I saw your face in the morning.
+Agnes {afraid, look away}: I don't think. I bake, and I bar the door, and I don't look out of that top window.
+Agnes {grave}: You looked out of it, your first night. I saw your face in the morning.
 -> n6_ask
 
 == leave
-Agnes: Before nine, mind!
+Agnes {warm}: Before nine, mind!
 "

@@ -81,7 +81,7 @@ func _process(_delta: float) -> void:
 			a.position = Vector3.UP * 1.6
 			a.play()
 			a.finished.connect(a.queue_free)
-		Talk.say("Gib", "(From the lane.) %s" % CALLS[on])
+		Talk.say("Gib {calm}", "(From the lane.) %s" % CALLS[on])
 		called.emit(on)
 
 

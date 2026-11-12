@@ -10,11 +10,11 @@ text = "# DRAFT
 # His last talk: ordinary, and a little sad. (He is killed in the fog on the round tonight. Nothing here says so.)
 == start
 (Old Brother Wulfric on the south walk, a shape in the fog until you're close. He's rubbing his knees.)
-Wulfric: Fog. My knees had it before the bell this morning. Forty years, and they've never once been wrong.
+Wulfric {weary}: Fog. My knees had it before the bell this morning. Forty years, and they've never once been wrong.
 -> topics
 
 == again
-Wulfric: Still here, boy? Go and ring something.
+Wulfric {amused}: Still here, boy? Go and ring something.
 -> topics
 
 == topics
@@ -22,17 +22,17 @@ Wulfric: Still here, boy? Go and ring something.
 * [if not n4_choira_came] How did you come to the abbey, brother? -> came
 
 == fast [set n4_choira_fast]
-Wulfric: Better than the young ones. I've kept every Lent since before you were born. An empty belly's a quiet one.
+Wulfric {calm}: Better than the young ones. I've kept every Lent since before you were born. An empty belly's a quiet one.
 (His stomach growls. He ignores it.)
 -> topics
 
 == came [set n4_choira_came]
-Wulfric: My mother walked me to that gate when I was eleven, with a cheese for the cellarer.
-Wulfric: Anselm let us in. He had both his eyes then.
-Wulfric: I've not been past Aldgate since. I meant to see the sea again, once, before the end.
-Wulfric: Well. There's time yet.
+Wulfric {warm}: My mother walked me to that gate when I was eleven, with a cheese for the cellarer.
+Wulfric {sad}: Anselm let us in. He had both his eyes then.
+Wulfric {sad}: I've not been past Aldgate since. I meant to see the sea again, once, before the end.
+Wulfric {calm}: Well. There's time yet.
 -> topics
 
 == leave
-Wulfric: On the mark tonight, boy. Don't keep my knees waiting.
+Wulfric {amused}: On the mark tonight, boy. Don't keep my knees waiting.
 "

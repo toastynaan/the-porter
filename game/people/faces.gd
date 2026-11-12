@@ -31,7 +31,7 @@ const BASELINES := {
 	&"hugh": {"mood": &"cold", "blink": 0.12, "gaze": 0.05, "habit": &"jaw"},
 	&"simon": {"mood": &"ashamed", "blink": 0.35, "gaze": 0.5, "down": 0.8, "habit": &"look down"},
 	&"anselm": {"mood": &"weary", "blink": 0.05, "gaze": 0.0, "blind": true, "habit": &"lip"},
-	&"osric": {"mood": &"glad", "blink": 0.3, "gaze": 0.4, "habit": &"smile"},
+	&"osric": {"mood": &"glad", "blink": 0.3, "gaze": 0.4, "habit": &"nod"},
 	&"ranulf": {"mood": &"grave", "blink": 0.12, "gaze": 0.1},
 	&"godric": {"mood": &"weary", "blink": 0.3, "gaze": 0.35, "down": 0.2},
 	&"edwin": {"mood": &"warm", "blink": 0.35, "gaze": 0.45, "habit": &"brow"},

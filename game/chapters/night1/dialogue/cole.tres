@@ -20,13 +20,13 @@ text = "# DRAFT
 * [if not n1_cole_today] Did anyone come to the gate today? -> today
 
 == take [set n1_cole_take]
-Cole: After supper.
+Cole {blank}: After supper.
 (He nods once, and goes back to watching the lane.)
 -> topics
 
 == today [set n1_cole_today]
 (He thinks about it.)
-Cole: Candle girl.
+Cole {blank}: Candle girl.
 -> topics
 
 == leave

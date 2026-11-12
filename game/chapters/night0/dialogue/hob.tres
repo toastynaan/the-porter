@@ -11,12 +11,12 @@ text = "# DRAFT
 # Plants the night-2 rule (n0_hob_jankin): he puts Jankin out at closing every night, rain or no.
 == start
 (A big man behind the board, a cloth over his shoulder. He looks at your habit a long while before your face.)
-Hob: A brother from over the way, in the Keys. That's new.
-Hob: Sit where you like. Not on Jankin.
+Hob {wary}: A brother from over the way, in the Keys. That's new.
+Hob {amused}: Sit where you like. Not on Jankin.
 -> topics
 
 == again
-Hob: Brother.
+Hob {calm}: Brother.
 -> topics
 
 == topics
@@ -25,20 +25,20 @@ Hob: Brother.
 * An ale, if you would. [drink] -> ale
 
 == abbey [set n0_hob_abbey]
-Hob: I pour, folk talk. I don't say any of it's true.
-Hob: Pilgrims go in at that gate and don't come out. Folk say they leave by some back way. I don't know of one.
-Hob: Lights in the church at night, when the brothers should be abed. And a thing on the wall with horns, Jankin says.
-Hob: Jankin says a deal. But I keep my shutters barred on that side.
+Hob {calm}: I pour, folk talk. I don't say any of it's true.
+Hob {grave}: Pilgrims go in at that gate and don't come out. Folk say they leave by some back way. I don't know of one.
+Hob {calm}: Lights in the church at night, when the brothers should be abed. And a thing on the wall with horns, Jankin says.
+Hob {grave}: Jankin says a deal. But I keep my shutters barred on that side.
 -> topics
 
 == bed [set n0_hob_bed]
-Hob: Beds are Agnes's business. Ask her, and don't haggle. She'll win.
-Hob: We take in anyone who comes before the bell. After it the door's barred, and it stays barred.
+Hob {amused}: Beds are Agnes's business. Ask her, and don't haggle. She'll win.
+Hob {grave}: We take in anyone who comes before the bell. After it the door's barred, and it stays barred.
 -> bed_jankin [if not n0_hob_jankin]
 -> topics
 
 == bed_jankin [set n0_hob_jankin]
-Hob: Them without a bed go out at closing. Jankin too, every night, rain or no.
+Hob {calm}: Them without a bed go out at closing. Jankin too, every night, rain or no.
 -> topics
 
 == ale
@@ -48,17 +48,17 @@ Hob: Them without a bed go out at closing. Jankin too, every night, rain or no.
 
 == ale_first [set n0_hob_poured]
 (He draws a cup from the cask and sets it down in front of you, hard.)
-Hob: A ha'penny. Or a prayer for my mother, God rest her. From you I'll take the prayer.
+Hob {warm}: A ha'penny. Or a prayer for my mother, God rest her. From you I'll take the prayer.
 -> ale_jankin [if not n0_hob_jankin]
 -> end
 
 == ale_jankin [set n0_hob_jankin]
 (Down the bench, Jankin's eyes are on your cup.)
-Hob: Mind Jankin doesn't drink it. I put him out at closing every night, rain or no.
+Hob {amused}: Mind Jankin doesn't drink it. I put him out at closing every night, rain or no.
 -> end
 
 == ale_third
-Hob: That's three, brother. Go steady. Agnes won't carry you up the stair.
+Hob {wary}: That's three, brother. Go steady. Agnes won't carry you up the stair.
 (He pours it all the same.)
 -> end
 
@@ -67,5 +67,5 @@ Hob: That's three, brother. Go steady. Agnes won't carry you up the stair.
 -> end
 
 == leave
-Hob: Bell's at nine, brother.
+Hob {calm}: Bell's at nine, brother.
 "

@@ -8,6 +8,7 @@
 - The rest of `docs/` describes the game as built. Update it in the same commit as the change it describes.
 - A number or choice the docs don't give is marked *(mine)* and logged for the user to review: in `docs/log/decisions.md`, or for rules and numbers in `docs/systems/mechanics.md`, "Decisions to review".
 - New dialogue and story text is a draft: conversations start with `# DRAFT`.
+- Every spoken line carries a face (`Name {mood, tells}: words`, `docs/systems/faces.md`). Check with `tools/lint_faces.py` (no Godot needed), then run `tools/script_docs.py` so `docs/script/` matches.
 
 ## Where new things go
 

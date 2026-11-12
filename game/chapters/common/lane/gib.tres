@@ -14,12 +14,12 @@ text = "# DRAFT
 -> start_new
 
 == start_known
-Gib: Brother. Still in one piece. Good.
+Gib {warm}: Brother. Still in one piece. Good.
 -> tonight
 
 == start_new
 (An old man on a short ladder, coaxing a lantern alight.)
-Gib: Gib, the watch. Mind my ladder, brother.
+Gib {calm}: Gib, the watch. Mind my ladder, brother.
 -> tonight
 
 == again
@@ -32,11 +32,11 @@ Gib: Gib, the watch. Mind my ladder, brother.
 -> hello
 
 == hello
-Gib: Brother.
+Gib {calm}: Brother.
 -> tonight
 
 == back
-Gib: Still here? I've lanterns to light.
+Gib {amused}: Still here? I've lanterns to light.
 -> ask
 
 == tonight
@@ -57,7 +57,7 @@ Gib: Still here? I've lanterns to light.
 
 # Night 1: night 0's killing was behind the wall. He heard something.
 == n1 [set lane_gib_1]
-Gib: Quiet night, last night. Quiet as I like it. Bar a fox crying over your wall, round midnight.
+Gib {calm}: Quiet night, last night. Quiet as I like it. Bar a fox crying over your wall, round midnight.
 -> n1_ask
 
 == n1_ask
@@ -65,27 +65,27 @@ Gib: Quiet night, last night. Quiet as I like it. Bar a fox crying over your wal
 * [if not lane_gib_n1_hour] When do you start calling? -> n1_hour
 
 == n1_fox [set lane_gib_n1_fox]
-Gib: Must have been. What else cries like that, at that hour?
+Gib {wary, look away}: Must have been. What else cries like that, at that hour?
 (He goes up his ladder and doesn't look down.)
 -> n1_ask
 
 == n1_hour [set lane_gib_n1_hour]
-Gib: At the bell. Nine, and then every hour till the light.
-Gib: You'll hear me from your gate. Listen for me, brother.
+Gib {calm}: At the bell. Nine, and then every hour till the light.
+Gib {warm}: You'll hear me from your gate. Listen for me, brother.
 -> n1_ask
 
 # Night 2
 == n2 [set lane_gib_2]
-Gib: Rain again. Keeps the lanterns spitting.
-Gib: After the bell there's nobody in this lane but me. Nobody should be.
+Gib {weary}: Rain again. Keeps the lanterns spitting.
+Gib {grave}: After the bell there's nobody in this lane but me. Nobody should be.
 -> n2_ask
 
 == n2_ask
 * [if not lane_gib_n2_out] What if someone's out after the bell? -> n2_out
 
 == n2_out [set lane_gib_n2_out]
-Gib: Then I tell him to get indoors, and I walk on. I'm one old man with a lantern, brother.
-Gib: Send them to the Keys while the Keys is open.
+Gib {weary}: Then I tell him to get indoors, and I walk on. I'm one old man with a lantern, brother.
+Gib {grave}: Send them to the Keys while the Keys is open.
 -> n2_ask
 
 # Night 3: about night 2. He found the body in the lane, or something passed him.
@@ -96,41 +96,41 @@ Gib: Send them to the Keys while the Keys is open.
 -> n3_passed
 
 == n3_jankin
-Gib: It was me found Jankin. Two o'clock, in the gutter by the chandler's.
-Gib: I called the hour and he didn't answer. He always answered. Is it, Gib, he'd say. Is it all well?
+Gib {sad}: It was me found Jankin. Two o'clock, in the gutter by the chandler's.
+Gib {sad, swallow}: I called the hour and he didn't answer. He always answered. Is it, Gib, he'd say. Is it all well?
 (The taper shakes in his hand, and he has to light it again.)
 -> n3_bell
 
 == n3_turned
-Gib: It was me found him. The poor soul who was turned off at your gate after the bell.
-Gib: In the gutter, under my own lantern. I heard him cry out, and I was three houses off. Three houses.
+Gib {sad}: It was me found him. The poor soul who was turned off at your gate after the bell.
+Gib {pained}: In the gutter, under my own lantern. I heard him cry out, and I was three houses off. Three houses.
 -> n3_bell
 
 == n3_other
-Gib: It was me found him, in the gutter under my own lantern. I heard him cry out. I was three houses off.
+Gib {sad}: It was me found him, in the gutter under my own lantern. I heard him cry out. I was three houses off.
 -> n3_bell
 
 == n3_passed
-Gib: Something went past me last night, at three. Close as you are now.
-Gib: I never saw it. I smelled it. Like a church.
+Gib {afraid}: Something went past me last night, at three. Close as you are now.
+Gib {afraid, swallow}: I never saw it. I smelled it. Like a church.
 -> n3_bell
 
 == n3_bell
-Gib: Bell's at nine. Be behind your gate when it goes, and keep it barred.
+Gib {grave}: Bell's at nine. Be behind your gate when it goes, and keep it barred.
 -> n3_ask
 
 == n3_ask
 * [if not lane_gib_n3_walk] Will you still walk the lane tonight? -> n3_walk
 
 == n3_walk [set lane_gib_n3_walk]
-Gib: Mayor pays me to. Every hour, till the light.
-Gib: You listen for me, brother. If I stop calling, I've stopped.
+Gib {grave}: Mayor pays me to. Every hour, till the light.
+Gib {afraid}: You listen for me, brother. If I stop calling, I've stopped.
 -> n3_ask
 
 # Night 4: about night 3. Running over the wall. Fog coming.
 == n4 [set lane_gib_4]
-Gib: Fog's coming up off the river. I'll not see one lantern from the next tonight.
-Gib: And I heard running over your wall last night. Running, in an abbey, at two in the morning.
+Gib {weary}: Fog's coming up off the river. I'll not see one lantern from the next tonight.
+Gib {wary}: And I heard running over your wall last night. Running, in an abbey, at two in the morning.
 -> n4_ask
 
 == n4_ask
@@ -138,11 +138,11 @@ Gib: And I heard running over your wall last night. Running, in an abbey, at two
 * [if not lane_gib_n4_run] You must have dreamed it. -> n4_dream
 
 == n4_me [set lane_gib_n4_run]
-Gib: Then God help you, brother, whatever it was behind you.
+Gib {afraid}: Then God help you, brother, whatever it was behind you.
 -> n4_ask
 
 == n4_dream [set lane_gib_n4_run]
-Gib: I don't sleep on the watch, brother. That's the whole of the job.
+Gib {wary, shake}: I don't sleep on the watch, brother. That's the whole of the job.
 -> n4_ask
 
 # Night 5: about night 4. A cry in the fog; Mab's place empty, if she was let in.
@@ -151,8 +151,8 @@ Gib: I don't sleep on the watch, brother. That's the whole of the job.
 -> n5_mab
 
 == n5_cry
-Gib: Heard a cry over your wall last night, in the fog. Then nothing.
-Gib: I called the hour twice over, to be sure I was still there.
+Gib {afraid}: Heard a cry over your wall last night, in the fog. Then nothing.
+Gib {afraid, blink}: I called the hour twice over, to be sure I was still there.
 -> n5_mab
 
 == n5_mab
@@ -160,18 +160,18 @@ Gib: I called the hour twice over, to be sure I was still there.
 -> n5_bell
 
 == n5_empty
-Gib: And Mab's place by your gate was empty at midnight. First time in all my years on this lane.
+Gib {wary}: And Mab's place by your gate was empty at midnight. First time in all my years on this lane.
 -> n5_bell
 
 == n5_bell
-Gib: Bell at nine, brother. Same as ever.
+Gib {weary}: Bell at nine, brother. Same as ever.
 -> n5_ask
 
 == n5_ask
 * [if not lane_gib_n5_eye] Keep an eye on my gate tonight. -> n5_eye
 
 == n5_eye [set lane_gib_n5_eye]
-Gib: I always do. From the far side of the lane, mind.
+Gib {grave}: I always do. From the far side of the lane, mind.
 -> n5_ask
 
 # Night 6: about night 5. Roger's sergeant, left outside the gate or let in. Snow.
@@ -181,26 +181,26 @@ Gib: I always do. From the far side of the lane, mind.
 -> n6_snow
 
 == n6_dead
-Gib: It was me found the bailiff's man. His lantern out, and him by your gate, where he'd stood all night.
-Gib: He'd been calling at your grille. I heard him from the corner. Then he stopped.
+Gib {pained}: It was me found the bailiff's man. His lantern out, and him by your gate, where he'd stood all night.
+Gib {sad, look down}: He'd been calling at your grille. I heard him from the corner. Then he stopped.
 -> n6_snow
 
 == n6_lived
-Gib: The bailiff's man sat inside your gate all night, they say. Good. That's one I didn't find.
+Gib {weary}: The bailiff's man sat inside your gate all night, they say. Good. That's one I didn't find.
 -> n6_snow
 
 == n6_snow
-Gib: Snow. You'll see every footprint in the lane tonight. Mine, and whatever else walks it.
-Gib: Be behind your gate at the bell, brother. Tonight of all nights.
+Gib {afraid}: Snow. You'll see every footprint in the lane tonight. Mine, and whatever else walks it.
+Gib {pleading}: Be behind your gate at the bell, brother. Tonight of all nights.
 -> n6_ask
 
 == n6_ask
 * [if not lane_gib_n6_call] Call the hour for me tonight. -> n6_call
 
 == n6_call [set lane_gib_n6_call]
-Gib: Every hour, till the light. Listen for me.
+Gib {grave, nod}: Every hour, till the light. Listen for me.
 -> n6_ask
 
 == leave
-Gib: Behind your gate at the bell, brother!
+Gib {grave}: Behind your gate at the bell, brother!
 "

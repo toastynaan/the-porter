@@ -80,7 +80,7 @@ Each person has a baseline in `game/people/faces.gd`: how often they blink, how 
 - **Prior Hugh:** cold, a hard stare, `jaw` often. He glares when he tells the truth. He is the obvious suspect and his face says so, and it is wrong.
 - **Simon:** ashamed, eyes down nearly always. `look down` means nothing from Simon; looking you in the eye does.
 - **Anselm:** blind. His eyes don't move, so you read him by his mouth and throat: `swallow`, `lip`.
-- **Osric:** glad, loud, laughing. His tell is a `smile` that comes too fast.
+- **Osric:** glad, loud, laughing, nods along. His tell is a `smile` that comes too fast, so `smile` is never his habit.
 - **Ranulf:** grave, measured, few blinks. His tell is a `glance` toward the church.
 - **Joan:** wary with everyone. She lies about her husband (`glance`, `lip`), and tells the truth about her brother (steady, `sad`).
 - **Walter:** amused, never still, always selling. His tell is that he stops selling.
@@ -156,4 +156,4 @@ Every spoken line in every conversation and every chapter's scripted lines carri
 - **people who look guilty and aren't:** Prior Hugh;
 - **visitors at the grille** whose story doesn't fit, alongside reading their boots and hands.
 
-There are a few claims a night, not every line.
+There are a few claims a night, not every line. `docs/script/` has every conversation with its faces and claims, and every claim in one table (`docs/script/README.md`).

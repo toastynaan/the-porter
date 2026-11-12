@@ -10,14 +10,15 @@ text = "# DRAFT
 # The killing seen from the Keys (n0_saw_killing): a dream, or the kitchen's beast being bled. Never the truth.
 # The guesthouse key: truthful, but he leaves locking to the porter and makes it sound unkind.
 # Anselm: an old man who frightens easily. If Anselm warned him on the tour, Thomas asks what he said.
+# Claims: n1_thomas_beast (lie: a man was killed by the well on night 0, not a beast; confront with window_killing).
 == start
 (Thomas at his bench, a mortar in his lap, grinding something that smells green. He smiles when he sees you.)
-Thomas: You slept. Good. The first night is the longest; after that your body learns it.
-Thomas: Supper at the bell, then the gate from Cole. Bar it. Matins at the black ring, then your round, then wait for Lauds.
+Thomas {warm}: You slept. Good. The first night is the longest; after that your body learns it.
+Thomas {warm, nod}: Supper at the bell, then the gate from Cole. Bar it. Matins at the black ring, then your round, then wait for Lauds.
 -> topics
 
 == again
-Thomas: Still here? The supper bell won't be long.
+Thomas {warm}: Still here? The supper bell won't be long.
 -> topics
 
 == topics
@@ -31,44 +32,68 @@ Thomas: Still here? The supper bell won't be long.
 -> well_sober
 
 == well_drunk
-Thomas: You came to us this morning with Agnes's ale still in your eyes. At midnight, in rain, from the top of the Keys?
-Thomas: They bled a beast for the kitchen by the well last night. A lantern, a knife, a thing that kicks.
-Thomas: I'd have dreamed the same. But I'd not carry it to the abbot. He sleeps badly enough as it is.
--> topics
+Thomas {warm}: You came to us this morning with Agnes's ale still in your eyes. At midnight, in rain, from the top of the Keys?
+Thomas {warm, still}: They bled a beast for the kitchen by the well last night. A lantern, a knife, a thing that kicks.
+Thomas {warm}: I'd have dreamed the same. But I'd not carry it to the abbot. He sleeps badly enough as it is.
+* [if not read_n1_thomas_beast] It was no beast, brother. I saw a man. -> n1_thomas_beast
+* (Let it go.) -> topics
 
 == well_sober
-Thomas: From the top of the Keys you look down into our court, it's true. At midnight, in the rain, after a day on a cart.
-Thomas: The kitchen bled a beast by the well in the night, so it would hang by morning. A knife over a thing that kicks.
-Thomas: I can see how it looked. I'd not carry it to the abbot, though. He sleeps badly enough as it is.
+Thomas {warm}: From the top of the Keys you look down into our court, it's true. At midnight, in the rain, after a day on a cart.
+Thomas {warm, still}: The kitchen bled a beast by the well in the night, so it would hang by morning. A knife over a thing that kicks.
+Thomas {warm}: I can see how it looked. I'd not carry it to the abbot, though. He sleeps badly enough as it is.
+* [if not read_n1_thomas_beast] It was no beast, brother. I saw a man. -> n1_thomas_beast
+* (Let it go.) -> topics
+
+== n1_thomas_beast [claim n1_thomas_beast lie]
+(He sets the pestle down, and smiles at you.)
+Thomas {warm, still}: A beast, brother. I heard it from this bench, kicking and bawling. Nobody died in our court.
+* [believe] Then I dreamed it. -> beast_believed
+* [press] You heard it? At midnight, through the rain? -> beast_pressed
+* [confront window_killing] I wrote it down that night. A man in a habit, dragging a man toward the cellar. -> beast_broken
+
+== beast_believed
+Thomas {warm, nod}: Dreams come cheap in a strange bed. Put it by, brother.
+-> topics
+
+== beast_pressed
+Thomas {warm}: Through the rain, and through a shut door. A pig makes himself heard.
+(He takes up the pestle again, and says no more about it.)
+-> topics
+
+== beast_broken
+(For a moment his face does nothing at all. Then the smile comes back, slower.)
+Thomas {grave, swallow}: You wrote it down.
+Thomas {warm}: Then write beside it that it was dark, and raining, and every brother here wears a black habit. So does the man who drags a pig to the cellar to hang.
 -> topics
 
 == key [set n1_thomas_key]
-Thomas: Keep it on your ring with the gate's. Show a guest to his bed, and the rest is your judgement.
-Thomas: Anselm locked them in at night. Some guests took that ill, to be shut up like sheep.
-Thomas: Do as you think best. It's your gate now.
+Thomas {warm}: Keep it on your ring with the gate's. Show a guest to his bed, and the rest is your judgement.
+Thomas {warm}: Anselm locked them in at night. Some guests took that ill, to be shut up like sheep.
+Thomas {warm, nod}: Do as you think best. It's your gate now.
 -> topics
 
 == anselm [set n1_thomas_anselm]
-Thomas: His eyes have gone white, both of them. I keep him here, where it's warm.
-Thomas: He frightens easily now, and he talks. Old porters' tales. Don't let him put them in your head.
+Thomas {sad}: His eyes have gone white, both of them. I keep him here, where it's warm.
+Thomas {warm, still}: He frightens easily now, and he talks. Old porters' tales. Don't let him put them in your head.
 -> anselm_ask [if d1_anselm_warned]
 -> topics
 
 == anselm_ask
-Thomas: Did he say something to you this morning, after I'd gone?
+Thomas {warm}: Did he say something to you this morning, after I'd gone?
 * He told me not to let them in after the bell. [trust thomas 5] -> anselm_told
 * He only wished me well. -> anselm_kept
 
 == anselm_told [set n1_thomas_whisper=told]
 (He nods slowly, and goes back to his mortar.)
-Thomas: Don't let them in after the bell. Yes. He says it to the walls, most nights. Poor soul.
+Thomas {sad}: Don't let them in after the bell. Yes. He says it to the walls, most nights. Poor soul.
 -> topics
 
 == anselm_kept [set n1_thomas_whisper=kept]
 (He looks at you a moment longer than he needs to.)
-Thomas: Well. He likes you, then.
+Thomas {warm}: Well. He likes you, then.
 -> topics
 
 == leave
-Thomas: Eat well at supper, brother. You'll be glad of it by Matins.
+Thomas {warm}: Eat well at supper, brother. You'll be glad of it by Matins.
 "

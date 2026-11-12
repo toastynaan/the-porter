@@ -30,7 +30,7 @@ func run() -> void:
 	if GameState.has_flag(&"hangover"):
 		await say("", "(Grey light. Your head is splitting.)")
 		agnes.add_to_group(&"glyph_targets")
-		await say("Agnes", "(From the stair.) You had more than was good for you last night, brother. Water's in the jug.")
+		await say("Agnes {amused}", "(From the stair.) You had more than was good for you last night, brother. Water's in the jug.")
 		agnes.remove_from_group(&"glyph_targets")
 	else:
 		await say("", "(Grey light through the shutter. The Keys is quiet below.)")

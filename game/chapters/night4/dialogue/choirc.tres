@@ -11,11 +11,11 @@ text = "# DRAFT
 # Thomas nursed Simon through a fever at Michaelmas, and Simon would do anything Thomas told him.
 == start
 (Brother Piers on the east walk, watching the fog fill the garth like milk in a bowl.)
-Piers: You can't see the far walk. I keep thinking someone's standing in it.
+Piers {wary}: You can't see the far walk. I keep thinking someone's standing in it.
 -> topics
 
 == again
-Piers: Still foggy.
+Piers {calm}: Still foggy.
 -> topics
 
 == topics
@@ -23,16 +23,16 @@ Piers: Still foggy.
 * [if n4_thomas_simon] [if not n4_choirc_simon] What do you know of Brother Simon? -> simon
 
 == talk [set n4_choirc_talk]
-Piers: That the abbot saw it at the foot of his bed. That it's hungry, and we fast so it finds nothing in us to eat.
+Piers {grave}: That the abbot saw it at the foot of his bed. That it's hungry, and we fast so it finds nothing in us to eat.
 (He doesn't smile.)
-Piers: I'd sooner eat.
+Piers {grave}: I'd sooner eat.
 -> topics
 
 == simon [set n4_choirc_simon]
-Piers: Simon keeps to himself. Thomas nursed him through a fever at Michaelmas, and he's been Thomas's shadow since.
-Piers: He'd walk into the river if Thomas told him it was good for his chest.
+Piers {calm}: Simon keeps to himself. Thomas nursed him through a fever at Michaelmas, and he's been Thomas's shadow since.
+Piers {grave}: He'd walk into the river if Thomas told him it was good for his chest.
 -> topics
 
 == leave
-Piers: Mind the fog, porter.
+Piers {wary}: Mind the fog, porter.
 "

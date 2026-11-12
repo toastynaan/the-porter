@@ -10,14 +10,15 @@ text = "# DRAFT
 # Not in the cult. Thomas has sent him to do a dirty job tonight (scrubbing blood) and he can't say so.
 # If Thomas has named him (n4_thomas_simon), the porter can ask where he goes at night (trust -5: he takes it badly).
 # Telling him to keep to the dormitory is a warning ([warn]); he takes it badly, and he trusts Thomas more than the porter.
+# Claims: n4_simon_night (hiding): he can't sleep, he walks. True, but Thomas sends him out at night; pressed, he says he's bid, not by whom.
 == start
 (A thin brother on the wall of the herb beds, picking at a thread on his sleeve. He stands too fast when he sees you.)
-Simon: Porter. I was only taking the air. There's not much else to take tonight.
+Simon {ashamed, look down}: Porter. I was only taking the air. There's not much else to take tonight.
 -> topics
 
 == again
 (Simon is back on the wall, picking at the same thread.)
-Simon: Porter.
+Simon {ashamed}: Porter.
 -> topics
 
 == topics
@@ -25,24 +26,35 @@ Simon: Porter.
 * [if not n4_simon_how] How are you keeping, brother? -> how
 * [if not n4_simon_warn] Keep to the dormitory tonight, brother. Bar the door. [warn] -> warn
 
-== night [set n4_simon_night] [trust simon -5]
+== night [set n4_simon_night] [trust simon -5] [claim n4_simon_night hiding]
 (The thread snaps in his fingers.)
-Simon: Who says I go anywhere? I can't sleep. I walk. Is that a sin now, with all the rest?
+Simon {afraid}: Who says I go anywhere? I can't sleep. I walk. Is that a sin now, with all the rest?
+* [believe] No sin, brother. I can't sleep either. -> night_believed
+* [press] Walk where, brother? Alone, at that hour? -> night_pressed
+
+== night_believed
 (He looks toward the infirmary, then at the ground.)
+Simon {ashamed, look down}: No. No sin. Leave me be, porter.
+-> topics
+
+== night_pressed
+(He looks toward the infirmary, then at the ground.)
+Simon {ashamed, swallow}: I go where I'm bid, porter. I do what I'm told, and I don't ask. I'm not to talk of it.
+Simon {pleading, look down}: Don't ask me again. Please.
 -> topics
 
 == how [set n4_simon_how]
-Simon: Hungry. Cold. Afraid, like everyone.
-Simon: I came here to sing, porter. It's all I'm good for. I wish they'd let me only sing.
+Simon {ashamed}: Hungry. Cold. Afraid, like everyone.
+Simon {sad, look down}: I came here to sing, porter. It's all I'm good for. I wish they'd let me only sing.
 -> topics
 
 == warn [set n4_simon_warn]
 (He goes white.)
-Simon: Why would you say that to me? Who told you to say it?
-Simon: I'll go where I'm bid. I'm a brother of this house, not a guest you can lock in.
-Simon: Don't tell anyone you said that to me. Please.
+Simon {afraid, look down}: Why would you say that to me? Who told you to say it?
+Simon {ashamed}: I'll go where I'm bid. I'm a brother of this house, not a guest you can lock in.
+Simon {pleading, look down}: Don't tell anyone you said that to me. Please.
 -> end
 
 == leave
-Simon: God keep you, porter.
+Simon {ashamed}: God keep you, porter.
 "

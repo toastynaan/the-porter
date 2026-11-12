@@ -11,11 +11,11 @@ text = "# DRAFT
 # Simon sleeps in the next bed and goes down the night stair after Compline (because Thomas sends him).
 == start
 (Brother Aldo in the nave, setting out the psalters. The fog has come in at the west door and hides the altar.)
-Aldo: Porter. Mind where you walk. I've lost two psalters in it already.
+Aldo {wary}: Porter. Mind where you walk. I've lost two psalters in it already.
 -> topics
 
 == again
-Aldo: Still here? So am I. There's no supper to go to.
+Aldo {weary}: Still here? So am I. There's no supper to go to.
 -> topics
 
 == topics
@@ -23,15 +23,15 @@ Aldo: Still here? So am I. There's no supper to go to.
 * [if n4_thomas_simon] [if not n4_choirb_simon] What do you know of Brother Simon? -> simon
 
 == bede [set n4_choirb_bede]
-Aldo: Father Abbot says nobody's to sit in it. His psalter's still there. Nobody will touch it.
-Aldo: Nobody will sit next to it either. So I do.
+Aldo {grave}: Father Abbot says nobody's to sit in it. His psalter's still there. Nobody will touch it.
+Aldo {sad}: Nobody will sit next to it either. So I do.
 -> topics
 
 == simon [set n4_choirb_simon]
-Aldo: Simon? His bed's next to mine. He's up after Compline, these last nights. I hear him go down the night stair.
-Aldo: He says he can't sleep. Who can?
+Aldo {calm}: Simon? His bed's next to mine. He's up after Compline, these last nights. I hear him go down the night stair.
+Aldo {weary}: He says he can't sleep. Who can?
 -> topics
 
 == leave
-Aldo: Ring it loud tonight, porter. We'll want to hear it through this.
+Aldo {afraid}: Ring it loud tonight, porter. We'll want to hear it through this.
 "

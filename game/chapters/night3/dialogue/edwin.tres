@@ -10,11 +10,11 @@ text = "# DRAFT
 # He's frightened and trying not to show it. (He dies on night 4. Nothing here says so.)
 == start
 (Edwin is pacing the west walk, his book shut under his arm. His face lights up when he sees you.)
-Edwin: Alric! There you are. I looked for you at None, then I remembered you sleep all day. You lucky man.
+Edwin {glad}: Alric! There you are. I looked for you at None, then I remembered you sleep all day. You lucky man.
 -> topics
 
 == again
-Edwin: You again! Good. Stay a bit. The walk's very long when there's nobody on it.
+Edwin {glad}: You again! Good. Stay a bit. The walk's very long when there's nobody on it.
 -> topics
 
 == topics
@@ -23,24 +23,24 @@ Edwin: You again! Good. Stay a bit. The walk's very long when there's nobody on 
 * [if not n3_edwin_tower] Did you know the brother in the bell tower? -> tower
 
 == how [set n3_edwin_how]
-Edwin: Me? Well. I'm well. I'm not sleeping, but nobody's sleeping. Except Brother Wulfric. He'd sleep through Doomsday.
-Edwin: I keep reading the same page. Look. It's the same psalm. I've been on it since Martinmas.
+Edwin {warm, blink}: Me? Well. I'm well. I'm not sleeping, but nobody's sleeping. Except Brother Wulfric. He'd sleep through Doomsday.
+Edwin {weary}: I keep reading the same page. Look. It's the same psalm. I've been on it since Martinmas.
 (He laughs, too quickly.)
 -> topics
 
 == bread [set n3_edwin_bread]
-Edwin: Bede said that? To you? He never said a word to me, and I sat by him at table a whole year.
-Edwin: It's only bread. I've eaten it since I was twelve.
+Edwin {warm, brow}: Bede said that? To you? He never said a word to me, and I sat by him at table a whole year.
+Edwin {warm}: It's only bread. I've eaten it since I was twelve.
 (He thinks about it, and the grin goes.)
-Edwin: I'll leave mine tonight, if you leave yours. We'll be hungry together. That's nearly a feast.
+Edwin {sad}: I'll leave mine tonight, if you leave yours. We'll be hungry together. That's nearly a feast.
 -> topics
 
 == tower [set n3_edwin_tower]
-Edwin: They're saying you found him. When you rang the bell. Is it true?
-Edwin: Bede taught me my letters. He'd rap my knuckles with a rule, and then give me an apple after.
-Edwin: Father Abbot says the demon did it. I'd rather it was the demon, Alric. Isn't that a terrible thing to want?
+Edwin {afraid}: They're saying you found him. When you rang the bell. Is it true?
+Edwin {sad}: Bede taught me my letters. He'd rap my knuckles with a rule, and then give me an apple after.
+Edwin {afraid, swallow}: Father Abbot says the demon did it. I'd rather it was the demon, Alric. Isn't that a terrible thing to want?
 -> topics
 
 == leave
-Edwin: I'll see you at supper! Sit by me, if they let you.
+Edwin {glad}: I'll see you at supper! Sit by me, if they let you.
 "

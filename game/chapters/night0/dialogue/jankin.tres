@@ -10,7 +10,7 @@ text = "# DRAFT
 # He says Hob throws him out at closing every night (the night-2 rule).
 == start
 (A man slumped on the bench by the wall lifts his cup to you. Most of it goes down his sleeve.)
-Jankin: A monk! In the Keys! Hob, the world's ending. I always said it would.
+Jankin {drunk, blink}: A monk! In the Keys! Hob, the world's ending. I always said it would.
 -> topics
 
 == again
@@ -18,11 +18,11 @@ Jankin: A monk! In the Keys! Hob, the world's ending. I always said it would.
 -> again_plain
 
 == again_wall
-Jankin: Did I tell you about the thing on the wall? I did. It's still true.
+Jankin {drunk}: Did I tell you about the thing on the wall? I did. It's still true.
 -> topics
 
 == again_plain
-Jankin: Brother! You came back. Nobody comes back to Jankin.
+Jankin {drunk}: Brother! You came back. Nobody comes back to Jankin.
 -> topics
 
 == topics
@@ -31,24 +31,24 @@ Jankin: Brother! You came back. Nobody comes back to Jankin.
 * [if not n0_jankin_home] Where will you sleep tonight? -> home
 
 == wall [set n0_jankin_wall]
-Jankin: The abbey. I'll tell you about the abbey. I saw a thing on its wall.
-Jankin: Up on the top, by the corner, against the moon. Horns on it like a hart's. Still as a post.
-Jankin: I said good evening to it. It never said good evening back. Rude, I call that.
-Jankin: Hob says it was the drink. Hob says everything's the drink.
+Jankin {drunk}: The abbey. I'll tell you about the abbey. I saw a thing on its wall.
+Jankin {drunk, blink}: Up on the top, by the corner, against the moon. Horns on it like a hart's. Still as a post.
+Jankin {amused}: I said good evening to it. It never said good evening back. Rude, I call that.
+Jankin {drunk}: Hob says it was the drink. Hob says everything's the drink.
 -> topics
 
 == who [set n0_jankin_who]
-Jankin: Jankin. I was a cooper once, brother. Best barrels in Aldgate.
-Jankin: Then my wife died, and I found I liked what goes in a barrel better than the barrel.
+Jankin {drunk}: Jankin. I was a cooper once, brother. Best barrels in Aldgate.
+Jankin {sad}: Then my wife died, and I found I liked what goes in a barrel better than the barrel.
 (He looks into his cup, and for a moment he doesn't look drunk at all.)
 -> topics
 
 == home [set n0_jankin_home]
-Jankin: Tonight? Wherever I fall. Hob throws me out at closing, every night, rain or no.
-Jankin: Good man, Hob. Big hands. I go out of that door like a sack of meal.
-Jankin: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
+Jankin {drunk}: Tonight? Wherever I fall. Hob throws me out at closing, every night, rain or no.
+Jankin {amused}: Good man, Hob. Big hands. I go out of that door like a sack of meal.
+Jankin {drunk}: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
 -> topics
 
 == leave
-Jankin: Pray for me, brother! Somebody ought to.
+Jankin {drunk}: Pray for me, brother! Somebody ought to.
 "

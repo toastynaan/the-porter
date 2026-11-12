@@ -11,12 +11,12 @@ text = "# DRAFT
 # He hangs in the bell tower on night 2: his stall, his climbs to be alone, the rooks that know him.
 == start
 (A thin brother under the eaves by the refectory door, his hood up. His eyes keep going past you to the door.)
-Bede: You're the porter. I'm Bede. Choir, the third stall on the left. You'll count me at Matins.
+Bede {wary, glance}: You're the porter. I'm Bede. Choir, the third stall on the left. You'll count me at Matins.
 -> topics
 
 == again
 (He's still watching the refectory door.)
-Bede: Brother.
+Bede {wary}: Brother.
 -> topics
 
 == topics
@@ -25,21 +25,21 @@ Bede: Brother.
 * [if not n1_warner_tower] How do I ring Matins? -> tower
 
 == supper [set n1_warner_supper]
-Bede: Pottage. Bread. There's always bread.
+Bede {wary}: Pottage. Bread. There's always bread.
 (He lowers his voice.)
-Bede: Eat slowly, brother. Watch what the rest of us leave.
+Bede {afraid}: Eat slowly, brother. Watch what the rest of us leave.
 -> topics
 
 == door [set n1_warner_door]
-Bede: Watching? (He makes himself look at you.) Nothing. I'm hungry, that's all. We're all hungry here.
+Bede {afraid, swallow}: Watching? (He makes himself look at you.) Nothing. I'm hungry, that's all. We're all hungry here.
 -> topics
 
 == tower [set n1_warner_tower]
-Bede: The rope hangs at the foot of the tower. Pull, let it rise, pull again. Don't hold on when it rises.
-Bede: I go up the tower stair sometimes, when I can't sleep. It's the one place in this house a man can think.
-Bede: The rooks know me now. They don't even get up. Anyone else, they go up all at once.
+Bede {calm}: The rope hangs at the foot of the tower. Pull, let it rise, pull again. Don't hold on when it rises.
+Bede {sad}: I go up the tower stair sometimes, when I can't sleep. It's the one place in this house a man can think.
+Bede {warm}: The rooks know me now. They don't even get up. Anyone else, they go up all at once.
 -> topics
 
 == leave
-Bede: God keep you, porter.
+Bede {wary}: God keep you, porter.
 "

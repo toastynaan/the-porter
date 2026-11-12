@@ -67,7 +67,7 @@ const DONT_ASK := "(Ask him nothing.)"
 ## Seconds between knocks until answered.
 @export var knock_every := 5.0
 ## The prior letting a visitor in when he's sent for.
-@export var prior_lines := PackedStringArray(["Hugh: (Lets him in, and takes him to the guesthouse himself.)"])
+@export var prior_lines := PackedStringArray(["Hugh {cold}: (Lets him in, and takes him to the guesthouse himself.)"])
 
 var _audio: AudioStreamPlayer3D
 var _reading := false

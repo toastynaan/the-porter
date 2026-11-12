@@ -26,7 +26,7 @@ text = "# DRAFT
 * [if not n2_cole_today] Did anyone come to the gate today? -> today
 
 == take [set n2_cole_take]
-Cole: After supper.
+Cole {blank}: After supper.
 -> topics
 
 == today [set n2_cole_today]
