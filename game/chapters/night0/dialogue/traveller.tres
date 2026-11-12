@@ -8,6 +8,7 @@ id = &"n0_traveller"
 text = "# DRAFT
 # The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.tres is that talk) and turns to it.
 # Four pilgrims under sacking, found in the ditch by the white chapel: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.
+# The ride reveals nothing of what or who is behind it: no demon, no men, no robbery. Only the dead, the count, the abbey, and a man too frightened to say what people say.
 # If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him.
 # What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.tres, after).
 == start
@@ -25,7 +26,7 @@ Traveller: Men from the shires who saved a year to see a saint, and nobody here 
 
 == what [set n0_cart_what]
 Traveller: Found in the ditch by the white chapel, the carter says. Laid out side by side, neat as you like.
-Traveller: Not a mark on them that anyone will talk about. And every purse gone.
+Traveller: Not a mark on them. Not one. As if they'd lain down there to sleep.
 -> count
 
 == pray [set n0_cart_pray]
@@ -47,35 +48,23 @@ Traveller: That's where they were all bound. To see the saint.
 -> rumour
 
 == rumour
--> rumour_done [if n0_cart_abbey] [if n0_cart_demon] [if n0_cart_see]
+-> rumour_done [if n0_cart_abbey] [if n0_cart_say] [if n0_cart_see]
 -> rumour_ask
 
 == rumour_ask
 * [if not n0_cart_abbey] Why lay it at the abbey's door? -> abbey
-* [if not n0_cart_demon] What do people say it is? -> demon
+* [if not n0_cart_say] What do people say? -> say
 * [if not n0_cart_see] I'll see for myself what's there. -> see
 
 == abbey [set n0_cart_abbey]
 Traveller: They go in at that gate to see the saint. Nobody sees them come out.
 Traveller: Then a week on, a month on, they turn up in a ditch outside the walls. Like those.
-* Anyone could have killed them on the road. -> road
-* Has anyone told the sheriff? -> sheriff
-* (Look back at the cart.) -> rumour
-
-== road [set n0_cart_road]
-Traveller: Anyone could. (He nods.) And anyone could have taken their purses. But nobody takes a pilgrim's badge, brother. It's worth nothing.
-Traveller: They were in that abbey. Then they were in the ditch.
+Traveller: (He crosses himself.) I don't say how. I don't know how. Nobody does.
 -> rumour
 
-== sheriff [set n0_cart_sheriff]
-Traveller: The sheriff's men came, and looked, and went to the abbot, and the abbot gave them dinner.
-Traveller: (He spits over the side.) A holy house. Who'd hang a monk on the word of a ditch?
--> rumour
-
-== demon [set n0_cart_demon]
-Traveller: A demon. A thing with horns that walks the cloister when the bells are done.
-Traveller: And lights in the church long after the last office. Singing, some say, when there's nothing to sing.
-Traveller: I don't say it's true. I say I'd not sleep in there for the King's own purse.
+== say [set n0_cart_say]
+Traveller: (He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight.
+Traveller: You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you.
 -> rumour
 
 == see [set n0_cart_see]

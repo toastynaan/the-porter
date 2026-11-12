@@ -10,7 +10,7 @@ text = "# DRAFT
 # He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
 # One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.
 # Before the cart he only hints at the abbey: road talk, men who don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.tres says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.
-# After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, what people say is in it, and who would know more. After Aldgate (n0_past_aldgate) he opens on the warden.
+# After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, whether he's been inside, what people say, and who would know more. Nothing on the ride reveals a demon or men behind the deaths. After Aldgate (n0_past_aldgate) he opens on the warden.
 == start
 -> after [if talked_n0_traveller]
 -> hello
@@ -68,7 +68,7 @@ Traveller: Every toll on the road robs me in between. The bridges, the gates, th
 
 == living [set n0_road_living]
 Traveller: Good enough to complain about. (He pats the bale under him.) This is a winter's bread for my house.
-Traveller: Which is why I'll sleep inside the walls tonight, and not in some ditch with my purse gone.
+Traveller: Which is why I'll sleep inside the walls tonight, and not in some ditch.
 -> topics
 
 == family [set n0_road_family]
@@ -135,34 +135,33 @@ Traveller: (He watches the gate's light go small behind you.) He took his time o
 -> after_topics
 
 == after_topics
--> after_spent [if n0_road_think] [if n0_cart_demon] [if n0_road_ask]
+-> after_spent [if n0_road_think] [if n0_cart_say] [if n0_road_ask]
 -> after_ask
 
 == after_ask
 * [if not n0_road_think] What do you think goes on in that abbey? -> think
-* [if not n0_cart_demon] What do people say is in there? -> demon
+* [if not n0_cart_say] What do people say about it? -> say
 * [if not n0_road_ask] Who would know more? -> ask
 
 == think [set n0_road_think]
-Traveller: I think a man goes in at that gate with a full purse, and nobody sees him come out.
-Traveller: Call that what you like. I'd call it a reason to keep walking.
+Traveller: I think men go in at that gate to pray, and nobody sees them come out.
+Traveller: That's all I know, and it's more than I want to. I'd call it a reason to keep walking.
 * Those are my brothers you're talking about. -> defend
-* You think men did it, not a demon? -> men
+* Have you been inside? -> inside
 * (Say nothing.) -> after_topics
 
 == defend [set n0_road_defend]
 Traveller: I'm talking about a wall I can't see over. (He shrugs.) You'll be over it tomorrow. Then you tell me.
 -> after_topics
 
-== men [set n0_road_men]
-Traveller: I think a demon has no use for a purse.
-Traveller: (He looks back the way the cart went.) But I've never seen a demon. I've seen plenty of men.
+== inside [set n0_road_inside]
+Traveller: Once, at Lent, to see the saint. A finger in a glass box, and more candles than I've seen in my life.
+Traveller: And cold. Cold in there like the bottom of a well. I said my prayer and I didn't stay.
 -> after_topics
 
-== demon [set n0_cart_demon]
-Traveller: A demon. A thing with horns that walks the cloister when the bells are done.
-Traveller: And lights in the church long after the last office. Singing, some say, when there's nothing to sing.
-Traveller: I don't say it's true. I say I'd not sleep in there for the King's own purse.
+== say [set n0_cart_say]
+Traveller: (He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight.
+Traveller: You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you.
 -> after_topics
 
 == ask [set n0_road_ask]
