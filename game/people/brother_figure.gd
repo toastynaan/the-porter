@@ -22,6 +22,8 @@ const BUILDS := {
 	Build.BIG: Vector2(1.04, 1.3),
 }
 const HEIGHT := 1.75
+## Where the head turns, from the feet.
+const NECK := 1.5
 
 @export var build := Build.AVERAGE:
 	set(value):
@@ -70,19 +72,28 @@ func _rebuild() -> void:
 	var cloth := _mat(cloth_col)
 	_add(_cylinder(0.27, 0.2, 1.45, cloth), Vector3(0, 0.725, 0))
 	_add(_cylinder(0.2, 0.1, 0.12, cloth), Vector3(0, 1.5, 0))
-	_add(_sphere(0.14, 0.32, cloth), Vector3(0, 1.62, 0.02))
+	# The head turns on the neck: its face (FaceRig, docs/systems/faces.md)
+	# carries the hood, the head and the face box. In the editor it is a
+	# plain node; the face moves only in the game.
+	var head: Node3D = FaceRig.new() if not Engine.is_editor_hint() else Node3D.new()
+	head.name = "Head"
+	head.position = Vector3(0, NECK, 0)
+	if head is FaceRig:
+		(head as FaceRig).hooded = hood_up
+	_parts.add_child(head)
+	_add(_sphere(0.14, 0.32, cloth), Vector3(0, 1.62 - NECK, 0.02), Vector3.ZERO, head)
 	var face := _mat(Color(0.03, 0.03, 0.03) if hood_up else face_color)
-	_add(_box(Vector3(0.14, 0.18, 0.04), face), Vector3(0, 1.6, -0.115 if not hood_up else -0.06))
+	_add(_box(Vector3(0.14, 0.18, 0.04), face), Vector3(0, 1.6 - NECK, -0.115 if not hood_up else -0.06), Vector3.ZERO, head)
 	if hood_up:
-		_add(_cylinder(0.16, 0.16, 0.1, cloth), Vector3(0, 1.66, -0.1), Vector3(PI * 0.5, 0, 0))
+		_add(_cylinder(0.16, 0.16, 0.1, cloth), Vector3(0, 1.66 - NECK, -0.1), Vector3(PI * 0.5, 0, 0), head)
 
 
-func _add(mesh: Mesh, at: Vector3, euler := Vector3.ZERO) -> void:
+func _add(mesh: Mesh, at: Vector3, euler := Vector3.ZERO, under: Node3D = null) -> void:
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh
 	mi.position = at
 	mi.rotation = euler
-	_parts.add_child(mi)
+	(under if under else _parts).add_child(mi)
 
 
 func _mat(color: Color) -> StandardMaterial3D:

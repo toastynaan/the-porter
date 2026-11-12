@@ -60,7 +60,7 @@ func _answer() -> void:
 	while is_inside_tree():
 		await grate.wait_for_use()
 		Talk.begin(npc)
-		var pick := await Talk.ask(PackedStringArray([OPEN, "(Not yet.)"]), npc.visitor.speaker, npc.visitor.greeting)
+		var pick := await Talk.ask(PackedStringArray([OPEN, "(Not yet.)"]), npc.visitor.said_with(npc.visitor.greeting_face), npc.visitor.greeting)
 		Talk.end()
 		if pick != 0:
 			continue

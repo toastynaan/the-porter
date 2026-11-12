@@ -163,12 +163,15 @@ func line(speaker: String, text: String, seconds := -1.0) -> void:
 func _say(speaker: String, text: String, seconds: float, own: bool) -> void:
 	if talking and left:
 		return
-	_log(speaker, text)
-	_line_id += 1
-	var id := _line_id
 	var t := seconds
 	if t <= 0.0:
 		t = line_seconds if line_seconds >= 0.0 else maxf(MIN_SECONDS, text.length() / CHARS_PER_SECOND)
+	var faced := _face(speaker, text, t, own)
+	speaker = faced[0]
+	text = faced[1]
+	_log(speaker, text)
+	_line_id += 1
+	var id := _line_id
 	_up.append([id, speaker, text, own, t])
 	_show_newest()
 	while true:
@@ -193,7 +196,9 @@ func _say(speaker: String, text: String, seconds: float, own: bool) -> void:
 ## Offers `options` under an optional line; returns the index picked. In a
 ## conversation "Walk away" comes last, and walking away returns -1. With no
 ## line given, the line that has just been said stays up over the answers.
-func choose(options: PackedStringArray, speaker := "", text := "") -> int:
+## `marks`: each answer's stance on a claim ("believe", "press",
+## "confront"), shown small beside it (docs/systems/faces.md).
+func choose(options: PackedStringArray, speaker := "", text := "", marks := PackedStringArray()) -> int:
 	if talking and left:
 		return -1
 	var gen := _gen
@@ -213,13 +218,15 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 	if text.is_empty() and Time.get_ticks_msec() - _ended_at <= PROMPT_LINGER:
 		_prompt = _ended.duplicate()
 	else:
-		_prompt = [speaker, text]
+		_prompt = [Faces.split(speaker)[0], text]
+	var shown_marks := marks.duplicate()
+	shown_marks.resize(shown.size())
 	_choices = shown
 	_highlight = 0
 	_picked = -1
 	_choice_age = 0.0
 	_show_newest()
-	view.show_options(shown, _leave_index, _highlight)
+	view.show_options(shown, _leave_index, _highlight, shown_marks)
 	while _picked < 0 and not (in_talk and left):
 		await get_tree().process_frame
 		if gen != _gen or (in_talk and _talk != mine):
@@ -245,8 +252,9 @@ func choose(options: PackedStringArray, speaker := "", text := "") -> int:
 func ask(options: PackedStringArray, speaker: String, text: String) -> int:
 	if talking and left:
 		return -1
-	_log(speaker, text)
-	return await choose(options, speaker, text)
+	var faced := _face(speaker, text, maxf(MIN_SECONDS, text.length() / CHARS_PER_SECOND), talking)
+	_log(faced[0], text)
+	return await choose(options, faced[0], faced[1])
 
 
 ## Asks him something outside a Conversation (a beat's question): says
@@ -297,18 +305,27 @@ func converse(conversation: Conversation, with: Node3D, watch: Node3D = null) ->
 		if left or answers.is_empty():
 			at = point.go()
 			continue
+		var shown_text := last.text if last else ""
 		if asked:
-			_log(asked.speaker, asked.text)
+			# It stays up while he chooses: their face holds it as long as he looks.
+			var faced := _face(asked.speaker, asked.text, maxf(MIN_SECONDS, asked.text.length() / CHARS_PER_SECOND), true)
+			shown_text = faced[1]
+			_log(faced[0], asked.text)
 			last = asked
 		var texts := PackedStringArray()
+		var marks := PackedStringArray()
 		for a in answers:
 			texts.append(a.text)
-		var pick := await choose(texts, last.speaker if last else "", last.text if last else "")
+			marks.append(a.stance())
+		var pick := await choose(texts, last.speaker if last else "", shown_text, marks)
 		if _talk != mine:
 			return
 		if pick < 0:
 			break
 		Conversation.apply(answers[pick].tags)
+		var claim := point.claim()
+		if not claim.is_empty() and answers[pick].stance() != "" and not point.lines.is_empty():
+			Reading.read(claim[0], claim[1], answers[pick].stance(), Conversation.partner, point.lines[-1].text)
 		if narration(answers[pick].text).is_empty():
 			await line(PORTER, answers[pick].text, own_seconds(answers[pick].text))
 			if _talk != mine:
@@ -426,6 +443,26 @@ func highlighted() -> int:
 ## stepping on anyone.
 func quiet() -> bool:
 	return not talking and _up.is_empty()
+
+
+## A line's face (docs/systems/faces.md): "Thomas {warm, still}" is said by
+## Thomas, whose face holds warm and goes still. Plays it on whoever has that
+## face in the scene (in a talk, the one he's talking to first), and returns
+## [the name without the braces, the text as shown]: with Describe faces on,
+## the face is written as an aside.
+func _face(speaker: String, text: String, seconds: float, own: bool) -> Array:
+	var parts := Faces.split(speaker)
+	var who: String = parts[0]
+	if who.is_empty() or who == PORTER:
+		return [who, text]
+	var rig := Faces.rig_for(get_tree(), who, talking_to if own and talking else null)
+	if rig:
+		rig.line(parts[1], parts[2], seconds)
+	if Settings.describe_faces and parts[1] != &"":
+		var words := PackedStringArray([String(parts[1])])
+		words.append_array(parts[2])
+		text = "(%s) %s" % [", ".join(words), text]
+	return [who, text]
 
 
 func _log(speaker: String, text: String) -> void:

@@ -10,6 +10,9 @@ extends Resource
 ##   == start                  A point in the talk. It starts at the first
 ##                             point, or at "again" once he has talked to them.
 ##   Osric: (Bread, brother?)  Someone says a line: "Name: line".
+##   Osric {glad, smile}: Bread?
+##                             With a face: a mood, then tells (Faces,
+##                             docs/systems/faces.md). Not shown as words.
 ##   (He smells of the ovens.) A line with no name: what the porter notices.
 ##   * Thank him. -> end       An answer, and where it leads: a point, or end.
 ##                             At most three. The point's last line stays up
@@ -38,6 +41,10 @@ extends Resource
 ##   [warn]                                    warns them (Warnings)
 ##   [follow] [wait]                           they follow him, or wait (Companion)
 ##   [drink]                                   he drinks an ale (GameState.drink)
+##   [claim id true|hiding|lie]                on a point: its last line is a claim
+##                                             to weigh (docs/systems/faces.md)
+##   [believe] [press] [confront note]         on an answer: Alric's stance on the
+##                                             claim; confront needs that note
 ## Every talk sets the flag talked_<id>.
 
 const MAX_ANSWERS := 3
@@ -63,6 +70,22 @@ class Answer:
 	var to := ""
 	var tags := PackedStringArray()
 
+	## [believe], [press] or [confront note]: "believe", "press", "confront", or "".
+	func stance() -> String:
+		for tag in tags:
+			var w := tag.split(" ", false)
+			if w[0] in Reading.STANCES:
+				return w[0]
+		return ""
+
+	## The note a confront stance names, or "".
+	func proof() -> StringName:
+		for tag in tags:
+			var w := tag.split(" ", false)
+			if w[0] == "confront" and w.size() == 2:
+				return StringName(w[1])
+		return &""
+
 
 class Point:
 	var name := ""
@@ -73,6 +96,14 @@ class Point:
 	## Jumps that need their tags to hold: [to, tags], first that holds wins.
 	var branches: Array = []
 	var tags := PackedStringArray()
+
+	## Its [claim id truth] as [id, truth], or [] if it makes none.
+	func claim() -> Array:
+		for tag in tags:
+			var w := tag.split(" ", false)
+			if w[0] == "claim" and w.size() == 3:
+				return [StringName(w[1]), w[2]]
+		return []
 
 	## Where it goes now with no answer: the first branch that holds, else next.
 	func go() -> String:
@@ -126,7 +157,8 @@ func point(point_name: String) -> Point:
 func offered(p: Point) -> Array[Answer]:
 	var out: Array[Answer] = []
 	for a in p.answers:
-		if holds(a.tags):
+		# A confrontation needs its proof in his notes.
+		if holds(a.tags) and (a.proof() == &"" or GameState.has_note(a.proof())):
 			out.append(a)
 	return out
 
@@ -245,6 +277,8 @@ func _parse() -> void:
 			if colon > 0 and not line.substr(0, colon).contains("("):
 				l.speaker = line.substr(0, colon).strip_edges()
 				l.text = line.substr(colon + 1).strip_edges()
+				for e in Faces.errors(l.speaker):
+					_errors.append("line %d: %s" % [n, e])
 			else:
 				l.text = line
 			current.lines.append(l)
@@ -253,6 +287,10 @@ func _parse() -> void:
 	for p: Point in _points.values():
 		if p.answers.size() > MAX_ANSWERS:
 			_errors.append("%s: %d answers (three at most)" % [p.name, p.answers.size()])
+		if p.answers.any(func(a: Answer) -> bool: return a.stance() != "") and p.claim().is_empty():
+			_errors.append("%s: a stance on a point with no [claim]" % p.name)
+		if not p.claim().is_empty() and (p.lines.is_empty() or p.lines[-1].speaker.is_empty()):
+			_errors.append("%s: a [claim] whose last line nobody says" % p.name)
 		if not p.answers.is_empty() and (not p.next.is_empty() or not p.branches.is_empty()):
 			_errors.append("%s: both answers and ->" % p.name)
 		var targets := [p.next] if not p.next.is_empty() else []
@@ -291,7 +329,10 @@ func _split_tags(s: String, n: int) -> Array:
 			or (words[0] == "suspicion" and words.size() == 2 and words[1].is_valid_int())
 			or (words[0] == "item" and words.size() == 2 and Items.ALL.has(StringName(words[1])))
 			or (words[0] == "note" and words.size() == 2 and Clues.is_clue(StringName(words[1])))
-			or (words[0] == "trust" and words.size() == 3 and words[2].is_valid_int()))
+			or (words[0] == "trust" and words.size() == 3 and words[2].is_valid_int())
+			or (words[0] == "claim" and words.size() == 3 and words[2] in Reading.TRUTHS)
+			or (words[0] == "confront" and words.size() == 2 and Clues.is_clue(StringName(words[1]))))
+		ok = ok or (words.size() == 1 and words[0] in ["believe", "press"])
 		if not ok:
 			_errors.append("line %d: unknown tag [%s]" % [n, tag])
 		else:

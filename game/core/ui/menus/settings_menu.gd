@@ -28,6 +28,7 @@ func build() -> void:
 		refresh())
 	_toggle("A dark band behind subtitles", &"subtitle_backing")
 	_toggle("Less motion", &"less_motion")
+	_toggle("Describe faces in words", &"describe_faces")
 	_toggle("Guidance (the duty flame)", &"guidance")
 	_toggle("A faster clock", &"fast_clock")
 	add_button("Back", func() -> void: back.emit())

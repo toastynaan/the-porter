@@ -17,6 +17,10 @@ extends Resource
 @export var lantern := true
 ## Said at the grille when the porter comes to it.
 @export var greeting := ""
+## Their face as they greet him, and as they answer (docs/systems/faces.md):
+## a mood, then any tells, as in a script's braces ("wary, glance").
+@export var greeting_face := ""
+@export var answer_face := ""
 @export var details: Array[VisitorDetail] = []
 ## The flag that records the porter's choice: admitted, refused or prior.
 @export var flag := &""
@@ -34,3 +38,8 @@ extends Resource
 
 func has_part(part: StringName) -> bool:
 	return details.any(func(d: VisitorDetail) -> bool: return d.part == part)
+
+
+## The speaker with a face for Talk: "Walter {amused, brow}", or the plain name.
+func said_with(face: String) -> String:
+	return speaker if face.strip_edges().is_empty() else "%s {%s}" % [speaker, face]

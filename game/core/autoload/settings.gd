@@ -32,6 +32,8 @@ var subtitle_size := 1
 var subtitle_backing := false
 ## No head bob, no lantern sway, a softer stumble.
 var less_motion := false
+## Faces described in words beside the speaker's name (docs/systems/faces.md).
+var describe_faces := false
 ## The duty glyph.
 var guidance := true
 ## The candle clock runs a third faster (off by default).
@@ -57,6 +59,7 @@ func load_settings() -> void:
 		sensitivity = clampf(float(cfg.get_value("view", "sensitivity", sensitivity)), SENSITIVITY_RANGE.x, SENSITIVITY_RANGE.y)
 		invert_look = bool(cfg.get_value("view", "invert_look", invert_look))
 		less_motion = bool(cfg.get_value("view", "less_motion", less_motion))
+		describe_faces = bool(cfg.get_value("text", "describe_faces", describe_faces))
 		volume = clampf(float(cfg.get_value("sound", "volume", volume)), 0.0, 1.0)
 		crouch_toggle = bool(cfg.get_value("controls", "crouch_toggle", crouch_toggle))
 		subtitle_size = clampi(int(cfg.get_value("text", "subtitle_size", subtitle_size)), 0, 2)
@@ -73,6 +76,7 @@ func save_settings() -> void:
 	cfg.set_value("view", "sensitivity", sensitivity)
 	cfg.set_value("view", "invert_look", invert_look)
 	cfg.set_value("view", "less_motion", less_motion)
+	cfg.set_value("text", "describe_faces", describe_faces)
 	cfg.set_value("sound", "volume", volume)
 	cfg.set_value("controls", "crouch_toggle", crouch_toggle)
 	cfg.set_value("text", "subtitle_size", subtitle_size)

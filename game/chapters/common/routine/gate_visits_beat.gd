@@ -119,20 +119,20 @@ func _receive(v: Visitor) -> void:
 		var greeted := false
 		if may_ask:
 			greeted = true
-			var ask := await Talk.ask(PackedStringArray([v.question, DONT_ASK]), v.speaker, v.greeting)
+			var ask := await Talk.ask(PackedStringArray([v.question, DONT_ASK]), v.said_with(v.greeting_face), v.greeting)
 			may_ask = ask < 0
 			if ask == 0:
 				GameState.set_flag(asked_flag)
 				await Talk.line(Talk.PORTER, v.question, Talk.own_seconds(v.question))
 				for i in v.answer.size() - 1:
-					await Talk.line(v.speaker, v.answer[i])
+					await Talk.line(v.said_with(v.answer_face), v.answer[i])
 				if not v.answer.is_empty():
 					under = v.answer[-1]
 					greeted = false
 		if greeted:
 			pick = await Talk.choose(PackedStringArray(CHOICES), v.speaker, under)
 		else:
-			pick = await Talk.ask(PackedStringArray(CHOICES), v.speaker, under)
+			pick = await Talk.ask(PackedStringArray(CHOICES), v.said_with(v.answer_face if under != v.greeting else v.greeting_face), under)
 		_reading = false
 		Talk.end()
 		if pick < 0:

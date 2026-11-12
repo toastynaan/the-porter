@@ -107,6 +107,8 @@ var _shown := false
 var _presence: Tween
 var _line_fade: Tween
 var _choices := PackedStringArray()
+## Each answer's stance on a claim, or "" (docs/systems/faces.md).
+var _marks := PackedStringArray()
 var _leave := -1
 var _highlight := 0
 ## Each row: [mark ColorRect, number Label, text Label].
@@ -266,8 +268,9 @@ func show_heard(who: String, text: String) -> void:
 
 ## Shows the answers, numbered; `leave` is the one that walks away (-1:
 ## none), `highlight` the one the arrows are on.
-func show_options(options: PackedStringArray, leave: int, highlight: int) -> void:
+func show_options(options: PackedStringArray, leave: int, highlight: int, marks := PackedStringArray()) -> void:
 	_choices = options
+	_marks = marks
 	_leave = leave
 	_highlight = highlight
 	_options_live = true
@@ -382,6 +385,13 @@ func _build_options(animate: bool) -> void:
 		row.add_child(mark)
 		row.add_child(number)
 		row.add_child(text)
+		if i < _marks.size() and not _marks[i].is_empty():
+			# Its stance, small and dim after it: what kind of answer this is.
+			var stance := _label(_italic, NUMBER)
+			stance.text = _marks[i]
+			_size(stance, ASIDE_SIZE)
+			stance.size_flags_vertical = Control.SIZE_SHRINK_END
+			row.add_child(stance)
 		if i == _leave and i > 0:
 			# Walking away stands a little apart from the answers.
 			var apart := Control.new()
