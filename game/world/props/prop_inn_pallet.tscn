@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_pallet.glb" id="model"]
+
+[node name="Pallet" type="Node3D"]
+editor_description = "A straw pallet on the floor, slept on (tools/build/prop_inn.py): a tick, a blanket thrown back, a cloak rolled for a pillow. 0.8 x 1.9 m, its head at -Z. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

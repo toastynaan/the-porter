@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_bundle.glb" id="model"]
+
+[node name="Bundle" type="Node3D"]
+editor_description = "A lodger's things on the floor (tools/build/prop_inn.py): his blanket rolled and corded, his scrip, his shoes. 0.7 x 0.4 m. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

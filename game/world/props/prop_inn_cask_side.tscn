@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_cask_side.glb" id="model"]
+
+[node name="CaskSide" type="Node3D"]
+editor_description = "A cask on its side along Z, chocked, its head at -Z, with sacks against it (tools/build/prop_inn.py). The hidden Block is the cask's collision; the sacks have none."
+
+[node name="CaskSide" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+script = ExtResource("block")
+size = Vector3(0.64, 0.62, 0.8)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model")]

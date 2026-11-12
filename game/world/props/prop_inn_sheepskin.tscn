@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_sheepskin.glb" id="model"]
+
+[node name="Sheepskin" type="Node3D"]
+editor_description = "A fleece on the floor (tools/build/prop_inn.py), about 1.1 x 0.75 m. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

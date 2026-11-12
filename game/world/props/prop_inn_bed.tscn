@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_bed.glb" id="model_bed"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_bed_slept.glb" id="model_bed_slept"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_bed_taken.glb" id="model_bed_taken"]
+[ext_resource type="Script" path="res://game/world/props/prop_variant.gd" id="variant_gd"]
+
+[node name="InnBed" type="Node3D"]
+editor_description = "A box bed at the Cross Keys (tools/build/prop_inn_bed.py): oak posts, a boarded headboard and footboard, deep side boards, a straw tick, a wool coverlet and a bolster. 0.9 x 2 m; the head posts 1.05 m high, the box 0.55 m. Its head is at -Z. Model shows one of three by where the bed stands: made; slept in; made and claimed, a cloak on it and shoes beside it (set its pick to choose). The hidden Block is its collision."
+
+[node name="Bed" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.9, 0.55, 2)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("variant_gd")
+weights = PackedFloat32Array(2, 2, 2)
+
+[node name="InnBed" parent="Model" instance=ExtResource("model_bed")]
+
+[node name="InnBedSlept" parent="Model" instance=ExtResource("model_bed_slept")]
+
+[node name="InnBedTaken" parent="Model" instance=ExtResource("model_bed_taken")]

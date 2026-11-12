@@ -120,6 +120,9 @@ Real since the props pass (see "The abbey's props" above), all but: `prop_tree_a
 | `prop_bed` | A straw bed, 0.9 × 2 m, 0.45 m high, head at -Z | Guesthouse (6), dormitory (19), infirmary (3) |
 | `prop_bed_raised` | A bed on legs you can hide under | Dormitory (3, the hiding spots), infirmary (1, a hiding spot) |
 | `prop_cot` | The porter's cot, planks on legs, with room under it | Porter's cell |
+| `prop_inn_bed` (`prop_inn_bed.py`) | The Cross Keys' box bed: oak, four posts, headboard and footboard, a straw tick, a wool coverlet with the sheet turned down, a bolster, a folded blanket; 0.9 × 2 m, 0.55 m high. Three variants (made, slept in, claimed with a cloak and shoes); `PropVariant` picks by place | The porter's room (always made), the loft (5) |
+| `tankard` (`prop_inn.py`: `prop_inn_tankard`) | A staved ale cup, about 15 cm, with the ale's surface (hidden once drunk); E drinks it | The Keys' tables and counter (8) |
+| `prop_inn_*` (`prop_inn.py`) | The Keys' dressing: rushes and strips of straw, a sheepskin, a log basket with kindling and a pail, a pot of pottage, a sleeping dog, trenchers, a jug with cups, ham, onions and herbs on the beams, a cask on its side with sacks, a besom, boots and a staff, peg boards with a hat, hood and satchel, a chest, a washstand, lodgers' bundles and packs, straw pallets. Only the cask, basket, pot, chest and washstand have collision | `Dressing` in `env_inn.tscn` |
 | `prop_desk` | Writing desk, 1.2 × 0.6 m | Porter's cell |
 | `prop_ledger` | The gate ledger, lying shut | On the desk |
 | `prop_stool` | Three-legged stool | Guesthouse, dormitory |

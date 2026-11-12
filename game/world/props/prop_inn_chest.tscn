@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_chest.glb" id="model"]
+
+[node name="Chest" type="Node3D"]
+editor_description = "A small iron-strapped chest, a blanket folded on it (tools/build/prop_inn.py): 0.75 x 0.42 m, 0.45 m high, its back at +Z. The hidden Block is its collision."
+
+[node name="Chest" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.78, 0.47, 0.44)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model")]

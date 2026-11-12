@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_pot.glb" id="model"]
+
+[node name="Pot" type="Node3D"]
+editor_description = "An iron pot of pottage on its three legs, a ladle in it (tools/build/prop_inn.py): 0.36 m across. The hidden Block is its collision."
+
+[node name="Pot" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.34, 0.32, 0.34)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model")]

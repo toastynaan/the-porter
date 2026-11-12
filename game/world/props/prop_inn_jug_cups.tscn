@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_jug_cups.glb" id="model"]
+
+[node name="JugCups" type="Node3D"]
+editor_description = "A jug and two cups (tools/build/prop_inn.py); set on a table top. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

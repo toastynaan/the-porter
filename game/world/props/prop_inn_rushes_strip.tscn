@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_rushes_strip.glb" id="model"]
+
+[node name="RushesStrip" type="Node3D"]
+editor_description = "Rushes along a wall's foot (tools/build/prop_inn.py): a strip 1.8 m long, the wall at Z = 0 and the rushes out toward -Z. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

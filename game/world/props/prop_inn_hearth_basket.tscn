@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_hearth_basket.glb" id="model"]
+
+[node name="HearthBasket" type="Node3D"]
+editor_description = "By the hearth (tools/build/prop_inn.py): a withy basket of logs, a bundle of kindling, a pail of water. 0.9 x 0.45 m, its back to a wall at +Z. The hidden Block is its collision."
+
+[node name="HearthBasket" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, 0, 0)
+script = ExtResource("block")
+size = Vector3(0.85, 0.45, 0.45)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model")]

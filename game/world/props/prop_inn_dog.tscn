@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_dog.glb" id="model"]
+
+[node name="Dog" type="Node3D"]
+editor_description = "The house dog asleep, curled nose to tail (tools/build/prop_inn.py), about 0.6 m across. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

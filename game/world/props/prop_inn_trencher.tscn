@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_trencher.glb" id="model"]
+
+[node name="Trencher" type="Node3D"]
+editor_description = "A board with a loaf, a wedge of cheese and a knife (tools/build/prop_inn.py), 0.36 m across; set on a table top. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

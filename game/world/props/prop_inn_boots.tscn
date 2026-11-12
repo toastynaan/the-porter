@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_boots.glb" id="model"]
+
+[node name="Boots" type="Node3D"]
+editor_description = "A pair of boots by a wall, one fallen, a staff leant over them (tools/build/prop_inn.py): the wall at Z = 0. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

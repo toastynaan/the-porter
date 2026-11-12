@@ -35,6 +35,8 @@ The killing (`WindowKilling`) is an implied death that feeds nothing (it's befor
 
 **The Cross Keys** (`game/world/street/env_inn.tscn`): three storeys, enterable. The taproom has the hearth, the counter, tables and benches; the stairs at the back left go up to an open loft of beds, and on to the top floor, where the porter's room is at the front right with one window toward the abbey. On night 0 Hob and Agnes are inside, with Jankin, Walter, Roger and Ralph drinking. The taproom's talk is heard while the Keys is open.
 
+**The Keys made warm (your ask, 2026-11-12).** Rushes and straw on the floors, thickest by the hearth; a sheepskin and a sleeping dog by the fire, a pot of pottage at its edge, logs and a pail; trenchers of bread and cheese and a jug on the tables; ham, onions and herbs from the beams; a cask and sacks behind the counter; cloaks on pegs, boots at the stair foot. Upstairs the lodgers' bundles and straw pallets in the loft, and box beds with coverlets and bolsters; in the porter's room a chest, a washstand and pegs. `tools/shots/inn_shots.sh` takes stills of it to `art/_review/inn/`.
+
 **Drinking:** an ale is an answer in Hob's or Agnes's talk (`[drink]`), and each ends the talk. +1 an ale, 5 at most, 1 lost an hour, cleared by sleep. What he sees (`DoseDriver`, the post shader's `drunk`):
 
 | Drink | You see |

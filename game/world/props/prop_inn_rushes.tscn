@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_rushes.glb" id="model"]
+
+[node name="Rushes" type="Node3D"]
+editor_description = "Rushes and straw strewn on the boards, a little meadowsweet in them (tools/build/prop_inn.py): a patch 2.4 x 1.4 m, thick in the middle, thinning out. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

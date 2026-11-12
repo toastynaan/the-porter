@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_pegs.glb" id="model"]
+
+[node name="Pegs" type="Node3D"]
+editor_description = "A peg board on a wall 1.75 m up (tools/build/prop_inn.py): a felt hat, a hood, a satchel. The wall at Z = 0, the origin on the floor under the board. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_washstand.glb" id="model"]
+
+[node name="Washstand" type="Node3D"]
+editor_description = "A stool with a basin on it and a jug by its foot (tools/build/prop_inn.py): 0.45 m across. The hidden Block is the stool's collision."
+
+[node name="Washstand" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(0.42, 0.6, 0.42)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model")]

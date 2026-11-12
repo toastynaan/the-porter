@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_table.tscn" id="table"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_bench.tscn" id="bench"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_barrel.tscn" id="barrel"]
-[ext_resource type="PackedScene" path="res://game/world/props/prop_bed.tscn" id="bed"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_bed.tscn" id="bed"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
 [ext_resource type="PackedScene" path="res://art/models/env_inn_rooms.glb" id="rooms"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_stool.tscn" id="stool"]
@@ -25,6 +25,25 @@
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="Material" path="res://game/world/materials/real/window_inn.tres" id="inn_glass"]
 [ext_resource type="Script" path="res://game/player/lantern_away.gd" id="lantern_away"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_rushes.tscn" id="inn_rushes"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_rushes_strip.tscn" id="inn_rushes_strip"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_sheepskin.tscn" id="inn_sheepskin"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_hearth_basket.tscn" id="inn_hearth_basket"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pot.tscn" id="inn_pot"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_dog.tscn" id="inn_dog"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_trencher.tscn" id="inn_trencher"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_jug_cups.tscn" id="inn_jug_cups"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_hanging.tscn" id="inn_hanging"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_cask_side.tscn" id="inn_cask_side"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_broom.tscn" id="inn_broom"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_boots.tscn" id="inn_boots"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pegs.tscn" id="inn_pegs"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pegs_room.tscn" id="inn_pegs_room"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_chest.tscn" id="inn_chest"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_washstand.tscn" id="inn_washstand"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_bundle.tscn" id="inn_bundle"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pack.tscn" id="inn_pack"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pallet.tscn" id="inn_pallet"]
 
 [sub_resource type="BoxShape3D" id="Shape_lantern_away"]
 size = Vector3(11.2, 9.5, 9.2)
@@ -389,6 +408,9 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 4.7, 3.0, 1.4)
 [node name="PorterBed" parent="." instance=ExtResource("bed")]
 transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 6.0, 2.6)
 
+[node name="Model" parent="PorterBed"]
+pick = 0
+
 [node name="Candle0" parent="." instance=ExtResource("candle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.55, 0.752, 2.0)
 energy = 0.9
@@ -533,3 +555,102 @@ editor_description = "Inside the Keys the porter keeps his lantern put away (Lan
 
 [node name="Shape" type="CollisionShape3D" parent="LanternAway"]
 shape = SubResource("Shape_lantern_away")
+
+[node name="Dressing" type="Node3D" parent="."]
+editor_description = "What makes the Keys look lived in (tools/build/prop_inn.py; each its own scene, prop_inn_*.tscn): in the taproom rushes strewn thick by the hearth, a sheepskin, the dog asleep, a pot of pottage, logs, kindling and a pail, a ham, onions and herbs from the beams, trenchers and a jug on the tables, a cask on its side behind the counter, a hat, hood and satchel on pegs, boots at the stair foot; in the loft lodgers' bundles; in the porter's room a chest, a basin on a stool, a towel and a hat on pegs. Kept off the walkways, the stairs, the door, the seats and the ales' places. Only the cask, the basket, the pot, the chest and the washstand have collision."
+
+[node name="RushesHearthLeft" parent="Dressing" instance=ExtResource("inn_rushes")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -3.9, 0, 7.95)
+
+[node name="RushesHearthRight" parent="Dressing" instance=ExtResource("inn_rushes")]
+transform = Transform3D(0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, 1.55, 0, 8.45)
+
+[node name="RushesTable0" parent="Dressing" instance=ExtResource("inn_rushes")]
+transform = Transform3D(0.996195, 0, 0.087156, 0, 1, 0, -0.087156, 0, 0.996195, -3.6, 0, 2.05)
+
+[node name="RushesTable2" parent="Dressing" instance=ExtResource("inn_rushes")]
+transform = Transform3D(0.087156, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.087156, -3.3, 0, 5.3)
+
+[node name="RushesTable1" parent="Dressing" instance=ExtResource("inn_rushes")]
+transform = Transform3D(-0.087156, 0, 0.996195, 0, 1, 0, -0.996195, 0, -0.087156, 4.55, 0, 4.8)
+
+[node name="RushesFront" parent="Dressing" instance=ExtResource("inn_rushes_strip")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.1, 0, 0.3)
+
+[node name="RushesRight" parent="Dressing" instance=ExtResource("inn_rushes_strip")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 5.7, 0, 2.6)
+
+[node name="RushesBack" parent="Dressing" instance=ExtResource("inn_rushes_strip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 0, 9.7)
+
+[node name="Sheepskin" parent="Dressing" instance=ExtResource("inn_sheepskin")]
+transform = Transform3D(0.990268, 0, 0.139173, 0, 1, 0, -0.139173, 0, 0.990268, -0.85, 0, 8.4)
+
+[node name="Dog" parent="Dressing" instance=ExtResource("inn_dog")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -1.95, 0, 8.35)
+
+[node name="Pot" parent="Dressing" instance=ExtResource("inn_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 8.8)
+
+[node name="HearthBasket" parent="Dressing" instance=ExtResource("inn_hearth_basket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 9.45)
+
+[node name="Broom" parent="Dressing" instance=ExtResource("inn_broom")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, 9.7)
+
+[node name="HangingHearth" parent="Dressing" instance=ExtResource("inn_hanging")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3, 0, 8.9)
+
+[node name="HangingBar" parent="Dressing" instance=ExtResource("inn_hanging")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1.05, 0, 8.6)
+
+[node name="TrencherTable0" parent="Dressing" instance=ExtResource("inn_trencher")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -2.95, 0.75, 1.75)
+
+[node name="TrencherTable2" parent="Dressing" instance=ExtResource("inn_trencher")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -2.95, 0.75, 5.95)
+
+[node name="TrencherTable3" parent="Dressing" instance=ExtResource("inn_trencher")]
+transform = Transform3D(-0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939693, 1.3, 0.75, 3.65)
+
+[node name="JugTable1" parent="Dressing" instance=ExtResource("inn_jug_cups")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 4.25, 0.75, 5.45)
+
+[node name="CaskSide" parent="Dressing" instance=ExtResource("inn_cask_side")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 5.2, 0, 8.3)
+
+[node name="Pegs" parent="Dressing" instance=ExtResource("inn_pegs")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -5.7, 0, 3.45)
+
+[node name="Boots" parent="Dressing" instance=ExtResource("inn_boots")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -5.7, 0, 9.35)
+
+[node name="Bundle0" parent="Dressing" instance=ExtResource("inn_bundle")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1.5, 3, 7.35)
+
+[node name="Pack" parent="Dressing" instance=ExtResource("inn_pack")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, 4.6, 3, 7.15)
+
+[node name="Bundle1" parent="Dressing" instance=ExtResource("inn_bundle")]
+transform = Transform3D(-0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, -0.984808, 5.2, 3, 2.4)
+
+[node name="PalletLoft0" parent="Dressing" instance=ExtResource("inn_pallet")]
+transform = Transform3D(-0.034899, 0, 0.999391, 0, 1, 0, -0.999391, 0, -0.034899, -1.7, 3, 1.35)
+
+[node name="PalletLoft1" parent="Dressing" instance=ExtResource("inn_pallet")]
+transform = Transform3D(0.104528, 0, 0.994522, 0, 1, 0, -0.994522, 0, 0.104528, 0.55, 3, 1.3)
+
+[node name="BundlePallet" parent="Dressing" instance=ExtResource("inn_pack")]
+transform = Transform3D(-0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, -0.939693, -0.6, 3, 2.45)
+
+[node name="PalletTop" parent="Dressing" instance=ExtResource("inn_pallet")]
+transform = Transform3D(0.034899, 0, 0.999391, 0, 1, 0, -0.999391, 0, 0.034899, -1.2, 6, 1.4)
+
+[node name="Chest" parent="Dressing" instance=ExtResource("inn_chest")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 1.86, 6, 1.6)
+
+[node name="Washstand" parent="Dressing" instance=ExtResource("inn_washstand")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 1.95, 6, 0.75)
+
+[node name="PegsRoom" parent="Dressing" instance=ExtResource("inn_pegs_room")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 1.625, 6, 2.7)

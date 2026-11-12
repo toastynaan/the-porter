@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_broom.glb" id="model"]
+
+[node name="Broom" type="Node3D"]
+editor_description = "A besom leant on a wall (tools/build/prop_inn.py): the wall at Z = 0, its head on the floor 0.35 m out. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]

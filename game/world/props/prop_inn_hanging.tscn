@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_hanging.glb" id="model"]
+
+[node name="Hanging" type="Node3D"]
+editor_description = "From the taproom's beams (tools/build/prop_inn.py): a ham, a string of onions, bunches of herbs on cords from iron hooks. Its origin is on the floor under them; they hang from 2.8 m and stay above 2 m. No collision."
+
+[node name="Model" parent="." instance=ExtResource("model")]
