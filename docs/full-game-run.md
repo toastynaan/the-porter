@@ -229,6 +229,7 @@ Each chronicle entry is a short paragraph written decades later in a plain chron
 - 2026-11-11 · Lane art, first look · c4ce1bd · The lane's real look: nine kinds of house on its fourteen plots, cobbles, a stone face on the precinct wall, houses round the bends, and an arched dark passage at each of its four ends with the street going on beyond (33 suites green). Also the road in's corners closed, its turn past the bridge, and the road and lane never shown together (e27f60d). Next: the Cross Keys, the gate, the lane's dressing, the people.
 - 2026-11-10 · Fix · c3403af · Talking on the wagon: the traveller's talk no longer ends after each answer (one click, one talk; he says so when there's nothing left to ask); every mouse click counts as its own press; the view turns to a speaker over 0.9 s, not 0.45, and pulling the mouse takes it back mid-turn. Checked in a scratch copy: dialogue, prologue, gate, frame. Not pushed.
 - 2026-11-11 · Fix · fa0b12b · The ride's talks, from your notes: at the body cart the traveller breaks off his own talk ("Whoa. Look at that."); at Aldgate he breaks off to greet the warden, who walks up, holds his lantern up to the porter's face and walks back saying they're good to go.
+- 2026-11-11 · Fix · 788cf09 · The ride, from your notes: four bodies on the cart; both carts jolt and sway over the road and the porter's view with them; the traveller's talk deeper (a name, a family, the dead tied to the abbey); the warden talks to him with the lantern up.
 
 ## Decisions to review
 
