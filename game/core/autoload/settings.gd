@@ -38,6 +38,8 @@ var less_motion := false
 var describe_faces := false
 ## The duty glyph.
 var guidance := true
+## The small sun-and-moon dial in the top right corner.
+var sky_dial := true
 ## The candle clock runs a third faster (off by default).
 var fast_clock := false
 ## Finished the game once: chapter select is open.
@@ -68,6 +70,7 @@ func load_settings() -> void:
 		subtitle_size = clampi(int(cfg.get_value("text", "subtitle_size", subtitle_size)), 0, 2)
 		subtitle_backing = bool(cfg.get_value("text", "subtitle_backing", subtitle_backing))
 		guidance = bool(cfg.get_value("help", "guidance", guidance))
+		sky_dial = bool(cfg.get_value("help", "sky_dial", sky_dial))
 		fast_clock = bool(cfg.get_value("help", "fast_clock", fast_clock))
 		finished = bool(cfg.get_value("profile", "finished", finished))
 	apply()
@@ -86,6 +89,7 @@ func save_settings() -> void:
 	cfg.set_value("text", "subtitle_size", subtitle_size)
 	cfg.set_value("text", "subtitle_backing", subtitle_backing)
 	cfg.set_value("help", "guidance", guidance)
+	cfg.set_value("help", "sky_dial", sky_dial)
 	cfg.set_value("help", "fast_clock", fast_clock)
 	cfg.set_value("profile", "finished", finished)
 	if cfg.save(path) != OK:

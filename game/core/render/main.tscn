@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://game/core/flow/game_flow.gd" id="13_flow"]
 [ext_resource type="Resource" path="res://game/core/flow/chapters.tres" id="14_chapters"]
 [ext_resource type="Script" path="res://game/core/ui/page_view.gd" id="15_page"]
+[ext_resource type="Script" path="res://game/core/ui/sky_dial.gd" id="sky_dial"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
 shader = ExtResource("2_post")
@@ -65,6 +66,16 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("12_glyph")
 main = NodePath("../..")
+
+[node name="SkyDial" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("sky_dial")
 
 [node name="Satchel" type="Control" parent="UI"]
 layout_mode = 3

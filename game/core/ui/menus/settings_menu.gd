@@ -31,6 +31,7 @@ func build() -> void:
 	_toggle("Less motion", &"less_motion")
 	_toggle("Describe faces in words", &"describe_faces")
 	_toggle("Guidance (the duty flame)", &"guidance")
+	_toggle("The sky dial (top right)", &"sky_dial")
 	_toggle("A faster clock", &"fast_clock")
 	add_button("Back", func() -> void: back.emit())
 	back.connect(Settings.save_settings)

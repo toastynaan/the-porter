@@ -106,10 +106,11 @@ Night 3's rescue by Thomas stays: it's a near miss, not a capture. *This changes
 
 ## The minimal HUD
 
-There are only two things on screen, plus subtitles and the dot.
+There are only three things on screen, plus subtitles and the dot.
 
 - **The outline**, as described under "Your hands".
 - **The duty glyph:** a small, dim mark (a candle flame, about 1° across) over the one person or thing the current duty needs, seen within 10 m. It never shows during a chase, while hiding, or while talking. The lit way to each duty stays. A setting turns the glyph off for players who want no help.
+- **The sky dial** *(your ask, 2026-11-12)*: small in the top right, a half-circle of sky over a horizon line, with the sun crossing it by day and a thin moon by night. No numbers. It shows when the light is going (sunset at 17:15 *mine*), so you can see dusk coming. Hidden in menus, when paused, and whenever the clock is stopped; a setting turns it off.
 - **The HUD lies once.** One scripted moment, on night 5 or 6 and only at Dose 75+: an outline on a door in a blank wall, which opens on nothing. The HUD is otherwise always true, so it stays something the player can trust.
 
 ## Reading the hidden numbers
@@ -143,8 +144,8 @@ The night-4 change is deliberate: the rule you trusted turns on you (design pill
 ## Time and duties
 
 - **Waking:** the night shift starts at 16:30, as the sun sets *(your call, 2026-11-12)*, which leaves the free hours of dusk before the first knock.
-- **The candle waits** at a duty's mark until you do it (as built), so nothing is skipped. The time you take after the mark counts as late.
 - **Length:** a night is 30–40 minutes. Awake, the clock runs at 3 minutes an in-game hour (it's 4 in night 3's build now). Dozing skips the waits. *(mine)*
+- **The candle waits** at a duty's mark until you do it (as built), so nothing is skipped. The time you take after the mark counts as late.
 - **Lateness** (*mine*):
 
 | How late | What happens |
@@ -314,7 +315,9 @@ The duty glyph marks each one. Then they take you to your cell, and lying on the
   - subtitle size (small, medium, large);
   - a subtitle backing (a dark band behind subtitles and choices);
   - less motion (no head bob, no lantern sway, a softer stumble);
-  - guidance (the duty glyph on or off).
+  - guidance (the duty glyph on or off);
+  - the sky dial on or off;
+  - describe faces in words.
 - **Chapter select** on the title screen once you've finished the game: start any night, with the state a typical playthrough would have reached.
 - **Not in this run:** key remapping and softer scares (you didn't pick them; easy to add later).
 
