@@ -39,3 +39,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Faces · 76bf89d · Faces and reading people: the engine (moods, tells, baselines, claims and stances, the placeholder face rig, Describe faces).
 - 2026-11-12 · Faces · 85daf8d · Every spoken line has a face; 20 claims across the nights and the lane.
 - 2026-11-12 · Docs · dce72ae · docs/script: every conversation as a readable page, with faces, claims, trust and Suspicion.
+- 2026-11-12 · Fix · 0388935 · Claims can be mistaken (the prior) or misleading (Thomas pointing at others); the oven badge and the candle ring now write their notes.
