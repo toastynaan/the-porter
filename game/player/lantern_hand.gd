@@ -8,6 +8,13 @@ extends Node3D
 ## `cover_lantern` tucks it under the cloak (so does hiding: `force_cover`).
 ## Hunger shakes the hand (Look and Feel, "Hunger": hand tremor on the
 ## lantern); `tremor` adds more for scripted moments.
+##
+## He may not have it at all (`owned`: night 0; he's given it on day 1), and
+## he can put it away in his satchel and take it out again (`stow_lantern`,
+## docs/systems/mechanics.md, "Your hands"). Put away, it gives no light and
+## shows nothing; the hunters see an unlit man. Some places make him put it
+## away while he's in them (LanternAway: the Cross Keys), and he takes it out
+## again as he leaves if he had it out before.
 
 ## Hand position relative to the head, held and tucked under the cloak.
 const HOLD := Vector3(-0.22, -0.22, -0.52)
@@ -29,6 +36,58 @@ const TREMOR_SIZE := 0.008
 
 ## Keeps the lantern covered whatever the player holds (hiding).
 var force_cover := false
+## He has a lantern (GameState flag has_lantern; NightDirector sets it).
+var owned := true:
+	set(value):
+		owned = value
+		_show()
+## In his hand, not put away in the satchel.
+var held := true:
+	set(value):
+		held = value
+		_show()
+## Places that have made him put it away (LanternAway) while he's in them.
+var _away_in: Array[Node] = []
+## Whether it was out when the first such place put it away.
+var _held_before_away := true
+
+signal changed
+
+
+## In his hand and giving light (owned, out, and nowhere has put it away).
+func showing() -> bool:
+	return owned and held and _away_in.is_empty()
+
+
+## Puts it away or takes it out (`stow_lantern`). Nothing while a place has
+## made him put it away, or if he has none.
+func toggle() -> void:
+	if not owned or not _away_in.is_empty():
+		return
+	held = not held
+
+
+## A place makes him put it away while he's in it (the Keys' rooms).
+func put_away_for(place: Node) -> void:
+	if _away_in.has(place):
+		return
+	if _away_in.is_empty():
+		_held_before_away = held
+	_away_in.append(place)
+	_show()
+
+
+## He leaves that place: out again if it was out before.
+func release(place: Node) -> void:
+	_away_in.erase(place)
+	if _away_in.is_empty():
+		held = _held_before_away
+	_show()
+
+
+func _show() -> void:
+	visible = showing()
+	changed.emit()
 
 var _swing := Vector2.ZERO
 var _swing_vel := Vector2.ZERO
@@ -51,7 +110,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	delta = clampf(delta, 0.001, 1.0 / 30.0)
 	_t += delta
-	var cover := force_cover or Input.is_action_pressed(&"cover_lantern")
+	# Put away (or none at all): covered too, so nothing counts him lit.
+	var cover := force_cover or not showing() or Input.is_action_pressed(&"cover_lantern")
 	if cover != lantern.covered:
 		lantern.covered = cover
 	_tuck = move_toward(_tuck, 1.0 if lantern.covered else 0.0, delta / TUCK_TIME)

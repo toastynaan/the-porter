@@ -1,7 +1,8 @@
 extends Node
 ## Player checks in the greybox abbey, driven through the input actions:
 ## walk 1.4 m/s and run 4 m/s with footsteps and head bob; covering the
-## lantern (5 m to 1 m); looking back; opening a door by looking at it (and
+## lantern (5 m to 1 m); putting it away and taking it out, and a place that
+## keeps it put away; looking back; opening a door by looking at it (and
 ## the draught guttering the lantern); high Dose guttering it; holding the
 ## breath; crawling under the mill wheel and dropping down the latrine chute.
 ## Run: tools/check.sh
@@ -50,6 +51,39 @@ func _run() -> void:
 	Input.action_release(&"cover_lantern")
 	await _seconds(0.6)
 	_check(is_equal_approx(lantern.light.omni_range, Lantern.REACH), "uncovered lantern reaches 5 m")
+
+	# Put the lantern away and take it out (G); a place that makes him put it away.
+	var hand := _player.lantern_hand
+	_press(&"stow_lantern")
+	await _seconds(0.1)
+	_check(not hand.held and not hand.visible and lantern.covered and not HunterSenses.is_lit(_player),
+		"G puts the lantern away: no light, nothing in his hand, and the hunters see an unlit man")
+	_press(&"stow_lantern")
+	await _seconds(0.4)
+	_check(hand.held and hand.visible and not lantern.covered and HunterSenses.is_lit(_player), "G again: out, and lit")
+	var inn := LanternAway.new()
+	var box := CollisionShape3D.new()
+	box.shape = BoxShape3D.new()
+	(box.shape as BoxShape3D).size = Vector3(4, 3, 4)
+	inn.add_child(box)
+	_abbey.add_child(inn)
+	inn.global_position = _player.global_position + Vector3(0, 1.5, 6.0)
+	await _seconds(0.1)
+	_place(inn.global_position + Vector3(0, -1.45, 0), PI)
+	await _seconds(0.3)
+	_press(&"stow_lantern")
+	await _seconds(0.1)
+	_check(not hand.showing() and not hand.visible, "inside a place that keeps lanterns put away, it's put away, and G does nothing")
+	_place(inn.global_position + Vector3(0, -1.45, 8.0), PI)
+	await _seconds(0.3)
+	_check(hand.showing() and hand.visible, "out again as he leaves")
+	inn.queue_free()
+	hand.owned = false
+	_press(&"stow_lantern")
+	await _seconds(0.1)
+	_check(not hand.visible and not HunterSenses.is_lit(_player), "without a lantern (night 0), nothing in his hand, and G does nothing")
+	hand.owned = true
+	await _seconds(0.4)
 	Input.action_press(&"look_back")
 	await _seconds(0.5)
 	_check(absf(rad_to_deg(_player.look_back_pivot.rotation.y) - Player.LOOK_BACK_ANGLE) < 1.0, "looks back over the shoulder")

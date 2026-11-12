@@ -14,6 +14,7 @@ Keep the gate: answer the knocks, read who stands at the grille, and let them in
 [b]Answer[/b]  1 to 4, or the arrows and E  ·  the pad and A
 [b]Lock, unlock[/b]  R  ·  Y
 [b]Cover the lantern[/b]  F or right click  ·  left trigger
+[b]Put the lantern away, take it out[/b]  G  ·  left on the pad
 [b]Hold your breath[/b]  Space  ·  right trigger
 [b]Look back[/b]  Q  ·  right stick
 [b]The ledger[/b]  L  ·  View

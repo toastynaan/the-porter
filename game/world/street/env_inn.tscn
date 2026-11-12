@@ -24,6 +24,10 @@
 [ext_resource type="PackedScene" path="res://art/models/env_inn.glb" id="shell"]
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="Material" path="res://game/world/materials/real/window_inn.tres" id="inn_glass"]
+[ext_resource type="Script" path="res://game/player/lantern_away.gd" id="lantern_away"]
+
+[sub_resource type="BoxShape3D" id="Shape_lantern_away"]
+size = Vector3(11.2, 9.5, 9.2)
 
 [node name="Inn" type="Node3D"]
 script = ExtResource("house_gd")
@@ -521,3 +525,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.25, 0, -0.27)
 
 [node name="BarrelEnd" parent="Outside" instance=ExtResource("barrel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0, -0.43)
+
+[node name="LanternAway" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.75, 5.0)
+script = ExtResource("lantern_away")
+editor_description = "Inside the Keys the porter keeps his lantern put away (LanternAway): Hob's fire and candles light the rooms. It comes out again as he leaves, if it was out."
+
+[node name="Shape" type="CollisionShape3D" parent="LanternAway"]
+shape = SubResource("Shape_lantern_away")

@@ -23,6 +23,10 @@ signal finished
 @export var start_suspicion := 0
 ## The rite's count the nights before would have reached.
 @export var start_count := 0
+## He has the porter's lantern from the start of this chapter. Off on night 0
+## (he comes to London without one) and day 1 (Anselm gives it to him on the
+## tour); once given, the flag has_lantern keeps it his.
+@export var porter_lantern := true
 
 var beats_run: Array[StringName] = []
 var current: NightBeat
@@ -69,6 +73,11 @@ func run() -> void:
 				GameState.set_flag(f)
 		# What Thomas was told since the last dusk has reached the cult.
 		Report.at_dusk()
+	if porter_lantern:
+		GameState.set_flag(&"has_lantern")
+	var p := get_tree().get_first_node_in_group(&"player") as Player
+	if p:
+		p.lantern_hand.owned = GameState.has_flag(&"has_lantern")
 	var beats: Array[NightBeat] = []
 	for c in get_children():
 		if c is NightBeat:

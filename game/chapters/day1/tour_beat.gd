@@ -48,10 +48,15 @@ func run() -> void:
 		var pick := await Talk.choose(PackedStringArray(["(Walk the duties with Thomas.)", "(Skip the tour: you've kept this gate before.)"]))
 		if pick == 1:
 			GameState.set_flag(&"d1_tour_skipped")
+			_give_lantern()
 			return
 	var p := player()
 	await say("Thomas {warm, nod}", "Brother Alric. I'm Thomas, the infirmarian. This is Brother Anselm, who kept the gate before you.")
 	await say("Anselm {weary}", "Kept it till my eyes went. Thomas will show you. I'll listen.")
+	# The porter's lantern: his now (docs/places/prologue.md, "Day 1").
+	await say("Anselm {weary, lip}", "(He holds out a horn lantern, its handle worn smooth by his hand.) The porter's light. I carried it more winters than you've been alive. I've no use for it now.")
+	_give_lantern()
+	await say("", "(The lantern is yours. G puts it away in your satchel, and takes it out again.)")
 	var duties: Array = [bar_gate, ledger, candle_clock, bell_rope, round_stop, guest_bed]
 	var markers := points(stops)
 	for i in duties.size():
@@ -79,6 +84,20 @@ func run() -> void:
 	GameState.set_flag(&"d1_anselm_warned")
 	await say("Anselm {afraid, lip}", "The old porter locked the guests in at night. Remember that.")
 	GameState.set_flag(&"d1_tour_done")
+
+
+## The porter's lantern, from Anselm: his from now on, in his hand.
+func _give_lantern() -> void:
+	GameState.set_flag(&"has_lantern")
+	var p := player()
+	if p:
+		p.lantern_hand.owned = true
+		p.lantern_hand.held = true
+
+
+## Started after the tour (Test a scene): he has it.
+func skipped() -> void:
+	_give_lantern()
 
 
 ## Thomas leads Anselm to the next stop; the porter follows.

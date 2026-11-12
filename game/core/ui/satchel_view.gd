@@ -77,13 +77,27 @@ static func page_text() -> String:
 		for k in GameState.keys:
 			names.append(Items.KEY_NAMES.get(k, String(k)))
 		text += "[b]Keys[/b], for %s.\n" % _join(names)
+	var hand := _lantern_hand()
+	if hand and hand.owned:
+		if hand.showing():
+			text += "[b]The lantern[/b], in your hand. [color=#%s][i]G: put it away[/i][/color]\n" % Manuscript.FADED_INK.to_html()
+		elif not hand.held:
+			text += "[b]The lantern[/b], put away. [color=#%s][i]G: take it out[/i][/color]\n" % Manuscript.FADED_INK.to_html()
+		else:
+			text += "[b]The lantern[/b], put away while you're indoors.\n"
 	for id in GameState.satchel:
 		text += "[b]%s.[/b] %s\n" % [Items.display_name(id), Items.line(id)]
-	if GameState.satchel.is_empty():
+	if GameState.satchel.is_empty() and not (hand and hand.owned):
 		text += "[color=#%s]Nothing else.[/color]\n" % Manuscript.FADED_INK.to_html()
 	elif GameState.is_hungry() and GameState.satchel.any(func(i: StringName) -> bool: return Items.kind(i) == &"food"):
 		text += "\n[center][color=#%s][i]E: eat[/i][/color][/center]" % Manuscript.FADED_INK.to_html()
 	return text
+
+
+static func _lantern_hand() -> LanternHand:
+	var tree := Engine.get_main_loop() as SceneTree
+	var p := tree.get_first_node_in_group(&"player") as Player if tree else null
+	return p.lantern_hand if p else null
 
 
 static func _join(names: PackedStringArray) -> String:

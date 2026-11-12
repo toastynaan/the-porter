@@ -175,6 +175,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				_let_go_of_face()
 		if _can_look():
 			_look(_turn(motion.relative * MOUSE_SENSITIVITY))
+	elif Press.fresh(event, &"stow_lantern") and not busy():
+		# Puts the lantern away in his satchel, or takes it out.
+		lantern_hand.toggle()
 	elif Press.fresh(event, &"interact") and hiding and not _hide_moving and not controls_locked:
 		leave_hiding()
 		get_viewport().set_input_as_handled()
@@ -361,6 +364,32 @@ func start_talk(at: Vector3, watch: Node3D = null) -> void:
 ## His view comes off their face before its time: he looked away.
 func _let_go_of_face() -> void:
 	_talk_turning = false
+	_talk_glance = false
+	_talk_watch = null
+	if _talk_tween:
+		_talk_tween.kill()
+	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_talk_tween.tween_property(self, ^"zoom", 0.0, TALK_TURN_TIME)
+
+
+## Something pulls his eyes outside a talk (the killing seen from the
+## window): his view narrows by `narrow` degrees and follows `target` until
+## stop_looking(). Moving the mouse or the stick lets go, as in a talk.
+func look_at_scene(target: Node3D, narrow := TALK_ZOOM) -> void:
+	_talk_glance = true
+	_talk_turning = false
+	_talk_watch = target
+	_talk_pull = 0.0
+	if _talk_tween:
+		_talk_tween.kill()
+	_talk_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_talk_tween.tween_property(self, ^"zoom", narrow, TALK_TURN_TIME)
+
+
+## His eyes are his own again after look_at_scene().
+func stop_looking() -> void:
+	if talking:
+		return
 	_talk_glance = false
 	_talk_watch = null
 	if _talk_tween:
