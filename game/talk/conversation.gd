@@ -51,6 +51,8 @@ const MAX_ANSWERS := 3
 const END := "end"
 const AGAIN := "again"
 const LEAVE := "leave"
+## Said when they call out to him as he passes (Talker); never where a talk starts.
+const HAIL := "hail"
 ## Trust from which they greet him warmly and tell him more; below 0, coldly.
 const WARM := 30
 
@@ -246,7 +248,7 @@ func _parse() -> void:
 			if _points.has(current.name):
 				_errors.append("line %d: a second point called %s" % [n, current.name])
 			_points[current.name] = current
-			if _first.is_empty() and current.name != LEAVE and current.name != AGAIN:
+			if _first.is_empty() and current.name != LEAVE and current.name != AGAIN and current.name != HAIL:
 				_first = current.name
 		elif current == null:
 			_errors.append("line %d: everything goes under a point (== name)" % n)

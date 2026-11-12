@@ -9,6 +9,10 @@ extends Node
 @export var leave: Marker3D
 @export var leave_hour := 17.5
 
+## Held still by something else, as by talking (a Chatter while they talk
+## among themselves).
+var held := false
+
 var _i := 0
 var _leaving := false
 var _paused := false
@@ -26,7 +30,7 @@ func _process(_delta: float) -> void:
 	if not _leaving and GameState.hour >= leave_hour:
 		_leaving = true
 		_walk()
-	var talking := _talker != null and _talker.talking
+	var talking := held or (_talker != null and _talker.talking)
 	if talking != _paused:
 		_paused = talking
 		if talking:

@@ -370,6 +370,7 @@ Each mechanic gets checks in `tools/check.sh` when it's built:
 - **Trust:** answers and gifts move it; the gates at 30 and 40.
 - **Warnings:** a warned guest lives and the count drops; overheard, +15.
 - **Companions:** follow, wait, hide with you, caught and gone.
+- **People who start talks** (`test_hails`): a hail once when he comes near, never as the talk's start, and the talk knowing it; two people's chatter heard when he comes near, once, and stopping when he walks off.
 - **Lies:** noticing a contradiction writes the note.
 - **Incense:** the dose by place, holding your breath, being seen out of your stall.
 - **Food:** eating ends hunger.

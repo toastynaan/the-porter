@@ -9,11 +9,20 @@ extends Area3D
 ## all (docs/systems/mechanics.md, "Reading the hidden numbers"). Someone who is his
 ## companion (a Companion child) is told to follow or wait with a quick E
 ## instead.
+##
+## Hails (your ask, 2026-11-12: people start talks too): if the conversation
+## has a `hail` point, the first time the porter comes within `hail_radius`
+## while they can talk, they turn to him and say its lines ("Brother! You're
+## the new porter?"), once a night (the flag hailed_<id>). Pressing E then
+## talks to them as usual; the talk can ask [if hailed_<id>].
 
 @export var conversation: Conversation
 @export var phases: Array[GameState.Phase] = [GameState.Phase.DUSK]
+## How near he must come for them to call out to him, m.
+@export var hail_radius := 5.0
 
 var talking := false
+var _since := 0.0
 
 
 func _ready() -> void:
@@ -47,6 +56,38 @@ func interact(_by: Node) -> void:
 	talking = true
 	await Talk.converse(conversation, get_parent() as Node3D)
 	talking = false
+
+
+func _physics_process(delta: float) -> void:
+	_since += delta
+	if _since < 0.3:
+		return
+	_since = 0.0
+	if collision_layer == 0 or conversation == null or talking or not conversation.has_point("hail"):
+		return
+	var flag := StringName("hailed_" + String(conversation.id))
+	if GameState.has_flag(flag) or not Talk.quiet():
+		return
+	var p := get_tree().get_first_node_in_group(&"player") as Player
+	var who := get_parent() as Node3D
+	if p == null or who == null or not who.is_visible_in_tree() or p.busy():
+		return
+	var head := who.global_position + Vector3.UP * 1.6
+	if p.global_position.distance_to(who.global_position) > hail_radius \
+			or not ViewCheck.clear(who, head, p.camera.global_position):
+		return
+	GameState.set_flag(flag)
+	if who.has_method(&"face"):
+		who.call(&"face", p.global_position)
+	_hail.call()
+
+
+## Calls out to him: the hail point's lines, unless a talk begins meanwhile.
+func _hail() -> void:
+	for l in conversation.point("hail").lines:
+		if Talk.talking:
+			return
+		await Talk.say(l.speaker, l.text)
 
 
 func _on_phase(phase: GameState.Phase) -> void:

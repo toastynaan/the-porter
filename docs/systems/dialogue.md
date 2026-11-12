@@ -19,6 +19,24 @@ At the gate it's one talk each time you come to the grille. Walter's knock opens
 
 **Questions outside a talk.** A beat can ask you something with no conversation open (the bread, the remedy, the wine, whom to tell about a body, the prior's question at dawn). The line just said stays up over the answers. What you do is in brackets, so in italics ("Eat the bread." / "Palm the bread."); what you say, you say, as in a talk. One question is open at a time: a second waits for the first to be answered.
 
+## Who starts a talk
+
+Most talks start when Alric looks at someone and presses E. Two kinds start without him (your ask, 2026-11-12):
+
+- **Hails.** If someone's talk has a `hail` point, the first time he comes within 5 m of them (`Talker.hail_radius`) while they can talk, and they can see him, they turn to him and say its lines: "Brother! You're the new porter?" It happens once a night (`hailed_<id>`), and it never interrupts a talk. Then E talks to them as usual, and their talk can follow it (`-> hailed_start [if hailed_<id>]`). A `hail` point is never where a talk starts.
+- **Overheard talk** (`Chatter`). Two or more people talking among themselves: when he comes within 4.5 m, they turn to each other and say the `start` point of their own `.talk` file (`dialogue/chatter_<who>.talk`), each line in its speaker's voice and face, once a night (`overheard_<id>`). It stops if he walks off (7 m). He can step in by pressing E on either of them; their own talk can pick up what he heard (`[if overheard_<id>]`).
+
+## How talk should feel
+
+Back-and-forth, not a menu (your choice, 2026-11-12). It's a horror game first, with a mystery and faces to read: talk pulls him into both.
+
+- **Short turns.** Two lines from them at most before he has something to say back.
+- **They ask him things** (who he is, where from, why the abbey) and react to his answer. Some of what he says they remember, and say again later.
+- **They change the subject themselves** when they want to, and some of what they say isn't an answer to anything.
+- **Everyone has their own thread**, a thing of their own they let out a piece at a time as they come to trust him, night by night. It leads toward the dread, not away from it.
+- **One leads to another.** What one person says opens a question for someone else (a flag the other's talk checks): Hob says Jankin saw something on the wall; now Alric can ask Jankin.
+- **They remember** what he told them and what he did, and it colours how they greet him.
+
 ## How it looks
 
 One column at the bottom of the screen, in the book face the menus use (EB Garamond), drawn by `game/talk/talk_view.gd`:
