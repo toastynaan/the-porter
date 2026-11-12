@@ -142,9 +142,9 @@ The night-4 change is deliberate: the rule you trusted turns on you (design pill
 
 ## Time and duties
 
-- **Length:** a night is 30–40 minutes. Awake, the clock runs at 3 minutes an in-game hour (it's 4 in night 3's build now). Dozing skips the waits. *(mine)*
 - **Waking:** the night shift starts at 16:30, as the sun sets *(your call, 2026-11-12)*, which leaves the free hours of dusk before the first knock.
 - **The candle waits** at a duty's mark until you do it (as built), so nothing is skipped. The time you take after the mark counts as late.
+- **Length:** a night is 30–40 minutes. Awake, the clock runs at 3 minutes an in-game hour (it's 4 in night 3's build now). Dozing skips the waits. *(mine)*
 - **Lateness** (*mine*):
 
 | How late | What happens |
@@ -305,7 +305,7 @@ The duty glyph marks each one. Then they take you to your cell, and lying on the
 
 - **One difficulty,** as designed.
 - **Settings:**
-  - fullscreen, on by default (F11 flips it, and it's remembered; the editor's Game tab and runs with `--windowed` stay in their window);
+  - fullscreen, on by default (F11 flips it, and it's remembered; the editor's Game tab and runs started at another scene, the review stills and films, stay in their window);
   - field of view, 60–90°;
   - mouse sensitivity;
   - invert look;

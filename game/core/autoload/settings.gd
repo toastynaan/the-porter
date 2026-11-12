@@ -107,15 +107,26 @@ func apply() -> void:
 	changed.emit()
 
 
-## Fullscreen or a window, as set; but never for a run that asked for a
-## window itself (--windowed: the review stills and films), headless runs,
-## or the editor's Game tab, which holds the game in its own frame.
-func _apply_window() -> void:
-	if DisplayServer.get_name() == "headless" or OS.get_cmdline_args().has("--windowed"):
+## Fullscreen or a window, as set, for the game itself, started at the
+## project's main scene, as soon as that scene is in. The project starts in
+## a window: started fullscreen, macOS ignores --windowed and won't leave
+## fullscreen while it is still going in, and the game can't see the flag;
+## so a run started at any other scene (the review stills and films) stays
+## in the window it asked for. Headless runs and the editor's Game tab,
+## which holds the game in its own frame, are left alone.
+func _apply_window(tries := 0) -> void:
+	if DisplayServer.get_name() == "headless":
 		return
 	if Engine.has_method(&"is_embedded_in_editor") and Engine.call(&"is_embedded_in_editor"):
 		return
-	var want := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
+	var scene := get_tree().current_scene
+	if scene == null:
+		# Before the first scene is in (the settings load as the game starts).
+		if tries < 3:
+			_apply_window.call_deferred(tries + 1)
+		return
+	var game := scene.scene_file_path == str(ProjectSettings.get_setting("application/run/main_scene"))
+	var want := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen and game else DisplayServer.WINDOW_MODE_WINDOWED
 	if DisplayServer.window_get_mode() != want:
 		DisplayServer.window_set_mode(want)
 
