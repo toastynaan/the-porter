@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/ground_lane.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_flags_worn_col.jpg" id="2_flag"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_flags_worn_nrm.jpg" id="3_flag_n"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_mud_wet_col.jpg" id="4_mud"]
+[ext_resource type="Texture2D" path="res://art/tex/tex_mud_wet_nrm.jpg" id="5_mud_n"]
+
+[sub_resource type="FastNoiseLite" id="noise"]
+noise_type = 3
+seed = 3
+frequency = 0.02
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="blotch"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("noise")
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/flag_col = ExtResource("2_flag")
+shader_parameter/flag_nrm = ExtResource("3_flag_n")
+shader_parameter/mud_col = ExtResource("4_mud")
+shader_parameter/mud_nrm = ExtResource("5_mud_n")
+shader_parameter/blotch = SubResource("blotch")

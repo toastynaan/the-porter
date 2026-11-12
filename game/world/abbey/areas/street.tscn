@@ -6,11 +6,9 @@
 [ext_resource type="Material" path="res://game/world/materials/plaster.tres" id="plaster"]
 [ext_resource type="Material" path="res://game/world/materials/roof.tres" id="roof"]
 [ext_resource type="Material" path="res://game/world/materials/mud.tres" id="mud"]
-[ext_resource type="Material" path="res://game/world/materials/flags.tres" id="flags"]
 [ext_resource type="Material" path="res://game/world/materials/water.tres" id="water"]
 [ext_resource type="Material" path="res://game/world/materials/window_lit.tres" id="wlit"]
 [ext_resource type="Material" path="res://game/world/materials/window_dark.tres" id="wdark"]
-[ext_resource type="Material" path="res://game/world/materials/iron.tres" id="iron"]
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_3storey_wide.tscn" id="env_house_3storey_wide"]
 [ext_resource type="PackedScene" path="res://game/world/street/env_house_2storey_wide.tscn" id="env_house_2storey_wide"]
@@ -33,10 +31,8 @@
 [ext_resource type="PackedScene" path="res://art/models/env_lane_wall.glb" id="lane_wall"]
 [ext_resource type="Material" path="res://game/world/materials/real/stone_ashlar.tres" id="ashlar"]
 [ext_resource type="Material" path="res://game/world/materials/real/stone_rubble.tres" id="rubble"]
-
-[sub_resource type="BoxMesh" id="M4"]
-material = ExtResource("iron")
-size = Vector3(0.5, 0.05, 0.05)
+[ext_resource type="Material" path="res://game/world/materials/real/flags_lane.tres" id="flags_lane"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_lane_bracket.tscn" id="lane_bracket"]
 
 [sub_resource type="BoxMesh" id="M11"]
 material = ExtResource("wdark")
@@ -491,19 +487,19 @@ radial_segments = 6
 rings = 1
 
 [node name="Street" type="Node3D"]
-editor_description = "The lane outside the west gate, on the edge of the city. Its houses, ground and ends have their real look (tools/build/env_house_timber.py, env_lane.py); the gate porch, the Cross Keys and the far skyline are still greybox. Lanterns hung outside houses follow the London mayor's order of 1415; hide StreetLanterns for a darker, earlier street."
+editor_description = "The lane outside the west gate, on the edge of the city. Its houses, the Cross Keys, its ground (setts, kerbs and a flagged walk each side) and its ends have their real look (tools/build/env_house_timber.py, env_inn.py, env_inn_rooms.py, env_lane.py); the gate porch and the far skyline are still greybox. Lanterns hung outside houses follow the London mayor's order of 1415; hide StreetLanterns for a darker, earlier street."
 
 [node name="Ground" type="Node3D" parent="." groups=["nav_source"]]
 
 [node name="Cobbles" parent="Ground" instance=ExtResource("lane_ground")]
-editor_description = "The lane's ground as it is seen (tools/build/env_lane.py): cobbles, mud, the kennel. The blocks under it are what is walked on; they aren't drawn."
+editor_description = "The lane's ground as it is seen (tools/build/env_lane.py): a carriageway of setts with a gutter along each kerb, and a kerb and a flagged sidewalk each side, none of it more than 6 cm off the blocks under it. Those are what is walked on; they aren't drawn, but for the gate's apron."
 
 [node name="Lane" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -43.4, -0.3, 0)
 script = ExtResource("block")
 size = Vector3(6, 0.3, 102)
 material = ExtResource("mud")
-surface = "mud"
+surface = "stone"
 shown = false
 
 [node name="Kennel" type="StaticBody3D" parent="Ground"]
@@ -520,7 +516,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, -0.3, 47)
 script = ExtResource("block")
 size = Vector3(31, 0.3, 6)
 material = ExtResource("mud")
-surface = "mud"
+surface = "stone"
 shown = false
 
 [node name="BendSouth" type="StaticBody3D" parent="Ground"]
@@ -528,14 +524,14 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -56, -0.3, -47)
 script = ExtResource("block")
 size = Vector3(31, 0.3, 6)
 material = ExtResource("mud")
-surface = "mud"
+surface = "stone"
 shown = false
 
 [node name="GateApron" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -40.5, -0.28, -2)
 script = ExtResource("block")
 size = Vector3(3.8, 0.3, 4.6)
-material = ExtResource("flags")
+material = ExtResource("flags_lane")
 surface = "stone"
 
 [node name="PrecinctFace" parent="." instance=ExtResource("lane_wall")]
@@ -573,7 +569,7 @@ transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -41.2, 2.95, -2)
 [node name="Houses" type="Node3D" parent="." groups=["nav_source"]]
 
 [node name="StreetLanterns" type="Node3D" parent="."]
-editor_description = "Lanterns hung outside houses on winter nights (London, from 1415). Hide this node for a darker, earlier street."
+editor_description = "Lanterns hung outside houses on winter nights (London, from 1415): each a lamp (the light) and, at the same place, the iron it hangs in (tools/build/prop_lane.py). Hide this node for a darker, earlier street."
 
 [node name="House-48" parent="Houses" instance=ExtResource("lane_c")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -45)
@@ -582,10 +578,8 @@ lit_windows = PackedStringArray("Window0_1", "Window1_2")
 [node name="LanternHouse-48" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -46.2)
 
-[node name="BracketHouse-48" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -46.2)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-48" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -46.2)
 
 [node name="House-42" parent="Houses" instance=ExtResource("lane_q")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -39)
@@ -594,10 +588,8 @@ lit_windows = PackedStringArray("Window1_0", "Window2_0")
 [node name="LanternHouse-42" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -40.2)
 
-[node name="BracketHouse-42" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -40.2)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-42" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -40.2)
 
 [node name="House-36" parent="Houses" instance=ExtResource("lane_s")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -33.5)
@@ -606,10 +598,8 @@ lit_windows = PackedStringArray("Window1_0")
 [node name="LanternHouse-36" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -34.5)
 
-[node name="BracketHouse-36" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -34.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-36" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -34.5)
 
 [node name="House-31" parent="Houses" instance=ExtResource("lane_r")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -28)
@@ -618,10 +608,8 @@ lit_windows = PackedStringArray("Window0_0", "Window1_1")
 [node name="LanternHouse-31" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -29.2)
 
-[node name="BracketHouse-31" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -29.2)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-31" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -29.2)
 
 [node name="House-25" parent="Houses" instance=ExtResource("lane_u")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -22.5)
@@ -630,10 +618,8 @@ lit_windows = PackedStringArray("Window1_0", "Window3_0")
 [node name="LanternHouse-25" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -23.5)
 
-[node name="BracketHouse-25" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -23.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-25" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -23.5)
 
 [node name="Alley-20" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -52.4, -0.3, -19)
@@ -656,10 +642,8 @@ lit_windows = PackedStringArray("Window1_1")
 [node name="LanternHouse-18" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -16.5)
 
-[node name="BracketHouse-18" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -16.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-18" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -16.5)
 
 [node name="House-13" parent="Houses" instance=ExtResource("lane_v")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -10.5)
@@ -668,22 +652,12 @@ lit_windows = PackedStringArray("Window1_0", "Window1_1")
 [node name="LanternHouse-13" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -11.5)
 
-[node name="BracketHouse-13" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -11.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse-13" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -11.5)
 
 [node name="Inn" parent="Houses" instance=ExtResource("env_inn")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, -2)
-lit_windows = PackedStringArray("Window0_0", "Window0_1", "Window1_0")
-
-[node name="LanternInn" parent="StreetLanterns" instance=ExtResource("lamp")]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, -2)
-
-[node name="BracketInn" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, -2)
-cast_shadow = 0
-mesh = SubResource("M4")
+lit_windows = PackedStringArray("Window0_0", "Window0_1", "Window1_0", "Window1_1", "Window1_2", "Window2_0", "Window3_0")
 
 [node name="House4" parent="Houses" instance=ExtResource("lane_u")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 6.5)
@@ -692,10 +666,8 @@ lit_windows = PackedStringArray("Window1_0", "Window2_1")
 [node name="LanternHouse4" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 5.5)
 
-[node name="BracketHouse4" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 5.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse4" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 5.5)
 
 [node name="House9" parent="Houses" instance=ExtResource("lane_a")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 11.5)
@@ -704,10 +676,8 @@ lit_windows = PackedStringArray("Window2_0")
 [node name="LanternHouse9" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 10.5)
 
-[node name="BracketHouse9" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 10.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse9" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 10.5)
 
 [node name="Alley14" type="StaticBody3D" parent="Ground"]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -52.4, -0.3, 15)
@@ -730,10 +700,8 @@ lit_windows = PackedStringArray("Window0_0", "Window1_2")
 [node name="LanternHouse16" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 17.8)
 
-[node name="BracketHouse16" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 17.8)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse16" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 17.8)
 
 [node name="House22" parent="Houses" instance=ExtResource("lane_s")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 24.5)
@@ -742,10 +710,8 @@ lit_windows = PackedStringArray("Window2_0", "Window3_0")
 [node name="LanternHouse22" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 23.5)
 
-[node name="BracketHouse22" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 23.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse22" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 23.5)
 
 [node name="House27" parent="Houses" instance=ExtResource("lane_q")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 30)
@@ -754,10 +720,8 @@ lit_windows = PackedStringArray("Window1_1")
 [node name="LanternHouse27" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 28.8)
 
-[node name="BracketHouse27" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 28.8)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse27" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 28.8)
 
 [node name="House33" parent="Houses" instance=ExtResource("lane_t")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 35.5)
@@ -766,10 +730,8 @@ lit_windows = PackedStringArray("Window1_0")
 [node name="LanternHouse33" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 34.5)
 
-[node name="BracketHouse33" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 34.5)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse33" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 34.5)
 
 [node name="House38" parent="Houses" instance=ExtResource("lane_r")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.4, 0, 41)
@@ -778,10 +740,8 @@ lit_windows = PackedStringArray("Window1_0", "Window2_0")
 [node name="LanternHouse38" parent="StreetLanterns" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 39.8)
 
-[node name="BracketHouse38" type="MeshInstance3D" parent="StreetLanterns"]
-transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -46.2, 2.72, 39.8)
-cast_shadow = 0
-mesh = SubResource("M4")
+[node name="BracketHouse38" parent="StreetLanterns" instance=ExtResource("lane_bracket")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.95, 2.6, 39.8)
 
 [node name="BendNorth" type="Node3D" parent="Houses"]
 editor_description = "The lane's bend at this end: houses across the lane's end and along the bend, and an archway closing each way on (env_lane_end.tscn): the street is seen going on through it, and nobody gets through."

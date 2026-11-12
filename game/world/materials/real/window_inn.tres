@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/world/materials/real/window_candle.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/glow = Color(0.96, 0.53, 0.2, 1)
+shader_parameter/energy = 1.5
+shader_parameter/panes = 4.0
+shader_parameter/flicker = 0.2

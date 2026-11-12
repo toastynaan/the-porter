@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/props/candle.gd" id="1_candle"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_candle_ring.glb" id="2_model"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_flame"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.878, 0.643, 0.345, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="SphereMesh" id="Mesh_flame"]
+material = SubResource("Mat_flame")
+radius = 0.011
+height = 0.046
+radial_segments = 6
+rings = 3
+
+[node name="CandleRing" type="Node3D"]
+editor_description = "An iron ring of eight candles hung on chains (tools/build/env_inn_rooms.py), 1.1 m across: one light for all of them, no shadows. Its origin is the middle of the ring; the chains rise 0.3 m to the hook. Hang it 2.3 m or more above a floor."
+script = ExtResource("1_candle")
+energy = 2.2
+flicker = 0.08
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="Flame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.504, 0.144, 0.209)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame1" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.295, -0.035, 0.295)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame2" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712, -0.01, 0.295)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame3" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.007, -0.05, 0)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame4" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.007, -0.005, -0.417)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame5" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712, -0.025, -0.712)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame6" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.295, -0.02, -0.712)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Flame7" type="MeshInstance3D" parent="Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.417)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+light_color = Color(0.9, 0.66, 0.36, 1)
+light_energy = 2.2
+omni_range = 6.0

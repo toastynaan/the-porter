@@ -47,10 +47,10 @@ _subresources={
 "use_external/fallback_path": "res://game/world/materials/real/far_dark.tres",
 "use_external/path": "res://game/world/materials/real/far_dark.tres"
 },
-"ground_street": {
+"ground_lane": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://game/world/materials/real/ground_street.tres",
-"use_external/path": "res://game/world/materials/real/ground_street.tres"
+"use_external/fallback_path": "res://game/world/materials/real/ground_lane.tres",
+"use_external/path": "res://game/world/materials/real/ground_lane.tres"
 },
 "plaster_daub": {
 "use_external/enabled": true,

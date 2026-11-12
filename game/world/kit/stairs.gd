@@ -28,6 +28,12 @@ extends StaticBody3D
 		material = value
 		_rebuild()
 
+## Off where a model shows the stair: still walked on, not drawn.
+@export var shown := true:
+	set(value):
+		shown = value
+		_rebuild()
+
 var _mesh: MeshInstance3D
 var _collision: CollisionShape3D
 
@@ -57,6 +63,7 @@ func _rebuild() -> void:
 	var mesh := st.commit()
 	mesh.surface_set_material(0, material)
 	_mesh.mesh = mesh
+	_mesh.visible = shown
 	var ramp := ConvexPolygonShape3D.new()
 	var w := width * 0.5
 	ramp.points = PackedVector3Array([

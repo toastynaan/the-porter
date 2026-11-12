@@ -14,37 +14,21 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_barrel.tscn" id="barrel"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_bed.tscn" id="bed"]
 [ext_resource type="PackedScene" path="res://game/world/props/candle.tscn" id="candle"]
+[ext_resource type="PackedScene" path="res://art/models/env_inn_rooms.glb" id="rooms"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_stool.tscn" id="stool"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_fire.tscn" id="inn_fire"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_settle.tscn" id="inn_settle"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_candle_ring.tscn" id="inn_ring"]
+[ext_resource type="PackedScene" path="res://game/world/props/prop_inn_lantern.tscn" id="inn_lantern"]
 [ext_resource type="PackedScene" path="res://game/world/door/door.tscn" id="door"]
+[ext_resource type="PackedScene" path="res://art/models/env_inn.glb" id="shell"]
+[ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
+[ext_resource type="Material" path="res://game/world/materials/real/window_inn.tres" id="inn_glass"]
 
-[sub_resource type="BoxMesh" id="M8"]
-material = ExtResource("wdark")
-size = Vector3(0.06, 0.8, 0.9)
-
-[sub_resource type="BoxMesh" id="M7"]
-material = ExtResource("oak")
-size = Vector3(0.32, 0.22, 12)
-
-[sub_resource type="BoxMesh" id="M9"]
-material = ExtResource("iron")
-size = Vector3(1.6, 0.06, 0.06)
-
-[sub_resource type="BoxMesh" id="M10"]
-material = ExtResource("oak")
-size = Vector3(0.05, 0.7, 1)
-
-[sub_resource type="StandardMaterial3D" id="Mat_fire"]
-albedo_color = Color(0, 0, 0, 1)
-emission_enabled = true
-emission = Color(0.95, 0.5, 0.2, 1)
-emission_energy_multiplier = 5.0
-
-[sub_resource type="BoxMesh" id="Mesh_fire"]
-material = SubResource("Mat_fire")
-size = Vector3(1.2, 0.35, 0.3)
-
-[node name="Inn" type="Node3D" groups=["placeholder"]]
+[node name="Inn" type="Node3D"]
 script = ExtResource("house_gd")
-editor_description = "Placeholder: the Cross Keys, the inn opposite the gate. Timber-framed, three storeys, 12 m along the lane and 10 m deep; its street front faces -Z with the door in the middle. Inside: the taproom (hearth, counter, tables), stairs at the left back to an open loft of beds, and at the top a small room at the front right with one window toward the abbey. Lit windows are set per house (lit_windows)."
+lit_material = ExtResource("inn_glass")
+editor_description = "The Cross Keys, the inn opposite the gate: a close-studded timber house of three storeys under twin gables, 12 m along the lane and 10 m deep; its street front faces -Z with the door in the middle. Shell is the outside (tools/build/env_inn.py) and Rooms the inside (tools/build/env_inn_rooms.py); tools/build/inn_plan.py is the plan they share. Inside: the taproom (hearth, counter, tables, settles), stairs at the left back to an open loft of beds, and at the top the porter's room at the front right with the one window that is really open, toward the abbey. The hidden Blocks and Solids are its collision. Lit windows are set where the inn is placed (lit_windows); the lane's curfew puts them out."
 
 [node name="Floor0" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, -0.3, 5.0)
@@ -52,6 +36,7 @@ script = ExtResource("block")
 size = Vector3(11.4, 0.3, 9.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor1A" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.6, 2.8, 5.0)
@@ -59,6 +44,7 @@ script = ExtResource("block")
 size = Vector3(10.2, 0.2, 9.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor1B" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 2.8, 2.15)
@@ -66,6 +52,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 0.2, 3.7)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor1C" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 2.8, 9.15)
@@ -73,6 +60,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 0.2, 1.1)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor2A" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.2, 5.8, 5.0)
@@ -80,6 +68,7 @@ script = ExtResource("block")
 size = Vector3(9.0, 0.2, 9.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor2B" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 5.8, 5.0)
@@ -87,6 +76,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 0.2, 9.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor2C" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.9, 5.8, 2.15)
@@ -94,6 +84,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 0.2, 3.7)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Floor2D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.9, 5.8, 9.15)
@@ -101,6 +92,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 0.2, 1.1)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Loft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 8.600000000000001, 5.0)
@@ -108,6 +100,7 @@ script = ExtResource("block")
 size = Vector3(11.4, 0.2, 9.4)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="WallBack" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0, 9.85)
@@ -115,6 +108,7 @@ script = ExtResource("block")
 size = Vector3(12.0, 8.8, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="WallLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.85, 0, 5.0)
@@ -122,6 +116,7 @@ script = ExtResource("block")
 size = Vector3(0.3, 8.8, 9.4)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="WallRight" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.85, 0, 5.0)
@@ -129,6 +124,7 @@ script = ExtResource("block")
 size = Vector3(0.3, 8.8, 9.4)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="FrontLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3.3, 0, 0.15)
@@ -136,6 +132,7 @@ script = ExtResource("block")
 size = Vector3(5.4, 8.8, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="FrontRight" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.3, 0, 0.15)
@@ -143,6 +140,7 @@ script = ExtResource("block")
 size = Vector3(5.4, 7.0, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="OverDoor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 2.3, 0.15)
@@ -150,6 +148,7 @@ script = ExtResource("block")
 size = Vector3(1.2, 6.500000000000001, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="WindowLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2.1, 7.0, 0.15)
@@ -157,6 +156,7 @@ script = ExtResource("block")
 size = Vector3(3.0, 0.9, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="WindowRight" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 7.0, 0.15)
@@ -164,6 +164,7 @@ script = ExtResource("block")
 size = Vector3(1.6, 0.9, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="OverWindow" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.3, 7.9, 0.15)
@@ -171,6 +172,7 @@ script = ExtResource("block")
 size = Vector3(5.4, 0.9000000000000004, 0.3)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="RoomWest" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.5, 6.0, 2.4)
@@ -178,6 +180,7 @@ script = ExtResource("block")
 size = Vector3(0.25, 2.6, 4.2)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="RoomBackA" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2.0, 6.0, 4.5)
@@ -185,6 +188,7 @@ script = ExtResource("block")
 size = Vector3(1.0, 2.6, 0.25)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="RoomBackB" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4.6, 6.0, 4.5)
@@ -192,6 +196,7 @@ script = ExtResource("block")
 size = Vector3(2.2, 2.6, 0.25)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="RoomLintel" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.0, 8.2, 4.5)
@@ -199,6 +204,7 @@ script = ExtResource("block")
 size = Vector3(1.0, 0.4, 0.25)
 material = ExtResource("plaster")
 surface = "wood"
+shown = false
 
 [node name="Counter" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.6, 0, 7.4)
@@ -206,6 +212,7 @@ script = ExtResource("block")
 size = Vector3(3.0, 1.05, 0.6)
 material = ExtResource("oak")
 surface = "wood"
+shown = false
 
 [node name="Hearth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0, 9.35)
@@ -213,6 +220,7 @@ script = ExtResource("block")
 size = Vector3(2.4, 1.3, 0.6)
 material = ExtResource("stone")
 surface = "stone"
+shown = false
 
 [node name="Chimney" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 1.3, 9.45)
@@ -220,6 +228,7 @@ script = ExtResource("block")
 size = Vector3(1.6, 7.500000000000001, 0.4)
 material = ExtResource("stone")
 surface = "stone"
+shown = false
 
 [node name="Roof" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 8.8, 5.0)
@@ -227,6 +236,7 @@ script = ExtResource("block")
 size = Vector3(12.3, 3.2, 10.8)
 material = ExtResource("roof")
 shape = 1
+shown = false
 
 [node name="StairsDown" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -5.1, 0.0, 8.6)
@@ -235,6 +245,7 @@ rise = 3.0
 run = 4.6
 width = 1.1
 material = ExtResource("oak")
+shown = false
 
 [node name="StairsUp" type="StaticBody3D" parent="."]
 transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -3.9, 3.0, 4.0)
@@ -243,120 +254,270 @@ rise = 3.0
 run = 4.6
 width = 1.1
 material = ExtResource("oak")
+shown = false
 
 [node name="Door" parent="." instance=ExtResource("door")]
-transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 0, 0, 0.15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
 size = Vector2(1.2, 2.3)
+leaf_offset = 0.19
 start_open = true
 
-[node name="Fire" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.2, 9.0)
-mesh = SubResource("Mesh_fire")
+[node name="Rooms" parent="." instance=ExtResource("rooms")]
+editor_description = "The inn from within (tools/build/env_inn_rooms.py): walls' inner faces, floors, ceilings and their timbers, stairs and rails, the hearth, the counter and the casks and shelves behind it, pegs and cloaks, the porter's room. No collision: the hidden Blocks and Solids are that."
+
+[node name="Fire" parent="." instance=ExtResource("inn_fire")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 0.04, 9.45)
 
 [node name="FireLight" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.8, 8.4)
-light_color = Color(0.95, 0.55, 0.25, 1)
-light_energy = 2.2
-omni_range = 8.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.55, 9.2)
+light_color = Color(1, 0.56, 0.25, 1)
+light_energy = 3.0
+omni_range = 12.0
+omni_attenuation = 1.2
+light_volumetric_fog_energy = 0.12
 shadow_enabled = true
+shadow_bias = 0.06
+editor_description = "The firelight: it stands in the hearth's mouth, so the jambs and the lintel shape what it reaches, and it throws the room's shadows. Little of it goes into the fog, or the hearth's mouth fills with glare. (Curfew hangs the taproom's talk on it.)"
 
 [node name="TopWindow" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4.0, 6.0, 0.9)
 editor_description = "Where the porter stands to look out of his window toward the abbey."
 
 [node name="Table0" parent="." instance=ExtResource("table")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -2.6, 0, 2.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 0, 2.0)
+
+[node name="Model" parent="Table0"]
+pick = 1
 
 [node name="Table1" parent="." instance=ExtResource("table")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 1.4, 0, 2.8)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 4.45, 0, 4.8)
+
+[node name="Model" parent="Table1"]
+pick = 2
 
 [node name="Table2" parent="." instance=ExtResource("table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.4, 0, 6.6)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -3.2, 0, 5.2)
+
+[node name="Model" parent="Table2"]
+pick = 1
+
+[node name="Table3" parent="." instance=ExtResource("table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, 3.5)
+
+[node name="Model" parent="Table3"]
+pick = 2
 
 [node name="Bench0" parent="." instance=ExtResource("bench")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -3.5, 0, 2.6)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3.6, 0, 1.15)
 
 [node name="Bench1" parent="." instance=ExtResource("bench")]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, -1.7, 0, 2.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 0, 2.85)
 
 [node name="Bench2" parent="." instance=ExtResource("bench")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0.5, 0, 2.8)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3.62, 0, 4.8)
 
 [node name="Bench3" parent="." instance=ExtResource("bench")]
-transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 2.3, 0, 2.8)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.9, 0, 2.62)
 
 [node name="Bench4" parent="." instance=ExtResource("bench")]
-transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -2.4, 0, 7.5)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2.42, 0, 5.2)
+
+[node name="SettleStair" parent="." instance=ExtResource("inn_settle")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4.24, 0, 5.2)
+
+[node name="SettleWall" parent="." instance=ExtResource("inn_settle")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 5.4, 0, 4.8)
+
+[node name="StoolBar0" parent="." instance=ExtResource("stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 0, 6.72)
+
+[node name="StoolBar1" parent="." instance=ExtResource("stool")]
+transform = Transform3D(0.8, 0, 0.6, 0, 1, 0, -0.6, 0, 0.8, 4.8, 0, 6.74)
+
+[node name="StoolHearth0" parent="." instance=ExtResource("stool")]
+transform = Transform3D(0.8, 0, -0.6, 0, 1, 0, 0.6, 0, 0.8, -2.6, 0, 8.7)
+
+[node name="StoolHearth1" parent="." instance=ExtResource("stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 8.45)
+
+[node name="StoolTable0" parent="." instance=ExtResource("stool")]
+transform = Transform3D(0.8, 0, 0.6, 0, 1, 0, -0.6, 0, 0.8, 1.3, 0, 4.3)
+
+[node name="StoolTable1" parent="." instance=ExtResource("stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 4.3)
+
+[node name="StoolBarrel0" parent="." instance=ExtResource("stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.95, 0, 1.25)
+
+[node name="StoolBarrel1" parent="." instance=ExtResource("stool")]
+transform = Transform3D(0.8, 0, -0.6, 0, 1, 0, 0.6, 0, 0.8, 3.7, 0, 1.2)
+
+[node name="StoolRoom" parent="." instance=ExtResource("stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32, 6.0, 3.0)
 
 [node name="Barrel0" parent="." instance=ExtResource("barrel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 0, 8.9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0, 1.6)
+
+[node name="Model" parent="Barrel0"]
+pick = 0
 
 [node name="Barrel1" parent="." instance=ExtResource("barrel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5.2, 0, 8.0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.25, 0, 0.8)
+
+[node name="Model" parent="Barrel1"]
+pick = 0
 
 [node name="LoftBed0" parent="." instance=ExtResource("bed")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 2.0, 3.0, 7.8)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.75, 3.0, 8.68)
 
 [node name="LoftBed1" parent="." instance=ExtResource("bed")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 3.0, 7.8)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.3, 3.0, 8.68)
 
 [node name="LoftBed2" parent="." instance=ExtResource("bed")]
-transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 3.0, 1.8)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3.85, 3.0, 8.68)
+
+[node name="LoftBed3" parent="." instance=ExtResource("bed")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5.2, 3.0, 8.68)
+
+[node name="LoftBed4" parent="." instance=ExtResource("bed")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 4.7, 3.0, 1.4)
 
 [node name="PorterBed" parent="." instance=ExtResource("bed")]
 transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 4.6, 6.0, 2.6)
 
 [node name="Candle0" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.6, 0.78, 2.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.55, 0.752, 2.0)
+energy = 0.9
 
 [node name="Candle1" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.4, 0.78, 2.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45, 0.752, 5.15)
+energy = 0.9
 
 [node name="Candle2" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.0, 1.08, 7.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.05, 7.38)
+energy = 0.9
 
 [node name="Candle3" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2.4, 0.78, 6.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 0.752, 5.3)
+energy = 0.9
 
 [node name="CandleRoom" parent="." instance=ExtResource("candle")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 3.8, 6.0, 0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32, 6.45, 3.0)
+energy = 0.9
 
-[node name="Window0_0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -3.2, 1.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="Light" parent="CandleRoom"]
+omni_range = 4.5
 
-[node name="Window0_1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 3.2, 1.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="CandleBarrel" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0.868, 1.6)
 
-[node name="Window1_0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 4.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="CandleLoft" parent="." instance=ExtResource("candle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62, 3.5, 7.2)
+energy = 0.9
 
-[node name="Window1_1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 4.4, -0.02)
-cast_shadow = 0
-mesh = SubResource("M8")
+[node name="Light" parent="CandleLoft"]
+omni_range = 4.5
 
-[node name="Beam1" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.05, -0.17)
-cast_shadow = 0
-mesh = SubResource("M7")
+[node name="CandleRing" parent="." instance=ExtResource("inn_ring")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.32, 2.7)
 
-[node name="Beam2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 6.05, -0.17)
-cast_shadow = 0
-mesh = SubResource("M7")
+[node name="LanternPost" parent="." instance=ExtResource("inn_lantern")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 2.0, 4.57)
 
-[node name="SignBracket" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 3.55, -0.85)
-cast_shadow = 0
-mesh = SubResource("M9")
+[node name="LampBar" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 1.92, 7.4)
+energy = 1.2
 
-[node name="Sign" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 2.75, -1.35)
-cast_shadow = 0
-mesh = SubResource("M10")
+[node name="LampLoft" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9, 5.3, 2.2)
+energy = 1.3
+
+[node name="LampTop" parent="." instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 8.3, 7.1)
+energy = 1.3
+
+[node name="Light" parent="LampTop"]
+omni_range = 8.0
+
+[node name="Solids" type="Node3D" parent="."]
+editor_description = "Collision for what the rooms' model adds (env_inn_rooms.py): the taproom's two posts and the loft's one, the casks and shelves behind the counter, the logs by the hearth, the loft's chest, the stores at the top."
+
+[node name="Post0" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, 4.9)
+script = ExtResource("block")
+size = Vector3(0.3, 2.8, 0.3)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Post1" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, 4.9)
+script = ExtResource("block")
+size = Vector3(0.3, 2.8, 0.3)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Post2" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 3.0, 4.9)
+script = ExtResource("block")
+size = Vector3(0.26, 2.8, 0.26)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="BackBar" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.05, 0, 9.26)
+script = ExtResource("block")
+size = Vector3(3.2, 1.0, 0.88)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Logs" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0, 9.47)
+script = ExtResource("block")
+size = Vector3(0.64, 0.55, 0.46)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Chest" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 3.0, 7.2)
+script = ExtResource("block")
+size = Vector3(0.9, 0.5, 0.45)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Stores" type="StaticBody3D" parent="Solids"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 6.0, 9.15)
+script = ExtResource("block")
+size = Vector3(2.7, 0.6, 1.1)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Shell" parent="." instance=ExtResource("shell")]
+editor_description = "The inn as the lane sees it (tools/build/env_inn.py): frame, jetties, windows, door case, gables, roofs, chimney, sign. Its panes (Window0_0 ... Window3_1) are lit by lit_windows. No collision: the hidden Blocks are that."
+
+[node name="Outside" type="Node3D" parent="."]
+editor_description = "What stands outside the Cross Keys: a lantern each side of the door and one at the north corner, on the iron arms the model draws (env_inn.py, LAMPS), and a barrel by the door, a bench under the north window, a barrel at the south end."
+
+[node name="LanternDoorNorth" parent="Outside" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 2.58, -0.95)
+
+[node name="LanternDoorSouth" parent="Outside" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35, 2.58, -0.95)
+
+[node name="LanternCorner" parent="Outside" instance=ExtResource("lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.58, -0.95)
+
+[node name="BarrelDoor" parent="Outside" instance=ExtResource("barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0, -0.43)
+
+[node name="BenchFront" parent="Outside" instance=ExtResource("bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.25, 0, -0.27)
+
+[node name="BarrelEnd" parent="Outside" instance=ExtResource("barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0, -0.43)

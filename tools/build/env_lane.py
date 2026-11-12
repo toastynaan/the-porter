@@ -2,13 +2,16 @@
 closes its ends.
 
 `env_lane_ground`, in the abbey's own coordinates
-(game/world/abbey/areas/street.tscn): cobbles down the lane (along z, its
-middle at x = -43.4), round the bend at each end (along x, at z = 47 and
--47) and up the two alleys, with mud down the cart track and against the
-walls, a kennel down the middle with water in it, and rain in the hollows.
-It has no collision: the lane's greybox blocks are still what is walked on
-(and what footsteps sound on), with their own faces not drawn. The flags
-before the abbey gate are left clear.
+(game/world/abbey/areas/street.tscn): a carriageway of setts down the lane (along z, its
+middle at x = -43.4) and round the bend at each end (along x, at z = 47 and
+-47), cambered, with a gutter along each kerb; a kerb and a flagged
+sidewalk each side, along the abbey wall and out round the gate's apron,
+along the house fronts and round their corners; the two alleys left as
+trodden earth. Mud is in the joints, the gutters and the alleys. It has no
+collision and nothing in it is more than 6 cm off y = 0: the lane's greybox
+blocks are still what is walked on (and what footsteps sound on), with
+their own faces not drawn. The flags before the abbey gate are that
+greybox block, still drawn, in the same material.
 
 `env_lane_end`, in its own space (its mouth at z = 0, looking out along
 -Z): a house built across the street on an archway. The passage under it
@@ -28,17 +31,32 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import porter
 import city_parts as cp
-from porter import fbm, smoothstep
+from porter import fbm, lerp, smoothstep
 
 LANE_X = -43.4
 HALF = 3.0
+WEST, EAST = LANE_X - HALF, LANE_X + HALF
 BEND_Z = 47.0
 # The lane's length each way, the bends' far end, the alleys (z, half width, x of their far end).
 REACH = 50.0
 BEND_WEST = -71.5
 ALLEYS = ((-19.0, 1.1, -58.4), (15.0, 1.1, -58.4))
-# The flags before the abbey gate: x from, x to, z from, z to.
-APRON = (-42.45, -38.6, -4.35, 0.35)
+# The flags before the abbey gate (the greybox block GateApron, which is still drawn): x from, x to, z from, z to; its top.
+APRON = (-42.4, -38.6, -4.3, 0.3)
+APRON_TOP = 0.02
+
+# The paving. Nothing here is solid: the walked surface is the greybox at
+# y = 0, so it all lies within 6 cm of that. A sidewalk (kerb and flags) is
+# WALK wide and UP high; the carriageway between the kerbs falls from its
+# crown to a gutter GUTTER wide at each kerb's foot.
+PAVING = "ground_lane"
+WALK = 1.0
+UP = 0.05
+KERB = 0.16
+ARRIS = 0.022
+CROWN = 2.0
+GUTTER = 0.28
+GUTTER_DEEP = -0.045
 
 ASHLAR = "stone_ashlar"
 RUBBLE = "stone_rubble"
@@ -46,62 +64,257 @@ OAK = "wood_frame"
 PALE = (0.9, 0.89, 0.86)
 
 
-def surface(side, along, seed):
-    """Height and masks (mud, 0, 0, water) `side` metres from a street's middle, `along` it."""
-    d = abs(side)
-    h = 0.03 + 0.05 * smoothstep(0.2, HALF, d) + 0.015 * fbm(along, side, 0.5, 2, seed)
-    kennel = 1.0 - smoothstep(0.1, 0.42, abs(side + 0.25 * fbm(along, 0.0, 0.15, 2, seed + 1.0)))
-    h -= 0.05 * kennel
-    track = 1.0 - smoothstep(1.2, 2.4, d + 0.6 * fbm(along, side, 0.2, 2, seed + 2.0))
-    drift = smoothstep(HALF - 1.0, HALF - 0.1, d + 0.5 * fbm(along, side, 0.3, 2, seed + 3.0))
-    mud = max(track * 0.7, drift)
-    return h, (mud, 0.0, 0.0, kennel * smoothstep(-0.2, 0.3, fbm(along, side, 0.12, 2, seed + 4.0) + 0.25))
+def near(d):
+    """How the paving's material is told how far a point of the road is from the nearest kerb (see ground_lane.gdshader)."""
+    return min(max((d + 0.25) / 2.25, 0.0), 1.0)
 
 
-def strip(m, x0, x1, z0, z1, at, skip=None, step=0.5):
-    nx, nz = int(round((x1 - x0) / step)), int(round((z1 - z0) / step))
-    index = {}
-    for i in range(nx + 1):
-        for j in range(nz + 1):
-            x, z = x0 + (x1 - x0) * i / nx, z0 + (z1 - z0) * j / nz
-            h, mask, uv = at(x, z)
-            index[(i, j)] = m.vert(x, h, z, mask, uv)
-    for i in range(nx):
-        for j in range(nz):
-            cx, cz = x0 + (x1 - x0) * (i + 0.5) / nx, z0 + (z1 - z0) * (j + 0.5) / nz
-            if skip and skip(cx, cz):
+def road_height(d):
+    """The carriageway `d` metres from the nearest kerb: the gutter, then the camber up to the crown."""
+    if d <= GUTTER:
+        return GUTTER_DEEP
+    t = min((d - GUTTER) / (CROWN - GUTTER), 1.0)
+    return -0.04 * (1.0 - t) ** 2
+
+
+class Kerb:
+    """A kerb's line (x, z) with the height of its top at each point, and
+    the wall line that closes its sidewalk behind it."""
+
+    def __init__(self, wall=()):
+        self.pts = []
+        self.ups = []
+        self.marks = {}
+        self.wall = list(wall)
+
+    def to(self, x, z, up=UP):
+        self.pts.append((x, z))
+        self.ups.append(up)
+        return self
+
+    def arc(self, cx, cz, r, a0, a1, n=5, up=UP):
+        """Round (cx, cz) from angle a0 to a1 (degrees from +x toward +z); the line is already at a0."""
+        for i in range(1, n + 1):
+            a = math.radians(a0 + (a1 - a0) * i / n)
+            self.to(cx + r * math.cos(a), cz + r * math.sin(a), up)
+        return self
+
+    def mark(self, name):
+        self.marks[name] = len(self.pts) - 1
+        return self
+
+    def flip(self):
+        """The same kerb the other side of z = 0."""
+        self.pts = [(x, -z) for x, z in self.pts]
+        self.wall = [(x, -z) for x, z in self.wall]
+        return self
+
+    def outline(self):
+        return self.pts + self.wall
+
+    def inward(self):
+        """At each point, the way into the sidewalk, long enough at a corner that the kerb keeps its width (a mitre)."""
+        out = self.outline()
+        area = sum(a[0] * b[1] - b[0] * a[1] for a, b in zip(out, out[1:] + out[:1]))
+        s = 1.0 if area > 0.0 else -1.0
+        normals = []
+        for (ax, az), (bx, bz) in zip(self.pts, self.pts[1:]):
+            n = math.hypot(bx - ax, bz - az)
+            normals.append((-s * (bz - az) / n, s * (bx - ax) / n))
+        ways = []
+        for i in range(len(self.pts)):
+            a = normals[max(i - 1, 0)]
+            b = normals[min(i, len(normals) - 1)]
+            k = 1.0 + a[0] * b[0] + a[1] * b[1]
+            ways.append(((a[0] + b[0]) / k, (a[1] + b[1]) / k))
+        return ways
+
+    def inner(self, d=KERB):
+        return [(p[0] + w[0] * d, p[1] + w[1] * d) for p, w in zip(self.pts, self.inward())]
+
+    def distance(self, x, z):
+        best = 1.0e9
+        for (ax, az), (bx, bz) in zip(self.pts, self.pts[1:]):
+            dx, dz = bx - ax, bz - az
+            t = min(max(((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz), 0.0), 1.0)
+            best = min(best, math.hypot(x - ax - dx * t, z - az - dz * t))
+        return best
+
+    def holds(self, x, z):
+        """Whether (x, z) is on its sidewalk, the edge included."""
+        out = self.outline()
+        inside = False
+        for (ax, az), (bx, bz) in zip(out, out[1:] + out[:1]):
+            dx, dz = bx - ax, bz - az
+            t = min(max(((x - ax) * dx + (z - az) * dz) / max(dx * dx + dz * dz, 1e-12), 0.0), 1.0)
+            if math.hypot(x - ax - dx * t, z - az - dz * t) < 1e-3:
+                return True
+            if (az > z) != (bz > z) and x < ax + (z - az) * dx / dz:
+                inside = not inside
+        return inside
+
+
+def kerbs():
+    """Every kerb of the lane: along the abbey wall and out round the
+    gate's apron; along the house fronts, turning in at each alley's mouth
+    and round the corner into each bend; and along each bend's far side,
+    turning in at the arch that closes the lane."""
+    out = []
+    # East. The apron stands out into the lane: the kerb goes round it, its top let down to the apron's flags.
+    xk, zs, zn, r, low = APRON[0] - KERB + 0.02, APRON[2] - KERB + 0.02, APRON[3] + KERB - 0.02, 0.3, APRON_TOP + 0.007
+    xe = EAST - WALK
+    east = Kerb(wall=[(EAST, REACH + 0.2), (EAST, -REACH - 0.2)])
+    east.to(xe, -REACH - 0.2).to(xe, zs).mark("apron0").to(xe - 0.35, zs, low).to(xk + r, zs, low).arc(xk + r, zs + r, r, -90, -180, 4, low)
+    east.to(xk, zn - r, low).arc(xk + r, zn - r, r, 180, 90, 4, low).to(xe - 0.35, zn, low).to(xe, zn).mark("apron1").to(xe, REACH + 0.2)
+    east.flags = [("z", EAST, [(0, "apron0"), (EAST, APRON[2]), (EAST, -REACH - 0.2)]), ("z", EAST, [("apron1", -1), (EAST, REACH + 0.2), (EAST, APRON[3])])]
+    out.append(east)
+    xw, r = WEST + WALK, 0.3
+    # West, between the alleys.
+    z0, z1 = ALLEYS[0][0] + ALLEYS[0][1], ALLEYS[1][0] - ALLEYS[1][1]
+    mid = Kerb()
+    mid.to(WEST, z0).to(xw - r, z0).arc(xw - r, z0 + r, r, -90, 0).to(xw, z1 - r).arc(xw - r, z1 - r, r, 0, 90).to(WEST, z1)
+    mid.flags = [("z", WEST, [(0, -1)])]
+    out.append(mid)
+    for s in (1, -1):
+        # West, from an alley to the lane's end, and round the houses' corner along the bend.
+        za = ALLEYS[1][0] + ALLEYS[1][1] if s > 0 else -(ALLEYS[0][0] - ALLEYS[0][1])
+        zc = BEND_Z - HALF
+        k = Kerb(wall=[(BEND_WEST, zc), (WEST, zc)])
+        k.to(WEST, za).to(xw - r, za).arc(xw - r, za + r, r, -90, 0).to(xw, zc).mark("corner").arc(WEST, zc, WALK, 0, 90, 7).to(BEND_WEST, zc + WALK)
+        k.flags = [("z", WEST, [(0, "corner"), (WEST, s * zc)]), ("x", s * zc, [("corner", -1), (BEND_WEST, s * zc), (WEST, s * zc)])]
+        out.append(k if s > 0 else k.flip())
+        # The bend's far side, ending at the jamb of the arch across the lane.
+        zf = BEND_Z + HALF
+        k = Kerb(wall=[(BEND_WEST, zf + 0.2)])
+        k.to(BEND_WEST, zf - WALK).to(WEST, zf - WALK).arc(WEST, zf, WALK, -90, 0, 7).to(xw, zf + 0.2)
+        k.flags = [("x", s * zf, [(0, -1), (BEND_WEST, s * (zf + 0.2))])]
+        out.append(k if s > 0 else k.flip())
+    return out
+
+
+def lay_kerb(m, k):
+    """The kerb stones along a kerb's line: each its own length, its top,
+    its worn arris and its face down into the gutter. A stone's colour is
+    (its tone, 0.5, half its length, a number of its own); its UV is
+    (metres from its end, metres over its top and down its face)."""
+    ways = k.inward()
+    for i in range(len(k.pts) - 1):
+        (ax, az), (bx, bz) = k.pts[i], k.pts[i + 1]
+        run = math.hypot(bx - ax, bz - az)
+        n = max(1, int(round(run / random.uniform(0.75, 1.05)))) if run > 1.3 else 1
+        cuts = [0.0] + sorted(min(max((j + random.uniform(-0.18, 0.18)) / n, 0.0), 1.0) for j in range(1, n)) + [1.0]
+        nx, nz = -(bz - az) / run, (bx - ax) / run
+        if nx * ways[i][0] + nz * ways[i][1] < 0.0:
+            nx, nz = -nx, -nz
+        for ta, tb in zip(cuts, cuts[1:]):
+            length = (tb - ta) * run
+            tone, own, tip = random.random(), random.random(), random.uniform(-0.003, 0.003)
+            ends = []
+            for t in (ta, tb):
+                w = ways[i] if t == 0.0 else ways[i + 1] if t == 1.0 else (nx, nz)
+                x, z, up = ax + (bx - ax) * t, az + (bz - az) * t, k.ups[i] + (k.ups[i + 1] - k.ups[i]) * t
+                u = 0.0 if t == ta else length
+                ends.append(((x + w[0] * KERB, up, z + w[1] * KERB), (x + w[0] * ARRIS, up + tip, z + w[1] * ARRIS), (x, up + tip - ARRIS, z),
+                             (x - w[0] * 0.006, -0.085, z - w[1] * 0.006), u))
+            colour = (tone, 0.5, min(length * 0.5, 1.0), own)
+            a, b = ends
+            v = (0.0, KERB - ARRIS, KERB + 0.009, KERB + 0.009 + 0.13)
+            for j, facing in ((0, (0.0, 1.0, 0.0)), (1, (-nx, 1.0, -nz)), (2, (-nx, 0.0, -nz))):
+                m.poly([a[j], b[j], b[j + 1], a[j + 1]], PAVING, colour, uvs=[(a[4], v[j]), (b[4], v[j]), (b[4], v[j + 1]), (a[4], v[j + 1])], facing=facing)
+
+
+def lay_flags(m, k):
+    """A kerb's sidewalk: flags from the back of the kerb to the wall, each
+    stretch a single face (the material draws the flags). UV is (metres
+    along the walk, metres from its wall)."""
+    inner = k.inner()
+    for frame, wall, parts in k.flags:
+        pts = []
+        for a, b in parts:
+            if isinstance(a, float):
+                pts.append((a, b))
                 continue
-            m.face((index[(i, j)], index[(i, j + 1)], index[(i + 1, j + 1)], index[(i + 1, j)]), "ground_street")
+            i0 = k.marks[a] if isinstance(a, str) else a
+            i1 = k.marks[b] if isinstance(b, str) else b if b >= 0 else len(inner) - 1
+            pts.extend(inner[i0:i1 + 1])
+        uvs = [(z, abs(x - wall)) if frame == "z" else (x, abs(z - wall)) for x, z in pts]
+        m.poly([(x, UP, z) for x, z in pts], PAVING, (0.0, 1.0, 1.0, 0.0), uvs=uvs, facing=(0, 1, 0))
+
+
+def lines(a, b, step, more=()):
+    n = int(round((b - a) / step))
+    return sorted(set([round(a + (b - a) * i / n, 4) for i in range(n + 1)] + [round(v, 4) for v in more if a < v < b]))
 
 
 def ground():
     porter.reset(71)
+    all_kerbs = kerbs()
+
+    def kerb_distance(x, z):
+        d = min(k.distance(x, z) for k in all_kerbs)
+        return -d if any(k.holds(x, z) for k in all_kerbs) else d
+
+    def alleyness(x, z):
+        for z_mid, half, _west in ALLEYS:
+            if abs(z - z_mid) <= half + 1e-6:
+                return 1.0 - smoothstep(WEST - 1.2, WEST, x)
+        return 0.0
+
+    def at(x, z):
+        """The road at (x, z): its height, and its colour (mud, 0, how near a kerb, standing water)."""
+        d = kerb_distance(x, z)
+        h = road_height(d) + 0.006 * fbm(x, z, 0.5, 2, 1.0)
+        # A few shallow puddles where the setts have sunk, away from the crown.
+        pool = smoothstep(0.32, 0.55, fbm(x, z, 0.16, 2, 4.0)) * (1.0 - 0.6 * smoothstep(1.0, CROWN, d))
+        h -= 0.012 * pool
+        mud = 0.1 + 0.1 * fbm(x, z, 0.3, 2, 3.0)
+        k = alleyness(x, z)
+        if k > 0.0:
+            # An alley: trodden earth over what paving it ever had, a runnel down it, wet.
+            z_mid = min(ALLEYS, key=lambda a: abs(a[0] - z))[0]
+            side = z - z_mid
+            run = (1.0 - smoothstep(0.1, 0.45, abs(side + 0.3 * fbm(x, 0.0, 0.3, 2, 10.0)))) * smoothstep(-0.3, 0.2, fbm(x, z, 0.25, 2, 11.0))
+            ha = 0.005 + 0.02 * smoothstep(0.2, 1.1, abs(side)) + 0.012 * fbm(x, z, 0.6, 2, 9.0) - 0.03 * run
+            h, mud, pool, d = lerp(h, ha, k), lerp(mud, 0.95, k), lerp(pool, run, k), lerp(d, CROWN, k)
+        return max(h, -0.058), (mud, 0.0, near(d), pool)
+
     m = porter.Mesh("Lane")
 
-    def lane(x, z):
-        h, mask = surface(x - LANE_X, z, 1.0)
-        return h, mask, (z, x - LANE_X)
+    def strip(xs, zs, uv):
+        index = {}
 
-    def in_apron(x, z):
-        return APRON[0] < x < APRON[1] and APRON[2] < z < APRON[3]
+        def vert(i, j):
+            if (i, j) not in index:
+                h, colour = at(xs[i], zs[j])
+                index[(i, j)] = m.vert(xs[i], h, zs[j], colour, uv(xs[i], zs[j]))
+            return index[(i, j)]
 
-    strip(m, LANE_X - HALF, LANE_X + HALF, -REACH, REACH, lane, in_apron)
+        for i in range(len(xs) - 1):
+            for j in range(len(zs) - 1):
+                corners = ((xs[i], zs[j]), (xs[i], zs[j + 1]), (xs[i + 1], zs[j + 1]), (xs[i + 1], zs[j]))
+                # Nothing is laid where a sidewalk or the gate's apron covers it.
+                if all(any(k.holds(x, z) for k in all_kerbs) for x, z in corners):
+                    continue
+                m.face((vert(i, j), vert(i, j + 1), vert(i + 1, j + 1), vert(i + 1, j)), PAVING)
+
+    # The lines the road's faces follow: close under each kerb, the gutter's edge, then up to the crown.
+    across = [0.0, 0.44, 0.88, 1.32, 1.7, 2.1, HALF]
+    edge = [BEND_Z - HALF + v for v in (0.0, 0.9, 1.3, 1.68, 2.12, 2.56, 3.0, 3.44, 3.88, 4.32, 4.7, 5.1, 6.0)]
+    xs = sorted(set([round(LANE_X + s * v, 4) for v in across for s in (-1, 1)] + [APRON[0] - KERB - 0.28, APRON[0] - 0.05]))
+    alley_edges = [z + s * half for z, half, _w in ALLEYS for s in (-1, 1)]
+    zs = sorted(set(lines(-(BEND_Z - HALF), BEND_Z - HALF, 0.5, alley_edges) + edge + [-v for v in edge]))
+    strip(xs, zs, lambda x, z: (z, x - LANE_X))
     for s in (-1, 1):
-        def bend(x, z, s=s):
-            h, mask = surface(z - s * BEND_Z, x, 5.0 + s)
-            # Where it runs into the lane, the lane's own surface takes over.
-            k = smoothstep(LANE_X - HALF - 2.0, LANE_X - HALF, x)
-            hl, ml = surface(x - LANE_X, z, 1.0)
-            return h * (1.0 - k) + hl * k, tuple(a * (1.0 - k) + b * k for a, b in zip(mask, ml)), (x, z - s * BEND_Z)
-        strip(m, BEND_WEST, LANE_X - HALF, s * BEND_Z - HALF, s * BEND_Z + HALF, bend)
+        strip(lines(BEND_WEST, WEST, 0.5), sorted(s * v for v in edge), lambda x, z, s=s: (x, z - s * BEND_Z))
     for z_mid, half, west in ALLEYS:
-        def alley(x, z, z_mid=z_mid, half=half):
-            side = z - z_mid
-            h = 0.04 + 0.03 * smoothstep(0.2, half, abs(side)) + 0.015 * fbm(x, z, 0.6, 2, 9.0)
-            pool = (1.0 - smoothstep(0.1, 0.45, abs(side + 0.3 * fbm(x, 0.0, 0.3, 2, 10.0)))) * smoothstep(-0.3, 0.2, fbm(x, z, 0.25, 2, 11.0))
-            return h - 0.03 * pool, (1.0, 0.0, 0.0, pool), (x, 7.0)
-        strip(m, west, LANE_X - HALF, z_mid - half, z_mid + half, alley, step=0.55)
+        strip(lines(west, WEST, 0.5), [z for z in zs if z_mid - half - 1e-6 <= z <= z_mid + half + 1e-6], lambda x, z, z_mid=z_mid: (x, z - z_mid))
     m.build(smooth=True)
+
+    walks = porter.Mesh("Walks")
+    for k in all_kerbs:
+        lay_kerb(walks, k)
+        lay_flags(walks, k)
+    walks.build()
     porter.export("env_lane_ground")
 
 
@@ -178,6 +391,17 @@ PASS = (1.7, 2.0, 1.5, 7.0)
 STONE_TOP, UPPER_TOP = 4.4, 7.2
 
 
+def road(m, half, z0, z1, step):
+    """A length of the lane's carriageway in a model of its own, along z about x = 0: setts, cambered, a gutter at each side `half` out."""
+    xs = [s * v for v in (0.0, 0.7, 1.4, 1.72, 2.0) for s in (-1, 1) if v or s > 0]
+    xs = sorted(x * half / 2.0 if abs(x) < 2.0 else math.copysign(half, x) for x in xs)
+    zs = cp.steps(z0, z1, step)
+    for za, zb in zip(zs, zs[1:]):
+        for xa, xb in zip(xs, xs[1:]):
+            pts = [(x, road_height(half - abs(x)), z) for x, z in ((xa, za), (xb, za), (xb, zb), (xa, zb))]
+            m.poly(pts, PAVING, [(0.15, 0.0, near(half - abs(q[0])), 0.0) for q in pts], uvs=[(q[2], q[0]) for q in pts], facing=(0, 1, 0))
+
+
 def end():
     porter.reset(73)
     half, spring, rise, length = PASS
@@ -231,11 +455,8 @@ def end():
     for s in (-1, 1):
         pts = [(s * WIDE, UPPER_TOP, zf), (s * WIDE, UPPER_TOP, length), (s * WIDE, UPPER_TOP + 3.0, (zf + length) * 0.5)]
         m.poly(pts, "plaster_daub", [daub(*p) for p in pts], facing=(s, 0, 0))
-    # The passage's floor: trodden mud, wet down the middle.
-    for za, zb3 in zip(cp.steps(-0.05, length, 1.0), cp.steps(-0.05, length, 1.0)[1:]):
-        for xa, xb in zip(cp.steps(-half - 0.3, half + 0.3, 1.0), cp.steps(-half - 0.3, half + 0.3, 1.0)[1:]):
-            pts = [(xa, 0.04, za), (xb, 0.04, za), (xb, 0.04, zb3), (xa, 0.04, zb3)]
-            m.poly(pts, "ground_street", [(0.9, 0.0, 0.0, 0.5 if abs(q[0]) < 0.6 else 0.0) for q in pts], uvs=[(q[2], 7.0) for q in pts], facing=(0, 1, 0))
+    # The passage's floor: the lane's setts go on through it, a gutter along each wall.
+    road(m, half + 0.3, -0.05, length, 1.0)
     # A stone to keep wheels off each jamb.
     for s in (-1, 1):
         m.tube([(s * (half + 0.42), 0.0, -0.22), (s * (half + 0.42), 0.55, -0.2), (s * (half + 0.42), 0.7, -0.16)], [0.2, 0.17, 0.06], 7, ASHLAR,
@@ -247,10 +468,7 @@ def end():
     random.seed(4)
     far = 36.0
     zs = cp.steps(length, far, 2.0)
-    for za, zb2 in zip(zs, zs[1:]):
-        b.poly([(-3.2, 0.03, za), (3.2, 0.03, za), (3.2, 0.03, zb2), (-3.2, 0.03, zb2)], "ground_street",
-               [(0.6, 0.0, 0.0, 0.3 if abs(x) < 1.0 else 0.0) for x in (-3.2, 3.2, 3.2, -3.2)], uvs=[(za, 7.0), (za, 7.0), (zb2, 7.0), (zb2, 7.0)],
-               facing=(0, 1, 0))
+    road(b, 3.2, length, far, 2.0)
     for s in (-1, 1):
         z = length
         while z < far - 0.1:

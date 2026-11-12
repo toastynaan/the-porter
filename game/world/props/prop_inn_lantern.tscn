@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/props/candle.gd" id="1_candle"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_lantern.glb" id="2_model"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_flame"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.878, 0.643, 0.345, 1)
+emission_energy_multiplier = 7.0
+
+[sub_resource type="SphereMesh" id="Mesh_flame"]
+material = SubResource("Mat_flame")
+radius = 0.011
+height = 0.042
+radial_segments = 6
+rings = 3
+
+[node name="Lantern" type="Node3D"]
+editor_description = "An iron lantern to hang from a bracket (tools/build/env_inn_rooms.py): a barred cage with a candle in it, its flame and its light (no shadows). Its origin is the foot of the flame; the ring it hangs by is 0.29 m above."
+script = ExtResource("1_candle")
+energy = 1.1
+flicker = 0.1
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="Flame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+cast_shadow = 0
+mesh = SubResource("Mesh_flame")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+light_color = Color(0.878, 0.643, 0.345, 1)
+light_energy = 1.1
+omni_range = 5.0

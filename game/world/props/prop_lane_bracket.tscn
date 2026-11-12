@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://art/models/prop_lane_bracket.glb" id="model_lane_bracket"]
+
+[node name="LaneBracket" type="Node3D"]
+editor_description = "The iron a house's lantern hangs in (tools/build/prop_lane.py): a strap up the wall, an arm on a curved stay, an open lantern of four bars and a hood, and an arm overhead for the hook. Put it exactly where its lamp is (game/world/props/lamp.tscn): the wall is 0.45 m behind it at its own x = -0.45, the lane toward +x. No collision; all of it is above 2 m."
+
+[node name="Model" parent="." instance=ExtResource("model_lane_bracket")]

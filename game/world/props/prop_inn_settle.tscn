@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/world/kit/block.gd" id="block"]
+[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="oak"]
+[ext_resource type="PackedScene" path="res://art/models/prop_inn_settle.glb" id="model_settle"]
+
+[node name="Settle" type="Node3D"]
+editor_description = "A high-backed settle (tools/build/env_inn_rooms.py), 1.8 m long (along X), 0.5 m deep, its boarded back 1.45 m high at +Z. Sat on facing -Z. The hidden Block is its collision."
+
+[node name="Settle" type="StaticBody3D" parent="."]
+script = ExtResource("block")
+size = Vector3(1.8, 1.45, 0.5)
+material = ExtResource("oak")
+surface = "wood"
+shown = false
+
+[node name="Model" parent="." instance=ExtResource("model_settle")]

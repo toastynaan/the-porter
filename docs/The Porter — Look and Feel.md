@@ -200,7 +200,7 @@ The abbey is old, worn and tall. Doors are narrow, walls thick and windows small
 | Beeswax and tallow | Candles everywhere | Drips that build up on surfaces; drips are a clue system |
 | Earth and mud | Graveyard, outer court, the lane | Wet, footprints persist |
 | Clipped box, yew, turf, gravel | The cloister garth | Dark evergreen, formal, a little neglected: weeds in the gravel, dead stalks in the beds |
-| Cobbles | The lane outside the gate, with a gutter down the middle | Uneven, wet, reflecting the lanterns |
+| Cobbles | The lane outside the gate: a cambered road of setts between two low kerbs, a flagged walk each side, a gutter at each kerb's foot | Uneven, wet, reflecting the lanterns |
 | Bone | Charnel house, crypt | Stacked neatly, which is worse than scattered |
 
 **The lane outside the gate**
@@ -209,7 +209,7 @@ The city presses against the abbey's west wall. The lane is narrow and tall: tim
 
 Mood references (street and gate images, Nov 2026): rain-wet streets with lamp pools and fog, tall facades closing in, a Gothic church at the end of the lane, an ivy-grown stone gate arch with a lantern and a lodge beside it. Take the mood, not the period details: no lamp posts, iron balconies, sash windows or ornamental ironwork. The medieval versions are lanterns on brackets, jettied upper floors, small shuttered or horn-paned windows, and a plain barred grille.
 
-**The Cross Keys** is the warmest room in the game, and it's meant to be: low beams, a big hearth, tallow smoke, faces lit orange, noise. It's the last warm place before the abbey, so the player feels its loss. Its upper rooms are small and cold, with one window toward the abbey.
+**The Cross Keys** is the warmest room in the game, and it's meant to be: low beams, a big hearth, tallow smoke, faces lit orange, noise. It's the last warm place before the abbey, so the player feels its loss. Its upper rooms are small and cold, with one window toward the abbey. As built (2026-11-11, from the user's pictures): outside, a dark close-studded front under twin gables, each storey jutting on brackets, leaded windows glowing on every floor, a lantern each side of an arched door, the crossed keys on a hanging board; inside, a low taproom under heavy joists, posts with curved braces, a stone hearth with a fire, a counter with casks and jug shelves, settles, an iron ring of candles. It is the one place where light was added on purpose: the fire and eight small flames.
 
 **The lane by the hour.** At dusk it's busy and lit: doors open, people going home, the inn loud. At nine the curfew bell rings and it empties. After that there are only the lanterns, the watchman's light moving between them, and lit windows going dark one by one, until it's as dark as the abbey.
 
