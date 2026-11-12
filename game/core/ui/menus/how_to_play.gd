@@ -19,7 +19,8 @@ Keep the gate: answer the knocks, read who stands at the grille, and let them in
 [b]Look back[/b]  Q  ·  right stick
 [b]The ledger[/b]  L  ·  View
 [b]The satchel[/b]  I  ·  down on the pad
-[b]Pause[/b]  Esc  ·  Menu"""
+[b]Pause[/b]  Esc  ·  Menu
+[b]Fullscreen[/b]  F11"""
 
 
 func build() -> void:

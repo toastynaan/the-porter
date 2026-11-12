@@ -304,6 +304,7 @@ The duty glyph marks each one. Then they take you to your cell, and lying on the
 
 - **One difficulty,** as designed.
 - **Settings:**
+  - fullscreen, on by default (F11 flips it, and it's remembered; the editor's Game tab and runs with `--windowed` stay in their window);
   - field of view, 60–90°;
   - mouse sensitivity;
   - invert look;

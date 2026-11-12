@@ -17,6 +17,8 @@ const FAST_CLOCK_FACTOR := 2.0 / 3.0
 
 var path := "user://settings.cfg"
 
+## Fullscreen (on by default; F11 flips it).
+var fullscreen := true
 ## Degrees, 60-90 (Look and Feel: 70 by default).
 var fov := 70.0
 ## A multiplier on the mouse and stick look speed.
@@ -55,6 +57,7 @@ func _ready() -> void:
 func load_settings() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(path) == OK:
+		fullscreen = bool(cfg.get_value("view", "fullscreen", fullscreen))
 		fov = clampf(float(cfg.get_value("view", "fov", fov)), FOV_RANGE.x, FOV_RANGE.y)
 		sensitivity = clampf(float(cfg.get_value("view", "sensitivity", sensitivity)), SENSITIVITY_RANGE.x, SENSITIVITY_RANGE.y)
 		invert_look = bool(cfg.get_value("view", "invert_look", invert_look))
@@ -72,6 +75,7 @@ func load_settings() -> void:
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
+	cfg.set_value("view", "fullscreen", fullscreen)
 	cfg.set_value("view", "fov", fov)
 	cfg.set_value("view", "sensitivity", sensitivity)
 	cfg.set_value("view", "invert_look", invert_look)
@@ -99,7 +103,21 @@ func apply() -> void:
 	var bus := AudioServer.get_bus_index(&"Master")
 	AudioServer.set_bus_volume_db(bus, linear_to_db(maxf(volume, 0.0001)))
 	AudioServer.set_bus_mute(bus, volume <= 0.001)
+	_apply_window()
 	changed.emit()
+
+
+## Fullscreen or a window, as set; but never for a run that asked for a
+## window itself (--windowed: the review stills and films), headless runs,
+## or the editor's Game tab, which holds the game in its own frame.
+func _apply_window() -> void:
+	if DisplayServer.get_name() == "headless" or OS.get_cmdline_args().has("--windowed"):
+		return
+	if Engine.has_method(&"is_embedded_in_editor") and Engine.call(&"is_embedded_in_editor"):
+		return
+	var want := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
+	if DisplayServer.window_get_mode() != want:
+		DisplayServer.window_set_mode(want)
 
 
 func subtitle_scale() -> float:

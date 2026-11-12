@@ -21,6 +21,7 @@ func build() -> void:
 	_fov = _slider("Field of view", Settings.FOV_RANGE.x, Settings.FOV_RANGE.y, 1.0, &"fov")
 	_sensitivity = _slider("Look sensitivity", Settings.SENSITIVITY_RANGE.x, Settings.SENSITIVITY_RANGE.y, 0.05, &"sensitivity")
 	_volume = _slider("Volume", 0.0, 1.0, 0.05, &"volume")
+	_toggle("Fullscreen (F11)", &"fullscreen")
 	_toggle("Invert look", &"invert_look")
 	_toggle("Crouch toggles (instead of held)", &"crouch_toggle")
 	_size_button = add_button("", func() -> void:
