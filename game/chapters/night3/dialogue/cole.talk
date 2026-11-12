@@ -1,0 +1,16 @@
+@id n3_cole
+# DRAFT
+# Cole at dusk, keeping the gate (night 3). Lay brothers don't talk (Look and Feel, "Characters").
+== start
+(Cole stands in the open gateway, arms folded, watching the lane. He looks round at you and says nothing.)
+* Did anyone come to the gate today, Brother Cole? -> nothing
+* I'll take the gate after supper, brother. -> nothing
+* Good evening, Brother Cole. -> end
+
+== again
+(Cole looks at you, then back at the lane. He says nothing.)
+-> end
+
+== nothing
+(He says nothing. He looks at you a moment longer than he needs to, then back at the lane.)
+-> end

@@ -34,7 +34,7 @@ One column at the bottom of the screen, in the book face the menus use (EB Garam
 
 ## Writing one
 
-Each conversation is a `Conversation` resource, one per person per night (`game/chapters/night0/dialogue/` to `night6/`), or one per person for every dusk (`game/chapters/common/lane/hob.tres`). All are drafts, and each starts with `# DRAFT`. Edit its `text` in the inspector (the expand button gives a bigger editor) or in any text editor. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
+Each conversation is a plain text file, `<person>.talk`, one per person per night (`game/chapters/night0/dialogue/` to `night6/`), or one per person for every dusk (`game/chapters/common/lane/hob.talk`). Its first line is its id (`@id n3_thomas`, which names the `talked_n3_thomas` flag); the rest is the script, as below, with no escaping. Edit it in any text editor; in Godot, add `talk` to Editor Settings, FileSystem, TextFile Extensions to open it there. `TalkLoader` loads it as a `Conversation`. All are drafts, and each starts with `# DRAFT`. A person's `Talker` node names the conversation, and the phases in which they'll talk (the brothers at dusk; Mab until the knocks).
 
 ```
 # A note; ignored.

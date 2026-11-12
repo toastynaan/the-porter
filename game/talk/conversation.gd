@@ -1,8 +1,8 @@
 class_name Conversation
 extends Resource
 ## A conversation with someone (design doc, "Dialogue with memory":
-## conversations that read and set flags), written as a short script in
-## `text`, to edit in the inspector or any text editor. Talk.converse() plays
+## conversations that read and set flags), written as a short script in a
+## plain text .talk file (TalkLoader) that loads into `text`. Talk.converse() plays
 ## it: they say their lines, and the porter picks one of up to three answers
 ## or walks away.
 ##

@@ -1,0 +1,38 @@
+@id n1_warner
+# DRAFT
+# Brother Bede, of the choir, under the eaves by the refectory door at dusk (night 1). Nervous; he keeps looking at the door.
+# He does NOT warn about the bread here: that is supper's scripted moment. He is only strange about supper.
+# He hangs in the bell tower on night 2: his stall, his climbs to be alone, the rooks that know him.
+== start
+(A thin brother under the eaves by the refectory door, his hood up. His eyes keep going past you to the door.)
+Bede {wary, glance}: You're the porter. I'm Bede. Choir, the third stall on the left. You'll count me at Matins.
+-> topics
+
+== again
+(He's still watching the refectory door.)
+Bede {wary}: Brother.
+-> topics
+
+== topics
+* [if not n1_warner_supper] What's for supper, brother? -> supper
+* [if not n1_warner_door] What are you watching for, brother? -> door
+* [if not n1_warner_tower] How do I ring Matins? -> tower
+
+== supper [set n1_warner_supper]
+Bede {wary}: Pottage. Bread. There's always bread.
+(He lowers his voice.)
+Bede {afraid}: Eat slowly, brother. Watch what the rest of us leave.
+-> topics
+
+== door [set n1_warner_door]
+Bede {afraid, swallow}: Watching? (He makes himself look at you.) Nothing. I'm hungry, that's all. We're all hungry here.
+-> topics
+
+== tower [set n1_warner_tower]
+Bede {calm}: The rope hangs at the foot of the tower. Pull, let it rise, pull again. Don't hold on when it rises.
+Bede {sad}: I go up the tower stair sometimes, when I can't sleep. It's the one place in this house a man can think.
+Bede {warm}: The rooks know me now. They don't even get up. Anyone else, they go up all at once.
+-> topics
+
+== leave
+Bede {wary}: God keep you, porter.

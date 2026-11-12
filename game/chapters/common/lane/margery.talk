@@ -1,0 +1,167 @@
+@id lane_margery
+# DRAFT
+# Margery hurrying home through the lane at dusk, nights 1 to 6: a line or two of gossip a night, and she's gone.
+# Her own flags: lane_margery_<night> (talked to her tonight).
+== start
+-> start_known [if talked_n0_margery]
+-> start_new
+
+== start_known
+(Margery, her basket on her arm, walking fast.)
+-> tonight
+
+== start_new
+(A woman with a covered basket on her arm, walking fast.)
+Margery {warm}: Margery, brother, from by Saint Andrew's. I can't stop.
+-> tonight
+
+== again
+-> back [if night=1] [if lane_margery_1]
+-> back [if night=2] [if lane_margery_2]
+-> back [if night=3] [if lane_margery_3]
+-> back [if night=4] [if lane_margery_4]
+-> back [if night=5] [if lane_margery_5]
+-> back [if night=6] [if lane_margery_6]
+-> hello
+
+== hello
+(Margery, her basket on her arm, hurrying past.)
+-> tonight
+
+== back
+Margery {amused}: Brother, I've told you all I know, and more!
+-> end
+
+== tonight
+-> n1 [if night=1]
+-> n2 [if night=2]
+-> n3 [if night=3]
+-> n4 [if night=4]
+-> n5 [if night=5]
+-> n6 [if night=6]
+
+# Night 1
+== n1 [set lane_margery_1]
+Margery {amused}: You're still with us, then, brother. The lane's been wondering.
+-> n1_ask
+
+== n1_ask
+* Wondering what? -> n1_what
+
+== n1_what
+Margery {amused}: How long you'd last. Oh, don't look at me like that. I'm late.
+-> end
+
+# Night 2
+== n2 [set lane_margery_2]
+-> n2_pond [if died_merchant]
+-> n2_rain
+
+== n2_pond
+Margery {afraid}: A man in your fishpond! Drowned drunk, your infirmarian says.
+Margery {angry}: Drunk! He went past my door as sober as a bishop.
+-> n2_ask
+
+== n2_rain
+Margery {weary}: Rain again. I'll be soaked through by the corner, and the long way round to go.
+-> n2_ask
+
+== n2_ask
+* Go carefully. -> n2_care
+
+== n2_care
+Margery {amused}: Carefully, in these pattens, in this mud? Pray for me, brother.
+-> end
+
+# Night 3
+== n3 [set lane_margery_3]
+-> n3_tower [if died_warner]
+-> n3_plain
+
+== n3_tower
+Margery {afraid, swallow}: Hanged in his own bell tower, a holy brother! Your abbot says the devil did it.
+Margery {grave}: Devil or rope, he's dead all the same.
+-> n3_more
+
+== n3_plain
+Margery {wary}: I'm not stopping, brother. Not this week.
+-> n3_more
+
+== n3_more
+-> n3_jankin [if died_jankin]
+-> n3_ask
+
+== n3_jankin
+Margery {sad}: And poor Jankin. He owed me tuppence. I'd forgive it twice over to have him back.
+-> n3_ask
+
+== n3_ask
+* Go safely. -> n3_safe
+
+== n3_safe
+Margery {afraid}: Safely! There's no safely, brother. There's quickly.
+-> end
+
+# Night 4
+== n4 [set lane_margery_4]
+Margery {wary}: Your abbot has you all fasting, they say. Fasting against the devil.
+Margery {grave}: My gran fasted every Friday of her life, and the devil took her husband anyway.
+-> n4_ask
+
+== n4_ask
+* Good night, Margery. -> n4_night
+
+== n4_night
+Margery {weary}: Good night! I'll settle for a night, brother. Never mind good.
+-> end
+
+# Night 5
+== n5 [set lane_margery_5]
+-> n5_mab [if n4_mab=admitted]
+-> n5_more
+
+== n5_mab
+Margery {afraid}: You let the leper in! Inside your walls! The whole lane's talking of it.
+Margery {warm, glance}: Well. I'd not leave a dog out in that fog either. Don't tell anyone I said so.
+-> n5_more
+
+== n5_more
+-> n5_edwin [if died_edwin]
+-> n5_plain
+
+== n5_edwin
+Margery {sad}: That poor young brother. They say he was laid among the bones as if somebody put him to bed.
+-> n5_ask
+
+== n5_plain
+Margery {afraid}: And I'm not stopping. Not with the light going.
+-> n5_ask
+
+== n5_ask
+* [if died_edwin] Who says so? -> n5_who
+* [if not died_edwin] Go home, Margery. -> n5_home
+
+== n5_who
+Margery {grave}: Everybody. Nobody knows who said it first. That's how you know it's true.
+-> end
+
+== n5_home
+Margery {afraid}: I'm going! What do you think I'm doing?
+-> end
+
+# Night 6
+== n6 [set lane_margery_6]
+Margery {afraid}: Snow! Every step I take, written down for anyone to follow.
+(She looks back over her shoulder at her own footprints.)
+Margery {pleading}: God keep you tonight, brother. I mean it.
+-> n6_ask
+
+== n6_ask
+* And you, Margery. [trust margery 5] -> n6_you
+
+== n6_you
+Margery {sad}: Me? I'll be under three blankets with the door barred. You're the one who'll be out in it.
+-> end
+
+== leave
+Margery {warm}: God keep you!

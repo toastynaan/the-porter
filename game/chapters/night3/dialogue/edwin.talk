@@ -1,0 +1,39 @@
+@id n3_edwin
+# DRAFT
+# Edwin at dusk, on the west walk (night 3). The novice, your friend: gangly, freckled, a book under his arm. He talks too fast.
+# He's frightened and trying not to show it. (He dies on night 4. Nothing here says so.)
+== start
+(Edwin is pacing the west walk, his book shut under his arm. His face lights up when he sees you.)
+Edwin {glad}: Alric! There you are. I looked for you at None, then I remembered you sleep all day. You lucky man.
+-> topics
+
+== again
+Edwin {glad}: You again! Good. Stay a bit. The walk's very long when there's nobody on it.
+-> topics
+
+== topics
+* [if not n3_edwin_how] How are you, Edwin? -> how
+* [if bread_warned] [if not n3_edwin_bread] The brother who died warned me off the bread. -> bread
+* [if not n3_edwin_tower] Did you know the brother in the bell tower? -> tower
+
+== how [set n3_edwin_how]
+Edwin {warm, blink}: Me? Well. I'm well. I'm not sleeping, but nobody's sleeping. Except Brother Wulfric. He'd sleep through Doomsday.
+Edwin {weary}: I keep reading the same page. Look. It's the same psalm. I've been on it since Martinmas.
+(He laughs, too quickly.)
+-> topics
+
+== bread [set n3_edwin_bread]
+Edwin {warm, brow}: Bede said that? To you? He never said a word to me, and I sat by him at table a whole year.
+Edwin {warm}: It's only bread. I've eaten it since I was twelve.
+(He thinks about it, and the grin goes.)
+Edwin {sad}: I'll leave mine tonight, if you leave yours. We'll be hungry together. That's nearly a feast.
+-> topics
+
+== tower [set n3_edwin_tower]
+Edwin {afraid}: They're saying you found him. When you rang the bell. Is it true?
+Edwin {sad}: Bede taught me my letters. He'd rap my knuckles with a rule, and then give me an apple after.
+Edwin {afraid, swallow}: Father Abbot says the demon did it. I'd rather it was the demon, Alric. Isn't that a terrible thing to want?
+-> topics
+
+== leave
+Edwin {glad}: I'll see you at supper! Sit by me, if they let you.

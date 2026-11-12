@@ -1,0 +1,45 @@
+@id n4_edwin
+# DRAFT
+# Edwin at dusk, on the west walk (night 4, fog). He has seen the demon's face; the dusk scene has him whisper it, and
+# that he'll tell after Matins. Here he's jumpy and won't say more: after Matins, he swears it. (He dies before Matins.
+# Nothing here says so.) The lines work whether or not the whisper has come yet.
+== start
+(Edwin on the west walk, his book hugged to his chest. He jumps when you come out of the fog, then laughs too loudly.)
+Edwin {afraid}: Alric! Don't come up on a man like that. Not in this.
+-> topics
+
+== again
+(Edwin hasn't moved. He's watching the fog at the end of the walk.)
+Edwin {afraid}: Still here? Good. Stay a bit.
+-> topics
+
+== topics
+* [if not n4_edwin_afraid] What has frightened you, Edwin? -> afraid
+* [if not n4_edwin_fast] How are you bearing the fast? -> fast
+* [if not n4_edwin_psalm] What are you reading? -> psalm
+
+== afraid [set n4_edwin_afraid]
+(He looks over your shoulder into the fog before he answers.)
+Edwin {afraid, glance}: Not here. Not now. After Matins, I swear it. I'll come to your gate and tell you everything.
+Edwin {afraid}: Somebody's always listening in this house, Alric. Even in the fog. Especially in the fog.
+-> topics
+
+== fast [set n4_edwin_fast]
+-> fast_bread [if n3_edwin_bread]
+-> fast_plain
+
+== fast_bread
+Edwin {warm}: I left my bread last night, like we said. And now there's none to leave. I'm so hungry I could eat my book.
+-> topics
+
+== fast_plain
+Edwin {glad}: No supper! I'm so hungry I could eat my book. Psalms and all.
+-> topics
+
+== psalm [set n4_edwin_psalm]
+Edwin {weary}: The same as ever. Psalm ninety, the one we sing at Compline. You shall not fear the terror of the night.
+Edwin {afraid}: I've said it a hundred times since None. It isn't working.
+-> topics
+
+== leave
+Edwin {pleading}: After Matins, Alric. At your gate. Don't forget.

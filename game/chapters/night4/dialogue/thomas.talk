@@ -1,0 +1,70 @@
+@id n4_thomas
+# DRAFT
+# Thomas at dusk, at his mortar in the infirmary (night 4, fog; the house fasts, no supper).
+# If he hid the porter from the hunter last night (n3_thomas_hid_you), he gives him a story for it: he was here, for his head.
+# Brother Simon out at night: he says it first (n4_thomas_simon) unless the porter has already heard it from him tonight
+# (the dusk scene should set the same flag), then comes back to it. True, and it costs him nothing: he sends Simon out.
+# Telling him about the crypt is reporting it the safe way (trust +5). Edwin poured out his sleeping draught; Thomas watched.
+# Claims: n4_thomas_keeps (misleading): Simon does keep things, which is so; Thomas sent him out himself and says it to point at an innocent man. Pressing is the right read.
+== start
+(Fog presses at the infirmary window. Thomas is at his mortar, humming, as if it weren't there.)
+Thomas {warm}: Alric. Come in, and shut the door on that. It gets into the chest.
+-> hid [if n3_thomas_hid_you]
+-> simon_back [if n4_thomas_simon]
+-> simon_first
+
+== hid
+Thomas {warm}: You're whole. I wasn't sure you would be, the way you came through that door last night.
+Thomas {warm, still}: If anyone asks, you were here with me, for your head. All night. It's true enough.
+-> simon_back [if n4_thomas_simon]
+-> simon_first
+
+== simon_first [set n4_thomas_simon]
+(He looks past you at the door, and lowers his voice.)
+Thomas {grave}: Brother. I've seen Brother Simon out at night. Long after Compline, when he should be abed.
+Thomas {warm, nod}: I don't say what it means. Only, keep an eye on him.
+-> topics
+
+== simon_back
+Thomas {warm}: You've thought on what I told you? About Simon?
+-> topics
+
+== again
+(Thomas looks up from the mortar. His fingers are stained green to the knuckle.)
+Thomas {warm}: Back again? There's no supper to be late for tonight.
+-> topics
+
+== topics
+* [if not n4_thomas_simon_ask] What was Brother Simon doing out there? -> simon_ask
+* [if died_crypt_pilgrim] [if not n4_thomas_crypt] I saw a bound man killed at the altar in the crypt. -> crypt
+* [if not n4_thomas_edwin] How is Edwin? -> edwin
+
+== simon_ask [set n4_thomas_simon_ask] [claim n4_thomas_keeps misleading]
+Thomas {grave}: On his knees on the flags by the chapter house, his lantern hooded. At an hour nobody prays.
+Thomas {warm, still}: He's a quiet one, Simon. Quiet men keep things.
+* [believe] I'll keep an eye on him, brother. -> simon_believed
+* [press] Simon? He sings, and keeps his head down. What would he keep? -> simon_pressed
+
+== simon_believed
+Thomas {warm, nod}: Watch him, Alric. Don't go to him. Watch.
+-> topics
+
+== simon_pressed
+Thomas {warm, still}: That's for you to find, not me. I only tell you what I see.
+Thomas {warm}: Watch him, Alric. Don't go to him. Watch.
+-> topics
+
+== crypt [set n4_thomas_crypt] [trust thomas 5]
+(He sets the pestle down very carefully, and hears you out.)
+Thomas {sad}: A man bound, at the saint's own altar. God have mercy on him.
+Thomas {grave, still}: Have you told the prior? Don't. Hugh would hang the porter for it and call it justice.
+Thomas {warm}: Leave it with me. You did right to bring it here.
+-> topics
+
+== edwin [set n4_thomas_edwin]
+Thomas {warm}: He came to me this morning for something to help him sleep, and poured it out of the window. I watched him do it.
+Thomas {warm, nod}: He listens to you. Tell him to come to me after Matins, if he can't sleep.
+-> topics
+
+== leave
+Thomas {warm}: Keep it between us, Alric. About Simon.

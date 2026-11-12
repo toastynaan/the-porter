@@ -1,0 +1,74 @@
+@id n4_hugh
+# DRAFT
+# Prior Hugh at dusk, on the north walk (night 4, fog). Cold; he's investigating. He heard two men run the cloister
+# after Matins last night and wants to know what the porter saw. If the porter has told him the truth before
+# (n3_told_prior, or everything at night 2's dawn), he says so. Telling him about the crypt: Suspicion +10 (Ranulf overhears).
+# If the keys were copied (keys_copied), he looks at them and finds the wax: where were they? (n4_hugh_keys)
+== start
+(The prior comes out of the fog so close you nearly walk into him. His wax tablet is already open.)
+Hugh {cold}: Porter. Two men ran the cloister last night after Matins, one behind the other. I heard them from this walk.
+Hugh {cold, jaw}: The first of them was you.
+-> before [if n3_told_prior]
+-> before [if n2_told_hugh=thomas]
+-> ask
+
+== before
+Hugh {cold}: You've told me the truth before, and I wrote it down. Do it again.
+-> ask
+
+== ask
+Hugh {cold}: What did you see?
+* [if died_crypt_pilgrim] I saw a bound man killed at the altar in the crypt. -> crypt
+* It was the demon, Father Prior. -> demon
+* It wasn't me, Father Prior. I was never there. -> denied
+
+# Telling the prior anything: Suspicion +10, because Ranulf overhears (design doc).
+== crypt [set n4_hugh_night=crypt] [suspicion 10]
+(You tell him: the light, the bound man, the figure at the altar. He writes it all on the wax.)
+(Somewhere in the fog behind you, a door closes softly.)
+Hugh {grave, jaw}: Under the saint's altar. Tell no one else. Not the abbot. Not anyone.
+-> keys [if keys_copied]
+-> end
+
+== demon [set n4_hugh_night=demon]
+Hugh {cold}: The demon. The abbot's word for it.
+Hugh {cold}: Whatever ran behind you was out of breath, porter. I heard it. Demons don't pant.
+-> keys [if keys_copied]
+-> end
+
+== denied [set n4_hugh_night=denied] [trust hugh -5]
+Hugh {angry, jaw}: Then someone wears your face. I'll find out who.
+-> keys [if keys_copied]
+-> end
+
+== keys [note keys_moved]
+Hugh {cold}: Your keys. Give them here.
+(He turns them in the grey light and scrapes a tooth with his thumbnail. Wax comes away.)
+Hugh {grave}: Someone has taken a mould of these. When were they out of your hands?
+* [if n3_thomas_hid_you] I was in the infirmary last night, with Brother Thomas. -> keys_thomas
+* I don't know, Father Prior. -> keys_unknown
+* They've never left me, Father Prior. -> keys_lie
+
+== keys_thomas [set n4_hugh_keys=thomas]
+Hugh {cold}: With Thomas. All night, and your keys on your belt the whole while.
+(He writes one word on the wax, and gives the keys back.)
+Hugh {cold}: A lock two men have a key to is no lock, porter. Remember that tonight.
+-> end
+
+== keys_unknown [set n4_hugh_keys=unknown]
+Hugh {cold}: You don't know. The porter, and he doesn't know where his keys go at night.
+Hugh {cold}: A lock two men have a key to is no lock. Remember that tonight.
+-> end
+
+== keys_lie [set n4_hugh_keys=lie] [trust hugh -5]
+Hugh {angry}: Then the wax grew on them by itself. (He drops them in your hand.)
+Hugh {cold, jaw}: A lock two men have a key to is no lock, porter. Remember that tonight.
+-> end
+
+== again
+(The prior is a dark shape in the fog, writing.)
+Hugh {cold}: Go, porter. And keep your keys on you.
+-> end
+
+== leave
+Hugh {cold}: I'll find you, porter. In fog or out of it.

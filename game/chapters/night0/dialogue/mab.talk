@@ -1,0 +1,42 @@
+@id n0_mab
+# DRAFT
+# Mab, a leper, begging by the barred abbey gate at dusk, night 0. Her first lines send him to the Cross Keys (n0_sent_to_inn).
+# Alms once (n0_mab_alms): she gives him a heel of Fenchurch Street bread.
+== start [set n0_sent_to_inn]
+(A wooden clapper, knocking. A woman sits against the wall by the gate, her face wrapped to the eyes in grey cloth.)
+Mab {wary}: No use knocking, brother. Stand off a little. Nobody will come.
+Mab {wary}: Nobody keeps that gate at night. Not since old Brother Anselm went blind. They bar it at dusk, and that's that.
+Mab {calm}: Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed.
+-> topics
+
+== again
+Mab {calm}: Still here, brother? The Keys is just across. They'll have the fire lit.
+-> topics
+
+== topics
+* [if not n0_mab_porter] I'm to be their new porter. -> porter
+* [if not n0_mab_saw] Are you here every night? -> saw
+* [if not n0_mab_alms] (Give her alms.) -> alms
+
+== porter [set n0_mab_porter]
+Mab {wary}: Their porter.
+(She looks at you a long while over the cloth.)
+Mab {sad}: You're very young. Well. You'll be in there, and I'll be out here. We'll see a deal of each other.
+-> topics
+
+== saw [set n0_mab_saw]
+Mab {weary}: Every night God sends. Rain or frost, it's all one to me.
+Mab {wary}: I see everyone who goes in at that gate, and everyone who comes out.
+Mab {sad}: Nobody asks me. Who asks a leper anything?
+Mab {grave}: But I'll tell you for nothing, brother. More go in than come out.
+-> topics
+
+== alms [set n0_mab_alms] [item mab_bread] [trust mab 5]
+(You drop a penny of your road money in the bowl at her feet.)
+Mab {warm}: God keep you, brother. Here. You'll want something for your supper.
+(She sets a heel of bread on the step between you, wrapped in a cloth, and draws back.)
+Mab {grave}: It's from a baker on Fenchurch Street. I don't eat what comes out of that gate.
+-> topics
+
+== leave
+Mab {wary}: Mind the lane after the bell, brother.

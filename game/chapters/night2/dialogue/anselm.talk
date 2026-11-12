@@ -1,0 +1,64 @@
+@id n2_anselm
+# DRAFT
+# Anselm by the infirmary brazier at dusk (night 2). He heard the merchant carried past his door, or heard him leave cursing.
+# The knock with no one there frightens him more than anything; it's new to him. He hints at his guilt and won't tell.
+# Claims: n2_anselm_guests (hiding: he is blind now, but for years he let the victims in; pressed, he hints, and names no one).
+== start
+(Anselm in his chair by the brazier. He turns his face toward your step before you speak.)
+-> dead [if died_merchant]
+-> lived [if n1_merchant=admitted]
+-> plain
+
+== dead
+Anselm {afraid}: They carried a man past my door this morning. Wet. I heard it run off him onto the flags.
+(His voice drops.)
+Anselm {pleading}: Did you lock the door, porter? I told you. I told you to.
+-> topics
+
+== lived
+Anselm {weary}: I heard your merchant in the court this morning, cursing you for locking him in.
+(He's nearly smiling.)
+Anselm {amused}: Let him curse. Let them all curse you, and go home.
+-> topics
+
+== plain
+Anselm {warm}: The porter. You came through your first night. (He reaches for your hand, and holds it a moment.)
+-> topics
+
+== again
+Anselm {weary}: Still there? I can hear you breathing.
+-> topics
+
+== topics
+* [if n1_knock_no_one] [if not n2_anselm_knock] Last night there was a knock at the gate, and no one there. -> knock
+* [if not n2_anselm_lost] [if not read_n2_anselm_guests] In your years at the gate, brother, did you ever lose a guest? -> lost
+
+== knock [set n2_anselm_knock]
+(His hands find the arms of his chair and hold on.)
+Anselm {afraid, swallow}: And nobody there. In thirty years at that gate I never had that.
+Anselm {afraid}: Pray, porter. It's all I know to tell you.
+-> topics
+
+== lost [set n2_anselm_lost]
+(A long silence. His hands tighten on the arms of the chair.)
+Anselm {weary, lip}: I'm blind, porter. I don't see anything now.
+-> n2_anselm_guests
+
+== n2_anselm_guests [claim n2_anselm_guests hiding]
+Anselm {afraid, swallow}: I don't see anything.
+* [believe] Forgive me, brother. I shouldn't have asked. -> guests_believed
+* [press] You weren't blind then, brother. -> guests_pressed
+
+== guests_believed
+(He turns his face back to the brazier.)
+Anselm {weary}: No. You shouldn't.
+-> topics
+
+== guests_pressed
+(His mouth works a long while before anything comes out of it.)
+Anselm {ashamed, lip}: Not every night. Some nights I didn't lock the door. Those mornings there was a bed empty by Lauds.
+Anselm {pained, swallow}: And I never asked whose. Never once. Don't make me say more.
+-> topics
+
+== leave
+Anselm {pleading}: Lock them in, porter.

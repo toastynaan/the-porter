@@ -36,9 +36,9 @@
 [ext_resource type="Resource" path="res://game/chapters/night6/visitors/roger_n6.tres" id="v_roger"]
 [ext_resource type="Resource" path="res://game/chapters/night6/visitors/joan_n6.tres" id="v_joan"]
 [ext_resource type="Resource" path="res://game/chapters/night6/visitors/mab_n6.tres" id="v_mab"]
-[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/hugh.tres" id="c_hugh"]
-[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/simon.tres" id="c_simon"]
-[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/godric.tres" id="c_godric"]
+[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/hugh.talk" id="c_hugh"]
+[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/simon.talk" id="c_simon"]
+[ext_resource type="Resource" path="res://game/chapters/night6/dialogue/godric.talk" id="c_godric"]
 
 [node name="Night6" instance=ExtResource("base")]
 editor_description = "Night 6, the hunt (design doc, Night 6): no routine; Anselm dead in his bed; Thomas's wine; the whole cult in costume; a knock at the gate (Roger, Joan or Mab); the proof in the crypt passage; the Hungry Saint as Matins nears; the rite in the crypt, stopped or not; fire; and the seven endings. It inherits night_base.tscn."

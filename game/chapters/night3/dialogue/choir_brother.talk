@@ -1,0 +1,22 @@
+@id n3_choir_brother
+# DRAFT
+# The choir brothers at dusk (night 3); Wulfric, Aldo and Piers all share this, so nobody is named.
+# Faces you know from Matins. Not in the cult. Bede, who warned you about the bread, sang beside them.
+== start
+(A brother of the choir, his hands in his sleeves. You know his face from Matins.)
+A choir brother {calm}: Porter. God give you good evening.
+* Did you know the brother who died? -> died
+* [if bread_warned] The brother who died warned me off the bread. Why? -> bread
+* Good night, brother. -> end
+
+== died
+A choir brother {sad}: Bede. Nine years I sang beside him at the night office. He sang flat, and knew it, and sang anyway.
+A choir brother {grave}: The abbot says the demon took him. Maybe so.
+A choir brother {sad}: He was frightened, those last days. But not of demons. Bede laughed at demons.
+-> end
+
+== bread
+(He looks toward the kitchen before he answers.)
+A choir brother {afraid}: He told you that too? He'd stopped eating it. He hid it in his sleeve and threw it over the wall.
+A choir brother {sad, swallow}: I asked him why. He said it was better I didn't know. Then he was dead.
+-> end

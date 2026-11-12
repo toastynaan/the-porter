@@ -1,0 +1,31 @@
+@id n2_choira
+# DRAFT
+# Brother Wulfric on the south walk at dusk (night 2), rubbing his knees. Background; crabbed.
+# The drowned merchant, or the abbot's extra hour of prayer; the abbot has dreamed badly since Michaelmas.
+== start
+(Old Brother Wulfric on the south walk, rubbing his knees.)
+-> dead [if died_merchant]
+-> plain
+
+== dead
+Wulfric {amused}: A drunk drowns in our fishpond, and the abbot goes about with a face like he's seen the Devil.
+Wulfric {weary}: In my day a drunk who drowned was a drunk who drowned.
+-> topics
+
+== plain
+Wulfric {weary}: The abbot had us on our knees an hour after chapter, praying for the house. My knees are older than his.
+-> topics
+
+== again
+Wulfric {amused}: Still here, boy? Go and ring something.
+-> topics
+
+== topics
+* [if not n2_choira_abbot] What is the abbot afraid of, brother? -> abbot
+
+== abbot [set n2_choira_abbot]
+Wulfric {grave}: Bad dreams. He's had them since Michaelmas. At his age you dream of the grave, and he's earned it.
+-> end
+
+== leave
+Wulfric {weary}: On the mark tonight, boy.

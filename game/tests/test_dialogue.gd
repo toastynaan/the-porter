@@ -516,7 +516,7 @@ func _conversations(dir: String) -> Array[String]:
 	for sub in DirAccess.get_directories_at(dir):
 		out.append_array(_conversations(dir.path_join(sub)))
 	for f in DirAccess.get_files_at(dir):
-		if f.ends_with(".tres") and load(dir.path_join(f)) is Conversation:
+		if f.ends_with(".talk") and load(dir.path_join(f)) is Conversation:
 			out.append(dir.path_join(f))
 	return out
 

@@ -1,0 +1,35 @@
+@id n0_kit
+# DRAFT
+# Kit, Ralph the chandler's daughter, selling her last candles in the lane at dusk, night 0. Young, quick, curious about the new porter.
+== start
+(A girl with a tray of candles on a strap round her neck, her hood up against the rain.)
+Kit {glad}: Candles! Last of the day, cheap as dirt. You're a brother. Are you the new one?
+-> topics
+
+== again
+Kit {glad}: Two left, brother. Both for a ha'penny, and I'll throw in the tray.
+-> topics
+
+== topics
+* [if not n0_kit_porter] I'm the new porter. -> porter
+* [if not n0_kit_candles] Who makes your candles? -> candles
+* [if not n0_kit_abbey] Have you been inside? -> abbey
+
+== porter [set n0_kit_porter]
+Kit {glad}: I knew it! Everybody knew you were coming. Gib told Margery, and Margery told the lane.
+Kit {amused}: You're younger than Brother Anselm. Well. Everybody's younger than Brother Anselm.
+-> topics
+
+== candles [set n0_kit_candles]
+Kit {calm}: Father makes them and I sell them. Ralph the chandler. He's in the Keys, most like.
+Kit {calm}: I'm at your gate most dusks with the tray. The brothers buy whatever I've got left.
+Kit {amused}: Brother Ranulf would buy the tray and the strap, if I let him.
+-> topics
+
+== abbey [set n0_kit_abbey]
+Kit {wary}: Past the gate? Never. Father says I'm not to, not ever.
+Kit {glad}: Is it true there's a saint's finger in a glass box? And lights at night? You'll tell me, when you've seen.
+-> topics
+
+== leave
+Kit {glad}: See you at the gate!

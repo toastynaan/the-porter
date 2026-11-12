@@ -1,0 +1,78 @@
+@id n0_traveller
+# DRAFT
+# The traveller (Will Fuller) beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the dead comes close the traveller breaks off whatever he was saying (traveller_road.tres is that talk) and turns to it.
+# Four pilgrims under sacking, found in the ditch by the white chapel: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.
+# The ride reveals nothing of what or who is behind it: no demon, no men, no robbery. Only the dead, the count, the abbey, and a man too frightened to say what people say.
+# If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him.
+# What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.tres, after).
+== start
+Traveller {afraid}: Whoa. Look at that.
+(The cart creaks by close enough to touch. Shapes lie under sacking on its bed, three side by side and one across them.)
+Traveller {afraid, swallow}: God's wounds. That's not one man. That's four.
+* God rest them. Who were they? -> who
+* What happened to them? -> what
+* (Cross yourself, and pray for them.) -> pray
+
+== who [set n0_cart_who]
+Traveller {sad}: Pilgrims, by the badges on their hats. Nobody knows them. Nobody ever knows them.
+Traveller {sad}: Men from the shires who saved a year to see a saint, and nobody here to ask after them.
+-> count
+
+== what [set n0_cart_what]
+Traveller {grave}: Found in the ditch by the white chapel, the carter says. Laid out side by side, neat as you like.
+Traveller {afraid, blink}: Not a mark on them. Not one. As if they'd lain down there to sleep.
+-> count
+
+== pray [set n0_cart_pray]
+(You say the words for the dead under your breath. The traveller watches you do it, and his lips move with yours.)
+Traveller {grave}: Say one for yourself while you're at it.
+-> count
+
+== count
+-> count_porter [if n0_road_porter]
+-> count_plain
+
+== count_porter
+Traveller {grave}: That makes seven this month, on this road alone. And every one of them bound for your abbey, to see the saint.
+-> rumour
+
+== count_plain
+Traveller {grave}: That makes seven this month, on this road alone. The carter says you're for the abbey in the lane.
+Traveller {afraid}: That's where they were all bound. To see the saint.
+-> rumour
+
+== rumour
+-> rumour_done [if n0_cart_abbey] [if n0_cart_say] [if n0_cart_see]
+-> rumour_ask
+
+== rumour_ask
+* [if not n0_cart_abbey] Why lay it at the abbey's door? -> abbey
+* [if not n0_cart_say] What do people say? -> say
+* [if not n0_cart_see] I'll see for myself what's there. -> see
+
+== abbey [set n0_cart_abbey]
+Traveller {afraid}: They go in at that gate to see the saint. Nobody sees them come out.
+Traveller {grave}: Then a week on, a month on, they turn up in a ditch outside the walls. Like those.
+Traveller {afraid, swallow}: (He crosses himself.) I don't say how. I don't know how. Nobody does.
+-> rumour
+
+== say [set n0_cart_say]
+Traveller {afraid, blink}: (He opens his mouth, and shuts it again.) People say a good many things, brother. None of them in daylight.
+Traveller {afraid}: You'll hear it all at the Keys tonight, I don't doubt. I'd rather not be the one who told you.
+-> rumour
+
+== see [set n0_cart_see]
+Traveller {grave}: You will, brother. That's what worries me.
+-> rumour
+
+== rumour_done
+(The cart's lantern goes small down the road behind you. The traveller doesn't take his eyes off it.)
+Traveller {sad}: Pray they keep you better than they kept those, brother.
+-> end
+
+== again
+Traveller {grave}: Nearly at the wall. Keep your hood up, brother.
+-> end
+
+== leave
+Traveller {weary}: Suit yourself. You'll see soon enough.

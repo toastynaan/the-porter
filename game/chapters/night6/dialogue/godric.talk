@@ -1,0 +1,41 @@
+@id n6_godric
+# DRAFT
+# Abbot Godric at dusk, sick in his bed since he fell in the smoke at Matins (night 6, snow). Thomas brings him something
+# hot at every bell, and he sleeps and wakes and doesn't know what's happening: why there's no bell, whether it's morning.
+# He doesn't know Anselm is dead: Thomas told him Anselm sleeps sound at last. Telling him what his brothers are: he
+# thinks the porter is feverish, sends him to Thomas, and will tell Thomas he's coming (Suspicion +5).
+== start
+(The abbot lies in his bed under a heap of blankets, his beads in his fingers, his lips moving. His breath rattles.)
+Godric {weary}: My son? Is it Matins? I didn't hear the bell.
+Godric {weary}: Thomas says I'm not to trouble about Matins. He says the house can sing without me for one night.
+-> topics
+
+== again
+(The abbot has slipped down in the bed. He opens his eyes, and takes a while to find you.)
+Godric {weary, blink}: Who is it? Oh. The porter. Is it morning?
+-> topics
+
+== topics
+* [if not n6_godric_how] How are you, Father Abbot? -> how
+* [if not n6_godric_anselm] Have you heard about Brother Anselm, Father Abbot? -> anselm
+* [if not n6_godric_truth] Father Abbot, your brothers are not what they seem. -> truth
+
+== how [set n6_godric_how]
+Godric {weary}: Thomas says it's the smoke, in my chest. He brings me something hot at every bell, and I sleep.
+Godric {sad}: I sleep so much, child. I dream I'm awake, and then I wake, and it's the same room.
+-> topics
+
+== anselm [set n6_godric_anselm]
+Godric {warm}: Anselm? Thomas sat with him through Vespers. He says Anselm sleeps sound at last, poor soul, like a child.
+Godric {warm}: Thirty years at our gate, and never a whole night's sleep. Let him have it.
+-> topics
+
+# He'll tell Thomas what the porter said: Suspicion +5.
+== truth [set n6_godric_truth] [suspicion 5]
+(He hears you out. Then he laughs, weakly, and it turns into coughing.)
+Godric {weary}: My brothers? Child, you're feverish. Thomas said you might be.
+Godric {warm}: Go to him. He'll give you something to help you sleep. I'll tell him you're coming.
+-> topics
+
+== leave
+Godric {sad}: Pray for the house, my son. I can't seem to keep hold of the words.

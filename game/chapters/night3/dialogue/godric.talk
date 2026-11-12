@@ -1,0 +1,36 @@
+@id n3_godric
+# DRAFT
+# Abbot Godric at dusk, in the chapter house (night 3). Small, frail, very old and kind; he leans on his crosier and coughs.
+# Not in the cult. Drugged hardest, he believes the demon has come, and has ordered more incense to drive it out.
+== start
+(The abbot sits alone on the stone bench, both hands on his crosier. The air in here is blue with incense.)
+Abbot Godric {warm}: Come in, my son. Let an old man look at you. You've lost colour since you came to us.
+-> topics
+
+== again
+(The abbot coughs into his sleeve for a long while before he can speak.)
+Abbot Godric {weary}: Forgive me. The smoke. A small price for the safety of the house.
+-> topics
+
+== topics
+* [if not n3_godric_demon] Is there truly a demon in the house, Father Abbot? -> demon
+* [if not n3_godric_porter] How am I doing as porter, Father Abbot? -> porter
+* [if not n3_godric_blessing] Will you bless me, Father Abbot? -> blessing
+
+== demon [set n3_godric_demon]
+Abbot Godric {grave}: It has come into our house. I said so before the brothers this morning, and I'll say it again.
+Abbot Godric {afraid}: I have felt it at the night office, my son. The way you feel a draught from a door left open.
+Abbot Godric {grave}: So we'll smoke it out. Incense at every office, and prayer. Our saint will not suffer it long.
+-> topics
+
+== porter [set n3_godric_porter]
+Abbot Godric {warm}: Thomas tells me you keep good hours, and you ring the bell well. That's most of it.
+Abbot Godric {weary}: The prior is harder to please. He's no harder on you than he is on himself. Bear with him.
+Abbot Godric {warm}: Anselm kept that gate thirty years. Be patient with yourself. It took him a while too.
+-> topics
+
+== blessing [set n3_godric_blessing]
+(You kneel. His hand on your head is as light as paper, and it shakes.)
+Abbot Godric {warm}: The Lord bless you and keep you, and keep the gate through you. Go in peace, my son.
+(He signs the cross over you, and coughs.)
+-> topics

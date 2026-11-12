@@ -4,7 +4,7 @@ extends Node
 ## no test opens. Runs as a scene (load_all.tscn) so the autoloads exist.
 
 const ROOTS: Array[String] = ["res://game", "res://tools"]
-const EXTENSIONS: Array[String] = ["gd", "tscn", "tres", "gdshader"]
+const EXTENSIONS: Array[String] = ["gd", "tscn", "tres", "gdshader", "talk"]
 
 
 func _ready() -> void:

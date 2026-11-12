@@ -1,0 +1,16 @@
+@id n3_dunstan
+# DRAFT
+# Dunstan at dusk, by the woodpile (night 3). Lay brothers don't talk (Look and Feel, "Characters").
+== start
+(Dunstan rests his axe on the block and looks at you. He says nothing.)
+* Is there wood enough for the winter, brother? -> nothing
+* Have you seen anything strange, Brother Dunstan? -> nothing
+* Good night, Brother Dunstan. -> end
+
+== again
+(Dunstan looks up from the woodpile. He says nothing.)
+-> end
+
+== nothing
+(He says nothing. He sets a log on the block, and the axe comes down.)
+-> end

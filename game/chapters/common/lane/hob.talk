@@ -1,0 +1,251 @@
+@id lane_hob
+# DRAFT
+# Hob at the door of the Cross Keys at dusk, nights 1 to 6, while the abbey gate stands open.
+# Each night he passes on what the lane says about the night before, then the night's questions.
+# The Keys is open: an ale every night, and it ends the talk. Night 2: he can be asked to keep Jankin in (n2_jankin_kept_in).
+# His own flags: lane_hob_<night> (talked to him tonight), lane_hob_n<night>_<topic> (asked).
+# Claims: n4_hob_walter (hiding: what Walter said over his ale on night 3).
+== start
+-> start_known [if talked_n0_hob]
+-> start_new
+
+== start_known
+Hob {amused}: Brother porter. So they kept you.
+-> tonight
+
+== start_new
+(A big man fills the inn's doorway, a cloth over his shoulder.)
+Hob {calm}: You'll be the new porter. I'm Hob. The Keys is mine.
+-> tonight
+
+== again
+-> back [if night=1] [if lane_hob_1]
+-> back [if night=2] [if lane_hob_2]
+-> back [if night=3] [if lane_hob_3]
+-> back [if night=4] [if lane_hob_4]
+-> back [if night=5] [if lane_hob_5]
+-> back [if night=6] [if lane_hob_6]
+-> hello
+
+== hello
+Hob {calm}: Brother.
+-> tonight
+
+== back
+Hob {calm}: Still here? The bell won't wait for you.
+-> ask
+
+== tonight
+-> n1 [if night=1]
+-> n2 [if night=2]
+-> n3 [if night=3]
+-> n4 [if night=4]
+-> n5 [if night=5]
+-> n6 [if night=6]
+
+== ask
+-> n1_ask [if night=1]
+-> n2_ask [if night=2]
+-> n3_ask [if night=3]
+-> n4_ask [if night=4]
+-> n5_ask [if night=5]
+-> n6_ask [if night=6]
+
+== ale
+(He reaches inside the door for a cup and fills it on the step.)
+Hob {warm}: The Keys is open, brother. Drink it before the bell.
+-> end
+
+# Night 1: the lane hasn't seen anything yet. How does he find the abbey?
+== n1 [set lane_hob_1]
+Hob {amused}: You've the look of a man who slept in his clothes. How do you find it over there?
+-> n1_ask
+
+== n1_ask
+* [if not lane_hob_n1_kind] They've been kind to me. -> n1_kind
+* [if not lane_hob_n1_away] If I turn someone away, where do they go? -> n1_away
+* An ale, if you would. [drink] -> ale
+
+== n1_kind [set lane_hob_n1_kind]
+Hob {wary}: Kind. Aye, they're kind at the gate, that lot. It's past the gate I'd wonder about.
+-> n1_ask
+
+== n1_away [set lane_hob_n1_away]
+Hob {calm}: Here, if they've sense. Send them across before the bell and Agnes will find them a bed.
+Hob {grave}: After the bell I bar the door, and it stays barred. I'd not open it for the mayor.
+-> n1_ask
+
+# Night 2: about night 1. The merchant. Then Jankin, whom he puts out at closing.
+== n2 [set lane_hob_2]
+-> n2_pond [if died_merchant]
+-> n2_locked [if n1_merchant=admitted] [if n1_guesthouse_locked]
+-> n2_jankin
+
+== n2_pond
+Hob {grave}: That merchant who went in at your gate. They pulled him out of your fishpond this morning, they say.
+Hob {grave}: The old porter used to lock his guests in at night, you know. Nobody does now.
+Hob {wary}: The bailiff was in at noon, asking after him. He'll be at your gate tonight.
+-> n2_jankin
+
+== n2_locked
+Hob {amused}: Your merchant came by at first light, hale, cursing your porter for locking him in like a sheep.
+Hob {amused}: Paid for his ale, at least, and went off grumbling to Cheapside.
+-> n2_jankin
+
+== n2_jankin
+(Through the door behind him, Jankin is already singing.)
+Hob {amused}: Hark at him. I'll put him out at closing, same as every night. Rain or no.
+-> n2_ask
+
+== n2_ask
+* [if not n2_jankin_kept_in] Will you keep Jankin in tonight? [set n2_jankin_kept_in] -> n2_keep
+* [if not lane_hob_n2_why] Why do you put Jankin out? -> n2_why
+* An ale, if you would. [drink] -> ale
+
+== n2_keep
+Hob {wary}: Keep him in? The Keys shuts at the bell, brother. Everybody out but them that pay.
+(He looks past you at the abbey wall, and his jaw works.)
+Hob {weary}: Fine. One night. He can snore on the bench. But you'll say a prayer for my rushes.
+-> n2_ask
+
+== n2_why [set lane_hob_n2_why]
+Hob {calm}: Because the Keys shuts at the bell, and a man who doesn't pay doesn't sleep in it.
+Hob {calm}: He beds down on the chandler's step. Twenty years, and he's come to no harm.
+-> n2_ask
+
+# Night 3: about night 2. Jankin, or whoever was turned away after the bell; the brother in the bell tower.
+== n3 [set lane_hob_3]
+-> n3_jankin [if died_jankin]
+-> n3_kept [if n2_jankin_kept_in]
+-> n3_tower
+
+== n3_jankin
+Hob {grave}: I put Jankin out at closing, same as every night. Gib found him in the gutter by the chandler's.
+(He wipes his hands on the cloth, though they're dry.)
+Hob {ashamed, look down}: I should have kept him in.
+-> n3_tower
+
+== n3_kept
+Hob {calm}: Kept Jankin in, like you asked. Snored on my bench till dawn.
+Hob {afraid, swallow}: Something walked the lane last night. I heard it go past the shutters. I didn't look.
+-> n3_tower
+
+== n3_tower
+-> n3_bede [if died_warner]
+-> n3_quiet [if not died_jankin] [if not n2_jankin_kept_in]
+-> n3_ask
+
+== n3_bede
+Hob {grave}: And a brother of yours hanged in your own bell tower, they say. Your abbot's telling the lane it's the devil.
+Hob {wary}: Is it, brother? You'd know. You're the one who rings that bell.
+-> n3_ask
+
+== n3_quiet
+Hob {weary}: Quiet in the Keys last night. Nobody wants to drink across from your wall any more.
+-> n3_ask
+
+== n3_ask
+* [if died_warner] [if not lane_hob_n3_devil] Do you believe it's the devil? -> n3_devil
+* An ale, if you would. [drink] -> ale
+
+== n3_devil [set lane_hob_n3_devil]
+Hob {cold}: I believe in what I pour and what I'm paid.
+(His eyes go to the abbey wall.)
+Hob {afraid}: And I bar my shutters.
+-> n3_ask
+
+# Night 4: about night 3. The lane knows nothing of the crypt.
+== n4 [set lane_hob_4]
+Hob {calm}: Walter was in last night before he went over to you. Paid for his ale in silver.
+Hob {amused}: Silver, from a pardoner. I bit it. It was good.
+-> n4_ask
+
+== n4_ask
+* [if not lane_hob_n4_heard] What else is the lane saying? -> n4_heard
+* [if not read_n4_hob_walter] What did Walter say over his ale? -> n4_walter
+* An ale, if you would. [drink] -> ale
+
+# Hob hears everything said over the ale (design doc, "The lane"), and Walter supplies the henbane ("Outside the gate").
+== n4_walter [claim n4_hob_walter hiding]
+Hob {calm, look away}: Walter? What he always says. Relics, and the price of them.
+* [press] You hear everything said over that counter, Hob. What else? -> n4_walter_pressed
+* [believe] Then it's nothing. -> n4_walter_believed
+
+== n4_walter_pressed
+(He looks up and down the lane before he answers.)
+Hob {wary}: He said your abbey's his best custom. Better than every shrine in Kent.
+Hob {grave}: I asked him what for. He laughed, and paid, and went over to you.
+-> n4_ask
+
+== n4_walter_believed
+Hob {calm}: Nothing. Like I said.
+-> n4_ask
+
+== n4_heard [set lane_hob_n4_heard]
+Hob {grave}: That your abbot has the house fasting against the devil. Kit had it from your kitchen door.
+Hob {weary}: And that another pilgrim went in at your gate and hasn't come out. But they always say that.
+-> n4_ask
+
+# Night 5: about night 4. Edwin; the brother in the fog.
+== n5 [set lane_hob_5]
+-> n5_edwin [if died_edwin]
+-> n5_more
+
+== n5_edwin
+Hob {grave}: They're saying a young one of yours was found in the bone house. Laid out among the bones.
+-> n5_more
+
+== n5_more
+-> n5_fog [if died_choira]
+-> n5_plain [if not died_edwin]
+-> n5_ask
+
+== n5_fog
+Hob {angry}: And another in your cloister, in the fog. I've stopped counting, brother. Has your abbot?
+-> n5_ask
+
+== n5_plain
+Hob {grave}: The fog's lifted. The lane's waiting to hear what it left behind.
+-> n5_ask
+
+== n5_ask
+* [if not lane_hob_n5_place] What would you do, in my place? -> n5_place
+* An ale, if you would. [drink] -> ale
+
+== n5_place [set lane_hob_n5_place]
+Hob {grave}: In your place? I'd walk out of that gate and keep walking till I smelled the sea.
+(He looks at you a while.)
+Hob {sad}: But you won't. Your sort never do.
+-> n5_ask
+
+# Night 6: about night 5. Roger's sergeant, left outside the gate or let in.
+== n6 [set lane_hob_6]
+-> n6_dead [if died_sergeant]
+-> n6_lived [if n5_sergeant=admitted]
+-> n6_snow
+
+== n6_dead
+Hob {grave}: The bailiff's man who stood at your gate all night. They found his lantern out and him in the lane.
+Hob {angry, jaw}: He was calling to you, brother. I heard him from my bed. Why didn't you let him in?
+-> n6_snow
+
+== n6_lived
+Hob {grave}: Roger's man was in at first light, white as milk. Says you let him sit inside your gate all night.
+Hob {afraid}: Says something walked the lane past your grille, and he didn't breathe till it had gone.
+-> n6_snow
+
+== n6_snow
+Hob {afraid}: Snow tonight. I'm barring the Keys early, bell or no bell.
+-> n6_ask
+
+== n6_ask
+* [if not lane_hob_n6_pray] Pray for us tonight. -> n6_pray
+* An ale, if you would. [drink] -> ale
+
+== n6_pray [set lane_hob_n6_pray]
+Hob {weary}: I gave up praying, brother. It never paid.
+Hob {sad}: But Agnes hasn't. I'll tell her to say your name.
+-> n6_ask
+
+== leave
+Hob {grave}: Bell's at nine, brother.

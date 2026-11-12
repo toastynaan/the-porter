@@ -1,0 +1,21 @@
+@id n1_choirc
+# DRAFT
+# Brother Piers, of the choir, on the east walk at dusk (night 1), watching the rain fill the garden. Background.
+== start
+(A brother of the choir on the east walk, watching the rain drown the garden beds.)
+Piers {amused}: They say you're from the country. You'll find London's rain is the same, only dirtier.
+-> topics
+
+== again
+Piers {weary}: Still raining. It always is, in November.
+-> topics
+
+== topics
+* [if not n1_choirc_house] What's the house like, brother? -> house
+
+== house [set n1_choirc_house]
+Piers {sad}: Quiet. We were thirty once, the old brothers say. Now look at us.
+-> end
+
+== leave
+Piers {calm}: Keep dry, porter.

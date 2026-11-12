@@ -138,13 +138,21 @@ def main():
     files = []
     for r in roots:
         r = os.path.join(ROOT, r)
-        files += glob.glob(os.path.join(r, "**/*.tres"), recursive=True) + glob.glob(os.path.join(r, "**/*.tscn"), recursive=True)
+        files += glob.glob(os.path.join(r, "**/*.talk"), recursive=True) + glob.glob(os.path.join(r, "**/*.tres"), recursive=True) \
+            + glob.glob(os.path.join(r, "**/*.tscn"), recursive=True)
     bad = False
     total_missing = 0
     for f in sorted(set(files)):
         text = open(f, encoding="utf-8").read()
         rel = os.path.relpath(f, ROOT)
-        if 'script_class="Conversation"' in text:
+        if f.endswith(".talk"):
+            lines = text.split("\n")
+            first = 2 if lines and lines[0].startswith("@id ") else 1
+            body = "\n".join(lines[1:]) if first == 2 else text
+            errors, missing = lint_conversation(rel, body, first)
+            if first == 1:
+                errors.append("1: a .talk file starts with its id: @id <id>")
+        elif 'script_class="Conversation"' in text:
             m = re.search(r'text = "(.*)"\s*$', text, re.S)
             body = m.group(1).replace('\\"', '"') if m else ""
             first = text.count("\n", 0, m.start(1)) + 1 if m else 1
