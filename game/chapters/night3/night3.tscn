@@ -235,7 +235,7 @@ blockers = NodePath("../../Stalk/Blockers")
 thomas = NodePath("../../Brothers/Thomas")
 rescue_porter = NodePath("../../Marks/RescuePorter")
 rescue_thomas = NodePath("../../Marks/RescueThomas")
-bones_lines = PackedStringArray("(Your hand closes on something in the ash. Smooth, curved, with teeth in it. A jaw.)")
+bones_lines = PackedStringArray("(Your hand closes on something in the ash. Smooth, curved, with teeth in it. A jaw.)", "(Beside it, a lump of pewter: a pilgrim's badge, half melted.)")
 rescue_lines = PackedStringArray("(A hand takes your collar and drags you sideways through a door, into the smell of herbs.)", "Thomas {grave}: Down. Behind the bed. Not a sound.", "Thomas {warm, still}: (When the steps have gone.) It's gone. Breathe, Alric. I heard you running. Whatever it was, it's gone.")
 caught_lines = PackedStringArray("(You wake in the infirmary. Thomas is bending over you with a cup.)", "Thomas {warm}: Lie still. I found you in the yard by the bakehouse. Drink this.")
 

@@ -4,16 +4,29 @@ class_name Reading
 ## note he writes about it. Nothing on the screen says whether he was right.
 
 const STANCES := ["believe", "press", "confront"]
-const TRUTHS := ["true", "hiding", "lie"]
+## true: they mean it, and it's so. hiding: true, and they hold something
+## back. lie: it isn't so, and they know it. mistaken: it isn't so, and they
+## believe it (the prior's accusation). misleading: true words said to lead
+## him wrong (Thomas pointing at innocent men).
+const TRUTHS := ["true", "hiding", "lie", "mistaken", "misleading"]
 
 ## What each read does to trust, by [truth][stance]. *(mine)*
 const TRUST := {
 	"true": {"believe": 2, "press": -2, "confront": -10},
 	"hiding": {"believe": 0, "press": 1, "confront": -5},
 	"lie": {"believe": 0, "press": 0, "confront": 0},
+	"mistaken": {"believe": 0, "press": 1, "confront": 2},
+	"misleading": {"believe": 0, "press": 0, "confront": 0},
 }
-## The right stance for each truth.
-const RIGHT := {"true": "believe", "hiding": "press", "lie": "confront"}
+## The right stances for each truth. A confrontation is only ever offered
+## with its proof, so where it's listed it is a right read.
+const RIGHT := {
+	"true": ["believe"],
+	"hiding": ["press"],
+	"lie": ["confront"],
+	"mistaken": ["press", "confront"],
+	"misleading": ["press", "confront"],
+}
 ## Confronting one of the cult with the truth: they know you know. *(mine)*
 const CULT_SUSPICION := 10
 
@@ -29,7 +42,7 @@ const VERDICT := {
 ## by `who` in `line`: sets read_<id>, changes trust and Suspicion, and
 ## writes his note. True if he read them right.
 static func read(id: StringName, truth: String, stance: String, who: StringName, line: String) -> bool:
-	var right: bool = RIGHT.get(truth, "") == stance
+	var right := is_right(truth, stance)
 	GameState.set_flag(StringName("read_%s" % id), StringName(_past(stance)))
 	if right:
 		GameState.set_flag(StringName("read_%s_right" % id))
@@ -37,12 +50,18 @@ static func read(id: StringName, truth: String, stance: String, who: StringName,
 		var change: int = TRUST.get(truth, {}).get(stance, 0)
 		if change != 0:
 			GameState.change_trust(who, change)
-		if stance == "confront" and truth != "lie":
+		# Accusing someone who told the truth: they remember it.
+		if stance == "confront" and truth in ["true", "hiding"]:
 			GameState.set_flag(StringName("wronged_%s" % who))
-		if stance == "confront" and truth == "lie" and Faces.CULT.has(who):
+		# Showing one of the cult you see through them.
+		if stance == "confront" and truth in ["lie", "misleading"] and Faces.CULT.has(who):
 			GameState.raise_suspicion(CULT_SUSPICION)
 	GameState.note(StringName("read_%s" % id), note_text(who, line, stance))
 	return right
+
+
+static func is_right(truth: String, stance: String) -> bool:
+	return (RIGHT.get(truth, []) as Array).has(stance)
 
 
 ## His note: what they said, and what he made of it. Never whether he was right.

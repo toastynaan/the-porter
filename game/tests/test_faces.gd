@@ -2,7 +2,8 @@ extends Node
 ## Faces and reading people (docs/systems/faces.md):
 ## - The script: "Name {mood, tells}: words" reads as a face and words; an
 ##   unknown mood or tell, a stance with no claim, or a bad truth is an error.
-## - Claims and stances: a confrontation is offered only with its proof in
+## - Claims and stances (true, hiding, lie, mistaken, misleading): a
+##   confrontation is offered only with its proof in
 ##   the notes; each read sets read_<claim>, changes trust (and Suspicion
 ##   for the cult rightly confronted), and writes Alric's note, which never
 ##   says whether he was right.
@@ -101,6 +102,17 @@ func _run() -> void:
 	suspicion = GameState.suspicion
 	Reading.read(&"r4", "hiding", "press", &"simon", "I didn't see anything.")
 	_check(GameState.suspicion == suspicion and GameState.has_flag(&"read_r4_right"), "pressing someone who holds back is right")
+	before = GameState.trust_of(&"hugh")
+	_check(Reading.read(&"r5", "mistaken", "press", &"hugh", "It came in with you.") and GameState.trust_of(&"hugh") == before + 1
+		and not Reading.is_right("mistaken", "believe") and Reading.is_right("mistaken", "confront"),
+		"mistaken (he believes it, and it isn't so): pressing or proof is right, believing is wrong")
+	suspicion = GameState.suspicion
+	_check(Reading.read(&"r6", "misleading", "press", &"thomas", "He was up the stair first.") and GameState.suspicion == suspicion
+		and not Reading.is_right("misleading", "believe"),
+		"misleading (true words meant to lead him wrong): pressing is right, and costs nothing")
+	Reading.read(&"r7", "misleading", "confront", &"thomas", "Quiet men keep things.")
+	_check(GameState.suspicion == suspicion + Reading.CULT_SUSPICION and not GameState.has_flag(&"wronged_thomas"),
+		"confronting the cult's misleading words: they know he knows; nobody's wronged")
 	var note := _note_text(&"read_r3")
 	var note_wrong := _note_text(&"read_r2")
 	_check(note.begins_with("Brother Thomas says, \"I sat with him till Lauds.\"") and note.contains("I don't believe him")

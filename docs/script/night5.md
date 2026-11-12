@@ -293,12 +293,12 @@ Moods through the talk: sad → weary → sad → afraid → weary → grave →
 
 [`hugh.tres`](../../game/chapters/night5/dialogue/hugh.tres) · baseline *cold*, habit *jaw* · starts at trust -20
 
-Moods through the talk: cold → grave → cold → grave → cold → grave → cold
+Moods through the talk: cold → grave → cold → grave → cold → grave → cold → grave → cold
 
 > Prior Hugh at dusk, on the north walk (night 5, clear and cold). Grim; he means to see it ended tonight.
 > (He arrests the porter at dawn. Nothing here says so.) He knows what happened in the chapter house. The blood on his
 > sleeve (prior_sleeve): Wulfric's, and the porter was there first. Telling him what you've seen: Suspicion +10 (Ranulf overhears).
-> Claims: n5_hugh_porter (lie): whatever is killing his brothers came in with the porter.
+> Claims: n5_hugh_porter (mistaken): whatever is killing his brothers came in with the porter.
 
 ### `start`
 
@@ -377,11 +377,11 @@ Moods through the talk: cold → grave → cold → grave → cold → grave →
 
 - **Hugh** *cold, jaw*: Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you.
 
-> **Claim `n5_hugh_porter`: a lie.** The last line is the claim.
+> **Claim `n5_hugh_porter`: mistaken: they believe it, and it isn't so.** The last line is the claim.
 
 1. God help me, Father Prior. Perhaps it did. → `porter_believed` · **believe** · wrong
-2. Then why am I not under lock, Father Prior? → `porter_pressed` · **press** · wrong
-3. The demon in the fog lost its mask, Father Prior. Under it was Brother Osric. → `porter_broken` · **confront** with *osric_mask* · **right**
+2. Then why am I not under lock, Father Prior? → `porter_pressed` · **press** · **right**, trust +1
+3. The demon in the fog lost its mask, Father Prior. Under it was Brother Osric. → `porter_broken` · **confront** with *osric_mask* · **right**, trust +2
 
 ### `porter_believed`
 
@@ -391,7 +391,8 @@ Moods through the talk: cold → grave → cold → grave → cold → grave →
 
 ### `porter_pressed`
 
-- **Hugh** *cold, jaw*: Because one man didn't do all this, and I want every one of them. Go to your gate.
+- **Hugh** *grave, look down*: (He's quiet a moment.) You'd be under lock, if I were sure of it. I'm not.
+- **Hugh** *cold, jaw*: One man didn't do all this, and I want every one of them. Go to your gate.
 
 - → `topics`
 

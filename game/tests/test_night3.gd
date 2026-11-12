@@ -207,6 +207,9 @@ func _run() -> void:
 	p.hide_in(oven)
 	await _pilot.until(func() -> bool: return GameState.has_flag(&"n3_body3"), 4.0)
 	_check(GameState.has_flag(&"n3_body3") and _said("(Your hand closes on something in the ash. Smooth, curved, with teeth in it. A jaw.)"), "in the oven, a jaw in the ash (body 3)")
+	await _pilot.until(func() -> bool: return _said("(Beside it, a lump of pewter: a pilgrim's badge, half melted.)"), 6.0)
+	_check(GameState.has_note(&"oven_badge") and _said("(Beside it, a lump of pewter: a pilgrim's badge, half melted.)"),
+		"beside the jaw a pilgrim's badge, melted, and he writes it down")
 	var checked := []
 	oven.checked.connect(func(found: bool) -> void: checked.append(found))
 	# He holds his breath once the hunter is at the oven, not while he is
@@ -263,6 +266,24 @@ func _run() -> void:
 		"he sleeps through the day; Dose falls, not to zero (%.1f to %.1f)" % [dose, GameState.dose])
 	await _pilot.until(func() -> bool: return _pilot.director().current == null, 3.0)
 	_check(_pilot.director().beats_run == ORDER, "every beat, in order: %s" % [_pilot.director().beats_run])
+
+	# The candle ring in the crypt, lit for the souls so far: looked at up
+	# close, he writes it down (proof he can confront someone with).
+	var ring: RiteCandles = night.get_node(^"RiteCandles")
+	var lit: Candle = null
+	for c in ring.get_children():
+		if c is Candle and (c as Candle).lit:
+			lit = c
+	for i in range(GameState.notes.size() - 1, -1, -1):
+		if GameState.notes[i].get("id") == &"crypt_candles":
+			GameState.notes.remove_at(i)
+	if lit:
+		p.place(_pilot.mark("CryptFoot"), 0.0)
+		await _pilot.seconds(0.2)
+		_pilot.face(lit.global_position + Vector3.UP * 0.2)
+	await _pilot.until(func() -> bool: return GameState.has_note(&"crypt_candles"), 2.0)
+	_check(lit != null and ring.lit_count() >= 1 and GameState.has_note(&"crypt_candles"),
+		"looking at the lit candle ring in the crypt (%d lit), he writes it down" % ring.lit_count())
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE))
 	Talk.auto_choice = Callable()

@@ -100,7 +100,9 @@ Thomas {warm, still}: I was with Anselm all night. He was very bad.
 **Truth** is one of:
 - `true`: they mean it, and it's so.
 - `hiding`: true as far as it goes, and they're holding something back.
-- `lie`: it isn't so.
+- `lie`: it isn't so, and they know it.
+- `mistaken`: it isn't so, and they believe it. The prior accusing the porter: his face is his honest one, and he's wrong.
+- `misleading`: true words, said to lead Alric wrong. Thomas pointing at the prior and at Simon: what he says happened, and he says it so Alric looks the wrong way.
 
 **Stances** are answers marked `[believe]`, `[press]` or `[confront <note>]`. A confront answer names the note in Alric's ledger that proves it, and is offered only if he has that note. A claim's answers can mix stances with ordinary answers. Each stance leads where its writer sends it; the game does the rest:
 
@@ -109,6 +111,8 @@ Thomas {warm, still}: I was with Anselm all night. He was very bad.
 | `true` | Right. Trust +2 | Wrong: they close up. Trust −2 | Wrong: trust −10, and they remember it |
 | `hiding` | Wrong: you never hear the rest | Right: they tell the rest. Trust +1 | Too hard: they close up. Trust −5 |
 | `lie` | Wrong: you never hear the truth | Half: they dig in and close up | Right: the truth, and a note. If they're in the cult, Suspicion +10 *(mine)*: now they know you know |
+| `mistaken` | Wrong: you take their error for your own | Right: they think again. Trust +1 | Right: they're shown. Trust +2 |
+| `misleading` | Wrong: you go where they point | Right: you aren't led. They dig in | Right: their aim is plain. If they're in the cult, Suspicion +10 |
 
 *(The numbers are mine.)* "Close up" is written by the writer: the point a wrong stance leads to ends the topic, and the claim's flags keep it shut for the night.
 

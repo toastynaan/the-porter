@@ -760,7 +760,7 @@ Moods through the talk: warm → grave → warm → grave → warm → sad → g
 > Brother Simon out at night: he says it first (n4_thomas_simon) unless the porter has already heard it from him tonight
 > (the dusk scene should set the same flag), then comes back to it. True, and it costs him nothing: he sends Simon out.
 > Telling him about the crypt is reporting it the safe way (trust +5). Edwin poured out his sleeping draught; Thomas watched.
-> Claims: n4_thomas_keeps (lie): Simon is a quiet man who keeps things. The men he points at are innocent, and he sent Simon out himself.
+> Claims: n4_thomas_keeps (misleading): Simon does keep things, which is so; Thomas sent him out himself and says it to point at an innocent man. Pressing is the right read.
 
 ### `start`
 
@@ -813,10 +813,10 @@ Moods through the talk: warm → grave → warm → grave → warm → sad → g
 - **Thomas** *grave*: On his knees on the flags by the chapter house, his lantern hooded. At an hour nobody prays.
 - **Thomas** *warm, still*: He's a quiet one, Simon. Quiet men keep things.
 
-> **Claim `n4_thomas_keeps`: a lie.** The last line is the claim.
+> **Claim `n4_thomas_keeps`: misleading: true words, said to lead him wrong.** The last line is the claim.
 
 1. I'll keep an eye on him, brother. → `simon_believed` · **believe** · wrong
-2. Simon? He sings, and keeps his head down. What would he keep? → `simon_pressed` · **press** · wrong
+2. Simon? He sings, and keeps his head down. What would he keep? → `simon_pressed` · **press** · **right**
 
 ### `simon_believed`
 

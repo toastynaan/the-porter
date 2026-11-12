@@ -26,7 +26,7 @@ def _consts():
 
 
 MOODS, TELLS, CLUES = _consts()
-TRUTHS = {"true", "hiding", "lie"}
+TRUTHS = {"true", "hiding", "lie", "mistaken", "misleading"}
 SPOKEN = re.compile(r"^([A-Z][A-Za-z ]*?)\s*(\{[^}]*\})?\s*:\s")
 
 
@@ -65,7 +65,7 @@ def lint_conversation(path, text, first=1):
             for t in current["tags"]:
                 w = t.split()
                 if w[0] == "claim" and (len(w) != 3 or w[2] not in TRUTHS):
-                    errors.append("%d: bad claim [%s] (claim <id> true|hiding|lie)" % (n, t))
+                    errors.append("%d: bad claim [%s] (claim <id> true|hiding|lie|mistaken|misleading)" % (n, t))
             continue
         if current is None:
             errors.append("%d: a line before any point" % n)

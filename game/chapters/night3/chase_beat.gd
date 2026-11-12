@@ -22,7 +22,7 @@ const BONES_AFTER := 1.5
 @export var thomas: Brother
 @export var rescue_porter: Marker3D
 @export var rescue_thomas: Marker3D
-@export var bones_lines := PackedStringArray(["(Your hand closes on something in the ash. A jaw.)"])
+@export var bones_lines := PackedStringArray(["(Your hand closes on something in the ash. A jaw.)", "(Beside it, a pilgrim's badge, half melted.)"])
 @export var rescue_lines := PackedStringArray(["Thomas {grave}: (Pulls you into the infirmary and hides you.)"])
 @export var caught_lines := PackedStringArray(["Thomas {warm}: (Over you as you wake.)"])
 
@@ -78,6 +78,9 @@ func run() -> void:
 
 func _bones() -> void:
 	GameState.set_flag(GameState.tonight("body3"))
+	# Beside the jaw, a pilgrim's badge melted in the ash (design doc, Bodies,
+	# night 3): its name was torn from his ledger.
+	GameState.note(&"oven_badge")
 	if AudioOut.enabled():
 		_audio.global_position = oven.view.global_position
 		_audio.play()

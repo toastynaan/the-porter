@@ -93,7 +93,7 @@ Osric: Come hungry!
 | `[if trust 30]`, `[if not trust 30]` | Offered only if the one he's talking to trusts him that much (or not) |
 | `[warn]` | Warns the one he's talking to (`docs/systems/abbey.md`, "Warnings") |
 | `[follow]`, `[wait]` | The one he's talking to follows him, or waits (`Companion`) |
-| `[claim id true]`, `[claim id hiding]`, `[claim id lie]` | On a point: its last line is a claim to weigh (`docs/systems/faces.md`, "Claims and stances") |
+| `[claim id true]`, `hiding`, `lie`, `mistaken` or `misleading` | On a point: its last line is a claim to weigh (`docs/systems/faces.md`, "Claims and stances") |
 | `[believe]`, `[press]`, `[confront note]` | On an answer to a claim: Alric's stance, shown small beside it. A confrontation is offered only with that note in his ledger |
 
 **Greetings follow trust:** a talk starts at `start_warm` if they trust him 30 or more, `start_cold` below 0, else `start`; the same for `again_warm`, `again_cold` and `again`, where those points exist.

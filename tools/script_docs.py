@@ -18,10 +18,16 @@ OUT = os.path.join(ROOT, "docs/script")
 CHAPTERS = ["night0", "day1", "night1", "night2", "night3", "night4", "night5", "night6"]
 
 # The reading table (game/talk/reading.gd).
-RIGHT = {"true": "believe", "hiding": "press", "lie": "confront"}
+RIGHT = {"true": ["believe"], "hiding": ["press"], "lie": ["confront"],
+         "mistaken": ["press", "confront"], "misleading": ["press", "confront"]}
 TRUST = {"true": {"believe": 2, "press": -2, "confront": -10},
          "hiding": {"believe": 0, "press": 1, "confront": -5},
-         "lie": {"believe": 0, "press": 0, "confront": 0}}
+         "lie": {"believe": 0, "press": 0, "confront": 0},
+         "mistaken": {"believe": 0, "press": 1, "confront": 2},
+         "misleading": {"believe": 0, "press": 0, "confront": 0}}
+TRUTH_WORDS = {"true": "true", "hiding": "true, but holding back", "lie": "a lie",
+               "mistaken": "mistaken: they believe it, and it isn't so",
+               "misleading": "misleading: true words, said to lead him wrong"}
 CULT_SUSPICION = 10
 
 
@@ -197,14 +203,14 @@ def claim_of(tags):
 
 
 def read_outcome(truth, stance, who):
-    right = RIGHT.get(truth) == stance
+    right = stance in RIGHT.get(truth, [])
     bits = ["**right**" if right else "wrong"]
     n = TRUST.get(truth, {}).get(stance, 0)
     if n:
         bits.append("trust %+d" % n)
-    if stance == "confront" and truth != "lie":
+    if stance == "confront" and truth in ("true", "hiding"):
         bits.append("they remember it (`wronged_%s`)" % who)
-    if stance == "confront" and truth == "lie" and who in CULT:
+    if stance == "confront" and truth in ("lie", "misleading") and who in CULT:
         bits.append("**Suspicion +%d**: the cult knows he knows" % CULT_SUSPICION)
     return ", ".join(bits)
 
@@ -273,7 +279,7 @@ def write_conversation(path, who, chapter, stats):
         if claim:
             cid, truth = claim
             md.append("")
-            md.append("> **Claim `%s`: %s.** The last line is the claim." % (cid, {"true": "true", "hiding": "true, but holding back", "lie": "a lie"}.get(truth, truth)))
+            md.append("> **Claim `%s`: %s.** The last line is the claim." % (cid, TRUTH_WORDS.get(truth, truth)))
             stats["claims"].append({"chapter": chapter, "who": who, "id": cid, "truth": truth,
                                     "line": p["lines"][-1]["text"] if p["lines"] else "", "file": path})
         if p["answers"] or p["jumps"]:
@@ -424,6 +430,8 @@ def write_index(files, stats):
     md.append("| true | **right**, trust +2 | wrong, trust −2, they close up | wrong, trust −10, they remember |")
     md.append("| hiding | wrong: he never hears the rest | **right**, trust +1, they tell the rest | too hard, trust −5, they close up |")
     md.append("| a lie | wrong: he never hears the truth | half: they dig in and close up | **right**: the truth; the cult: Suspicion +10 |")
+    md.append("| mistaken | wrong: he takes their error for his own | **right**, trust +1: they think again | **right**, trust +2: they're shown |")
+    md.append("| misleading | wrong: he goes where they point | **right**: he isn't led | **right**; the cult: Suspicion +10 |")
     md.append("")
     md.append("Moods: %s. Tells: %s." % (", ".join("*%s*" % m for m in MOODS), ", ".join("*%s*" % t for t in TELLS)))
     md.append("")

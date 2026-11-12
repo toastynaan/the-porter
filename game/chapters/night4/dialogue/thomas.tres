@@ -11,7 +11,7 @@ text = "# DRAFT
 # Brother Simon out at night: he says it first (n4_thomas_simon) unless the porter has already heard it from him tonight
 # (the dusk scene should set the same flag), then comes back to it. True, and it costs him nothing: he sends Simon out.
 # Telling him about the crypt is reporting it the safe way (trust +5). Edwin poured out his sleeping draught; Thomas watched.
-# Claims: n4_thomas_keeps (lie): Simon is a quiet man who keeps things. The men he points at are innocent, and he sent Simon out himself.
+# Claims: n4_thomas_keeps (misleading): Simon does keep things, which is so; Thomas sent him out himself and says it to point at an innocent man. Pressing is the right read.
 == start
 (Fog presses at the infirmary window. Thomas is at his mortar, humming, as if it weren't there.)
 Thomas {warm}: Alric. Come in, and shut the door on that. It gets into the chest.
@@ -45,7 +45,7 @@ Thomas {warm}: Back again? There's no supper to be late for tonight.
 * [if died_crypt_pilgrim] [if not n4_thomas_crypt] I saw a bound man killed at the altar in the crypt. -> crypt
 * [if not n4_thomas_edwin] How is Edwin? -> edwin
 
-== simon_ask [set n4_thomas_simon_ask] [claim n4_thomas_keeps lie]
+== simon_ask [set n4_thomas_simon_ask] [claim n4_thomas_keeps misleading]
 Thomas {grave}: On his knees on the flags by the chapter house, his lantern hooded. At an hour nobody prays.
 Thomas {warm, still}: He's a quiet one, Simon. Quiet men keep things.
 * [believe] I'll keep an eye on him, brother. -> simon_believed

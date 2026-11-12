@@ -116,7 +116,7 @@ No number is ever shown, but each has a tell in the world, so the player can lea
 
 | Number | How you can tell |
 | --- | --- |
-| The rite's count | The crypt: the cult lights a candle there for each soul. Go down and count them. The book's page (night 3) says what they're for |
+| The rite's count | The crypt: the cult lights a candle there for each soul. Go down and count them. Looking at the lit ring from within 6 m *(mine)* writes the `crypt_candles` note. The book's page (night 3) says what they're for |
 | Suspicion | 30+: talk stops when you walk into a room, and someone is always watching you at supper. 60+: doors you used to pass are locked, and one hunter waits at the gatehouse. 85+: the brothers won't speak to you at all |
 | Trust | Each person greets you warmly, plainly or coldly; at 30+ they tell you more; low, they won't follow you |
 | Dose | The image itself (Look and Feel) |

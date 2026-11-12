@@ -30,6 +30,8 @@ Every conversation in the game, line by line, with each speaker's face and what 
 | true | **right**, trust +2 | wrong, trust −2, they close up | wrong, trust −10, they remember |
 | hiding | wrong: he never hears the rest | **right**, trust +1, they tell the rest | too hard, trust −5, they close up |
 | a lie | wrong: he never hears the truth | half: they dig in and close up | **right**: the truth; the cult: Suspicion +10 |
+| mistaken | wrong: he takes their error for his own | **right**, trust +1: they think again | **right**, trust +2: they're shown |
+| misleading | wrong: he goes where they point | **right**: he isn't led | **right**; the cult: Suspicion +10 |
 
 Moods: *calm*, *warm*, *glad*, *amused*, *grave*, *sad*, *weary*, *afraid*, *wary*, *angry*, *cold*, *ashamed*, *pleading*, *pained*, *drunk*, *blank*. Tells: *glance*, *look down*, *look away*, *swallow*, *blink*, *lip*, *jaw*, *brow*, *smile*, *still*, *nod*, *shake*, *flinch*.
 
@@ -47,11 +49,11 @@ Moods: *calm*, *warm*, *glad*, *amused*, *grave*, *sad*, *weary*, *afraid*, *war
 | [night2](night2.md) | Brother Thomas | `n2_thomas_drowned` | lie | I pressed the pond out of his chest with my own hands, brother. He drowned. Drink and the dark, nothing more. |
 | [night3](night3.md) | Prior Hugh | `n3_hugh_night` | true | I want to know who walks this house at night. Since you came to that gate, a brother has hanged in our tower. |
 | [night3](night3.md) | Brother Osric | `n3_osric_page` | lie | Keep your cell door shut, porter. The cats get in. A cat will eat anything. |
-| [night3](night3.md) | Brother Thomas | `n3_thomas_prior` | lie | Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell. |
+| [night3](night3.md) | Brother Thomas | `n3_thomas_prior` | misleading | Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell. |
 | [night4](night4.md) | Brother Ranulf | `n4_ranulf_crypt` | lie | If you see a light below, porter, it's mine. I keep candles burning for the dead. |
 | [night4](night4.md) | Brother Simon | `n4_simon_night` | hiding | Who says I go anywhere? I can't sleep. I walk. Is that a sin now, with all the rest? |
-| [night4](night4.md) | Brother Thomas | `n4_thomas_keeps` | lie | He's a quiet one, Simon. Quiet men keep things. |
-| [night5](night5.md) | Prior Hugh | `n5_hugh_porter` | lie | Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you. |
+| [night4](night4.md) | Brother Thomas | `n4_thomas_keeps` | misleading | He's a quiet one, Simon. Quiet men keep things. |
+| [night5](night5.md) | Prior Hugh | `n5_hugh_porter` | mistaken | Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you. |
 | [night5](night5.md) | Brother Simon | `n5_simon_sent` | true | Brother Thomas. He said it was for the good of the house. He said the abbot mustn't see it. |
 | [night5](night5.md) | Brother Thomas | `n5_thomas_attack` | lie | The one I saw was tall, Alric. As tall as the prior. I'll say no more than that, God forgive me if I'm wrong. |
 | [night6](night6.md) | Prior Hugh | `n6_hugh_lantern` | true | I'll be about the court with a light. If a lantern comes looking for you tonight, it may be mine. Look before you run. |
@@ -89,11 +91,11 @@ Mostly, by chapter: night3 *sad*.
 
 Baseline *weary*.
 
-Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *afraid* · night5 *weary* · night6 *weary*.
+Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *afraid* · night5 *sad* · night6 *weary*.
 
 ### Agnes
 
-Mostly, by chapter: night0 *warm* · lane *warm*.
+Mostly, by chapter: night0 *warm* · lane *sad*.
 
 ### Brother Aldo
 
@@ -105,7 +107,7 @@ Mostly, by chapter: night1 *amused* · night2 *wary* · night4 *weary* · night5
 
 Baseline *weary*. habit *lip* (means nothing from them). blind: read the mouth and throat. starts at trust 20.
 
-Mostly, by chapter: night1 *afraid* · night2 *weary* · night3 *weary* · night4 *weary* · night5 *afraid*.
+Mostly, by chapter: night1 *afraid* · night2 *afraid* · night3 *weary* · night4 *afraid* · night5 *afraid*.
 
 - Claim [`n2_anselm_guests`](night2.md) (hiding): "I don't see anything."
 
@@ -113,13 +115,13 @@ Mostly, by chapter: night1 *afraid* · night2 *weary* · night3 *weary* · night
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *wary*.
+Mostly, by chapter: night1 *afraid*.
 
 ### Brother Edwin
 
 Baseline *warm*. habit *brow* (means nothing from them). starts at trust 50.
 
-Mostly, by chapter: night1 *glad* · night2 *amused* · night3 *warm* · night4 *afraid*.
+Mostly, by chapter: night1 *glad* · night2 *amused* · night3 *glad* · night4 *afraid*.
 
 ### Brother Osric
 
@@ -135,7 +137,7 @@ Mostly, by chapter: night1 *glad* · night2 *glad* · night3 *glad* · night4 *g
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *calm* · night2 *weary* · night4 *grave* · night5 *grave*.
+Mostly, by chapter: night1 *sad* · night2 *weary* · night4 *grave* · night5 *calm*.
 
 ### Brother Ranulf
 
@@ -162,15 +164,15 @@ Mostly, by chapter: night1 *warm* · night2 *warm* · night3 *warm* · night4 *w
 
 - Claim [`n1_thomas_beast`](night1.md) (lie): "A beast, brother. I heard it from this bench, kicking and bawling. Nobody died in our court."
 - Claim [`n2_thomas_drowned`](night2.md) (lie): "I pressed the pond out of his chest with my own hands, brother. He drowned. Drink and the dark, nothing more."
-- Claim [`n3_thomas_prior`](night3.md) (lie): "Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell."
-- Claim [`n4_thomas_keeps`](night4.md) (lie): "He's a quiet one, Simon. Quiet men keep things."
+- Claim [`n3_thomas_prior`](night3.md) (misleading): "Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell."
+- Claim [`n4_thomas_keeps`](night4.md) (misleading): "He's a quiet one, Simon. Quiet men keep things."
 - Claim [`n5_thomas_attack`](night5.md) (lie): "The one I saw was tall, Alric. As tall as the prior. I'll say no more than that, God forgive me if I'm wrong."
 
 ### Brother Wulfric
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *sad*.
+Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *calm*.
 
 ### Cole
 
@@ -186,7 +188,7 @@ Mostly, by chapter: night1 *blank*.
 
 ### Gib the watchman
 
-Mostly, by chapter: night0 *grave* · lane *grave*.
+Mostly, by chapter: night0 *grave* · lane *afraid*.
 
 ### Hob
 
@@ -216,7 +218,7 @@ Mostly, by chapter: night0 *wary* · night3 *wary* · lane *afraid*.
 
 ### Margery
 
-Mostly, by chapter: night0 *afraid* · night3 *wary* · lane *afraid*.
+Mostly, by chapter: night0 *afraid* · night3 *afraid* · lane *afraid*.
 
 ### Merchant
 
@@ -234,7 +236,7 @@ Mostly, by chapter: night1 *cold* · night2 *cold* · night3 *cold* · night4 *c
 
 - Claim [`n1_hugh_gate`](night1.md) (true): "Everything that comes in at that gate matters to me. You came in at it."
 - Claim [`n3_hugh_night`](night3.md) (true): "I want to know who walks this house at night. Since you came to that gate, a brother has hanged in our tower."
-- Claim [`n5_hugh_porter`](night5.md) (lie): "Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you."
+- Claim [`n5_hugh_porter`](night5.md) (mistaken): "Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you."
 - Claim [`n6_hugh_lantern`](night6.md) (true): "I'll be about the court with a light. If a lantern comes looking for you tonight, it may be mine. Look before you run."
 
 ### Ralph the chandler

@@ -9,7 +9,7 @@ text = "# DRAFT
 # Prior Hugh at dusk, on the north walk (night 5, clear and cold). Grim; he means to see it ended tonight.
 # (He arrests the porter at dawn. Nothing here says so.) He knows what happened in the chapter house. The blood on his
 # sleeve (prior_sleeve): Wulfric's, and the porter was there first. Telling him what you've seen: Suspicion +10 (Ranulf overhears).
-# Claims: n5_hugh_porter (lie): whatever is killing his brothers came in with the porter.
+# Claims: n5_hugh_porter (mistaken): whatever is killing his brothers came in with the porter.
 == start
 (The prior is on the north walk, his tablet shut in his hand for once. He looks as if he hasn't slept.)
 Hugh {cold}: Porter.
@@ -62,9 +62,9 @@ Hugh {grave}: What a prior is for. Find who has been killing my brothers, and se
 Hugh {cold}: Keep to your gate tonight, porter. Keep to it, and I'll know where to find you.
 -> n5_hugh_porter
 
-# He suspects the porter (design doc, cast table), and means it: his face is his honest one. But it isn't so: a lie.
+# He suspects the porter (design doc, cast table), and means it: his face is his honest one. But it isn't so: mistaken. Pressing him or showing him proof is the right read.
 # Right is to show him better (docs/systems/mechanics.md, \"The payoff\": he believes the porter if shown enough).
-== n5_hugh_porter [claim n5_hugh_porter lie]
+== n5_hugh_porter [claim n5_hugh_porter mistaken]
 Hugh {cold, jaw}: Every death in this house since you came to that gate, and the porter there before me. Whatever is killing my brothers, it came in with you.
 * [believe] God help me, Father Prior. Perhaps it did. -> porter_believed
 * [press] Then why am I not under lock, Father Prior? -> porter_pressed
@@ -75,7 +75,8 @@ Hugh {cold}: Then pray on it, porter. You've until Lauds.
 -> topics
 
 == porter_pressed
-Hugh {cold, jaw}: Because one man didn't do all this, and I want every one of them. Go to your gate.
+Hugh {grave, look down}: (He's quiet a moment.) You'd be under lock, if I were sure of it. I'm not.
+Hugh {cold, jaw}: One man didn't do all this, and I want every one of them. Go to your gate.
 -> topics
 
 # Telling the prior anything: Suspicion +10, because Ranulf overhears (design doc).

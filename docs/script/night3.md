@@ -608,7 +608,7 @@ Moods through the talk: warm → sad → grave → warm
 > Thomas at dusk, in the infirmary (night 3). Tall, thin, stooped, gentle deep-set eyes, fingers stained from his herbs; he hums at his mortar.
 > Your first ally. He tells you what he has noticed, always about someone else. (He leads the cult. Nothing here says so.)
 > At supper Ranulf offers his remedy and Thomas warns you off it; the headaches answer sets that up.
-> Claims: n3_thomas_prior (lie): the prior up the tower stair first. He points at someone else; the men he points at are innocent.
+> Claims: n3_thomas_prior (misleading): the prior was up the tower stair first, which is so; he says it to point at an innocent man. Pressing is the right read.
 
 ### `start`
 
@@ -655,10 +655,10 @@ Moods through the talk: warm → sad → grave → warm
 - **Thomas** *grave, nod*: Father Abbot says the demon. I've seen what I've seen in this house. I don't argue with him.
 - **Thomas** *warm, still*: Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell.
 
-> **Claim `n3_thomas_prior`: a lie.** The last line is the claim.
+> **Claim `n3_thomas_prior`: misleading: true words, said to lead him wrong.** The last line is the claim.
 
 1. Then I'll watch him, brother. → `prior_believed` · **believe** · wrong
-2. Before any of you? Who saw him go up? → `prior_pressed` · **press** · wrong
+2. Before any of you? Who saw him go up? → `prior_pressed` · **press** · **right**
 
 ### `prior_believed`
 

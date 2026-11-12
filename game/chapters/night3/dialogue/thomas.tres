@@ -9,7 +9,7 @@ text = "# DRAFT
 # Thomas at dusk, in the infirmary (night 3). Tall, thin, stooped, gentle deep-set eyes, fingers stained from his herbs; he hums at his mortar.
 # Your first ally. He tells you what he has noticed, always about someone else. (He leads the cult. Nothing here says so.)
 # At supper Ranulf offers his remedy and Thomas warns you off it; the headaches answer sets that up.
-# Claims: n3_thomas_prior (lie): the prior up the tower stair first. He points at someone else; the men he points at are innocent.
+# Claims: n3_thomas_prior (misleading): the prior was up the tower stair first, which is so; he says it to point at an innocent man. Pressing is the right read.
 == start
 (Thomas is at his bench, grinding something in a mortar and humming. He stops when he sees you, and smiles.)
 Thomas {warm}: Alric. Come in. You slept, I hope? You've the look of a man who dreamed.
@@ -37,7 +37,7 @@ Thomas {warm}: Quieter since the tower. He asks after you. Old porters never sto
 Thomas {warm, still}: Don't let him frighten you, Alric. His mind wanders at night. He hears things.
 -> topics
 
-== tower [set n3_thomas_tower] [claim n3_thomas_prior lie]
+== tower [set n3_thomas_tower] [claim n3_thomas_prior misleading]
 Thomas {sad}: Bede. I'm sorry you were the one who found him. A hard thing, on your second night.
 Thomas {grave, nod}: Father Abbot says the demon. I've seen what I've seen in this house. I don't argue with him.
 Thomas {warm, still}: Only I wonder about the prior. He was up the tower stair before any of us. Quick, for a man woken by a bell.
