@@ -43,3 +43,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Script · ae09bfe · Conversations are plain .talk text files, loaded by TalkLoader.
 - 2026-11-12 · Fix · b448bcf · Simon answers the off-hours bell once he's been saved (the bell asked for a flag nothing set).
 - 2026-11-12 · Docs · a470f7e · docs/script: each night's map, every conversation's paths, links.md for every flag; tools/script_review.py.
+- 2026-11-12 · Feature · 4108852 · The lantern: none on night 0, Anselm gives it on day 1, G puts it away, put away indoors at the Keys.
+- 2026-11-12 · Fix · 128c86c · Night 0 finished: the 14 talks final, and the last scene readable (the view follows the killing; the light goes out of sight with the body).
