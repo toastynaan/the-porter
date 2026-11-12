@@ -26,6 +26,11 @@ func face_position() -> Vector3:
 	return face.global_position if face else global_position + Vector3.UP * 1.6
 
 
+## A part of the character scene by its path (the warden's Lantern), or null.
+func part(path: NodePath) -> Node3D:
+	return _body.get_node_or_null(path) as Node3D if _body else null
+
+
 func _dress() -> void:
 	if not is_inside_tree():
 		return

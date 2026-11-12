@@ -197,7 +197,7 @@ script = ExtResource("look_gd")
 look = ExtResource("chr_sailor")
 
 [node name="RideCues" type="Node3D" parent="."]
-editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a talk someone starts, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines and talks wait while the porter talks, and are dropped once the wagon is `keep` metres past; a cue with cut_in breaks off his talk instead (the carter's Whoa)."
+editor_description = "What happens on the road in as the wagon passes each cue (RideCue): lines, a talk someone starts, a sound, a new pace, a stop. Each counts from the nearest point of the road; move them to move the moment. Lines and talks wait while the porter talks, and are dropped once the wagon is `keep` metres past; a cue with cut_in breaks off his talk instead (the traveller greeting the warden at Aldgate). The cart with the body is RideBeat's own: as it comes close the traveller breaks off (\"Whoa. Look at that.\")."
 
 [node name="Fields" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("talker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 44.5)
@@ -217,9 +217,8 @@ keep = 25.0
 [node name="Whoa" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -174, 0, 44.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Carter: Whoa. Whoa, there. Let him by.")
+lines = PackedStringArray("Carter: Easy, easy. Let him by.")
 keep = 12.0
-cut_in = true
 
 [node name="Wall" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -134, 0, 44.5)
@@ -228,13 +227,18 @@ lines = PackedStringArray("(The city wall, black against the sky. A lantern burn
 pace = 2.0
 keep = 12.0
 
-[node name="Aldgate" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("watchers")]
+[node name="Aldgate" type="Marker3D" parent="RideCues" node_paths=PackedStringArray("watchers", "inspector")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.5, 0, 44.4)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Warden: In or out, carter? We shut at the curfew bell, and we open for no one after it.", "(He holds his lantern up to your face, and looks at you a long moment.)", "Warden: A monk. For the abbey in the lane? Then God go with you. Go on.")
+editor_description = "The wagon stops and the traveller breaks off whatever he was saying to greet the warden (cut_in). The warden walks up with the last of the lines, holds his lantern to the porter's face (close_lines), and walks back to his place (parting_lines)."
+lines = PackedStringArray("Traveller: Evening, warden. God keep the gate.", "Warden: In or out, carter? We shut at the curfew bell, and we open for no one after it.", "Carter: In, warden. Two for the city.", "Warden: Let's have a look at you, then.")
 pace = 3.2
 hold = 1.0
 watchers = [NodePath("../../RoadFolk/Warden")]
+cut_in = true
+inspector = NodePath("../../RoadFolk/Warden")
+close_lines = PackedStringArray("(He holds his lantern up to your face, and looks at you a long moment.)", "Warden: A monk. For the abbey in the lane, I'd wager.")
+parting_lines = PackedStringArray("Warden: You're good. Go on, and God go with you.")
 
 [node name="Shutters" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 4, 44)

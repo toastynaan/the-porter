@@ -9,7 +9,7 @@ text = "# DRAFT
 # The traveller beside the porter on the carter's wagon, night 0: a wool merchant from Colchester, bound for Cheapside, inside the walls.
 # He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
 # One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.
-# He says nothing of the abbey until the cart with the body goes by (traveller.tres). The carter's Whoa cuts this talk short, with no parting line.
+# He says nothing of the abbey until the cart with the body goes by (traveller.tres). When that cart comes close he breaks this talk off himself (\"Whoa. Look at that.\"), with no parting line; at Aldgate he breaks off again to greet the warden.
 # After the cart (talked_n0_traveller) he has told what he knows, and points the porter to the Keys.
 == start
 -> after [if talked_n0_traveller]

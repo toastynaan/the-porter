@@ -6,10 +6,13 @@ extends NightBeat
 ## beside him turns to him as they set off, and he can talk to the traveller
 ## again whenever he likes. The RideCues along the road play as the wagon
 ## passes them: lines, talks, sounds, a new pace, a stop at the city gate.
-## Early on the carter pulls in (his "Whoa" breaks off any talk) to let a
-## cart go by the other way with a covered body on it (the hook): the
-## porter's view goes to the body and follows it by, and the traveller talks
-## about it. The night comes up out of black as the wagon sets off. On the
+## Early on the carter pulls in to let a cart go by the other way with a
+## covered body on it (the hook). As it comes close the traveller breaks off
+## whatever he was saying ("Whoa. Look at that."): the porter's view goes to
+## the body and follows it by, and the traveller talks about it. At Aldgate
+## the traveller breaks off again to greet the warden, who walks up with his
+## lantern, holds it to the porter's face, and walks back to his place to
+## let them through. The night comes up out of black as the wagon sets off. On the
 ## bridge over the brook, once the talk is done, it goes dark, and comes up
 ## again in the lane as the wagon reaches the abbey gate. It ends when the
 ## carter sets him down there and drives off down the lane.
@@ -71,6 +74,18 @@ const PULLED_IN := 1.7
 const CART_SIDE := 1.2
 ## The cart waits this far off until the wagon has pulled in.
 const CART_WAIT := 9.0
+## The traveller sees it, and breaks off, when it is this far off.
+const HOOK_AT := 8.0
+## Someone walking up to the wagon (the warden): m/s, how far out from the
+## middle of the wagon he stands, and how far behind the porter's seat.
+const WALK := 1.2
+const STAND_OUT := 1.35
+const STAND_BACK := 0.25
+## Seconds to raise the lantern to his face; how far from his eyes it comes,
+## and how far to the side of the line to the warden's face (his right hand).
+const RAISE := 0.8
+const LANTERN_NEAR := 0.75
+const LANTERN_ASIDE := 0.25
 ## Its pace past the bridge's crown while he is still talking, m/s.
 const DAWDLE := 0.5
 ## Slowest the wagon rolls toward a stop, so it gets there.
@@ -100,6 +115,9 @@ var _pulled_in := false
 var _hook_done := false
 var _cart_along := INF
 var _rumble: AudioStreamPlayer3D
+## Who is walking up to the wagon or back (the warden): the watch leaves him be.
+var _inspecting: Node3D
+var _walking := false
 
 
 func _ready() -> void:
@@ -336,19 +354,20 @@ func _watch() -> void:
 			_place(body_cart, maxf(_cart_along, 0.0), CART_SIDE, true)
 		for c in _cues:
 			for w in c.watchers:
-				if is_instance_valid(w) and w.has_method(&"face") and w.global_position.distance_to(wagon.global_position) < 15.0:
+				if is_instance_valid(w) and w != _inspecting and w.has_method(&"face") and w.global_position.distance_to(wagon.global_position) < 15.0:
 					w.call(&"face", wagon.global_position)
 		await PlayTime.physics_frame(self)
 
 
-## Stopped at the side of the road: the traveller breaks off, the cart comes
-## by close on his side, and the traveller talks about it as the wagon goes on.
+## Stopped at the side of the road: any talk goes on while the cart comes,
+## and nothing more from the road is said. As it comes close the traveller
+## breaks off, it goes by close on his side, and the traveller talks about it
+## as the wagon goes on.
 func _let_the_cart_by() -> void:
 	_hush = true
-	Talk.interrupt()
-	await until(func() -> bool: return not _speaking)
 	_pulled_in = true
-	await until(func() -> bool: return _cart_along < _pull_along + 6.0)
+	await until(func() -> bool: return _cart_along < _pull_along + HOOK_AT)
+	await until(func() -> bool: return not _speaking or Talk.talking)
 	_hook.call()
 	_hush = false
 	await until(func() -> bool: return _cart_along < _pull_along - 4.0)
@@ -357,19 +376,117 @@ func _let_the_cart_by() -> void:
 func _hook() -> void:
 	if traveller_talk == null:
 		return
+	# Whatever was being said stops short: "Whoa. Look at that."
 	Talk.interrupt()
+	_queue.clear()
 	# His eyes go to what is on the cart, not to the man beside him.
 	var body: Node3D = body_cart.get_node_or_null(^"ShroudedBody") if is_instance_valid(body_cart) else null
 	await Talk.converse(traveller_talk, traveller, body if body else body_cart)
 
 
-## Stopped at a cue: once nobody's talking, its lines, then it stands a while.
+## Stopped at a cue: once nobody's talking (at once, cutting any talk short,
+## with `cut_in`), its lines; its inspector comes and looks at him; then it
+## stands a while.
 func _hold_at(cue: RideCue) -> void:
-	await until(func() -> bool: return Talk.quiet() and not _speaking)
+	if cue.cut_in:
+		_hush = true
+		Talk.interrupt()
+		_queue.clear()
+		await until(func() -> bool: return not _speaking)
+		_hush = false
+	else:
+		await until(func() -> bool: return Talk.quiet() and not _speaking)
 	_speaking = true
-	await _say_unless_talking(cue.lines)
+	var who := cue.inspector
+	if who == null or cue.lines.is_empty():
+		await _say_unless_talking(cue.lines)
+	else:
+		# He sets off with the last of the lines.
+		var home := who.global_transform
+		_inspecting = who
+		await _say_unless_talking(cue.lines.slice(0, cue.lines.size() - 1))
+		_walk.call(who, _beside_him(who))
+		await say_lines(cue.lines.slice(cue.lines.size() - 1))
+		await until(func() -> bool: return not _walking)
+		await _lantern_to_his_face(who, cue.close_lines)
+		# He goes back to his place saying they can go.
+		_walk.call(who, home.origin)
+		await _say_unless_talking(cue.parting_lines)
+		await until(func() -> bool: return not _walking)
+		who.global_transform = home
+		_inspecting = null
 	_speaking = false
 	await wait(cue.hold / pace_scale)
+
+
+## Where someone coming up to the stopped wagon stands: beside its back on
+## his own side of it, a little behind the porter's seat, so he can see him.
+func _beside_him(who: Node3D) -> Vector3:
+	var seat := wagon.get_node(^"Seat") as Marker3D
+	var side := signf((who.global_position - wagon.global_position).dot(wagon.global_basis.x))
+	var at := wagon.to_global(Vector3((side if side != 0.0 else -1.0) * STAND_OUT, 0.0, seat.position.z + STAND_BACK))
+	at.y = who.global_position.y
+	return at
+
+
+## Walks `who` (someone who doesn't walk himself, a Figure) to `to`, turning
+## the way he goes; `_walking` until he's there.
+func _walk(who: Node3D, to: Vector3) -> void:
+	_walking = true
+	var from := who.global_position
+	var flat := Vector3(to.x - from.x, 0.0, to.z - from.z)
+	var length := flat.length()
+	var walked := 0.0
+	while is_instance_valid(who) and walked < length:
+		var dt := PlayTime.physics(self)
+		walked = minf(walked + WALK * pace_scale * dt, length)
+		var at := from.lerp(to, walked / maxf(length, 0.001))
+		# A little rise and fall with each step.
+		at.y += absf(sin(walked * PI / 0.7)) * 0.025
+		who.global_position = at
+		who.global_rotation.y = lerp_angle(who.global_rotation.y, atan2(-flat.x, -flat.z), 1.0 - exp(-10.0 * dt))
+		await PlayTime.physics_frame(self)
+	if is_instance_valid(who):
+		who.global_position = to
+	_walking = false
+
+
+## He turns to the porter and holds his lantern up to his face: the porter's
+## view goes to the warden's face, with the lantern up beside it, `lines`
+## are said, and it comes down again.
+func _lantern_to_his_face(who: Node3D, lines: PackedStringArray) -> void:
+	var p := player()
+	var look := who.get_node_or_null(^"Look") as CharacterLook
+	var lantern: Node3D = look.part(^"Lantern") if look else null
+	# Whatever he turned to the traveller about meanwhile, this comes first.
+	Talk.interrupt()
+	var opened := Talk.begin(who)
+	if not opened and who.has_method(&"face"):
+		who.call(&"face", p.global_position)
+	var rest := lantern.position if lantern else Vector3.ZERO
+	if lantern:
+		var eyes := p.camera.global_position
+		var near := eyes + ((who.call(&"face_position") as Vector3) - eyes).normalized() * LANTERN_NEAR \
+				+ who.global_basis.x * LANTERN_ASIDE
+		await _move_lantern(lantern, rest, (lantern.get_parent() as Node3D).to_local(near))
+	for l in lines:
+		var at := l.find(": ")
+		if at > 0 and not l.begins_with("("):
+			await Talk.line(l.left(at), l.substr(at + 2))
+		else:
+			await Talk.line("", l)
+	if lantern:
+		_move_lantern.call(lantern, lantern.position, rest)
+	if opened:
+		Talk.end()
+
+
+func _move_lantern(lantern: Node3D, from: Vector3, to: Vector3) -> void:
+	var t := 0.0
+	while is_instance_valid(lantern) and t < 1.0:
+		t = minf(t + PlayTime.physics(self) * pace_scale / RAISE, 1.0)
+		lantern.position = from.lerp(to, smoothstep(0.0, 1.0, t))
+		await PlayTime.physics_frame(self)
 
 
 ## On down the lane, out of sight; then gone.

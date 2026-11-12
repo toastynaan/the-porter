@@ -6,12 +6,12 @@
 script = ExtResource("1_convo")
 id = &"n0_traveller"
 text = "# DRAFT
-# The traveller beside the porter on the carter's wagon, night 0. He turns to the porter as the carter pulls in and the cart with the covered body creaks by close on his side.
-# The carter's Whoa has broken off any talk on the road before it (traveller_road.tres is that talk).
+# The traveller beside the porter on the carter's wagon, night 0. The carter has pulled in; as the cart with the covered body comes close the traveller breaks off whatever he was saying (traveller_road.tres is that talk) and turns to it.
 # If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him.
 == start
+Traveller: Whoa. Look at that.
 (The cart creaks by close enough to touch. Something long lies under sacking on its bed.)
-Traveller: Did you see that, brother? Under the sacking?
+Traveller: That's a man under the sacking, brother.
 * God rest him. Who was he? -> who
 * What happened to him? -> what
 * (Cross yourself, and pray for him.) -> pray

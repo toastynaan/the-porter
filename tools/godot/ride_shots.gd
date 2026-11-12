@@ -2,7 +2,7 @@ extends Node
 ## Stills of the reworked ride in (night 0) through the full render pipeline,
 ## to art/_review/ride/ (tools/ride_shots.sh), at the ride's own pace: talking
 ## to the traveller in the fields, the carter pulled in and the body cart going
-## by, the warden at Aldgate, the woman in the doorway, the lane, and the
+## by, the warden at Aldgate walking up and his lantern in the porter's face, the woman in the doorway, the lane, and the
 ## wagon driving off down it.
 
 const OUT := "res://art/_review/ride/"
@@ -46,11 +46,13 @@ func _ready() -> void:
 	_look_at(p, cart.global_position + Vector3.UP * 0.9)
 	await _shot("the_body_cart_goes_by", 0.05)
 
-	# The warden at Aldgate.
+	# The warden at Aldgate walks up, and holds his lantern to his face.
 	var warden := night.get_node(^"RoadFolk/Warden") as Node3D
-	await _until(func() -> bool: return Talk.history.any(func(l: Array) -> bool: return l[0] == "Warden"), 90.0)
+	await _until(func() -> bool: return Talk.history.has(["Warden", "Let's have a look at you, then."]), 90.0)
 	_look_at(p, warden.global_position + Vector3.UP * 1.5)
-	await _shot("the_warden_at_aldgate", 0.8)
+	await _shot("the_warden_walks_up", 0.9)
+	await _until(func() -> bool: return Talk.history.has(["", "(He holds his lantern up to your face, and looks at you a long moment.)"]), 20.0)
+	await _shot("the_lantern_in_his_face", 0.3)
 
 	# The woman in the doorway.
 	var woman := night.get_node(^"RoadFolk/Townswoman") as Node3D

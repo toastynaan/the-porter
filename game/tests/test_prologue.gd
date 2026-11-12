@@ -3,9 +3,11 @@ extends Node
 ## docs/full-game-run.md, M12), through main.tscn from New Game to night 1's
 ## dusk in one run:
 ## - night 0: the ride in arrives at the lane (about two minutes at its own
-##   pace; the traveller turning to him as they set off, cut short by the
-##   carter's Whoa as he pulls in for the body cart, and the traveller on the
-##   body; paused, it waits; the warden at Aldgate; the wagon
+##   pace; the traveller turning to him as they set off, breaking off with
+##   "Whoa. Look at that." as the body cart comes by the pulled-in wagon, and
+##   the traveller on the body; paused, it waits; at Aldgate the traveller
+##   breaks off to greet the warden, who walks up, holds his lantern to the
+##   porter's face and walks back to his place; the wagon
 ##   waits at the gate for a talk to end, the carter's word, and it drives
 ##   off); the
 ##   gate barred, nobody at it; the knock and Mab sending him to the Keys;
@@ -91,7 +93,18 @@ func _run() -> void:
 	var walked := [false]
 	var leave_option := [""]
 	var dark_from := Vector3.ZERO
-	var warden_x := (night.get_node(^"RoadFolk/Warden") as Node3D).global_position.x
+	var warden := night.get_node(^"RoadFolk/Warden") as Node3D
+	var warden_x := warden.global_position.x
+	var warden_home := warden.global_position
+	var warden_lantern := (warden.get_node(^"Look") as CharacterLook).part(^"Lantern")
+	var warden_near := INF
+	var lantern_near := INF
+	var lantern_seen := -1.0
+	var warden_back := false
+	var gate_talk := false
+	var gate_talk_open := false
+	const GREETING := ["Traveller", "Evening, warden. God keep the gate."]
+	const LANTERN_LINE := ["", "(He holds his lantern up to your face, and looks at you a long moment.)"]
 	var abbey := night.get_node(^"Abbey") as Node3D
 	var lane_hidden := not abbey.visible
 	var moving_into_dark := 0.0
@@ -119,7 +132,7 @@ func _run() -> void:
 			hooked = true
 			hooked_at = elapsed
 			parted = Talk.history.slice(said_before).any(func(l: Array) -> bool: return l[1] == "Suit yourself, brother.") \
-				or not Talk.history.slice(said_before).any(func(l: Array) -> bool: return l == ["Carter", "Whoa. Whoa, there. Let him by."])
+				or not Talk.history.slice(said_before).any(func(l: Array) -> bool: return l == ["Traveller", "Whoa. Look at that."])
 		if hooked and watched < 0.0 and elapsed - hooked_at > 1.2:
 			# A moment into it his eyes are on what lies on the cart, not on the traveller.
 			watched = ViewCheck.off_centre(p.camera, (cart.get_node(^"ShroudedBody") as Node3D).global_position)
@@ -132,6 +145,24 @@ func _run() -> void:
 			paused_ok = get_tree().paused and wagon.global_position.is_equal_approx(at) and GameState.hour == hour_then
 			_flow.resume()
 			last = wagon.global_position
+		if paused_ok and not gate_talk and at.x > -132.0 and at.x < -125.0 and not Talk.talking:
+			# He turns to the traveller again on the way up to Aldgate, and is
+			# still talking when the wagon stops there.
+			gate_talk = true
+			Talk.auto_choice = func(_o: PackedStringArray) -> int: return -1
+			talker.interact(p)
+		if gate_talk and not Talk.history.has(GREETING):
+			gate_talk_open = Talk.talking and Talk.is_choosing()
+		elif gate_talk and Talk.auto_choice != answer_with and not held_talk:
+			Talk.auto_choice = answer_with
+		if is_instance_valid(warden):
+			warden_near = minf(warden_near, Vector2(warden.global_position.x - p.camera.global_position.x,
+				warden.global_position.z - p.camera.global_position.z).length())
+			lantern_near = minf(lantern_near, warden_lantern.global_position.distance_to(p.camera.global_position))
+			if lantern_seen < 0.0 and Talk.history.has(LANTERN_LINE):
+				lantern_seen = ViewCheck.off_centre(p.camera, (warden as Figure).face_position())
+			if at.x > -110.0 and not warden_back:
+				warden_back = warden.global_position.distance_to(warden_home) < 0.05
 		if hooked and not held_talk and at.x > -46.0 and at.z < 30.0 and not Talk.talking:
 			# In the lane he turns to the traveller again, and is still talking
 			# when the wagon stops.
@@ -148,16 +179,21 @@ func _run() -> void:
 				return o.size() - 1
 	var pulled_in := stops.any(func(s: Vector3) -> bool: return absf(s.x - pilot.mark("PullOver").x) < 1.5)
 	# Nothing left over from the road comes between the Whoa and the cart.
-	var whoa := Talk.history.find(["Carter", "Whoa. Whoa, there. Let him by."])
+	var whoa := Talk.history.find(["Traveller", "Whoa. Look at that."])
 	var hook_at := Talk.history.find(["", "(The cart creaks by close enough to touch. Something long lies under sacking on its bed.)"])
-	_check(whoa >= 0 and hook_at == whoa + 1, "after the Whoa the next thing said is the cart going by (%s)" % [Talk.history.slice(whoa, hook_at + 1)])
+	_check(whoa >= 0 and hook_at == whoa + 1, "after the traveller's Whoa the next thing said is the cart going by (%s)" % [Talk.history.slice(whoa, hook_at + 1)])
 	_check(hooked and not parted and pulled_in and closest < 4.0 and closest > 2.0,
-		"the carter's Whoa breaks off the talk, he pulls in for the body cart (stopped at %s), it passes close by on his side (%.1f m), and the traveller talks about it" % [str(stops), closest])
+		"the carter pulls in for the body cart (stopped at %s); as it comes the traveller breaks off his talk with a Whoa, it passes close by on his side (%.1f m), and he talks about it" % [str(stops), closest])
 	_check(watched >= 0.0 and watched < 8.0, "as the cart goes by his view goes to the body on it and follows it (%.1f° off)" % watched)
 	_check(paused_ok, "paused, the wagon and the clock wait")
 	var at_gate := stops.any(func(s: Vector3) -> bool: return absf(s.x - warden_x) < 1.5)
 	var warden_spoke := Talk.history.any(func(l: Array) -> bool: return l[0] == "Warden")
 	_check(at_gate and warden_spoke, "the wagon stops at Aldgate, and the warden looks them over")
+	var greeted := Talk.history.find(GREETING)
+	_check(gate_talk_open and greeted >= 0 and not Talk.history.slice(greeted - 3, greeted).any(func(l: Array) -> bool: return l[1].begins_with("Suit yourself")),
+		"talking as the wagon stops at Aldgate, the traveller breaks off (no parting line) and greets the warden")
+	_check(warden_near < 1.6 and lantern_near < 1.0 and lantern_seen >= 0.0 and lantern_seen < 8.0 and warden_back,
+		"the warden walks up to him (%.2f m), holds his lantern up to his face (%.2f m, his view on the warden's face %.1f° off), and walks back to his place" % [warden_near, lantern_near, lantern_seen])
 	var cues_said := Talk.history.filter(func(l: Array) -> bool: return l[0] == "Carter" or l[0] == "Traveller").size()
 	_check(elapsed > 60.0 and elapsed < 150.0 and cues_said >= 8,
 		"the ride takes a minute or two (%.0f s), with something said along the way (%d lines)" % [elapsed, cues_said])
