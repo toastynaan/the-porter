@@ -11,8 +11,9 @@ extends Marker3D
 ## cut short any talk he's in and are said at once (a stop with `cut_in`
 ## doesn't wait for the talk to end either). With an `inspector`, someone
 ## walks up to the stopped wagon with the last of the lines, holds a lantern
-## to his face for `close_lines`, and walks back to his place with
-## `parting_lines` (the warden at Aldgate).
+## up to his face and has `talk` with him, and walks back to his place with
+## `parting_lines` (the warden at Aldgate). `flag` is set as the wagon
+## passes (or, at a stop, as it goes on).
 
 ## "Name: words" is Name speaking; a line in brackets is what he notices.
 @export var lines: PackedStringArray
@@ -28,16 +29,18 @@ extends Marker3D
 ## People here who turn to watch the wagon while it's within 15 m.
 @export var watchers: Array[Node3D] = []
 ## A conversation `talker` starts with him here, after the lines; it waits,
-## like the lines, while he's talking to someone.
+## like the lines, while he's talking to someone. With an `inspector` it is
+## his, while the lantern is up.
 @export var talk: Conversation
 @export var talker: Node3D
 ## The lines cut short any talk he's in, and drop any still waiting.
 @export var cut_in := false
 ## At a stop: who walks up to him with a lantern (its character scene's
-## "Lantern"), what is said while it's held to his face, and as he goes back.
+## "Lantern"), and what he says as he goes back.
 @export var inspector: Node3D
-@export var close_lines: PackedStringArray
 @export var parting_lines: PackedStringArray
+## Set when the wagon has passed (dialogue can ask it: n0_past_aldgate).
+@export var flag := &""
 
 ## Metres along the road (RideBeat sets it).
 var along := 0.0

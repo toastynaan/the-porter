@@ -60,6 +60,8 @@ const BOB_RUN := 0.05
 const STRIDE_WALK := 0.7
 const STRIDE_RUN := 1.4
 const LOOK_BACK_ANGLE := 150.0
+## How much of his seat's tipping reaches his view (he sways against it).
+const RIDE_TILT := 0.8
 const LOOK_BACK_TIME := 0.25
 ## Radians per pixel of mouse movement, and per second at full stick.
 const MOUSE_SENSITIVITY := 0.0022
@@ -136,6 +138,8 @@ var _talk_pull := 0.0
 var _talk_still := false
 ## The heading of what he rides, last frame.
 var _ride_yaw := 0.0
+## How his seat tips him (a cart on a rough road): roll and pitch, radians.
+var _ride_tilt := Vector2.ZERO
 
 @onready var head: Node3D = $Head
 @onready var look_back_pivot: Node3D = $Head/LookBack
@@ -228,8 +232,10 @@ func _physics_process(delta: float) -> void:
 		var turned := wrapf(riding.global_rotation.y - _ride_yaw, -PI, PI)
 		_ride_yaw = riding.global_rotation.y
 		rotation.y += turned
+		_ride_tilt = _tilt_of(riding)
 		velocity = Vector3.ZERO
 		return
+	_ride_tilt = Vector2.ZERO
 	if crawling or hiding or _hide_moving or peeking:
 		stamina.update(false, delta)
 		return
@@ -625,12 +631,20 @@ func _update_bob(delta: float) -> void:
 		head.rotation.z = -deg_to_rad(LEAN_TILT) * lean
 
 
-## Drunk (3 ales and more), the view drifts a little (none with less motion).
+## Drunk (3 ales and more), the view drifts a little; riding, it tips with
+## the seat (neither with less motion).
 func _drift() -> void:
 	var k := DoseDriver.drunk_amount() if not Settings.less_motion else 0.0
+	var ride := RIDE_TILT if not Settings.less_motion else 0.0
 	var t := Time.get_ticks_msec() / 1000.0
-	look_back_pivot.rotation.z = sin(t * 0.43) * 0.035 * k
-	look_back_pivot.rotation.x = sin(t * 0.31 + 1.0) * 0.02 * k
+	look_back_pivot.rotation.z = sin(t * 0.43) * 0.035 * k + _ride_tilt.x * ride
+	look_back_pivot.rotation.x = sin(t * 0.31 + 1.0) * 0.02 * k + _ride_tilt.y * ride
+
+
+## How far `seat` tips him, as he faces now: [roll, pitch].
+func _tilt_of(seat: Node3D) -> Vector2:
+	var up := global_basis.inverse() * seat.global_basis.y
+	return Vector2(atan2(-up.x, up.y), atan2(up.z, up.y))
 
 
 func _update_look_back(delta: float) -> void:

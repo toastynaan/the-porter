@@ -4,39 +4,43 @@
 [ext_resource type="PackedScene" path="res://game/characters/chr_horse.tscn" id="horse"]
 [ext_resource type="PackedScene" path="res://game/world/props/lamp.tscn" id="lamp"]
 [ext_resource type="PackedScene" path="res://art/models/prop_cart_load.glb" id="load"]
+[ext_resource type="Script" path="res://game/world/road/cart_jolt.gd" id="jolt"]
 
 [sub_resource type="BoxShape3D" id="Shape_floor"]
 size = Vector3(1.4, 0.06, 2.6)
 
 [node name="Wagon" type="Node3D"]
-editor_description = "The carter's wagon the porter rides in on, night 0: a two-wheeled cart and its horse, a lantern on a pole by the carter. Seats at the back for the porter and the traveller (Seat, TravellerSeat), the carter at the front (CarterSeat). Faces -Z (the horse in front). Origin on the ground under the middle of the bed."
+editor_description = "The carter's wagon the porter rides in on, night 0: a two-wheeled cart and its horse, a lantern on a pole by the carter. Seats at the back for the porter and the traveller (Seat, TravellerSeat), the carter at the front (CarterSeat). Faces -Z (the horse in front). Origin on the ground under the middle of the bed. Everything but the horse is under Bed, which jolts over the road (CartJolt), so the seats and whoever sits on them jolt with it."
 
-[node name="Cart" parent="." instance=ExtResource("cart")]
+[node name="Bed" type="Node3D" parent="."]
+script = ExtResource("jolt")
 
-[node name="Load" parent="." instance=ExtResource("load")]
+[node name="Cart" parent="Bed" instance=ExtResource("cart")]
+
+[node name="Load" parent="Bed" instance=ExtResource("load")]
 editor_description = "What the carter is bringing in: a chest under a canvas, a cask, sacks (tools/build/prop_cart.py), amidships, clear of the three seats."
 
 [node name="Horse" parent="." instance=ExtResource("horse")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.95)
 
-[node name="Lantern" parent="." instance=ExtResource("lamp")]
+[node name="Lantern" parent="Bed" instance=ExtResource("lamp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74, 1.74, -1.14)
 editor_description = "The carter's lantern, hung on the headboard's corner."
 energy = 0.9
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Floor" type="StaticBody3D" parent="Bed"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 0)
 metadata/surface = "wood"
 
-[node name="Shape" type="CollisionShape3D" parent="Floor"]
+[node name="Shape" type="CollisionShape3D" parent="Bed/Floor"]
 shape = SubResource("Shape_floor")
 
-[node name="Seat" type="Marker3D" parent="."]
+[node name="Seat" type="Marker3D" parent="Bed"]
 transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -0.35, 0.87, 0.75)
 editor_description = "Where the porter rides, at the back, looking back down the road, on the side the body cart passes."
 
-[node name="TravellerSeat" type="Marker3D" parent="."]
+[node name="TravellerSeat" type="Marker3D" parent="Bed"]
 transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 0.30, 0.87, 0.75)
 
-[node name="CarterSeat" type="Marker3D" parent="."]
+[node name="CarterSeat" type="Marker3D" parent="Bed"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 0.87, -1.00)

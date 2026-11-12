@@ -6,11 +6,11 @@
 script = ExtResource("1_convo")
 id = &"n0_traveller_road"
 text = "# DRAFT
-# The traveller beside the porter on the carter's wagon, night 0: a wool merchant from Colchester, bound for Cheapside, inside the walls.
+# The traveller beside the porter on the carter's wagon, night 0: Will Fuller, a wool merchant from Colchester, forty-one, bound for Cheapside, inside the walls. A wife and two girls at home. Wry, warm, more frightened than he lets on.
 # He turns to the porter himself a little way down the road (the Fields cue), and the porter can turn to him again on the road in (E): that starts at again.
 # One turn to him is one talk: after each answer the questions left come up again, until the porter turns away or has asked them all.
-# He says nothing of the abbey until the cart with the body goes by (traveller.tres). When that cart comes close he breaks this talk off himself (\"Whoa. Look at that.\"), with no parting line; at Aldgate he breaks off again to greet the warden.
-# After the cart (talked_n0_traveller) he has told what he knows, and points the porter to the Keys.
+# Before the cart he only hints at the abbey: road talk, men who don't come home. When the cart with the dead comes close he breaks this talk off himself (traveller.tres says the rest), with no parting line; at Aldgate he breaks off again to greet the warden.
+# After the cart (talked_n0_traveller) the porter can ask what he thinks goes on in the abbey, what people say is in it, and who would know more. After Aldgate (n0_past_aldgate) he opens on the warden.
 == start
 -> after [if talked_n0_traveller]
 -> hello
@@ -21,32 +21,65 @@ Traveller: Evening, brother. Bound for the city, are you?
 * Where are you bound yourself? -> trade
 * (Nod, and say nothing.) -> quiet
 
+== quiet [set n0_road_quiet]
+Traveller: Not one for talk. (He blows into his hands.) Then I'll talk for both of us. It keeps the cold out.
+Traveller: Wool, for Cheapside. Twelve days on the road from Colchester, and every one of them wet.
+-> topics
+
 == porter [set n0_road_porter]
 Traveller: The porter? At the abbey in the lane, by the Cross Keys?
 Traveller: (He looks at you a moment longer than he needs to.) Well. Somebody has to keep the gate.
+Traveller: You look young for it. They give that work to old men, mostly. Men with nothing left to want.
+* I'm nineteen. Old enough. -> young
+* The old porter went blind. They needed someone. -> blind
+* I go where my abbot sends me. -> sent
+
+== young [set n0_road_young]
+Traveller: Nineteen. (He laughs, not unkindly.) At nineteen I was sure I'd be rich by thirty.
+Traveller: I'm forty-one, and sat in the back of a cart in the rain. Keep your vows, brother. They're cheaper than wool.
 -> topics
 
-== quiet
-Traveller: Not one for talk. Suit yourself, brother. It's a cold way to Aldgate.
--> end
-
-== again
--> after [if talked_n0_traveller]
--> spent [if n0_road_porter] [if n0_road_trade] [if n0_road_carter]
--> still
-
-== still
-Traveller: Brother?
+== blind [set n0_road_blind]
+Traveller: Blind, was he. (He's quiet a moment.) Years on a gate, watching who comes in after dark.
+Traveller: I'd not want to know what a man sees, all those years. Maybe the eyes just give up.
 -> topics
 
-== topics
-* [if not n0_road_porter] I'm to be porter at an abbey inside Aldgate. -> porter
-* [if not n0_road_trade] Where are you bound yourself? -> trade
-* [if not n0_road_carter] Is the carter always in such a hurry? -> carter
+== sent [set n0_road_sent]
+Traveller: Obedience. My father wanted that of me, and I gave him a wool trade instead.
+Traveller: Your abbot, now. Does he know the house he's sending you to?
+* He says it's a holy house. It has a saint. -> holy
+* I don't think he knows it at all. -> unknown
+
+== holy
+Traveller: A saint. Yes. Everyone on this road has heard of the saint.
+(He says it the way a man says the name of a dog that bit him.)
+-> topics
+
+== unknown
+Traveller: Then that's two of you. Three, with me.
+-> topics
 
 == trade [set n0_road_trade]
 Traveller: Cheapside, with wool. I buy it cheap in Colchester and sell it dear in London.
-Traveller: Every toll on the road robs me in between.
+Traveller: Every toll on the road robs me in between. The bridges, the gates, the bishop's men. A sack's half sold before it's sold.
+* Is it a good living? -> living
+* Have you family at home? -> family
+* (Let him grumble.) -> topics
+
+== living [set n0_road_living]
+Traveller: Good enough to complain about. (He pats the bale under him.) This is a winter's bread for my house.
+Traveller: Which is why I'll sleep inside the walls tonight, and not in some ditch with my purse gone.
+-> topics
+
+== family [set n0_road_family]
+Traveller: A wife, and two girls who think London's paved with ribbon. I'm to bring them some.
+Traveller: (His face goes quiet.) My wife made me swear I'd stop nowhere but an inn I know. She's heard the stories too.
+* What stories? -> stories
+* (Nod.) -> topics
+
+== stories [set n0_road_stories]
+Traveller: Road talk. Men who set out for London and don't come home. There are always some.
+Traveller: (He glances at the carter's back.) More, this year. Ask him why he whips his horse when the light goes.
 -> topics
 
 == carter [set n0_road_carter]
@@ -54,27 +87,92 @@ Traveller: They shut the city gates at the curfew bell. Be on the wrong side and
 Traveller: He doesn't care to sleep in a ditch. Not this month.
 -> topics
 
+== name [set n0_road_name]
+Traveller: Will Fuller. Will, to anyone who's shared a wet cart with me.
+Traveller: And you're brother something, and you'll tell me if you like. I'll not press a monk.
+* Alric. -> alric
+* (Smile, and leave it.) -> topics
+
+== alric [set n0_road_alric]
+Traveller: Alric. (He tries it.) Well, Brother Alric. I'll pray for you, if you'll pray for my wool.
+-> topics
+
+== topics
+-> spent [if n0_road_porter] [if n0_road_trade] [if n0_road_carter] [if n0_road_stories] [if n0_road_name]
+-> topics_late [if n0_road_porter] [if n0_road_trade]
+-> topics_early
+
+== topics_early
+* [if not n0_road_porter] I'm to be porter at an abbey inside Aldgate. -> porter
+* [if not n0_road_trade] Where are you bound yourself? -> trade
+* [if not n0_road_carter] Is the carter always in such a hurry? -> carter
+
+== topics_late
+* [if not n0_road_name] I never asked your name. -> name
+* [if not n0_road_carter] Is the carter always in such a hurry? -> carter
+* [if not n0_road_stories] What's different about this year? -> stories
+
+== again
+-> after [if talked_n0_traveller]
+-> spent [if n0_road_porter] [if n0_road_trade] [if n0_road_carter] [if n0_road_stories] [if n0_road_name]
+-> still
+
+== still
+Traveller: Brother? (He shifts on the sacks.) Go on, ask. It shortens the road.
+-> topics
+
 == spent
 Traveller: (He pulls his hood closer.) Save your breath, brother. It's a cold way to Aldgate yet.
 -> end
 
 == after
+-> after_gate [if n0_past_aldgate]
 Traveller: Still thinking of that cart, brother? So am I.
 -> after_topics
 
+== after_gate
+Traveller: (He watches the gate's light go small behind you.) He took his time over you, that warden. Most nights they wave a monk through.
+-> after_topics
+
 == after_topics
+-> after_spent [if n0_road_think] [if n0_cart_demon] [if n0_road_ask]
+-> after_ask
+
+== after_ask
 * [if not n0_road_think] What do you think goes on in that abbey? -> think
+* [if not n0_cart_demon] What do people say is in there? -> demon
 * [if not n0_road_ask] Who would know more? -> ask
 
 == think [set n0_road_think]
 Traveller: I think a man goes in at that gate with a full purse, and nobody sees him come out.
 Traveller: Call that what you like. I'd call it a reason to keep walking.
+* Those are my brothers you're talking about. -> defend
+* You think men did it, not a demon? -> men
+* (Say nothing.) -> after_topics
+
+== defend [set n0_road_defend]
+Traveller: I'm talking about a wall I can't see over. (He shrugs.) You'll be over it tomorrow. Then you tell me.
+-> after_topics
+
+== men [set n0_road_men]
+Traveller: I think a demon has no use for a purse.
+Traveller: (He looks back the way the cart went.) But I've never seen a demon. I've seen plenty of men.
+-> after_topics
+
+== demon [set n0_cart_demon]
+Traveller: A demon. A thing with horns that walks the cloister when the bells are done.
+Traveller: And lights in the church long after the last office. Singing, some say, when there's nothing to sing.
+Traveller: I don't say it's true. I say I'd not sleep in there for the King's own purse.
 -> after_topics
 
 == ask [set n0_road_ask]
 Traveller: The inn across the lane from the abbey gate. The Cross Keys.
-Traveller: Buy the landlord an ale and he'll talk till the candle's out.
+Traveller: Buy the landlord an ale and he'll talk till the candle's out. His wife hears more, and says less.
 -> after_topics
+
+== after_spent
+Traveller: I've said more than I meant to, brother. (He tries a smile.) It's the cold. It loosens a man.
+-> end
 
 == leave
 Traveller: Suit yourself, brother.

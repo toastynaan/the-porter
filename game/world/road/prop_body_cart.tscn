@@ -3,18 +3,36 @@
 [ext_resource type="PackedScene" path="res://game/world/road/prop_cart.tscn" id="cart"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_horse.tscn" id="horse"]
 [ext_resource type="PackedScene" path="res://art/models/prop_shrouded_body.glb" id="body"]
+[ext_resource type="Script" path="res://game/world/road/cart_jolt.gd" id="jolt"]
 
 [node name="BodyCart" type="Node3D"]
-editor_description = "A cart going the other way with a covered body on it (night 0's hook: a pilgrim found in the ditch, the third this month). Faces -Z (the horse in front). Origin on the ground under the middle of the bed."
+editor_description = "A cart going the other way with the dead on it (night 0's hook: pilgrims found in the ditch by the white chapel). Faces -Z (the horse in front). Origin on the ground under the middle of the bed. Everything but the horse is under Bed, which jolts over the road (CartJolt)."
 
-[node name="Cart" parent="." instance=ExtResource("cart")]
+[node name="Bed" type="Node3D" parent="."]
+script = ExtResource("jolt")
+seed_offset = 5
+
+[node name="Cart" parent="Bed" instance=ExtResource("cart")]
+
+[node name="Bodies" type="Node3D" parent="Bed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.81, 0.15)
+editor_description = "Four of them under sacking (tools/build/prop_shrouded_body.py): three side by side, head to foot, and one laid across them. The porter's view goes here as the cart passes (RideBeat). Move, add or delete them by hand."
+
+[node name="Body1" parent="Bed/Bodies" instance=ExtResource("body")]
+transform = Transform3D(0.9962, 0, 0.0872, 0, 1, 0, -0.0872, 0, 0.9962, -0.44, 0, 0)
+
+[node name="Body2" parent="Bed/Bodies" instance=ExtResource("body")]
+transform = Transform3D(-0.9986, 0, 0.0523, 0, 1, 0, -0.0523, 0, -0.9986, 0.02, 0.012, 0.06)
+
+[node name="Body3" parent="Bed/Bodies" instance=ExtResource("body")]
+transform = Transform3D(0.9945, 0, -0.1045, 0, 1, 0, 0.1045, 0, 0.9945, 0.45, 0.024, -0.04)
+
+[node name="Body4" parent="Bed/Bodies" instance=ExtResource("body")]
+transform = Transform3D(0.1219, 0, 0.9925, 0.0436, 0.999, -0.0054, -0.9915, 0.0436, 0.1218, 0.02, 0.15, -0.32)
+editor_description = "Laid across the other three, its head and feet over the cart's sides."
+
+[node name="CarterSeat" type="Marker3D" parent="Bed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 0.87, -1.00)
 
 [node name="Horse" parent="." instance=ExtResource("horse")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.95)
-
-[node name="ShroudedBody" parent="." instance=ExtResource("body")]
-transform = Transform3D(0.9962, 0, 0.0872, 0, 1, 0, -0.0872, 0, 0.9962, 0.06, 0.81, 0.15)
-editor_description = "What lies on the bed, under sacking (tools/build/prop_shrouded_body.py)."
-
-[node name="CarterSeat" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0.00, 0.87, -1.00)

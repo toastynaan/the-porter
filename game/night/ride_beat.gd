@@ -118,6 +118,7 @@ var _rumble: AudioStreamPlayer3D
 ## Who is walking up to the wagon or back (the warden): the watch leaves him be.
 var _inspecting: Node3D
 var _walking := false
+var _lantern_moving := false
 
 
 func _ready() -> void:
@@ -251,14 +252,14 @@ func _leave_the_road() -> void:
 ## Seats him and the traveller and the carter on the wagon.
 func _seat(p: Player) -> void:
 	_place(wagon, 0.0, SIDE)
-	var seat := wagon.get_node(^"Seat") as Marker3D
+	var seat := wagon.get_node(^"Bed/Seat") as Marker3D
 	p.place(seat.global_position, seat.global_rotation.y)
 	p.riding = seat
-	traveller.reparent(wagon.get_node(^"TravellerSeat"), false)
+	traveller.reparent(wagon.get_node(^"Bed/TravellerSeat"), false)
 	traveller.position = Vector3.ZERO
 	traveller.rotation = Vector3.ZERO
 	if carter:
-		carter.reparent(wagon.get_node(^"CarterSeat"), false)
+		carter.reparent(wagon.get_node(^"Bed/CarterSeat"), false)
 		carter.position = Vector3.ZERO
 		carter.rotation = Vector3.ZERO
 
@@ -278,6 +279,8 @@ func _pass_cues() -> void:
 	while _next < _cues.size() and _cues[_next].along <= _along + 0.01:
 		var cue := _cues[_next]
 		_next += 1
+		if cue.flag != &"" and cue.hold <= 0.0:
+			GameState.set_flag(cue.flag)
 		if cue.pace > 0.0:
 			_pace = cue.pace
 		if cue.sound and AudioOut.enabled():
@@ -380,7 +383,7 @@ func _hook() -> void:
 	Talk.interrupt()
 	_queue.clear()
 	# His eyes go to what is on the cart, not to the man beside him.
-	var body: Node3D = body_cart.get_node_or_null(^"ShroudedBody") if is_instance_valid(body_cart) else null
+	var body: Node3D = body_cart.get_node_or_null(^"Bed/Bodies") if is_instance_valid(body_cart) else null
 	await Talk.converse(traveller_talk, traveller, body if body else body_cart)
 
 
@@ -408,7 +411,7 @@ func _hold_at(cue: RideCue) -> void:
 		_walk.call(who, _beside_him(who))
 		await say_lines(cue.lines.slice(cue.lines.size() - 1))
 		await until(func() -> bool: return not _walking)
-		await _lantern_to_his_face(who, cue.close_lines)
+		await _lantern_to_his_face(who, cue.talk)
 		# He goes back to his place saying they can go.
 		_walk.call(who, home.origin)
 		await _say_unless_talking(cue.parting_lines)
@@ -416,13 +419,15 @@ func _hold_at(cue: RideCue) -> void:
 		who.global_transform = home
 		_inspecting = null
 	_speaking = false
+	if cue.flag != &"":
+		GameState.set_flag(cue.flag)
 	await wait(cue.hold / pace_scale)
 
 
 ## Where someone coming up to the stopped wagon stands: beside its back on
 ## his own side of it, a little behind the porter's seat, so he can see him.
 func _beside_him(who: Node3D) -> Vector3:
-	var seat := wagon.get_node(^"Seat") as Marker3D
+	var seat := wagon.get_node(^"Bed/Seat") as Marker3D
 	var side := signf((who.global_position - wagon.global_position).dot(wagon.global_basis.x))
 	var at := wagon.to_global(Vector3((side if side != 0.0 else -1.0) * STAND_OUT, 0.0, seat.position.z + STAND_BACK))
 	at.y = who.global_position.y
@@ -452,41 +457,40 @@ func _walk(who: Node3D, to: Vector3) -> void:
 
 
 ## He turns to the porter and holds his lantern up to his face: the porter's
-## view goes to the warden's face, with the lantern up beside it, `lines`
-## are said, and it comes down again.
-func _lantern_to_his_face(who: Node3D, lines: PackedStringArray) -> void:
+## view goes to the warden's face, with the lantern up beside it, they talk
+## (`talk`), and it comes down again.
+func _lantern_to_his_face(who: Node3D, talk: Conversation) -> void:
 	var p := player()
 	var look := who.get_node_or_null(^"Look") as CharacterLook
 	var lantern: Node3D = look.part(^"Lantern") if look else null
 	# Whatever he turned to the traveller about meanwhile, this comes first.
 	Talk.interrupt()
-	var opened := Talk.begin(who)
-	if not opened and who.has_method(&"face"):
+	if who.has_method(&"face"):
 		who.call(&"face", p.global_position)
 	var rest := lantern.position if lantern else Vector3.ZERO
 	if lantern:
 		var eyes := p.camera.global_position
 		var near := eyes + ((who.call(&"face_position") as Vector3) - eyes).normalized() * LANTERN_NEAR \
 				+ who.global_basis.x * LANTERN_ASIDE
-		await _move_lantern(lantern, rest, (lantern.get_parent() as Node3D).to_local(near))
-	for l in lines:
-		var at := l.find(": ")
-		if at > 0 and not l.begins_with("("):
-			await Talk.line(l.left(at), l.substr(at + 2))
-		else:
-			await Talk.line("", l)
+		# It comes up as he starts to speak.
+		_move_lantern.call(lantern, rest, (lantern.get_parent() as Node3D).to_local(near))
+	if talk:
+		await Talk.converse(talk, who)
+	else:
+		await wait(2.0 * RAISE / pace_scale)
+	await until(func() -> bool: return not _lantern_moving)
 	if lantern:
 		_move_lantern.call(lantern, lantern.position, rest)
-	if opened:
-		Talk.end()
 
 
 func _move_lantern(lantern: Node3D, from: Vector3, to: Vector3) -> void:
+	_lantern_moving = true
 	var t := 0.0
 	while is_instance_valid(lantern) and t < 1.0:
 		t = minf(t + PlayTime.physics(self) * pace_scale / RAISE, 1.0)
 		lantern.position = from.lerp(to, smoothstep(0.0, 1.0, t))
 		await PlayTime.physics_frame(self)
+	_lantern_moving = false
 
 
 ## On down the lane, out of sight; then gone.

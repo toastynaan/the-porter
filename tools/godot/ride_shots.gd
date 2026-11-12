@@ -1,8 +1,8 @@
 extends Node
 ## Stills of the reworked ride in (night 0) through the full render pipeline,
 ## to art/_review/ride/ (tools/ride_shots.sh), at the ride's own pace: talking
-## to the traveller in the fields, the carter pulled in and the body cart going
-## by, the warden at Aldgate walking up and his lantern in the porter's face, the woman in the doorway, the lane, and the
+## to the traveller in the fields, the carter pulled in and the cart with the
+## dead going by, the warden at Aldgate walking up and his lantern in the porter's face, the woman in the doorway, the lane, and the
 ## wagon driving off down it.
 
 const OUT := "res://art/_review/ride/"
@@ -51,8 +51,8 @@ func _ready() -> void:
 	await _until(func() -> bool: return Talk.history.has(["Warden", "Let's have a look at you, then."]), 90.0)
 	_look_at(p, warden.global_position + Vector3.UP * 1.5)
 	await _shot("the_warden_walks_up", 0.9)
-	await _until(func() -> bool: return Talk.history.has(["", "(He holds his lantern up to your face, and looks at you a long moment.)"]), 20.0)
-	await _shot("the_lantern_in_his_face", 0.3)
+	await _until(func() -> bool: return Talk.history.has(["Warden", "A monk. Young, too. Where are you bound, brother?"]), 20.0)
+	await _shot("the_lantern_in_his_face", 1.2)
 
 	# The woman in the doorway.
 	var woman := night.get_node(^"RoadFolk/Townswoman") as Node3D
