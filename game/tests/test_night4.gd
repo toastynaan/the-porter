@@ -1,5 +1,5 @@
 extends Node
-## Night 4, Edwin (design doc, Night 4; docs/full-game-run.md, "Witnessed
+## Night 4, Edwin (design doc, Night 4; docs/log/full-game-run.md, "Witnessed
 ## deaths", the chase rule "two hunters; one is Osric"), played in full twice:
 ## - the pilgrim let in and not warned: no supper (the fast), Edwin's
 ##   whisper and Thomas on Simon at dusk, Mab let in, Edwin missing at

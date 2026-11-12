@@ -1,5 +1,5 @@
 extends NightBeat
-## The road in (design doc, night 0; docs/prologue.md, "The ride"): on rails,
+## The road in (design doc, night 0; docs/places/prologue.md, "The ride"): on rails,
 ## the carter's wagon drives itself from the fields past the white chapel,
 ## through Aldgate, along the close streets and into the lane, about two
 ## minutes. The porter rides at the back and can look about. The traveller

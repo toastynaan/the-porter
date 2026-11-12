@@ -1,5 +1,5 @@
 extends NightBeat
-## The tour (design doc, "Day 1: The duties"; docs/mechanics.md, "The tour"):
+## The tour (design doc, "Day 1: The duties"; docs/systems/mechanics.md, "The tour"):
 ## about five minutes. Thomas, leading the blind Anselm by the arm, walks
 ## ahead and stops at each of the porter's duties; at each, he explains it
 ## and the porter tries it: bar the gate, open the ledger, read the candle

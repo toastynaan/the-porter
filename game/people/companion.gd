@@ -1,6 +1,6 @@
 class_name Companion
 extends Node
-## Someone who goes with the porter (docs/mechanics.md, "Companions"): a guest
+## Someone who goes with the porter (docs/systems/mechanics.md, "Companions"): a guest
 ## to his bed, Mab or Joan on night 6, Simon on nights 5-6 if he saved him.
 ## A child of their VisitorNPC. Asked to follow ([follow] in a talk), they
 ## keep a few steps behind and open doors; told to wait ([wait], or a quick

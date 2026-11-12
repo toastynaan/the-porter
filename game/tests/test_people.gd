@@ -1,5 +1,5 @@
 extends Node
-## The abbey's people (docs/mechanics.md, "People", "Routines", "Trust",
+## The abbey's people (docs/systems/mechanics.md, "People", "Routines", "Trust",
 ## "Warnings", "Companions", "Lies", "Saving people", "Reading the hidden
 ## numbers", "Time and duties" and "Tests"), in night 3:
 ## - routines walk by the hour, in view: Osric to the granary door at nine,

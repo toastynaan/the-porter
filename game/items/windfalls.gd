@@ -1,6 +1,6 @@
 class_name Windfalls
 extends Node3D
-## Windfall apples under the orchard trees (docs/mechanics.md, "The drug,
+## Windfall apples under the orchard trees (docs/systems/mechanics.md, "The drug,
 ## and food": two or three a night): of its Pickup children, it puts out a
 ## third each night, a different third from the night before.
 

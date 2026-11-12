@@ -1,6 +1,6 @@
 class_name PauseMenu
 extends MenuPage
-## The pause menu (docs/mechanics.md, "Controls": Esc or Start opens it and
+## The pause menu (docs/systems/mechanics.md, "Controls": Esc or Start opens it and
 ## frees the mouse): Resume, Settings, How to Play, Quit to the title.
 
 signal chosen(what: StringName)

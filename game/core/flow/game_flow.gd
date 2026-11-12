@@ -1,6 +1,6 @@
 class_name GameFlow
 extends Node
-## The game from the title screen to the last chronicle (docs/full-game-run.md,
+## The game from the title screen to the last chronicle (docs/log/full-game-run.md,
 ## "Done when" 1): New Game plays the chapters in order (night 0, day 1,
 ## nights 1 to 6), each opened by its chapter card, and when night 6 ends the
 ## ending's chronicle closes the game and chapter select opens. Continue

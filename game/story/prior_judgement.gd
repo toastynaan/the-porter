@@ -1,5 +1,5 @@
 class_name PriorJudgement
-## The prior's judgement at dawn on night 5 (docs/mechanics.md, "The
+## The prior's judgement at dawn on night 5 (docs/systems/mechanics.md, "The
 ## payoff"): he arrests the porter, and believes him if he can show two
 ## different kinds of proof (a costume, a purse, the relic, the book) or
 ## has enough in his notes (6 of the clues the game can write). Believed,

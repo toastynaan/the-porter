@@ -1,6 +1,6 @@
 class_name DemonChoice
 extends Node3D
-## The Demon ending is a choice (docs/mechanics.md, "Night 6"). At Dose 75+,
+## The Demon ending is a choice (docs/systems/mechanics.md, "Night 6"). At Dose 75+,
 ## from `hour`, "the demon" comes for the porter with a light: the prior,
 ## coming to help, though drugged he can't see it. When it corners him
 ## (within REACH) he can strike, the only time he can: the Demon ending; or

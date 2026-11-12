@@ -10,7 +10,7 @@ extends CharacterBody3D
 ## running, steps heard at half range, hidden behind anything 1 m high) and
 ## leans (`lean_left`, `lean_right`: the view moves 0.4 m aside and tilts
 ## 10°, and a hunter can see the leaning head). Look follows the mouse or the
-## right stick at the Settings sensitivity (docs/mechanics.md, "Your body").
+## right stick at the Settings sensitivity (docs/systems/mechanics.md, "Your body").
 ##
 ## He crawls through squeezes (crawl_along), hides in hiding spots (hide_in,
 ## then `interact` to climb out), and stumbles when he stares at the demon
@@ -22,7 +22,7 @@ extends CharacterBody3D
 ## He peeks through a squint (peek(), E again steps back): his eye to the
 ## bars, the view held within its few degrees.
 ##
-## He holds one thing to throw at a time, in his right hand (docs/mechanics.md,
+## He holds one thing to throw at a time, in his right hand (docs/systems/mechanics.md,
 ## "Throwing": a stone, a bone or a cup from his satchel): throw() sends it
 ## about 8 m ahead.
 ##

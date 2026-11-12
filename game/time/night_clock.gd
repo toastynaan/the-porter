@@ -13,7 +13,7 @@ signal woke
 ## Where a fresh night starts: the porter wakes in the late afternoon.
 @export var start_hour := 16.0
 ## Real seconds per in-game hour, awake and dozing (3 minutes an hour
-## awake: docs/mechanics.md, "Time and duties"; a third less with the
+## awake: docs/systems/mechanics.md, "Time and duties"; a third less with the
 ## faster-clock setting).
 @export var seconds_per_hour := 180.0
 @export var doze_seconds_per_hour := 2.0

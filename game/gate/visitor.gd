@@ -20,7 +20,7 @@ extends Resource
 @export var details: Array[VisitorDetail] = []
 ## The flag that records the porter's choice: admitted, refused or prior.
 @export var flag := &""
-## One question he can ask first (docs/mechanics.md, "Talking at the
+## One question he can ask first (docs/systems/mechanics.md, "Talking at the
 ## grille"), and what they answer.
 @export var question := ""
 @export var answer: PackedStringArray = []

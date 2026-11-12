@@ -1,6 +1,6 @@
 class_name SeenWatch
 extends Node
-## Being seen somewhere he shouldn't be (docs/mechanics.md, "Being seen").
+## Being seen somewhere he shouldn't be (docs/systems/mechanics.md, "Being seen").
 ## While the porter is in a restricted place (group "restricted": Restricted
 ## boxes, and the ground near a body), any brother in the world who can see
 ## him by the hunters' sight rules (lantern light, distance, his view)

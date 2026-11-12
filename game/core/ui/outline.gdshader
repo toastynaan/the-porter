@@ -1,5 +1,5 @@
 shader_type spatial;
-// The thin pale outline on whatever E would use (docs/mechanics.md, "Your
+// The thin pale outline on whatever E would use (docs/systems/mechanics.md, "Your
 // hands"): the mesh drawn again as a hull a little bigger than itself, its
 // back faces only, so only the rim outside the silhouette shows. It grows
 // with distance, so it stays about one render pixel thick.

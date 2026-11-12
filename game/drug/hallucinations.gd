@@ -1,7 +1,7 @@
 class_name Hallucinations
 extends Node3D
 ## What the drug does to the porter's senses, never to his body (design doc,
-## "Effect tiers"; docs/mechanics.md, "The drug, and food": Dose changes
+## "Effect tiers"; docs/systems/mechanics.md, "The drug, and food": Dose changes
 ## only what he sees and hears). Every so often, while he's about, it plays
 ## an event the tier allows; the tiers stack:
 ## - 25+, his ears: a whisper at his shoulder, steps behind him, his name

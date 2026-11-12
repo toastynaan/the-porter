@@ -3,7 +3,7 @@ extends Control
 ## The porter's ledger, held up with `ledger` (Look and Feel, "UI": who came
 ## in is shown by the ledger, written in a manuscript hand on parchment; the
 ## ledger and the candle clock say what is due). An object he carries, not a
-## HUD, with two pages (docs/mechanics.md, "The ledger's notes"): tonight's
+## HUD, with two pages (docs/systems/mechanics.md, "The ledger's notes"): tonight's
 ## guests as he wrote them and tonight's duties, the done ones struck
 ## through; then his notes, oldest first, a night to a section. `ledger`
 ## turns to the notes, and again puts it away. The night goes on while he

@@ -1,6 +1,6 @@
 class_name Fire
 extends Node3D
-## Fire on night 6 (docs/mechanics.md, "Fire"): hold the lantern to this
+## Fire on night 6 (docs/systems/mechanics.md, "Fire"): hold the lantern to this
 ## marked spot (the granary's sacks, the crypt's hangings) for LIGHT_TIME
 ## seconds, from within REACH m and looking at it, and it catches. Then it
 ## spreads along `path` (its Marker3D children, in order) at SPREAD m/s,

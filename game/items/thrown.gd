@@ -1,6 +1,6 @@
 class_name Thrown
 extends RigidBody3D
-## Something the porter has thrown (docs/mechanics.md, "Throwing"): it flies
+## Something the porter has thrown (docs/systems/mechanics.md, "Throwing"): it flies
 ## about 8 m, and where it first lands makes a noise the hunters go to look
 ## at (Investigate). How far it carries depends on what it lands on: stone
 ## 10 m, wood 8 m, mud or grass 4 m. It stays where it comes to rest; the

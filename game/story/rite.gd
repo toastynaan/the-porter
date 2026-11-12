@@ -1,5 +1,5 @@
 class_name Rite
-## The rite (docs/full-game-run.md, "The rite"): the cult's book says the
+## The rite (docs/log/full-game-run.md, "The rite"): the cult's book says the
 ## Hungry Saint wakes when it has been fed ten souls in the six nights, the
 ## last given in the crypt at Matins on night 6. Six deaths always come;
 ## five can be stopped by the porter's choices. What the count has reached

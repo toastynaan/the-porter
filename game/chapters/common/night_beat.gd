@@ -9,7 +9,7 @@ extends Node
 @export var bell := &""
 ## Saves quietly as the beat starts (before a designed chase or set piece).
 @export var quiet := false
-## Lateness counts for this duty from `due` until arrived() (docs/mechanics.md,
+## Lateness counts for this duty from `due` until arrived() (docs/systems/mechanics.md,
 ## "Lateness"): 15 minutes late is noticed, 45 brings someone to fetch him.
 @export var watch_late := false
 ## Who comes to fetch him: "prior", or "cole" (at dusk).
@@ -72,7 +72,7 @@ func fade_to(alpha: float, seconds: float) -> void:
 
 
 ## Lies down and sleeps through the day: the screen goes dark, the clock
-## stops, and of the night's Dose only `keeps` is left (docs/full-game-run.md,
+## stops, and of the night's Dose only `keeps` is left (docs/log/full-game-run.md,
 ## "Six nights": Dose halved by a day's sleep); the cult scrubs the marks that
 ## prove men did it. Sets night<N>_done.
 func sleep_through_the_day(keeps: float, line: String) -> void:

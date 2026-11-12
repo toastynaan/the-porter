@@ -6,7 +6,7 @@ extends Area3D
 ## game/chapters/<chapter>/dialogue/; Talk.converse() plays it, with the porter's view eased in
 ## on their face. They turn to face him. Only in `phases` (e.g. dusk, while
 ## there is time to talk). At Suspicion 85+ the brothers won't speak to him at
-## all (docs/mechanics.md, "Reading the hidden numbers"). Someone who is his
+## all (docs/systems/mechanics.md, "Reading the hidden numbers"). Someone who is his
 ## companion (a Companion child) is told to follow or wait with a quick E
 ## instead.
 

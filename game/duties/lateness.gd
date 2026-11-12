@@ -1,5 +1,5 @@
 class_name Lateness
-## Being late for a duty (docs/mechanics.md, "Time and duties"): the candle
+## Being late for a duty (docs/systems/mechanics.md, "Time and duties"): the candle
 ## waits at a duty's mark until he does it, and the time he takes after the
 ## mark counts as late.
 ## - Up to 15 minutes: on time.

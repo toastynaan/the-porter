@@ -7,7 +7,7 @@ extends NightBeat
 ## those nights it takes Dose to 50 at least and keeps it there for the rest
 ## of the night, so no one sees a mask clearly before night 4 (M0 default).
 ## From night 4 it comes a breath at a time while it burns, and where he
-## stands decides how much (docs/mechanics.md, "Incense from night 4"): in
+## stands decides how much (docs/systems/mechanics.md, "Incense from night 4"): in
 ## his stall, all of it; by the choir's west door, about a third; holding
 ## his breath, none. But if a brother sees him out of his stall while the
 ## office is sung, Suspicion +10.

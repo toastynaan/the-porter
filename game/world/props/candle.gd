@@ -4,7 +4,7 @@ extends Node3D
 ## rules"). Small range, no shadows, a slow flicker. Put it out with `lit`.
 ## A hunter sees anyone standing in its light (HunterSenses.is_lit). While
 ## the porter's lantern is out, a lit candle relights it: hold E on it for
-## RELIGHT_TIME s (docs/mechanics.md, "The lantern").
+## RELIGHT_TIME s (docs/systems/mechanics.md, "The lantern").
 
 const RELIGHT_TIME := 1.5
 

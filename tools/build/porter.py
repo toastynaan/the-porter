@@ -7,7 +7,7 @@ art/models/<name>.glb. Conventions:
 - Scripts work in the game's own space: metres, +Y up, -Z forward, as Godot
   has it. Mesh.vert() takes care of Blender's Z-up.
 - An asset's origin is on the floor at the middle of its footprint, its front
-  facing -Z (docs/assets.md).
+  facing -Z (docs/systems/assets.md).
 - Materials are exported by name only, with no images. A material called
   "plaster_white" is linked on import to
   game/world/materials/real/plaster_white.tres (tools/build/link_materials.py),

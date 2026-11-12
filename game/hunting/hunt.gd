@@ -1,7 +1,7 @@
 class_name Hunt
 extends Node3D
 ## How hard the porter is hunted on a night's round, by Suspicion (design
-## doc, "Thresholds"; docs/mechanics.md, "Suspicion" and "Reading the hidden
+## doc, "Thresholds"; docs/systems/mechanics.md, "Suspicion" and "Reading the hidden
 ## numbers"). A night's beat calls begin() when the hunting starts (from
 ## night 3, Suspicion drives it every night) and end() when it's over:
 ## - 0-29: one costumed cultist on a patrol route; he chases what he sees

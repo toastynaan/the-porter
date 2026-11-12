@@ -1,5 +1,5 @@
 extends Node
-## The incense at Matins from night 4 (docs/mechanics.md, "Incense from
+## The incense at Matins from night 4 (docs/systems/mechanics.md, "Incense from
 ## night 4" and "Tests": the dose by place, holding your breath, being seen
 ## out of your stall), in a test night of Matins alone: in his stall he
 ## takes the whole +25; by the choir's west door about a third; holding his

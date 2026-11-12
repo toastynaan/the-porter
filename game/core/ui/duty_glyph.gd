@@ -1,6 +1,6 @@
 class_name DutyGlyph
 extends Control
-## The duty glyph (docs/mechanics.md, "The minimal HUD"): a small, dim candle
+## The duty glyph (docs/systems/mechanics.md, "The minimal HUD"): a small, dim candle
 ## flame, about 1° across, over the one person or thing the current duty
 ## needs (the nearest node in the "glyph_targets" group: wanted Duties, and
 ## people a beat marks), seen within RANGE and in clear view. Never during a

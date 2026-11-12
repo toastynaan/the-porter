@@ -1,5 +1,5 @@
 extends NightBeat
-## The cult comes for a guest in the small hours (docs/mechanics.md, "Saving
+## The cult comes for a guest in the small hours (docs/systems/mechanics.md, "Saving
 ## people"; night 1: the merchant). At `hour`, if the porter let `guest` in
 ## (his Visitor flag is admitted, or prior), and nothing keeps him safe
 ## (Saving.guest_safe: the guesthouse locked on nights 1-3, or warned to bar

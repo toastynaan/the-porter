@@ -1,5 +1,5 @@
 extends Node
-## The drug and the dark (design doc, "Effect tiers"; docs/mechanics.md, "The
+## The drug and the dark (design doc, "Effect tiers"; docs/systems/mechanics.md, "The
 ## drug, and food", "The minimal HUD"; M10's "each tier's events fire, fakes
 ## leave nothing"), in night_base's furniture (death_demo.tscn):
 ## - the tiers: clear below 25; whispers, steps behind and his name at 25+;

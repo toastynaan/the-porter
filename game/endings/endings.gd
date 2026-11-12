@@ -1,5 +1,5 @@
 class_name Endings
-## The seven endings and their chronicle entries (docs/full-game-run.md,
+## The seven endings and their chronicle entries (docs/log/full-game-run.md,
 ## "Endings"), in the order they are checked when night 6 ends. Each entry is
 ## the official version, written decades later; it never matches what the
 ## porter saw. DRAFT: every chronicle here waits on the user's rewrite.

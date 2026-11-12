@@ -1,5 +1,5 @@
 extends Node
-## The game's frame (docs/full-game-run.md, M8 and "Done when" 1), through
+## The game's frame (docs/log/full-game-run.md, M8 and "Done when" 1), through
 ## main.tscn from the title screen: New Game plays night 0, day 1 and nights
 ## 1 to 6 in order, each opened by its chapter card (night 0 to night 5 are
 ## played in full; night 6 is played to the Broken Rite), with Dose halved by each day's sleep

@@ -28,7 +28,7 @@ const BREAD_CHOICES := ["(Eat the bread.)", "(Palm the bread.)"]
 @export var thomas: Brother
 ## Who offers the remedy (none: no remedy tonight).
 @export var ranulf: Brother
-## Who watches him at supper from Suspicion 30 (docs/mechanics.md, "Reading
+## Who watches him at supper from Suspicion 30 (docs/systems/mechanics.md, "Reading
 ## the hidden numbers": someone is always watching you at supper).
 @export var watcher: Brother
 

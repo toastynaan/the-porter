@@ -1,6 +1,6 @@
 class_name FalseDoor
 extends Node3D
-## The HUD lies once (docs/mechanics.md, "The minimal HUD"): on night 5 or 6,
+## The HUD lies once (docs/systems/mechanics.md, "The minimal HUD"): on night 5 or 6,
 ## only at Dose 75+, the outline shows on a door in a blank wall. The slab
 ## is the wall's own stone, so only its outline can be seen. Use it and it
 ## swings open on more stone behind it, and is gone. Only ever once.

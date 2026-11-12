@@ -1,6 +1,6 @@
 class_name Pickup
 extends Node3D
-## Something lying about that the porter can take (docs/mechanics.md, "Your
+## Something lying about that the porter can take (docs/systems/mechanics.md, "Your
 ## hands"): a windfall apple under the orchard trees, a stone to throw. Look
 ## at it and press `interact`. Clean food eaten now if he's hungry (hunger
 ## ends for the night, no Dose), else it goes in his satchel; something to

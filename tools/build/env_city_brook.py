@@ -4,7 +4,7 @@ the street runs along x at z = 47; the brook crosses it, running along z).
 
 The street inside Aldgate ends at the water. The wagon goes over the bridge
 with the porter looking back down the street to the gate, and there the
-talk of the road ends and the night goes dark (docs/prologue.md).
+talk of the road ends and the night goes dark (docs/places/prologue.md).
 
 - The bridge: one low arch of cut stone, hump-backed, cobbled, a parapet
   each side between stone piers. Each pier carries an iron standard for a

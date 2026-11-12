@@ -1,5 +1,5 @@
 extends NightBeat
-## The window (design doc, "Night 0"; docs/mechanics.md, "Sleeping"): lying
+## The window (design doc, "Night 0"; docs/systems/mechanics.md, "Sleeping"): lying
 ## down on the bed in his room at the top of the Cross Keys, he hears a cry;
 ## from the window he sees over the abbey wall into the court: a figure in a
 ## black habit, its back to him, kills a man by the well and drags him away

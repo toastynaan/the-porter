@@ -1,6 +1,6 @@
 extends Node
 ## Starting a chapter at one of its beats, for testing (SceneSelect, the
-## title's "Test a scene" in debug builds; docs/full-game-run.md, "Tools"):
+## title's "Test a scene" in debug builds; docs/log/full-game-run.md, "Tools"):
 ## - the page lists every chapter, and a chapter's beats as its scene has them;
 ## - night 0 from Arrive: no ride. He stands in the lane by the barred gate,
 ##   the road and the wagon are gone, the abbey is shown, and the knock is

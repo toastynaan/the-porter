@@ -1,6 +1,6 @@
 extends Node
-## Night 2, the bell (design doc, Night 2; docs/full-game-run.md, "Witnessed
-## deaths"; docs/mechanics.md, "Saving people"), played in full three times:
+## Night 2, the bell (design doc, Night 2; docs/log/full-game-run.md, "Witnessed
+## deaths"; docs/systems/mechanics.md, "Saving people"), played in full three times:
 ## - after the merchant died: Thomas's word about the prior at supper (he
 ##   missed him at dusk); Joan, Roger (asking after the merchant) and the
 ##   sailor at the gate; the sailor turned away after the curfew bell dies

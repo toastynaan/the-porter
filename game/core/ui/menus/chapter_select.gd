@@ -1,6 +1,6 @@
 class_name ChapterSelect
 extends MenuPage
-## Chapter select, once the game is finished (docs/mechanics.md, "Settings
+## Chapter select, once the game is finished (docs/systems/mechanics.md, "Settings
 ## and accessibility"): start any night, with the state a typical
 ## playthrough would have reached by then (each night's own start state).
 

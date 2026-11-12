@@ -7,7 +7,7 @@ extends Node3D
 ## degrees of straight through; E steps back. He can't be seen through it
 ## except up close, with a light (HunterSenses).
 
-## Degrees he can look about through it, either way (docs/mechanics.md, "Peeking").
+## Degrees he can look about through it, either way (docs/systems/mechanics.md, "Peeking").
 const PEEK_LOOK := 25.0
 ## How far from the slit his eye is.
 const EYE_OFF := 0.12

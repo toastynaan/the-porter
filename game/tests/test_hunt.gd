@@ -1,5 +1,5 @@
 extends Node
-## Hunters (docs/mechanics.md, "Being hunted", "Throwing", "The bell rope",
+## Hunters (docs/systems/mechanics.md, "Being hunted", "Throwing", "The bell rope",
 ## "Hunters talk", "The lantern" and "Tests"), in night_base's furniture:
 ## - the four Suspicion bands: one hunter who doesn't search; one who does;
 ##   two, one waiting at the gatehouse, and doors locked (his key opens his

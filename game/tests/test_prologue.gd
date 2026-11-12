@@ -1,6 +1,6 @@
 extends Node
-## Night 0 and day 1 (docs/mechanics.md, "Night 0 and day 1" and "Tests";
-## docs/full-game-run.md, M12), through main.tscn from New Game to night 1's
+## Night 0 and day 1 (docs/systems/mechanics.md, "Night 0 and day 1" and "Tests";
+## docs/log/full-game-run.md, M12), through main.tscn from New Game to night 1's
 ## dusk in one run:
 ## - night 0: the ride in arrives at the lane (about two minutes at its own
 ##   pace; the traveller turning to him as they set off, breaking off with

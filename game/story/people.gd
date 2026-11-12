@@ -1,6 +1,6 @@
 class_name People
 ## Who's who: the name each person goes by, and what they think of the
-## porter at the start (docs/mechanics.md, "Trust": -100 to 100; starting
+## porter at the start (docs/systems/mechanics.md, "Trust": -100 to 100; starting
 ## values Thomas 40, Edwin 50, Anselm 20, Osric 20, Ranulf 0, Mab 0, Joan 0,
 ## Prior Hugh -20, the choir brothers 10). Ids are the node names, lower case.
 

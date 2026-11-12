@@ -1,6 +1,6 @@
 class_name Chapter
 extends Resource
-## One chapter of the game (docs/full-game-run.md, "Done when" 1): night 0,
+## One chapter of the game (docs/log/full-game-run.md, "Done when" 1): night 0,
 ## day 1, or one of the six nights, with the chronicle page its card shows.
 
 @export var id := &""

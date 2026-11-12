@@ -1,5 +1,5 @@
 class_name Items
-## What the porter can carry in his satchel (docs/mechanics.md, "Your hands"):
+## What the porter can carry in his satchel (docs/systems/mechanics.md, "Your hands"):
 ## keys (GameState.keys), evidence, clean food and the thing in his hand.
 ## Each item has a name and the line he reads in the satchel. Evidence kinds
 ## are what the Gate ending counts (two different kinds of proof).

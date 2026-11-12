@@ -1,6 +1,6 @@
 class_name SettingsMenu
 extends MenuPage
-## The settings (docs/mechanics.md, "Settings and accessibility"): field of
+## The settings (docs/systems/mechanics.md, "Settings and accessibility"): field of
 ## view 60-90°, look sensitivity, invert look, volume, crouch held or
 ## toggled, subtitle size and backing, less motion, guidance (the duty
 ## glyph) and the faster clock. Each applies at once; leaving saves them.

@@ -1,5 +1,5 @@
 extends Node
-## Night 1, the new porter (design doc, Night 1; docs/mechanics.md, "Saving
+## Night 1, the new porter (design doc, Night 1; docs/systems/mechanics.md, "Saving
 ## people"), played in full twice:
 ## - the merchant let in and the guesthouse left unlocked: Bede's warning at
 ##   supper, the merchant and Walter at the gate, the first Matins with all

@@ -1,6 +1,6 @@
 class_name BloodMarks
 extends Node3D
-## Blood and marks that stay (docs/full-game-run.md, "Blood and marks"): every
+## Blood and marks that stay (docs/log/full-game-run.md, "Blood and marks"): every
 ## mark a death leaves is kept in GameState.marks and stands in the abbey on
 ## every night after, until the cult cleans it. Each dawn they scrub what
 ## would prove men did it (drag marks, boot prints in blood) and miss the

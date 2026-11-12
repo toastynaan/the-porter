@@ -4,7 +4,7 @@ extends Node
 ## reverb on what he hears, through the DoseLook curves, every frame (Dose
 ## itself only ever drifts). Drink adds its own blur (1-2 ales, a softer
 ## focus) and a drifting double image (3 and more), and the morning after
-## three or more ales, a headache blur until noon (docs/mechanics.md,
+## three or more ales, a headache blur until noon (docs/systems/mechanics.md,
 ## "Drinking"; Look and Feel, "Drink and daylight": no palette shift).
 ## The Environment's saturation isn't touched: the doc's saturation change is
 ## for reds and ambers only, which the post shader does.

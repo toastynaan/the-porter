@@ -1,6 +1,6 @@
 extends Node
-## The dark between the chases, and clean food (docs/full-game-run.md,
-## "Scares between chases", "The cat"; docs/mechanics.md, "The drug, and
+## The dark between the chases, and clean food (docs/log/full-game-run.md,
+## "Scares between chases", "The cat"; docs/systems/mechanics.md, "The drug, and
 ## food" and "Tests": eating ends hunger), on night 3's furniture:
 ## - the cat follows him at night, stares into the dark (at a man, if one
 ##   is near), and runs before the demon when the animals go quiet;

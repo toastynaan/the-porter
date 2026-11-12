@@ -1,6 +1,6 @@
 class_name Corpse
 extends CharacterBody3D
-## A body that falls (docs/full-game-run.md, "Deaths and bodies": the body
+## A body that falls (docs/log/full-game-run.md, "Deaths and bodies": the body
 ## falls as a ragdoll, the kept ragdoll system). It stands as a figure on the
 ## ragdoll rig (game/ragdoll) in the victim's colours until fall() or
 ## lie_dead(); then it goes limp on Layers.DEAD_BODY and stays where it came

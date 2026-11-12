@@ -1,5 +1,5 @@
 extends Node3D
-## The porter's body (docs/mechanics.md, "Your body" and "Tests"): crouching
+## The porter's body (docs/systems/mechanics.md, "Your body" and "Tests"): crouching
 ## is 0.8 m/s with the eyes at 1.0 m and no running, its steps are heard at
 ## half the walking range (2 m), and it hides him from a hunter behind
 ## anything 1 m high; leaning moves the view 0.4 m aside and tilts it 10°,

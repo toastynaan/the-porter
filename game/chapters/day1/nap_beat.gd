@@ -1,5 +1,5 @@
 extends NightBeat
-## The nap (docs/mechanics.md, "The tour"): his shift is at night, so they
+## The nap (docs/systems/mechanics.md, "The tour"): his shift is at night, so they
 ## send him to sleep in his cell. Lying on the cot fades to dusk, and night 1
 ## begins with its wake.
 

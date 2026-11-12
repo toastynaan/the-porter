@@ -1,5 +1,5 @@
 class_name Report
-## Whom the porter tells about a body (docs/full-game-run.md, "Reporting"):
+## Whom the porter tells about a body (docs/log/full-game-run.md, "Reporting"):
 ## Thomas (safe now, dangerous later: he tells the cult, and each body told
 ## to him is Suspicion +5 at the next dusk), the prior (Suspicion +10 at
 ## once, because Ranulf overhears, and the prior suspects him), or no one

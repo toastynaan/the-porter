@@ -1,6 +1,6 @@
 class_name Gust
 extends Node3D
-## A scripted gust (docs/mechanics.md, "The lantern": wind puts the lantern
+## A scripted gust (docs/systems/mechanics.md, "The lantern": wind puts the lantern
 ## out only at set moments, never at random and never in a chase): a gust
 ## down the tower stair on night 2, the door that blows open in the fog on
 ## night 4, and a few like them. When the porter walks into its box on one

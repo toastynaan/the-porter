@@ -1,5 +1,5 @@
 extends Node
-## Deaths (docs/full-game-run.md, "Deaths and bodies"; M9's "each style plays
+## Deaths (docs/log/full-game-run.md, "Deaths and bodies"; M9's "each style plays
 ## in a test scene"), in game/dev/encounters/death_demo.tscn through main.tscn:
 ## an implied death sober (a man in a mask, a cry, a lantern, a body that
 ## falls as a ragdoll and settles, a pool of blood), a gory one drugged (the

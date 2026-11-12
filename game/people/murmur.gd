@@ -1,6 +1,6 @@
 class_name Murmur
 extends Node3D
-## Brothers talking low (docs/mechanics.md, "Reading the hidden numbers": at
+## Brothers talking low (docs/systems/mechanics.md, "Reading the hidden numbers": at
 ## Suspicion 30+ talk stops when he walks into a room). A murmur plays here
 ## while two or more brothers stand within RADIUS of it. From Suspicion 30,
 ## it stops when the porter comes within HUSH, and they turn to look at him.

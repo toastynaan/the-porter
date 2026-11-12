@@ -1,5 +1,5 @@
 extends Node
-## The frame's quiet parts on night 3 (docs/mechanics.md, "The minimal HUD",
+## The frame's quiet parts on night 3 (docs/systems/mechanics.md, "The minimal HUD",
 ## "Your hands", "Settings" and "Tests"): the outline is on what E would use
 ## only while it is in reach; the duty glyph marks only the current duty,
 ## within 10 m and in view, never while talking, hiding or in a chase, and

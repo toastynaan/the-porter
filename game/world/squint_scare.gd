@@ -1,6 +1,6 @@
 class_name SquintScare
 extends Node3D
-## The squint scare (docs/mechanics.md, "The squint scare"): night 0 only,
+## The squint scare (docs/systems/mechanics.md, "The squint scare"): night 0 only,
 ## once. If he walks the lane alone after the curfew bell and passes the
 ## south squint, a shape stands perfectly still just inside it: too tall, too
 ## thin, no horns. It's gone once he has seen it (a clear line through the

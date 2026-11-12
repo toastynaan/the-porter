@@ -1,6 +1,6 @@
 class_name Footprints
 extends Node3D
-## Footprints in the snow (night 6; docs/full-game-run.md, "Weather"): the
+## Footprints in the snow (night 6; docs/log/full-game-run.md, "Weather"): the
 ## porter and the hunters leave prints outdoors that stay for the night, and
 ## each can follow the other's: a hunter who loses the porter goes to his
 ## freshest print near where he lost him (Hunter._lose_track).

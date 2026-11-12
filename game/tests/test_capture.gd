@@ -1,6 +1,6 @@
 extends Node
 ## Getting caught, through the whole game (main.tscn with the hunt demo;
-## docs/mechanics.md, "Being hunted"): a level rings the "start" bell. On
+## docs/systems/mechanics.md, "Being hunted"): a level rings the "start" bell. On
 ## night 1 the first capture wakes you in the infirmary with +40 Dose, the
 ## satchel emptied but the keys kept, and the hunter back on his round; the
 ## second kills you and restarts the night from the bell, Dose and all, at

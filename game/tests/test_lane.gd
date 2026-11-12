@@ -1,5 +1,5 @@
 extends Node
-## The lane and the squints (docs/mechanics.md, "The lane at dusk", "Peeking",
+## The lane and the squints (docs/systems/mechanics.md, "The lane at dusk", "Peeking",
 ## "The squint scare", "Drinking" and "Tests"), in night_base's furniture:
 ## - the lane's dusk talk reads the flags: what happened the night before is
 ##   what they talk about (Hob on night 2: the merchant dead in the fishpond,

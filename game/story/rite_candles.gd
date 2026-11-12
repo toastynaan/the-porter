@@ -1,6 +1,6 @@
 class_name RiteCandles
 extends Node3D
-## The crypt keeps count (docs/full-game-run.md, "The rite"; docs/mechanics.md,
+## The crypt keeps count (docs/log/full-game-run.md, "The rite"; docs/systems/mechanics.md,
 ## "Reading the hidden numbers"): the cult lights a candle here for each
 ## soul the rite has been fed, so the porter can go down and count them.
 ## Lights the first GameState.count of its Candle children, in order.

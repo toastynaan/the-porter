@@ -8,7 +8,7 @@ extends NightBeat
 ## - Simon: the masked man (`masked`) lets him go and is gone once unseen;
 ##   Thomas gets up "wounded" anyway; Simon tells him Thomas sent him to
 ##   scrub the blood (the note thomas_sent_simon); n5_saved=simon.
-## Saving Simon is the night's rule (docs/mechanics.md, "Saving people").
+## Saving Simon is the night's rule (docs/systems/mechanics.md, "Saving people").
 
 @export var thomas: Brother
 @export var thomas_down: Marker3D

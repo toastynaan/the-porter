@@ -1,5 +1,5 @@
 class_name Clues
-## Every clue the porter can write in his ledger's notes (docs/mechanics.md,
+## Every clue the porter can write in his ledger's notes (docs/systems/mechanics.md,
 ## "Investigation"): something he finds, a lie he notices, something he
 ## hears that matters, someone missing. Six of them, or two kinds of proof,
 ## and the prior believes him on night 5 (PriorJudgement). The notes are in

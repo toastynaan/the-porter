@@ -1,5 +1,5 @@
 class_name Warnings
-## Warning someone (docs/mechanics.md, "Warnings"): a guest to bar the
+## Warning someone (docs/systems/mechanics.md, "Warnings"): a guest to bar the
 ## guesthouse door or leave at first light, a brother to stay in the
 ## dormitory. A warning given before that night's death saves them, and the
 ## count is short by one (a death beat checks warned()). If the cult hears of

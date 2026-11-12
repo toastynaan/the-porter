@@ -1,6 +1,6 @@
 extends Node
-## Night 6 and the seven endings (design doc, "Endings"; docs/full-game-run.md,
-## "Endings", checked in order; docs/mechanics.md, "Night 6"): each reached by
+## Night 6 and the seven endings (design doc, "Endings"; docs/log/full-game-run.md,
+## "Endings", checked in order; docs/systems/mechanics.md, "Night 6"): each reached by
 ## its own scripted route from night 6's dusk:
 ## - the New Faith: he drinks Thomas's wine and is caught;
 ## - the Demon: at Dose 75+ "the demon" corners him with a light and he strikes;

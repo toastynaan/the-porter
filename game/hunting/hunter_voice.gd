@@ -1,6 +1,6 @@
 class_name HunterVoice
 extends Node
-## Hunters talk (docs/mechanics.md, "Hunters talk"): from night 4 they call
+## Hunters talk (docs/systems/mechanics.md, "Hunters talk"): from night 4 they call
 ## the porter's name in a voice he knows, shown as a subtitle with where it
 ## comes from: "Alric..." (behind you, Osric). Drugged (Dose 50+), the name
 ## is missing and it's only "A voice". Before night 4 they're silent. While

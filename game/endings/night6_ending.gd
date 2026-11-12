@@ -1,6 +1,6 @@
 class_name Night6Ending
 extends Node
-## How night 6 ends (docs/full-game-run.md, "Endings", checked in this
+## How night 6 ends (docs/log/full-game-run.md, "Endings", checked in this
 ## order). The New Faith is CaptureFlow's (caught after the wine). The rest:
 ## - the Demon: he struck "the demon" (DemonChoice);
 ## - the Rising: the rite finished with the count at 9 or more (RiteBeat);

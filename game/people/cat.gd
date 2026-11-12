@@ -1,6 +1,6 @@
 class_name Cat
 extends CharacterBody3D
-## The abbey cat (docs/full-game-run.md, "The cat"; design doc, "Animals as
+## The abbey cat (docs/log/full-game-run.md, "The cat"; design doc, "Animals as
 ## tells"): it follows the porter on his rounds, a few steps off; now and
 ## then it stops and stares into a dark corner, and sometimes a man is
 ## standing there (the nearest hunter within `stare_range`, waiting or not);

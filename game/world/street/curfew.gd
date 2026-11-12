@@ -1,6 +1,6 @@
 class_name Curfew
 extends Node3D
-## The city's curfew (docs/mechanics.md, "The lane at dusk"; design doc,
+## The city's curfew (docs/systems/mechanics.md, "The lane at dusk"; design doc,
 ## "Setting"): at nine the curfew bell rings and the lane empties. Its people
 ## (group "lane_people") go home down the lane; the Cross Keys shuts its door;
 ## the lane's lit windows go dark one by one through the next hour. After it

@@ -1,6 +1,6 @@
 class_name HiddenBody
 extends FoundBody
-## One of the five hidden bodies (docs/full-game-run.md, "Hidden bodies"):
+## One of the five hidden bodies (docs/log/full-game-run.md, "Hidden bodies"):
 ## an earlier victim with a pilgrim's badge that matches a name torn from
 ## the ledger, there from `from_night` on for a porter who explores. It
 ## stays hidden until he does the thing that finds it at its "Reveal"

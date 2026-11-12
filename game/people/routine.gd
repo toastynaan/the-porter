@@ -1,6 +1,6 @@
 class_name Routine
 extends Node
-## A brother's routine by the hour (docs/mechanics.md, "Routines"; design doc,
+## A brother's routine by the hour (docs/systems/mechanics.md, "Routines"; design doc,
 ## "Everyone keeps a routine you can see"): where he goes through the night,
 ## walking there in view. Each Marker3D child is a stop, with metadata:
 ## - "hour": from when he goes there (the night's hours: 21.0 is nine, 25.0

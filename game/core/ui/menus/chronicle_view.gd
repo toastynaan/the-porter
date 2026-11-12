@@ -1,6 +1,6 @@
 class_name ChronicleView
 extends MenuPage
-## The chronicle entry that closes the game (docs/full-game-run.md,
+## The chronicle entry that closes the game (docs/log/full-game-run.md,
 ## "Endings"): written decades later in a plain chronicler's voice, the
 ## official version, which never matches what the porter saw. Its last line
 ## follows the thing in the crypt down the years. It goes on like a card.

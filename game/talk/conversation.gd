@@ -21,7 +21,7 @@ extends Resource
 ##                             "-> point" after them, else the talk ends.
 ##   == leave                  Said as he walks away in the middle of a talk.
 ##
-## Who they are to the porter (docs/mechanics.md, "Trust"): a talk starts at
+## Who they are to the porter (docs/systems/mechanics.md, "Trust"): a talk starts at
 ## "start_warm" if they trust him 30 or more, "start_cold" below 0, else
 ## "start" (and "again_warm", "again_cold", "again" the next time), where
 ## those points exist: the greeting follows trust.

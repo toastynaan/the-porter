@@ -3,7 +3,7 @@ extends Node
 ## Runs one night: its NightBeat children, in order (design doc, "Core loop:
 ## one night"). After a death or a Continue the night starts again at the
 ## beat whose `bell` the save was made at. A beat marked `quiet` saves
-## quietly as it starts (docs/mechanics.md, "Quiet saves": just before every
+## quietly as it starts (docs/systems/mechanics.md, "Quiet saves": just before every
 ## designed chase and set piece). `beats_run` records what ran, for tests.
 ##
 ## A night played on its own (the slice, tests, chapter select) starts as if

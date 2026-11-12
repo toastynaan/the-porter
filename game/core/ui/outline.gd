@@ -1,6 +1,6 @@
 class_name Outline
 ## The outline on whatever `interact` would use, while the porter looks at it
-## within reach (docs/mechanics.md, "Your hands"; the Interactor calls set_on()
+## within reach (docs/systems/mechanics.md, "Your hands"; the Interactor calls set_on()
 ## as its focus changes). It draws over the thing's meshes: a node's own
 ## `outline` list if it has one (a Duty or a hiding spot names the prop it
 ## stands for), the person a Talker belongs to, or else the node's own meshes.

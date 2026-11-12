@@ -876,7 +876,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.126, 0, -0.650)
 lit = false
 
 [node name="Restricted" type="Node3D" parent="."]
-editor_description = "Places the porter shouldn't be seen (docs/mechanics.md, Being seen): each a box, with the hour it starts to count."
+editor_description = "Places the porter shouldn't be seen (docs/systems/mechanics.md, Being seen): each a box, with the hour it starts to count."
 
 [node name="Crypt" type="Node3D" parent="Restricted"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -2.2, -32)
@@ -911,7 +911,7 @@ size = Vector3(8, 3.4, 40)
 from_hour = 20.0
 
 [node name="HiddenBodies" type="Node3D" parent="."]
-editor_description = "The five hidden bodies (docs/full-game-run.md, Hidden bodies): earlier victims, each with a pilgrim's badge whose name was torn from the ledger. Each is found at its Reveal marker from its night on."
+editor_description = "The five hidden bodies (docs/log/full-game-run.md, Hidden bodies): earlier victims, each with a pilgrim's badge whose name was torn from the ledger. Each is found at its Reveal marker from its night on."
 
 [node name="Well" type="Node3D" parent="HiddenBodies"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, -1.0, 4)
@@ -1244,7 +1244,7 @@ hidden = NodePath("../HiddenBodies/Well")
 editor_description = "The court well: draw water and drink (dosed from night 4). The first time, the bucket comes up heavy."
 
 [node name="Throwables" type="Node3D" parent="."]
-editor_description = "Stones, bones and cups to throw (docs/mechanics.md, Throwing): a few in every area, more where people work."
+editor_description = "Stones, bones and cups to throw (docs/systems/mechanics.md, Throwing): a few in every area, more where people work."
 
 [node name="StoneCourt0" type="Node3D" parent="Throwables"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0.02, 0)

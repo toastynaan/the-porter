@@ -1,7 +1,7 @@
 class_name SatchelView
 extends Control
 ## The porter's satchel, held up with `satchel` like the ledger
-## (docs/mechanics.md, "Your hands"): what he carries, a line for each, in
+## (docs/systems/mechanics.md, "Your hands"): what he carries, a line for each, in
 ## his hands rather than on a grid. Keys, evidence, clean food and the thing
 ## he holds to throw. Hungry, `interact` eats the clean food he carries. The
 ## night goes on while he looks.

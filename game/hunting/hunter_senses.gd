@@ -21,7 +21,7 @@ const NOTICE_NEAR := 0.3
 const NOTICE_FAR := 1.5
 ## How fast awareness falls away when he can't see, per second.
 const FORGET_RATE := 0.5
-## At a squint the porter is seen only this close (docs/mechanics.md, "Peeking").
+## At a squint the porter is seen only this close (docs/systems/mechanics.md, "Peeking").
 const SQUINT_SEEN := 3.0
 
 ## Chasing: no noticing delay, and he keeps his eyes on you.

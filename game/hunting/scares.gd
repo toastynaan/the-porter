@@ -1,6 +1,6 @@
 class_name Scares
 extends Node3D
-## Scares between chases (docs/full-game-run.md, "Scares between chases"):
+## Scares between chases (docs/log/full-game-run.md, "Scares between chases"):
 ## the hunter heard and glimpsed on every round, and a few jump scares, at
 ## most one a night. A night's round beats call these where the night wants
 ## them; each says whether it could play.

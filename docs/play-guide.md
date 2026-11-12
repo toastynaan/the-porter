@@ -41,7 +41,7 @@ Each night from 1 to 5 runs from dusk to Lauds on the candle clock in your cell 
 
 ## Routes to the seven endings
 
-Each is decided on night 6 (`docs/night6.md`); `test_endings` plays a route to each and checks its chronicle.
+Each is decided on night 6 (`docs/places/night6.md`); `test_endings` plays a route to each and checks its chronicle.
 
 | Ending | One way to get it |
 | --- | --- |
@@ -59,20 +59,20 @@ The whole run takes about 4 hours at the clock's normal pace: night 0 about 19 m
 
 | Topic | Doc |
 | --- | --- |
-| The run's spec, Progress, and decisions to review | `docs/full-game-run.md` |
-| Every rule and number | `docs/mechanics.md` (its "Decisions to review" lists the numbers I chose) |
-| The frame: chapters, saves, death, menus, settings, HUD | `docs/frame.md` |
-| Deaths, bodies, the rite, the notes | `docs/death.md` |
-| The drug and the dark | `docs/drug.md` |
-| Hunters and the abbey's people | `docs/abbey.md` |
-| Night 0, day 1, the lane | `docs/prologue.md` |
-| Nights 1 to 5 | `docs/nights.md`, `docs/night3.md` |
-| Night 6 and the endings | `docs/night6.md` |
-| Writing conversations | `docs/dialogue.md` |
-| Scenes, props, characters | `docs/assets.md`, `docs/abbey-layout.md` |
+| The run's spec, Progress, and decisions to review | `docs/log/full-game-run.md` |
+| Every rule and number | `docs/systems/mechanics.md` (its "Decisions to review" lists the numbers I chose) |
+| The frame: chapters, saves, death, menus, settings, HUD | `docs/systems/frame.md` |
+| Deaths, bodies, the rite, the notes | `docs/systems/death.md` |
+| The drug and the dark | `docs/systems/drug.md` |
+| Hunters and the abbey's people | `docs/systems/abbey.md` |
+| Night 0, day 1, the lane | `docs/places/prologue.md` |
+| Nights 1 to 5 | `docs/places/nights.md`, `docs/places/night3.md` |
+| Night 6 and the endings | `docs/places/night6.md` |
+| Writing conversations | `docs/systems/dialogue.md` |
+| Scenes, props, characters | `docs/systems/assets.md`, `docs/places/abbey-layout.md` |
 
 ## Checks and stills
 
 - `tools/check.sh` runs every test (about 20 minutes; `test_flow` plays the whole game from New Game).
 - `tools/m<N>_shots.sh` renders each milestone's stills to `art/_review/m<N>/`.
-- `tools/intro_shots.sh` and `tools/intro_film.sh` render stills and a short film of the road in; `tools/build.sh` rebuilds the real models (`docs/assets.md`).
+- `tools/shots/intro_shots.sh` and `tools/shots/intro_film.sh` render stills and a short film of the road in; `tools/build.sh` rebuilds the real models (`docs/systems/assets.md`).

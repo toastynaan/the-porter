@@ -1,6 +1,6 @@
 class_name Restricted
 extends Node3D
-## Somewhere the porter shouldn't be seen (docs/mechanics.md, "Being seen"):
+## Somewhere the porter shouldn't be seen (docs/systems/mechanics.md, "Being seen"):
 ## the crypt at any time, the granary and stores after Compline, the
 ## dormitory floor at night. A box (`size`, centred on the node) and the
 ## hours it counts in. SeenWatch does the seeing.

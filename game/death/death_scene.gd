@@ -1,6 +1,6 @@
 class_name DeathScene
 extends Node3D
-## A death the porter sees (docs/full-game-run.md, "Deaths and bodies"; Look
+## A death the porter sees (docs/log/full-game-run.md, "Deaths and bodies"; Look
 ## and Feel, "Deaths"). The node stands where the victim stands, facing -Z;
 ## a beat calls play() when the porter is where the night wants him, and
 ## control is never taken away. It plays in one of three styles:

@@ -1,5 +1,5 @@
 extends Node
-## Night 6's rules (docs/mechanics.md, "Night 6" and "Tests"), in night6.tscn:
+## Night 6's rules (docs/systems/mechanics.md, "Night 6" and "Tests"), in night6.tscn:
 ## - the Saint: its speed by the count; it goes through a locked door; the
 ##   animals fall silent near it; walking, it takes Dunstan, Cole and Osric
 ##   as he comes near each; at full strength it kills a cultist it meets; its

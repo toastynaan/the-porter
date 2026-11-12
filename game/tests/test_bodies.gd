@@ -1,6 +1,6 @@
 extends Node
-## Bodies and what follows them (docs/full-game-run.md, "Found bodies",
-## "Moving bodies", "Reporting", "Hidden bodies"; docs/mechanics.md,
+## Bodies and what follows them (docs/log/full-game-run.md, "Found bodies",
+## "Moving bodies", "Reporting", "Hidden bodies"; docs/systems/mechanics.md,
 ## "Investigation", "Being seen", "The payoff"), in death_demo.tscn:
 ## looking at a body finds it and writes a note; the cult moves a body that
 ## proves men did it once he leaves it, with its proof, and coming back he

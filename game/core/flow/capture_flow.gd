@@ -1,6 +1,6 @@
 class_name CaptureFlow
 extends Node
-## Being caught, and dying (docs/mechanics.md, "Being hunted"). One capture
+## Being caught, and dying (docs/systems/mechanics.md, "Being hunted"). One capture
 ## in the game is forgiving: the first, if it comes on night 1 or 2, wakes
 ## you in the infirmary (the level's "wake_point" marker) with a fresh dose
 ## in you (+40), the satchel emptied but for the keys, and the hunters back

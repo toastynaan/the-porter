@@ -10,9 +10,9 @@ extends Node
 ##
 ## Suspicion rises fast and falls slowly: raise_suspicion() ignores
 ## decreases, and only lower_suspicion() takes any off (a clean night,
-## docs/mechanics.md). Captures only go up: loading a save never undoes one.
+## docs/systems/mechanics.md). Captures only go up: loading a save never undoes one.
 ##
-## Saves (docs/full-game-run.md, "Saves" and "Quiet saves"): one slot at every
+## Saves (docs/log/full-game-run.md, "Saves" and "Quiet saves"): one slot at every
 ## bell, which Continue loads, and a quiet save just before every designed
 ## chase and set piece, which only death goes back to. A bell clears the quiet
 ## save, so death always goes back to whichever came last. Each is a snapshot()
@@ -28,7 +28,7 @@ signal phase_changed(phase: Phase)
 signal flag_changed(flag: StringName, value: Variant)
 signal bell_saved(bell: StringName)
 signal loaded
-## The rite was fed a soul (docs/full-game-run.md, "The rite").
+## The rite was fed a soul (docs/log/full-game-run.md, "The rite").
 signal fed(id: StringName)
 ## The porter wrote a note in his ledger.
 signal noted(id: StringName)
@@ -74,7 +74,7 @@ var suspicion := 0
 ## everyone at Dose 50 or more, so no one sees a mask clearly). Set by the night.
 var dose_floor := 0.0
 ## Times the porter has been caught (only the first, on night 1 or 2, is
-## not death: docs/mechanics.md, "Captures").
+## not death: docs/systems/mechanics.md, "Captures").
 var captures := 0
 ## Keys the porter holds. Doors name the key that locks them.
 var keys: Array[StringName] = START_KEYS.duplicate()
@@ -86,12 +86,12 @@ var ledger: Array[Dictionary] = []
 var notes: Array[Dictionary] = []
 ## What he carries in his satchel besides the keys (item ids, Items).
 var satchel: Array[StringName] = []
-## What each person thinks of him, -100 to 100 (docs/mechanics.md, "Trust").
+## What each person thinks of him, -100 to 100 (docs/systems/mechanics.md, "Trust").
 var trust: Dictionary = {}
-## Ales drunk tonight (docs/mechanics.md, "Drinking": +1 an ale, to 5; he
+## Ales drunk tonight (docs/systems/mechanics.md, "Drinking": +1 an ale, to 5; he
 ## loses 1 an hour; sleep clears it). Drink blurs his sight, like Dose.
 var drink := 0.0
-## Souls the rite has been fed in the six nights (docs/full-game-run.md,
+## Souls the rite has been fed in the six nights (docs/log/full-game-run.md,
 ## "The rite"): `count` of them, the ones in `souls` by name (a night played
 ## on its own starts with a count and no names).
 var count := 0
@@ -198,7 +198,7 @@ func raise_suspicion(amount: int) -> void:
 		suspicion_changed.emit(suspicion)
 
 
-## Takes Suspicion off (only a clean night does: docs/mechanics.md).
+## Takes Suspicion off (only a clean night does: docs/systems/mechanics.md).
 func lower_suspicion(amount: int) -> void:
 	var next := maxi(suspicion - maxi(amount, 0), 0)
 	if next != suspicion:
@@ -246,7 +246,7 @@ func have_a_drink() -> void:
 	set_flag(&"drank", int(get_flag(&"drank", 0)) + 1)
 
 
-## Eats clean food: hunger ends for the night, no Dose (docs/mechanics.md,
+## Eats clean food: hunger ends for the night, no Dose (docs/systems/mechanics.md,
 ## "The drug, and food").
 func eat_clean() -> void:
 	set_flag(&"hungry", false)
@@ -265,7 +265,7 @@ func write_ledger(guest: String, description: String) -> void:
 
 
 ## The porter writes a note on the ledger's second page, in his own hand
-## (docs/mechanics.md, "The ledger's notes"), once per `id`. A note whose id
+## (docs/systems/mechanics.md, "The ledger's notes"), once per `id`. A note whose id
 ## is in Clues counts toward what the prior needs on night 5. `text` empty:
 ## the clue's own text.
 func note(id: StringName, text := "") -> bool:

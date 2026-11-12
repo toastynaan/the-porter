@@ -1,6 +1,6 @@
 class_name Saving
-## The rules a careful porter can learn for saving people (docs/mechanics.md,
-## "Saving people"; docs/full-game-run.md, "Choices decide who dies"). Each
+## The rules a careful porter can learn for saving people (docs/systems/mechanics.md,
+## "Saving people"; docs/log/full-game-run.md, "Choices decide who dies"). Each
 ## night's death beats ask these, and the lane's talk at the next dusk says
 ## what would have saved them (Rumours).
 ## - Nights 1-3: lock the guesthouse once the guests are in bed, and the cult

@@ -1,7 +1,7 @@
 extends NightBeat
 ## Night 6's rite (design doc: "At Matins the cult gives it the last soul in
 ## the crypt (Brother Simon if he lived, otherwise a pilgrim) unless you stop
-## them"; docs/mechanics.md, "Stopping the rite"). From `begins` the last
+## them"; docs/systems/mechanics.md, "Stopping the rite"). From `begins` the last
 ## soul lies bound in the crypt with Thomas over him and the book on the
 ## altar. Before the Matins mark (`due`) the porter can stop it: free the
 ## victim (stand at his cords holding E for FREE_TIME), or take the book

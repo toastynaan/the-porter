@@ -1,5 +1,5 @@
 extends Node
-## Getting caught on night 3 (main.tscn and night3.tscn; docs/mechanics.md,
+## Getting caught on night 3 (main.tscn and night3.tscn; docs/systems/mechanics.md,
 ## "Being hunted"). Starting from the Matins bell, the night picks up in the
 ## choir. Through the round, the night saves quietly just before the crypt.
 ## Caught in the chase, the porter dies (from night 3 the first capture

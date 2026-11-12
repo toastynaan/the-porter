@@ -1,7 +1,7 @@
 class_name FoundBody
 extends Node3D
-## A body to find (docs/full-game-run.md, "Found bodies", "Moving bodies";
-## docs/mechanics.md, "Investigation": look at a body for a moment to find
+## A body to find (docs/log/full-game-run.md, "Found bodies", "Moving bodies";
+## docs/systems/mechanics.md, "Investigation": look at a body for a moment to find
 ## it, and a note is written). The node is where it lies. It's a ragdoll
 ## body lying dead (Corpse), or `figure`, a posed figure (hanging, sitting).
 ##
@@ -38,7 +38,7 @@ const FIND_ANGLE := 14.0
 @export var look_time := 0.6
 @export var find_range := 5.0
 @export var leave_range := 20.0
-## Being seen within this many metres of it counts (docs/mechanics.md).
+## Being seen within this many metres of it counts (docs/systems/mechanics.md).
 @export var near_radius := 4.0
 
 var is_found := false

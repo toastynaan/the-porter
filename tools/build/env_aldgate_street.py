@@ -46,7 +46,7 @@ def ground(x, z):
 
 # Beyond the brook the street runs on a little and turns south out of sight:
 # its two lengths, as (x from, x to, z from, z to). The wagon is on it only
-# as the night goes dark (docs/prologue.md).
+# as the night goes dark (docs/places/prologue.md).
 BEYOND = ((-72.0, -56.8, 43.8, 50.2), (-63.0, -56.8, 50.2, 64.6))
 
 

@@ -1,6 +1,6 @@
 class_name OffHoursBell
 extends Node3D
-## The bell rope, out of hours (docs/mechanics.md, "The bell rope"): ring it
+## The bell rope, out of hours (docs/systems/mechanics.md, "The bell rope"): ring it
 ## any time but Matins and the whole abbey comes to the tower. The chase
 ## breaks off, because the hunter can't be seen in costume by the abbey. Who
 ## comes first follows rules he can learn:

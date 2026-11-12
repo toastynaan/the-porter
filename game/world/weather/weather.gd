@@ -1,6 +1,6 @@
 class_name Weather
 extends Node3D
-## The night's weather (docs/full-game-run.md, "Weather"; design doc,
+## The night's weather (docs/log/full-game-run.md, "Weather"; design doc,
 ## "Weather changes the space"), set on each night's scene:
 ## - RAIN (nights 1-2): halves what the hunter hears, and what the porter
 ##   hears of him (hearing_factor; the hunters' sounds carry half as far).

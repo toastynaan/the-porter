@@ -1,5 +1,5 @@
 extends Node
-## The weather (docs/full-game-run.md, "Weather"; M11's "each kind of weather
+## The weather (docs/log/full-game-run.md, "Weather"; M11's "each kind of weather
 ## tested"), in night_base's furniture with the Weather node set by hand:
 ## - rain halves what a hunter hears (running 8 m off: heard in clear air,
 ##   not in the rain) and how far his own sounds carry;

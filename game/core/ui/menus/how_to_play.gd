@@ -1,6 +1,6 @@
 class_name HowToPlay
 extends MenuPage
-## How to play: the porter's work and the controls (docs/mechanics.md,
+## How to play: the porter's work and the controls (docs/systems/mechanics.md,
 ## "Controls"), keyboard and mouse, then gamepad.
 
 const TEXT := """[center][i]You are Brother Alric, the new porter.[/i][/center]

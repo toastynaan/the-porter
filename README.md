@@ -1,0 +1,58 @@
+# The Porter
+
+A first-person horror game set in a Benedictine abbey inside London's walls in the 1420s. You are Brother Alric, the new porter: you keep the gate, ring the night bells and walk the lantern rounds while pilgrims vanish and something with horns hunts the cloister. Built in Godot 4.8 with Blender-built assets.
+
+The design lives in `docs/design/`. Everything else in `docs/` describes the game as built.
+
+## Run it
+
+- Open the project in Godot 4.8 (`/Applications/Godot_4_8.app`) and press **F5**: the title screen, then New Game.
+- To play one chapter, open its scene in `game/chapters/<chapter>/` and press **F6**. In a debug build the title also has **Test a scene**, which starts any chapter at any beat.
+- `docs/play-guide.md` walks through the nights and how to see each ending.
+
+## Check it
+
+- `tools/check.sh` imports the project, loads every script and scene, and runs every test in `game/tests/`, with GDScript warnings treated as errors. The whole suite takes about 20 minutes.
+- `tools/check.sh prologue` runs only the tests whose name contains "prologue".
+- The tools in `tools/shots/` render stills and films to `art/_review/` (not committed) for looking at changes.
+
+## Where things are
+
+```
+game/
+  chapters/        the story, one folder per chapter
+    common/        night_base.tscn (the abbey every night inherits), NightBeat and the
+                   director, the routine beats every night shares, reusable beats, the lane's talk
+    night0/ day1/ night1/ ... night6/
+                   the chapter's scene, its own beats, dialogue/ and visitors/
+  core/            autoloads, game flow and saves, rendering, UI and menus
+  time/            the night clock, candle clock, daylight
+  duties/          the porter's duties, lateness, wayfinding, the bell tower
+  gate/            the abbey gate, the bench, visitors at the grille
+  talk/            the conversation system (Talk, Conversation, the talk view, Talker)
+  hunting/         hunters, hiding, senses, scares
+  people/          brothers, the lane's people, the cat, companions
+  player/          the porter, his lantern
+  demon/           the costume, the stalker, the Hungry Saint
+  drug/ death/ items/ story/ endings/
+  world/           places and props: the abbey, the lane, the road (built by tools/build)
+  characters/      how each person looks (built by tools/build)
+  ragdoll/         kept for later
+  dev/             lookdev, test encounters, debug keys
+  tests/           the test scenes tools/check.sh runs
+art/               models, textures, sounds, fonts; credits.csv lists every downloaded source
+docs/
+  design/          the design doc and the look and feel: these win over everything else
+  systems/         how each system works, with its numbers
+  places/          the chapters and places as built
+  log/             progress, decisions waiting for review, the full-game run's spec
+  play-guide.md
+tools/
+  check.sh build.sh bake_nav.sh review.sh
+  build/           Blender scripts that build every model and place (tools/build.sh <name>)
+  shots/           stills and film tools, each tool's .sh, .gd and .tscn together
+  godot/           Godot-side helpers for the checks and the cast
+playtests/         screen recordings of playtests (not committed)
+```
+
+Where a new file goes: if one chapter uses it, in that chapter's folder; if several do, in the system it belongs to.

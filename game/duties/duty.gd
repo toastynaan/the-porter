@@ -10,7 +10,7 @@ extends Area3D
 ## The world shows the way: while it is wanted its `lamp` burns (put out
 ## again after unless `keep_lit`), and the doors on the way to it from the
 ## porter stand open with a lamp over each (Wayfinding). The almost-no HUD
-## adds two quiet marks (docs/mechanics.md, "The minimal HUD"): the outline
+## adds two quiet marks (docs/systems/mechanics.md, "The minimal HUD"): the outline
 ## on `outline` (the prop it stands for) while he looks at it in reach, and
 ## the faint duty glyph over it while it is wanted (group "glyph_targets").
 

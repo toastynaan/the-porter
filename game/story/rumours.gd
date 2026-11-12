@@ -1,6 +1,6 @@
 class_name Rumours
-## What the lane says at dusk about the night before (docs/full-game-run.md,
-## "The lane": the rumours run ahead of you; docs/mechanics.md, "Saving
+## What the lane says at dusk about the night before (docs/log/full-game-run.md,
+## "The lane": the rumours run ahead of you; docs/systems/mechanics.md, "Saving
 ## people": the lane's talk at the next dusk tells him what would have saved
 ## them). Each rumour is a line for someone in the lane, said when its flags
 ## hold; the lane's dusk conversations (M12) carry them. DRAFT lines.

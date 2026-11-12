@@ -1,5 +1,5 @@
 extends Node
-## Night 5, the granary (design doc, Night 5; docs/mechanics.md, "Saving
+## Night 5, the granary (design doc, Night 5; docs/systems/mechanics.md, "Saving
 ## people": save Simon, not Thomas; "The payoff"), played in full twice:
 ## - Simon saved: the masked man lets him go, Thomas turns up "wounded"
 ##   anyway, and Simon says Thomas sent him to scrub the blood; the

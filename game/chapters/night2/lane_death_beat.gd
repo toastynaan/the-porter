@@ -1,5 +1,5 @@
 extends NightBeat
-## Night 2's lane death (docs/full-game-run.md, "Witnessed deaths"): toward
+## Night 2's lane death (docs/log/full-game-run.md, "Witnessed deaths"): toward
 ## midnight a cry from the lane, and Gib's call doesn't come. At the grille,
 ## under a street lantern, a man is killed: whoever the porter turned away
 ## after the curfew bell tonight (a visitor whose fate is "lane"), or, if no
@@ -8,7 +8,7 @@ extends NightBeat
 ## and the night stays quiet. The tall shape behind him never moves while
 ## the porter looks. The death feeds the rite as the lane death.
 
-## Named outsiders never die in view (docs/full-game-run.md).
+## Named outsiders never die in view (docs/log/full-game-run.md).
 const NAMED: Array[StringName] = [&"walter", &"joan", &"roger", &"mab"]
 
 @export var hour := 23.25

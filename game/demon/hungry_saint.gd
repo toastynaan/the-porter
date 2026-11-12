@@ -1,7 +1,7 @@
 class_name HungrySaint
 extends Node3D
 ## The Hungry Saint, on night 6 only (design doc, "The Hungry Saint";
-## docs/mechanics.md, "Night 6"). The one thing in the game that isn't men
+## docs/systems/mechanics.md, "Night 6"). The one thing in the game that isn't men
 ## and the drug. It moves in view, slowly. Doors, locks and darkness don't
 ## stop it, and it goes through the hidden passages: it always knows roughly
 ## where the porter is and walks toward him, finding its way again every

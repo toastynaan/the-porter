@@ -1,6 +1,6 @@
 class_name SaintKills
 extends Node3D
-## The Saint's witnessed deaths on night 6 (docs/full-game-run.md, "Witnessed
+## The Saint's witnessed deaths on night 6 (docs/log/full-game-run.md, "Witnessed
 ## deaths"): Dunstan in the cloister (it finds him first, then turns to the
 ## porter), Cole at the gate (holding it shut against him), and Osric or
 ## Ranulf in the choir (the candles go out one by one). Only once it walks

@@ -1,6 +1,6 @@
 extends Node
 ## Autoload Settings: the player's settings and whether they have finished
-## the game (docs/mechanics.md, "Settings and accessibility"; the run's spec,
+## the game (docs/systems/mechanics.md, "Settings and accessibility"; the run's spec,
 ## "Menus"), kept in one ConfigFile in user://. Changing one emits `changed`;
 ## the player, the HUD, the subtitles and the audio follow it. Tests point
 ## `path` elsewhere before they save.
@@ -12,7 +12,7 @@ const SENSITIVITY_RANGE := Vector2(0.25, 2.5)
 ## Subtitle size: small, medium, large.
 const SUBTITLE_SCALES: Array[float] = [0.8, 1.0, 1.3]
 ## Real seconds per in-game hour with the faster clock (3 min an hour is
-## the night's own pace; docs/mechanics.md, "Time and duties").
+## the night's own pace; docs/systems/mechanics.md, "Time and duties").
 const FAST_CLOCK_FACTOR := 2.0 / 3.0
 
 var path := "user://settings.cfg"
