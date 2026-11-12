@@ -2,7 +2,7 @@ class_name TitleMenu
 extends MenuPage
 ## The title screen (the run's spec, "Menus"): New Game, Continue (with a
 ## bell save), Chapters (once the game is finished), How to Play, Settings,
-## Quit.
+## Quit. In debug builds, also Test a scene (SceneSelect).
 
 signal chosen(what: StringName)
 
@@ -18,6 +18,8 @@ func build() -> void:
 	_continue = add_button("Continue", func() -> void: chosen.emit(&"continue"))
 	add_button("New Game", func() -> void: chosen.emit(&"new_game"))
 	_chapters = add_button("Chapters", func() -> void: chosen.emit(&"chapters"))
+	if OS.is_debug_build():
+		add_button("Test a scene", func() -> void: chosen.emit(&"test"))
 	add_button("How to Play", func() -> void: chosen.emit(&"how_to_play"))
 	add_button("Settings", func() -> void: chosen.emit(&"settings"))
 	add_button("Quit", func() -> void: chosen.emit(&"quit"))

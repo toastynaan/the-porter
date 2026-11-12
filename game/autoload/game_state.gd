@@ -122,6 +122,11 @@ func _process(delta: float) -> void:
 
 
 ## Everything back to the start of the game (New Game).
+## For testing (SceneSelect, debug builds): the beat the next night loaded
+## starts at, by its node's name. The director clears it. Never saved.
+var start_beat := &""
+
+
 func new_game() -> void:
 	chapter = -1
 	night = 0

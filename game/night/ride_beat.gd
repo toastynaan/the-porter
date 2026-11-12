@@ -239,6 +239,18 @@ func _through_the_dark() -> void:
 	fade_to(0.0, dark_fade / pace_scale)
 
 
+## Set down in the lane by the gate, the wagon gone, as if the ride had been ridden.
+func skipped() -> void:
+	GameState.hour += 0.5
+	GameState.set_flag(&"n0_arrived")
+	GameState.set_flag(&"talked_n0_carter")
+	_leave_the_road()
+	for n: Node in [wagon, body_cart, traveller, carter]:
+		if is_instance_valid(n):
+			n.queue_free()
+	player().place(set_down.global_position, set_down.global_rotation.y)
+
+
 ## The road and its people go, and the abbey and the lane are there.
 func _leave_the_road() -> void:
 	for n in lane_world:

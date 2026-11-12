@@ -32,6 +32,8 @@ var pause: PauseMenu
 var settings: SettingsMenu
 var how_to_play: HowToPlay
 var chapter_select: ChapterSelect
+## For testing, in debug builds: any chapter from any of its beats.
+var scene_select: SceneSelect
 var card: ChapterCard
 var chronicle: ChronicleView
 
@@ -52,6 +54,14 @@ func _ready() -> void:
 	chapter_select.chapters = chapters
 	chapter_select.backdrop = Manuscript.NIGHT
 	_page(chapter_select)
+	scene_select = SceneSelect.new()
+	scene_select.chapters = chapters
+	scene_select.backdrop = Manuscript.NIGHT
+	_page(scene_select)
+	scene_select.back.connect(func() -> void:
+		scene_select.close()
+		title.open())
+	scene_select.picked.connect(start_at)
 	card = ChapterCard.new()
 	card.backdrop = Manuscript.NIGHT
 	_page(card)
@@ -79,6 +89,13 @@ func _page(p: MenuPage) -> MenuPage:
 func _start() -> void:
 	if main.get(&"current_level") == null:
 		show_title()
+		# For testing: `-- --from=night0:Arrive` starts there (debug builds).
+		for arg in OS.get_cmdline_user_args():
+			if OS.is_debug_build() and arg.begins_with("--from="):
+				var parts := arg.trim_prefix("--from=").split(":")
+				var i := chapters.index_of(StringName(parts[0]))
+				if i >= 0:
+					start_at(i, StringName(parts[1]) if parts.size() > 1 else &"")
 
 
 func show_title() -> void:
@@ -114,6 +131,22 @@ func continue_game() -> void:
 func select_chapter(i: int) -> void:
 	GameState.new_game()
 	await start_chapter(i, false)
+
+
+## For testing (SceneSelect): chapter `i` from the beat named `beat`, with no
+## card, as a fresh game. The beats before it are skipped, not played.
+func start_at(i: int, beat: StringName) -> void:
+	_close_pages()
+	get_tree().paused = false
+	main.call(&"unload_level")
+	Talk.reset()
+	GameState.new_game()
+	GameState.begin_chapter(i, chapters.chapters[i].night)
+	GameState.start_beat = beat
+	fade.color.a = 1.0
+	await get_tree().process_frame
+	_load_chapter(i)
+	_fade_in_if_left_dark.call()
 
 
 ## Shows the chapter's card, then plays it. `carried`: it follows the
@@ -220,6 +253,9 @@ func _on_title(what: StringName) -> void:
 		&"chapters":
 			title.close()
 			chapter_select.open()
+		&"test":
+			title.close()
+			scene_select.open()
 		&"how_to_play":
 			_open_from(how_to_play, title)
 		&"settings":
@@ -254,7 +290,7 @@ func _back_from() -> void:
 
 
 func _close_pages() -> void:
-	for p in [title, pause, settings, how_to_play, chapter_select]:
+	for p in [title, pause, settings, how_to_play, chapter_select, scene_select]:
 		(p as MenuPage).close()
 
 

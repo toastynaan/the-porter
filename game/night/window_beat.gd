@@ -24,7 +24,7 @@ func run() -> void:
 		if GameState.hour >= midnight:
 			await _sent_up(p)
 			break
-		await get_tree().physics_frame
+		await tick()
 		if not bed.enabled:
 			break
 	bed.enabled = false

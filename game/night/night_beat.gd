@@ -29,6 +29,13 @@ func arrived() -> void:
 @export var can_doze := false
 
 
+## The night is being started after this beat, for testing (SceneSelect): leave
+## things as the beat would have, without playing it. Most beats leave
+## nothing behind that later ones need; those that do override this.
+func skipped() -> void:
+	pass
+
+
 ## Does the beat; returns when it is over. Beats override this.
 func run() -> void:
 	await get_tree().process_frame
@@ -91,7 +98,17 @@ func sleep_through_the_day(keeps: float, line: String) -> void:
 
 func until(condition: Callable) -> void:
 	while not condition.call():
+		await tick()
+
+
+## The next physics frame. If the night has been taken away meanwhile (back
+## to the title, another scene started), it doesn't return: the beat stops
+## where it is until it is freed.
+func tick() -> void:
+	if is_inside_tree():
 		await get_tree().physics_frame
+	if not is_inside_tree():
+		await (Engine.get_main_loop() as SceneTree).create_timer(3600.0).timeout
 
 
 func wait(seconds: float) -> void:

@@ -13,3 +13,8 @@ func run() -> void:
 	agnes.add_to_group(&"glyph_targets")
 	await until(func() -> bool: return GameState.has_flag(&"n0_room") or GameState.hour >= 24.0)
 	agnes.remove_from_group(&"glyph_targets")
+
+
+## Agnes has given him the room.
+func skipped() -> void:
+	GameState.set_flag(&"n0_room")

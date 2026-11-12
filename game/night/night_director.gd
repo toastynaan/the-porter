@@ -78,6 +78,17 @@ func run() -> void:
 		for i in beats.size():
 			if beats[i].bell == GameState.last_bell:
 				from = i
+	if not GameState.start_beat.is_empty():
+		# For testing: start at that beat, the ones before it skipped.
+		for i in beats.size():
+			if beats[i].name == GameState.start_beat:
+				from = i
+		GameState.start_beat = &""
+		for i in from:
+			beats_run.append(beats[i].name)
+			if beats[i].due >= 0.0:
+				GameState.hour = maxf(GameState.hour, beats[i].due)
+			beats[i].skipped()
 	var clock := get_tree().get_first_node_in_group(&"night_clock") as NightClock
 	for i in range(from, beats.size()):
 		current = beats[i]

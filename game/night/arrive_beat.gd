@@ -26,3 +26,8 @@ func run() -> void:
 	mab.add_to_group(&"glyph_targets")
 	await until(func() -> bool: return GameState.has_flag(&"n0_sent_to_inn"))
 	mab.remove_from_group(&"glyph_targets")
+
+
+## Mab has sent him to the Keys.
+func skipped() -> void:
+	GameState.set_flag(&"n0_sent_to_inn")
