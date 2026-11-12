@@ -8,7 +8,7 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 | Beat | What happens | Where it comes from | Flags it sets |
 | --- | --- | --- | --- |
-| Wake | 16:00. You wake in your cell as the light fails. The gate stands open with Cole at it. Until the supper bell you can walk about, talk to the brothers at their dusk places, or step out into the lane, where Mab begs by the gate and two passers-by go home before dark. The supper bell rings at the candle's mark, 17:15 | Core loop 0 | the `start` bell save |
+| Wake | 16:30, as the sun sets. You wake in your cell as the light fails. The gate stands open with Cole at it. Until the supper bell you can walk about, talk to the brothers at their dusk places, or step out into the lane, where Mab begs by the gate and two passers-by go home before dark. The supper bell rings at the candle's mark, 17:15 | Core loop 0 | the `start` bell save |
 | Supper | Take your place at the refectory table; seated, you can look but not walk. Osric serves bread; use it to eat it, or, warned on night 1, palm it. Thomas tells you quietly that the prior has been asking about you. Ranulf offers a remedy for your headaches, and Thomas, beside you, warns you off it (the design doc's second review) | Core loop 1; night 3 "the bread tastes bitter"; `docs/systems/drug.md` | `n3_ate_bread` or `n3_palmed_bread` (+ `hungry`, `n3_osric_saw`), `n3_took_remedy` or `n3_refused_remedy` (Thomas's trust +5) |
 | Gate | Relieve Cole at the gate; he goes off into the abbey. Shut the gate and bar it, then open the ledger at tonight's page on your cell desk | Core loop 2 | `gate_taken`, `gate_barred`, `n3_ledger` |
 | Knocks | At 20:00 Walter comes up the lane with his lantern and knocks at the grille (see "Keeping the gate" below). At 22:00, at Dose 50+, a small knock low on the gate, with no one there | Core loop 3; night 3 knocks | `n3_walter` (admitted / refused / prior), `n3_child_knock` |
@@ -26,11 +26,11 @@ Night 3, "The oven", runs from waking at dusk to sleeping at dawn, as the design
 
 ## The candle clock
 
-`game/time/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:00 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
+`game/time/night_clock.gd` (the `Clock` node). The night runs on in-game hours from 16:30 to 06:00 the next morning (hours past midnight count on: 30.0 is 06:00).
 
 - **Awake, time runs slowly in real time:** 3 minutes an hour (2 with the faster-clock setting). Dusk to the supper bell is under 4 minutes, and the whole night is within the run's 30–40 minutes if you doze through the waits.
 - **Dozing on the gate bench, it runs fast:** 2 seconds an hour, with the screen nearly black. Whatever needs you wakes you: a knock (the visitor is at the grille already when you wake), the Matins mark, the Lauds bell. You can doze only once you have the gate, while the night is waiting on it (the knocks, before Matins, the small hours), and while no duty is wanted.
-- **The candle in your cell** (`CandleClock`, on the desk) burns down from 16:00 to 07:00, with rings at the supper bell, Matins and Lauds. Look at it and press E: "(The candle stands at 19:40. The next mark is Matins.)".
+- **The candle in your cell** (`CandleClock`, on the desk) burns down from 16:30 to 07:00, with rings at the supper bell, Matins and Lauds. Look at it and press E: "(The candle stands at 19:40. The next mark is Matins.)".
 - **The bells** ring at the marks: supper at 17:15, Matins at midnight (you ring it, from 23:45), Lauds at 06:00.
 - **The ledger** lists each duty with its time.
 - **The candle waits for the night.** It doesn't burn past the mark of a beat the night hasn't reached, so however long the round and the chase take, Lauds and the morning wait for the small hours.

@@ -23,7 +23,7 @@ New beats: `Taken` (the cult comes for a guest), `KnockNoOne` (M10's), `Pond` (`
 
 | Beat | What happens |
 | --- | --- |
-| Wake | 16:00. A fresh candle in his clock; the gate open with Cole at it; the brothers at their dusk places and the lane's people at the gate |
+| Wake | 16:30, as the sun sets *(your call, 2026-11-12)*. A fresh candle in his clock; the gate open with Cole at it; the brothers at their dusk places and the lane's people at the gate |
 | Supper | The abbot welcomes the new porter; Osric serves him an extra heel of bread; he eats it (he hasn't been warned); then Bede, beside him, tells him quietly not to eat the bread |
 | Gate | Cole gives him the gate |
 | Knocks | 19:00 the merchant, Geoffrey Pykard of Coventry, with a question he can ask first; 20:15 Walter *(mine: both before the curfew bell, so turning either away sends him to the Cross Keys)* |

@@ -11,7 +11,7 @@ extends Node
 signal woke
 
 ## Where a fresh night starts: the porter wakes in the late afternoon.
-@export var start_hour := 16.0
+@export var start_hour := 16.5
 ## Real seconds per in-game hour, awake and dozing (3 minutes an hour
 ## awake: docs/systems/mechanics.md, "Time and duties"; a third less with the
 ## faster-clock setting).

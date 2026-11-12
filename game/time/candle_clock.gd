@@ -7,7 +7,7 @@ extends Node3D
 
 signal read
 
-@export var start_hour := 16.0
+@export var start_hour := 16.5
 @export var end_hour := 31.0
 ## Height of the unburned candle, m.
 @export var length := 0.36
