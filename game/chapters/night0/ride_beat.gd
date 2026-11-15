@@ -67,6 +67,9 @@ extends NightBeat
 @export var carter_talk: Conversation
 
 const RUMBLE := preload("res://art/sfx/amb_wagon_loop.wav")
+## Inside Aldgate: hooves and wheels on cobbles. It takes over while the
+## wagon stands at the gate, where the rumble is all but silent.
+const COBBLES := preload("res://art/sfx/amb_wagon_cobbles_loop.wav")
 ## The wagon's place across the road: its right of the middle, more when it
 ## pulls in. The body cart keeps to its own right.
 const SIDE := 1.2
@@ -115,6 +118,7 @@ var _pulled_in := false
 var _hook_done := false
 var _cart_along := INF
 var _rumble: AudioStreamPlayer3D
+var _on_cobbles := false
 ## Who is walking up to the wagon or back (the warden): the watch leaves him be.
 var _inspecting: Node3D
 var _walking := false
@@ -185,6 +189,10 @@ func run() -> void:
 			_side = move_toward(_side, SIDE, 0.25 * dt * pace_scale)
 		_place(wagon, _along, _side)
 		if _rumble:
+			if not _on_cobbles and GameState.has_flag(&"n0_past_aldgate"):
+				_on_cobbles = true
+				_rumble.stream = AudioOut.looped(COBBLES)
+				_rumble.play()
 			_rumble.volume_db = -6.0 + linear_to_db(clampf(_v / (2.0 * pace_scale), 0.08, 1.0))
 		if _along >= stop - 0.01:
 			_v = 0.0

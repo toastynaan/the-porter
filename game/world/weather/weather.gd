@@ -18,6 +18,12 @@ extends Node3D
 enum Kind { CLEAR, RAIN, FOG, SNOW }
 
 const RAIN_LOOP := preload("res://art/sfx/amb_rain_loop.wav")
+## The rain's level out in it, and under a roof (heard through it, as the
+## wind is: game/world/ambience/wind.gd).
+const RAIN_OUT_DB := -12.0
+const RAIN_IN_DB := -24.0
+## How high to look for a roof, m.
+const ROOF_CHECK := 30.0
 const RAIN_HEARING := 0.5
 ## Sight in the fog, m, either way; and how far off an uncovered lantern
 ## shows as a glow there.
@@ -53,7 +59,7 @@ func _ready() -> void:
 			_fall = _rain_fall()
 			_rain = AudioStreamPlayer.new()
 			_rain.stream = AudioOut.looped(RAIN_LOOP)
-			_rain.volume_db = -12.0
+			_rain.volume_db = RAIN_OUT_DB
 			add_child(_rain)
 			if AudioOut.enabled():
 				_rain.play()
@@ -142,6 +148,18 @@ func _particles(color: Color, size: Vector2, speed: float, amount: int) -> CPUPa
 	p.local_coords = false
 	add_child(p)
 	return p
+
+
+func _physics_process(delta: float) -> void:
+	if _rain == null or not _rain.playing:
+		return
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return
+	var from := camera.global_position
+	var query := PhysicsRayQueryParameters3D.create(from, from + Vector3.UP * ROOF_CHECK, Layers.WORLD)
+	var under_roof := not camera.get_world_3d().direct_space_state.intersect_ray(query).is_empty()
+	_rain.volume_db = move_toward(_rain.volume_db, RAIN_IN_DB if under_roof else RAIN_OUT_DB, delta * 12.0)
 
 
 func _process(_delta: float) -> void:

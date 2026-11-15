@@ -224,7 +224,7 @@ While the gate stands open at dusk: Hob and Agnes at the Keys' door, Kit selling
 
 ## Sounds
 
-New placeholders (`tools/build/sfx_placeholders.py`): the wagon rumbling (wheels, axle, hooves), the taproom's talk, the watchman's call. The curfew bell is the abbey bell pitched down.
+Recorded (Freesound, CC0; `docs/systems/assets.md`, "Sounds"; made by `tools/build/sfx_recorded.py`): the rain, the wind, the wagon (on the road; on cobbles from Aldgate on, `RideBeat` swapping it while the wagon stands at the gate), the taproom's talk, the Keys' hearth and the watch fire at Aldgate (`FireSound`, `game/world/ambience/loop_sound.gd`), the bell (the curfew bell is it pitched down), the dog, the shutters, the cry, the fall, the lantern, the body dragged off from the well (`DeathScene.drag_to`), the knock, the doors, footsteps, rooks, rats, the cat. Under a roof the rain drops 12 dB, as the wind does *(mine)*. Still a placeholder: the watchman's call (a recording would put modern words in his mouth).
 
 ## Tests and tools
 

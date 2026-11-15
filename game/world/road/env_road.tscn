@@ -54,6 +54,8 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_field_shrine.tscn" id="field_shrine"]
 [ext_resource type="PackedScene" path="res://art/models/prop_field_stone.glb" id="field_stone"]
 [ext_resource type="PackedScene" path="res://art/models/prop_field_wreck.glb" id="field_wreck"]
+[ext_resource type="Script" path="res://game/world/ambience/loop_sound.gd" id="loop_sound_gd"]
+[ext_resource type="AudioStream" path="res://art/sfx/amb_fire_loop.wav" id="sfx_fire"]
 
 [sub_resource type="FastNoiseLite" id="mist_noise"]
 noise_type = 3
@@ -142,6 +144,13 @@ editor_description = "The city behind the wall: roofs and parish churches near, 
 [node name="WatchFire" parent="." instance=ExtResource("brazier")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -122.7, 0, 50.7)
 editor_description = "The gate's watch fire, at the foot of the south tower."
+
+[node name="FireSound" type="AudioStreamPlayer3D" parent="WatchFire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+script = ExtResource("loop_sound_gd")
+stream = ExtResource("sfx_fire")
+volume_db = -6.0
+unit_size = 3.0
 
 [node name="Gibbet" parent="." instance=ExtResource("gibbet")]
 transform = Transform3D(-0.5, 0, 0.866, 0, 1, 0, -0.866, 0, -0.5, -121.45, 7.6, 55.45)

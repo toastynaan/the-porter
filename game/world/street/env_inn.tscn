@@ -46,6 +46,8 @@
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_bundle.tscn" id="inn_bundle"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pack.tscn" id="inn_pack"]
 [ext_resource type="PackedScene" path="res://game/world/props/prop_inn_pallet.tscn" id="inn_pallet"]
+[ext_resource type="Script" path="res://game/world/ambience/loop_sound.gd" id="loop_sound_gd"]
+[ext_resource type="AudioStream" path="res://art/sfx/amb_fire_loop.wav" id="sfx_fire"]
 
 [sub_resource type="BoxShape3D" id="Shape_lantern_away"]
 size = Vector3(11.2, 9.5, 9.2)
@@ -292,6 +294,13 @@ editor_description = "The inn from within (tools/build/env_inn_rooms.py): walls'
 
 [node name="Fire" parent="." instance=ExtResource("inn_fire")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 0.04, 9.45)
+
+[node name="FireSound" type="AudioStreamPlayer3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+script = ExtResource("loop_sound_gd")
+stream = ExtResource("sfx_fire")
+volume_db = -4.0
+unit_size = 2.0
 
 [node name="FireLight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -1.0, 0.55, 9.2)

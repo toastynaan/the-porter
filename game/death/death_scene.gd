@@ -32,6 +32,8 @@ const CRY := preload("res://art/sfx/sfx_cry.wav")
 const CUT := preload("res://art/sfx/sfx_cut.wav")
 const FALL := preload("res://art/sfx/sfx_body_fall.wav")
 const LANTERN_DROP := preload("res://art/sfx/sfx_lantern_drop.wav")
+## The body dragged, and the steps of whoever drags it.
+const DRAG := preload("res://art/sfx/sfx_drag.wav")
 const OLD_BLOOD := Color("#5A1A14")
 ## Seconds the porter must have looked away before a fake is gone.
 const FAKE_UNSEEN := 1.0
@@ -147,6 +149,7 @@ func drag_to(to: Vector3, speed := 1.0, carry_light := false) -> void:
 	dragged.look = victim_look
 	add_child(dragged)
 	dragged.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
+	_sound(DRAG)
 	var start := killer.global_position
 	var d := start.distance_to(to)
 	var t := 0.0
@@ -157,7 +160,9 @@ func drag_to(to: Vector3, speed := 1.0, carry_light := false) -> void:
 		var dir := (to - start).normalized()
 		killer.rotation = Vector3(0.0, atan2(dir.x, dir.z), 0.0)
 		dragged.global_position = at - dir * 0.9 + Vector3.UP * 0.15
+		_audio.global_position = at + Vector3.UP * 0.5
 		await PlayTime.physics_frame(self)
+	_audio.stop()
 	if is_instance_valid(killer):
 		killer.queue_free()
 	killer = null
