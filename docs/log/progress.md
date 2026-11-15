@@ -58,3 +58,6 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-15 · Fix · 26118cf · His bed at the Keys is outlined before Agnes gives the room; clicked early, it sends him to her.
 - 2026-11-15 · Feature · c9bbab9 · His room at the Keys: the gate lantern's light through the window onto the ceiling, a faint bounce to see the bed by.
 - 2026-11-15 · Feature · 2e88b86 · Strangers are labelled by what they do until they give their name (Will Fuller, Hamo, Lambert).
+- 2026-11-15 · Script · 17f6b7f · Night 0's talks polished (still draft); Will Fuller, Hamo and Lambert give their names.
+- 2026-11-15 · Sound · 0f723a5 · Night 0's sounds are Freesound CC0 recordings, rebuilt by tools/build/sfx_recorded.py.
+- 2026-11-15 · Sound · cf44999 · The hearth and the watch fire crackle, the drag is heard, cobbles past Aldgate, rain muffled under a roof.
