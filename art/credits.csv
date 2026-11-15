@@ -1,6 +1,45 @@
 asset,source_url,author,licence,credit_required
 art/fonts/eb_garamond/EBGaramond.ttf,https://github.com/google/fonts/tree/main/ofl/ebgaramond,The EB Garamond Project Authors (Georg Duffner; Octavio Pardo),SIL Open Font License 1.1,no (keep OFL.txt with the font)
 art/fonts/unifraktur_maguntia/UnifrakturMaguntia-Book.ttf,https://github.com/google/fonts/tree/main/ofl/unifrakturmaguntia,j. 'mach' wust; Peter Wiegel,SIL Open Font License 1.1,no (keep OFL.txt with the font)
+art/sfx/amb_fire_loop.wav,https://freesound.org/people/samarobryn/sounds/414767/,samarobryn,CC0 1.0,no
+art/sfx/amb_rain_loop.wav,https://freesound.org/people/silencyo/sounds/81731/; https://freesound.org/people/xkeril/sounds/669487/,silencyo; xkeril,CC0 1.0,no
+art/sfx/amb_taproom_loop.wav,https://freesound.org/people/craigsmith/sounds/675072/; https://freesound.org/people/craigsmith/sounds/438431/,craigsmith,CC0 1.0,no
+art/sfx/amb_wagon_cobbles_loop.wav,https://freesound.org/people/craigsmith/sounds/437103/; https://freesound.org/people/craigsmith/sounds/437077/,craigsmith,CC0 1.0,no
+art/sfx/amb_wagon_loop.wav,https://freesound.org/people/thefilmbakery/sounds/137843/; https://freesound.org/people/craigsmith/sounds/437078/,thefilmbakery; craigsmith,CC0 1.0,no
+art/sfx/amb_wind_night.wav,https://freesound.org/people/lakewoodsound/sounds/719095/; https://freesound.org/people/TRP/sounds/567356/,lakewoodsound; TRP,CC0 1.0,no
+art/sfx/sfx_bell.wav,https://freesound.org/people/daytripper/sounds/73678/,daytripper,CC0 1.0,no
+art/sfx/sfx_body_fall.wav,https://freesound.org/people/leonelmail/sounds/504626/,leonelmail,CC0 1.0,no
+art/sfx/sfx_cat_0.wav,https://freesound.org/people/skymary/sounds/412017/,skymary,CC0 1.0,no
+art/sfx/sfx_cry.wav,https://freesound.org/people/joseppujol/sounds/221544/,joseppujol,CC0 1.0,no
+art/sfx/sfx_dog.wav,https://freesound.org/people/Sheyvan/sounds/522921/,Sheyvan,CC0 1.0,no
+art/sfx/sfx_door_close.wav,https://freesound.org/people/LampEight/sounds/402465/,LampEight,CC0 1.0,no
+art/sfx/sfx_door_open.wav,https://freesound.org/people/LampEight/sounds/402465/,LampEight,CC0 1.0,no
+art/sfx/sfx_drag.wav,https://freesound.org/people/Wallch503/sounds/507473/,Wallch503,CC0 1.0,no
+art/sfx/sfx_knock.wav,https://freesound.org/people/kbnevel/sounds/119833/,kbnevel,CC0 1.0,no
+art/sfx/sfx_lantern_drop.wav,https://freesound.org/people/jamesdrake89/sounds/637099/,jamesdrake89,CC0 1.0,no
+art/sfx/sfx_rat_0.wav,https://freesound.org/people/macohibs/sounds/728086/,macohibs,CC0 1.0,no
+art/sfx/sfx_rat_1.wav,https://freesound.org/people/macohibs/sounds/728086/,macohibs,CC0 1.0,no
+art/sfx/sfx_rat_2.wav,https://freesound.org/people/macohibs/sounds/728086/,macohibs,CC0 1.0,no
+art/sfx/sfx_rook_0.wav,https://freesound.org/people/Walking.With.Microphones/sounds/556221/,Walking.With.Microphones,CC0 1.0,no
+art/sfx/sfx_rook_1.wav,https://freesound.org/people/Walking.With.Microphones/sounds/556221/,Walking.With.Microphones,CC0 1.0,no
+art/sfx/sfx_rook_2.wav,https://freesound.org/people/Walking.With.Microphones/sounds/556223/,Walking.With.Microphones,CC0 1.0,no
+art/sfx/sfx_shutters.wav,https://freesound.org/people/SamuelGremaud/sounds/524801/; https://freesound.org/people/SamuelGremaud/sounds/524800/,SamuelGremaud,CC0 1.0,no
+art/sfx/sfx_step_grass_0.wav,https://freesound.org/people/Fission9/sounds/521587/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_grass_1.wav,https://freesound.org/people/Fission9/sounds/521587/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_grass_2.wav,https://freesound.org/people/Fission9/sounds/521587/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_grass_3.wav,https://freesound.org/people/Fission9/sounds/521587/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_mud_0.wav,https://freesound.org/people/Nox_Sound/sounds/548384/,Nox_Sound,CC0 1.0,no
+art/sfx/sfx_step_mud_1.wav,https://freesound.org/people/Nox_Sound/sounds/548384/,Nox_Sound,CC0 1.0,no
+art/sfx/sfx_step_mud_2.wav,https://freesound.org/people/Nox_Sound/sounds/548384/,Nox_Sound,CC0 1.0,no
+art/sfx/sfx_step_mud_3.wav,https://freesound.org/people/Nox_Sound/sounds/548384/,Nox_Sound,CC0 1.0,no
+art/sfx/sfx_step_stone_0.wav,https://freesound.org/people/Fission9/sounds/521590/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_stone_1.wav,https://freesound.org/people/Fission9/sounds/521590/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_stone_2.wav,https://freesound.org/people/Fission9/sounds/521590/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_stone_3.wav,https://freesound.org/people/Fission9/sounds/521590/,Fission9,CC0 1.0,no
+art/sfx/sfx_step_wood_0.wav,https://freesound.org/people/IENBA/sounds/485421/,IENBA,CC0 1.0,no
+art/sfx/sfx_step_wood_1.wav,https://freesound.org/people/IENBA/sounds/485421/,IENBA,CC0 1.0,no
+art/sfx/sfx_step_wood_2.wav,https://freesound.org/people/IENBA/sounds/485421/,IENBA,CC0 1.0,no
+art/sfx/sfx_step_wood_3.wav,https://freesound.org/people/IENBA/sounds/485421/,IENBA,CC0 1.0,no
 art/tex/tex_bark_col.jpg,https://polyhaven.com/a/bark_willow,Dario Barresi; Dimitrios Savva,CC0 1.0,no
 art/tex/tex_bark_nrm.jpg,https://polyhaven.com/a/bark_willow,Dario Barresi; Dimitrios Savva,CC0 1.0,no
 art/tex/tex_bark_orm.jpg,https://polyhaven.com/a/bark_willow,Dario Barresi; Dimitrios Savva,CC0 1.0,no

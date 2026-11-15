@@ -44,10 +44,17 @@ Writes 22.05 kHz mono 16-bit WAVs to art/sfx/:
   amb_murmur_loop.wav          brothers talking low (loop)
   sfx_clatter.wav              a thrown stone landing on stone
 
-Replace them with recordings when the sound pass comes; keep the file names.
+A recording replaces a placeholder under the same file name. Every recording
+is credited in art/credits.csv, and this script skips any art/sfx/ file
+listed there, so running it never overwrites one (night 0's recordings from
+the 2026-11-15 sound pass: rain, wind, the wagon, the taproom, the bell, the
+dog, the shutters, the cry, the fall, the lantern, the knock, the doors, the
+footsteps, the rooks, the rats, the cat). It still makes every sound in the
+same order, so the placeholders it does write come out as before.
 Run: python3 tools/build/sfx_placeholders.py
 """
 
+import csv
 import math
 import os
 import random
@@ -56,9 +63,22 @@ import wave
 
 RATE = 22050
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "art", "sfx")
+CREDITS = os.path.join(os.path.dirname(__file__), "..", "..", "art", "credits.csv")
+
+
+def recorded():
+    """The art/sfx/ files that are recordings now (credited), not placeholders."""
+    with open(CREDITS, newline="") as f:
+        return {os.path.basename(r[0]) for r in csv.reader(f) if r and r[0].startswith("art/sfx/")}
+
+
+RECORDED = recorded()
 
 
 def write(name, samples, peak=0.8):
+    if name in RECORDED:
+        print("kept", name, "(a recording, in art/credits.csv)")
+        return
     top = max(1e-9, max(abs(s) for s in samples))
     scale = peak / top
     path = os.path.join(OUT, name)

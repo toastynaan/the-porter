@@ -12,6 +12,7 @@ Every model is built by a script, and every texture is fetched and finished by o
 | Models | `tools/build.sh <name>` runs `tools/build/<name>.py` in Blender. A script works in the game's own space (metres, +Y up, front at -Z) through `tools/build/porter.py`, and writes one model | `art/models/<name>.glb` |
 | Materials | A model carries material names only. On import each is linked to the material of the same name, so models share materials and textures | `game/world/materials/real/<name>.tres` (linked by `tools/build/link_imports.py`, which `build.sh` runs) |
 | Scenes | A model is placed through a scene of its own, which adds what a model can't carry: lights, scripts, seats | `game/world/props/prop_*.tscn`, `game/world/road/*.tscn`, `game/characters/chr_*.tscn` |
+| Sounds | Recordings from Freesound, searched with its CC0 licence filter only, each sound's own page checked for "Creative Commons 0". Taken from the HQ previews, then trimmed, faded, filtered, mixed and levelled with ffmpeg; loops are cut so their end crossfades into their start. The rest of `art/sfx/` is still `tools/build/sfx_placeholders.py`'s synthesised placeholders, and that script skips any file credited as a recording | `art/sfx/*.wav` under the placeholders' names; each credited in `art/credits.csv` (source page, author, CC0). The downloads stay out of the repository |
 
 - **Vertex colour** does the grime: materials multiply it in (damp at the foot of a wall, shadow under the eaves, darker twigs). The ground's shader reads it as masks instead.
 - **Collision** is an object named `<Name>-colonly` in the model (Godot makes it a collider on import).
@@ -88,6 +89,34 @@ Their materials: `wood_prop` (grey weathered grain laid on by each face's own UV
 **Colour.** Vertex colours are linear light and the lantern is strong at arm's length. Timber is darkened by its texture, so its tones are 0.4 to 0.7. Everything untextured draws as bright as its numbers: 0.02 is dark cloth, 0.03 undyed wool, 0.06 pale linen, 0.13 wax, the palest thing there is. Anything redder than leather turns orange under the lantern.
 
 **Collision.** The model fits the Blocks: open where they are open (the oven's chamber, the tomb, under the altar and the raised beds). What stands outside them is out of reach or too thin to notice: the well's posts and roof, the stalls' backs above 1.1 m, grave markers, the latrine's partitions, the fallen half of the tomb's lid.
+
+### Sounds (night 0, 2026-11-15)
+
+`tools/build/sfx_recorded.py` makes them: it fetches each recording (its `SOURCES`) into `art/_src/sfx/`, checking its page still says CC0, then cuts, filters, loops and levels it into `art/sfx/` (run it with Blender's Python, which has numpy). The sounds night 0 plays are recordings now (Freesound, CC0; sources in `art/credits.csv`). Which recording, where it is cut and how it is treated are all *(mine)*. Loops are WAV, because `AudioOut.looped()` takes an `AudioStreamWAV`; they are mono where the player is positional and stereo for the two non-positional beds (rain, wind). The beds are levelled to about -21 LUFS *(mine)*, near the placeholders they replace, so the scenes' `volume_db` still roughly holds.
+
+| File | Now | Length |
+| --- | --- | --- |
+| `amb_rain_loop.wav` | Rain on a stone courtyard in a village with no traffic, under rain on roof tiles. Stereo | 24 s loop |
+| `amb_wagon_loop.wav` | A draught horse hauling a cart on a dirt and mud road, with an ox cart's wooden wheels creaking under it | 26 s loop |
+| `amb_wagon_cobbles_loop.wav` | A horse walking on cobbles and a wagon rattling on hard ground. The ride swaps to it at Aldgate | 26 s loop |
+| `amb_taproom_loop.wav` | Old film-library crowd walla made to have no words in it, two takes laid together | 23 s loop |
+| `amb_fire_loop.wav` | A wood fire crackling in a fireplace. Imported to loop (`loop_mode` Forward), so a scene can play it as it is. Plays at the Keys' hearth and Aldgate's watch fire (`FireSound`) | 21 s loop |
+| `amb_wind_night.wav` | High wind in bare trees, with cold gusts moaning at a window over it. Stereo | 24 s loop |
+| `sfx_bell.wav` | One stroke of a very large bell, ringing out (the abbey bell, the white chapel, and the curfew pitched down) | 7.9 s |
+| `sfx_dog.wav` | A big dog barking five times, muffled as if behind a door | 3.2 s |
+| `sfx_shutters.wav` | Wooden shutters banged shut one after another, the later ones farther off | 3.9 s |
+| `sfx_cry.wav` | A man's scream cut off 0.65 s in, the court giving a little of it back | 1.3 s |
+| `sfx_body_fall.wav` | A heavy body falling on dirt | 1.5 s |
+| `sfx_lantern_drop.wav` | A metal lantern dropped | 1.5 s |
+| `sfx_drag.wav` | A body dragged, and the slow steps of whoever drags it. `DeathScene.drag_to` plays it, following the body | 9.2 s |
+| `sfx_knock.wav` | Two runs of three knocks on a heavy wooden door | 2.2 s |
+| `sfx_door_open.wav`, `sfx_door_close.wav` | A heavy wooden door: latch and creak; swinging shut and slamming | 1.3 s, 1.1 s |
+| `sfx_step_<surface>_<n>.wav` | Boots on stone, on a wood floor, in mud and on grass, four steps each | 0.4 s |
+| `sfx_rook_<n>.wav` | Rooks calling (*Corvus frugilegus*) | 0.9 to 1.9 s |
+| `sfx_rat_<n>.wav` | A rat squeaking | 0.4 to 0.7 s |
+| `sfx_cat_0.wav` | A cat's short meow | 1.7 s |
+
+Still placeholders: the watchman's call (a recording would put modern words where Gib calls the hour), and everything night 0 doesn't play.
 
 ## Placeholders
 
