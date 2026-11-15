@@ -1,8 +1,9 @@
 @id n0_warden
 # DRAFT
-# The warden at Aldgate, night 0. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines): that is the talk's closing line, so his own last answer can end it.
-# A gatekeeper talking to a gatekeeper: blunt and tired. He lifts the sacking on every cart that passes his gate, and has counted the dead this month. Nothing he says names a demon or men behind the deaths.
-# His one question asked (or a nod), the talk ends.
+# The warden at Aldgate, night 0: Lambert *(the name is mine, 2026-11-15)*. The wagon has stopped, he has walked up beside the porter and holds his lantern up to his face (RideBeat, the Aldgate cue's inspector). When the talk ends he lowers it and walks back to his place saying they can go (the cue's parting_lines): that is the talk's closing line, so his own last answer can end it.
+# A gatekeeper talking to a gatekeeper: blunt and tired. He has just told the carter he opens for no one after the curfew bell; told the porter's going to keep a gate, he asks him what he'll do when someone knocks after it. He lifts the sacking on every cart that passes his gate, and has counted the dead this month. Nothing he says names a demon or men behind the deaths.
+# His name: every path comes to `name` (knows_warden), where he gives it as he finishes looking the porter over. Only walking away before it misses it.
+# Answer paths the tests take: test_prologue and test_flow answer 0 throughout (porter, open, name, cart): n0_warden_porter. The narration that opens it is checked word for word.
 == start
 (He holds his lantern up to your face, and looks at you a long moment.)
 Warden {weary}: A monk, and a young one. Where are you bound, brother?
@@ -12,18 +13,23 @@ Warden {weary}: A monk, and a young one. Where are you bound, brother?
 
 == porter [set n0_warden_porter]
 (The lantern doesn't move.)
-Warden {cold}: The porter. The old one went blind, I heard.
-Warden {weary}: You'll keep your gate and I'll keep mine. Mine shuts at the curfew bell. Does yours?
-* It will now. -> shuts
+Warden {cold, jaw}: Their porter. Then we're in one trade, you and I.
+Warden {weary}: Somebody knocks at your gate after the bell, wet through, a child with him. What do you do?
+* Let them in. -> open
+* Keep it shut till it's light. -> shut
 * I don't know yet. -> unsure
 
-== shuts
-Warden {grave}: Good. Bar it at the bell, and don't open it to a knock till it's light. Not for anyone.
--> ask
+== open
+Warden {grave, shake}: Then God help you, porter. I open to no one after the bell. Not to a child. Not to my own mother.
+-> name
+
+== shut
+Warden {grave, nod}: Good. Whoever it is, and whatever they tell you.
+-> name
 
 == unsure
-Warden {grave}: Then learn that before you learn anything else. Bar it at the bell, and keep it barred till it's light.
--> ask
+Warden {grave}: Then learn it before you learn anything else. Bar it at the bell, and keep it barred till it's light.
+-> name
 
 == abbey
 (His mouth goes thin.)
@@ -33,15 +39,16 @@ Warden {wary, lip}: Pilgrim?
 
 == plain
 Warden {cold}: Just a monk. There's no such thing in this city, brother.
--> ask
+-> name
 
 == silent
 Warden {amused}: Light in your eyes? It's meant to be. A face tells me more than a mouth does.
 Warden {grave}: Yours says you've never slept inside a city wall.
--> ask
+-> name
 
-== ask
-* You saw the cart with the dead, warden? -> cart
+== name [set knows_warden]
+Warden {calm}: I'm Lambert. Twenty winters on this gate, and I'll know your face again.
+* You saw the cart with the dead, Lambert? -> cart
 * (Nod.) -> end
 
 == cart [set n0_warden_cart]

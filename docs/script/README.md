@@ -97,7 +97,7 @@ Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 
 
 ### Agnes
 
-Mostly, by chapter: night0 *warm* · lane *warm*.
+Mostly, by chapter: night0 *warm* · lane *grave*.
 
 ### Brother Aldo
 
@@ -139,7 +139,7 @@ Mostly, by chapter: night1 *glad* · night2 *glad* · night3 *glad* · night4 *g
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *amused* · night2 *weary* · night4 *grave* · night5 *calm*.
+Mostly, by chapter: night1 *amused* · night2 *weary* · night4 *grave* · night5 *grave*.
 
 ### Brother Ranulf
 
@@ -174,7 +174,7 @@ Mostly, by chapter: night1 *warm* · night2 *warm* · night3 *warm* · night4 *w
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *sad*.
+Mostly, by chapter: night1 *weary* · night2 *weary* · night4 *amused*.
 
 ### Cole
 
@@ -190,7 +190,7 @@ Mostly, by chapter: night1 *blank*.
 
 ### Gib the watchman
 
-Mostly, by chapter: night0 *weary* · lane *afraid*.
+Mostly, by chapter: night0 *grave* · lane *grave*.
 
 ### Hob
 
@@ -220,7 +220,7 @@ Mostly, by chapter: night0 *wary* · night3 *wary* · lane *afraid*.
 
 ### Margery
 
-Mostly, by chapter: night0 *afraid* · night3 *afraid* · lane *afraid*.
+Mostly, by chapter: night0 *afraid* · night3 *wary* · lane *afraid*.
 
 ### Merchant
 
@@ -253,7 +253,7 @@ Mostly, by chapter: night0 *calm* · night6 *amused*.
 
 ### Traveller
 
-Mostly, by chapter: night0 *afraid*.
+Mostly, by chapter: night0 *grave*.
 
 ### Walter
 
@@ -265,7 +265,7 @@ Mostly, by chapter: night0 *amused*.
 
 ### Warden
 
-Mostly, by chapter: night0 *weary*.
+Mostly, by chapter: night0 *grave*.
 
 ### the carter
 

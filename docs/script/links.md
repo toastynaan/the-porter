@@ -6,9 +6,9 @@ Who sets each flag or note, and who reads it, across every conversation, scene a
 
 Every flag and note that is read is set somewhere.
 
-<details><summary>Set but never read (194): bookkeeping (talked_, reads), notes that count toward the prior, or loose ends</summary>
+<details><summary>Set but never read (191): bookkeeping (talked_, reads), notes that count toward the prior, or loose ends</summary>
 
-`anselm_henbane`, `bread_warning`, `d1_saw_sand`, `d1_tour_done`, `d1_tour_skipped`, `edwin_comb`, `edwin_missing`, `ergot_rye`, `incense_bag`, `keys_moved`, `knock_no_one`, `lane_kit_n4_look`, `merchant_purse`, `n0_agnes_fed`, `n0_cart_go`, `n0_cart_pray`, `n0_cart_what`, `n0_cart_who`, `n0_gib_louder`, `n0_hob_bag_promise`, `n0_jankin_comforted`, `n0_jankin_count`, `n0_jankin_trade`, `n0_jankin_warned`, `n0_kit_porter`, `n0_kit_tooth`, `n0_mab_anselm`, `n0_margery_wat_saw`, `n0_ralph_singing`, `n0_riding`, `n0_road_blind`, `n0_road_family`, `n0_road_girls`, `n0_road_inside`, `n0_road_quiet`, `n0_road_sent`, `n0_road_young`, `n0_roger_tally`, `n0_walter_nocoin`, `n0_warden_cart`, `n0_warden_porter`, `n1_anselm_warned`, `n1_hugh_rule`, `n1_hugh_why`, `n1_thomas_whisper`, `n2_empty_bed`, `n2_hugh_lock`, `n2_lane_quiet`, `n2_roger`, `n2_sailor`, `n3_body3`, `n3_caught`, `n3_seen_in_crypt`, `n3_walter`, `n4_edwin_whisper`, `n4_fast`, `n4_guest`, `n4_hugh_keys`, `n4_hugh_night`, `n4_simon_scrubbing`, `n5_anselm_key`, `n5_body5`, `n5_escaped`, `n5_thomas_simon_told`, `n6_joan`, `n6_knock`, `n6_mab`, `n6_roger`, `oven_badge`, `prior_believes`, `ran_from_the_demon`, `read_n0_roger_count_right`, `read_n0_walter_gate`, `read_n0_walter_gate_right`, `read_n1_hugh_gate`, `read_n1_hugh_gate_right`, `read_n1_osric_pig_right`, `read_n1_thomas_beast_right`, `read_n2_anselm_guests_right`, `read_n2_osric_rye_right`, `read_n2_thomas_drowned_right`, `read_n3_hugh_night`, `read_n3_hugh_night_right`, `read_n3_osric_page`, `read_n3_osric_page_right`, `read_n3_thomas_prior`, `read_n3_thomas_prior_right`, `read_n4_hob_walter_right`, `read_n4_ranulf_crypt`, `read_n4_ranulf_crypt_right`, `read_n4_simon_night`, `read_n4_simon_night_right`, `read_n4_thomas_keeps`, `read_n4_thomas_keeps_right`, `read_n5_hugh_porter`, `read_n5_hugh_porter_right`, `read_n5_kit_candles_right`, `read_n5_simon_sent`, `read_n5_simon_sent_right`, `read_n5_thomas_attack`, `read_n5_thomas_attack_right`, `read_n6_hugh_lantern`, `read_n6_hugh_lantern_right`, `refused_wine`, `rite_stopped`, `sailor_knot`, `sand_by_the_well`, `struck_the_demon`, `talked_lane_agnes`, `talked_lane_carter`, `talked_lane_gib`, `talked_lane_hob`, `talked_lane_kit`, `talked_lane_mab`, `talked_lane_margery`, `talked_n0_chatter_hob_agnes`, `talked_n0_chatter_jankin_walter`, `talked_n0_chatter_kit_margery`, `talked_n0_chatter_roger_ralph`, `talked_n0_jankin`, `talked_n0_ralph`, `talked_n0_roger`, `talked_n0_traveller_road`, `talked_n0_walter`, `talked_n0_warden`, `talked_n1_anselm`, `talked_n1_choira`, `talked_n1_choirb`, `talked_n1_choirc`, `talked_n1_cole`, `talked_n1_dunstan`, `talked_n1_edwin`, `talked_n1_godric`, `talked_n1_hugh`, `talked_n1_osric`, `talked_n1_ranulf`, `talked_n1_thomas`, `talked_n1_warner`, `talked_n2_anselm`, `talked_n2_choira`, `talked_n2_choirb`, `talked_n2_choirc`, `talked_n2_cole`, `talked_n2_dunstan`, `talked_n2_edwin`, `talked_n2_godric`, `talked_n2_hugh`, `talked_n2_osric`, `talked_n2_ranulf`, `talked_n2_thomas`, `talked_n3_anselm`, `talked_n3_carter`, `talked_n3_choir_brother`, `talked_n3_cole`, `talked_n3_dunstan`, `talked_n3_edwin`, `talked_n3_godric`, `talked_n3_hugh`, `talked_n3_lane_woman`, `talked_n3_mab`, `talked_n3_osric`, `talked_n3_ranulf`, `talked_n3_thomas`, `talked_n4_anselm`, `talked_n4_choira`, `talked_n4_choirb`, `talked_n4_choirc`, `talked_n4_cole`, `talked_n4_dunstan`, `talked_n4_edwin`, `talked_n4_godric`, `talked_n4_hugh`, `talked_n4_osric`, `talked_n4_ranulf`, `talked_n4_simon`, `talked_n4_thomas`, `talked_n5_anselm`, `talked_n5_choirb`, `talked_n5_choirc`, `talked_n5_cole`, `talked_n5_dunstan`, `talked_n5_godric`, `talked_n5_hugh`, `talked_n5_osric`, `talked_n5_ranulf`, `talked_n5_simon`, `talked_n5_thomas`, `talked_n6_godric`, `talked_n6_hugh`, `talked_n6_simon`, `thomas_custody`, `two_demons`, `window_killing_drunk`, `woke_in_infirmary`
+`anselm_henbane`, `bread_warning`, `d1_saw_sand`, `d1_tour_done`, `d1_tour_skipped`, `edwin_comb`, `edwin_missing`, `ergot_rye`, `incense_bag`, `keys_moved`, `knock_no_one`, `knows_carter`, `knows_warden`, `lane_kit_n4_look`, `merchant_purse`, `n0_agnes_fed`, `n0_cart_go`, `n0_cart_pray`, `n0_cart_what`, `n0_cart_who`, `n0_gib_louder`, `n0_hob_bag_promise`, `n0_jankin_comforted`, `n0_jankin_count`, `n0_jankin_trade`, `n0_jankin_warned`, `n0_kit_porter`, `n0_kit_tooth`, `n0_mab_anselm`, `n0_margery_wat_saw`, `n0_ralph_singing`, `n0_riding`, `n0_road_girls`, `n0_road_quiet`, `n0_roger_tally`, `n0_walter_nocoin`, `n0_warden_cart`, `n0_warden_porter`, `n1_anselm_warned`, `n1_hugh_rule`, `n1_hugh_why`, `n1_thomas_whisper`, `n2_empty_bed`, `n2_hugh_lock`, `n2_lane_quiet`, `n2_roger`, `n2_sailor`, `n3_body3`, `n3_caught`, `n3_seen_in_crypt`, `n3_walter`, `n4_edwin_whisper`, `n4_fast`, `n4_guest`, `n4_hugh_keys`, `n4_hugh_night`, `n4_simon_scrubbing`, `n5_anselm_key`, `n5_body5`, `n5_escaped`, `n5_thomas_simon_told`, `n6_joan`, `n6_knock`, `n6_mab`, `n6_roger`, `oven_badge`, `prior_believes`, `ran_from_the_demon`, `read_n0_roger_count_right`, `read_n0_walter_gate`, `read_n0_walter_gate_right`, `read_n1_hugh_gate`, `read_n1_hugh_gate_right`, `read_n1_osric_pig_right`, `read_n1_thomas_beast_right`, `read_n2_anselm_guests_right`, `read_n2_osric_rye_right`, `read_n2_thomas_drowned_right`, `read_n3_hugh_night`, `read_n3_hugh_night_right`, `read_n3_osric_page`, `read_n3_osric_page_right`, `read_n3_thomas_prior`, `read_n3_thomas_prior_right`, `read_n4_hob_walter_right`, `read_n4_ranulf_crypt`, `read_n4_ranulf_crypt_right`, `read_n4_simon_night`, `read_n4_simon_night_right`, `read_n4_thomas_keeps`, `read_n4_thomas_keeps_right`, `read_n5_hugh_porter`, `read_n5_hugh_porter_right`, `read_n5_kit_candles_right`, `read_n5_simon_sent`, `read_n5_simon_sent_right`, `read_n5_thomas_attack`, `read_n5_thomas_attack_right`, `read_n6_hugh_lantern`, `read_n6_hugh_lantern_right`, `refused_wine`, `rite_stopped`, `sailor_knot`, `sand_by_the_well`, `struck_the_demon`, `talked_lane_agnes`, `talked_lane_carter`, `talked_lane_gib`, `talked_lane_hob`, `talked_lane_kit`, `talked_lane_mab`, `talked_lane_margery`, `talked_n0_chatter_hob_agnes`, `talked_n0_chatter_jankin_walter`, `talked_n0_chatter_kit_margery`, `talked_n0_chatter_roger_ralph`, `talked_n0_jankin`, `talked_n0_ralph`, `talked_n0_roger`, `talked_n0_traveller_road`, `talked_n0_walter`, `talked_n0_warden`, `talked_n1_anselm`, `talked_n1_choira`, `talked_n1_choirb`, `talked_n1_choirc`, `talked_n1_cole`, `talked_n1_dunstan`, `talked_n1_edwin`, `talked_n1_godric`, `talked_n1_hugh`, `talked_n1_osric`, `talked_n1_ranulf`, `talked_n1_thomas`, `talked_n1_warner`, `talked_n2_anselm`, `talked_n2_choira`, `talked_n2_choirb`, `talked_n2_choirc`, `talked_n2_cole`, `talked_n2_dunstan`, `talked_n2_edwin`, `talked_n2_godric`, `talked_n2_hugh`, `talked_n2_osric`, `talked_n2_ranulf`, `talked_n2_thomas`, `talked_n3_anselm`, `talked_n3_carter`, `talked_n3_choir_brother`, `talked_n3_cole`, `talked_n3_dunstan`, `talked_n3_edwin`, `talked_n3_godric`, `talked_n3_hugh`, `talked_n3_lane_woman`, `talked_n3_mab`, `talked_n3_osric`, `talked_n3_ranulf`, `talked_n3_thomas`, `talked_n4_anselm`, `talked_n4_choira`, `talked_n4_choirb`, `talked_n4_choirc`, `talked_n4_cole`, `talked_n4_dunstan`, `talked_n4_edwin`, `talked_n4_godric`, `talked_n4_hugh`, `talked_n4_osric`, `talked_n4_ranulf`, `talked_n4_simon`, `talked_n4_thomas`, `talked_n5_anselm`, `talked_n5_choirb`, `talked_n5_choirc`, `talked_n5_cole`, `talked_n5_dunstan`, `talked_n5_godric`, `talked_n5_hugh`, `talked_n5_osric`, `talked_n5_ranulf`, `talked_n5_simon`, `talked_n5_thomas`, `talked_n6_godric`, `talked_n6_hugh`, `talked_n6_simon`, `thomas_custody`, `two_demons`, `window_killing_drunk`, `woke_in_infirmary`
 
 </details>
 
@@ -300,6 +300,24 @@ Every flag and note that is read is set somewhere.
 ### `knock_no_one` (a note: A knock at the gate after midnight. No one there. Mab saw no one come.)
 
 - **Set by:** Mab, lane (`n2_knock`); code: `game/chapters/night1/knock_no_one_beat.gd`
+- **Read by:** *nothing*
+
+<a id="knows_carter"></a>
+### `knows_carter`
+
+- **Set by:** the carter, night0 (`wait_will`); the carter, night0 (`shut_keys`); the carter, night0 (`bless`); Traveller, night0 (`carter_hamo`)
+- **Read by:** *nothing*
+
+<a id="knows_traveller"></a>
+### `knows_traveller`
+
+- **Set by:** Traveller, night0 (`done_name`); Traveller, night0 (`trade_name`); Traveller, night0 (`porter_hand`); Traveller, night0 (`after_intro`)
+- **Read by:** Traveller, night0 (`done_plain`); Traveller, night0 (`trade`); Traveller, night0 (`porter`); Traveller, night0 (`after_name`)
+
+<a id="knows_warden"></a>
+### `knows_warden`
+
+- **Set by:** Warden, night0 (`name`)
 - **Read by:** *nothing*
 
 <a id="lane_agnes_1"></a>
@@ -846,7 +864,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_agnes_jankin`
 
 - **Set by:** Agnes, night0 (`jankin`)
-- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics_late: "Is Jankin always like this?"`)
+- **Read by:** Agnes, night0 (`topics`); Agnes, night0 (`topics_late: "Who's the man on the bench by the wall?"`)
 
 <a id="n0_agnes_overheard"></a>
 ### `n0_agnes_overheard`
@@ -894,7 +912,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_cart_say`
 
 - **Set by:** Traveller, night0 (`say`); Traveller, night0 (`say`)
-- **Read by:** Traveller, night0 (`rumour`); Traveller, night0 (`rumour_ask: "What do people say?"`); Traveller, night0 (`again`); Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask: "What do people say about it?"`)
+- **Read by:** Traveller, night0 (`rumour`); Traveller, night0 (`rumour_ask: "What do people say?"`); Traveller, night0 (`again`); Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask_first: "What do people say about it?"`); Traveller, night0 (`after_ask_inside: "What do people say about it?"`)
 
 <a id="n0_cart_see"></a>
 ### `n0_cart_see`
@@ -1074,7 +1092,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_kit_forbidden`
 
 - **Set by:** Kit, night0 (`forbidden`)
-- **Read by:** Kit, night0 (`topics`); Kit, night0 (`topics`); Kit, night0 (`ask: "Why won't your father let you in?"`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Your girl sells them at our gate?"`)
+- **Read by:** Kit, night0 (`topics`); Kit, night0 (`topics`); Kit, night0 (`ask: "Why won't your father let you in?"`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Do you carry them over yourself?"`)
 
 <a id="n0_kit_heard"></a>
 ### `n0_kit_heard`
@@ -1145,7 +1163,7 @@ Every flag and note that is read is set somewhere.
 <a id="n0_mab_why"></a>
 ### `n0_mab_why`
 
-- **Set by:** Mab, night0 (`why_blind`); Mab, night0 (`why_sent`); Mab, night0 (`why_quiet`)
+- **Set by:** Mab, night0 (`why_must`); Mab, night0 (`why_sent`); Mab, night0 (`why_quiet`)
 - **Read by:** Mab, night0 (`done`); Mab, night0 (`done`)
 
 <a id="n0_margery_home"></a>
@@ -1206,7 +1224,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_ralph_kit`
 
 - **Set by:** Ralph the chandler, night0 (`trade_nod`); Ralph the chandler, night0 (`forbid`)
-- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Your girl sells them at our gate?"`)
+- **Read by:** Ralph the chandler, night0 (`again`); Ralph the chandler, night0 (`topics`); Ralph the chandler, night0 (`ask: "Kit says you won't let her inside the abbey."`); Ralph the chandler, night0 (`ask: "Do you carry them over yourself?"`)
 
 <a id="n0_ralph_light"></a>
 ### `n0_ralph_light`
@@ -1242,25 +1260,19 @@ Every flag and note that is read is set somewhere.
 ### `n0_road_ask`
 
 - **Set by:** Traveller, night0 (`ask`)
-- **Read by:** Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask: "Who would know more?"`)
-
-<a id="n0_road_blind"></a>
-### `n0_road_blind`
-
-- **Set by:** Traveller, night0 (`blind`)
-- **Read by:** *nothing*
+- **Read by:** Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask_first: "Who would know more?"`); Traveller, night0 (`after_ask_inside: "Who would know more?"`)
 
 <a id="n0_road_carter"></a>
 ### `n0_road_carter`
 
 - **Set by:** Traveller, night0 (`carter`)
-- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "Why is the carter in such a hurry?"`); Traveller, night0 (`topics_late: "Why is the carter in such a hurry?"`); Traveller, night0 (`again`)
+- **Read by:** Traveller, night0 (`stories`); Traveller, night0 (`topics`); Traveller, night0 (`topics_ask: "Why is the carter in such a hurry?"`); Traveller, night0 (`again`)
 
 <a id="n0_road_family"></a>
 ### `n0_road_family`
 
 - **Set by:** Traveller, night0 (`family`)
-- **Read by:** *nothing*
+- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`again`)
 
 <a id="n0_road_girls"></a>
 ### `n0_road_girls`
@@ -1272,19 +1284,13 @@ Every flag and note that is read is set somewhere.
 ### `n0_road_inside`
 
 - **Set by:** Traveller, night0 (`inside`)
-- **Read by:** *nothing*
-
-<a id="n0_road_name"></a>
-### `n0_road_name`
-
-- **Set by:** Traveller, night0 (`name`)
-- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics_late: "I never asked your name, friend."`); Traveller, night0 (`again`)
+- **Read by:** Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask_inside: "What did you see, inside?"`)
 
 <a id="n0_road_porter"></a>
 ### `n0_road_porter`
 
 - **Set by:** Traveller, night0 (`porter`)
-- **Read by:** Traveller, night0 (`count`); Traveller, night0 (`trade_turn`); Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "I'm to be porter at an abbey inside Aldgate."`); Traveller, night0 (`again`)
+- **Read by:** Traveller, night0 (`count`); Traveller, night0 (`trade_turn`); Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_ask: "I'm to be porter at an abbey inside Aldgate."`); Traveller, night0 (`again`)
 
 <a id="n0_road_quiet"></a>
 ### `n0_road_quiet`
@@ -1292,35 +1298,23 @@ Every flag and note that is read is set somewhere.
 - **Set by:** Traveller, night0 (`quiet`)
 - **Read by:** *nothing*
 
-<a id="n0_road_sent"></a>
-### `n0_road_sent`
-
-- **Set by:** Traveller, night0 (`sent`)
-- **Read by:** *nothing*
-
 <a id="n0_road_stories"></a>
 ### `n0_road_stories`
 
 - **Set by:** Traveller, night0 (`stories`)
-- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics_late: "What's different about this year?"`); Traveller, night0 (`again`)
+- **Read by:** Traveller, night0 (`family: "What stories?"`); Traveller, night0 (`carter_hamo`)
 
 <a id="n0_road_think"></a>
 ### `n0_road_think`
 
 - **Set by:** Traveller, night0 (`think`)
-- **Read by:** Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask: "What do you think goes on in that abbey?"`)
+- **Read by:** Traveller, night0 (`after_topics`); Traveller, night0 (`after_ask`)
 
 <a id="n0_road_trade"></a>
 ### `n0_road_trade`
 
-- **Set by:** Traveller, night0 (`quiet`); Traveller, night0 (`trade`)
-- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_early: "Where are you bound yourself, friend?"`); Traveller, night0 (`again`)
-
-<a id="n0_road_young"></a>
-### `n0_road_young`
-
-- **Set by:** Traveller, night0 (`young`)
-- **Read by:** *nothing*
+- **Set by:** Traveller, night0 (`trade`)
+- **Read by:** Traveller, night0 (`topics`); Traveller, night0 (`topics`); Traveller, night0 (`topics_ask: "Where are you bound yourself, friend?"`); Traveller, night0 (`again`)
 
 <a id="n0_roger_agreed"></a>
 ### `n0_roger_agreed`

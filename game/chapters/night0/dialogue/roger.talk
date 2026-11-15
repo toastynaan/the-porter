@@ -13,7 +13,7 @@
 
 == first_start
 (A broad man in a good brown coat, a staff of office leaning on the table. He was watching you before you came in.)
-Roger {cold}: You came in on the carter's wagon, in a habit, with one bundle. Who are you?
+Roger {cold}: You came down off the carter's wagon, and the first thing you looked at was the abbey wall. Who are you?
 -> who_q
 
 == overheard_start
@@ -35,7 +35,7 @@ Roger {cold}: Roger, bailiff of this ward. When I ask, people answer. You'll be 
 -> letters
 
 == silent
-Roger {calm}: A habit, a bundle, and a face that's never seen London. You're their new porter. I'm Roger, bailiff of this ward.
+Roger {calm}: A habit, one bundle, and a face that's never seen London. You're their new porter. I'm Roger, bailiff of this ward.
 -> letters
 
 == letters

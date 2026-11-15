@@ -4,8 +4,10 @@
 # Four pilgrims under sacking, found in the ditch: seven this month on this road. They went in at the abbey's gate to see the saint; nobody saw them come out; they turn up after, outside the walls.
 # The ride reveals nothing of what or who is behind it: no demon, no men, no robbery. Only the dead, the count, the abbey, and a man too frightened to say what people say.
 # If the porter told him he's the abbey's porter (n0_road_porter), he says your abbey; if not, the carter has told him. If he gave his name (n0_road_alric), Will uses it.
+# If the cart broke in before Will gave his own name, he gives it as the cart goes (done_name: knows_traveller).
 # He asks the porter one thing back: whether he'll still go in at that gate (n0_cart_go).
 # One talk: the questions left come up again until all are asked; then he watches the cart go and closes it (done). What he doesn't get to say here (Aldgate may cut it short), the porter can ask him after (traveller_road.talk, after).
+# Answer paths the tests take: test_prologue and test_flow answer 0 throughout (who, abbey, abbey_how, say, see, see_go, done). The two lines that open it ("Whoa. Look at that." and the cart going by) are checked word for word.
 == start
 Traveller {afraid}: Whoa. Look at that.
 (The cart creaks by close enough to touch. Shapes lie under sacking on its bed, three side by side and one across them.)
@@ -23,7 +25,7 @@ Traveller {afraid, blink}: Found in the ditch, the carter says. All four in the 
 -> count
 
 == pray [set n0_cart_pray]
-(You say the words for the dead under your breath. The traveller's lips move with yours.)
+(You say the words for the dead under your breath. His lips move with yours.)
 Traveller {grave}: Say one for yourself while you're at it.
 -> count
 
@@ -79,7 +81,7 @@ Traveller {grave}: That's the first wise thing anyone's said on this cart.
 -> rumour
 
 == done
-(The cart's lantern goes small down the road behind you. The traveller doesn't take his eyes off it.)
+(The cart's lantern goes small down the road behind you. He doesn't take his eyes off it.)
 -> done_named [if n0_road_alric]
 -> done_plain
 
@@ -89,6 +91,11 @@ Traveller {sad}: God keep you better than He kept those, Brother Alric.
 
 == done_plain
 Traveller {sad}: God keep you better than He kept those, brother.
+-> done_name [if not knows_traveller]
+-> end
+
+== done_name [set knows_traveller]
+Traveller {sad, look down}: Will Fuller. A man should know who he saw that with.
 -> end
 
 == again

@@ -265,7 +265,7 @@ watchers = [NodePath("../../RoadFolk/Townswoman")]
 [node name="Dog" type="Marker3D" parent="RideCues"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99, 0, 50.5)
 script = ExtResource("cue_gd")
-lines = PackedStringArray("Traveller {grave}: They bar their doors early, this side of the wall. Since the pilgrims started going missing.")
+lines = PackedStringArray("Traveller {grave}: They bar their doors early, this side of the wall. Since the pilgrims stopped coming home.")
 sound = ExtResource("sfx_dog")
 volume_db = -3.0
 keep = 25.0

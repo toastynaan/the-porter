@@ -87,9 +87,9 @@ Hob {calm}: Brother. What'll it be?
 
 == abbey [set n0_hob_abbey]
 Hob {calm}: I pour, folk talk. I don't say any of it's true.
-Hob {grave}: Pilgrims go in at that gate and don't come out. Folk say they leave by some back way. I don't know of one.
+Hob {grave}: They say there's a back way out of that abbey, for pilgrims who'd sooner not be seen leaving. Twenty years on this lane, and I don't know of one.
 * What else do they say? -> abbey_more
-* Do you believe it? -> abbey_believe
+* You don't believe in the back way? -> abbey_believe
 
 == abbey_more [set n0_hob_wall]
 Hob {calm}: Lights moving in there at night, at hours no bell's rung for. And a thing up on the wall with horns, Jankin says.
@@ -98,7 +98,7 @@ Hob {grave}: Jankin says a deal. But I keep my shutters barred on that side.
 
 == abbey_believe
 Hob {cold}: I believe in what I pour and what I'm paid.
-Hob {grave}: And I keep my shutters barred on that side.
+Hob {grave, glance}: And I keep my shutters barred on that side.
 -> topics
 
 == shut [set n0_hob_shut] [set n0_hob_jankin]
@@ -108,7 +108,7 @@ Hob {calm}: Them with a bed go up the stair. Them without go out. Jankin too, ev
 * (Nod.) -> topics
 
 == shut_jankin
-Hob {weary}: Even Jankin. A man who doesn't pay doesn't sleep in the Keys. If I kept him, I'd keep the lane.
+Hob {weary, look away}: Even Jankin. A man who doesn't pay doesn't sleep in the Keys. If I kept him, I'd keep the lane.
 Hob {amused}: If it's a bed you're after, that's Agnes's business. Don't haggle. She'll win.
 -> topics
 

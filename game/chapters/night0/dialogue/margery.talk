@@ -78,7 +78,7 @@ Margery {afraid}: You again, brother. Quickly, then.
 
 == home [set n0_margery_home]
 Margery {afraid}: Home, by Saint Andrew's. I'm Margery. I go the long way round.
-Margery {afraid}: Two streets more, but it doesn't pass that wall.
+Margery {wary, glance}: Two streets more, but it doesn't pass that wall.
 -> topics
 
 == family [set n0_margery_wat]
@@ -115,7 +115,7 @@ Margery {afraid}: I must go. The Keys, brother, mind. God keep you.
 -> end
 
 == done_plain
-Margery {afraid}: I must go, brother. God keep you.
+Margery {afraid}: I must go, brother. Don't you walk by that wall after dark. Nobody does.
 -> end
 
 == leave

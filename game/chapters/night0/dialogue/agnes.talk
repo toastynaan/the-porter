@@ -15,7 +15,7 @@ Agnes {warm}: Look at you, wet to the skin. Come by the fire. What brings a brot
 * An ale, if you would. [drink] -> ale
 
 == gate
-Agnes {grave}: It always is, after dark. Since old Anselm's eyes went there's nobody keeps it.
+Agnes {grave, glance}: Every night now, and nobody comes to a knock. Don't stand out there knocking, brother.
 Agnes {warm}: So it's a bed you want, and I've the one.
 -> topics
 
@@ -27,7 +27,7 @@ Agnes {warm}: A ha'penny, and I'll not haggle with a monk. Have you eaten today?
 
 == fed [set n0_agnes_fed]
 (She ladles pottage into a bowl and puts it into your hands without asking.)
-Agnes {amused}: Say your grace quick, it's hot. And be in before the curfew bell at nine. After it the Keys is shut.
+Agnes {amused}: Say your grace quick, it's hot. And be in by the curfew bell. At nine Hob bars the door, and he'll not open it for a bishop.
 -> topics
 
 == again
@@ -54,7 +54,7 @@ Agnes {amused}: Well? Warmer?
 
 == topics_late
 * [if not n0_agnes_window] Why will nobody else take the room? -> window
-* [if not n0_agnes_jankin] Is Jankin always like this? -> jankin
+* [if not n0_agnes_jankin] Who's the man on the bench by the wall? -> jankin
 * An ale, if you would. [drink] -> ale
 
 == topics_close
@@ -65,8 +65,8 @@ Agnes {amused}: Well? Warmer?
 == abbey [set n0_agnes_abbey]
 Agnes {cold}: I don't talk about that place under my own roof.
 (She glances at the shutters all the same, and lowers her voice.)
-Agnes {grave}: We've had lodgers go over there to see the relic. Paid me for two nights, and slept one.
-* What becomes of their things? -> abbey_things
+Agnes {grave, lip}: We've had lodgers go over there of an evening, to see the relic. Not all of them came back for their supper.
+* And their things? -> abbey_things
 * (Say nothing.) -> topics
 
 == abbey_things [set n0_agnes_bag]
@@ -82,16 +82,16 @@ Agnes {grave, glance}: The last one up there came down at midnight in his shirt,
 
 == window_saw
 Agnes {grave}: He wouldn't say, and I didn't ask. I don't look out of that window, brother.
-Agnes {wary}: Nor should you. Draw the shutter and say your prayers.
+Agnes {wary}: Nor should you. Draw the shutter, and say your prayers.
 -> topics
 
 == window_quiet
-Agnes {wary}: Draw the shutter, and say your prayers. That's what I'd do.
+Agnes {wary, look down}: I'd draw the shutter, and say my prayers. That's all I'd do.
 -> topics
 
 == jankin [set n0_agnes_jankin]
 (She looks down the bench at him, and her face softens.)
-Agnes {warm}: Jankin? Every night. Hob puts him out at closing, and I put a crust in his pocket first.
+Agnes {warm}: That's Jankin. He's here every night. Hob puts him out at closing, and I put a crust in his pocket first.
 Agnes {sad}: One of these nights it'll be too cold for him out there. You see if it isn't.
 -> topics
 

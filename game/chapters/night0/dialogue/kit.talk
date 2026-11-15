@@ -101,7 +101,7 @@ Kit {amused}: You came back! Two left, brother. Both for a farthing, and I'll th
 
 == candles [set n0_kit_candles]
 Kit {amused}: Brother Ranulf, your sacrist. He'd buy the tray and the strap, if I let him.
-Kit {calm}: He used to buy two. Father says nobody needs that much light to pray by.
+Kit {calm}: At Easter it was two a week. Father says nobody needs that much light to pray by.
 * What does he want with them? -> candles_what
 * (Nod.) -> topics
 
@@ -112,7 +112,7 @@ Kit {amused}: You can ask him, though. You live there.
 
 == heard [set n0_kit_heard]
 Kit {ashamed}: I shouldn't have asked about the finger. Margery thinks it's wicked, wanting to see it.
-Kit {wary}: But Wat came out of your gate white as tallow, Father says. And he's a big man, Wat.
+Kit {wary}: But Father saw Wat come out of your gate that morning, and he wouldn't say good day. Wat says good day to cats.
 -> topics
 
 == done

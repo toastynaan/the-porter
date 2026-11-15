@@ -63,15 +63,15 @@ Ralph {warm}: Brother. Tell your sacrist I've wax enough for whatever he wants.
 == ask
 * [if not n0_ralph_coin] How does he pay you? -> coin
 * [if n0_kit_forbidden] [if not n0_ralph_kit] Kit says you won't let her inside the abbey. -> forbid
-* [if not n0_kit_forbidden] [if not n0_ralph_kit] Your girl sells them at our gate? -> trade
+* [if not n0_kit_forbidden] [if not n0_ralph_kit] Do you carry them over yourself? -> trade
 
 == coin [set n0_ralph_coin]
-Ralph {calm}: In silver. On the nail, and he doesn't haggle.
+Ralph {calm}: In silver. On the nail, and never a word about the price.
 Ralph {wary, swallow}: That abbey hadn't two pennies to rub together. Everybody knew it. I don't ask where a man of God gets his silver.
 -> topics
 
 == trade
-Ralph {warm}: My Kit. She's at your gate most dusks with her tray. Be kind to her.
+Ralph {warm}: Not I. My girl Kit does, with her tray, most dusks. Be kind to her.
 (He turns his cup round on the board.)
 Ralph {grave}: And don't you ever let her in past it.
 * Why not? -> forbid

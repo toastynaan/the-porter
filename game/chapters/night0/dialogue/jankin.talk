@@ -62,7 +62,7 @@ Jankin {glad}: Brother! You came back. Nobody comes back to Jankin.
 -> ask
 
 == ask
-* What do you know of the abbey, friend? -> wall
+* You've seen one, then? A devil? -> wall
 * [if not n0_jankin_who] Who are you, friend? -> who
 * [if not n0_jankin_home] Where will you sleep tonight? -> home
 
@@ -101,7 +101,7 @@ Jankin {afraid, still}: Last week it was on the wall right across from my step. 
 * It won't come down off the wall. -> wall_down
 
 == warned [set n0_jankin_warned]
-Jankin {amused}: Where? Hob puts me out at the bell, and every door in Aldgate's barred by then.
+Jankin {amused, smile}: Where? Hob puts me out at the bell, and every door in Aldgate's barred by then.
 Jankin {drunk}: Pray for me instead. Monks' prayers are stronger. They're sober.
 -> topics
 
@@ -122,7 +122,7 @@ Jankin {sad, still}: Ask me another, brother. Ask me about devils. I'm good on d
 -> topics
 
 == home [set n0_jankin_home]
-Jankin {drunk}: Tonight? Wherever I fall. Hob throws me out at closing, every night, rain or no.
+Jankin {drunk}: Tonight? Wherever I fall. Hob throws me out at closing.
 Jankin {amused}: There's a step by the chandler's. Dry, mostly. Nobody's murdered me on it yet.
 -> topics
 
