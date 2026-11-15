@@ -11,7 +11,8 @@ extends Node
 ##   questions drop off.
 ## - Showing lines: narration (in brackets) in italics without its brackets
 ##   or a name; an aside it opens with over the name; a line said over a talk
-##   gives the talk's line back when it's over.
+##   gives the talk's line back when it's over; a stranger is named by what
+##   he does until he gives his name.
 ## - Walking away by moving: the talk ends, his view comes back, they call
 ##   after him. The next talk starts at "again". `interact` skips a line.
 ## - Keys held down (from the playtest): `interact` held skips one line, and
@@ -138,6 +139,10 @@ func _run() -> void:
 	_check(view.aside == "He laughs." and view.speaker == "Osric" and view.words == "Leave it." and not view.narrated,
 		"a spoken line's aside shows beside the name")
 	await _seconds(0.6)
+	var stranger := People.label("Traveller")
+	GameState.set_flag(&"knows_traveller")
+	_check(stranger == "Traveller" and People.label("Traveller") == "Will Fuller" and People.label("Osric") == "Osric",
+		"a stranger's lines show what he is until he gives his name, then his name")
 
 	# Talking: they turn to him, his view turns to their face for a moment.
 	talker.interact(_player)

@@ -214,7 +214,7 @@ func show_line(who: String, text: String) -> void:
 		return
 	_on_screen = now
 	_new_on_frame = Engine.get_process_frames()
-	_name.text = speaker.to_upper()
+	_name.text = People.label(speaker).to_upper()
 	_name.visible = not speaker.is_empty()
 	_name.add_theme_color_override(&"font_color", OWN_NAME if speaker == Talk.PORTER else NAME)
 	_aside.text = aside
@@ -245,7 +245,7 @@ func show_line(who: String, text: String) -> void:
 ## italics, or "NAME  words". Empty: nothing.
 func show_heard(who: String, text: String) -> void:
 	var told := Talk.narration(text)
-	var now := told if not told.is_empty() else ("%s  %s" % [who.to_upper(), text] if not who.is_empty() else text)
+	var now := told if not told.is_empty() else ("%s  %s" % [People.label(who).to_upper(), text] if not who.is_empty() else text)
 	if now == heard:
 		return
 	heard = now

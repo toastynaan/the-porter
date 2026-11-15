@@ -37,6 +37,8 @@ Back-and-forth, not a menu (your choice, 2026-11-12). It's a horror game first, 
 - **One leads to another.** What one person says opens a question for someone else (a flag the other's talk checks): Hob says Jankin saw something on the wall; now Alric can ask Jankin.
 - **They remember** what he told them and what he did, and it colours how they greet him.
 
+**Strangers' names** (your ask, 2026-11-15). Someone he meets by what they do is shown by that until they give their name; then the talk shows the name over their lines. The speaker in the talk file stays the same (the face lookup uses it). Where the name is said, the talk sets `knows_<id>`; `People.MET_BY_NAME` maps the speaker to the id and name. On night 0: the traveller is Will Fuller, the carter Hamo, the warden at Aldgate Lambert *(Hamo and Lambert are mine)*.
+
 ## How it looks
 
 One column at the bottom of the screen, in the book face the menus use (EB Garamond), drawn by `game/talk/talk_view.gd`:
