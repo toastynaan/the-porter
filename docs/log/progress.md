@@ -54,3 +54,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Feature · a5e0959 · At the Keys: sit on any bench or stool, drink the ales on the tables; clicking the bed walks him to the window ("So that's my new home."); upstairs dark.
 - 2026-11-12 · Feature · 271bc05 · People start talks: hails as he passes, and chatter he overhears and can step into.
 - 2026-11-12 · Script · 35b3ec6 · Night 0's talks go back and forth: short turns, a thread each, cross-links, memory, four overheard chatters (draft).
+- 2026-11-15 · Fix · 343a244 · The chatter talks' .uid files, left out of 271bc05.
+- 2026-11-15 · Fix · 26118cf · His bed at the Keys is outlined before Agnes gives the room; clicked early, it sends him to her.
