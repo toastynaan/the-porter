@@ -13,6 +13,9 @@ extends Area3D
 ## adds two quiet marks (docs/systems/mechanics.md, "The minimal HUD"): the outline
 ## on `outline` (the prop it stands for) while he looks at it in reach, and
 ## the faint duty glyph over it while it is wanted (group "glyph_targets").
+## A duty with a `not_yet` line can be reached before it's wanted: it has the
+## outline, and using it shows that line instead (his bed before the room is
+## his).
 
 signal used(by: Node)
 
@@ -20,7 +23,7 @@ signal used(by: Node)
 	set(value):
 		var was := enabled
 		enabled = value
-		collision_layer = Layers.INTERACT if value else 0
+		_set_layer()
 		if value != was and is_inside_tree() and not Engine.is_editor_hint():
 			_show_way(value)
 @export var size := Vector3(0.6, 0.6, 0.6):
@@ -35,6 +38,12 @@ signal used(by: Node)
 @export var open_way := true
 ## What the outline goes on: the prop the duty stands for (its own meshes if empty).
 @export var outline: Array[Node3D] = []
+## Shown when he uses it before it's wanted; set, it can be reached (and is
+## outlined) all the time. Empty: until it's wanted the view ray passes through.
+@export_multiline var not_yet := "":
+	set(value):
+		not_yet = value
+		_set_layer()
 ## Height of the duty glyph over the origin, m (below 0: just over the box).
 @export var glyph_height := -1.0
 
@@ -50,8 +59,12 @@ func _ready() -> void:
 			lamp.add_to_group(&"duty_lamp")
 	collision_mask = 0
 	monitoring = false
-	collision_layer = Layers.INTERACT if enabled else 0
+	_set_layer()
 	_build()
+
+
+func _set_layer() -> void:
+	collision_layer = Layers.INTERACT if enabled or not not_yet.is_empty() else 0
 
 
 func _build() -> void:
@@ -86,6 +99,8 @@ func glyph_point() -> Vector3:
 func interact(by: Node) -> void:
 	if enabled:
 		used.emit(by)
+	elif not not_yet.is_empty() and not Talk.talking:
+		Talk.say("", not_yet)
 
 
 ## Enables it and waits until the porter uses it, then disables it again.

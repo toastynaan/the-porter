@@ -46,7 +46,7 @@ Staring at the demon still makes you lose your footing (the doc's stare rule). T
 
 ## Your hands
 
-**Outlines.** Whatever E would use gets a thin, pale outline while you look at it within reach (2 m). The centre dot stays. This replaces the dot turning into a hand.
+**Outlines.** Whatever E would use gets a thin, pale outline while you look at it within reach (2 m). The centre dot stays. This replaces the dot turning into a hand. A duty is outlined only while it is wanted, unless it has a `not_yet` line: then it is outlined all the time, and using it early shows that line (`Duty.not_yet`; his bed at the Keys).
 
 **The lantern** is in the left hand. Hold F (or the right mouse button) to cover it under the cloak (5 m of light to 1 m). G (left on the pad) puts it away in the satchel or takes it out again: put away, it gives no light and the hunters see an unlit man. Indoors where others keep the light (the Cross Keys), he puts it away as he goes in and G does nothing; it comes out again as he leaves, if it was out before. He comes to London without one: on night 0 he has none, and on day 1 Anselm gives him the porter's lantern at the start of the tour (`has_lantern`; `NightDirector.porter_lantern`). *(Your design, 2026-11-12.)*
 
@@ -278,7 +278,7 @@ Both are in the crypt, so you must go down while the cult and the Saint are abou
 
 **Sitting.** Benches, settles and stools at the Keys are seats: E sits, E or a move key stands. You can look about and talk while seated.
 
-**Sleeping** at the inn ends night 0. Clicking the bed in your room (it is outlined) starts the scene: you walk to the window, think aloud about the abbey being your new home, hear the cry, and watch the killing. Then you sleep, and day 1 begins.
+**Sleeping** at the inn ends night 0. The bed in your room is outlined whenever you look at it. Until Agnes has given you the room, clicking it only says so: "(A bed, made up. Nobody has let it to you yet. Agnes keeps the house, down by the fire.)" *(mine)*. After, clicking it starts the scene: you walk to the window, think aloud about the abbey being your new home, hear the cry, and watch the killing. Then you sleep, and day 1 begins.
 
 **The squint scare.** Night 0 only, once. If you walk the lane alone after the curfew bell and pass the south squint, a shape stands still just inside it: too tall, too thin, no horns. It's gone once you've looked away. It's one of the three things never explained before night 6 (it's the Saint).
 

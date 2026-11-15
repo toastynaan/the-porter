@@ -11,8 +11,9 @@ extends Node
 ##   waits at the gate for a talk to end, the carter's word, and it drives
 ##   off); the
 ##   gate barred, nobody at it; the knock and Mab sending him to the Keys;
-##   Agnes's room; ales blur and wear off; the curfew bell, Gib's call and the
-##   squint scare once; lying down plays the cry and the window (the killing,
+##   his bed outlined but not his until Agnes gives the room; ales blur and
+##   wear off; the curfew bell, Gib's call and the squint scare once; looking
+##   at the bed outlines it, and using it plays the cry and the window (the killing,
 ##   the body dragged off, his notes say how much he'd drunk); then sleep;
 ## - day 1: the headache after three ales, until noon; the gate open, the sand
 ##   by the well; the tour visits every duty and he tries each; the sand's
@@ -251,6 +252,18 @@ func _run() -> void:
 
 	# The Keys: a room from Agnes, ales with Hob.
 	await _until(func() -> bool: return pilot.beat() == &"Inn", 10.0)
+	# Up to the top before Agnes: the bed is outlined, but it isn't his yet.
+	var inn_bed := pilot.duty("InnBed")
+	var interactor := get_tree().get_first_node_in_group(&"interactor") as Interactor
+	p.place(inn_bed.global_position + Vector3(1.0, 0.0, 0.0), 0.0)
+	await _frames(3)
+	pilot.face(inn_bed.global_position + Vector3(0.0, 0.5, 0.0))
+	await _frames(3)
+	_check(interactor.focused == inn_bed and Outline.is_on(inn_bed), "up in his room before Agnes, looking at the bed outlines it")
+	inn_bed.interact(p)
+	await _frames(2)
+	_check(Talk.history.back()[1].contains("Agnes keeps the house") and not GameState.has_flag(&"n0_lay_down"),
+		"using it then sends him to Agnes, and the window doesn't start")
 	var agnes := night.get_node(^"People/Agnes") as VisitorNPC
 	var hob := night.get_node(^"People/Hob") as VisitorNPC
 	_check(agnes.is_in_group(&"glyph_targets") and agnes.global_position.x < -50.0 and hob.global_position.x < -50.0,
@@ -297,7 +310,11 @@ func _run() -> void:
 
 	# The window.
 	var death := night.get_node(^"WindowKilling") as DeathScene
-	p.place(pilot.duty("InnBed").global_position + Vector3(0.0, 0.0, -1.4), 0.0)
+	p.place(inn_bed.global_position + Vector3(0.0, 0.0, -1.4), 0.0)
+	await _frames(3)
+	pilot.face(inn_bed.global_position + Vector3(0.0, 0.5, 0.0))
+	await _frames(3)
+	_check(interactor.focused == inn_bed and Outline.is_on(inn_bed), "with the room his, the bed is outlined when he looks at it")
 	await pilot.use("InnBed")
 	await _until(func() -> bool: return death.has_played, 20.0)
 	_check(death.has_played and p.global_position.distance_to(pilot.mark("TopWindow")) < 0.5,
