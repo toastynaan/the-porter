@@ -56,3 +56,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-12 · Script · 35b3ec6 · Night 0's talks go back and forth: short turns, a thread each, cross-links, memory, four overheard chatters (draft).
 - 2026-11-15 · Fix · 343a244 · The chatter talks' .uid files, left out of 271bc05.
 - 2026-11-15 · Fix · 26118cf · His bed at the Keys is outlined before Agnes gives the room; clicked early, it sends him to her.
+- 2026-11-15 · Feature · c9bbab9 · His room at the Keys: the gate lantern's light through the window onto the ceiling, a faint bounce to see the bed by.
+- 2026-11-15 · Feature · 2e88b86 · Strangers are labelled by what they do until they give their name (Will Fuller, Hamo, Lambert).
