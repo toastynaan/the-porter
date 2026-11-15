@@ -445,6 +445,23 @@ together = 3.0
 [node name="Walk" parent="People/Woman"]
 leave_hour = 18.5
 
+[node name="WindowGlow" type="SpotLight3D" parent="Abbey/Street/GatePorch"]
+transform = Transform3D(-0.64518, 0.45391, 0.61458, 0, 0.80439, -0.5941, -0.76403, -0.3833, -0.51898, -41.9, 3.1, -1.8)
+light_color = Color(1, 0.72, 0.42, 1)
+light_energy = 30.0
+shadow_enabled = true
+spot_range = 12.0
+spot_angle = 7.0
+spot_angle_attenuation = 2.0
+editor_description = "The gate lantern's light across the lane, in at the window of his room at the top of the Keys: the only light up there, faint on the ceiling and the far wall with the window's shadow in it (your ask, 2026-11-15; the lantern burns all night, so this does too). Aimed at the window; the walls' shadows keep it out of everything else."
+
+[node name="WindowBounce" type="OmniLight3D" parent="Abbey/Street/GatePorch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.6, 8.2, 2.0)
+light_color = Color(1, 0.72, 0.42, 1)
+light_energy = 0.12
+omni_range = 4.5
+editor_description = "What the gate lantern's patch on his ceiling throws back into the room (WindowGlow): a faint fill, no shadow, so the bed and the floor can just be made out."
+
 [node name="Director" type="Node" parent="."]
 script = ExtResource("director_gd")
 porter_lantern = false

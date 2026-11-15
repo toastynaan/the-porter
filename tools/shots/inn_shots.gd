@@ -23,6 +23,8 @@ const SHOTS := [
 	{"name": "loft_lamp", "feet": Vector3(-0.4, 3.0, 5.4), "at": Vector3(3.6, 3.35, 8.6), "lamp": true},
 	{"name": "loft_front_lamp", "feet": Vector3(1.0, 3.0, 5.2), "at": Vector3(-1.2, 3.0, 1.2), "lamp": true},
 	{"name": "porter_room_bed", "feet": Vector3(2.3, 6.0, 4.05), "at": Vector3(4.7, 6.35, 2.6)},
+	{"name": "porter_room_window", "feet": Vector3(1.6, 6.0, 3.2), "at": Vector3(4.0, 7.0, 0.9)},
+	{"name": "porter_room_back", "feet": Vector3(4.2, 6.0, 1.5), "at": Vector3(1.5, 7.0, 4.2)},
 	{"name": "porter_room_bed_lamp", "feet": Vector3(2.3, 6.0, 4.05), "at": Vector3(4.7, 6.35, 2.6), "lamp": true},
 	{"name": "porter_room_corner_lamp", "feet": Vector3(4.6, 6.0, 1.2), "at": Vector3(1.8, 6.6, 1.9), "lamp": true},
 ]
