@@ -92,6 +92,7 @@ script = ExtResource("figure_gd")
 [node name="Look" type="Node3D" parent="Traveller"]
 script = ExtResource("look_gd")
 look = ExtResource("chr_traveller")
+seated = true
 
 [node name="Talker" type="Area3D" parent="Traveller"]
 script = ExtResource("talker_gd")
@@ -105,6 +106,7 @@ script = ExtResource("figure_gd")
 [node name="Look" type="Node3D" parent="WagonCarter"]
 script = ExtResource("look_gd")
 look = ExtResource("chr_carter")
+seated = true
 
 [node name="RoadFolk" type="Node3D" parent="."]
 editor_description = "People the wagon passes on the road in; the ride's cues turn them to watch it."

@@ -3,8 +3,11 @@
 once (tools/build.sh runs it between two imports).
 
 - art/models/*.glb: every material in the model that has a file of the same
-  name in game/world/materials/real/ is linked to it, so the model uses the
-  game's own material (its textures, its shader) wherever it is placed.
+  name in game/world/materials/real/ (or, for people, game/people/materials/)
+  is linked to it, so the model uses the game's own material (its textures,
+  its shader) wherever it is placed.
+- art/models/chr_*.png: a character's hand-painted atlas: lossless, with
+  mipmaps (its shader reads it nearest).
 - art/tex/tex_*.jpg: mipmaps, and video-memory compression; *_nrm as a
   normal map; *_col as colour.
 
@@ -19,6 +22,7 @@ import struct
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REAL = os.path.join(ROOT, "game", "world", "materials", "real")
+PEOPLE = os.path.join(ROOT, "game", "people", "materials")
 
 
 def glb_materials(path):
@@ -62,9 +66,11 @@ def link_model(path):
     text = open(imp).read()
     linked = {}
     for name in glb_materials(path):
-        tres = os.path.join(REAL, name + ".tres")
-        if os.path.exists(tres):
-            linked[name] = "res://" + os.path.relpath(tres, ROOT)
+        for folder in (REAL, PEOPLE):
+            tres = os.path.join(folder, name + ".tres")
+            if os.path.exists(tres):
+                linked[name] = "res://" + os.path.relpath(tres, ROOT)
+                break
     body = "{}"
     if linked:
         rows = ['"%s": {\n"use_external/enabled": true,\n"use_external/fallback_path": "%s",\n'
@@ -95,9 +101,25 @@ def link_texture(path):
     return True
 
 
+def link_atlas(path):
+    imp = path + ".import"
+    if not os.path.exists(imp):
+        return False
+    text = open(imp).read()
+    new = set_param(text, "compress/mode", "0")
+    new = set_param(new, "mipmaps/generate", "true")
+    new = set_param(new, "detect_3d/compress_to", "0")
+    if new == text:
+        return False
+    forget(text)
+    open(imp, "w").write(new)
+    return True
+
+
 def main():
     changed = [p for p in sorted(glob.glob(os.path.join(ROOT, "art", "models", "*.glb"))) if link_model(p)]
     changed += [p for p in sorted(glob.glob(os.path.join(ROOT, "art", "tex", "tex_*.jpg"))) if link_texture(p)]
+    changed += [p for p in sorted(glob.glob(os.path.join(ROOT, "art", "models", "chr_*.png"))) if link_atlas(p)]
     for p in changed:
         print("linked", os.path.relpath(p, ROOT))
 

@@ -1,26 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="prop_mat"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_traveller.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_traveller_head.glb" id="head"]
 
-[sub_resource type="BoxMesh" id="Mesh_Pack"]
-material = ExtResource("prop_mat")
-size = Vector3(0.32, 0.4, 0.18)
+[node name="Traveller" type="Node3D"]
+editor_description = "Will Fuller, the traveller on the carter's wagon on the road in through Aldgate (night 0): a wool merchant from Colchester, forty-one, lean, road-worn. A felt hat turned up behind, a belted gown under a good travelling cloak, a pack on his back (tools/build/chr_traveller.py). Model is his body on its skeleton, with his clips: idle, talk, walk, and seated on the wagon's bed, knees up (sit, sit_talk) when `seated` is on, or the Look's `seated` (PersonModel). Feet (or seat) at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Traveller" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: A traveller on the carter's wagon on the road in through Aldgate: lean, road-worn. Prop: a pack. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 4
-tunic = true
-face_color = Color(0.722, 0.580, 0.502, 1)
-cloth_color = Color(0.243, 0.227, 0.204, 1)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47, 0.011)
+script = ExtResource("face_gd")
 
-[node name="Pack" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 1.15, 0.2)
-cast_shadow = 0
-mesh = SubResource("Mesh_Pack")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64, -0.088)

@@ -1,13 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_carter.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_carter_head.glb" id="head"]
 
-[node name="Carter" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: A carter in the lane at dusk, going home before dark. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Carter" type="Node3D"]
+editor_description = "Hamo, the carter who drives night 0's wagon. A hood with its shoulder cape, a russet tunic, bound legs, a whip (tools/build/chr_carter.py). Model is his body on its skeleton, with his clips: idle, talk, walk, and seated on the wagon's board driving, the reins out to the horse (sit), when `seated` is on, or the Look's `seated` (PersonModel). Feet (or seat) at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-tunic = true
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4406, 0.012)
+script = ExtResource("face_gd")
+
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6106, -0.088)

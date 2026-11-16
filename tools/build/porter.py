@@ -27,6 +27,8 @@ from mathutils import Vector, noise
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODELS = os.path.join(ROOT, "art", "models")
+## Each built object's vertex tags, by its name (Mesh.tag).
+TAGS = {}
 
 
 def reset(seed=1):
@@ -64,10 +66,14 @@ def lerp(a, b, t):
 class Mesh:
     """Gathers one object's geometry: vertices in the game's space, each with
     a colour and a UV, and faces (counter-clockwise seen from outside) each
-    with a material."""
+    with a material. Vertices made while `tag` is set carry it (a person's
+    cloak, what his hand holds: how they bind to his skeleton); built, the
+    object's tags are in TAGS[its name]."""
 
     def __init__(self, name):
         self.name = name
+        self.tag = None
+        self.tags = []
         self.verts = []
         self.colors = []
         self.uvs = []
@@ -78,6 +84,7 @@ class Mesh:
     def vert(self, x, y, z, color=(1.0, 1.0, 1.0, 1.0), uv=(0.0, 0.0)):
         # The game's (x, y up, z) is Blender's (x, -z, y up).
         self.verts.append((x, -z, y))
+        self.tags.append(self.tag)
         self.colors.append(tuple(color) if len(color) == 4 else (color[0], color[1], color[2], 1.0))
         self.uvs.append(uv)
         return len(self.verts) - 1
@@ -194,6 +201,7 @@ class Mesh:
         mesh.update()
         mesh.validate()
         obj = bpy.data.objects.new(self.name, mesh)
+        TAGS[obj.name] = list(self.tags)
         (collection or bpy.context.scene.collection).objects.link(obj)
         if origin is not None:
             obj.location = (origin[0], -origin[2], origin[1])

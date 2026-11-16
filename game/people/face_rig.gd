@@ -1,15 +1,20 @@
 class_name FaceRig
 extends Node3D
-## A placeholder face (docs/systems/faces.md, "The face"): eyes that look
-## about, brows, a mouth line, lids that blink, a throat that swallows, and
-## the head it turns, nods and tips. It sits at the neck of a BrotherFigure,
-## with the head's parts under it, and moves in steps at 15 frames a second
-## like every other character. Between lines it idles on its owner's
-## baseline (Faces.BASELINES); a line gives it a mood to hold, tells to
-## play once, and a mouth that moves while it is up.
+## A face (docs/systems/faces.md, "The face"): eyes that look about, brows,
+## a mouth line, lids that blink, a throat that swallows, and the head it
+## turns, nods and tips. It sits at the neck, with the head under it, and
+## moves in steps at 15 frames a second like every other character. Between
+## lines it idles on its owner's baseline (Faces.BASELINES); a line gives it
+## a mood to hold, tells to play once, and a mouth that moves while it is up.
 ##
-## The real character models will answer to the same calls: line(), mood(),
-## tell(), speak().
+## Two kinds of head answer to the same calls (line(), mood(), tell(),
+## speak()):
+## - a placeholder's (BrotherFigure makes this the Head at its neck): the
+##   features are little boxes it builds and moves;
+## - a real model's (a character scene's Head, over the head model,
+##   tools/build/people.py): the head's material is the face shader
+##   (game/people/face.gdshader), which draws the features where this sets
+##   them each step (its instance uniforms).
 
 ## Steps a second, as every character moves (Look and Feel, "PSX").
 const STEP := 1.0 / 15.0
@@ -18,6 +23,8 @@ const FACE_Y := 0.1
 const FACE_Z := -0.137
 const INK := Color("#2A1D17")
 const BLIND_EYE := Color("#B9B2A6")
+## The real heads' face (its instance uniforms face_a, face_b, face_c).
+const FACE_SHADER := preload("res://game/people/face.gdshader")
 
 ## Each mood's face: offsets from rest. brow_y and eye_y in metres; tilt,
 ## curve, pitch, yaw, roll in radians; lid 0 open to 1 shut (below 0: wide);
@@ -71,6 +78,8 @@ var _eyes: Array[MeshInstance3D] = []
 var _brows: Array[MeshInstance3D] = []
 var _mouth: Array[MeshInstance3D] = []
 var _throat: MeshInstance3D
+## A real head's meshes whose faces are drawn by FACE_SHADER.
+var _painted: Array[GeometryInstance3D] = []
 
 
 func _ready() -> void:
@@ -138,6 +147,11 @@ func tell(t: StringName, delay := 0.0) -> void:
 ## The mouth moves for `seconds`: they are talking.
 func speak(seconds: float) -> void:
 	_speak = maxf(seconds, 0.0)
+
+
+## Talking: the mouth is moving.
+func speaking() -> bool:
+	return _speak > 0.0
 
 
 func mood_now() -> StringName:
@@ -268,6 +282,9 @@ func _tell_pose(t: StringName, p: float, side: float, pose: Dictionary, blind: b
 
 func _apply() -> void:
 	rotation = Vector3(-float(_pose["pitch"]), float(_pose["yaw"]), float(_pose["roll"]))
+	if not _painted.is_empty():
+		_apply_painted()
+		return
 	if hooded:
 		return
 	var lid := clampf(float(_pose["lid"]), -0.4, 1.0)
@@ -295,7 +312,37 @@ func _apply() -> void:
 		_throat.position.y = -0.065 + 0.03 * float(_pose["throat"])
 
 
+## A real head's face: its channels to the face shader, as they are.
+func _apply_painted() -> void:
+	var a := Vector4(float(_pose["brow_y"]), float(_pose["brow_tilt"]), clampf(float(_pose["lid"]), -0.4, 1.0), float(_pose["eye_x"]))
+	var b := Vector4(float(_pose["eye_y"]), float(_pose["mouth_w"]), float(_pose["curve"]), clampf(float(_pose["open"]), 0.0, 1.0))
+	var c := Vector4(float(_pose["mouth_y"]), float(_pose["throat"]), 1.0 if _base.get("blind", false) else 0.0, 0.0)
+	for g in _painted:
+		if is_instance_valid(g):
+			g.set_instance_shader_parameter(&"face_a", a)
+			g.set_instance_shader_parameter(&"face_b", b)
+			g.set_instance_shader_parameter(&"face_c", c)
+
+
+## The meshes under `node` whose material is the face shader.
+static func painted_heads(node: Node) -> Array[GeometryInstance3D]:
+	var out: Array[GeometryInstance3D] = []
+	for c in node.get_children(true):
+		if c is MeshInstance3D:
+			var mi := c as MeshInstance3D
+			for i in mi.get_surface_override_material_count():
+				var mat := mi.get_active_material(i) as ShaderMaterial
+				if mat and mat.shader == FACE_SHADER:
+					out.append(mi)
+					break
+		out.append_array(painted_heads(c))
+	return out
+
+
 func _build() -> void:
+	_painted = painted_heads(self)
+	if not _painted.is_empty():
+		return
 	if hooded:
 		return
 	var ink := _mat(INK)

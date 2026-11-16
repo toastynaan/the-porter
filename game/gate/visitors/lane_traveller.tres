@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Visitor" format=3]
 
 [ext_resource type="Script" path="res://game/gate/visitor.gd" id="1_visitor"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_traveller.tscn" id="2_look"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_lane_traveller.tscn" id="2_look"]
 
 [resource]
 script = ExtResource("1_visitor")

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://game/story/readable.gd" id="readable_gd"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_choir_brother_a.tscn" id="chr_a"]
 [ext_resource type="PackedScene" path="res://game/characters/chr_pilgrim.tscn" id="chr_pilgrim"]
-[ext_resource type="PackedScene" path="res://game/characters/chr_carter.tscn" id="chr_carter"]
+[ext_resource type="PackedScene" path="res://game/characters/chr_lane_carter.tscn" id="chr_carter"]
 
 [node name="DeathDemo" instance=ExtResource("base")]
 editor_description = "Deaths and bodies on their own (M9): the three styles of death, a hallucinated one, a body that the cult moves, and the cult's book page in the crypt. Run it (F6) and press the debug keys, or see test_death and test_bodies."

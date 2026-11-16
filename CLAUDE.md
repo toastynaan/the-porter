@@ -15,7 +15,7 @@
 - Used by one chapter: `game/chapters/<chapter>/` (its beats beside its scene, `dialogue/`, `visitors/`).
 - Used by several chapters: the system folder it belongs to (`time/`, `duties/`, `gate/`, `talk/`, `hunting/`...). Shared beats go in `chapters/common/`.
 - World content is human-editable `.tscn` scenes: Blender scripts (`tools/build/`) make meshes, scenes place them. Every asset is built by a script; `game/world/` and `game/characters/` are where those scripts write, so they don't move.
-- Downloads: CC0 only (Poly Haven, ambientCG, Freesound with the CC0 licence filter), each logged in `art/credits.csv`.
+- Downloads: CC0 only (Poly Haven, ambientCG, Freesound with the CC0 licence filter, Quaternius's animation libraries), each logged in `art/credits.csv`.
 - Playtest recordings go in `playtests/` and are never committed.
 
 ## Checks

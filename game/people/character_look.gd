@@ -12,6 +12,13 @@ extends Node3D
 	set(value):
 		look = value
 		_dress()
+## Sitting (the traveller and the carter on the wagon): a real model shows
+## its seated body (PersonModel.seated); a placeholder stands as it was.
+@export var seated := false:
+	set(value):
+		seated = value
+		if _body and &"seated" in _body:
+			_body.set(&"seated", seated)
 
 var _body: Node3D
 
@@ -22,7 +29,11 @@ func _ready() -> void:
 
 ## Where his face is: what the conversation camera looks at.
 func face_position() -> Vector3:
-	var face := _body.get_node_or_null(^"Face") as Node3D if _body else null
+	var face: Node3D = null
+	if _body and _body.has_method(&"face_marker"):
+		face = _body.call(&"face_marker") as Node3D
+	elif _body:
+		face = _body.get_node_or_null(^"Face") as Node3D
 	return face.global_position if face else global_position + Vector3.UP * 1.6
 
 
@@ -40,4 +51,6 @@ func _dress() -> void:
 		_body = null
 	if look:
 		_body = look.instantiate() as Node3D
+		if seated and &"seated" in _body:
+			_body.set(&"seated", true)
 		add_child(_body, false, Node.INTERNAL_MODE_FRONT)

@@ -133,24 +133,37 @@ The note says what Alric thought, not whether he was right. A wrong read and a r
 Reading a face is looking at it. Nothing in the game reads it for you.
 
 - **Light.** At night a face is only readable in light: your lantern uncovered, a candle, a fire. In the dark the face is a shape. Faces lit from below look wrong even when they're kind (Look and Feel, "Faces lit from below").
-- **Distance.** Past about 4 m the placeholder face is too small to read. Up close, at the grille or across a table, it's easy.
+- **Distance.** Past about 4 m a face is too small to read. Up close, at the grille or across a table, it's easy.
 - **Looking.** The talk turns your view to their face for a moment, and then the view is yours. A tell plays a moment into the line, so if you've looked away, you miss it.
 - **The drug.** From Dose 50, faces twitch with tells nobody made. From Dose 75, a face sometimes shows the wrong mood for a moment. The drug affects your senses, not the world, so a drugged reading is a bad reading.
 - **Accessibility.** A setting, *Describe faces*, off by default, writes the mood and tells as an aside beside the name for players who can't see the face well.
 
-## The face (placeholder)
+## The face
 
-Until the real character models exist, each placeholder figure (`BrotherFigure`) has a `FaceRig`:
+Every face is a `FaceRig` (`game/people/face_rig.gd`) at the neck (on a real model, carried by the skeleton's head bone, so the clips move the head and the face turns it further):
 - two eyes that look about,
 - two brows that rise, fall and tilt,
-- a mouth line that widens, tightens and moves with speech,
+- a mouth line that widens, tightens, curves and moves with speech,
 - lids that blink,
 - a throat that swallows,
 - a head that nods, shakes, turns, tips and flinches.
 
 It moves in steps at 15 frames a second, like every other character (Look and Feel, "PSX"). Between lines it idles on its baseline: blinks, small glances, breathing.
 
-The real models plug into the same interface (`FaceRig.mood()`, `tell()`, `speak()`): each mood is a face texture, and tells are the head, eye and texture changes.
+Two kinds of head answer to the same calls (`line()`, `mood()`, `tell()`, `speak()`):
+
+- **Placeholders** (`BrotherFigure`, every brother and most of the town): the features are small dark boxes on a box face.
+- **Real models** (the traveller, the carter and the warden so far: `docs/systems/assets.md`, "People"): the head is a low-poly model (`tools/build/people.py`) whose material is the face shader, `game/people/face.gdshader`. The skin, hair and beard are the character's hand-painted texture; the shader draws the eyes (whites, iris, pupil, a catchlight), the lids and lashes, the brows, the mouth (lips, the open mouth, teeth), the socket shadows, the lines from nose to mouth, the creases of a raised or knitted brow, and the lump in the throat, from what the FaceRig sets each step (three instance uniforms). They are drawn on a grid of 2.1 mm, about 70 texels across the face *(mine)*, so they read as a painted PSX face texture that swaps, never as smooth shapes. The head itself turns, nods and tips.
+
+What each mood and tell does on a real face *(mine)*:
+- the iris moves inside the eye (`glance`, idle gaze, `look down`), and the upper lid follows it down;
+- `lid` closes the eye from the top (a blink shuts it to a line); below 0 (`afraid`) the eye opens wide, white above and below the iris;
+- a smile (`curve` above 0) lifts the lower lids and deepens the lines from nose to mouth;
+- brows raised (`afraid`, `glad`, `brow`) or tilted up in the middle (`sad`, `pleading`) crease the forehead; brows down hard (`angry`), or knit with the eyes shut (`pained`), put two lines between them;
+- a narrow mouth (`lip`, `jaw`, `angry`) thins the lips; talking opens the mouth on the teeth;
+- `swallow` moves the lump in the throat up and down, and tips the head a little.
+
+Per character the face material sets the iris, brow, lip colours and how deep the lines are (`game/people/materials/chr_<name>_face.tres`). `tools/shots/cast_shots.sh` renders every mood and tell on each real head by the porter's lantern (`art/_review/cast_night0/`).
 
 ## Where it's used
 
