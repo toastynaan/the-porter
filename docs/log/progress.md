@@ -70,3 +70,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-16 · Fix · 3fd3b17 · No error when the thing he is looking at goes away (the carter's word at the gate).
 - 2026-11-16 · Fix · bdf5a19 · Night 0's clock waits at eight until Agnes gives him a room.
 - 2026-11-16 · Feature · 2c0b836 · At eight on night 0 with no room, a bell strikes and he thinks of the curfew and Agnes.
+- 2026-11-16 · Art · e80b5dd · The people's kit: builds, skins, faces, hair, clothes and headwear every person is put together from; sheets in art/_review/kit/.
