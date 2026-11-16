@@ -67,3 +67,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-16 · Feature · 584f4ff · The sky dial says the hour in words, to the nearest quarter ("Nine of the clock").
 - 2026-11-16 · Fix · 1b8844c · Water stands on the ground only while it rains, and dries after.
 - 2026-11-16 · Feature · 23596d0 · At the gate he climbs down himself, Hamo tells him to knock and turns only his head, and Mab speaks up after the knock.
+- 2026-11-16 · Fix · 3fd3b17 · No error when the thing he is looking at goes away (the carter's word at the gate).
+- 2026-11-16 · Fix · bdf5a19 · Night 0's clock waits at eight until Agnes gives him a room.
