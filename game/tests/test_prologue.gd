@@ -8,9 +8,12 @@ extends Node
 ##   the traveller on the body; paused, it waits; at Aldgate the traveller
 ##   breaks off to greet the warden, who walks up, holds his lantern to the
 ##   porter's face and walks back to his place; the wagon
-##   waits at the gate for a talk to end, the carter's word, and it drives
+##   waits at the gate for a talk to end, the carter calls down to him, he
+##   sits on until he moves, then jumps down and goes to the carter, who
+##   tells him to knock (turning his head, not his body), and it drives
 ##   off); the
-##   gate barred, nobody at it; the knock and Mab sending him to the Keys;
+##   gate barred, nobody at it; the knock, and Mab speaking up herself to
+##   send him to the Keys;
 ##   his bed outlined but not his until Agnes gives the room; ales blur and
 ##   wear off; the curfew bell, Gib's call and the squint scare once; looking
 ##   at the bed outlines it, and using it plays the cry and the window (the killing,
@@ -226,11 +229,22 @@ func _run() -> void:
 	_check(lane_hidden and abbey.visible and night.get_node_or_null(^"Road") == null and night.get_node_or_null(^"RoadFolk") == null,
 		"the abbey and the lane aren't shown on the road, and in the lane the road and its people are gone")
 	_check(waited_at_gate and leave_option[0] == Talk.TURN_AWAY, "at the gate the wagon waits until he's done talking (he turns away: %s)" % leave_option[0])
-	await _until(func() -> bool: return GameState.has_flag(&"talked_n0_carter") and not Talk.talking, 30.0)
 	Talk.auto_choice = answer_with
 	var gate := night.get_node(^"AbbeyGate") as AbbeyGate
-	_check(GameState.has_flag(&"n0_arrived") and GameState.has_flag(&"talked_n0_carter") and p.riding == null
-		and p.global_position.distance_to(pilot.mark("SetDown")) < 1.0, "the carter sets him down in the lane by the gate, and has a word")
+	# At the gate the carter calls down to him; he sits on until he moves.
+	const DOWN := ["Carter", "Here's your abbey, brother. Down you get, and come round to me before I'm off."]
+	await _until(func() -> bool: return Talk.history.has(DOWN) and Talk.quiet(), 15.0)
+	await _frames(20)
+	_check(Talk.history.has(DOWN) and p.riding != null and not GameState.has_flag(&"talked_n0_carter"),
+		"at the gate the carter calls down to him to get down and come to him; he sits on until he moves")
+	var carter_node := night.find_child("WagonCarter", true, false) as Node3D
+	var carter_yaw := carter_node.global_rotation.y
+	await pilot.off_the_wagon([0], _answer)
+	const KNOCK_LINE := ["Carter", "There's your abbey, brother. Knock at the grille. Maybe somebody'll let you in."]
+	_check(GameState.has_flag(&"talked_n0_carter") and p.riding == null and p.global_position.distance_to(pilot.mark("SetDown")) < 1.0
+		and Talk.history.has(KNOCK_LINE), "a step stands him up and he jumps down beside the wagon; he goes to the carter, who tells him to knock")
+	_check(absf(wrapf(carter_node.global_rotation.y - carter_yaw, -PI, PI)) < 0.01,
+		"the carter turns his head to him, not his body (his hands stay on the reins)")
 	var last_z := wagon.global_position.z if is_instance_valid(wagon) else INF
 	while is_instance_valid(wagon):
 		last_z = wagon.global_position.z
@@ -243,12 +257,13 @@ func _run() -> void:
 	# The knock, and Mab.
 	p.place(pilot.duty("KnockGate").global_position + Vector3(-1.2, 0.0, 0.0), deg_to_rad(-90.0))
 	await pilot.use("KnockGate")
-	var mab := night.get_node(^"People/Mab") as VisitorNPC
-	await _until(func() -> bool: return mab.is_in_group(&"glyph_targets"), 5.0)
-	_check(mab.is_in_group(&"glyph_targets"), "nobody comes; the duty flame goes to Mab")
-	p.place(mab.global_position + Vector3(-1.4, 0.0, 0.0), deg_to_rad(-90.0))
-	await pilot.talk(mab.get_node(^"Talker") as Talker, [2, 0, 0], _answer)
-	_check(GameState.has_flag(&"n0_sent_to_inn") and GameState.satchel.has(&"mab_bread"), "Mab sends him to the Keys (and gives him bread for alms)")
+	var mab_talker := night.get_node(^"People/Mab/Talker") as Talker
+	await _until(func() -> bool: return mab_talker.talking, 8.0)
+	_check(mab_talker.talking, "nobody comes, and Mab by the wall speaks up herself")
+	await pilot.talk(mab_talker, [2, 0, 0], _answer)
+	var stay := Talk.history.any(func(l: Array) -> bool: return l[0] == "Mab" and String(l[1]).begins_with("They'll open it for nobody now."))
+	_check(GameState.has_flag(&"n0_sent_to_inn") and stay and GameState.satchel.has(&"mab_bread"),
+		"Mab: they'll open it for nobody now, he'll have to stay at the Keys (and she gives him bread for alms)")
 
 	# The Keys: a room from Agnes, ales with Hob.
 	await _until(func() -> bool: return pilot.beat() == &"Inn", 10.0)

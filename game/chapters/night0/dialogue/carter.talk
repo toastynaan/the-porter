@@ -1,12 +1,13 @@
 @id n0_carter
 # DRAFT
-# The carter, Hamo *(the name is mine, 2026-11-15)*, sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).
+# The carter, Hamo *(the name is mine, 2026-11-15)*, has set the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat). The porter has jumped down and come round to him on his board; he tells him to knock at the gate (your ask, 2026-11-16), then drives off down the lane with the traveller (the scene does that once the talk ends). He stays facing his horse, turning his head to the porter.
 # Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line.
 # His name: every answer reaches it (knows_carter): Will asks Hamo to wait, Hamo tells him to say Hamo set him down at the Keys, or asks to be put in his prayer. The traveller may have named him already on the road (traveller_road.talk, carter_hamo). Only walking away at his first line misses it.
 # Answer paths the tests take: test_prologue and test_flow answer 0 (wait, wait_will).
 == start
-(The carter twists round on his seat as you climb down. The horse stamps in the wet.)
-Carter {weary}: There's your abbey, brother. I've a horse to stable before dark.
+(The carter looks down at you from his board, the reins in his fists. The horse stamps in the wet.)
+Carter {weary}: There's your abbey, brother. Knock at the grille. Maybe somebody'll let you in.
+Carter {wary, glance}: I've a horse to stable before dark.
 * Will you wait while I knock, friend? -> wait
 * Is the gate always shut like this? -> shut
 * God keep you, friend. -> bless

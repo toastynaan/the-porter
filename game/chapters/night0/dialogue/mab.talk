@@ -1,7 +1,7 @@
 @id n0_mab
 # DRAFT
 # Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn, set at start whichever way it opens).
-# Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and the flame goes to her (arrive_beat.gd).
+# Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and she speaks up herself: this talk starts on its own (arrive_beat.gd; your ask, 2026-11-16).
 # She asks him why they'd send a boy to keep that gate, and remembers what he said (n0_mab_why = must, sent or quiet): her closing line uses it.
 # Alms once (n0_mab_alms): a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
 # Thread: Brother Anselm, the old porter, was the only one inside who passed her a word through the bars, most nights for eleven years. The winter before his eyes went he stopped, and stood at the grille after the bell looking out past her. The last thing he said to her: never come in, not if they ask kindly (n0_mab_anselm). For later nights: Anselm (day 1, night 1) can know Mab's name from it; on night 4 she comes inside the gate for the first time.
@@ -26,7 +26,7 @@ Mab {wary}: I could have told you. Nobody keeps that gate at night, not since ol
 -> send
 
 == send
-Mab {calm}: Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed.
+Mab {calm}: They'll open it for nobody now. You'll have to stay the night at the Cross Keys, there, with the lantern. Agnes will find you a bed.
 -> topics
 
 == again

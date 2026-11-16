@@ -93,11 +93,11 @@ Mostly, by chapter: night3 *sad*.
 
 Baseline *weary*.
 
-Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *grave* · night5 *weary* · night6 *weary*.
+Mostly, by chapter: night1 *warm* · night2 *afraid* · night3 *warm* · night4 *grave* · night5 *sad* · night6 *weary*.
 
 ### Agnes
 
-Mostly, by chapter: night0 *warm* · lane *grave*.
+Mostly, by chapter: night0 *warm* · lane *warm*.
 
 ### Brother Aldo
 
@@ -109,7 +109,7 @@ Mostly, by chapter: night1 *amused* · night2 *wary* · night4 *weary* · night5
 
 Baseline *weary*. habit *lip* (means nothing from them). blind: read the mouth and throat. starts at trust 20.
 
-Mostly, by chapter: night1 *afraid* · night2 *weary* · night3 *weary* · night4 *weary* · night5 *afraid*.
+Mostly, by chapter: night1 *afraid* · night2 *afraid* · night3 *weary* · night4 *afraid* · night5 *afraid*.
 
 - Claim [`n2_anselm_guests`](night2.md) (hiding): "I don't see anything."
 
@@ -139,7 +139,7 @@ Mostly, by chapter: night1 *glad* · night2 *glad* · night3 *glad* · night4 *g
 
 Starts at trust 10.
 
-Mostly, by chapter: night1 *amused* · night2 *weary* · night4 *grave* · night5 *grave*.
+Mostly, by chapter: night1 *sad* · night2 *weary* · night4 *grave* · night5 *calm*.
 
 ### Brother Ranulf
 
@@ -190,7 +190,7 @@ Mostly, by chapter: night1 *blank*.
 
 ### Gib the watchman
 
-Mostly, by chapter: night0 *grave* · lane *grave*.
+Mostly, by chapter: night0 *grave* · lane *afraid*.
 
 ### Hob
 
@@ -253,7 +253,7 @@ Mostly, by chapter: night0 *calm* · night6 *amused*.
 
 ### Traveller
 
-Mostly, by chapter: night0 *grave*.
+Mostly, by chapter: night0 *afraid*.
 
 ### Walter
 

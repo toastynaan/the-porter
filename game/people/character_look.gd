@@ -22,6 +22,9 @@ extends Node3D
 
 var _body: Node3D
 
+## How far a head turns to look, radians (about 75°).
+const AIM_YAW := 1.3
+
 
 func _ready() -> void:
 	_dress()
@@ -35,6 +38,24 @@ func face_position() -> Vector3:
 	elif _body:
 		face = _body.get_node_or_null(^"Face") as Node3D
 	return face.global_position if face else global_position + Vector3.UP * 1.6
+
+
+## Turns his head (not his body) to look at `point`, as far as a neck turns:
+## a seated man looking round at the porter. look_ahead() turns it back.
+func aim_head(point: Vector3) -> void:
+	var rig := FaceRig.on(_body) if _body else null
+	if rig == null:
+		return
+	var to := global_basis.inverse() * (point - face_position())
+	var yaw := clampf(atan2(-to.x, -to.z), -AIM_YAW, AIM_YAW)
+	var pitch := clampf(atan2(to.y, Vector2(to.x, to.z).length()), -0.5, 0.35)
+	rig.aim_at = Vector2(yaw, pitch)
+
+
+func look_ahead() -> void:
+	var rig := FaceRig.on(_body) if _body else null
+	if rig:
+		rig.aim_at = Vector2.ZERO
 
 
 ## A part of the character scene by its path (the warden's Lantern), or null.

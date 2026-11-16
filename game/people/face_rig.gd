@@ -80,6 +80,12 @@ var _mouth: Array[MeshInstance3D] = []
 var _throat: MeshInstance3D
 ## A real head's meshes whose faces are drawn by FACE_SHADER.
 var _painted: Array[GeometryInstance3D] = []
+## Where the head is turned to look, over and above the face's own moves:
+## (yaw, pitch), radians, eased toward `aim_at` at AIM_SPEED. A seated man
+## turns his head to the porter, not his body (Figure.face, CharacterLook.aim_head).
+var aim := Vector2.ZERO
+var aim_at := Vector2.ZERO
+const AIM_SPEED := 2.5
 
 
 func _ready() -> void:
@@ -191,6 +197,7 @@ func _process(delta: float) -> void:
 
 func _advance(dt: float) -> void:
 	_clock += dt
+	aim = aim.move_toward(aim_at, AIM_SPEED * dt)
 	_speak = maxf(_speak - dt, 0.0)
 	_still = maxf(_still - dt, 0.0)
 	var target := {}
@@ -281,7 +288,7 @@ func _tell_pose(t: StringName, p: float, side: float, pose: Dictionary, blind: b
 
 
 func _apply() -> void:
-	rotation = Vector3(-float(_pose["pitch"]), float(_pose["yaw"]), float(_pose["roll"]))
+	rotation = Vector3(-float(_pose["pitch"]) + aim.y, float(_pose["yaw"]) + aim.x, float(_pose["roll"]))
 	if not _painted.is_empty():
 		_apply_painted()
 		return

@@ -150,12 +150,15 @@ func play_stub() -> void:
 ## picks it), lies down, sees the killing from the window and sleeps.
 ## `answer` is the Array the test's Talk.auto_choice reads.
 func play_night0(answer: Array) -> void:
-	await until(func() -> bool: return beat() == &"Arrive" and not Talk.talking, 400.0)
+	await off_the_wagon([0], answer)
+	await until(func() -> bool: return beat() == &"Arrive" and not Talk.talking, 30.0)
 	player.place(duty("KnockGate").global_position + Vector3(-1.2, 0.0, 0.0), deg_to_rad(-90.0))
 	await use("KnockGate")
+	# Mab speaks up herself once nobody comes.
 	var mab := night.get_node(^"People/Mab") as VisitorNPC
-	player.place(mab.global_position + Vector3(-1.4, 0.0, 0.0), deg_to_rad(-90.0))
-	await talk(mab.get_node(^"Talker") as Talker, [0, 0, 0], answer)
+	var mab_talker := mab.get_node(^"Talker") as Talker
+	await until(func() -> bool: return mab_talker.talking, 10.0)
+	await talk(mab_talker, [0, 0, 0], answer)
 	await until(func() -> bool: return beat() == &"Inn", 10.0)
 	var agnes := night.get_node(^"People/Agnes") as VisitorNPC
 	player.place(agnes.global_position + Vector3(1.3, 0.0, 0.0), deg_to_rad(90.0))
@@ -166,6 +169,23 @@ func play_night0(answer: Array) -> void:
 	await until(func() -> bool: return beat() == &"Sleep", 120.0)
 	await use("InnBed")
 	await until(over, 20.0)
+
+
+## Night 0 at the abbey gate: waits for the wagon to stand there, steps
+## off (a move key stands him up and he jumps down), and has the carter's
+## word (`picks` as for talk()).
+func off_the_wagon(picks: Array[int], answer: Array) -> void:
+	await until(func() -> bool: return GameState.has_flag(&"n0_arrived") and Talk.quiet(), 400.0)
+	player.use_input_override = true
+	player.input_override = Vector2(0.0, 1.0)
+	await until(func() -> bool: return player.controls_locked or player.riding == null, 10.0)
+	player.input_override = Vector2.ZERO
+	await until(func() -> bool: return player.riding == null, 10.0)
+	player.use_input_override = false
+	# On the wagon's board now (RideBeat seats him there).
+	var carter := night.find_child("WagonCarter", true, false) as Node3D
+	await until(func() -> bool: return carter.get_node_or_null(^"Talker") != null, 10.0)
+	await talk(carter.get_node(^"Talker") as Talker, picks, answer)
 
 
 ## Day 1 from waking at the Keys to the nap: crosses the lane, follows Thomas

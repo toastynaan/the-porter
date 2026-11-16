@@ -65,9 +65,9 @@ sequenceDiagram
 
 - [Agnes](#agnes) (`agnes.talk`)
 - [the carter](#carter) (`carter.talk`)
-- [Agnes](#chatter_hob_agnes) (`chatter_hob_agnes.talk`)
-- [Jankin](#chatter_jankin_walter) (`chatter_jankin_walter.talk`)
-- [Kit](#chatter_kit_margery) (`chatter_kit_margery.talk`)
+- [Hob](#chatter_hob_agnes) (`chatter_hob_agnes.talk`)
+- [Walter](#chatter_jankin_walter) (`chatter_jankin_walter.talk`)
+- [Margery](#chatter_kit_margery) (`chatter_kit_margery.talk`)
 - [Roger the bailiff](#chatter_roger_ralph) (`chatter_roger_ralph.talk`)
 - [Gib the watchman](#gib) (`gib.talk`)
 - [Hob](#hob) (`hob.talk`)
@@ -344,9 +344,9 @@ flowchart TD
 
 [`carter.talk`](../../game/chapters/night0/dialogue/carter.talk) · id `n0_carter`
 
-Moods through the talk: weary → afraid → calm → wary → calm → grave → angry → calm
+Moods through the talk: weary → wary → afraid → calm → wary → calm → grave → angry → calm
 
-> The carter, Hamo *(the name is mine, 2026-11-15)*, sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).
+> The carter, Hamo *(the name is mine, 2026-11-15)*, has set the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat). The porter has jumped down and come round to him on his board; he tells him to knock at the gate (your ask, 2026-11-16), then drives off down the lane with the traveller (the scene does that once the talk ends). He stays facing his horse, turning his head to the porter.
 > Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line.
 > His name: every answer reaches it (knows_carter): Will asks Hamo to wait, Hamo tells him to say Hamo set him down at the Keys, or asks to be put in his prayer. The traveller may have named him already on the road (traveller_road.talk, carter_hamo). Only walking away at his first line misses it.
 > Answer paths the tests take: test_prologue and test_flow answer 0 (wait, wait_will).
@@ -357,7 +357,7 @@ Moods through the talk: weary → afraid → calm → wary → calm → grave �
 
 ```mermaid
 flowchart TD
-  p_start["<b>start</b><br/>Carter: There's your abbey, brother. I've a horse to stable b…"]
+  p_start["<b>start</b><br/>Carter: There's your abbey, brother. Knock at the grille. May…"]
   p_wait["<b>wait</b><br/>Carter: Wait? In this lane, with the light going?"]
   p_wait_will["<b>wait_will</b><br/>Traveller: Hamo. It's one knock. Give him that.<br/><i>sets knows_carter</i>"]
   p_shut["<b>shut</b><br/>Carter: Couldn't say. I don't stop here."]
@@ -386,8 +386,9 @@ flowchart TD
 
 #### `start`
 
-- *The carter twists round on his seat as you climb down. The horse stamps in the wet.*
-- **Carter** *weary*: There's your abbey, brother. I've a horse to stable before dark.
+- *The carter looks down at you from his board, the reins in his fists. The horse stamps in the wet.*
+- **Carter** *weary*: There's your abbey, brother. Knock at the grille. Maybe somebody'll let you in.
+- **Carter** *wary, glance*: I've a horse to stable before dark.
 
 1. Will you wait while I knock, friend? → `wait`
 2. Is the gate always shut like this? → `shut`
@@ -443,7 +444,7 @@ flowchart TD
 </details>
 
 <a id="chatter_hob_agnes"></a>
-## Agnes (chatter hob agnes)
+## Hob (chatter hob agnes)
 
 [`chatter_hob_agnes.talk`](../../game/chapters/night0/dialogue/chatter_hob_agnes.talk) · id `n0_chatter_hob_agnes`
 
@@ -478,9 +479,9 @@ flowchart TD
 </details>
 
 <a id="chatter_jankin_walter"></a>
-## Jankin (chatter jankin walter)
+## Walter (chatter jankin walter)
 
-[`chatter_jankin_walter.talk`](../../game/chapters/night0/dialogue/chatter_jankin_walter.talk) · id `n0_chatter_jankin_walter`
+[`chatter_jankin_walter.talk`](../../game/chapters/night0/dialogue/chatter_jankin_walter.talk) · id `n0_chatter_jankin_walter` · baseline *amused*, habit *brow*
 
 Moods through the talk: drunk → amused → drunk → amused → afraid → amused
 
@@ -513,7 +514,7 @@ flowchart TD
 </details>
 
 <a id="chatter_kit_margery"></a>
-## Kit (chatter kit margery)
+## Margery (chatter kit margery)
 
 [`chatter_kit_margery.talk`](../../game/chapters/night0/dialogue/chatter_kit_margery.talk) · id `n0_chatter_kit_margery`
 
@@ -1796,7 +1797,7 @@ flowchart TD
 Moods through the talk: wary → calm → wary → grave → calm → grave → wary → grave → calm → grave → weary → wary → grave → cold → warm → grave → wary → calm → grave → calm → wary
 
 > Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn, set at start whichever way it opens).
-> Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and the flame goes to her (arrive_beat.gd).
+> Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and she speaks up herself: this talk starts on its own (arrive_beat.gd; your ask, 2026-11-16).
 > She asks him why they'd send a boy to keep that gate, and remembers what he said (n0_mab_why = must, sent or quiet): her closing line uses it.
 > Alms once (n0_mab_alms): a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
 > Thread: Brother Anselm, the old porter, was the only one inside who passed her a word through the bars, most nights for eleven years. The winter before his eyes went he stopped, and stood at the grille after the bell looking out past her. The last thing he said to her: never come in, not if they ask kindly (n0_mab_anselm). For later nights: Anselm (day 1, night 1) can know Mab's name from it; on night 4 she comes inside the gate for the first time.
@@ -1814,7 +1815,7 @@ flowchart TD
   p_start["<b>start</b><br/><i>sets n0_sent_to_inn</i>"]
   p_first_start["<b>first_start</b><br/>Mab: No use knocking, brother. Nobody keeps that gate at n…"]
   p_hailed_start["<b>hailed_start</b><br/>Mab: I could have told you. Nobody keeps that gate at nigh…"]
-  p_send["<b>send</b><br/>Mab: Go across to the Cross Keys, there, with the lantern.…"]
+  p_send["<b>send</b><br/>Mab: They'll open it for nobody now. You'll have to stay t…"]
   p_again["<b>again</b>"]
   p_again_ask["<b>again_ask</b><br/>Mab: You again, brother. The Keys hasn't moved."]
   p_topics["<b>topics</b>"]
@@ -1921,7 +1922,7 @@ flowchart TD
 
 #### `send`
 
-- **Mab** *calm*: Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed.
+- **Mab** *calm*: They'll open it for nobody now. You'll have to stay the night at the Cross Keys, there, with the lantern. Agnes will find you a bed.
 
 - → `topics`
 

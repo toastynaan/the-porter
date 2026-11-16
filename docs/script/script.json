@@ -2278,7 +2278,7 @@
    "name": "the carter",
    "chapter": "night0",
    "notes": [
-    "The carter, Hamo *(the name is mine, 2026-11-15)*, sets the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat), then drives off down the lane with the traveller (the scene does that once the talk ends).",
+    "The carter, Hamo *(the name is mine, 2026-11-15)*, has set the porter down in the lane by the abbey gate at dusk, night 0 (RideBeat). The porter has jumped down and come round to him on his board; he tells him to knock at the gate (your ask, 2026-11-16), then drives off down the lane with the traveller (the scene does that once the talk ends). He stays facing his horse, turning his head to the porter.",
     "Gruff and in a hurry: one answer, one reply, and he's gone. Each reply is his parting line.",
     "His name: every answer reaches it (knows_carter): Will asks Hamo to wait, Hamo tells him to say Hamo set him down at the Keys, or asks to be put in his prayer. The traveller may have named him already on the road (traveller_road.talk, carter_hamo). Only walking away at his first line misses it.",
     "Answer paths the tests take: test_prologue and test_flow answer 0 (wait, wait_will)."
@@ -2293,13 +2293,21 @@
        "who": "",
        "mood": "",
        "tells": [],
-       "text": "(The carter twists round on his seat as you climb down. The horse stamps in the wet.)"
+       "text": "(The carter looks down at you from his board, the reins in his fists. The horse stamps in the wet.)"
       },
       {
        "who": "Carter",
        "mood": "weary",
        "tells": [],
-       "text": "There's your abbey, brother. I've a horse to stable before dark."
+       "text": "There's your abbey, brother. Knock at the grille. Maybe somebody'll let you in."
+      },
+      {
+       "who": "Carter",
+       "mood": "wary",
+       "tells": [
+        "glance"
+       ],
+       "text": "I've a horse to stable before dark."
       }
      ],
      "answers": [
@@ -2505,8 +2513,8 @@
   },
   "game/chapters/night0/dialogue/chatter_hob_agnes.talk": {
    "id": "n0_chatter_hob_agnes",
-   "person": "agnes",
-   "name": "Agnes",
+   "person": "hob",
+   "name": "Hob",
    "chapter": "night0",
    "notes": [
     "Overheard at the Cross Keys, night 0 (Chatter): Hob and Agnes about tonight's lodgers: the top room nobody will take, and the Norwich man's bag Hob keeps behind his board. Only the start point is said.",
@@ -2569,8 +2577,8 @@
   },
   "game/chapters/night0/dialogue/chatter_jankin_walter.talk": {
    "id": "n0_chatter_jankin_walter",
-   "person": "jankin",
-   "name": "Jankin",
+   "person": "walter",
+   "name": "Walter",
    "chapter": "night0",
    "notes": [
     "Overheard at the Cross Keys, night 0 (Chatter): Jankin on his bench telling Walter about the horned thing on the abbey wall, and Walter scoffing. Only the start point is said.",
@@ -2639,8 +2647,8 @@
   },
   "game/chapters/night0/dialogue/chatter_kit_margery.talk": {
    "id": "n0_chatter_kit_margery",
-   "person": "kit",
-   "name": "Kit",
+   "person": "margery",
+   "name": "Margery",
    "chapter": "night0",
    "notes": [
     "Overheard in the lane at dusk, night 0 (Chatter): Kit with her tray and Margery with her basket, about Margery's son-in-law Wat, who carts the abbey's rye and won't go in past the gate any more. Only the start point is said. It ends as they notice the porter.",
@@ -6026,7 +6034,7 @@
    "chapter": "night0",
    "notes": [
     "Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn, set at start whichever way it opens).",
-    "Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and the flame goes to her (arrive_beat.gd).",
+    "Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and she speaks up herself: this talk starts on its own (arrive_beat.gd; your ask, 2026-11-16).",
     "She asks him why they'd send a boy to keep that gate, and remembers what he said (n0_mab_why = must, sent or quiet): her closing line uses it.",
     "Alms once (n0_mab_alms): a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.",
     "Thread: Brother Anselm, the old porter, was the only one inside who passed her a word through the bars, most nights for eleven years. The winter before his eyes went he stopped, and stood at the grille after the bell looking out past her. The last thing he said to her: never come in, not if they ask kindly (n0_mab_anselm). For later nights: Anselm (day 1, night 1) can know Mab's name from it; on night 4 she comes inside the gate for the first time.",
@@ -6137,7 +6145,7 @@
        "who": "Mab",
        "mood": "calm",
        "tells": [],
-       "text": "Go across to the Cross Keys, there, with the lantern. Agnes will find you a bed."
+       "text": "They'll open it for nobody now. You'll have to stay the night at the Cross Keys, there, with the lantern. Agnes will find you a bed."
       }
      ],
      "answers": [],
@@ -41232,6 +41240,12 @@
      "talk": "game/chapters/night0/dialogue/traveller_road.talk",
      "chapter": "night0",
      "where": "after"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/ride_beat.gd"
     }
    ]
   },
@@ -42032,6 +42046,18 @@
     }
    ],
    "read": [
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/arrive_beat.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/arrive_beat.gd"
+    },
     {
      "kind": "code",
      "talk": null,

@@ -14,8 +14,12 @@ extends NightBeat
 ## lantern, holds it to the porter's face, and walks back to his place to
 ## let them through. The night comes up out of black as the wagon sets off. On the
 ## bridge over the brook, once the talk is done, it goes dark, and comes up
-## again in the lane as the wagon reaches the abbey gate. It ends when the
-## carter sets him down there and drives off down the lane.
+## again in the lane as the wagon reaches the abbey gate. There the carter
+## calls back to him from his board (`down_lines`) and he stays sat until he
+## moves: a move key stands him up on the bed and he jumps down beside the
+## wagon. The carter, a mark over him, waits for a word (`carter_talk`: he
+## tells him to knock), turning his head to him, not his body (his hands are
+## on the reins). Then he drives off down the lane.
 
 ## The wagon (its Seat, TravellerSeat and CarterSeat markers), and the road.
 @export var wagon: Node3D
@@ -65,6 +69,19 @@ extends NightBeat
 ## What the traveller says as the body goes by, and the carter at the gate.
 @export var traveller_talk: Conversation
 @export var carter_talk: Conversation
+## What the carter calls back as the wagon stands at the gate; what he says
+## if the porter sits on (after `nag_after` seconds), and if, down, he
+## doesn't come for his word. DRAFT.
+@export var down_lines := PackedStringArray(["Carter {weary}: Here's your abbey, brother. Down you get, and come round to me before I'm off."])
+@export var sit_nag_lines := PackedStringArray(["Carter {wary}: Down, brother. I'll not sit here till the bell."])
+@export var nag_lines := PackedStringArray(["Carter {angry}: Brother! A word, before I'm off."])
+@export var nag_after := 15.0
+
+## Getting down: seconds to stand up on the bed, then to jump down, and how
+## high the jump rises, m *(mine)*.
+const STAND_UP := 0.45
+const JUMP_DOWN := 0.5
+const JUMP_RISE := 0.22
 
 const RUMBLE := preload("res://art/sfx/amb_wagon_loop.wav")
 ## Inside Aldgate: hooves and wheels on cobbles. It takes over while the
@@ -209,19 +226,94 @@ func run() -> void:
 			else:
 				break
 		await PlayTime.physics_frame(self)
-	# Set down once nobody's talking and the road's lines are said.
+	# At the gate, once nobody's talking and the road's lines are said.
 	await until(func() -> bool: return Talk.quiet() and not _speaking and _queue.is_empty())
 	_riding = false
-	p.riding = null
-	p.place(set_down.global_position, set_down.global_rotation.y)
 	GameState.flags.erase(&"n0_riding")
 	GameState.set_flag(&"n0_arrived")
 	if body_cart:
 		body_cart.queue_free()
+	await say_lines(down_lines)
+	await _get_down(p)
 	if carter_talk and carter:
-		await Talk.converse(carter_talk, carter)
+		await _a_word_with_the_carter(p)
 	# The carter drives off down the lane, and the traveller with him.
+	if carter and carter.has_method(&"face"):
+		var look := carter.get_node_or_null(^"Look") as CharacterLook
+		if look:
+			look.look_ahead()
 	_drive_off.call()
+
+
+## He sits on until he moves: then he stands up on the bed and jumps down
+## beside the wagon, at `set_down`.
+func _get_down(p: Player) -> void:
+	var waited := 0.0
+	var nagged := false
+	while not _wants_down(p):
+		waited += PlayTime.physics(self)
+		if not nagged and waited > nag_after and Talk.quiet():
+			nagged = true
+			say_lines.call(sit_nag_lines)
+		await PlayTime.physics_frame(self)
+	var seat := p.riding
+	var hop := Node3D.new()
+	hop.name = "GettingDown"
+	add_child(hop)
+	hop.global_transform = seat.global_transform if seat else p.global_transform
+	p.riding = hop
+	p.controls_locked = true
+	var eye := p.head.position.y
+	var t := 0.0
+	while t < 1.0:
+		t = minf(t + PlayTime.physics(self) / STAND_UP, 1.0)
+		p.head.position.y = lerpf(eye, Player.EYE_HEIGHT, smoothstep(0.0, 1.0, t))
+		await PlayTime.physics_frame(self)
+	var from := hop.global_position
+	var to := set_down.global_position
+	t = 0.0
+	while t < 1.0:
+		t = minf(t + PlayTime.physics(self) / JUMP_DOWN, 1.0)
+		var at := from.lerp(to, t)
+		at.y = lerpf(from.y, to.y, t * t) + JUMP_RISE * sin(PI * t)
+		hop.global_position = at
+		await PlayTime.physics_frame(self)
+	p.riding = null
+	p.global_position = to
+	p.velocity = Vector3.ZERO
+	p.controls_locked = false
+	hop.queue_free()
+
+
+## A move key, as gets him up off a bench.
+func _wants_down(p: Player) -> bool:
+	if Talk.talking or get_tree().paused:
+		return false
+	var move := p.input_override if p.use_input_override else Input.get_vector(&"move_left", &"move_right", &"move_back", &"move_forward")
+	return move.length() > 0.3
+
+
+## The carter waits on his board for a word with him (the mark over him):
+## he talks when the porter comes and looks at him and presses E. Once.
+func _a_word_with_the_carter(p: Player) -> void:
+	var talker := Talker.new()
+	talker.name = "Talker"
+	talker.conversation = carter_talk
+	talker.phases = [GameState.phase]
+	carter.add_child(talker)
+	carter.add_to_group(&"glyph_targets")
+	var waited := 0.0
+	var nagged := false
+	while not GameState.has_flag(carter_talk.talked_flag()):
+		waited += PlayTime.physics(self)
+		if not nagged and waited > nag_after and Talk.quiet() and not p.busy():
+			nagged = true
+			carter.call(&"face", p.global_position)
+			say_lines.call(nag_lines)
+		await PlayTime.physics_frame(self)
+	carter.remove_from_group(&"glyph_targets")
+	await until(func() -> bool: return not talker.talking)
+	talker.queue_free()
 
 
 ## The night goes dark as the wagon rolls on over the bridge, still moving.

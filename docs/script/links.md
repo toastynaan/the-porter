@@ -1206,7 +1206,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_past_aldgate`
 
 - **Set by:** scene: RideCues/Aldgate (night0.tscn)
-- **Read by:** Traveller, night0 (`after`)
+- **Read by:** Traveller, night0 (`after`); code: `game/chapters/night0/ride_beat.gd`
 
 <a id="n0_ralph_candles"></a>
 ### `n0_ralph_candles`
@@ -1374,7 +1374,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_sent_to_inn`
 
 - **Set by:** Mab, night0 (`start`); code: `game/chapters/night0/arrive_beat.gd`
-- **Read by:** code: `game/chapters/night0/arrive_beat.gd`
+- **Read by:** code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`
 
 <a id="n0_squint_scare"></a>
 ### `n0_squint_scare`
@@ -2933,19 +2933,19 @@ Every flag and note that is read is set somewhere.
 <a id="talked_n0_chatter_hob_agnes"></a>
 ### `talked_n0_chatter_hob_agnes`
 
-- **Set by:** Agnes, night0 (`(any talk)`)
+- **Set by:** Hob, night0 (`(any talk)`)
 - **Read by:** *nothing*
 
 <a id="talked_n0_chatter_jankin_walter"></a>
 ### `talked_n0_chatter_jankin_walter`
 
-- **Set by:** Jankin, night0 (`(any talk)`)
+- **Set by:** Walter, night0 (`(any talk)`)
 - **Read by:** *nothing*
 
 <a id="talked_n0_chatter_kit_margery"></a>
 ### `talked_n0_chatter_kit_margery`
 
-- **Set by:** Kit, night0 (`(any talk)`)
+- **Set by:** Margery, night0 (`(any talk)`)
 - **Read by:** *nothing*
 
 <a id="talked_n0_chatter_roger_ralph"></a>

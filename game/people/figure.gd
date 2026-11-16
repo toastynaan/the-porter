@@ -2,7 +2,8 @@ class_name Figure
 extends Node3D
 ## Someone who stays where a beat puts them (the traveller and the carter on
 ## the wagon): their Look (a CharacterLook) and, for a Talker, a face to look
-## at and a way to turn to him.
+## at and a way to turn to him. Seated, he turns his head, not his body (so
+## the carter's reins stay where his hands are).
 
 @onready var look := get_node_or_null(^"Look") as CharacterLook
 
@@ -12,6 +13,11 @@ func face_position() -> Vector3:
 
 
 func face(point: Vector3) -> void:
+	if look and look.seated:
+		look.aim_head(point)
+		return
+	if look:
+		look.look_ahead()
 	var to := point - global_position
 	if Vector2(to.x, to.z).length() > 0.05:
 		global_rotation.y = atan2(-to.x, -to.z)
