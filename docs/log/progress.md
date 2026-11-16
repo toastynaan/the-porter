@@ -63,3 +63,7 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-15 · Sound · cf44999 · The hearth and the watch fire crackle, the drag is heard, cobbles past Aldgate, rain muffled under a roof.
 - 2026-11-16 · Art · 09c1f03 · Night 0's people are real models on Quaternius's skeleton (CC0): Will, Hamo and Lambert idle, talk, walk and sit; Lambert's arms follow his lantern and staff.
 - 2026-11-16 · Fix · c13eb66 · On the wagon the porter's eyes are at sitting height, level with Will's.
+- 2026-11-16 · Fix · db9ffd2 · The outline goes once round a thing's whole silhouette, and is fainter.
+- 2026-11-16 · Feature · 584f4ff · The sky dial says the hour in words, to the nearest quarter ("Nine of the clock").
+- 2026-11-16 · Fix · 1b8844c · Water stands on the ground only while it rains, and dries after.
+- 2026-11-16 · Feature · 23596d0 · At the gate he climbs down himself, Hamo tells him to knock and turns only his head, and Mab speaks up after the knock.
