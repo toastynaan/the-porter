@@ -145,7 +145,7 @@ The night-4 change is deliberate: the rule you trusted turns on you (design pill
 
 - **Waking:** the night shift starts at 16:30, as the sun sets *(your call, 2026-11-12)*, which leaves the free hours of dusk before the first knock.
 - **Length:** a night is 30–40 minutes. Awake, the clock runs at 3 minutes an in-game hour (it's 4 in night 3's build now). Dozing skips the waits. *(mine)*
-- **The candle waits** at a duty's mark until you do it (as built), so nothing is skipped. The time you take after the mark counts as late.
+- **The candle waits** at a duty's mark until you do it (as built), so nothing is skipped. The time you take after the mark counts as late. A beat can also hold the clock at an hour until it is over (`holds_clock_at`): on night 0 it waits at eight until Agnes gives you a room, so the curfew bell never rings before you have a bed *(your ask, 2026-11-16)*.
 - **Lateness** (*mine*):
 
 | How late | What happens |

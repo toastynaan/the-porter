@@ -127,10 +127,14 @@ func end_night() -> void:
 	finished.emit()
 
 
-## The earliest mark of the beats after `i` (INF if none has one).
+## Where the clock must wait while beat `i` runs: the earliest mark of the
+## beats after it, or the hold of any beat not yet over, itself included
+## (INF if none).
 func _next_due(beats: Array[NightBeat], i: int) -> float:
 	var due := INF
-	for k in range(i + 1, beats.size()):
-		if beats[k].due >= 0.0:
+	for k in range(i, beats.size()):
+		if k > i and beats[k].due >= 0.0:
 			due = minf(due, beats[k].due)
+		if beats[k].holds_clock_at >= 0.0:
+			due = minf(due, beats[k].holds_clock_at)
 	return due

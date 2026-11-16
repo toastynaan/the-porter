@@ -283,6 +283,9 @@ func _run() -> void:
 	var hob := night.get_node(^"People/Hob") as VisitorNPC
 	_check(agnes.is_in_group(&"glyph_targets") and agnes.global_position.x < -50.0 and hob.global_position.x < -50.0,
 		"Agnes and Hob are inside the Keys; the flame goes to Agnes")
+	pilot.skip_to(20.5)
+	await _frames(3)
+	_check(is_equal_approx(GameState.hour, 20.0), "until Agnes gives him a room the clock waits at eight (%.2f)" % GameState.hour)
 	p.place(agnes.global_position + Vector3(1.3, 0.0, 0.0), deg_to_rad(90.0))
 	await pilot.talk(agnes.get_node(^"Talker") as Talker, [0, 1], _answer)
 	_check(GameState.has_flag(&"n0_room") and absf(GameState.drink - 1.0) < 0.05, "the room at the top, and an ale (%.0f)" % GameState.drink)

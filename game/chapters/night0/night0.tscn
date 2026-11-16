@@ -501,9 +501,11 @@ knock = NodePath("../../Duties/KnockGate")
 mab = NodePath("../../People/Mab")
 
 [node name="Inn" type="Node" parent="Director" node_paths=PackedStringArray("agnes")]
+editor_description = "Until Agnes gives him the room, the clock waits at eight (holds_clock_at): the curfew bell can't ring before he has a bed."
 script = ExtResource("inn_gd")
 phase = 6
 duty = "Find a bed at the Cross Keys"
+holds_clock_at = 20.0
 agnes = NodePath("../../People/Agnes")
 
 [node name="Window" type="Node" parent="Director" node_paths=PackedStringArray("bed", "window", "death", "drag_to")]

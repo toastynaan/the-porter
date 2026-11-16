@@ -25,6 +25,9 @@ func arrived() -> void:
 @export var duty := ""
 ## When it is due by the candle clock, in hours (-1: no set time).
 @export var due := -1.0
+## The clock goes no further than this hour until this beat is over (-1:
+## no hold). Night 0's Inn: it waits at eight until Agnes gives him the room.
+@export var holds_clock_at := -1.0
 ## The porter may doze on the gate bench while this beat waits.
 @export var can_doze := false
 
