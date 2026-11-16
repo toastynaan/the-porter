@@ -46,7 +46,7 @@ Staring at the demon still makes you lose your footing (the doc's stare rule). T
 
 ## Your hands
 
-**Outlines.** Whatever E would use gets a thin, pale outline while you look at it within reach (2 m). The centre dot stays. This replaces the dot turning into a hand. A duty is outlined only while it is wanted, unless it has a `not_yet` line: then it is outlined all the time, and using it early shows that line (`Duty.not_yet`; his bed at the Keys).
+**Outlines.** Whatever E would use gets a thin, pale outline while you look at it within reach (2 m). It goes once round the thing's whole silhouette, never round each of its parts, and it is faint *(your ask, 2026-11-16; `game/core/ui/outline.tres`: a stencil mask of the thing, then the rim outside it)*. The centre dot stays. This replaces the dot turning into a hand. A duty is outlined only while it is wanted, unless it has a `not_yet` line: then it is outlined all the time, and using it early shows that line (`Duty.not_yet`; his bed at the Keys).
 
 **The lantern** is in the left hand. Hold F (or the right mouse button) to cover it under the cloak (5 m of light to 1 m). G (left on the pad) puts it away in the satchel or takes it out again: put away, it gives no light and the hunters see an unlit man. Indoors where others keep the light (the Cross Keys), he puts it away as he goes in and G does nothing; it comes out again as he leaves, if it was out before. He comes to London without one: on night 0 he has none, and on day 1 Anselm gives him the porter's lantern at the start of the tour (`has_lantern`; `NightDirector.porter_lantern`). *(Your design, 2026-11-12.)*
 

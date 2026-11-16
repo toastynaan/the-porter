@@ -1,9 +1,15 @@
 [gd_resource type="ShaderMaterial" format=3]
 
-[ext_resource type="Shader" path="res://game/core/ui/outline.gdshader" id="1_shader"]
+[ext_resource type="Shader" path="res://game/core/ui/outline_mask.gdshader" id="1_mask"]
+[ext_resource type="Shader" path="res://game/core/ui/outline.gdshader" id="2_rim"]
+
+[sub_resource type="ShaderMaterial" id="rim"]
+render_priority = 2
+shader = ExtResource("2_rim")
+shader_parameter/color = Color(0.85, 0.82, 0.75, 0.35)
+shader_parameter/width = 0.006
 
 [resource]
 render_priority = 1
-shader = ExtResource("1_shader")
-shader_parameter/color = Color(0.85, 0.82, 0.75, 0.6)
-shader_parameter/width = 0.007
+next_pass = SubResource("rim")
+shader = ExtResource("1_mask")

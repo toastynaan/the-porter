@@ -1,13 +1,15 @@
 shader_type spatial;
 // The thin pale outline on whatever E would use (docs/systems/mechanics.md, "Your
-// hands"): the mesh drawn again as a hull a little bigger than itself, its
-// back faces only, so only the rim outside the silhouette shows. It grows
-// with distance, so it stays about one render pixel thick.
-render_mode unshaded, cull_front, depth_draw_never, shadows_disabled, fog_disabled;
+// hands"): the mesh drawn again as a hull a little bigger than itself, only
+// where the thing itself isn't (the stencil its first pass, outline_mask.gdshader,
+// marked), so only a rim round its whole silhouette shows. It grows with
+// distance, so it stays about one render pixel thick.
+render_mode unshaded, cull_disabled, depth_draw_never, shadows_disabled, fog_disabled;
+stencil_mode read, compare_not_equal, 1;
 
-uniform vec4 color : source_color = vec4(0.85, 0.82, 0.75, 0.6);
+uniform vec4 color : source_color = vec4(0.85, 0.82, 0.75, 0.35);
 // Thickness as a fraction of the distance from the eye.
-uniform float width = 0.007;
+uniform float width = 0.006;
 
 void vertex() {
 	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);

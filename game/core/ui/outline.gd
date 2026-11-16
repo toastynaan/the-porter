@@ -4,6 +4,8 @@ class_name Outline
 ## as its focus changes). It draws over the thing's meshes: a node's own
 ## `outline` list if it has one (a Duty or a hiding spot names the prop it
 ## stands for), the person a Talker belongs to, or else the node's own meshes.
+## It goes round all of them together, as one silhouette (outline.tres: a
+## stencil mask, then the rim outside it).
 
 const MATERIAL := preload("res://game/core/ui/outline.tres")
 const PREV := &"outline_prev"
