@@ -3,8 +3,11 @@ a head whose face the game draws (Look and Feel, "Characters"; the locked
 PSX character style: low poly, hand-painted textures at 256 px with nearest
 filtering, per-vertex shading; docs/systems/faces.md, "The real faces").
 
-A character script (tools/build/chr_<name>.py) gives a spec and calls
-build(spec), which writes to art/models/:
+These are the builders: the head, tubes of cloth, limbs, the texture, the
+build. What a person is put together from (builds, skins, faces, clothes,
+headwear) is the people's kit, tools/build/people_kit.py: a character
+script (tools/build/chr_<name>.py) is a spec on that. build() writes to
+art/models/:
 
     chr_<name>.png          the character's texture: a 256 px atlas, painted
                             here (the head in the top-left 128 px, a swatch
@@ -50,22 +53,35 @@ import porter
 import rig
 
 TEX = 256
-## The atlas: x, y (from the top), width, height in pixels.
-REGIONS = {
-    "head": (0, 0, 128, 128),
-    "garment": (128, 0, 64, 64),
-    "cloak": (192, 0, 64, 64),
-    "hose": (128, 64, 64, 64),
-    "hat": (192, 64, 64, 64),
-    "boots": (0, 128, 64, 64),
-    "leather": (64, 128, 64, 64),
-    "hands": (128, 128, 64, 64),
-    "wood": (192, 128, 64, 64),
-    "metal": (0, 192, 64, 64),
-    "linen": (64, 192, 64, 64),
-    "pack": (128, 192, 64, 64),
-    "under": (192, 192, 64, 64),
-}
+## The atlas: x, y (from the top), width, height in pixels. The head has the
+## top-left 128 px; each cloth (leather, wood...) a part asks for with
+## swatch() takes the next 64 px cell of the twelve.
+CELLS = [(128, 0), (192, 0), (128, 64), (192, 64), (0, 128), (64, 128), (128, 128), (192, 128), (0, 192), (64, 192),
+         (128, 192), (192, 192)]
+REGIONS = {"head": (0, 0, 128, 128)}
+## Each swatch's colour and how it is painted (paint_cloth's keywords).
+SWATCHES = {}
+
+
+def swatch(name, color=None, **paint):
+    """A swatch of the atlas named `name`, painted `color` (paint_cloth's
+    keywords say how: folds, hem, wear...). The first to ask for a name
+    sets it; later calls only return the name. Twelve to a character."""
+    if name not in REGIONS:
+        assert color is not None, "swatch %s has no colour yet" % name
+        assert len(SWATCHES) < len(CELLS), "more than %d cloths on one character: %s" % (len(CELLS), name)
+        x, y = CELLS[len(SWATCHES)]
+        REGIONS[name] = (x, y, 64, 64)
+        SWATCHES[name] = (tuple(color[:3]), paint)
+    return name
+
+
+def reset_atlas():
+    for k in list(REGIONS):
+        if k != "head":
+            del REGIONS[k]
+    SWATCHES.clear()
+
 
 WHITE = (1.0, 1.0, 1.0, 1.0)
 
@@ -117,12 +133,14 @@ def _spow(v, e):
 
 
 def head_rows(spec):
-    """The head's rows for this person: width, jaw, chin and brow scaled."""
+    """The head's rows for this person: width, jaw, chin and brow scaled;
+    `jowl` fills out under the jaw and the neck (a fat face)."""
     hs = spec.get("head", {})
     w = hs.get("width", 1.0)
     jaw = hs.get("jaw", 1.0)
     chin = hs.get("chin", 1.0)
     brow = hs.get("brow", 1.0)
+    jowl = hs.get("jowl", 0.0)
     rows = []
     for i, (h, a, f, b, cz) in enumerate(HEAD_ROWS):
         a *= w
@@ -131,6 +149,9 @@ def head_rows(spec):
             f = 0.064 + (f - 0.064) * chin
         if i == 5:
             a *= 0.5 + 0.5 * jaw
+        if i <= 3:
+            a *= 1.0 + jowl * (0.26 if i < 3 else 0.12)
+            f *= 1.0 + jowl * (0.22 if i < 3 else 0.0)
         if i == 8:
             f += 0.004 * (brow - 1.0)
         rows.append((h, a, f, b, cz))
@@ -427,11 +448,12 @@ def mirror(p, side):
 
 
 def arm(m, mat, spec, side, shoulder, elbow, wrist, hand_dir=(0.0, -1.0, 0.0), sleeve="garment", cuff=None,
-        fist=False, upper=True, lower=True):
+        fist=False, upper=True, lower=True, wide=1.0):
     """An arm: the sleeve from shoulder to wrist, and the hand. With `upper`
-    or `lower` only, that half (an arm in two parts that bend)."""
-    kw = spec.get("breadth", 1.0)
-    r_sh, r_el, r_wr = 0.056 * kw, 0.046 * kw, 0.036 * kw
+    or `lower` only, that half (an arm in two parts that bend). `wide`
+    opens the sleeve toward the wrist (a habit's)."""
+    kw = spec.get("limb", spec.get("breadth", 1.0))
+    r_sh, r_el, r_wr = 0.056 * kw, 0.046 * kw * (1.0 + (wide - 1.0) * 0.5), 0.036 * kw * wide
     sh, el, wr = Vector(shoulder), Vector(elbow), Vector(wrist)
     col_in = grey(0.78)
     if upper:
@@ -468,8 +490,9 @@ def hand(m, mat, spec, wrist, ahead, side, fist=False):
 def leg(m, mat, spec, side, hip, knee, ankle, hose="hose", boot_top=0.24, toe=(0.0, 0.0, -1.0), boot="boots",
         wraps=False):
     """A leg in hose from the hip to the ankle, and a boot (or a shoe, with
-    `boot_top` low) on the foot pointing along `toe`."""
-    kw = spec.get("breadth", 1.0)
+    `boot_top` low) on the foot pointing along `toe`. `wraps` (a swatch's
+    name) binds cloth round the shin. Bare legs and feet are the skin's swatch."""
+    kw = spec.get("limb", spec.get("breadth", 1.0))
     hp, kn, an = Vector(hip), Vector(knee), Vector(ankle)
     r_th, r_kn, r_ca, r_an = 0.074 * kw, 0.048 * kw, 0.054 * kw, 0.034 * kw
     calf = kn + (an - kn) * 0.32
@@ -492,8 +515,8 @@ def leg(m, mat, spec, side, hip, knee, ankle, hose="hose", boot_top=0.24, toe=(0
          [grey(0.9), WHITE, grey(0.85), WHITE, grey(0.9)], caps=(False, True))
     if wraps:
         # Cloth bound round the shin, over the hose (a carter's leg wraps).
-        tube(m, mat, [tuple(an + shank * 0.03), tuple(an + (kn - an) * 0.55)], [r_an * 1.32, r_ca * 1.08], 6, "under",
-             [grey(0.85), WHITE])
+        tube(m, mat, [tuple(an + shank * 0.03), tuple(an + (kn - an) * 0.55)], [r_an * 1.32, r_ca * 1.08], 6,
+             wraps if isinstance(wraps, str) else "under", [grey(0.85), WHITE])
 
 
 def standing_limbs(spec, body, arms, legs):
@@ -514,11 +537,11 @@ def standing_limbs(spec, body, arms, legs):
         sh, el, wr = (mirror(jt[k], side) for k in ("shoulder", "elbow", "wrist"))
         ahead = (Vector(wr) - Vector(el)).normalized()
         um = porter.Mesh("UpperArm" + nm)
-        arm(um, mat, spec, side, sh, el, wr, sleeve=a.get("sleeve", "garment"), lower=False)
+        arm(um, mat, spec, side, sh, el, wr, sleeve=a.get("sleeve", "garment"), lower=False, wide=a.get("wide", 1.0))
         upper = um.build(smooth=True, origin=sh, parent=body)
         fm = porter.Mesh("Forearm" + nm)
         arm(fm, mat, spec, side, sh, el, wr, hand_dir=tuple(ahead), sleeve=a.get("sleeve", "garment"), cuff=a.get("cuff"),
-            fist=a.get("fist", False), upper=False)
+            fist=a.get("fist", False), upper=False, wide=a.get("wide", 1.0))
         grip = a.get("grip", tuple(Vector(wr) + ahead * 0.05))
         if a.get("held"):
             fm.tag = "bone:hand_" + ("l" if side < 0 else "r")
@@ -648,15 +671,41 @@ def paint_head(img, spec, rng):
                 c = c * 0.93
             if 0.75 < a < 1.3 and 0.19 < py < 0.23:
                 c = c * 0.94
+            # Freckles over the nose and cheeks; a scar along the jaw.
+            fr = spec.get("freckles", 0.0)
+            if fr and a < 1.1 and 0.14 < py < 0.2 and fine[(j * 3 + 11) % h, (i * 5 + 7) % w] > 1.0 - 0.16 * fr:
+                c = c * 0.8 + np.array([0.45, 0.27, 0.18]) * 0.2
+            scar = spec.get("scar", 0.0)
+            if scar and th > 0.0:
+                along = (a - 0.45) / 0.55
+                if 0.0 < along < 1.0 and abs(py - (0.104 + 0.03 * along)) < 0.0022:
+                    c = c * (1 - 0.5 * scar) + np.array([0.78, 0.66, 0.62]) * 0.5 * scar
             # Hair: above the hairline in front, lower at the sides and back.
+            style = spec.get("hair_style", "cropped")
             line = hairline - 0.02 * min(1.0, a / 1.4) - 0.075 * max(0.0, (a - 1.4) / (math.pi - 1.4))
             if a > 1.35 and a < 1.85 and py < 0.21:
                 line = 0.21  # round the ear
-            if py > line - 0.004 * fine[j, i]:
+            if style == "bowl":
+                # Cut straight round, above the ears and the nape.
+                line = max(line, 0.205 if a > 0.9 else hairline - 0.012)
+            grows = py > line - 0.004 * fine[j, i]
+            thin = 1.0
+            if style == "tonsure":
+                # The crown shaved: a ring of hair left round the head.
+                grows = grows and py < 0.268 + 0.004 * fine[j, i]
+                if a < 0.9:
+                    grows = grows and py > hairline + 0.012
+            elif style == "balding":
+                # Gone from the brow and the crown; left at the sides and back.
+                grows = grows and a > 1.05 and py < 0.262
+                thin = 0.85
+            elif style == "bald":
+                thin = 0.14 if grows else 0.0
+            if grows and thin > 0.0:
                 streak = 0.75 + 0.35 * fine[j, (i * 3) % w] * (0.6 + 0.4 * tone[j, i])
                 gr = spec.get("grey_hair", 0.0)
                 hc = hair * (1 - gr * fine[(j * 7) % h, i]) + np.array([0.55, 0.53, 0.5]) * gr * fine[(j * 7) % h, i]
-                c = hc * streak
+                c = c * (1.0 - thin) + hc * streak * thin
             out[j, i] = c
     img[y0:y0 + h, x0:x0 + w] = np.clip(out, 0, 1)
 
@@ -682,12 +731,12 @@ def write_png(path, img):
 
 
 def texture(spec):
+    """Paints the atlas: the head, and every swatch the parts asked for."""
     rng = np.random.default_rng(spec.get("seed", 1))
     img = np.zeros((TEX, TEX, 3))
-    cols = spec["colors"]
     paint_head(img, spec, rng)
-    for region, kw in spec["swatches"].items():
-        paint_cloth(img, region, cols[region], rng, **kw)
+    for region, (color, paint) in SWATCHES.items():
+        paint_cloth(img, region, color, rng, **paint)
     img = quantize(img)
     path = os.path.join(porter.MODELS, "chr_%s.png" % spec["name"])
     write_png(path, img)
@@ -701,15 +750,111 @@ def _report(name):
     print("  %s: %s" % (name, ", ".join(parts)))
 
 
-def build(spec, body, head_extra=None, extras=None, posed=None, keep_apart=()):
-    """Writes the character's texture and models. `body(spec)` builds him
-    standing at rest on his skeleton; `posed(spec, skeleton)` (if given)
-    adds parts made in one of his clips' poses (rig.posed, rig.bind: the
-    carter's reins as he sits), named in `keep_apart` if they are to stay
-    apart from his Body. `head_extra(spec, head_obj)` adds what he wears on
-    his head; `extras` is a list of (glb name, function) for more models (a
-    lantern)."""
-    texture(spec)
+## A character scene as the build writes it (scene()).
+SCENE = """[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/%(name)s.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/%(name)s_head.glb" id="head"]
+
+[node name="%(node)s" type="Node3D"]
+editor_description = "%(about)s"
+script = ExtResource("person_gd")
+
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, %(ny).4f, %(nz).4f)
+script = ExtResource("face_gd")
+
+[node name="Model" parent="Head" instance=ExtResource("head")]
+
+[node name="Face" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, %(fy).4f, %(fz).4f)
+"""
+MATERIAL = """[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/%s.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://art/models/%s.png" id="atlas"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/atlas = ExtResource("atlas")
+"""
+
+
+def face_look(spec):
+    """What the face shader is given for this person (face.gdshader): how
+    deep his lines are, and the colours of his eyes, brows and lips."""
+    brow = spec.get("brow_color") or tuple(c * 0.9 for c in spec["hair"])
+    out = {"lines": round(spec.get("lines", spec.get("age_lines", 0.5)), 3), "iris_color": spec.get("iris", (0.32, 0.25, 0.17)),
+           "brow_color": brow, "lip_color": spec.get("lip", (0.52, 0.33, 0.29))}
+    if spec.get("brow_size"):
+        out["brow_size"] = spec["brow_size"]
+    return out
+
+
+def materials(spec):
+    """Writes his two materials to game/people/materials/: chr_<name> (the
+    atlas, person.gdshader) and chr_<name>_face (the same, and his face:
+    face.gdshader with face_look()). They are the build's: a change to them
+    goes in his spec."""
+    name = "chr_" + spec["name"]
+    folder = os.path.join(porter.ROOT, "game", "people", "materials")
+    os.makedirs(folder, exist_ok=True)
+    open(os.path.join(folder, name + ".tres"), "w").write(MATERIAL % ("person", name))
+    rows = []
+    for k, v in face_look(spec).items():
+        if k == "lines":
+            rows.append("shader_parameter/lines = %s" % v)
+        elif k == "brow_size":
+            rows.append("shader_parameter/brow_size = Vector2(%s, %s)" % (round(v[0], 4), round(v[1], 4)))
+        else:
+            rows.append("shader_parameter/%s = Color(%s, %s, %s, 1)" % (k, round(v[0], 3), round(v[1], 3), round(v[2], 3)))
+    open(os.path.join(folder, name + "_face.tres"), "w").write(MATERIAL % ("face", name) + "\n".join(rows) + "\n")
+
+
+def scene(spec):
+    """Writes game/characters/chr_<name>.tscn (a PersonModel: Model, Head,
+    Face) if there is none, or only a placeholder. A real scene is left as
+    it is: what the scene adds by hand (a lantern in his hand) stays."""
+    name = "chr_" + spec["name"]
+    path = os.path.join(porter.ROOT, "game", "characters", name + ".tscn")
+    if os.path.exists(path) and 'groups=["placeholder"]' not in open(path).read():
+        return
+    neck = rig.JOINTS["neck"]
+    about = spec.get("about", "%s (tools/build/%s.py)." % (spec["name"].capitalize(), name)).replace('"', "'")
+    about += " Model is his body on its skeleton, with his clips (PersonModel). Feet (or seat) at the origin, facing -Z. " \
+        "Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both " \
+        "ride on the skeleton's head."
+    text = SCENE % {"name": name, "node": "".join(w.capitalize() for w in spec["name"].split("_")), "about": about,
+                    "ny": neck[1], "nz": neck[2], "fy": neck[1] + 0.17, "fz": neck[2] - 0.1}
+    open(path, "w").write(text)
+    print("wrote game/characters/%s.tscn" % name)
+
+
+def build_head(spec, head_extra=None):
+    """Only his head (and what he wears on it)."""
+    name = "chr_" + spec["name"]
+    porter.reset(spec.get("seed", 1) + 2)
+    h = head_mesh(spec).build(smooth=True)
+    if head_extra:
+        head_extra(spec, h)
+    porter.export(name + "_head")
+
+
+def build(spec, body, head_extra=None, extras=None, posed=None, keep_apart=(), game=True):
+    """Writes the character's models, texture, materials and scene.
+    `body(spec)` builds him standing at rest on his skeleton;
+    `posed(spec, skeleton)` (if given) adds parts made in one of his clips'
+    poses (rig.posed, rig.bind: the carter's reins as he sits), named in
+    `keep_apart` if they are to stay apart from his Body.
+    `head_extra(spec, head_obj)` adds what he wears on his head; `extras` is
+    a list of (glb name, function) for more models (a lantern). The texture
+    is painted last, when every part has asked for its swatch. With `game`
+    off (the kit's catalogue) no material or scene is written."""
+    reset_atlas()
     name = "chr_" + spec["name"]
     porter.reset(spec.get("seed", 1))
     skeleton, library, clips = rig.rig(spec)
@@ -720,12 +865,12 @@ def build(spec, body, head_extra=None, extras=None, posed=None, keep_apart=()):
         posed(spec, skeleton)
     porter.export(name)
     _report(name)
-    porter.reset(spec.get("seed", 1) + 2)
-    h = head_mesh(spec).build(smooth=True)
-    if head_extra:
-        head_extra(spec, h)
-    porter.export(name + "_head")
+    build_head(spec, head_extra)
     for glb, fn in extras or []:
         porter.reset(spec.get("seed", 1) + 3)
         fn(spec)
         porter.export(glb)
+    texture(spec)
+    if game:
+        materials(spec)
+        scene(spec)

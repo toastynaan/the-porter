@@ -8,15 +8,19 @@ upperarm_l, lowerarm_l, hand_l, thigh_l, calf_l, foot_l, ball_l, and _r).
 
 - rig(spec): the library's skeleton turned to face -Z, scaled to his height,
   its arms lowered from the library's T-pose to hang at his sides, the pose
-  his model is made in. JOINTS then has where his joints are, standing.
+  his model is made in; his shoulders and hips set as wide as his build
+  (`shoulders_wide`, `hips_wide`). JOINTS then has where his joints are,
+  standing.
 - skin(armature): every model in the file bound to it. Arms and legs bind
   bone by bone; the body by height (pelvis, spine_01..03), the skirt of a
-  gown from the hips down to the thighs, blended; a cloak only to the body;
+  gown from the hips down to the thighs (below the knee, half to the
+  calves), blended; a cloak only to the body;
   a vertex tagged "bone:<name>" to that bone alone (what a hand holds, a pack).
 - clips(spec, armature): the clips he needs, from the library, made his: each
   bone turned as the library's is (so his own lengths are kept), the hips
   where the library's are. A seated clip has the seat at the origin, and his
-  feet (and hands, if given) where the spec puts them.
+  feet (and hands, if given) where the spec puts them. His `stoop` (degrees)
+  bends his back in every clip.
 
 Space: as people.py, the game's (metres, +Y up, facing -Z, his right +X);
 Blender's is (x, -z, y).
@@ -132,6 +136,18 @@ def rig(spec):
         pb.matrix = Matrix.Translation(head) @ turn @ Matrix.Translation(-head) @ pb.bone.matrix_local
         bpy.context.view_layer.update()
     bpy.ops.pose.armature_apply(selected=False)
+    # His own breadth: the arms out or in at the shoulders, the legs at the hips.
+    wide = spec.get("shoulders_wide", 1.0)
+    hips = spec.get("hips_wide", 1.0)
+    if abs(wide - 1.0) > 1e-4 or abs(hips - 1.0) > 1e-4:
+        bpy.ops.object.mode_set(mode="EDIT")
+        ebs = arm.data.edit_bones
+        for side, sx in (("l", -1.0), ("r", 1.0)):
+            for root, k in (("upperarm_" + side, wide), ("thigh_" + side, hips)):
+                dx = sx * abs(ebs[root].head.x) * (k - 1.0)
+                for eb in [ebs[root]] + list(ebs[root].children_recursive):
+                    eb.head.x += dx
+                    eb.tail.x += dx
     bpy.ops.object.mode_set(mode="OBJECT")
     bones = arm.data.bones
 
@@ -189,9 +205,14 @@ def _torso(p, skirt=True):
     if skirt and y < hip:
         f = porter.smoothstep(0.0, 0.22, hip - y)
         right = porter.smoothstep(-0.07, 0.07, p.x)
+        # A long skirt: below the knee it goes half with the calves.
+        knee = JOINTS["knee"][1]
+        shin = 0.5 * porter.smoothstep(0.0, 0.18, knee - y)
         w = {k: v * (1.0 - f) for k, v in w.items()}
-        w["thigh_r"] = w.get("thigh_r", 0.0) + f * right
-        w["thigh_l"] = w.get("thigh_l", 0.0) + f * (1.0 - right)
+        for side, share in (("r", right), ("l", 1.0 - right)):
+            w["thigh_" + side] = w.get("thigh_" + side, 0.0) + f * share * (1.0 - shin)
+            if shin > 0.0:
+                w["calf_" + side] = w.get("calf_" + side, 0.0) + f * share * shin
     return w
 
 
@@ -314,11 +335,40 @@ def _limb(rest, rot, pos, upper, lower, end, target, pole, facing):
     return turn_l
 
 
+## A stoop bends the back at these bones, each by this share of it; the
+## head lifts again by HEAD_UP of the whole, to look ahead.
+STOOP = {"spine_01": 0.2, "spine_02": 0.3, "spine_03": 0.35, "neck_01": 0.15}
+HEAD_UP = 0.75
+
+
+def _stoop(spec, order, rot):
+    """His posture, in every clip: `stoop` degrees his back bends forward
+    (a hunched old man 30 or more). His arms still hang as the clip has them."""
+    deg = spec.get("stoop", 0.0)
+    if abs(deg) < 0.01:
+        return
+    bent = {}
+    for b in order:
+        up = bent.get(b.parent.name, 0.0) if b.parent else 0.0
+        if b.name.startswith("clavicle") or b.name.startswith("thigh"):
+            up = 0.0
+        if b.name == "Head":
+            up -= deg * HEAD_UP
+        bent[b.name] = up + deg * STOOP.get(b.name, 0.0)
+    for name, a in bent.items():
+        if abs(a) > 0.01:
+            # Forward is Blender's +Y: a turn about X by -a tips the top of him forward.
+            rot[name] = Quaternion((1.0, 0.0, 0.0), math.radians(-a)) @ rot[name]
+
+
 def clips(spec, arm, src, library):
     """Bakes his clips (CLIPS and the spec's "clips") onto his skeleton as
     actions of their names; then drops the library."""
     wanted = dict(CLIPS)
     wanted.update(spec.get("clips", {}))
+    if spec.get("only_clips"):
+        # The kit's catalogue: he only stands.
+        wanted = {k: v for k, v in wanted.items() if k in spec["only_clips"]}
     order = _order(arm)
     rest = {b.name: b.matrix_local.copy() for b in arm.data.bones}
     scene = bpy.context.scene
@@ -340,6 +390,7 @@ def clips(spec, arm, src, library):
             ev = src.evaluated_get(bpy.context.evaluated_depsgraph_get())
             pose = {b.name: ev.pose.bones[b.name].matrix.copy() for b in order}
             rot = {k: m.to_quaternion() for k, m in pose.items()}
+            _stoop(spec, order, rot)
             pos = {}
             hip = pose["pelvis"].translation.copy()
             if "seat" in c:

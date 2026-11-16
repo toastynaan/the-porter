@@ -8,5 +8,5 @@ shader = ExtResource("shader")
 shader_parameter/atlas = ExtResource("atlas")
 shader_parameter/lines = 0.5
 shader_parameter/iris_color = Color(0.32, 0.25, 0.17, 1)
-shader_parameter/brow_color = Color(0.17, 0.13, 0.1, 1)
-shader_parameter/lip_color = Color(0.52, 0.33, 0.29, 1)
+shader_parameter/brow_color = Color(0.162, 0.162, 0.18, 1)
+shader_parameter/lip_color = Color(0.53, 0.34, 0.3, 1)
