@@ -34,6 +34,8 @@ uniform float rut_outer = 1.98;
 uniform float rut_half = 0.17;
 // Rain on the water, 0..1.
 uniform float rain : hint_range(0.0, 1.0) = 1.0;
+// How much water stands (1 while it rains; Weather dries it to 0 after).
+uniform float puddles : hint_range(0.0, 1.0) = 1.0;
 
 varying vec3 world_pos;
 
@@ -95,7 +97,7 @@ void fragment() {
 	float wide = max(rut(side, rut_inner, wobble - rut_half * 1.6), rut(side, rut_outer, wobble - rut_half * 1.6));
 	float in_ruts = max(ruts * smoothstep(0.44, 0.6, deep), wide * smoothstep(0.6, 0.74, deep)) * w_road;
 	float holes = smoothstep(0.69, 0.78, texture(blotch, vec2(UV.x * 0.043, UV.y * 0.1) + 0.37).r + (fine - 0.5) * 0.1) * w_road;
-	float water = smoothstep(0.4, 0.6, max(mask.a, max(in_ruts, holes)) + grit * 0.3);
+	float water = smoothstep(0.4, 0.6, max(mask.a, max(in_ruts, holes)) + grit * 0.3 - (1.0 - puddles) * 0.8);
 
 	vec3 n_mud = texture(mud_nrm, p / mud_size).rgb;
 	vec3 n_grass = texture(grass_nrm, p / grass_size).rgb;

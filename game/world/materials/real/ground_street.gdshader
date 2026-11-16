@@ -24,6 +24,8 @@ uniform float rut_inner = 0.42;
 uniform float rut_outer = 1.98;
 uniform float rut_half = 0.17;
 uniform float rain : hint_range(0.0, 1.0) = 1.0;
+// How much water stands (1 while it rains; Weather dries it to 0 after): 0 is a dry street.
+uniform float puddles : hint_range(0.0, 1.0) = 1.0;
 
 varying vec3 world_pos;
 
@@ -66,16 +68,16 @@ void fragment() {
 	// Standing water: the kennel, the ruts' deeper lengths, hollows in the mud and between sunk cobbles.
 	float deep = texture(blotch, vec2(UV.x * 0.017, side * 0.07 + 0.5)).r + (mid - 0.5) * 0.3;
 	float holes = smoothstep(0.62, 0.72, texture(blotch, p * 0.047 + 0.37).r + (fine - 0.5) * 0.12);
-	float water = smoothstep(0.4, 0.6, max(COLOR.a, max(ruts * smoothstep(0.42, 0.58, deep), holes)) + (mid - 0.5) * 0.25);
+	float water = smoothstep(0.4, 0.6, max(COLOR.a, max(ruts * smoothstep(0.42, 0.58, deep), holes)) + (mid - 0.5) * 0.25 - (1.0 - puddles) * 0.8);
 	vec2 r1 = texture(blotch, p * 1.7 + vec2(TIME * 0.31, TIME * 0.23)).rg;
 	vec2 r2 = texture(blotch, p * 2.9 - vec2(TIME * 0.27, TIME * 0.35)).gr;
 	vec2 struck = rings(p * 2.7, TIME * 1.25) + rings(p * 4.3 + 7.3, TIME * 1.05 + 0.4) * 0.7;
 	vec3 n_water = normalize(vec3(((r1 + r2 - 1.0) * 0.1 + struck * 0.45) * rain, 1.0)) * 0.5 + 0.5;
 	vec3 n = mix(texture(cobble_nrm, p / cobble_size).rgb, texture(mud_nrm, p / mud_size).rgb, muddy);
 	float mirror = smoothstep(0.7, 1.0, water);
-	ALBEDO = mix(albedo * 0.6, water_color, water * 0.94);
+	ALBEDO = mix(albedo * mix(0.82, 0.6, puddles), water_color, water * 0.94);
 	// Wet stone shines more than wet mud; water most of all.
-	ROUGHNESS = mix(mix(mix(0.42, 0.3, fine), mix(0.75, 0.5, fine), muddy), 0.03, mirror);
+	ROUGHNESS = mix(mix(mix(0.42, 0.3, fine), mix(0.75, 0.5, fine), muddy) + (1.0 - puddles) * 0.25, 0.03, mirror);
 	SPECULAR = mix(0.5, 0.6, mirror) * (1.0 - clamp(water * (1.0 - mirror) * 3.0, 0.0, 1.0));
 	NORMAL_MAP = mix(n, n_water, water);
 	NORMAL_MAP_DEPTH = mix(1.1, 1.0, water);

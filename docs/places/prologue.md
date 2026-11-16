@@ -101,6 +101,7 @@ The second pass read as one stone and one house, and its rain as a few white scr
 - **It splashes** where it lands: a small crown of spray on the cobbles, the roofs, the wagon.
 - **It shows where light is** (`rain_drop.gdshader`): faint against the sky, gold near a lantern or a fire, brightest with the light behind it. Drops within 2 m of the eye are not drawn.
 - **Standing water is struck:** rings open in the puddles of the street and the fields (`rings()` in the two ground shaders).
+- **Water stands only while it rains** (your ask, 2026-11-16): the lane's, the street's and the fields' ground take how much water stands (`puddles`) and whether drops ring it (`rain`) from the night's `Weather`. Night 0's rain stops at 19:00, and the puddles then dry over 0.4 game hours, about a minute *(mine)*: the joints keep their water longest. A night without rain has none.
 - **Eaves drip:** lines of heavy drops off the street's eaves and the gate's parapets (`Drips` in `env_road.tscn`, `game/world/weather/drips.gd`).
 
 **Surfaces** (`game/world/materials/real/surface.gdshader`, one shader behind the city's stone, plaster, timber and roofs):

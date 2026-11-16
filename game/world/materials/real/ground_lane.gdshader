@@ -47,6 +47,8 @@ uniform vec3 mud_tint : source_color = vec3(0.4, 0.36, 0.32);
 uniform vec3 water_color : source_color = vec3(0.012, 0.014, 0.017);
 uniform float gutter_wide = 0.23;
 uniform float rain : hint_range(0.0, 1.0) = 1.0;
+// How much water stands (1 while it rains; Weather dries it to 0 after): 0 is a dry street.
+uniform float puddles : hint_range(0.0, 1.0) = 1.0;
 uniform bool plain_flags = false;
 
 varying vec3 world_pos;
@@ -236,7 +238,7 @@ void fragment() {
 		water = max(water, max(gutter, holes));
 	}
 	// Water covers the joints first, then the stones' shoulders, then everything.
-	float flood = smoothstep(-0.1, 0.1, water * 1.3 - high - 0.12);
+	float flood = smoothstep(-0.1, 0.1, water * 1.3 * puddles - high - 0.12 - (1.0 - puddles) * 0.2);
 	vec2 r1 = texture(blotch, p * 1.7 + vec2(TIME * 0.31, TIME * 0.23)).rg;
 	vec2 r2 = texture(blotch, p * 2.9 - vec2(TIME * 0.27, TIME * 0.35)).gr;
 	vec2 struck = rings(p * 2.7, TIME * 1.25) + rings(p * 4.3 + 7.3, TIME * 1.05 + 0.4) * 0.7;
@@ -245,9 +247,9 @@ void fragment() {
 	vec3 n_water = normalize(up + vec3(ripple.x, 0.0, ripple.y));
 	// Everything is wet: darker than dry, and it shines. Shallow water shows the stone under it; only where it stands deep is it dark.
 	float deep = smoothstep(0.7, 1.0, water);
-	ALBEDO = mix(albedo * 0.6, mix(albedo * 0.42, water_color, 0.35 + 0.6 * deep), flood);
-	ROUGHNESS = mix(rough, 0.035, flood);
+	ALBEDO = mix(albedo * mix(0.82, 0.6, puddles), mix(albedo * 0.42, water_color, 0.35 + 0.6 * deep), flood);
+	ROUGHNESS = mix(min(rough + (1.0 - puddles) * 0.3, 1.0), 0.035, flood);
 	// A little more than water gives: the lane has few lamps, and it is the wet that shows them.
-	SPECULAR = mix(0.75, 0.6, flood);
+	SPECULAR = mix(mix(0.5, 0.75, puddles), 0.6, flood);
 	NORMAL = normalize((VIEW_MATRIX * vec4(normalize(mix(n_wet, n_water, flood)), 0.0)).xyz);
 }

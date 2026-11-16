@@ -7,7 +7,8 @@ extends Node
 ##   in clear air, not in fog; 3 m off, seen), but his lantern is a glow a
 ##   hunter can make out from further and come to look at;
 ## - snow takes his snow outdoors (not under a roof), and a hunter who
-##   loses him follows the freshest one.
+##   loses him follows the freshest one;
+## - water stands on the ground while it rains, and dries after.
 ## Run: tools/check.sh
 
 const TEST_SAVE := "user://test_weather_save.tres"
@@ -55,6 +56,19 @@ func _run() -> void:
 	await get_tree().process_frame
 	var steps := h.get_node(^"Audio").get_child(0) as AudioStreamPlayer3D
 	_check(is_equal_approx(steps.max_distance, 30.0), "and his own steps carry half as far (%.0f m)" % steps.max_distance)
+	# Water stands on the ground only while it rains, and dries after.
+	var lane := load("res://game/world/materials/real/ground_lane.tres") as ShaderMaterial
+	var puddles := func() -> float: return float(lane.get_shader_parameter(&"puddles"))
+	var rain_on := float(lane.get_shader_parameter(&"rain"))
+	_check(is_equal_approx(puddles.call(), 1.0) and is_equal_approx(rain_on, 1.0), "raining, water stands in the lane and the drops ring it")
+	weather.clears_at = GameState.hour - Weather.DRY_HOURS * 0.5
+	await get_tree().process_frame
+	var drying: float = puddles.call()
+	weather.clears_at = -1.0
+	weather.kind = Weather.Kind.CLEAR
+	await get_tree().process_frame
+	_check(absf(drying - 0.5) < 0.05 and is_equal_approx(puddles.call(), 0.0) and is_equal_approx(float(lane.get_shader_parameter(&"rain")), 0.0),
+		"once the rain stops the puddles dry (%.2f halfway), and with no rain the lane is dry" % drying)
 
 	# Fog: a lit porter 8 m in front.
 	h.global_transform = Transform3D(Basis(Vector3.UP, PI), Vector3(-2.0, 0.05, -24.0))

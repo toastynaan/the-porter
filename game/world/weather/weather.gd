@@ -10,6 +10,11 @@ extends Node3D
 ##   (Footprints).
 ## Rain and snow fall around the porter; the fog thickens the volumetric fog.
 ##
+## Water stands on the ground only while it rains (your ask, 2026-11-16):
+## the lane's, the street's and the fields' materials take how much
+## (`puddles`) and whether drops ring it (`rain`) from here. When the rain
+## clears they dry over DRY_HOURS; a night with no rain has none.
+##
 ## Rain is GPU particles (rain_fall.gdshader moves the drops,
 ## rain_drop.gdshader draws them): a slab of drops born over the camera,
 ## falling on the wind onto a height field of whatever is under the sky
@@ -41,6 +46,17 @@ const RAIN_SPEED := 11.5
 const RAIN_WIND := Vector3(1.6, 0.0, 0.5)
 ## The height field the rain lands on: its size about the camera, m.
 const RAIN_COVER := Vector3(38.0, 48.0, 38.0)
+## The ground the rain stands on, and the brook it rings.
+const WET_GROUND: Array[ShaderMaterial] = [
+	preload("res://game/world/materials/real/ground_lane.tres"),
+	preload("res://game/world/materials/real/flags_lane.tres"),
+	preload("res://game/world/materials/real/ground_street.tres"),
+	preload("res://game/world/materials/real/ground_fields.tres"),
+]
+const BROOK := preload("res://game/world/materials/real/water_brook.tres")
+## Game hours for the puddles to dry once the rain stops *(mine)*: about a
+## minute at night 0's pace.
+const DRY_HOURS := 0.4
 
 @export var kind := Kind.CLEAR
 @export var world_environment: WorldEnvironment
@@ -50,6 +66,8 @@ const RAIN_COVER := Vector3(38.0, 48.0, 38.0)
 var _fall: GeometryInstance3D
 var _cover: GPUParticlesCollisionHeightField3D
 var _rain: AudioStreamPlayer
+## What the ground was last given: (puddles, rain).
+var _ground := Vector2(-1.0, -1.0)
 
 
 func _ready() -> void:
@@ -67,6 +85,7 @@ func _ready() -> void:
 			_fall = _particles(Color(0.85, 0.87, 0.9, 0.8), Vector2(0.03, 0.03), 1.0, 900)
 		Kind.FOG:
 			_thicken.call_deferred()
+	_wet_the_ground()
 
 
 static func now(tree: SceneTree) -> Kind:
@@ -169,9 +188,31 @@ func _process(_delta: float) -> void:
 			_fall.set(&"emitting", false)
 		if _rain:
 			_rain.stop()
+	_wet_the_ground()
 	if _fall:
 		var camera := get_viewport().get_camera_3d()
 		if camera:
 			_fall.global_position = camera.global_position + Vector3.UP * (RAIN_ABOVE if _cover else 8.0)
 			if _cover:
 				_cover.global_position = camera.global_position
+
+
+## How wet the ground is now: puddles while it rains, drying after it
+## clears, none on a night it didn't rain.
+func puddles() -> float:
+	if kind == Kind.RAIN:
+		return 1.0
+	if clears_at >= 0.0 and GameState.hour >= clears_at:
+		return clampf(1.0 - (GameState.hour - clears_at) / DRY_HOURS, 0.0, 1.0)
+	return 0.0
+
+
+func _wet_the_ground() -> void:
+	var want := Vector2(snappedf(puddles(), 0.01), 1.0 if kind == Kind.RAIN else 0.0)
+	if want == _ground:
+		return
+	_ground = want
+	for m in WET_GROUND:
+		m.set_shader_parameter(&"puddles", want.x)
+		m.set_shader_parameter(&"rain", want.y)
+	BROOK.set_shader_parameter(&"rain", want.y)
