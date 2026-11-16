@@ -110,7 +110,7 @@ There are only three things on screen, plus subtitles and the dot.
 
 - **The outline**, as described under "Your hands".
 - **The duty glyph:** a small, dim mark (a candle flame, about 1° across) over the one person or thing the current duty needs, seen within 10 m. It never shows during a chase, while hiding, or while talking. The lit way to each duty stays. A setting turns the glyph off for players who want no help.
-- **The sky dial** *(your ask, 2026-11-12)*: small in the top right, a half-circle of sky over a horizon line, with the sun crossing it by day and a thin moon by night. No numbers. It shows when the light is going (sunset at 17:15 *mine*), so you can see dusk coming. Hidden in menus, when paused, and whenever the clock is stopped; a setting turns it off.
+- **The sky dial** *(your ask, 2026-11-12)*: small in the top right, a half-circle of sky over a horizon line, with the sun crossing it by day and a thin moon by night. Under it, the hour in words as the watch calls it, to the nearest quarter: "Nine of the clock", "A quarter past nine", "Half past nine", "A quarter to ten" *(your ask, 2026-11-16: the moon alone didn't say it was nine)*. It shows when the light is going (sunset at 17:15 *mine*), so you can see dusk coming. Hidden in menus, when paused, and whenever the clock is stopped; a setting turns it off.
 - **The HUD lies once.** One scripted moment, on night 5 or 6 and only at Dose 75+: an outline on a door in a blank wall, which opens on nothing. The HUD is otherwise always true, so it stays something the player can trust.
 
 ## Reading the hidden numbers
