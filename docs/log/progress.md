@@ -61,3 +61,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-15 · Script · 17f6b7f · Night 0's talks polished (still draft); Will Fuller, Hamo and Lambert give their names.
 - 2026-11-15 · Sound · 0f723a5 · Night 0's sounds are Freesound CC0 recordings, rebuilt by tools/build/sfx_recorded.py.
 - 2026-11-15 · Sound · cf44999 · The hearth and the watch fire crackle, the drag is heard, cobbles past Aldgate, rain muffled under a roof.
+- 2026-11-16 · Art · 09c1f03 · Night 0's people are real models on Quaternius's skeleton (CC0): Will, Hamo and Lambert idle, talk, walk and sit; Lambert's arms follow his lantern and staff.
+- 2026-11-16 · Fix · c13eb66 · On the wagon the porter's eyes are at sitting height, level with Will's.
