@@ -70,6 +70,9 @@ const RUMBLE := preload("res://art/sfx/amb_wagon_loop.wav")
 ## Inside Aldgate: hooves and wheels on cobbles. It takes over while the
 ## wagon stands at the gate, where the rumble is all but silent.
 const COBBLES := preload("res://art/sfx/amb_wagon_cobbles_loop.wav")
+## The porter's eyes above the wagon's bed, sitting on it beside the
+## traveller, knees up as he is *(mine)*.
+const RIDE_EYE := 0.82
 ## The wagon's place across the road: its right of the middle, more when it
 ## pulls in. The body cart keeps to its own right.
 const SIDE := 1.2
@@ -275,6 +278,9 @@ func _seat(p: Player) -> void:
 	var seat := wagon.get_node(^"Bed/Seat") as Marker3D
 	p.place(seat.global_position, seat.global_rotation.y)
 	p.riding = seat
+	# Sitting: his eyes come down to the traveller's (off the wagon, the
+	# player's own eye height takes over again).
+	p.head.position = Vector3(0.0, RIDE_EYE, 0.0)
 	traveller.reparent(wagon.get_node(^"Bed/TravellerSeat"), false)
 	traveller.position = Vector3.ZERO
 	traveller.rotation = Vector3.ZERO
