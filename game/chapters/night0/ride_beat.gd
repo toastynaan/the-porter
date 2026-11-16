@@ -313,6 +313,8 @@ func _a_word_with_the_carter(p: Player) -> void:
 		await PlayTime.physics_frame(self)
 	carter.remove_from_group(&"glyph_targets")
 	await until(func() -> bool: return not talker.talking)
+	# Off him before it goes, if he is looking at him.
+	Outline.set_on(talker, false)
 	talker.queue_free()
 
 

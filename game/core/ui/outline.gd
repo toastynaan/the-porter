@@ -11,11 +11,12 @@ const MATERIAL := preload("res://game/core/ui/outline.tres")
 const PREV := &"outline_prev"
 
 
-## Puts the outline on `target`, or takes it off.
-static func set_on(target: Node, on: bool) -> void:
-	if target == null or not is_instance_valid(target):
+## Puts the outline on `target`, or takes it off. Untyped, so a target
+## freed meanwhile is let be rather than an error.
+static func set_on(target: Variant, on: bool) -> void:
+	if target == null or not is_instance_valid(target) or not (target is Node):
 		return
-	for mesh in meshes_of(target):
+	for mesh in meshes_of(target as Node):
 		if on:
 			if not mesh.has_meta(PREV):
 				mesh.set_meta(PREV, mesh.material_overlay)

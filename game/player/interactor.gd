@@ -24,6 +24,9 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if focused != null and not is_instance_valid(focused):
+		# Freed while he looked at it (a talk that was only for a moment).
+		focused = null
 	var target: Node = null
 	if is_colliding() and not _player.busy():
 		target = _interactable(get_collider() as Node)
@@ -41,6 +44,8 @@ func _exit_tree() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# A click that only recaptures the mouse doesn't count.
 	var click := event is InputEventMouseButton
+	if focused != null and not is_instance_valid(focused):
+		focused = null
 	if Press.fresh(event, &"interact") and focused and (not click or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		focused.interact(_player)
 		get_viewport().set_input_as_handled()
