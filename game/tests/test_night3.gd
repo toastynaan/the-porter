@@ -50,11 +50,11 @@ func _run() -> void:
 	var daylight: Daylight = night.get_node(^"Daylight")
 
 	# Waking at dusk: the cell, failing light, the gate open with Cole at it.
-	_check(_pilot.beat() == &"Wake" and GameState.phase == GameState.Phase.DUSK and absf(GameState.hour - 16.0) < 0.01,
-		"night 3 opens at dusk, 16:00 by the candle")
+	_check(_pilot.beat() == &"Wake" and GameState.phase == GameState.Phase.DUSK and absf(GameState.hour - 16.5) < 0.01,
+		"night 3 opens at dusk, 16:30 by the candle")
 	await _pilot.until(func() -> bool: return not p.controls_locked, 5.0)
 	_check(p.global_position.distance_to(_pilot.mark("WakeCell")) < 0.5, "he wakes in his cell")
-	_check(daylight.light > 0.95 and absf(GameState.dose - 30.0) < 0.5 and GameState.has_flag(&"bread_warned"),
+	_check(daylight.light > 0.5 and daylight.light < 0.95 and absf(GameState.dose - 30.0) < 0.5 and GameState.has_flag(&"bread_warned"),
 		"in failing daylight, with what the nights before left (Dose 30, warned about the bread)")
 	_check(gate.is_open() and not (night.get_node(^"Abbey/Navigation/OuterCourt/Props/GateBar") as Node3D).visible
 		and cole.visible and cole.global_position.distance_to(_pilot.mark("ColeGate")) < 0.3,
@@ -84,7 +84,7 @@ func _run() -> void:
 	_check(_said("(The gate is Cole's until after supper.)") and not _pilot.clock().dozing, "no dozing while the gate is Cole's")
 	(night.get_node(^"CandleClock") as CandleClock).interact(p)
 	await _pilot.seconds(0.3)
-	_check(_said("(The candle stands at 16:00. The next mark is the supper bell.)"), "the candle clock tells the hour and the next mark")
+	_check(_said("(The candle stands at 16:30. The next mark is the supper bell.)"), "the candle clock tells the hour and the next mark")
 
 	# The supper bell at its mark. The light has gone; the lane's lanterns are lit.
 	_pilot.skip_to(17.25)
