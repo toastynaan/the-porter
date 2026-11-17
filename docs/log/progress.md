@@ -75,3 +75,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-16 · Fix · 4d5e836 · test_night3 follows the 16:30 waking (it had failed since the shift moved).
 - 2026-11-16 · Art · 3ff2b34 · Sixteen more people are real: the lane's, the inn's and the road's (Hob, Agnes, Mab, Walter, Gib...); the kit gains held things, rags, a wrapped face.
 - 2026-11-16 · Art · 1ad7a0e · Faces after your reference heads: heads cut in flat planes and painted by the face shader (flat skin, soft shadows, dot eyes, hatched brows, tufted hair, stubble in strokes); all nineteen real people rebuilt; a portraits sheet in art/_review/kit/.
+- 2026-11-16 · Fix · 4a99ed3 · Night 0 out of order: the bed is his once Agnes gives the room, with no knock at the gate needed (Mab or Agnes first ends the gate's beat); telling Agnes the gate is shut gives the room too. New: test_night0_routes.
