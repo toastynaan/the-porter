@@ -29,14 +29,14 @@ func _ready() -> void:
 	env.background_color = Color(0.3, 0.3, 0.3)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.9, 0.9, 0.92)
-	env.ambient_light_energy = 1.3
+	env.ambient_light_energy = 1.0
 	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	var we := WorldEnvironment.new()
 	we.environment = env
 	add_child(we)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-28.0, 152.0, 0.0)
-	sun.light_energy = 1.7
+	sun.light_energy = 1.2
 	add_child(sun)
 	_camera = Camera3D.new()
 	_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
@@ -199,10 +199,11 @@ func _dress(root: Node, atlas: Texture2D, look: Dictionary) -> void:
 	body.set_shader_parameter(&"atlas", atlas)
 	var face := ShaderMaterial.new()
 	face.shader = FACE
-	face.set_shader_parameter(&"atlas", atlas)
 	for k: String in look:
 		var v: Variant = look[k]
-		if v is Array:
+		if k == "hair_style":
+			face.set_shader_parameter(k, int(v))
+		elif v is Array:
 			var a := v as Array
 			if a.size() == 2:
 				face.set_shader_parameter(k, Vector2(a[0], a[1]))

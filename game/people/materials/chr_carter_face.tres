@@ -1,17 +1,33 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://game/people/face.gdshader" id="shader"]
-[ext_resource type="Texture2D" path="res://art/models/chr_carter.png" id="atlas"]
 
 [resource]
 shader = ExtResource("shader")
-shader_parameter/atlas = ExtResource("atlas")
+shader_parameter/skin_color = Color(0.64, 0.5, 0.42, 1)
+shader_parameter/shade_color = Color(0.512, 0.34, 0.328, 1)
+shader_parameter/flush = 0.85
+shader_parameter/socket = 0.5
 shader_parameter/lines = 0.88
-shader_parameter/iris_color = Color(0.36, 0.4, 0.42, 1)
+shader_parameter/freckles = 0.0
+shader_parameter/scar = 0.0
+shader_parameter/hair_color = Color(0.27, 0.23, 0.19, 1)
+shader_parameter/hair_style = 0
+shader_parameter/hairline = 0.228
+shader_parameter/grey_hair = 0.45
+shader_parameter/tufts = 1.0
+shader_parameter/beard_color = Color(0.3, 0.27, 0.23, 1)
+shader_parameter/beard = 0.55
+shader_parameter/beard_top = 0.0
+shader_parameter/moustache = 0.0
+shader_parameter/eye_at = Vector2(0.0314, 0.184)
+shader_parameter/eye_size = Vector2(0.0042, 0.0066)
+shader_parameter/eye_color = Color(0.108, 0.114, 0.117, 1)
 shader_parameter/brow_color = Color(0.243, 0.207, 0.171, 1)
+shader_parameter/mouth_half = 0.0146
 shader_parameter/lip_color = Color(0.5, 0.3, 0.27, 1)
 shader_parameter/brow_size = Vector2(0.0175, 0.003)
-shader_parameter/brow_at = Vector2(0.033, 0.204)
-shader_parameter/brow_arch = 0.8
+shader_parameter/brow_at = Vector2(0.034, 0.2005)
+shader_parameter/brow_arch = 0.4
 shader_parameter/brow_slant = 0.0
 shader_parameter/brow_taper = 0.35

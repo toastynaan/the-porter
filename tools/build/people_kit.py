@@ -74,7 +74,8 @@ HAIR = {
     "black": (0.09, 0.08, 0.075), "dark": (0.2, 0.15, 0.11), "brown": (0.3, 0.21, 0.14), "chestnut": (0.38, 0.22, 0.13),
     "red": (0.5, 0.25, 0.12), "fair": (0.55, 0.44, 0.27), "grey": (0.42, 0.4, 0.38), "white": (0.66, 0.64, 0.6),
 }
-## How the hair is cut (people.paint_head; "long" adds a fall of hair behind).
+## How the hair is cut (face.gdshader paints it, people.hair_bulk gives it
+## its bulk; "long" adds a fall of hair behind).
 HAIR_STYLES = ("cropped", "bowl", "tonsure", "balding", "bald", "long")
 ## Where the hair starts on the brow, by cut (height up the head, m).
 HAIRLINE = {"cropped": 0.236, "bowl": 0.226, "tonsure": 0.234, "balding": 0.25, "bald": 0.24, "long": 0.234}
@@ -104,21 +105,33 @@ BODIES = {
     "woman_stout": {"height": 0.92, "frame": 0.98, "girth": 0.75, "shoulders": 1.0, "limb": 1.02, "stoop": 0.0, "sex": "f"},
 }
 
-## Faces: the head's shape (people.head_rows, head_mesh). Each number is a
-## scale on the plain head's: width, jaw, chin, nose (how far it stands
-## out), nose_width, cheek (how hollow under the cheekbone), brow (how
-## heavy), jowl (0 none to 1 a fat face).
+## Faces: the head's shape (people.head_rows, head_mesh) and what is
+## painted on it (people.face_look). Each number is a scale on the plain
+## head's: width, jaw, chin, nose (how far it stands out), nose_width, cheek
+## (how hollow under the cheekbone), brow (how heavy), jowl (0 none to 1 a
+## fat face); socket (0 to 1: how deep the shadow under the brows, deep-set
+## eyes), eye (the eyes' width and height), mouth (its width).
 FACES = {
-    "plain": {"width": 1.0, "jaw": 1.0, "chin": 1.0, "nose": 1.0, "nose_width": 1.0, "cheek": 1.0, "brow": 1.0, "jowl": 0.0},
-    "narrow": {"width": 0.9, "jaw": 0.86, "chin": 1.08, "nose": 1.1, "nose_width": 0.9, "cheek": 1.2},
-    "gaunt": {"width": 0.93, "jaw": 0.84, "chin": 1.14, "nose": 1.18, "nose_width": 0.95, "cheek": 2.4, "brow": 1.5},
-    "sharp": {"width": 0.95, "jaw": 0.82, "chin": 1.22, "nose": 1.3, "nose_width": 0.8, "cheek": 1.5, "brow": 1.1},
-    "soft": {"width": 0.99, "jaw": 0.95, "chin": 0.9, "nose": 0.82, "nose_width": 0.95, "cheek": 0.4, "brow": 0.4},
-    "round": {"width": 1.1, "jaw": 1.2, "chin": 0.86, "nose": 0.9, "nose_width": 1.2, "cheek": 0.4, "brow": 0.7, "jowl": 1.0},
-    "broad": {"width": 1.08, "jaw": 1.12, "chin": 1.0, "nose": 1.08, "nose_width": 1.3, "cheek": 1.1, "brow": 1.5},
-    "square": {"width": 1.03, "jaw": 1.26, "chin": 1.1, "nose": 1.0, "nose_width": 1.05, "cheek": 1.0, "brow": 1.3},
-    "heavy": {"width": 1.07, "jaw": 1.28, "chin": 1.14, "nose": 1.15, "nose_width": 1.35, "cheek": 0.9, "brow": 2.2, "jowl": 0.4},
-    "hooked": {"width": 0.97, "jaw": 0.94, "chin": 1.0, "nose": 1.55, "nose_width": 1.1, "cheek": 1.3, "brow": 1.3},
+    "plain": {"width": 1.0, "jaw": 1.0, "chin": 1.0, "nose": 1.0, "nose_width": 1.0, "cheek": 1.0, "brow": 1.0, "jowl": 0.0,
+              "socket": 0.5, "eye": (1.0, 1.0), "mouth": 1.0},
+    "narrow": {"width": 0.9, "jaw": 0.86, "chin": 1.08, "nose": 1.1, "nose_width": 0.9, "cheek": 1.2, "eye": (0.95, 1.0),
+               "mouth": 0.92},
+    "gaunt": {"width": 0.93, "jaw": 0.84, "chin": 1.14, "nose": 1.18, "nose_width": 0.95, "cheek": 2.4, "brow": 1.5, "socket": 0.95,
+              "mouth": 0.95},
+    "sharp": {"width": 0.95, "jaw": 0.82, "chin": 1.22, "nose": 1.3, "nose_width": 0.8, "cheek": 1.5, "brow": 1.1,
+              "eye": (0.95, 0.9), "mouth": 0.9},
+    "soft": {"width": 0.99, "jaw": 0.95, "chin": 0.9, "nose": 0.82, "nose_width": 0.95, "cheek": 0.4, "brow": 0.4, "socket": 0.3,
+             "eye": (1.12, 1.08)},
+    "round": {"width": 1.1, "jaw": 1.2, "chin": 0.86, "nose": 0.9, "nose_width": 1.2, "cheek": 0.4, "brow": 0.7, "jowl": 1.0,
+              "socket": 0.35, "eye": (1.05, 0.95), "mouth": 1.12},
+    "broad": {"width": 1.08, "jaw": 1.12, "chin": 1.0, "nose": 1.08, "nose_width": 1.3, "cheek": 1.1, "brow": 1.5, "socket": 0.6,
+              "mouth": 1.15},
+    "square": {"width": 1.03, "jaw": 1.26, "chin": 1.1, "nose": 1.0, "nose_width": 1.05, "cheek": 1.0, "brow": 1.3, "socket": 0.6,
+               "mouth": 1.05},
+    "heavy": {"width": 1.07, "jaw": 1.28, "chin": 1.14, "nose": 1.15, "nose_width": 1.35, "cheek": 0.9, "brow": 2.2, "jowl": 0.4,
+              "socket": 0.8, "eye": (1.0, 0.85), "mouth": 1.15},
+    "hooked": {"width": 0.97, "jaw": 0.94, "chin": 1.0, "nose": 1.55, "nose_width": 1.1, "cheek": 1.3, "brow": 1.3, "socket": 0.65,
+               "eye": (0.92, 0.95)},
 }
 
 ## Brows (face.gdshader draws them): size (half length, half thickness,
@@ -127,22 +140,23 @@ FACES = {
 ## (how much they thin toward the temples), at (where: from the middle, up
 ## the head).
 BROWS = {
-    "plain": {"size": (0.0165, 0.003), "arch": 0.8, "slant": 0.0, "taper": 0.35, "at": (0.033, 0.204)},
-    "thin": {"size": (0.016, 0.0019), "arch": 1.3, "taper": 0.25},
-    "arched": {"size": (0.017, 0.0026), "arch": 2.6, "taper": 0.3, "at": (0.033, 0.2035)},
-    "straight": {"size": (0.0175, 0.003), "arch": 0.0, "taper": 0.15},
-    "heavy": {"size": (0.0185, 0.0044), "arch": 0.5, "slant": -0.06, "taper": 0.2, "at": (0.033, 0.2025)},
-    "bushy": {"size": (0.019, 0.005), "arch": 0.9, "taper": 0.05},
-    "stern": {"size": (0.0175, 0.0036), "arch": 0.3, "slant": -0.2, "taper": 0.3},
-    "worried": {"size": (0.0165, 0.0028), "arch": 0.6, "slant": 0.2, "taper": 0.35},
-    "short": {"size": (0.0115, 0.0034), "arch": 0.8, "taper": 0.1, "at": (0.031, 0.204)},
-    "joined": {"size": (0.023, 0.0036), "arch": 0.5, "taper": 0.3, "at": (0.0265, 0.2035)},
+    "plain": {"size": (0.019, 0.0034), "arch": 0.4, "slant": 0.0, "taper": 0.35, "at": (0.034, 0.2005)},
+    "thin": {"size": (0.018, 0.0026), "arch": 0.9, "taper": 0.3},
+    "arched": {"size": (0.0185, 0.0029), "arch": 2.2, "taper": 0.35, "at": (0.034, 0.201)},
+    "straight": {"size": (0.0195, 0.0033), "arch": 0.0, "taper": 0.15},
+    "heavy": {"size": (0.0205, 0.0046), "arch": 0.3, "slant": -0.06, "taper": 0.2, "at": (0.034, 0.2)},
+    "bushy": {"size": (0.021, 0.0054), "arch": 0.6, "taper": 0.05, "at": (0.034, 0.2015)},
+    "stern": {"size": (0.0195, 0.0038), "arch": 0.2, "slant": -0.2, "taper": 0.3},
+    "worried": {"size": (0.0185, 0.0031), "arch": 0.5, "slant": 0.2, "taper": 0.35},
+    "short": {"size": (0.013, 0.0037), "arch": 0.6, "taper": 0.1, "at": (0.031, 0.2005)},
+    "joined": {"size": (0.0245, 0.0038), "arch": 0.4, "taper": 0.3, "at": (0.027, 0.2005)},
 }
 ## The brows a face has unless its spec says ("brows").
 FACE_BROWS = {"narrow": "thin", "gaunt": "straight", "sharp": "arched", "soft": "thin", "round": "short", "broad": "heavy",
               "square": "straight", "heavy": "bushy", "hooked": "stern"}
 
-## Beards (people.paint_head paints them; beard_volume builds the jaw out).
+## Beards (face.gdshader paints them: below 0.6 stubble, in strokes; from
+## 0.6 one dark shape; beard_volume builds the jaw out).
 BEARDS = {
     "none": {"beard": 0.0},
     "stubble": {"beard": 0.36},
@@ -900,8 +914,11 @@ def wrap(spec, head, color="undyed", cloth="wrap"):
     """Cloth wound round the whole head and the face, open only at the eyes
     (Mab the leper's)."""
     region = swatch(cloth, dye(color), folds=0.4, blotch=0.2, wear=0.5, patches=0.4)
-    m = _shell(spec, head, "Wrap", region, [-0.035, 0.04, 0.085, 0.13, 0.166, 0.2, 0.226, 0.262, 0.295, 0.31],
-               lambda h, th: 0.012 + (0.01 if h < 0.14 and abs(th) > 0.8 else 0.0) + (0.006 if h < 0.05 else 0.0),
+    # (It stands off the face over the nose.)
+    nose = 0.023 * spec.get("head", {}).get("nose", 1.0)
+    m = _shell(spec, head, "Wrap", region, [-0.035, 0.04, 0.085, 0.13, 0.15, 0.166, 0.2, 0.226, 0.262, 0.295, 0.31],
+               lambda h, th: 0.012 + (0.01 if h < 0.14 and abs(th) > 0.8 else 0.0) + (0.006 if h < 0.05 else 0.0)
+               + (nose * (1.0 if h > 0.14 else 0.4) if 0.12 < h < 0.17 and abs(th) < 0.3 else 0.0),
                opening=lambda mid, th: abs(th) < 0.82 and 0.166 < mid < 0.214, top=(0.0, 0.316, 0.01), inner=0.3, crown=0.55)
     m.build(smooth=True, parent=head)
 
@@ -1037,7 +1054,7 @@ def pilgrim_hat(spec, head, color="dark", badges=3):
 
 def long_hair(spec, head):
     """Hair to the collar, behind the ears (HAIR_STYLES "long")."""
-    region = swatch("hair", tuple(c * 0.9 for c in spec["hair"]), stripes=0.5, weave=0.1)
+    region = swatch("hair", spec["hair"], blotch=0.0, weave=0.0)
     m = _shell(spec, head, "Hair", region, [-0.03, 0.03, 0.09, 0.15, 0.21, 0.25],
                lambda h, th: 0.012 + 0.012 * max(0.0, (0.12 - h) / 0.15), opening=lambda mid, th: abs(th) < 1.3, inner=0.5,
                shade=(0.75, 1.0))

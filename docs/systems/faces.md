@@ -153,17 +153,26 @@ It moves in steps at 15 frames a second, like every other character (Look and Fe
 Two kinds of head answer to the same calls (`line()`, `mood()`, `tell()`, `speak()`):
 
 - **Placeholders** (`BrotherFigure`, every brother and most of the town): the features are small dark boxes on a box face.
-- **Real models** (the traveller, the carter and the warden so far: `docs/systems/assets.md`, "People"): the head is a low-poly model (`tools/build/people.py`) whose material is the face shader, `game/people/face.gdshader`. The skin, hair and beard are the character's hand-painted texture; the shader draws the eyes (whites, iris, pupil, a catchlight), the lids and lashes, the brows, the mouth (lips, the open mouth, teeth), the socket shadows, the lines from nose to mouth, the creases of a raised or knitted brow, and the lump in the throat, from what the FaceRig sets each step (three instance uniforms). They are drawn on a grid of 2.1 mm, about 70 texels across the face *(mine)*, so they read as a painted PSX face texture that swaps, never as smooth shapes. A mood moves a painted face 1.6 times as far as the FaceRig's numbers say (`expression` *mine*: the brows' rise and tilt, the mouth's curve and width, how wide the eyes go), so it reads at 4 m and by lantern *(your ask, 2026-11-16)*. Each person has his own brows (the kit's `BROWS`: thin, arched, heavy, bushy, stern, worried...; `brow_size`, `brow_arch`, `brow_slant`, `brow_taper`, `brow_at`); a mood tilts them from their own slant. The head itself turns, nods and tips.
+- **Real models** (night 0's three and the lane's, the inn's and the road's people: `docs/systems/assets.md`, "People"): the head is a low-poly model cut in flat planes (`tools/build/people.py`), after the reference heads you gave on 2026-11-16: a flat face, a cheek plane each side that turns back from it, a jaw with an edge, a wedge of a nose, ears that stand out. Its material is the face shader, `game/people/face.gdshader`, which paints all of it; no texture is read. What it paints:
+  - **skin:** one flat colour, with the soft shadows a painter gives it (a band under the brows and across the eyes, the sides of the face, under the jaw and down the neck) in a darker, pinker tone of the same skin, and red in the cheeks, the nose and the ears;
+  - **hair:** one dark shape with a spiked edge: uneven tufts down onto the brow, sideburns that end in fine strokes, round the ears to the nape. Each cut has its own line (cropped, a bowl's fringe, a tonsure's ring, balding, bald, long). Grey comes all through it and in strokes;
+  - **a beard:** stubble is a shadow on the jaw and short strokes down it toward the chin; a beard is one dark shape with a broken edge;
+  - **the eyes:** dark ovals, with no whites at rest. A blind man's are pale, with a rim;
+  - **the brows:** thick and dark, blunt at the nose and thinner to the temple, hatched as a brush leaves them;
+  - **the mouth:** a short dark line, a lip under it and the lip's shadow;
+  - **marks:** age lines (forehead, the corners of the eyes, under them, nose to mouth), freckles, a scar along the jaw, the lump in the throat.
+
+  The eyes, brows, mouth, creases and throat move with what the FaceRig sets each step (three instance uniforms). Shapes are clean, with a pixel of soft edge; the shader's `texel` (0 by default) puts everything on a grid again (0.0021 m gives the old PSX texels) *(mine: clean by default, to match your references)*. A mood moves a painted face 1.6 times as far as the FaceRig's numbers say (`expression` *mine*: the brows' rise and tilt, the mouth's curve and width, how wide the eyes go), so it reads at talking distance and by lantern *(your ask, 2026-11-16)*. Each person has his own brows (the kit's `BROWS`: thin, arched, heavy, bushy, stern, worried...; `brow_size`, `brow_arch`, `brow_slant`, `brow_taper`, `brow_at`); a mood tilts them from their own slant. The head itself turns, nods and tips.
 
 What each mood and tell does on a real face *(mine)*:
-- the iris moves inside the eye (`glance`, idle gaze, `look down`), and the upper lid follows it down;
-- `lid` closes the eye from the top (a blink shuts it to a line); below 0 (`afraid`) the eye opens wide, white above and below the iris;
-- a smile (`curve` above 0) lifts the lower lids and deepens the lines from nose to mouth;
-- brows raised (`afraid`, `glad`, `brow`) or tilted up in the middle (`sad`, `pleading`) crease the forehead; brows down hard (`angry`), or knit with the eyes shut (`pained`), put two lines between them;
-- a narrow mouth (`lip`, `jaw`, `angry`) thins the lips; talking opens the mouth on the teeth;
+- the eyes move as a pair (`glance`, idle gaze, `look down`), under a fold of the lid that stays where it is;
+- `lid` brings the upper lid down across the eye, with a dark edge (weary, wary, drunk), and the lower up a little; a blink shuts it to a line; below 0 (`afraid`) the eye stands in a ring of white;
+- a smile (`curve` above 0) lifts the foot of the eyes, deepens the lines from nose to mouth and tucks the mouth in at its corners;
+- brows raised (`afraid`, `glad`, `brow`) or tilted up in the middle (`sad`, `pleading`) crease the forehead; brows down hard (`angry`) come over the top of the eyes and put a line between them, as do brows knit with the eyes shut (`pained`);
+- a narrow mouth (`lip`, `jaw`, `angry`) thins the lips; talking opens the mouth, on the teeth when it is wide;
 - `swallow` moves the lump in the throat up and down, and tips the head a little.
 
-Per character the face material sets the iris, brow, lip colours and how deep the lines are (`game/people/materials/chr_<name>_face.tres`). `tools/shots/cast_shots.sh` renders every mood and tell on each real head by the porter's lantern (`art/_review/cast_night0/`).
+Per character the face material holds who he is: skin and its shadow, how flushed, how deep-set the eyes and how lined, freckles, a scar; hair colour, cut, hairline and grey; the beard; where the eyes, brows and mouth are, their size and colours (`game/people/materials/chr_<name>_face.tres`, written by his build from his spec: `people.face_look`). They can be changed in the inspector to try something; a change that should stay goes in his spec. `tools/shots/cast_shots.sh` renders every mood and tell on each real head by the porter's lantern (`art/_review/cast_night0/`); `tools/shots/kit_shots.sh portraits` renders four heads close, from in front, turned and side on.
 
 ## Where it's used
 

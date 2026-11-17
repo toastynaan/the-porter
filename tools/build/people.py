@@ -1,7 +1,9 @@
 """The people of The Porter: one low-poly human, dressed per character, with
-a head whose face the game draws (Look and Feel, "Characters"; the locked
-PSX character style: low poly, hand-painted textures at 256 px with nearest
-filtering, per-vertex shading; docs/systems/faces.md, "The real faces").
+a head cut in flat planes whose face the game paints (Look and Feel,
+"Characters"; the locked PSX character style: low poly, hand-painted
+textures at 256 px with nearest filtering, per-vertex shading; the heads
+after the user's reference heads of 2026-11-16: docs/systems/faces.md,
+"The face").
 
 These are the builders: the head, tubes of cloth, limbs, the texture, the
 build. What a person is put together from (builds, skins, faces, clothes,
@@ -10,8 +12,9 @@ script (tools/build/chr_<name>.py) is a spec on that. build() writes to
 art/models/:
 
     chr_<name>.png          the character's texture: a 256 px atlas, painted
-                            here (the head in the top-left 128 px, a swatch
-                            of 64 px for each cloth, leather, wood...)
+                            here (a swatch of 64 px for each cloth, leather,
+                            wood...; the top-left 128 px, once the head's,
+                            is only his skin)
     chr_<name>.glb          his body on his skeleton (tools/build/rig.py):
                               Skeleton  the bones, named as Unreal's
                                         mannequin (pelvis, spine_01, Head,
@@ -22,16 +25,17 @@ art/models/:
                               and his clips: idle, talk, walk, and those his
                               spec adds (sit, sit_talk: the seat at the origin)
     chr_<name>_head.glb     the head, its origin at the neck: Head (material
-                            chr_<name>_face, whose shader draws the eyes,
-                            brows, mouth and throat the FaceRig moves) and
-                            what he wears on it
+                            chr_<name>_face, whose shader paints the skin,
+                            the hair, the beard, and the eyes, brows, mouth
+                            and throat the FaceRig moves) and what he wears
+                            on it
 
 He is made standing at rest, as his skeleton stands: arms hanging straight
 at his sides, legs straight (joints(): where the joints are).
 
 Materials are names only, linked on import to game/people/materials/<name>.tres
 (tools/build/link_imports.py): chr_<name> (the atlas, per-vertex shading)
-and chr_<name>_face (the same atlas and the face).
+and chr_<name>_face (the head, painted by its shader).
 
 Space: metres, +Y up, the figure faces -Z, his right hand is +X, feet at the
 origin. Vertex colours carry the shading
@@ -53,9 +57,10 @@ import porter
 import rig
 
 TEX = 256
-## The atlas: x, y (from the top), width, height in pixels. The head has the
-## top-left 128 px; each cloth (leather, wood...) a part asks for with
-## swatch() takes the next 64 px cell of the twelve.
+## The atlas: x, y (from the top), width, height in pixels. The top-left
+## 128 px was the head's and is only skin now (the face shader paints the
+## head); each cloth (leather, wood...) a part asks for with swatch() takes
+## the next 64 px cell of the twelve.
 CELLS = [(128, 0), (192, 0), (128, 64), (192, 64), (0, 128), (64, 128), (128, 128), (192, 128), (0, 192), (64, 192),
          (128, 192), (192, 192)]
 REGIONS = {"head": (0, 0, 128, 128)}
@@ -101,192 +106,274 @@ def uv(region, s, t):
 
 # ---------------------------------------------------------------- the head
 
-## Columns round the head, radians from the front (+ toward his right): close
-## together over the face, wide apart behind it.
-HEAD_COLS = [-math.pi, -2.2, -1.35, -0.95, -0.62, -0.32, 0.0, 0.32, 0.62, 0.95, 1.35, 2.2, math.pi]
-## Rows up the head from the neck pivot: height, half width, front depth,
-## back depth, middle z. Front is -z. One average man's head; a spec scales it.
-HEAD_ROWS = [
-    (-0.035, 0.054, 0.052, 0.056, 0.006),
-    (0.035, 0.049, 0.05, 0.054, 0.004),
-    (0.07, 0.052, 0.056, 0.06, 0.0),
-    (0.083, 0.054, 0.088, 0.07, 0.0),
-    (0.102, 0.068, 0.097, 0.078, 0.0),
-    (0.126, 0.07, 0.1, 0.086, 0.0),
-    (0.152, 0.073, 0.1, 0.095, 0.0),
-    (0.184, 0.075, 0.094, 0.1, 0.0),
-    (0.208, 0.076, 0.098, 0.102, 0.0),
-    (0.243, 0.073, 0.091, 0.1, 0.002),
-    (0.272, 0.061, 0.072, 0.086, 0.004),
-    (0.294, 0.036, 0.042, 0.052, 0.006),
+## The head is cut in flat planes, as a low-poly head is: a flat face, a
+## cheek plane each side turning back from it, flat sides, a jaw with an
+## edge to it, a wedge of a nose. Rings up the head from the neck pivot,
+## each of seven points from the middle of the face round his right side to
+## the middle of the back (his left side mirrors them): the middle of the
+## face, the inner face, the face's corner (where the front turns to the
+## cheek), the cheek's back (where it turns to the side), the ear line, the
+## back's corner, the middle of the back. A point is (x, y, z); front is -z.
+## A ring isn't level: the jaw's edge rises from the chin to the ear. One
+## average man's head; a spec scales it (head_rows).
+HEAD = [
+    # The neck: its foot, its top.
+    [(0, -.035, -.046), (.022, -.035, -.045), (.042, -.035, -.034), (.054, -.035, -.010), (.055, -.035, .020), (.038, -.035, .056), (0, -.035, .062)],
+    [(0, .035, -.046), (.021, .035, -.045), (.039, .035, -.034), (.050, .035, -.010), (.051, .035, .020), (.036, .035, .054), (0, .035, .060)],
+    # Under the jaw, where it meets the neck.
+    [(0, .070, -.054), (.020, .070, -.053), (.037, .072, -.040), (.050, .076, -.016), (.053, .082, .018), (.039, .072, .056), (0, .070, .062)],
+    # The jaw's edge: the chin, flat in front, back and up to its corner under the ear.
+    [(0, .083, -.094), (.018, .083, -.093), (.035, .088, -.072), (.053, .098, -.032), (.062, .112, .006), (.046, .100, .060), (0, .096, .070)],
+    # Under the lip.
+    [(0, .102, -.097), (.020, .102, -.0965), (.043, .104, -.087), (.060, .113, -.040), (.067, .128, .010), (.049, .122, .067), (0, .120, .079)],
+    # The mouth.
+    [(0, .126, -.097), (.022, .126, -.0965), (.048, .127, -.090), (.066, .132, -.041), (.071, .142, .011), (.051, .140, .073), (0, .140, .087)],
+    # The nose's foot and the cheekbones.
+    [(0, .150, -.097), (.022, .150, -.0965), (.050, .150, -.091), (.072, .152, -.040), (.074, .157, .012), (.053, .157, .079), (0, .157, .095)],
+    # Under the eyes; the top of their sockets; the brow over them.
+    [(0, .172, -.0945), (.022, .172, -.094), (.051, .172, -.089), (.073, .172, -.040), (.075, .172, .012), (.054, .172, .081), (0, .172, .098)],
+    [(0, .198, -.0945), (.022, .198, -.094), (.052, .198, -.089), (.074, .198, -.040), (.076, .198, .012), (.055, .198, .083), (0, .198, .101)],
+    [(0, .212, -.0975), (.022, .212, -.0975), (.052, .212, -.092), (.074, .212, -.040), (.076, .212, .012), (.055, .212, .084), (0, .212, .102)],
+    # The forehead, the crown, the top.
+    [(0, .243, -.090), (.022, .243, -.0895), (.050, .243, -.083), (.071, .243, -.036), (.073, .243, .014), (.053, .243, .082), (0, .243, .100)],
+    [(0, .272, -.070), (.020, .272, -.069), (.042, .272, -.062), (.059, .272, -.028), (.061, .272, .014), (.044, .272, .070), (0, .272, .086)],
+    [(0, .294, -.040), (.012, .294, -.039), (.025, .294, -.034), (.035, .294, -.016), (.036, .294, .010), (.026, .294, .042), (0, .294, .052)],
 ]
+NECK_FOOT, NECK, UNDER, JAW, LOW, MOUTH, CHEEK, EYE, SOCKET, BROW, FOREHEAD, CROWN, TOP_RING = range(13)
 HEAD_TOP = 0.303
 ## Where the face is on every head (the face shader's layout, face.gdshader).
-EYE = (0.032, 0.184)
+EYE_AT = (0.031, 0.184)
+EYE_SIZE = (0.0042, 0.0066)
 MOUTH_Y = 0.126
-## The superellipse power: below 1 the head is squarer than an ellipse.
-HEAD_E = 0.72
-
-
-def _spow(v, e):
-    return math.copysign(abs(v) ** e, v)
+MOUTH_HALF = 0.0145
+## The face shader's hair_style, by the kit's HAIR_STYLES.
+HAIR_STYLE = {"cropped": 0, "bowl": 1, "tonsure": 2, "balding": 3, "bald": 4, "long": 5}
+## Two of the head's planes meeting at more than this many degrees keep a
+## hard edge between them (the face's corners, the jaw, the nose); less,
+## and they shade as one.
+HEAD_EDGE = 30.0
+## How far each cut stands off the skull, m.
+HAIR_BULK = {"cropped": 0.009, "bowl": 0.012, "tonsure": 0.008, "balding": 0.006, "bald": 0.0, "long": 0.009}
 
 
 def head_rows(spec):
-    """The head's rows for this person: width, jaw, chin and brow scaled;
-    `jowl` fills out under the jaw and the neck (a fat face)."""
+    """The head's rings for this person: width, jaw, chin, cheek and brow
+    scaled; `jowl` fills out under the jaw and the neck (a fat face)."""
     hs = spec.get("head", {})
     w = hs.get("width", 1.0)
     jaw = hs.get("jaw", 1.0)
     chin = hs.get("chin", 1.0)
     brow = hs.get("brow", 1.0)
+    cheek = hs.get("cheek", 1.0)
     jowl = hs.get("jowl", 0.0)
     rows = []
-    for i, (h, a, f, b, cz) in enumerate(HEAD_ROWS):
-        a *= w
-        if i in (3, 4):
-            a *= jaw
-            f = 0.064 + (f - 0.064) * chin
-        if i == 5:
-            a *= 0.5 + 0.5 * jaw
-        if i <= 3:
-            a *= 1.0 + jowl * (0.26 if i < 3 else 0.12)
-            f *= 1.0 + jowl * (0.22 if i < 3 else 0.0)
-        if i == 8:
-            f += 0.004 * (brow - 1.0)
-        rows.append((h, a, f, b, cz))
+    for i, ring in enumerate(HEAD):
+        out = []
+        for c, (x, y, z) in enumerate(ring):
+            x *= w if i > UNDER else 1.0 + (w - 1.0) * 0.5
+            # The jaw: wider or narrower from the chin to its corner.
+            if i in (JAW, LOW) and 1 <= c <= 4:
+                x *= jaw
+            if i == MOUTH and 2 <= c <= 4:
+                x *= 0.5 + 0.5 * jaw
+            # The chin: further out, and longer.
+            if i in (JAW, LOW) and c <= 2:
+                z = -0.064 + (z + 0.064) * chin
+            if i in (UNDER, JAW) and c <= 1:
+                y -= 0.03 * (chin - 1.0)
+            # A heavy brow stands out over deeper sockets.
+            if i == BROW and c <= 2:
+                z -= 0.0035 * (brow - 1.0)
+            if i in (EYE, SOCKET) and c in (1, 2):
+                z += 0.0012 * (brow - 1.0)
+            # Hollow cheeks fall in under the cheekbones.
+            if i == MOUTH and c in (2, 3):
+                x -= 0.0035 * (cheek - 1.0)
+            if i == CHEEK and c == 3:
+                x += 0.002 * (cheek - 1.0)
+            if i <= UNDER:
+                x *= 1.0 + jowl * 0.26
+                z *= 1.0 + jowl * 0.22 if z < 0.0 else 1.0
+            if i == JAW and 2 <= c <= 4:
+                x *= 1.0 + jowl * 0.12
+                y -= 0.005 * jowl if c < 4 else 0.0
+            if i == LOW and c in (2, 3):
+                x *= 1.0 + jowl * 0.07
+            out.append((x, y, z))
+        rows.append(out)
     return rows
 
 
+def _up_column(rows, col, h):
+    """Where column `col` of the head's rings is at height `h`: (x, z)."""
+    pts = [r[col] for r in rows]
+    if h <= pts[0][1]:
+        return pts[0][0], pts[0][2]
+    for a, b in zip(pts, pts[1:]):
+        if h <= b[1]:
+            t = (h - a[1]) / max(b[1] - a[1], 1e-6)
+            return a[0] + (b[0] - a[0]) * t, a[2] + (b[2] - a[2]) * t
+    return pts[-1][0], pts[-1][2]
+
+
 def head_point(rows, theta, h):
-    """A point on the head's skin at angle `theta` and height `h`, before the
-    face's own dents (sockets) and the nose are added."""
-    hs = [r[0] for r in rows]
-    h = min(max(h, hs[0]), hs[-1])
-    k = 0
-    while k < len(rows) - 2 and h > hs[k + 1]:
-        k += 1
-    t = (h - hs[k]) / (hs[k + 1] - hs[k])
-    r = [rows[k][j] + (rows[k + 1][j] - rows[k][j]) * t for j in range(5)]
-    s, c = math.sin(theta), math.cos(theta)
-    x = r[1] * _spow(s, HEAD_E)
-    z = r[4] + (-r[2] * abs(c) ** HEAD_E if c >= 0.0 else r[3] * abs(c) ** HEAD_E)
-    return x, h, z
+    """A point on the head's skin at angle `theta` round it from the front
+    (+ toward his right) and height `h`: on its planes, before the nose, the
+    ears and the hair's bulk are added. What is worn on the head is made
+    from this."""
+    h = min(max(h, rows[0][0][1]), rows[-1][0][1])
+    ring = [_up_column(rows, c, h) for c in range(7)]
+    a = min(abs(theta), math.pi)
+    s, c = math.sin(a), math.cos(a)
+    best = ring[0] if a < 1.5 else ring[-1]
+    for (x0, z0), (x1, z1) in zip(ring, ring[1:]):
+        dx, dz = x1 - x0, z1 - z0
+        den = s * dz + c * dx
+        if abs(den) < 1e-9:
+            continue
+        u = (-x0 * c - z0 * s) / den
+        if -1e-6 <= u <= 1.0 + 1e-6 and (x0 * dz - z0 * dx) / den > 0.0:
+            best = (x0 + dx * u, z0 + dz * u)
+            break
+    return math.copysign(best[0], theta), h, best[1]
 
 
-def head_u(theta):
-    """The head's texture across: the front 1.0 rad each side takes 56% of it."""
-    a = abs(theta)
-    u = 0.28 * a if a <= 1.0 else 0.28 + 0.22 * (a - 1.0) / (math.pi - 1.0)
-    return 0.5 + math.copysign(u, theta)
+def _along(x, a, b):
+    return min(max((x - a) / (b - a), 0.0), 1.0)
 
 
-def head_theta(u):
-    d = abs(u - 0.5)
-    a = d / 0.28 if d <= 0.28 else 1.0 + (d - 0.28) / 0.22 * (math.pi - 1.0)
-    return math.copysign(a, u - 0.5)
+def hair_line(spec, aa):
+    """How far down the hair comes at `aa` round the head from the front (0)
+    to the back (pi). The face shader paints it (face.gdshader, hair_line:
+    the same line); here it says where the hair's bulk is."""
+    top = spec.get("hairline", 0.236)
+    style = spec.get("hair_style", "cropped")
+    mix = lambda a, b, t: a + (b - a) * t
+    if style == "bowl":
+        return mix(top - 0.014, 0.203, _along(aa, 0.8, 1.0))
+    if style == "tonsure":
+        return mix(top - 0.008, 0.203, _along(aa, 0.75, 1.0))
+    y = mix(top, top + 0.006, _along(aa, 0.0, 0.42))
+    y = mix(y, top - 0.006, _along(aa, 0.42, 0.7))
+    y = mix(y, 0.2, _along(aa, 0.7, 1.16))
+    y = mix(y, 0.168, _along(aa, 1.16, 1.26))
+    y = mix(y, 0.207, _along(aa, 1.48, 1.6))
+    y = mix(y, 0.152, _along(aa, 1.95, 2.12))
+    return mix(y, 0.13, _along(aa, 2.12, math.pi))
 
 
-def head_v(h):
-    """Down the head's texture: 0 at the crown, 1 at the neck's foot."""
-    return (HEAD_TOP - h) / (HEAD_TOP - HEAD_ROWS[0][0])
-
-
-def head_uv(theta, h):
-    return uv("head", head_u(theta), head_v(h))
+def hair_bulk(spec, x, y, z):
+    """How far the hair stands off the skull at a point of it, m: none on
+    skin, under a hat or a hood, or on a bald head."""
+    style = spec.get("hair_style", "cropped")
+    if spec.get("headwear"):
+        return 0.0
+    aa = abs(math.atan2(x, -z))
+    k = _along(y, hair_line(spec, aa), hair_line(spec, aa) + 0.03)
+    if style == "tonsure" and y > 0.262:
+        k = 0.0
+    if style == "balding" and (aa < 1.2 or y > 0.255):
+        k = 0.0
+    return k * HAIR_BULK.get(style, 0.009)
 
 
 def head_mesh(spec, name="Head"):
-    """The head: rows of skin from the neck to the crown, a nose, ears; the
-    face's dents (eye sockets under the brow, cheekbones) in the vertices.
-    Material chr_<name>_face. Origin at the neck pivot."""
+    """The head: rings of flat planes from the neck to the crown, a wedge
+    of a nose, ears that stand out, the hair's bulk. Material
+    chr_<name>_face, which paints all of it (face.gdshader): the UVs only
+    say what a face of it is (x: 0 skin, 1 an ear, 2 the nose). Its planes
+    are smooth, with a hard edge wherever two of them meet at more than
+    HEAD_EDGE degrees (build_head). Origin at the neck pivot."""
     mat = "chr_%s_face" % spec["name"]
     m = porter.Mesh(name)
     rows = head_rows(spec)
     hs = spec.get("head", {})
     # A face kept in shadow (a stranger deep in his cowl): `face_shade` below 1.
     dim = spec.get("face_shade", 1.0)
+    beard = spec.get("beard_volume", 0.0)
+    skin, ear, nose = (0.0, 0.0), (1.0, 0.0), (2.0, 0.0)
+
+    def bulked(x, y, z):
+        b = hair_bulk(spec, x, y, z)
+        if b <= 0.0:
+            return x, y, z
+        up = _along(y, 0.24, 0.3)
+        d = math.hypot(x, z) or 1.0
+        return x + x / d * b * (1.0 - 0.5 * up), y + b * 0.9 * up, z + z / d * b * (1.0 - 0.5 * up)
+
     grid = []
     for i, row in enumerate(rows):
         ring = []
-        for th in HEAD_COLS:
-            x, y, z = head_point(rows, th, row[0])
-            a = abs(th)
-            # Sockets under the brow; the brow over them; cheekbones; a jaw.
-            if i == 7 and a < 0.7:
-                z += 0.007 * (1.0 - abs(a - 0.32) / 0.4) if a > 0.05 else 0.002
-            if i == 8 and a < 0.7:
-                z -= 0.003 * hs.get("brow", 1.0)
-            if i == 6 and 0.6 < a < 1.2:
-                x *= 1.03
-                z -= 0.004 * hs.get("cheek", 1.0)
-            if i == 4 and 0.8 < a < 1.6:
-                x *= 1.0 + 0.04 * (hs.get("jaw", 1.0) - 0.9)
-            beard = spec.get("beard_volume", 0.0)
-            if beard and i in (3, 4, 5) and a < 1.6:
-                grow = beard * (1.0 if i < 5 else 0.5) * (1.0 - 0.4 * a / 1.6)
-                if i == 5 and a < 0.4:
+        # Round from the middle of the back by his left, the face, his right.
+        for k in range(13):
+            c = abs(k - 6)
+            x, y, z = row[c]
+            x = -x if k < 6 else x
+            # A beard builds the jaw out and down.
+            if beard and i in (JAW, LOW, MOUTH) and c <= 3:
+                grow = beard * (1.0 if i < MOUTH else 0.5) * (1.0 - 0.25 * c / 3.0)
+                if i == MOUTH and c <= 1:
                     grow *= 0.2
-                x *= 1.0 + grow * 0.25
-                z -= grow * 0.012 if a < 1.2 else 0.0
-                y -= grow * 0.01 if i == 3 else 0.0
-            shade = 1.0
-            if i <= 2:
-                shade = 0.5 + 0.08 * i
-            elif i == 3:
-                shade = 0.9
-            elif i == 7 and 0.15 < a < 0.6:
-                shade = 0.86
-            ring.append(m.vert(x, y, z, grey(shade * dim), head_uv(th, row[0])))
+                x *= 1.0 + grow * 0.22
+                z -= grow * 0.012
+                y -= grow * 0.012 if i == JAW else 0.0
+            x, y, z = bulked(x, y, z)
+            ring.append(ring[0] if k == 12 else m.vert(x, y, z, grey(dim), skin))
         grid.append(ring)
+    # Each plane as two triangles, cut the same way on both sides of him.
     for r0, r1 in zip(grid, grid[1:]):
-        for k in range(len(HEAD_COLS) - 1):
-            m.face((r1[k], r1[k + 1], r0[k + 1], r0[k]), mat)
-    top = m.vert(0.0, HEAD_TOP, 0.004, grey(dim), head_uv(0.0, HEAD_TOP))
-    for k in range(len(HEAD_COLS) - 1):
+        for k in range(12):
+            if k < 6:
+                m.face((r1[k], r1[k + 1], r0[k + 1]), mat)
+                m.face((r1[k], r0[k + 1], r0[k]), mat)
+            else:
+                m.face((r1[k], r1[k + 1], r0[k]), mat)
+                m.face((r1[k + 1], r0[k + 1], r0[k]), mat)
+    tx, ty, tz = bulked(0.0, HEAD_TOP, 0.004)
+    top = m.vert(tx, max(ty, HEAD_TOP + hair_bulk(spec, 0.0, HEAD_TOP, 0.004)), tz, grey(dim), skin)
+    for k in range(12):
         m.face((top, grid[-1][k + 1], grid[-1][k]), mat)
-    # The nose: a ridge from between the eyes to the tip, its sides down to
-    # the wings, and under it. Faces turned by the way they look.
+    # The nose: a wedge. A flat ridge from between the brows to the tip, a
+    # side each way down to the wings, and under it back to the lip.
     n = hs.get("nose", 1.0)
     nw = hs.get("nose_width", 1.0)
-    fz = head_point(rows, 0.0, 0.15)[2]
+    fz = _up_column(rows, 0, 0.15)[1]
 
     def surf(x, y, out=0.0):
-        return (x, y, head_point(rows, math.atan2(x, 0.09), y)[2] - out)
+        return (x, y, head_point(rows, math.atan2(x, 0.095), y)[2] - out)
 
-    # Broad at the bridge and the tip, standing out no more than a real
-    # nose does at this size (narrower and further, it reads as a wedge).
-    wing = 0.017 * nw
-    tip_x, tip_y, tip_z = 0.0085 * nw, 0.151 - 0.003 * (n - 1.0), fz - 0.0155 * n
+    tip_x, tip_y, tip_z = 0.006 * nw, 0.1535 - 0.004 * (n - 1.0), fz - 0.023 * n
+    wing = 0.0165 * nw
     pt = {
-        "bl": surf(-0.0065, 0.186, 0.001), "br": surf(0.0065, 0.186, 0.001),
+        "bl": surf(-0.0036, 0.2, 0.0015), "br": surf(0.0036, 0.2, 0.0015),
         "tl": (-tip_x, tip_y, tip_z), "tr": (tip_x, tip_y, tip_z),
-        "sl": surf(-0.0155, 0.174), "sr": surf(0.0155, 0.174),
-        "wl": (-wing, 0.145, fz - 0.004), "wr": (wing, 0.145, fz - 0.004),
-        "un": (0.0, 0.141, fz - 0.009),
+        "sl": surf(-0.0115 * math.sqrt(nw), 0.184), "sr": surf(0.0115 * math.sqrt(nw), 0.184),
+        "wl": surf(-wing, 0.146, 0.0005), "wr": surf(wing, 0.146, 0.0005),
+        "un": surf(0.0, 0.1445, 0.001),
     }
-    shades = {"bl": 1.0, "br": 1.0, "tl": 1.05, "tr": 1.05, "sl": 0.9, "sr": 0.9, "wl": 0.85, "wr": 0.85, "un": 0.62}
 
-    def nose_face(keys, facing):
-        pts = [pt[k] for k in keys]
-        m.poly(pts, mat, [grey(shades[k] * dim) for k in keys], [head_uv(math.atan2(p[0], -p[2]), p[1]) for p in pts], facing=facing)
+    def nose_face(keys, facing, shade):
+        m.poly([pt[k] for k in keys], mat, grey(shade * dim), [nose] * len(keys), facing=facing)
 
-    nose_face(("bl", "br", "tr", "tl"), (0.0, 0.3, -1.0))
-    nose_face(("sl", "bl", "tl", "wl"), (-1.0, 0.0, -0.6))
-    nose_face(("br", "sr", "wr", "tr"), (1.0, 0.0, -0.6))
-    nose_face(("tl", "tr", "un"), (0.0, -1.0, -0.4))
-    nose_face(("tl", "un", "wl"), (-0.3, -1.0, -0.3))
-    nose_face(("tr", "wr", "un"), (0.3, -1.0, -0.3))
-    # Ears: a flat flap each side, back from the cheek.
+    nose_face(("bl", "br", "tr", "tl"), (0.0, 0.3, -1.0), 1.0)
+    nose_face(("sl", "bl", "tl"), (-1.0, 0.0, -0.6), 0.97)
+    nose_face(("sl", "tl", "wl"), (-1.0, 0.0, -0.6), 0.97)
+    nose_face(("br", "sr", "tr"), (1.0, 0.0, -0.6), 0.97)
+    nose_face(("sr", "wr", "tr"), (1.0, 0.0, -0.6), 0.97)
+    nose_face(("tl", "tr", "un"), (0.0, -1.0, -0.4), 0.74)
+    nose_face(("tl", "un", "wl"), (-0.3, -1.0, -0.3), 0.74)
+    nose_face(("tr", "wr", "un"), (0.3, -1.0, -0.3), 0.74)
+    # Ears: a flat plate each side, standing out and back from the head.
     if hs.get("ears", True):
+        x0, z0 = _up_column(rows, 4, 0.176)
+        big = hs.get("ear", 1.0)
         for sx in (-1.0, 1.0):
-            x0 = head_point(rows, sx * 1.62, 0.17)[0]
-            quad = [(x0 - sx * 0.004, 0.198, 0.004), (x0 + sx * 0.012, 0.192, 0.018), (x0 + sx * 0.01, 0.148, 0.016),
-                    (x0 - sx * 0.004, 0.142, 0.002)]
-            ids = [m.vert(p[0], p[1], p[2], grey(0.82 if j in (1, 2) else 0.7), head_uv(sx * 1.62, p[1])) for j, p in enumerate(quad)]
-            m.face(ids if sx > 0 else list(reversed(ids)), mat)
-            ids = [m.vert(p[0], p[1], p[2], grey(0.6), head_uv(sx * 1.62, p[1])) for p in quad]
-            m.face(list(reversed(ids)) if sx > 0 else ids, mat)
+            plate = [(-0.004, 0.176 + 0.02 * big, -0.012), (0.01 * big, 0.176 + 0.024 * big, 0.012 * big),
+                     (0.014 * big, 0.176 + 0.012 * big, 0.02 * big), (0.012 * big, 0.176 - 0.014 * big, 0.019 * big),
+                     (-0.004, 0.176 - 0.026 * big, -0.008)]
+            pts = [(sx * (x0 + p[0]), p[1], z0 + p[2]) for p in plate]
+            m.poly(pts, mat, grey(dim), [ear] * 5, facing=(sx, 0.0, -0.8))
+            m.poly(pts, mat, grey(0.78 * dim), [ear] * 5, facing=(-sx, 0.0, 0.8))
     return m
 
 
@@ -620,112 +707,6 @@ def paint_cloth(img, region, base, rng, blotch=0.12, weave=0.05, folds=0.0, hem=
     img[y:y + h, x:x + w] = np.clip(col, 0, 1)
 
 
-def paint_head(img, spec, rng):
-    """The head's skin: tone, the flush of the cheeks and nose, the shadow
-    under the jaw, age, stubble or beard, the hair. The eyes, brows, mouth
-    and throat are drawn over it by the face shader."""
-    x0, y0, w, h = REGIONS["head"]
-    rows = head_rows(spec)
-    skin = srgb_arr(spec["skin"])
-    hair = srgb_arr(spec["hair"])
-    beard_col = srgb_arr(spec.get("beard_color", spec["hair"]))
-    out = np.zeros((h, w, 3))
-    tone = _noise(rng, w, h, 5)
-    fine = rng.random((h, w))
-    hairline = spec.get("hairline", 0.235)
-    for j in range(h):
-        hh = HEAD_TOP - (j + 0.5) / h * (HEAD_TOP - HEAD_ROWS[0][0])
-        for i in range(w):
-            th = head_theta((i + 0.5) / w)
-            px, py, pz = head_point(rows, th, hh)
-            a = abs(th)
-            c = skin * (0.94 + 0.12 * tone[j, i])
-            # Warm in the cheeks, the nose and the ears; paler on the brow.
-            cheek = math.exp(-(((abs(px) - 0.045) / 0.02) ** 2 + ((py - 0.152) / 0.02) ** 2))
-            nose = math.exp(-((px / 0.012) ** 2 + ((py - 0.152) / 0.02) ** 2)) if a < 0.6 else 0.0
-            ear = math.exp(-(((a - 1.62) / 0.2) ** 2 + ((py - 0.17) / 0.03) ** 2))
-            flush = spec.get("flush", 0.5)
-            red = (cheek * 0.8 + nose * 0.7 + ear * 0.6) * flush
-            c = c * (1 - 0.18 * red) + np.array([0.62, 0.3, 0.24]) * 0.18 * red * 2.0
-            if py > 0.215 and a < 0.9:
-                c = c * 1.04
-            # Under the jaw and the neck: in its own shadow.
-            if py < 0.09:
-                c = c * (0.78 + 0.22 * max(0.0, min(1.0, (py - 0.0) / 0.09)))
-            # Age: lines at the eyes' corners and across the brow.
-            age = spec.get("age_lines", 0.0)
-            if age and a < 1.1:
-                ex = abs(px) - 0.052
-                if 0.0 < ex < 0.012 and abs((py - 0.184) - (ex * 0.6 * ((j + i) % 3 - 1))) < 0.0016:
-                    c = c * (1 - 0.18 * age)
-                if a < 0.6 and abs(py - 0.232) < 0.0012 and abs(px) < 0.03:
-                    c = c * (1 - 0.12 * age)
-            # Stubble and beard: on the jaw, the chin, the upper lip.
-            b = 0.0
-            beard = spec.get("beard", 0.0)
-            if beard and a < 1.42:
-                # Its top: across the upper lip, down to the mouth's corners, up
-                # the cheeks to the ears.
-                top = float(np.interp(a, [0.0, 0.2, 0.32, 0.9, 1.5, 1.75],
-                                      [0.141 + 0.004 * spec.get("moustache", 0.0), 0.139, 0.13, 0.163, 0.2, 0.2]))
-                if a > 1.2:
-                    top = min(top, 0.2 - (a - 1.2) * 0.3)
-                top += spec.get("beard_top", 0.0)
-                if 0.06 < py < top:
-                    b = beard * min(1.0, (top - py) / 0.012 + 0.6 * (fine[(j * 5) % h, i] - 0.5))
-                    if py < 0.085:
-                        b *= max(0.0, (py - 0.06) / 0.025)
-                    b = max(b, 0.0)
-                if b > 0:
-                    grain = 0.55 + 0.45 * fine[j, i]
-                    c = c * (1 - b * grain) + beard_col * b * grain
-            # Form: the sides of the face turn from the light; hollows under
-            # the cheekbones; the temples.
-            if a > 0.6:
-                c = c * (1.0 - 0.14 * min(1.0, (a - 0.6) / 0.9))
-            if 0.5 < a < 1.2 and 0.115 < py < 0.15:
-                c = c * 0.93
-            if 0.75 < a < 1.3 and 0.19 < py < 0.23:
-                c = c * 0.94
-            # Freckles over the nose and cheeks; a scar along the jaw.
-            fr = spec.get("freckles", 0.0)
-            if fr and a < 1.1 and 0.14 < py < 0.2 and fine[(j * 3 + 11) % h, (i * 5 + 7) % w] > 1.0 - 0.16 * fr:
-                c = c * 0.8 + np.array([0.45, 0.27, 0.18]) * 0.2
-            scar = spec.get("scar", 0.0)
-            if scar and th > 0.0:
-                along = (a - 0.45) / 0.55
-                if 0.0 < along < 1.0 and abs(py - (0.104 + 0.03 * along)) < 0.0022:
-                    c = c * (1 - 0.5 * scar) + np.array([0.78, 0.66, 0.62]) * 0.5 * scar
-            # Hair: above the hairline in front, lower at the sides and back.
-            style = spec.get("hair_style", "cropped")
-            line = hairline - 0.02 * min(1.0, a / 1.4) - 0.075 * max(0.0, (a - 1.4) / (math.pi - 1.4))
-            if a > 1.35 and a < 1.85 and py < 0.21:
-                line = 0.21  # round the ear
-            if style == "bowl":
-                # Cut straight round, above the ears and the nape.
-                line = max(line, 0.205 if a > 0.9 else hairline - 0.012)
-            grows = py > line - 0.004 * fine[j, i]
-            thin = 1.0
-            if style == "tonsure":
-                # The crown shaved: a ring of hair left round the head.
-                grows = grows and py < 0.268 + 0.004 * fine[j, i]
-                if a < 0.9:
-                    grows = grows and py > hairline + 0.012
-            elif style == "balding":
-                # Gone from the brow and the crown; left at the sides and back.
-                grows = grows and a > 1.05 and py < 0.262
-                thin = 0.85
-            elif style == "bald":
-                thin = 0.14 if grows else 0.0
-            if grows and thin > 0.0:
-                streak = 0.75 + 0.35 * fine[j, (i * 3) % w] * (0.6 + 0.4 * tone[j, i])
-                gr = spec.get("grey_hair", 0.0)
-                hc = hair * (1 - gr * fine[(j * 7) % h, i]) + np.array([0.55, 0.53, 0.5]) * gr * fine[(j * 7) % h, i]
-                c = c * (1.0 - thin) + hc * streak * thin
-            out[j, i] = c
-    img[y0:y0 + h, x0:x0 + w] = np.clip(out, 0, 1)
-
-
 def quantize(img, levels=24):
     """Fewer tones, as a hand-painted texture of the time has."""
     return np.round(img * levels) / levels
@@ -750,7 +731,9 @@ def texture(spec):
     """Paints the atlas: the head, and every swatch the parts asked for."""
     rng = np.random.default_rng(spec.get("seed", 1))
     img = np.zeros((TEX, TEX, 3))
-    paint_head(img, spec, rng)
+    # The head's corner of the atlas is only his skin: the face shader paints the head.
+    x, y, w, h = REGIONS["head"]
+    img[y:y + h, x:x + w] = srgb_arr(spec["skin"])
     for region, (color, paint) in SWATCHES.items():
         paint_cloth(img, region, color, rng, **paint)
     img = quantize(img)
@@ -791,22 +774,61 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, %(fy).4f, %(fz).4f)
 """
 MATERIAL = """[gd_resource type="ShaderMaterial" format=3]
 
-[ext_resource type="Shader" path="res://game/people/%s.gdshader" id="shader"]
+[ext_resource type="Shader" path="res://game/people/person.gdshader" id="shader"]
 [ext_resource type="Texture2D" path="res://art/models/%s.png" id="atlas"]
 
 [resource]
 shader = ExtResource("shader")
 shader_parameter/atlas = ExtResource("atlas")
 """
+FACE_MATERIAL = """[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/face.gdshader" id="shader"]
+
+[resource]
+shader = ExtResource("shader")
+"""
 
 
 def face_look(spec):
-    """What the face shader is given for this person (face.gdshader): how
-    deep his lines are, the colours of his eyes, brows and lips, and the
-    shape of his brows (the kit's BROWS)."""
-    brow = spec.get("brow_color") or tuple(c * 0.9 for c in spec["hair"])
-    out = {"lines": round(spec.get("lines", spec.get("age_lines", 0.5)), 3), "iris_color": spec.get("iris", (0.32, 0.25, 0.17)),
-           "brow_color": brow, "lip_color": spec.get("lip", (0.52, 0.33, 0.29))}
+    """What the face shader is given for this person (face.gdshader), which
+    paints his whole head: his skin and its shadow, how flushed, how
+    deep-set his eyes and how lined he is, his marks; his hair, its cut and
+    its grey; his beard; where his eyes, brows and mouth are, their size and
+    colours (the kit's FACES, BROWS, EYES)."""
+    hs = spec.get("head", {})
+    skin = spec["skin"]
+    hair = spec["hair"]
+    iris = spec.get("iris", (0.32, 0.25, 0.17))
+    # The eyes are dark ovals with a little of their colour in them; a blind
+    # man's are as pale as they are.
+    eye = iris if sum(iris) / 3.0 > 0.5 else tuple(0.05 + 0.16 * c for c in iris)
+    wide = hs.get("width", 1.0)
+    es = hs.get("eye", (1.0, 1.0))
+    out = {
+        "skin_color": skin,
+        "shade_color": spec.get("shade") or (skin[0] * 0.8, skin[1] * 0.68, skin[2] * 0.78),
+        "flush": spec.get("flush", 0.5),
+        "socket": hs.get("socket", 0.5),
+        "lines": round(spec.get("lines", spec.get("age_lines", 0.5)), 3),
+        "freckles": spec.get("freckles", 0.0),
+        "scar": spec.get("scar", 0.0),
+        "hair_color": hair,
+        "hair_style": HAIR_STYLE[spec.get("hair_style", "cropped")],
+        "hairline": spec.get("hairline", 0.236),
+        "grey_hair": spec.get("grey_hair", 0.0),
+        "tufts": spec.get("tufts", 1.0),
+        "beard_color": spec.get("beard_color", hair),
+        "beard": spec.get("beard", 0.0),
+        "beard_top": spec.get("beard_top", 0.0),
+        "moustache": spec.get("moustache", 0.0),
+        "eye_at": (EYE_AT[0] * (1.0 + 0.6 * (wide - 1.0)) * hs.get("eyes_apart", 1.0), EYE_AT[1]),
+        "eye_size": (EYE_SIZE[0] * es[0], EYE_SIZE[1] * es[1]),
+        "eye_color": eye,
+        "brow_color": spec.get("brow_color") or tuple(c * 0.9 for c in hair),
+        "mouth_half": MOUTH_HALF * hs.get("mouth", 1.0) * (0.5 + 0.5 * wide),
+        "lip_color": spec.get("lip", (0.52, 0.33, 0.29)),
+    }
     brows = spec.get("brows")
     if brows:
         out.update({"brow_size": brows["size"], "brow_at": brows["at"], "brow_arch": brows["arch"], "brow_slant": brows["slant"],
@@ -818,22 +840,24 @@ def face_look(spec):
 
 def materials(spec):
     """Writes his two materials to game/people/materials/: chr_<name> (the
-    atlas, person.gdshader) and chr_<name>_face (the same, and his face:
-    face.gdshader with face_look()). They are the build's: a change to them
-    goes in his spec."""
+    atlas, person.gdshader) and chr_<name>_face (his head: face.gdshader
+    with face_look()). They are the build's: a change to them goes in his
+    spec."""
     name = "chr_" + spec["name"]
     folder = os.path.join(porter.ROOT, "game", "people", "materials")
     os.makedirs(folder, exist_ok=True)
-    open(os.path.join(folder, name + ".tres"), "w").write(MATERIAL % ("person", name))
+    open(os.path.join(folder, name + ".tres"), "w").write(MATERIAL % name)
     rows = []
     for k, v in face_look(spec).items():
-        if isinstance(v, (int, float)):
-            rows.append("shader_parameter/%s = %s" % (k, round(float(v), 4)))
+        if isinstance(v, int):
+            rows.append("shader_parameter/%s = %d" % (k, v))
+        elif isinstance(v, float):
+            rows.append("shader_parameter/%s = %s" % (k, round(v, 4)))
         elif len(v) == 2:
             rows.append("shader_parameter/%s = Vector2(%s, %s)" % (k, round(v[0], 4), round(v[1], 4)))
         else:
             rows.append("shader_parameter/%s = Color(%s, %s, %s, 1)" % (k, round(v[0], 3), round(v[1], 3), round(v[2], 3)))
-    open(os.path.join(folder, name + "_face.tres"), "w").write(MATERIAL % ("face", name) + "\n".join(rows) + "\n")
+    open(os.path.join(folder, name + "_face.tres"), "w").write(FACE_MATERIAL + "\n".join(rows) + "\n")
 
 
 def scene(spec):
@@ -873,6 +897,7 @@ def build_head(spec, head_extra=None):
     name = "chr_" + spec["name"]
     porter.reset(spec.get("seed", 1) + 2)
     h = head_mesh(spec).build(smooth=True)
+    h.data.set_sharp_from_angle(angle=math.radians(HEAD_EDGE))
     if head_extra:
         head_extra(spec, h)
     # A big man's head is a little bigger, a slight one's smaller (the head
