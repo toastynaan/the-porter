@@ -72,3 +72,5 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-16 · Feature · 2c0b836 · At eight on night 0 with no room, a bell strikes and he thinks of the curfew and Agnes.
 - 2026-11-16 · Art · e80b5dd · The people's kit: builds, skins, faces, hair, clothes and headwear every person is put together from; sheets in art/_review/kit/.
 - 2026-11-16 · Art · fa8b427 · People: arms in one piece with rounded shoulders; ten brow styles; moods read stronger on painted faces.
+- 2026-11-16 · Fix · 4d5e836 · test_night3 follows the 16:30 waking (it had failed since the shift moved).
+- 2026-11-16 · Art · 3ff2b34 · Sixteen more people are real: the lane's, the inn's and the road's (Hob, Agnes, Mab, Walter, Gib...); the kit gains held things, rags, a wrapped face.
