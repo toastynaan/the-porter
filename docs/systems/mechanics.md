@@ -378,7 +378,7 @@ Each mechanic gets checks in `tools/check.sh` when it's built:
 - **The Saint:** its speed by count, it passes doors, its touch kills.
 - **Proof and the rite:** two kinds open the Gate; freeing the victim or taking the book stops the rite; the Demon ending only by striking at 75+.
 - **Fire:** it spreads, choking leads to collapse, flames kill, and death takes you back before you set it.
-- **Night 0:** the ride arrives at the lane, drink blurs and wears off, lying down plays the window, the squint scare happens once and only after curfew, and the night ends in sleep.
+- **Night 0:** the ride arrives at the lane, drink blurs and wears off, lying down plays the window, the squint scare happens once and only after curfew, and the night ends in sleep. Out of order (`test_night0_routes`): Mab or Agnes before the knock, and the bed is his once Agnes gives the room.
 - **Day 1:** the tour visits every duty, then the nap leads to night 1's dusk.
 - **The lane:** dusk lines change with the flags, the curfew bell empties the lane, and the watchman calls the hour.
 

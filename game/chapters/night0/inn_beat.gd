@@ -26,7 +26,9 @@ const BELL_DB := -16.0
 
 
 func run() -> void:
-	await say("", "(Warm light and noise across the lane. The Cross Keys.)")
+	# Not if he has the room already (he went to Agnes before the gate).
+	if not _has_room():
+		await say("", "(Warm light and noise across the lane. The Cross Keys.)")
 	agnes.add_to_group(&"glyph_targets")
 	_nudge.call()
 	await until(_has_room)

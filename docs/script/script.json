@@ -1572,7 +1572,7 @@
    "chapter": "night0",
    "notes": [
     "Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.",
-    "The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.",
+    "The bed answer gives him the room at the top (n0_room); so does telling her the gate is shut: she says she has the one bed, and goes straight on to it. An ale ends the talk with her own line; the next talk starts at again, so he can have another.",
     "Answer paths the tests take: answer 0 at her first question is the bed; the next question (has he eaten?) has the ale as answer 1. 0,0,0 reaches n0_room.",
     "She asks whether he's eaten today, and remembers it (n0_agnes_fed: she fed him; the lane's first dusk opens on whether they're feeding him over there).",
     "Thread: the room at the top, whose one window looks toward the abbey. Nobody else will have it. The last lodger up there came down at midnight in his shirt and sat by her fire till light: a lantern going about in their court, by the well. She doesn't look out of that window, and tells him not to (n0_agnes_window). It is the window he sees the killing from. For later nights: the lane's night 6 (\"You looked out of it, your first night\").",
@@ -1648,7 +1648,7 @@
      "answers": [],
      "jumps": [
       {
-       "to": "topics",
+       "to": "bed",
        "tags": []
       }
      ]
@@ -41996,6 +41996,18 @@
      "kind": "code",
      "talk": null,
      "chapter": null,
+     "where": "game/chapters/night0/arrive_beat.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/arrive_beat.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
      "where": "game/chapters/night0/inn_beat.gd"
     }
    ]
@@ -42046,18 +42058,6 @@
     }
    ],
    "read": [
-    {
-     "kind": "code",
-     "talk": null,
-     "chapter": null,
-     "where": "game/chapters/night0/arrive_beat.gd"
-    },
-    {
-     "kind": "code",
-     "talk": null,
-     "chapter": null,
-     "where": "game/chapters/night0/arrive_beat.gd"
-    },
     {
      "kind": "code",
      "talk": null,

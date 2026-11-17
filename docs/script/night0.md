@@ -90,7 +90,7 @@ sequenceDiagram
 Moods through the talk: warm → grave → warm → calm → warm → amused → warm → amused → cold → grave → weary → wary → grave → wary → warm → sad → weary → sad → warm → wary → warm
 
 > Agnes, Hob's wife, by the fire in the Cross Keys, night 0. Motherly, and sharp.
-> The bed answer gives him the room at the top (n0_room). An ale ends the talk with her own line; the next talk starts at again, so he can have another.
+> The bed answer gives him the room at the top (n0_room); so does telling her the gate is shut: she says she has the one bed, and goes straight on to it. An ale ends the talk with her own line; the next talk starts at again, so he can have another.
 > Answer paths the tests take: answer 0 at her first question is the bed; the next question (has he eaten?) has the ale as answer 1. 0,0,0 reaches n0_room.
 > She asks whether he's eaten today, and remembers it (n0_agnes_fed: she fed him; the lane's first dusk opens on whether they're feeding him over there).
 > Thread: the room at the top, whose one window looks toward the abbey. Nobody else will have it. The last lodger up there came down at midnight in his shirt and sat by her fire till light: a lantern going about in their court, by the well. She doesn't look out of that window, and tells him not to (n0_agnes_window). It is the window he sees the killing from. For later nights: the lane's night 6 ("You looked out of it, your first night").
@@ -131,7 +131,7 @@ flowchart TD
   p_start -->|"A bed, if you have one, goodwife."| p_bed
   p_start -->|"The gate over the way is shut."| p_gate
   p_start -->|"An ale, if you would."| p_ale
-  p_gate -.-> p_topics
+  p_gate -.-> p_bed
   p_bed -->|"Not since morning."| p_fed
   p_bed -->|"An ale will do me."| p_ale
   p_fed -.-> p_topics
@@ -190,7 +190,7 @@ flowchart TD
 - **Agnes** *grave, glance*: Every night now, and nobody comes to a knock. Don't stand out there knocking, brother.
 - **Agnes** *warm*: So it's a bed you want, and I've the one.
 
-- → `topics`
+- → `bed`
 
 #### `bed`
 *sets `n0_room`*

@@ -1362,7 +1362,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_room`
 
 - **Set by:** Agnes, night0 (`bed`); code: `game/chapters/night0/inn_beat.gd`
-- **Read by:** Agnes, night0 (`again`); Agnes, night0 (`topics`); Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "A bed, if you have one, goodwife."`); code: `game/chapters/night0/inn_beat.gd`
+- **Read by:** Agnes, night0 (`again`); Agnes, night0 (`topics`); Agnes, night0 (`topics`); Agnes, night0 (`topics_first: "A bed, if you have one, goodwife."`); code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/inn_beat.gd`
 
 <a id="n0_saw_killing"></a>
 ### `n0_saw_killing`
@@ -1374,7 +1374,7 @@ Every flag and note that is read is set somewhere.
 ### `n0_sent_to_inn`
 
 - **Set by:** Mab, night0 (`start`); code: `game/chapters/night0/arrive_beat.gd`
-- **Read by:** code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`
+- **Read by:** code: `game/chapters/night0/arrive_beat.gd`
 
 <a id="n0_squint_scare"></a>
 ### `n0_squint_scare`
