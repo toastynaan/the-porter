@@ -3,8 +3,10 @@ extends Node
 ## the gate, Mab and Agnes can be come to in any order, and the bed is his as
 ## soon as Agnes has given him the room. Each route starts where the carter
 ## sets him down (SceneSelect's start at `Arrive`):
-## - Mab before the knock ("No use knocking, brother"): she sends him to the
-##   Keys, the knock is no longer wanted, and the flame goes to Agnes;
+## - Mab before the knock: she has called to him, and opens with "No use
+##   knocking, brother" ("I could have told you" is for after a knock); she
+##   sends him to the Keys, the knock is no longer wanted, and the flame goes
+##   to Agnes;
 ## - telling Agnes the gate is shut: she says she has the one bed, and it is
 ##   his without asking again;
 ## - straight to Agnes, with no knock and no word from Mab: she gives him the
@@ -48,9 +50,12 @@ func _run() -> void:
 	_check(knock.enabled and not inn_bed.enabled, "set down in the lane: the knock is wanted, the bed isn't his")
 	var mab := night.get_node(^"People/Mab") as VisitorNPC
 	p.place(mab.global_position + Vector3(-1.3, 0.0, 0.0), deg_to_rad(-90.0))
-	await _frames(3)
+	# She calls for alms as he comes near.
+	await _until(func() -> bool: return GameState.has_flag(&"hailed_n0_mab") and Talk.quiet(), 5.0)
+	_check(_said("Mab", "Alms, brother."), "Mab calls to him as he comes near the gate")
 	await pilot.talk(mab.get_node(^"Talker") as Talker, [-1], _answer)
-	_check(GameState.has_flag(&"n0_sent_to_inn") and _said("Mab", "No use knocking, brother."), "Mab, before any knock: no use knocking, he'll have to stay at the Keys")
+	_check(GameState.has_flag(&"n0_sent_to_inn") and _said("Mab", "No use knocking, brother.") and not _said("Mab", "I could have told you."),
+		"Mab, before any knock: no use knocking, he'll have to stay at the Keys (not \"I could have told you\")")
 	var agnes := night.get_node(^"People/Agnes") as VisitorNPC
 	await _until(func() -> bool: return pilot.beat() == &"Inn" and agnes.is_in_group(&"glyph_targets"), 5.0)
 	_check(pilot.beat() == &"Inn" and not knock.enabled and agnes.is_in_group(&"glyph_targets"),

@@ -31,6 +31,8 @@ func run() -> void:
 	knock.enabled = false
 	knock.used.disconnect(on_knock)
 	if knocked[0]:
+		# Mab's first words know it ("I could have told you.").
+		GameState.set_flag(&"n0_knocked")
 		if AudioOut.enabled():
 			var a := AudioStreamPlayer3D.new()
 			a.stream = KNOCK
@@ -56,6 +58,7 @@ func _moved_on() -> bool:
 	return GameState.has_flag(&"n0_sent_to_inn") or GameState.has_flag(&"n0_room")
 
 
-## Mab has sent him to the Keys.
+## He knocked, and Mab has sent him to the Keys.
 func skipped() -> void:
+	GameState.set_flag(&"n0_knocked")
 	GameState.set_flag(&"n0_sent_to_inn")

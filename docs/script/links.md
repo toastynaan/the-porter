@@ -234,7 +234,7 @@ Every flag and note that is read is set somewhere.
 ### `hailed_n0_mab`
 
 - **Set by:** family: `game/talk/talker.gd (built as hailed_<id>)`
-- **Read by:** Mab, night0 (`start`)
+- **Read by:** Mab, night0 (`start`); Mab, night0 (`start`)
 
 <a id="hailed_n0_walter"></a>
 ### `hailed_n0_walter`
@@ -1123,6 +1123,12 @@ Every flag and note that is read is set somewhere.
 
 - **Set by:** Kit, night0 (`finger_tooth`)
 - **Read by:** *nothing*
+
+<a id="n0_knocked"></a>
+### `n0_knocked`
+
+- **Set by:** code: `game/chapters/night0/arrive_beat.gd`; code: `game/chapters/night0/arrive_beat.gd`
+- **Read by:** Mab, night0 (`start`)
 
 <a id="n0_lay_down"></a>
 ### `n0_lay_down`

@@ -1798,13 +1798,14 @@ Moods through the talk: wary → calm → wary → grave → calm → grave → 
 
 > Mab, a leper, begging by the barred abbey gate at dusk, night 0. Plain and unflinching: she sees everyone who goes in and out, and nobody asks her. Her first lines send him to the Cross Keys (n0_sent_to_inn, set at start whichever way it opens).
 > Hail: as he comes near the gate she knocks her clapper and asks alms. Then he knocks, nobody comes, and she speaks up herself: this talk starts on its own (arrive_beat.gd; your ask, 2026-11-16).
+> Three openings, by what has happened: hailed and he has knocked (n0_knocked, set by arrive_beat.gd), "I could have told you."; hailed and no knock yet, "No use knocking, brother." (hailed_early: the same two lines, put together); not hailed, first_start.
 > She asks him why they'd send a boy to keep that gate, and remembers what he said (n0_mab_why = must, sent or quiet): her closing line uses it.
 > Alms once (n0_mab_alms): a heel of bread from a Fenchurch Street baker. She doesn't eat what comes out of the abbey's gate.
 > Thread: Brother Anselm, the old porter, was the only one inside who passed her a word through the bars, most nights for eleven years. The winter before his eyes went he stopped, and stood at the grille after the bell looking out past her. The last thing he said to her: never come in, not if they ask kindly (n0_mab_anselm). For later nights: Anselm (day 1, night 1) can know Mab's name from it; on night 4 she comes inside the gate for the first time.
 > Cross-link: if Margery told him her son-in-law Wat carts the abbey's rye (n0_margery_wat), Mab has seen Wat come out (n0_mab_wat).
 > Answer paths the tests take: 0,0,0 and 2,0,0 (alms first) both end the talk with n0_sent_to_inn set; 2,0,0 gives the bread.
 
-**Reads from elsewhere:** [`hailed_n0_mab`](links.md#hailed_n0_mab), [`n0_margery_wat`](links.md#n0_margery_wat)
+**Reads from elsewhere:** [`hailed_n0_mab`](links.md#hailed_n0_mab), [`n0_knocked`](links.md#n0_knocked), [`n0_margery_wat`](links.md#n0_margery_wat)
 **Read elsewhere:** [`n0_sent_to_inn`](links.md#n0_sent_to_inn), [`talked_n0_mab`](links.md#talked_n0_mab)
 
 ### Every path
@@ -1815,6 +1816,7 @@ flowchart TD
   p_start["<b>start</b><br/><i>sets n0_sent_to_inn</i>"]
   p_first_start["<b>first_start</b><br/>Mab: No use knocking, brother. Nobody keeps that gate at n…"]
   p_hailed_start["<b>hailed_start</b><br/>Mab: I could have told you. Nobody keeps that gate at nigh…"]
+  p_hailed_early["<b>hailed_early</b><br/>Mab: No use knocking, brother. Nobody keeps that gate at n…"]
   p_send["<b>send</b><br/>Mab: They'll open it for nobody now. You'll have to stay t…"]
   p_again["<b>again</b>"]
   p_again_ask["<b>again_ask</b><br/>Mab: You again, brother. The Keys hasn't moved."]
@@ -1841,10 +1843,12 @@ flowchart TD
   p_done_plain["<b>done_plain</b><br/>Mab: Go on across to the fire, brother. I'll be here. I'm…"]
   p_leave["<b>leave</b><br/>Mab: Mind the lane after the bell, brother."]
   end_((end))
-  p_start -.->|"if hailed_n0_mab"| p_hailed_start
+  p_start -.->|"if hailed_n0_mab, n0_knocked"| p_hailed_start
+  p_start -.->|"if hailed_n0_mab"| p_hailed_early
   p_start -.-> p_first_start
   p_first_start -.-> p_send
   p_hailed_start -.-> p_send
+  p_hailed_early -.-> p_send
   p_send -.-> p_topics
   p_again -.->|"if n0_mab_porter, n0_mab_saw, n0_mab_alms,…"| p_done
   p_again -.->|"if n0_mab_porter, n0_mab_saw, n0_mab_alms,…"| p_done
@@ -1903,7 +1907,8 @@ flowchart TD
 #### `start`
 *sets `n0_sent_to_inn`*
 
-- → `hailed_start` if `hailed_n0_mab`
+- → `hailed_start` if `hailed_n0_mab`, `n0_knocked`
+- → `hailed_early` if `hailed_n0_mab`
 - → `first_start`
 
 #### `first_start`
@@ -1917,6 +1922,13 @@ flowchart TD
 
 - *The woman by the wall lowers her clapper. Her face is wrapped to the eyes in grey cloth.*
 - **Mab** *wary*: I could have told you. Nobody keeps that gate at night, not since old Brother Anselm went blind.
+
+- → `send`
+
+#### `hailed_early`
+
+- *The woman by the wall lowers her clapper. Her face is wrapped to the eyes in grey cloth.*
+- **Mab** *wary*: No use knocking, brother. Nobody keeps that gate at night, not since old Brother Anselm went blind.
 
 - → `send`
 
