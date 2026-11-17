@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/face.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://art/models/chr_cole.png" id="atlas"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/atlas = ExtResource("atlas")
+shader_parameter/lines = 0.565
+shader_parameter/iris_color = Color(0.2, 0.15, 0.11, 1)
+shader_parameter/brow_color = Color(0.18, 0.135, 0.099, 1)
+shader_parameter/lip_color = Color(0.46, 0.29, 0.25, 1)
+shader_parameter/brow_size = Vector2(0.019, 0.005)
+shader_parameter/brow_at = Vector2(0.033, 0.204)
+shader_parameter/brow_arch = 0.9
+shader_parameter/brow_slant = 0.0
+shader_parameter/brow_taper = 0.05

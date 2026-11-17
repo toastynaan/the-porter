@@ -1,6 +1,6 @@
 # Assets
 
-Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. The road in (night 0), the abbey's buildings and the abbey's props are real, and three of the people (the traveller, the carter, the warden); the other people, the trees in the abbey and a few decals are still placeholders: boxes, cylinders and the greybox figure, in the shared materials. How the real ones are made is below, then the placeholders.
+Each kind of thing lives in one scene, so a real model replaces it in one place and every copy in the world changes with it. The road in (night 0), the abbey's buildings and the abbey's props are real, and the people of night 0, the lane and the road in (nineteen of them); the brothers and the gate's other visitors, the trees in the abbey and a few decals are still placeholders: boxes, cylinders and the greybox figure, in the shared materials. How the real ones are made is below, then the placeholders.
 
 ## Real assets: how they're made
 
@@ -108,8 +108,33 @@ How they are made (`tools/build/people_kit.py`, the kit they are put together fr
 - **One texture each.** `art/models/chr_<name>.png`, 256 px, painted by the script: the head in the top-left 128 px (skin, flush, the shadow under the jaw, stubble or beard, hair, age lines), and a 64 px swatch for each cloth, leather, wood, metal a part of him asks for (`people.swatch()`: blotches, weave, folds, mud and wet at the hems, wear; twelve to a character), in 24 tones a channel. It is painted last, when every part has asked. Imported lossless with mipmaps (`link_imports.py`), read nearest.
 - **Materials** by name, linked on import to `game/people/materials/`: `chr_<name>` (`game/people/person.gdshader`: the atlas times the vertex colour, lit per vertex, snapped) and `chr_<name>_face` (`game/people/face.gdshader`: the same, and the face drawn over it; `docs/systems/faces.md`, "The face"). The build writes both (`people.materials()`): the face's lines, eye, brow and lip colours come from his spec, so a change to them goes there, not in the `.tres`.
 - **The scene.** The build writes `game/characters/chr_<name>.tscn` when there is none, or only a placeholder (`people.scene()`); a real scene is never overwritten, so what is added by hand (the warden's lantern and staff in his hands) stays. A character scene's root is a `PersonModel` (`game/people/person_model.gd`): `Model` (the body on its skeleton, with its clips), `Head` (a `FaceRig`, with the head model under it), `Face` (where the talk looks). In the game `Head` and `Face` ride on the skeleton's `Head` bone. It plays the clips in steps at 15 a second: `idle`; `talk` while his face speaks; `walk` as he is carried along on his feet, faster or slower with his pace (1.3 m/s at the clip's own speed *(mine)*); `sit` and `sit_talk` when `seated` is on, on the scene's root or on the `CharacterLook` that wears it (`seated = true` on the Look of night 0's `Traveller` and `WagonCarter`). A clip he lacks falls back (`sit_talk` to `sit`, anything to `idle`). `right_hand_holds` and `left_hand_holds` (the warden's `Lantern` and `Staff`) keep an arm reaching for what it holds (`HandReach`, `game/people/hand_reach.gd`, after the clip): when the ride lifts the lantern to the porter's face his arm comes up with it, and if it is out of reach the lantern stays in his hand at the end of his arm.
-- **Only night 0's.** These three scenes are night 0's people. Others who stood in for them before keep the placeholders: the carter in the lane, night 5's sergeant and a victim, and the death demo wear `chr_lane_carter.tscn`; the traveller in the lane wears `chr_lane_traveller.tscn`.
+- **Who is real** (2026-11-16): night 0's three, and the lane's, the inn's and the road in's people (next table). Hamo is the carter in the lane at dusk too (`lane_carter.tres`). Still placeholders: the brothers (Thomas, Osric, Ranulf, Hugh, Godric, Anselm, Edwin, Simon, Dunstan, the choir brothers), Joan, the merchant, and `chr_lane_carter.tscn`, which stands in for night 5's sergeant and a victim and the death demo.
 - **Look at them:** `tools/shots/cast_shots.sh` (names given take only those) renders the three side by side in grey light and by lantern, each face's moods and tells close by the porter's lantern, the warden's lantern raised, the two seated on the wagon (and the porter's view, his eyes at sitting height), the carter walking, to `art/_review/cast_night0/`, at 1920x1080 and at the game's 960x540 (`_game`).
+
+### The lane's, the inn's and the road's people (2026-11-16)
+
+Each is a spec on the people's kit (`tools/build/chr_<name>.py`), their looks *(mine)* from the design's words; the scenes are the build's (`game/characters/chr_<name>.tscn`). Each has `idle`, `talk` and `walk`.
+
+| Who | Build, face | Wears and carries |
+| --- | --- | --- |
+| `hob` | Big, heavy; ruddy, round, going bald | A tan tunic, a linen apron at his waist; an ale jug in his hand |
+| `agnes` | A woman, a little stout; sharp | A dark wool kirtle, an apron, a wimple and veil; a cloth over her shoulder |
+| `jankin` | Gangly; flushed, a hooked nose, worried brows | A patched tunic, a rope belt, a coif; a wooden cup |
+| `walter` | Plump; round, cheerful, arched brows | A dark gown, a scarlet cloak (the only saturated colour), a red cap; his box of relics on a strap, a purse |
+| `roger` | Lean; pale, square, stern, a short black beard | A dark gown, a purse and a knife, boots to the calf, a black cap |
+| `ralph` | Short and heavy; broad, grey, going bald | A brown tunic, a bibbed apron, a coif; a bundle of tapers |
+| `kit` | Small and slight, young (about fourteen *mine*); soft, freckled, fair hair loose | A tan kirtle, an apron; a basket of candles |
+| `gib` | Hunched, old; gaunt, a white beard, bushy brows | A grey tunic and cloak, its hood down, a cap; a staff in his left hand |
+| `lane_woman` (Margery) | Stout; ruddy, round | A russet kirtle, an apron, a kerchief; a basket |
+| `mab` | Small, bent; her face wound in cloth to the eyes | Rags, a ragged shawl, bound feet; a leper's clapper |
+| `cole` | Big; weathered, heavy, blank | A brown work tunic, a rope belt, heavy boots |
+| `townswoman` | A woman; soft | A plain dark kirtle, a white coif |
+| `sailor` | Lean; weathered, sharp, a short beard | A short tarred coat, loose hose, a blue cap; a sea bundle on his shoulder |
+| `pilgrim` | Average; weathered, a short beard | An undyed gown, a cord and beads, a grey cloak, a scrip, a felt hat with badges; a staff in his right hand |
+| `stranger` | Average; his face in shadow | The black habit, its cowl up |
+| `lane_traveller` | Lean; weathered, narrow | A dark tunic, a moss hood and cape, a pack |
+
+**Look at them:** `tools/shots/people_shots.sh <sheet> <names>` renders any character scenes side by side, named, from in front and turned, to `art/_review/people/` (`lane.png`, `street.png`).
 
 ### The people's kit (2026-11-16)
 
@@ -143,15 +168,18 @@ Everything in a catalogue can be overridden in the spec (a name, a name with cha
 | `HAIR`, `HAIR_STYLES` | Colours `black`, `dark`, `brown`, `chestnut`, `red`, `fair`, `grey`, `white` (and `grey`: how much grey is in it). Cuts `cropped`, `bowl`, `tonsure` (the brothers'), `balding`, `bald`, `long` (to the collar) |
 | `BEARDS` | `none`, `stubble`, `short`, `full` |
 | `CLOTH` | Dyes, muted as the palette asks: `black` (the habit), `dark`, `grey`, `slate`, `undyed`, `tan`, `brown`, `russet`, `moss`, `woad`, `ochre`, `madder`, `scarlet` (Walter's, the only saturated colour), `linen`, `white`, `straw`, and `leather`, `wood`, `iron`, `tin` |
-| `WEAR` | `tunic` (to the knee; `collar_only` under a jerkin), `gown` (longer, cuffed), `kirtle` (a woman's, to the ground), `habit` (the Benedictine's: wide sleeves, scapular, the cowl's hood `down` or `up`), `jerkin`, `apron` (at the waist, or with a bib), `cloak` (open in front; `thrown` back off the right shoulder; with its `hood` down), `cape` (a hood's shoulder cape), `hose`, `boots`, `shoes`, `wraps` (bound shins), `belt` (leather, cloth or `rope`, and what hangs from it: `purse`, `knife`, `keys`, `rosary`, `pouch`), `pack`, `scrip` (a pilgrim's bag). With no hose his legs are bare, with no shoes his feet |
-| `HEADWEAR` | `hood` (up, with a point), `cowl` (the habit's hood up, deep), `coif`, `kerchief`, `wimple` (and veil), `bycocket`, `cap`, `straw` (wide-brimmed), `pilgrim_hat` (the brim up in front, badges on it) |
-| `PROPS` | Models of their own, held as the warden's are (`chr_<name>_<prop>.glb`): `staff`, `lantern` |
+| `WEAR` | `tunic` (to the knee; `collar_only` under a jerkin), `gown` (longer, cuffed), `kirtle` (a woman's, to the ground), `habit` (the Benedictine's: wide sleeves, scapular, the cowl's hood `down` or `up`), `jerkin`, `apron` (at the waist, or with a bib), `cloak` (open in front; `thrown` back off the right shoulder; with its `hood` down), `cape` (a hood's shoulder cape), `hose`, `boots`, `shoes`, `wraps` (bound shins), `belt` (leather, cloth or `rope`, and what hangs from it: `purse`, `knife`, `keys`, `rosary`, `pouch`), `pack`, `scrip` (a pilgrim's bag), `rags` (patched, torn at the hem), `shawl`, `shoulder_cloth`, `bundle` (on the shoulder), `relic_box` (on a strap). With no hose his legs are bare, with no shoes his feet |
+| `HEADWEAR` | `hood` (up, with a point), `cowl` (the habit's hood up, deep), `coif`, `kerchief`, `wimple` (and veil), `bycocket`, `cap`, `straw` (wide-brimmed), `pilgrim_hat` (the brim up in front, badges on it), `wrap` (cloth wound round the head and face, open at the eyes) |
+| `HELD` (`"holds": {"r": "jug"}`) | In a hand, and going where the hand goes: `jug`, `cup`, `basket` (with `candles`), `clapper`, `candles` |
+| `PROPS` | Models of their own, held as the warden's are (`chr_<name>_<prop>.glb`): `staff`, `lantern`. With `"hand": "l"` or `"r"` the build's scene stands it at his side and puts it in that hand |
 
 How it fits a build: garments are cut to the kit's `Body`, his trunk's half width and depth at nine heights from the collar to the seat (a yoke carries it out level from the neck to the shoulders, where the arms' rounded tops meet it), made from his build (frame, girth, shoulders, sex). A garment follows it with some ease down to the seat and hangs from there, flaring; so the same tunic, habit or cloak fits a gaunt novice and a fat cellarer. A part a person needs that the kit lacks is added to the kit (a function and a line in its table), or, if it is his alone, kept in his script (the carter's whip and reins: `build()`'s `posed`).
 
 **Look at it:** `tools/shots/kit_shots.sh` builds a figure or a head for every entry (`tools/build/kit_catalogue.py`, to `art/_review/kit/models/`, about two minutes) and renders them as named sheets in plain grey light to `art/_review/kit/`: `bodies` (and turned side on), `skins`, `faces` (and turned), `brows`, `moods` (one face in every mood), `hair` (cuts, colours, beards), `headwear`, `wear` (twelve outfits that between them use every garment), `colours` (chips). The catalogue's models are read from the file as they are; they are not the game's and are never imported.
 
-**Not in it yet:** children; rags and a wrapped face (Mab); the props in the character table that are held in a hand (a censer, a crosier, a book, a wax tablet, a jug, a basket, a clapper, a relic box). They are added as the people who carry them are built.
+A head is a little bigger on a broad frame and smaller on a slight one (`head_scale`); `face_shade` below 1 keeps a face in shadow (the stranger's, deep in his cowl).
+
+**Not in it yet:** small children; the brothers' props (a censer, a crosier, a book, a wax tablet, a walking stick). They are added as the people who carry them are built.
 
 ### Sounds (night 0, 2026-11-15)
 

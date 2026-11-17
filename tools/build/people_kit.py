@@ -19,7 +19,9 @@ the catalogues here, and one call:
                  ("tunic", {"color": "russet", "belt": {"hung": ["purse"]}}),
                  ("apron", {})],            # WEAR, in any order
         "headwear": ["coif"],               # HEADWEAR
-        "props": [("staff", {})],           # PROPS: models of their own
+        "holds": {"r": "jug"},              # HELD: in a hand, and goes with it
+        "props": [("staff", {"hand": "l"})],  # PROPS: models of their own; with a
+                                            # hand, the scene puts it in that hand
     }
     people_kit.build(SPEC)
 
@@ -35,6 +37,7 @@ the parts are for a body of height 1.0 (1.75 m) and scale with his.
 """
 import math
 import os
+import random
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -173,7 +176,7 @@ def _entries(items):
 
 def resolve(spec):
     """The spec with every name looked up: what people.py and rig.py read
-    (height, breadth, limb, girth, stoop, shoulders_wide, hips_wide; skin,
+    (height, breadth, limb, girth, stoop, shoulders_wide, hips_wide, head_scale; skin,
     hands_color, lip, flush; head; hair, hair_style, hairline, grey_hair;
     beard...; iris; age_lines, lines)."""
     s = dict(spec)
@@ -184,6 +187,7 @@ def resolve(spec):
     s["breadth"] = body["frame"]
     s["limb"] = body["frame"] * body["limb"]
     s["hand"] = 0.92 + 0.08 * body["frame"] * body["limb"]
+    s.setdefault("head_scale", round(1.0 + (body["frame"] - 1.0) * 0.5, 3))
     s["girth"] = body["girth"]
     s["sex"] = body.get("sex", "m")
     s["stoop"] = body["stoop"]
@@ -359,16 +363,20 @@ def robe(k, region, top=1.5, hem=0.56, ease=0.0, flare=0.13, sides=10, turn=True
 # ---------------------------------------------------------------- wear
 
 def tunic(k, color="russet", hem=0.52, belt="leather", cloth="tunic", flare=0.13, ease=0.0, wide=1.0, cuff=False,
-          collar_only=False, folds=0.35, mud=0.25, wear=0.3):
+          collar_only=False, folds=0.35, mud=0.25, wear=0.3, patches=0.0, ragged=0):
     """A tunic to the thigh or the knee (hem 0.52), belted; longer, a gown
     (hem 0.56 and down). `collar_only`: only its collar and sleeves, for
-    under a jerkin. `belt`: a cloth's name, None, or belt()'s keywords."""
-    region = swatch(cloth, dye(color), folds=folds, hem=mud, wear=wear, hem_color=(0.15, 0.12, 0.09))
+    under a jerkin. `belt`: a cloth's name, None, or belt()'s keywords.
+    `patches` (0 to 1) sews patches on it; `ragged`, that many tatters hang
+    from its hem."""
+    region = swatch(cloth, dye(color), folds=folds, hem=mud, wear=wear, hem_color=(0.15, 0.12, 0.09), patches=patches)
     if collar_only:
         robe(k, region, top=1.53, hem=1.47, ease=ease, flare=0.0, turn=False)
     else:
         robe(k, region, hem=hem, ease=ease, flare=flare)
         k.ease, k.flare = ease, flare
+        if ragged:
+            tatters(k, region, hem, ragged, ease=ease, flare=flare)
     k.sleeve, k.wide = region, wide
     k.cuff = region if cuff else None
     if not collar_only:
@@ -402,6 +410,81 @@ def habit(k, color="black", hem=0.1, hood="down", scapular=True, belt=None):
         cape(k, color=color, length=0.1, cloth=region)
     if hood == "down":
         hood_down(k, cloth=region)
+
+
+def tatters(k, region, y, n, ease=0.0, flare=0.13, seed=3):
+    """Torn strips hanging from a garment's edge at height `y`."""
+    b = k.body
+    rng = random.Random(seed + n)
+    r = b.ring(max(y, SEAT), ease)
+    drop = max(0.0, SEAT - y)
+    r = (r[0] + flare * drop, r[1] + flare * 0.75 * drop, r[2] + flare * 0.75 * drop)
+    for i in range(n):
+        a = 2.0 * math.pi * (i + rng.uniform(-0.3, 0.3)) / n
+        wide = rng.uniform(0.1, 0.2)
+        long = rng.uniform(0.06, 0.16)
+        p0, p1 = b.at(y, r, a - wide), b.at(y, r, a + wide)
+        mid = b.at(y, r, a, 0.01)
+        tip = (mid[0], mid[1] - long, mid[2])
+        out = (math.sin(a), 0.0, -math.cos(a))
+        uvs = [people.uv(region, 0.2, 0.9), people.uv(region, 0.5, 0.9), people.uv(region, 0.35, 1.0)]
+        k.m.poly([p0, p1, tip], k.mat, [grey(0.8), grey(0.8), grey(0.6)], uvs, facing=out)
+        k.m.poly([p0, p1, tip], k.mat, [grey(0.4), grey(0.4), grey(0.3)], uvs, facing=(-out[0], 0.0, -out[2]))
+
+
+def rags(k, color="tan", hem=0.3):
+    """Rags: a patched, torn tunic to the shin, a cord round it (Mab's)."""
+    tunic(k, color=color, hem=hem, belt="rope", cloth="rags", wear=0.7, mud=0.45, patches=1.0, ragged=9)
+
+
+def shawl(k, color="undyed", hem=1.02):
+    """A ragged shawl over the shoulders, pulled close."""
+    cloak(k, color=color, hem=hem, open=0.45, clasp=False, cloth="shawl")
+    tatters(k, "shawl", hem, 7, ease=0.07, flare=0.0, seed=11)
+
+
+def shoulder_cloth(k, color="linen", cloth="cloth"):
+    """A cloth over the left shoulder (an alewife's, for the tables)."""
+    b = k.body
+    region = swatch(cloth, dye(color), folds=0.3, blotch=0.2, hem=0.3, hem_color=(0.36, 0.32, 0.26))
+    x = -b.ring(1.45)[0] * 0.72
+    front, back = b.ring(1.28, k.ease), b.ring(1.3, k.ease)
+    path = [(x, 1.2 * b.h, b.z - front[1] - 0.012), (x, 1.36 * b.h, b.z - front[1] * 0.9 - 0.01), (x, 1.475 * b.h, b.z - 0.02),
+            (x, 1.475 * b.h, b.z + 0.04), (x, 1.36 * b.h, b.z + back[2] * 0.95 + 0.01), (x, 1.26 * b.h, b.z + back[2] + 0.014)]
+    k.m.tag = "bone:spine_03"
+    tube(k.m, k.mat, path, [(0.05, 0.007, 0.007)] * len(path), 4, region, [grey(0.75), WHITE, WHITE, WHITE, grey(0.9), grey(0.75)],
+         caps=(True, True))
+    k.m.tag = None
+
+
+def bundle(k, color="tan", cloth="bundle"):
+    """A bundle on his left shoulder, roped (a sailor's sea bag)."""
+    b = k.body
+    region = swatch(cloth, dye(color), folds=0.3, wear=0.4)
+    x = -b.ring(1.45)[0] * 0.8
+    y = 1.53 * b.h
+    k.m.tag = "bone:spine_03"
+    tube(k.m, k.mat, [(x, y - 0.02, b.z - 0.2), (x, y, b.z - 0.08), (x, y, b.z + 0.14), (x, y - 0.03, b.z + 0.26)],
+         [0.05, 0.075, 0.08, 0.055], 6, region, [grey(0.8), WHITE, WHITE, grey(0.8)], caps=(True, True))
+    k.m.tag = None
+
+
+def relic_box(k, color="wood"):
+    """A box on a strap across the chest, at his right hip (the pardoner's relics)."""
+    b = k.body
+    wood = swatch("wood", CLOTH["wood"], stripes=0.4)
+    leather = swatch("leather", CLOTH["leather"], wear=0.5, blotch=0.15)
+    swatch("metal", CLOTH["tin"], wear=0.6)
+    hip = b.ring(0.97, k.ease)
+    at = b.at(0.97, hip, 1.0, 0.07)
+    box(k.m, k.mat, at, (0.2, 0.13, 0.11), wood, grey(0.9), top_shade=1.15, yaw=-1.0)
+    box(k.m, k.mat, (at[0], at[1] + 0.02, at[2]), (0.205, 0.02, 0.115), "metal", grey(0.7), yaw=-1.0)
+    pts = []
+    for i in range(7):
+        a = 1.0 - (math.pi * 2.0 - 0.9) * i / 6.0
+        y = 1.02 + (1.44 - 1.02) * math.sin(math.pi * i / 6.0)
+        pts.append(b.at(y, b.ring(y, k.ease), a, 0.012))
+    tube(k.m, k.mat, pts, [0.011] * 7, 4, leather, [grey(0.8)] * 7)
 
 
 def jerkin(k, color="leather", hem=0.76, cloth="jerkin", belt="dark"):
@@ -630,7 +713,71 @@ def _pouch(k, y, r):
 
 HUNG = {"purse": _purse, "knife": _knife, "keys": _keys, "rosary": _rosary, "pouch": _pouch}
 WEAR = {"tunic": tunic, "gown": gown, "kirtle": kirtle, "habit": habit, "jerkin": jerkin, "apron": apron, "cloak": cloak,
-        "cape": cape, "hose": hose, "boots": boots, "shoes": shoes, "wraps": wraps, "belt": waist_belt, "pack": pack, "scrip": scrip}
+        "cape": cape, "hose": hose, "boots": boots, "shoes": shoes, "wraps": wraps, "belt": waist_belt, "pack": pack, "scrip": scrip,
+        "rags": rags, "shawl": shawl, "shoulder_cloth": shoulder_cloth, "bundle": bundle, "relic_box": relic_box}
+
+
+# ---------------------------------------------------------- in the hand
+# Each is made where his hand hangs at rest (`grip`, the middle of his
+# fist) and bound to that hand, so it goes where the hand goes.
+
+def jug(k, m, grip, ahead):
+    """An ale jug, carried by its handle."""
+    region = swatch("pot", (0.4, 0.27, 0.19), blotch=0.2, wear=0.3)
+    x, y, z = grip
+    c = (x, y - 0.13, z - 0.03)
+    tube(m, k.mat, [(c[0], c[1] - 0.1, c[2]), (c[0], c[1] - 0.06, c[2]), (c[0], c[1] + 0.02, c[2]), (c[0], c[1] + 0.08, c[2]),
+                    (c[0], c[1] + 0.11, c[2])], [0.045, 0.066, 0.062, 0.034, 0.04], 6, region,
+         [grey(0.7), WHITE, WHITE, grey(0.9), WHITE], caps=(True, True))
+    tube(m, k.mat, [(c[0], c[1] + 0.09, c[2] + 0.03), (x, y, z + 0.02), (c[0], c[1] - 0.01, c[2] + 0.06)], [0.009] * 3, 3, region,
+         [WHITE] * 3)
+
+
+def cup(k, m, grip, ahead):
+    """A wooden cup, in his fist."""
+    wood = swatch("wood", CLOTH["wood"], stripes=0.4)
+    x, y, z = grip
+    tube(m, k.mat, [(x, y - 0.045, z - 0.01), (x, y + 0.05, z - 0.01)], [0.03, 0.038], 6, wood, [grey(0.8), WHITE], caps=(True, False))
+    tube(m, k.mat, [(x, y + 0.05, z - 0.01), (x, y + 0.03, z - 0.01)], [0.036, 0.03], 6, wood, [grey(0.5), grey(0.25)], caps=(False, True))
+
+
+def basket(k, m, grip, ahead, candles=False, color="straw"):
+    """A basket hanging from the hand by its handle (`candles`: tapers in it)."""
+    region = swatch("wicker", dye(color), weave=0.2, blotch=0.12, wear=0.2)
+    x, y, z = grip
+    c = (x, y - 0.27, z - 0.02)
+    tube(m, k.mat, [(c[0], c[1] - 0.06, c[2]), (c[0], c[1] - 0.03, c[2]), (c[0], c[1] + 0.07, c[2])], [0.1, 0.125, 0.14], 7, region,
+         [grey(0.7), WHITE, WHITE], caps=(True, False))
+    tube(m, k.mat, [(c[0], c[1] + 0.07, c[2]), (c[0], c[1] + 0.03, c[2])], [0.135, 0.11], 7, region, [grey(0.55), grey(0.3)],
+         caps=(False, True))
+    tube(m, k.mat, [(c[0] - 0.135, c[1] + 0.07, c[2]), (c[0] - 0.09, y - 0.03, c[2]), (x, y + 0.005, z), (c[0] + 0.09, y - 0.03, c[2]),
+                    (c[0] + 0.135, c[1] + 0.07, c[2])], [0.009] * 5, 3, region, [WHITE] * 5)
+    if candles:
+        wax = swatch("wax", (0.74, 0.69, 0.55), blotch=0.06)
+        for dx, dz, lean in ((-0.06, 0.0, -0.03), (-0.02, 0.04, 0.0), (0.03, -0.03, 0.02), (0.07, 0.02, 0.04), (0.0, -0.05, -0.01)):
+            tube(m, k.mat, [(c[0] + dx, c[1], c[2] + dz), (c[0] + dx + lean, c[1] + 0.2, c[2] + dz)], [0.009, 0.007], 3, wax,
+                 [grey(0.8), WHITE], caps=(False, True))
+
+
+def clapper(k, m, grip, ahead):
+    """A leper's clapper: three wooden leaves on a handle."""
+    wood = swatch("wood", CLOTH["wood"], stripes=0.4)
+    x, y, z = grip
+    tube(m, k.mat, [(x, y + 0.04, z + 0.02), (x, y - 0.03, z - 0.03)], [0.012, 0.012], 4, wood, [WHITE, WHITE], caps=(True, True))
+    for dx in (-0.016, 0.0, 0.016):
+        box(m, k.mat, (x + dx, y - 0.1, z - 0.1 - abs(dx) * 0.4), (0.011, 0.15, 0.06), wood, grey(0.9 - abs(dx) * 8.0), yaw=dx * 6.0)
+
+
+def candles(k, m, grip, ahead):
+    """A bundle of tapers, hung by their wicks from the hand."""
+    wax = swatch("wax", (0.74, 0.69, 0.55), blotch=0.06)
+    x, y, z = grip
+    for dx, dz in ((-0.02, 0.0), (0.0, 0.016), (0.02, -0.004), (-0.008, -0.018), (0.012, 0.012)):
+        tube(m, k.mat, [(x + dx * 0.3, y - 0.03, z + dz * 0.3), (x + dx, y - 0.34, z + dz)], [0.006, 0.009], 3, wax,
+             [WHITE, grey(0.85)], caps=(False, True))
+
+
+HELD = {"jug": jug, "cup": cup, "basket": basket, "clapper": clapper, "candles": candles}
 
 
 # ------------------------------------------------------------ headwear
@@ -747,6 +894,16 @@ def wimple(spec, head, color="white", cloth="wimple"):
                   lambda h, th: 0.02 + 0.045 * max(0.0, (0.16 - h) / 0.25), opening=lambda mid, th: abs(th) < 1.25 and mid < 0.236,
                   top=(0.0, 0.318, 0.01), inner=0.5, crown=0.5, shade=(0.75, 1.0))
     veil.build(smooth=True, parent=head)
+
+
+def wrap(spec, head, color="undyed", cloth="wrap"):
+    """Cloth wound round the whole head and the face, open only at the eyes
+    (Mab the leper's)."""
+    region = swatch(cloth, dye(color), folds=0.4, blotch=0.2, wear=0.5, patches=0.4)
+    m = _shell(spec, head, "Wrap", region, [-0.035, 0.04, 0.085, 0.13, 0.166, 0.2, 0.226, 0.262, 0.295, 0.31],
+               lambda h, th: 0.012 + (0.01 if h < 0.14 and abs(th) > 0.8 else 0.0) + (0.006 if h < 0.05 else 0.0),
+               opening=lambda mid, th: abs(th) < 0.82 and 0.166 < mid < 0.214, top=(0.0, 0.316, 0.01), inner=0.3, crown=0.55)
+    m.build(smooth=True, parent=head)
 
 
 def _crown(spec, m, region, rings, top, cols=12, lean_from=None):
@@ -888,7 +1045,7 @@ def long_hair(spec, head):
 
 
 HEADWEAR = {"hood": hood, "cowl": cowl, "coif": coif, "kerchief": kerchief, "wimple": wimple, "bycocket": bycocket, "cap": cap,
-            "straw": straw, "pilgrim_hat": pilgrim_hat}
+            "straw": straw, "pilgrim_hat": pilgrim_hat, "wrap": wrap}
 
 
 # --------------------------------------------------------------- props
@@ -950,9 +1107,13 @@ def _body(spec):
         WEAR[name](k, **opts)
     obj = k.m.build(smooth=True)
     fists = spec.get("fists", ())
+    holds = {h: (v, {}) if isinstance(v, str) else (v[0], dict(v[1])) for h, v in spec.get("holds", {}).items()}
     arms = {}
     for side, s in ((-1, "l"), (1, "r")):
-        arms[side] = {"sleeve": k.sleeve or "hands", "cuff": k.cuff, "wide": k.wide, "fist": s in fists}
+        arms[side] = {"sleeve": k.sleeve or "hands", "cuff": k.cuff, "wide": k.wide, "fist": s in fists or s in holds}
+        if s in holds:
+            name, opts = holds[s]
+            arms[side]["held"] = lambda m, mat, grip, ahead, fn=HELD[name], o=opts: fn(k, m, grip, ahead, **o)
     people.standing_limbs(spec, obj, arms, k.legs)
 
 
@@ -978,7 +1139,15 @@ def build(spec, posed=None, keep_apart=(), game=True, head_only=False):
         people.texture(s)
         return s
     extras = []
+    held_props = []
     for name, opts in _entries(spec.get("props")):
+        hand = opts.pop("hand", None)
+        if hand:
+            # Where the scene stands it: at his side, a little forward, his hand
+            # at its grip (1 m up a staff).
+            sx = -1.0 if hand == "l" else 1.0
+            held_props.append({"name": name, "hand": hand, "at": (sx * 0.3 * s["breadth"], opts.get("grip", 1.0) * s["height"], -0.2)})
         extras.append(("chr_%s_%s" % (s["name"], name), lambda sp, fn=PROPS[name], o=opts: fn(sp, **o)))
+    s["held_props"] = held_props
     people.build(s, _body, _headwear, extras, posed, keep_apart, game)
     return s

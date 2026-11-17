@@ -1,14 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_roger.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_roger_head.glb" id="head"]
 
-[node name="Roger" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Roger, the town bailiff. (Not in the character table yet: a lay townsman in a dark tunic.) Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Roger" type="Node3D"]
+editor_description = "Roger, the town bailiff (design doc, 'Outside the gate'; not in the character table: his look is mine). Lean, pale, hard; a dark gown belted with a purse and a knife, boots to the calf, a dark cap, a short black beard (tools/build/chr_roger.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 4
-tunic = true
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4990, 0.0106)
+script = ExtResource("face_gd")
+
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.632, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6690, -0.0894)

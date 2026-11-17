@@ -1,24 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_lane_woman.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_lane_woman_head.glb" id="head"]
 
-[sub_resource type="BoxMesh" id="Mesh_Basket"]
-material = ExtResource("sacking")
-size = Vector3(0.3, 0.18, 0.22)
+[node name="LaneWoman" type="Node3D"]
+editor_description = "Margery, a neighbour with her basket, who hurries home before dark. Stout, ruddy; a russet kirtle, an apron, a kerchief over her hair, a basket on her arm (tools/build/chr_lane_woman.py). Model is her body on its skeleton, with her clips (PersonModel). Feet at the origin, facing -Z. Head is her face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="LaneWoman" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Margery, a neighbour with her basket in the lane at dusk, hurrying home. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 3
-tunic = true
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3520, 0.0095)
+script = ExtResource("face_gd")
 
-[node name="Basket" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.85, -0.1)
-cast_shadow = 0
-mesh = SubResource("Mesh_Basket")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.472, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5220, -0.0905)

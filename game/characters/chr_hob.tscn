@@ -1,27 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="prop_mat"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_hob.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_hob_head.glb" id="head"]
 
-[sub_resource type="CylinderMesh" id="Mesh_Jug"]
-material = ExtResource("prop_mat")
-top_radius = 0.06
-bottom_radius = 0.08
-height = 0.22
+[node name="Hob" type="Node3D"]
+editor_description = "Hob, who keeps the Cross Keys with Agnes (design doc, 'The lane'): the innkeeper, who hears everything said over the ale. Big, red-faced, going bald; a tan tunic, a linen apron tied at his waist, an ale jug in his hand (tools/build/chr_hob.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Hob" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Hob, who keeps the Cross Keys: big, red-faced, an apron. Prop: a jug. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 7
-tunic = true
-face_color = Color(0.788, 0.565, 0.431, 1)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5578, 0.0110)
+script = ExtResource("face_gd")
 
-[node name="Jug" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.95, -0.12)
-cast_shadow = 0
-mesh = SubResource("Mesh_Jug")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7278, -0.0890)

@@ -1,15 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_walter.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_walter_head.glb" id="head"]
 
-[node name="Walter" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Walter the pardoner. Plump; oily, cheerful. Coloured cloak (the only saturated colour on any character). His box of relics and his bag are on VisitorNPC, where the porter reads them. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Walter" type="Node3D"]
+editor_description = "Walter the pardoner, a relic-seller (Look and Feel, 'Characters': plump; oily, cheerful; a coloured cloak, the only saturated colour on any character; a box of 'relics'). A scarlet cloak over a dark gown, a felt cap, his box on a strap at his hip, a purse (tools/build/chr_walter.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 2
-face_color = Color(0.8, 0.6, 0.5, 1)
-cloth_color = Color(0.54, 0.23, 0.2, 1)
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4402, 0.0102)
+script = ExtResource("face_gd")
+
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.472, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6102, -0.0898)

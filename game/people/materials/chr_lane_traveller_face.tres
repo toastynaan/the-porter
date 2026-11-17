@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/face.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://art/models/chr_lane_traveller.png" id="atlas"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/atlas = ExtResource("atlas")
+shader_parameter/lines = 0.565
+shader_parameter/iris_color = Color(0.38, 0.33, 0.2, 1)
+shader_parameter/brow_color = Color(0.27, 0.189, 0.126, 1)
+shader_parameter/lip_color = Color(0.46, 0.29, 0.25, 1)
+shader_parameter/brow_size = Vector2(0.016, 0.0019)
+shader_parameter/brow_at = Vector2(0.033, 0.204)
+shader_parameter/brow_arch = 1.3
+shader_parameter/brow_slant = 0.0
+shader_parameter/brow_taper = 0.25

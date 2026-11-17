@@ -204,6 +204,8 @@ def head_mesh(spec, name="Head"):
     m = porter.Mesh(name)
     rows = head_rows(spec)
     hs = spec.get("head", {})
+    # A face kept in shadow (a stranger deep in his cowl): `face_shade` below 1.
+    dim = spec.get("face_shade", 1.0)
     grid = []
     for i, row in enumerate(rows):
         ring = []
@@ -235,12 +237,12 @@ def head_mesh(spec, name="Head"):
                 shade = 0.9
             elif i == 7 and 0.15 < a < 0.6:
                 shade = 0.86
-            ring.append(m.vert(x, y, z, grey(shade), head_uv(th, row[0])))
+            ring.append(m.vert(x, y, z, grey(shade * dim), head_uv(th, row[0])))
         grid.append(ring)
     for r0, r1 in zip(grid, grid[1:]):
         for k in range(len(HEAD_COLS) - 1):
             m.face((r1[k], r1[k + 1], r0[k + 1], r0[k]), mat)
-    top = m.vert(0.0, HEAD_TOP, 0.004, WHITE, head_uv(0.0, HEAD_TOP))
+    top = m.vert(0.0, HEAD_TOP, 0.004, grey(dim), head_uv(0.0, HEAD_TOP))
     for k in range(len(HEAD_COLS) - 1):
         m.face((top, grid[-1][k + 1], grid[-1][k]), mat)
     # The nose: a ridge from between the eyes to the tip, its sides down to
@@ -267,7 +269,7 @@ def head_mesh(spec, name="Head"):
 
     def nose_face(keys, facing):
         pts = [pt[k] for k in keys]
-        m.poly(pts, mat, [grey(shades[k]) for k in keys], [head_uv(math.atan2(p[0], -p[2]), p[1]) for p in pts], facing=facing)
+        m.poly(pts, mat, [grey(shades[k] * dim) for k in keys], [head_uv(math.atan2(p[0], -p[2]), p[1]) for p in pts], facing=facing)
 
     nose_face(("bl", "br", "tr", "tl"), (0.0, 0.3, -1.0))
     nose_face(("sl", "bl", "tl", "wl"), (-1.0, 0.0, -0.6))
@@ -458,13 +460,13 @@ def arm(m, mat, spec, side, shoulder, elbow, wrist, hand_dir=(0.0, -1.0, 0.0), s
     sh, el, wr = Vector(shoulder), Vector(elbow), Vector(wrist)
     up = (sh - el).normalized()
     inward = Vector((-float(side), 0.0, 0.0))
-    # The shoulder's cap: over the joint and in toward the neck, so the arm
-    # grows out of the trunk and doesn't hang off its side.
-    top = sh + up * r_sh * 0.46 + inward * r_sh * 1.0
-    cap = sh + up * r_sh * 0.36 + inward * r_sh * 0.3
+    # The shoulder's cap: a low dome over the joint, level with the trunk's
+    # yoke, so the arm grows out of the trunk and doesn't hang off its side.
+    top = sh + up * r_sh * 0.6 + inward * r_sh * 0.12
+    cap = sh + up * r_sh * 0.36 + inward * r_sh * 0.06
     cuff_r = r_wr * (1.3 if cuff else 1.1)
     pts = [top, cap, sh, sh + (el - sh) * 0.5, el, el + (wr - el) * 0.5, wr]
-    radii = [r_sh * 0.5, r_sh * 0.9, r_sh, r_sh * 0.88, r_el, (r_el + cuff_r) * 0.48, cuff_r]
+    radii = [r_sh * 0.45, r_sh * 0.86, r_sh, r_sh * 0.88, r_el, (r_el + cuff_r) * 0.48, cuff_r]
     tube(m, mat, [tuple(q) for q in pts], radii, 6, sleeve,
          [grey(0.82), grey(0.95), WHITE, WHITE, grey(0.82), WHITE, grey(0.85)], caps=(True, False))
     if cuff:
@@ -576,10 +578,11 @@ def srgb_arr(c):
 
 
 def paint_cloth(img, region, base, rng, blotch=0.12, weave=0.05, folds=0.0, hem=0.0, hem_color=None, stripes=None,
-                wear=0.0):
+                wear=0.0, patches=0.0):
     """A swatch of cloth (or leather, wood): its colour, blotched, a weave or
     grain, folds hanging down (darker streaks across), mud and wet toward
-    the hem (the swatch's foot), and wear (lighter, at random)."""
+    the hem (the swatch's foot), wear (lighter, at random), and patches
+    sewn on (0 none to 1 many: rags)."""
     x, y, w, h = REGIONS[region]
     col = np.tile(srgb_arr(base), (h, w, 1))
     k = 1.0 + (_noise(rng, w, h, 4) - 0.5) * 2.0 * blotch
@@ -594,6 +597,16 @@ def paint_cloth(img, region, base, rng, blotch=0.12, weave=0.05, folds=0.0, hem=
     if wear:
         k *= 1.0 + wear * np.clip(_noise(rng, w, h, 9) - 0.6, 0, 1) * 2.5
     col = col * k[:, :, None]
+    for _ in range(int(round(patches * 7))):
+        # A patch: another bit of cloth, its stitches dark round it.
+        pw, ph_ = int(rng.integers(9, 20)), int(rng.integers(8, 18))
+        px, py = int(rng.integers(0, w - pw)), int(rng.integers(0, h - ph_))
+        tone = srgb_arr(base) * float(rng.uniform(0.6, 1.3)) + (rng.random(3) - 0.5) * 0.06
+        col[py:py + ph_, px:px + pw] = tone[None, None, :] * (0.92 + 0.16 * rng.random((ph_, pw, 1)))
+        col[py, px:px + pw] *= 0.6
+        col[py + ph_ - 1, px:px + pw] *= 0.6
+        col[py:py + ph_, px] *= 0.6
+        col[py:py + ph_, px + pw - 1] *= 0.6
     if stripes:
         # Grain: fine streaks along the swatch (wood).
         g = _noise(rng, w * 6, h, 3)[:, ::6]
@@ -833,11 +846,24 @@ def scene(spec):
         return
     neck = rig.JOINTS["neck"]
     about = spec.get("about", "%s (tools/build/%s.py)." % (spec["name"].capitalize(), name)).replace('"', "'")
-    about += " Model is his body on its skeleton, with his clips (PersonModel). Feet (or seat) at the origin, facing -Z. " \
-        "Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both " \
-        "ride on the skeleton's head."
+    whose = "her" if spec.get("sex") == "f" else "his"
+    about += " Model is %s body on its skeleton, with %s clips (PersonModel). Feet at the origin, facing -Z. " \
+        "Head is %s face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both " \
+        "ride on the skeleton's head." % (whose, whose, whose)
     text = SCENE % {"name": name, "node": "".join(w.capitalize() for w in spec["name"].split("_")), "about": about,
                     "ny": neck[1], "nz": neck[2], "fy": neck[1] + 0.17, "fz": neck[2] - 0.1}
+    # What his hands hold that is a model of its own (a staff): in the scene,
+    # where his hand takes it (PersonModel's right_hand_holds, left_hand_holds).
+    for i, prop in enumerate(spec.get("held_props", [])):
+        node = prop["name"].capitalize()
+        rid = "prop%d" % i
+        text = text.replace('\n[node name=', '[ext_resource type="PackedScene" path="res://art/models/%s_%s.glb" id="%s"]\n\n[node name='
+                            % (name, prop["name"], rid), 1)
+        text = text.replace('script = ExtResource("person_gd")\n', 'script = ExtResource("person_gd")\n%s_hand_holds = NodePath("%s")\n'
+                            % ("left" if prop["hand"] == "l" else "right", node), 1)
+        at = prop["at"]
+        text += '\n[node name="%s" type="Node3D" parent="."]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, %.4f, %.4f, %.4f)\n' \
+            '\n[node name="Model" parent="%s" instance=ExtResource("%s")]\n' % (node, at[0], at[1], at[2], node, rid)
     open(path, "w").write(text)
     print("wrote game/characters/%s.tscn" % name)
 
@@ -849,6 +875,10 @@ def build_head(spec, head_extra=None):
     h = head_mesh(spec).build(smooth=True)
     if head_extra:
         head_extra(spec, h)
+    # A big man's head is a little bigger, a slight one's smaller (the head
+    # model's own size stays: the face shader measures in it).
+    k = spec.get("head_scale", 1.0)
+    h.scale = (k, k, k)
     porter.export(name + "_head")
 
 

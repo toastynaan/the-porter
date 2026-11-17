@@ -1,15 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_cole.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_cole_head.glb" id="head"]
 
-[node name="Cole" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Cole, a lay brother. Big labourer; weathered, blank. Brown work tunic, not a habit. Sound: heavy boots, no talk. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Cole" type="Node3D"]
+editor_description = "Cole, a lay brother (Look and Feel, 'Characters': a big labourer; weathered, blank; a brown work tunic, not a habit). He keeps the gate by day. A rope for a belt, hose, heavy boots (tools/build/chr_cole.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 7
-tunic = true
-face_color = Color(0.6, 0.47, 0.38, 1)
+[node name="Model" parent="." instance=ExtResource("model")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5578, 0.0110)
+script = ExtResource("face_gd")
+
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.664, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7278, -0.0890)

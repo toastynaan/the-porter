@@ -1,25 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="sacking"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_sailor.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_sailor_head.glb" id="head"]
 
-[sub_resource type="BoxMesh" id="Mesh_Bundle"]
-material = ExtResource("sacking")
-size = Vector3(0.22, 0.3, 0.22)
+[node name="Sailor" type="Node3D"]
+editor_description = "The sailor at the gate on night 2 (and a shape in an alley on the road in): lean, weathered; a short coat of tarred cloth, loose hose, a cap, a sea bundle on his shoulder (tools/build/chr_sailor.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Sailor" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: the sailor at the gate on night 2: lean, weathered, a short tarred-cloth coat, a sea bundle on his shoulder. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-tunic = true
-face_color = Color(0.72, 0.52, 0.4, 1)
-cloth_color = Color(0.2, 0.22, 0.25, 1)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4990, 0.0106)
+script = ExtResource("face_gd")
 
-[node name="Bundle" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.25, 0.05)
-cast_shadow = 0
-mesh = SubResource("Mesh_Bundle")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6690, -0.0894)

@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/person.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://art/models/chr_agnes.png" id="atlas"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/atlas = ExtResource("atlas")

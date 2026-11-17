@@ -1,28 +1,28 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/oak.tres" id="prop_mat"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_gib.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_gib_head.glb" id="head"]
+[ext_resource type="PackedScene" path="res://art/models/chr_gib_staff.glb" id="prop0"]
 
-[sub_resource type="CylinderMesh" id="Mesh_Staff"]
-material = ExtResource("prop_mat")
-top_radius = 0.02
-bottom_radius = 0.025
-height = 1.7
+[node name="Gib" type="Node3D"]
+editor_description = "Gib, the night watchman: old, hunched; he lights the lane's lanterns and walks it after curfew calling the hour. A grey cloak with its hood down over a grey tunic, a cap, a white beard, a staff in his left hand (his lantern is the visitor's) (tools/build/chr_gib.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
+left_hand_holds = NodePath("Staff")
 
-[node name="Gib" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: Gib the night watchman: old, hunched, a grey cloak. Prop: his staff (his lantern is the visitor's). Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 6
-tunic = true
-face_color = Color(0.706, 0.604, 0.533, 1)
-cloth_color = Color(0.227, 0.227, 0.220, 1)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4108, 0.0100)
+script = ExtResource("face_gd")
 
-[node name="Staff" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 0.85, -0.05)
-cast_shadow = 0
-mesh = SubResource("Mesh_Staff")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5808, -0.0900)
+
+[node name="Staff" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2850, 0.9120, -0.2000)
+
+[node name="Model" parent="Staff" instance=ExtResource("prop0")]

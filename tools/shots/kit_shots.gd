@@ -204,7 +204,10 @@ func _dress(root: Node, atlas: Texture2D, look: Dictionary) -> void:
 		var v: Variant = look[k]
 		if v is Array:
 			var a := v as Array
-			face.set_shader_parameter(k, Vector2(a[0], a[1]) if a.size() == 2 else Color(a[0], a[1], a[2]))
+			if a.size() == 2:
+				face.set_shader_parameter(k, Vector2(a[0], a[1]))
+			else:
+				face.set_shader_parameter(k, Color(a[0], a[1], a[2]))
 		else:
 			face.set_shader_parameter(k, float(v))
 	for mi: MeshInstance3D in root.find_children("*", "MeshInstance3D", true, false):

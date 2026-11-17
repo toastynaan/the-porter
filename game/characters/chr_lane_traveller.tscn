@@ -1,26 +1,21 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://game/people/brother_figure.gd" id="figure_gd"]
-[ext_resource type="Material" path="res://game/world/materials/sacking.tres" id="prop_mat"]
+[ext_resource type="Script" path="res://game/people/person_model.gd" id="person_gd"]
+[ext_resource type="Script" path="res://game/people/face_rig.gd" id="face_gd"]
+[ext_resource type="PackedScene" path="res://art/models/chr_lane_traveller.glb" id="model"]
+[ext_resource type="PackedScene" path="res://art/models/chr_lane_traveller_head.glb" id="head"]
 
-[sub_resource type="BoxMesh" id="Mesh_Pack"]
-material = ExtResource("prop_mat")
-size = Vector3(0.32, 0.4, 0.18)
+[node name="LaneTraveller" type="Node3D"]
+editor_description = "A traveller in the lane at dusk: lean, road-worn, a stranger passing through. A hood and cape, a dark tunic, a pack on his back (tools/build/chr_lane_traveller.py). Model is his body on its skeleton, with his clips (PersonModel). Feet at the origin, facing -Z. Head is his face (a FaceRig over the head model); Face is where the conversation camera looks. In the game both ride on the skeleton's head."
+script = ExtResource("person_gd")
 
-[node name="Traveller" type="Node3D" groups=["placeholder"]]
-editor_description = "Placeholder: A traveller in the lane, lean, road-worn (night 0's traveller, Will Fuller, is chr_traveller.tscn). Prop: a pack. Feet at the origin, facing -Z. Face is where the conversation camera looks."
+[node name="Model" parent="." instance=ExtResource("model")]
 
-[node name="Figure" type="Node3D" parent="."]
-script = ExtResource("figure_gd")
-build = 4
-tunic = true
-face_color = Color(0.722, 0.580, 0.502, 1)
-cloth_color = Color(0.243, 0.227, 0.204, 1)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4990, 0.0106)
+script = ExtResource("face_gd")
 
-[node name="Pack" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 1.15, 0.2)
-cast_shadow = 0
-mesh = SubResource("Mesh_Pack")
+[node name="Model" parent="Head" instance=ExtResource("head")]
 
 [node name="Face" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6690, -0.0894)

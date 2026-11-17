@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://game/people/face.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://art/models/chr_ralph.png" id="atlas"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/atlas = ExtResource("atlas")
+shader_parameter/lines = 0.705
+shader_parameter/iris_color = Color(0.32, 0.25, 0.17, 1)
+shader_parameter/brow_color = Color(0.378, 0.36, 0.342, 1)
+shader_parameter/lip_color = Color(0.53, 0.34, 0.3, 1)
+shader_parameter/brow_size = Vector2(0.0185, 0.0044)
+shader_parameter/brow_at = Vector2(0.033, 0.2025)
+shader_parameter/brow_arch = 0.5
+shader_parameter/brow_slant = -0.06
+shader_parameter/brow_taper = 0.2
