@@ -42128,6 +42128,18 @@
      "talk": null,
      "chapter": null,
      "where": "game/chapters/night0/arrive_beat.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/arrive_beat.gd"
+    },
+    {
+     "kind": "code",
+     "talk": null,
+     "chapter": null,
+     "where": "game/chapters/night0/inn_beat.gd"
     }
    ]
   },

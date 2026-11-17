@@ -11,6 +11,11 @@ extends NightBeat
 ## or goes straight over to the Keys and Agnes gives him the room, the gate
 ## is behind him and the knock is no longer wanted: before, the night waited
 ## here for a knock that never came, and his bed never became his.
+##
+## Nor does the night wait at the gate past eight. If the clock gets as far
+## as it may with no bed (the Inn's hold) and he has neither knocked nor
+## heard Mab out, the gate's beat is over and the Inn's begins: its bell
+## strikes eight and he thinks of Agnes.
 
 @export var knock: Duty
 @export var mab: Node3D
@@ -27,7 +32,7 @@ func run() -> void:
 	var on_knock := func(_by: Node) -> void: knocked[0] = true
 	knock.used.connect(on_knock)
 	knock.enabled = true
-	await until(func() -> bool: return knocked[0] or _moved_on())
+	await until(func() -> bool: return knocked[0] or _moved_on() or _clock_waits())
 	knock.enabled = false
 	knock.used.disconnect(on_knock)
 	if knocked[0]:
@@ -45,9 +50,9 @@ func run() -> void:
 			await talker.interact(player())
 		if not _moved_on():
 			mab.add_to_group(&"glyph_targets")
-			await until(_moved_on)
+			await until(func() -> bool: return _moved_on() or _clock_waits())
 			mab.remove_from_group(&"glyph_targets")
-	elif not GameState.has_flag(&"n0_room"):
+	elif GameState.has_flag(&"n0_sent_to_inn") and not GameState.has_flag(&"n0_room"):
 		# Mab, before any knock: the Keys once she has had her say.
 		await until(Talk.quiet)
 
@@ -56,6 +61,13 @@ func run() -> void:
 ## given him the room already.
 func _moved_on() -> bool:
 	return GameState.has_flag(&"n0_sent_to_inn") or GameState.has_flag(&"n0_room")
+
+
+## The clock has gone as far as it may while he has no bed (the director's
+## cap: the Inn's hold at eight).
+func _clock_waits() -> bool:
+	var c := clock()
+	return c != null and GameState.hour >= c.cap - 0.001
 
 
 ## He knocked, and Mab has sent him to the Keys.

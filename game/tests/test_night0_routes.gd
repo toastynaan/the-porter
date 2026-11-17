@@ -9,6 +9,8 @@ extends Node
 ##   to Agnes;
 ## - telling Agnes the gate is shut: she says she has the one bed, and it is
 ##   his without asking again;
+## - no knock, no Mab and no bed asked for (an ale from Agnes): at eight the
+##   gate's beat ends, the bell strikes and he thinks of Agnes;
 ## - straight to Agnes, with no knock and no word from Mab: she gives him the
 ##   room, the knock is no longer wanted, and the bed starts the window.
 ## Run: tools/check.sh
@@ -69,6 +71,26 @@ func _run() -> void:
 		"told the gate is shut, Agnes says she has the one bed, and it is his")
 	await _until(func() -> bool: return pilot.beat() == &"Window", 5.0)
 	_check(pilot.beat() == &"Window" and inn_bed.enabled, "and his bed is wanted (%s)" % pilot.beat())
+
+	# No knock, no Mab, no bed asked for: at eight the bell comes all the same.
+	pilot = await _set_down()
+	p = pilot.player
+	night = pilot.night
+	knock = pilot.duty("KnockGate")
+	await _until(func() -> bool: return knock.enabled, 5.0)
+	agnes = night.get_node(^"People/Agnes") as VisitorNPC
+	p.place(agnes.global_position + Vector3(1.3, 0.0, 0.0), deg_to_rad(90.0))
+	await _frames(3)
+	await pilot.talk(agnes.get_node(^"Talker") as Talker, [2], _answer)
+	_check(pilot.beat() == &"Arrive" and not GameState.has_flag(&"n0_room") and GameState.drink > 0.5,
+		"an ale from Agnes and no bed asked for: the knock is still what's wanted (%s)" % pilot.beat())
+	pilot.skip_to(20.5)
+	var eight := func() -> bool: return _said("", "(A bell somewhere in the city strikes eight.")
+	await _until(func() -> bool: return eight.call() and Talk.quiet(), 15.0)
+	_check(is_equal_approx(GameState.hour, 20.0) and pilot.beat() == &"Inn" and not knock.enabled and agnes.is_in_group(&"glyph_targets"),
+		"at eight the gate is behind him: the knock is no longer wanted, the flame goes to Agnes (%s, %.2f)" % [pilot.beat(), GameState.hour])
+	_check(eight.call() and not _said("", "(Warm light and noise across the lane."),
+		"the bell strikes eight and he thinks of Agnes; nothing tells him the Keys is across the lane")
 
 	# Straight to Agnes: no knock, no Mab. (Last: the window is left playing.)
 	pilot = await _set_down()

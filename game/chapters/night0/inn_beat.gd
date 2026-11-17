@@ -8,7 +8,9 @@ extends NightBeat
 ## Until she does, the clock waits at eight (holds_clock_at). As it gets
 ## there a bell in the city strikes eight and he thinks of the curfew and a
 ## bed (`eight_lines`), and again every `nudge_every` seconds while he still
-## has none (`nudge_lines`) (your ask, 2026-11-16).
+## has none (`nudge_lines`) (your ask, 2026-11-16). The gate's beat ends at
+## eight if he hasn't knocked or heard Mab, so the bell comes whatever he did
+## at the gate.
 
 @export var agnes: Node3D
 ## What he thinks as the bell strikes eight, and later while he still has
@@ -26,8 +28,10 @@ const BELL_DB := -16.0
 
 
 func run() -> void:
-	# Not if he has the room already (he went to Agnes before the gate).
-	if not _has_room():
+	# Mab has just sent him over from the gate. Not if he has the room
+	# already (he went to Agnes first), or the gate's beat ended at eight with
+	# him anywhere, perhaps in the Keys: the bell's thought names it then.
+	if GameState.has_flag(&"n0_sent_to_inn") and not _has_room():
 		await say("", "(Warm light and noise across the lane. The Cross Keys.)")
 	agnes.add_to_group(&"glyph_targets")
 	_nudge.call()
