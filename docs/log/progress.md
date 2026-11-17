@@ -77,3 +77,4 @@ One line per change as it lands: date, kind, commit, what changed.
 - 2026-11-16 · Art · 1ad7a0e · Faces after your reference heads: heads cut in flat planes and painted by the face shader (flat skin, soft shadows, dot eyes, hatched brows, tufted hair, stubble in strokes); all nineteen real people rebuilt; a portraits sheet in art/_review/kit/.
 - 2026-11-16 · Fix · 4a99ed3 · Night 0 out of order: the bed is his once Agnes gives the room, with no knock at the gate needed (Mab or Agnes first ends the gate's beat); telling Agnes the gate is shut gives the room too. New: test_night0_routes.
 - 2026-11-16 · Fix · a120af0 · Mab opens with "I could have told you." only after he has knocked; called to and not yet knocked, "No use knocking, brother."
+- 2026-11-16 · Fix · 76a40b0 · At eight with no knock and no word from Mab, the gate's beat ends by itself, so the bell and the thought of Agnes still come.
