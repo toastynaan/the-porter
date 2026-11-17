@@ -19,12 +19,23 @@ uniform float specular : hint_range(0.0, 1.0) = 0.3;
 
 // The face's layout on the head.
 uniform vec2 eye_at = vec2(0.032, 0.184);
-uniform vec2 eye_size = vec2(0.0132, 0.0052);
-uniform float iris_r = 0.0052;
+uniform vec2 eye_size = vec2(0.0142, 0.006);
+uniform float iris_r = 0.0056;
 uniform vec2 brow_at = vec2(0.033, 0.204);
-uniform vec2 brow_size = vec2(0.0165, 0.0026);
+// The brows' half length and half thickness; how far the middle arches (in
+// thicknesses); how they slant at rest (radians: + the inner ends up, a
+// worried look; - down, a stern one); how much they thin toward the temples
+// (tools/build/people_kit.py, BROWS).
+uniform vec2 brow_size = vec2(0.0165, 0.003);
+uniform float brow_arch = 0.8;
+uniform float brow_slant = 0.0;
+uniform float brow_taper = 0.35;
 uniform float mouth_y = 0.126;
-uniform float mouth_half = 0.023;
+uniform float mouth_half = 0.0245;
+// How far a mood moves the face: the brows' rise and tilt, the mouth's
+// curve and width, how wide the eyes go. 1 is the FaceRig's own numbers (a
+// placeholder's box face); a painted face needs more to read at 4 m.
+uniform float expression = 1.6;
 // One texel of the face, metres.
 uniform float texel = 0.0021;
 // How deep the creases are drawn: age, weather.
@@ -119,13 +130,16 @@ vec3 eye(vec2 q, float s, vec3 c, float lid, vec2 look, float smile, bool blind)
 
 vec3 face(vec2 q, vec3 skin) {
 	float s = q.x < 0.0 ? -1.0 : 1.0;
-	float brow_y = face_a.x;
-	float tilt = face_a.y;
-	float lid = clamp(face_a.z, -0.4, 1.0);
+	float brow_y = face_a.x * expression;
+	// The mood's tilt, and with his brows' own slant.
+	float mood_tilt = face_a.y * expression;
+	float tilt = mood_tilt + brow_slant;
+	float lid = face_a.z;
+	lid = clamp(lid < 0.0 ? lid * expression : lid, -0.65, 1.0);
 	float eye_x = face_a.w;
 	float eye_y = face_b.x;
-	float mw = clamp(face_b.y, 0.4, 1.5);
-	float curve = face_b.z;
+	float mw = clamp(1.0 + (face_b.y - 1.0) * expression, 0.4, 1.6);
+	float curve = clamp(face_b.z * expression, -0.7, 0.7);
 	float open = clamp(face_b.w, 0.0, 1.0);
 	float my = mouth_y + face_c.x;
 	float throat = face_c.y;
@@ -142,23 +156,23 @@ vec3 face(vec2 q, vec3 skin) {
 	float bl = brow_size.x;
 	if (abs(u) < bl) {
 		float k = u / bl;
-		float yc = brow_at.y + brow_y - u * tan(tilt) + brow_size.y * 0.8 * (1.0 - k * k) - brow_size.y * 0.4;
-		float half_thick = brow_size.y * (1.2 - 0.35 * (k + 1.0));
+		float yc = brow_at.y + brow_y - u * tan(tilt) + brow_size.y * brow_arch * (1.0 - k * k) - brow_size.y * brow_arch * 0.5;
+		float half_thick = brow_size.y * max(1.0 + brow_taper * 0.57 - brow_taper * (k + 1.0), 0.3);
 		if (abs(q.y - yc) < half_thick) {
 			c = brow_color;
 		}
 	}
 	// Raised brows crease the forehead; a frown knits two lines between them.
-	float raise = max(brow_y / 0.007, 0.0) + max(tilt - 0.15, 0.0) * 3.0;
+	float raise = max(brow_y / 0.011, 0.0) + max(mood_tilt - 0.24, 0.0) * 2.0;
 	if (raise > 0.45 && abs(q.x) < 0.03) {
 		for (int i = 0; i < 2; i++) {
-			float ly = brow_at.y + 0.019 + float(i) * 0.008 + brow_y * 0.6 + tilt * 0.008 * (1.0 - abs(q.x) / 0.03);
+			float ly = brow_at.y + 0.019 + float(i) * 0.008 + brow_y * 0.6 + mood_tilt * 0.008 * (1.0 - abs(q.x) / 0.03);
 			if (abs(q.y - ly) < texel * 0.5) {
 				c *= 0.84;
 			}
 		}
 	}
-	if ((tilt < -0.2 || (tilt > 0.3 && lid > 0.5)) && abs(abs(q.x) - 0.0055) < texel * 0.55
+	if ((mood_tilt < -0.3 || (mood_tilt > 0.45 && lid > 0.5)) && abs(abs(q.x) - 0.0055) < texel * 0.55
 			&& q.y > brow_at.y - 0.005 && q.y < brow_at.y + 0.008) {
 		c *= 0.78;
 	}
@@ -178,7 +192,7 @@ vec3 face(vec2 q, vec3 skin) {
 	if (abs(mt) <= 1.0) {
 		float ly = my + mh * tan(curve) * pow(abs(mt), 1.6);
 		float gap = open * 0.012 * pow(max(1.0 - mt * mt, 0.0), 0.8);
-		float thick = 0.0048 * clamp(mw, 0.45, 1.2) * (1.0 - 0.5 * abs(mt));
+		float thick = 0.0056 * clamp(mw, 0.45, 1.2) * (1.0 - 0.5 * abs(mt));
 		// Open, the upper lip lifts a little and the jaw drops the rest.
 		ly += gap * 0.3;
 		float dy = q.y - ly;
@@ -195,7 +209,7 @@ vec3 face(vec2 q, vec3 skin) {
 			c *= 0.8;
 		}
 	}
-	if (curve > 0.12 && length(q - vec2(s * (mh + texel), my + mh * tan(curve))) < texel * 0.75) {
+	if (curve > 0.18 && length(q - vec2(s * (mh + texel), my + mh * tan(curve))) < texel * 0.75) {
 		c *= 0.78;
 	}
 

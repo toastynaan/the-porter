@@ -4,7 +4,8 @@ catalogue in tools/build/people_kit.py, to art/_review/kit/models/, and
 catalogue.json there saying what is on each sheet.
 
 Sheets: bodies (every build, dressed alike), skins, faces (every head
-shape, and the marks a face can carry), hair (cuts, colours, beards),
+shape, and the marks a face can carry), brows, moods (one face in every
+mood, as the talk shows them), hair (cuts, colours, beards),
 headwear, wear (outfits that between them use every garment), colours
 (the cloth, hair and eye colours as chips).
 
@@ -67,6 +68,16 @@ def main():
              head("faces", "blind", face="narrow", eyes="milky", age=0.9, hair=("grey", "tonsure"))]
     sheets.append({"name": "faces", "kind": "head", "views": [0, 70], "rows": 3, "items": [
         head("faces", name, face=name) for name in kit.FACES] + marks})
+    sheets.append({"name": "brows", "kind": "head", "views": [0], "rows": 2, "items": [
+        head("brows", name, brows=name, hair=("dark", "cropped")) for name in kit.BROWS]})
+    moods = ["calm", "warm", "glad", "amused", "grave", "sad", "weary", "afraid", "wary", "angry", "cold", "ashamed", "pleading",
+             "pained", "drunk"]
+    items = []
+    for m in moods:
+        item = head("moods", m, hair=("dark", "cropped"), beard="stubble")
+        item["mood"] = m
+        items.append(item)
+    sheets.append({"name": "moods", "kind": "head", "views": [0], "rows": 3, "items": items})
     hair = [head("hair", style, hair=("brown", style)) for style in kit.HAIR_STYLES]
     hair += [head("hair", name, hair=(name, "bowl")) for name in kit.HAIR]
     hair += [head("hair", "beard_" + name, hair=("dark", "cropped"), beard=name) for name in kit.BEARDS if name != "none"]

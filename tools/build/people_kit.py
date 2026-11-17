@@ -10,6 +10,7 @@ the catalogues here, and one call:
         "body": "big",                      # BODIES, or ("big", {"height": 1.0})
         "skin": "ruddy",                    # SKINS
         "face": "broad",                    # FACES, or ("broad", {"nose": 1.2})
+        "brows": "heavy",                   # BROWS (each face has its own unless said)
         "eyes": "brown",                    # EYES
         "hair": ("brown", "balding"),       # HAIR colour, HAIR_STYLES
         "beard": "stubble",                 # BEARDS
@@ -117,6 +118,27 @@ FACES = {
     "hooked": {"width": 0.97, "jaw": 0.94, "chin": 1.0, "nose": 1.55, "nose_width": 1.1, "cheek": 1.3, "brow": 1.3},
 }
 
+## Brows (face.gdshader draws them): size (half length, half thickness,
+## m), arch (how far the middle rises, in thicknesses), slant (radians at
+## rest: + the inner ends up, a worried look; - down, a stern one), taper
+## (how much they thin toward the temples), at (where: from the middle, up
+## the head).
+BROWS = {
+    "plain": {"size": (0.0165, 0.003), "arch": 0.8, "slant": 0.0, "taper": 0.35, "at": (0.033, 0.204)},
+    "thin": {"size": (0.016, 0.0019), "arch": 1.3, "taper": 0.25},
+    "arched": {"size": (0.017, 0.0026), "arch": 2.6, "taper": 0.3, "at": (0.033, 0.2035)},
+    "straight": {"size": (0.0175, 0.003), "arch": 0.0, "taper": 0.15},
+    "heavy": {"size": (0.0185, 0.0044), "arch": 0.5, "slant": -0.06, "taper": 0.2, "at": (0.033, 0.2025)},
+    "bushy": {"size": (0.019, 0.005), "arch": 0.9, "taper": 0.05},
+    "stern": {"size": (0.0175, 0.0036), "arch": 0.3, "slant": -0.2, "taper": 0.3},
+    "worried": {"size": (0.0165, 0.0028), "arch": 0.6, "slant": 0.2, "taper": 0.35},
+    "short": {"size": (0.0115, 0.0034), "arch": 0.8, "taper": 0.1, "at": (0.031, 0.204)},
+    "joined": {"size": (0.023, 0.0036), "arch": 0.5, "taper": 0.3, "at": (0.0265, 0.2035)},
+}
+## The brows a face has unless its spec says ("brows").
+FACE_BROWS = {"narrow": "thin", "gaunt": "straight", "sharp": "arched", "soft": "thin", "round": "short", "broad": "heavy",
+              "square": "straight", "heavy": "bushy", "hooked": "stern"}
+
 ## Beards (people.paint_head paints them; beard_volume builds the jaw out).
 BEARDS = {
     "none": {"beard": 0.0},
@@ -177,9 +199,17 @@ def resolve(spec):
     head.update(_pick(FACES, spec.get("face", "plain")))
     head.update(spec.get("head", {}))
     s["head"] = head
+    face = spec.get("face", "plain")
+    face = face if isinstance(face, str) else face[0] if isinstance(face, (tuple, list)) else "plain"
+    brows = dict(BROWS["plain"])
+    brows.update(_pick(BROWS, spec.get("brows", FACE_BROWS.get(face, "plain"))))
+    if spec.get("brow_size"):
+        brows["size"] = spec["brow_size"]
+    s["brows"] = brows
     hair = spec.get("hair", ("brown", "cropped"))
     hair = (hair, "cropped") if isinstance(hair, str) or len(hair) == 3 else hair
-    s["hair"] = dye(hair[0])
+    # (A hair colour first: "dark" and "grey" are cloths too.)
+    s["hair"] = HAIR[hair[0]] if isinstance(hair[0], str) and hair[0] in HAIR else dye(hair[0])
     s["hair_style"] = hair[1]
     s.setdefault("hairline", HAIRLINE[hair[1]])
     s["grey_hair"] = spec.get("grey", 0.0)
@@ -199,11 +229,14 @@ def resolve(spec):
 # ------------------------------------------------------------- the body
 
 ## The trunk at rest, for a frame of 1.0: height (of a body 1.0 tall), half
-## width, depth in front, depth behind. A close garment's surface.
+## width, depth in front, depth behind. A close garment's surface. The yoke
+## carries the garment out from the neck to the shoulders, level with the
+## top of the arms.
 STATIONS = [
     ("collar", 1.50, 0.064, 0.062, 0.064),
-    ("neck", 1.47, 0.128, 0.086, 0.086),
-    ("shoulder", 1.41, 0.188, 0.1, 0.1),
+    ("neck", 1.476, 0.096, 0.076, 0.08),
+    ("yoke", 1.45, 0.166, 0.092, 0.096),
+    ("shoulder", 1.40, 0.192, 0.102, 0.102),
     ("chest", 1.30, 0.172, 0.107, 0.1),
     ("ribs", 1.15, 0.152, 0.1, 0.09),
     ("waist", 1.06, 0.146, 0.098, 0.088),
@@ -212,11 +245,12 @@ STATIONS = [
 ]
 SEAT = 0.84
 ## What a girth of 1.0 adds at each station: to the half width, front, back.
-GIRTH = {"collar": (0.008, 0.008, 0.006), "neck": (0.01, 0.01, 0.008), "shoulder": (0.01, 0.016, 0.012),
+GIRTH = {"collar": (0.008, 0.008, 0.006), "neck": (0.01, 0.01, 0.008), "yoke": (0.008, 0.012, 0.012),
+         "shoulder": (0.01, 0.016, 0.012),
          "chest": (0.022, 0.045, 0.018), "ribs": (0.048, 0.095, 0.026), "waist": (0.07, 0.135, 0.034),
          "hip": (0.06, 0.105, 0.04), "seat": (0.04, 0.05, 0.04)}
 ## A woman's trunk against a man's of the same frame: width, front depth.
-WOMAN = {"neck": (0.95, 1.0), "shoulder": (0.92, 1.0), "chest": (0.95, 1.2), "ribs": (0.92, 1.08), "waist": (0.88, 0.98),
+WOMAN = {"neck": (0.95, 1.0), "yoke": (0.92, 1.0), "shoulder": (0.92, 1.0), "chest": (0.95, 1.2), "ribs": (0.92, 1.08), "waist": (0.88, 0.98),
          "hip": (1.07, 1.04), "seat": (1.08, 1.06)}
 
 
@@ -236,7 +270,7 @@ class Body:
         self.rings = []
         for name, y, rx, rf, rb in STATIONS:
             rx, rf, rb = rx * self.frame, rf * self.frame, rb * self.frame
-            if name in ("neck", "shoulder"):
+            if name in ("yoke", "shoulder"):
                 rx *= self.shoulders
             gx, gf, gb = GIRTH[name]
             g = self.girth if self.girth > 0.0 else self.girth * 0.22
@@ -286,7 +320,7 @@ class Kit:
 def _shade(y):
     """A garment's vertex shade by height: darker at the collar, under the
     belt and toward the hem."""
-    marks = [(1.5, 0.8), (1.47, 0.9), (1.41, 1.0), (1.3, 1.0), (1.15, 0.92), (1.06, 0.85), (0.95, 1.0), (0.5, 0.94), (0.0, 0.88)]
+    marks = [(1.5, 0.8), (1.476, 0.88), (1.45, 1.0), (1.4, 1.0), (1.3, 1.0), (1.15, 0.92), (1.06, 0.85), (0.95, 1.0), (0.5, 0.94), (0.0, 0.88)]
     for (y0, s0), (y1, s1) in zip(marks, marks[1:]):
         if y1 <= y <= y0:
             return s0 + (s1 - s0) * (y0 - y) / (y0 - y1)
@@ -394,8 +428,8 @@ def cloak(k, color="moss", hem=0.62, open=0.95, thrown=False, clasp=True, hood=F
     behind his neck."""
     b = k.body
     region = swatch(cloth, dye(color), folds=0.45, hem=0.3, blotch=0.16, hem_color=(0.12, 0.11, 0.09))
-    sh = b.ring(1.41)
-    ys = [1.52, 1.47, 1.405, 1.12]
+    sh = b.ring(1.40)
+    ys = [1.52, 1.462, 1.405, 1.12]
     y = 1.12
     while y - 0.36 > hem + 0.08:
         y -= 0.3
@@ -409,7 +443,8 @@ def cloak(k, color="moss", hem=0.62, open=0.95, thrown=False, clasp=True, hood=F
             c = b.ring(1.5)
             r = (c[0] + 0.013, c[1] + 0.01, c[2] + 0.013)
         elif i == 1:
-            r = (body[0] + 0.042, body[1] + 0.034, body[2] + 0.039)
+            yoke = b.ring(1.45)
+            r = (yoke[0] + 0.014, yoke[1] + 0.03, yoke[2] + 0.034)
         else:
             r = (max(sh[0], body[0]) + 0.045 + 0.045 * t, max(sh[1], body[1]) + 0.03, max(sh[2], body[2]) + 0.05 + 0.06 * t)
         if i == len(ys) - 1:
@@ -432,9 +467,9 @@ def cape(k, color="undyed", length=0.16, cloth="hood"):
     """The shoulder cape of a hood (the headwear "hood" is its other half)."""
     b = k.body
     region = swatch(cloth, dye(color), folds=0.3, blotch=0.16, wear=0.3)
-    n, s = b.ring(1.47), b.ring(1.41)
+    n, s = b.ring(1.45), b.ring(1.40)
     ys = [1.52, 1.47, 1.42, 1.47 - length, 1.47 - length + 0.015]
-    rings = [(0.072, 0.07, 0.074), (n[0] + 0.03, n[1] + 0.028, n[2] + 0.033), (s[0] + 0.04, s[1] + 0.037, s[2] + 0.042),
+    rings = [(0.072, 0.07, 0.074), (n[0] - 0.006, n[1] + 0.024, n[2] + 0.028), (s[0] + 0.04, s[1] + 0.037, s[2] + 0.042),
              (s[0] + 0.064, s[1] + 0.052, s[2] + 0.057), (s[0] + 0.05, s[1] + 0.042, s[2] + 0.047)]
     k.m.tag = "cloak"
     tube(k.m, k.mat, [(0.0, y * b.h, b.z + 0.004 * i) for i, y in enumerate(ys)], rings, 12, region,

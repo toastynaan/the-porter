@@ -12,7 +12,7 @@ upperarm_l, lowerarm_l, hand_l, thigh_l, calf_l, foot_l, ball_l, and _r).
   (`shoulders_wide`, `hips_wide`). JOINTS then has where his joints are,
   standing.
 - skin(armature): every model in the file bound to it. Arms and legs bind
-  bone by bone; the body by height (pelvis, spine_01..03), the skirt of a
+  bone by bone, an elbow, a knee, a wrist with both its bones; the body by height (pelvis, spine_01..03), the skirt of a
   gown from the hips down to the thighs (below the knee, half to the
   calves), blended; a cloak only to the body;
   a vertex tagged "bone:<name>" to that bone alone (what a hand holds, a pack).
@@ -166,17 +166,31 @@ def rig(spec):
 
 # ------------------------------------------------------------------ binding
 
+## A joint of a limb bends with both its bones this far each side of it, m.
+JOINT = 0.03
+
+
 def _chain(p, links):
-    """The bone of the link (bone, a, b) nearest the point."""
+    """The bone of the link (bone, a, b) nearest the point; at a joint
+    between two links, both, half and half at the joint itself (an elbow's
+    ring bends with the upper arm and the forearm)."""
     best, bd = None, 1e9
-    for bone, a, b in links:
+    for i, (bone, a, b) in enumerate(links):
         a, b = Vector(a), Vector(b)
         ab = b - a
         t = max(0.0, min(1.0, (p - a).dot(ab) / max(ab.length_squared, 1e-9)))
         d = (p - (a + ab * t)).length
         if d < bd:
-            best, bd = bone, d
-    return {best: 1.0}
+            best, bd = (i, t * ab.length, ab.length), d
+    i, along, length = best
+    other, share = None, 0.0
+    if along < JOINT and i > 0:
+        other, share = links[i - 1][0], 0.5 * (1.0 - along / JOINT)
+    elif length - along < JOINT and i < len(links) - 1:
+        other, share = links[i + 1][0], 0.5 * (1.0 - (length - along) / JOINT)
+    if other is None or share <= 0.0:
+        return {links[i][0]: 1.0}
+    return {links[i][0]: 1.0 - share, other: share}
 
 
 def _smooth(a, b, x):
@@ -218,7 +232,7 @@ def _torso(p, skirt=True):
 
 def _links(part):
     """The bones an arm or a leg binds to, by its object's name (people.py:
-    LegL, LegR, UpperArmL..., ForearmL...), or None."""
+    LegL, LegR, ArmL, ArmR), or None."""
     side = "l" if part.endswith("L") else "r"
     sx = -1.0 if side == "l" else 1.0
 
@@ -230,7 +244,7 @@ def _links(part):
         toe = Vector(j("ball")) + Vector((0.0, 0.0, -0.1))
         return [("thigh_" + side, j("hip"), j("knee")), ("calf_" + side, j("knee"), j("ankle")),
                 ("foot_" + side, j("ankle"), j("ball")), ("ball_" + side, j("ball"), tuple(toe))]
-    if part.startswith("UpperArm") or part.startswith("Forearm"):
+    if part.startswith("Arm"):
         return [("upperarm_" + side, j("shoulder"), j("elbow")), ("lowerarm_" + side, j("elbow"), j("wrist")),
                 ("hand_" + side, j("wrist"), j("hand"))]
     return None

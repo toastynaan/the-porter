@@ -11,3 +11,7 @@ shader_parameter/iris_color = Color(0.36, 0.4, 0.42, 1)
 shader_parameter/brow_color = Color(0.243, 0.207, 0.171, 1)
 shader_parameter/lip_color = Color(0.5, 0.3, 0.27, 1)
 shader_parameter/brow_size = Vector2(0.0175, 0.003)
+shader_parameter/brow_at = Vector2(0.033, 0.204)
+shader_parameter/brow_arch = 0.8
+shader_parameter/brow_slant = 0.0
+shader_parameter/brow_taper = 0.35

@@ -76,8 +76,16 @@ func _sheet(sheet: Dictionary, view: float) -> void:
 		_stage.add_child(who)
 		who.position = at
 		who.rotation.y = deg_to_rad(view)
+		# Faces hold still (no blink in the still), in the mood the sheet asks.
+		var rig := FaceRig.on(who)
+		if rig:
+			rig._still = 100.0
+			if item.has("mood"):
+				rig.mood(StringName(String(item["mood"])))
 		_label(String(item["label"]), at + Vector3(0.0, -0.1 if figures else -0.215, 0.3), 0.075 if figures else 0.024)
-	# Their clips come to rest, then every one at the same moment of his idle.
+	# Their clips come to rest (and a mood eases in), then every one at the
+	# same moment of his idle.
+	await get_tree().create_timer(1.0).timeout
 	await _frames(6)
 	for anim: AnimationPlayer in _stage.find_children("*", "AnimationPlayer", true, false):
 		if anim.has_animation(&"idle"):

@@ -448,23 +448,30 @@ def mirror(p, side):
 
 
 def arm(m, mat, spec, side, shoulder, elbow, wrist, hand_dir=(0.0, -1.0, 0.0), sleeve="garment", cuff=None,
-        fist=False, upper=True, lower=True, wide=1.0):
-    """An arm: the sleeve from shoulder to wrist, and the hand. With `upper`
-    or `lower` only, that half (an arm in two parts that bend). `wide`
-    opens the sleeve toward the wrist (a habit's)."""
+        fist=False, wide=1.0):
+    """An arm, in one piece: the shoulder rounded over and leaning in to the
+    trunk, the sleeve down through the elbow (one ring there, which bends
+    with both halves: rig.skin) to the wrist, and the hand. `wide` opens the
+    sleeve toward the wrist (a habit's); `cuff` turns its end back."""
     kw = spec.get("limb", spec.get("breadth", 1.0))
-    r_sh, r_el, r_wr = 0.056 * kw, 0.046 * kw * (1.0 + (wide - 1.0) * 0.5), 0.036 * kw * wide
+    r_sh, r_el, r_wr = 0.062 * kw, 0.047 * kw * (1.0 + (wide - 1.0) * 0.5), 0.036 * kw * wide
     sh, el, wr = Vector(shoulder), Vector(elbow), Vector(wrist)
-    col_in = grey(0.78)
-    if upper:
-        start = sh + (sh - el).normalized() * 0.02
-        tube(m, mat, [tuple(start), tuple(sh), tuple(lerp3(sh, el, 0.5)), tuple(el + (el - sh).normalized() * 0.03)],
-             [r_sh * 0.9, r_sh, r_sh * 0.92, r_el * 1.02], 6, sleeve, [grey(0.75), grey(0.95), WHITE, col_in], t_range=(0.0, 0.5))
-    if lower:
-        cuff_r = r_wr * (1.35 if cuff else 1.1)
-        tube(m, mat, [tuple(el - (wr - el).normalized() * 0.02), tuple(lerp3(el, wr, 0.45)), tuple(wr)],
-             [r_el, r_el * 0.92, cuff_r], 6, cuff or sleeve, [col_in, WHITE, grey(0.85)], t_range=(0.5, 1.0))
-        hand(m, mat, spec, wr, Vector(hand_dir), side, fist)
+    up = (sh - el).normalized()
+    inward = Vector((-float(side), 0.0, 0.0))
+    # The shoulder's cap: over the joint and in toward the neck, so the arm
+    # grows out of the trunk and doesn't hang off its side.
+    top = sh + up * r_sh * 0.46 + inward * r_sh * 1.0
+    cap = sh + up * r_sh * 0.36 + inward * r_sh * 0.3
+    cuff_r = r_wr * (1.3 if cuff else 1.1)
+    pts = [top, cap, sh, sh + (el - sh) * 0.5, el, el + (wr - el) * 0.5, wr]
+    radii = [r_sh * 0.5, r_sh * 0.9, r_sh, r_sh * 0.88, r_el, (r_el + cuff_r) * 0.48, cuff_r]
+    tube(m, mat, [tuple(q) for q in pts], radii, 6, sleeve,
+         [grey(0.82), grey(0.95), WHITE, WHITE, grey(0.82), WHITE, grey(0.85)], caps=(True, False))
+    if cuff:
+        ahead = (wr - el).normalized()
+        tube(m, mat, [tuple(wr - ahead * 0.05), tuple(wr + ahead * 0.004)], [cuff_r * 1.08, cuff_r * 1.16], 6, cuff,
+             [grey(0.7), grey(0.95)])
+    hand(m, mat, spec, wr, Vector(hand_dir), side, fist)
 
 
 def hand(m, mat, spec, wrist, ahead, side, fist=False):
@@ -520,12 +527,11 @@ def leg(m, mat, spec, side, hip, knee, ankle, hose="hose", boot_top=0.24, toe=(0
 
 
 def standing_limbs(spec, body, arms, legs):
-    """His legs and arms as he stands at rest: LegL, LegR; UpperArmL,
-    UpperArmR, each with its Forearm (and the hand) (rig.skin binds them to
-    the bones). `arms` gives each side (-1, 1) a
-    dict: fist, sleeve, cuff, grip (where the hand holds, else just past
-    the wrist), held (fn(mesh, mat, grip, ahead): what's in the hand, made
-    as the hand hangs; bound to the hand). `legs` are leg()'s keywords."""
+    """His legs and arms as he stands at rest: LegL, LegR, ArmL, ArmR
+    (rig.skin binds them to the bones). `arms` gives each side (-1, 1) a
+    dict: fist, sleeve, cuff, wide, grip (where the hand holds, else just
+    past the wrist), held (fn(mesh, mat, grip, ahead): what's in the hand,
+    made as the hand hangs; bound to the hand). `legs` are leg()'s keywords."""
     mat = "chr_" + spec["name"]
     jt = joints(spec)
     for side, nm in ((-1, "L"), (1, "R")):
@@ -536,18 +542,15 @@ def standing_limbs(spec, body, arms, legs):
         a = arms[side]
         sh, el, wr = (mirror(jt[k], side) for k in ("shoulder", "elbow", "wrist"))
         ahead = (Vector(wr) - Vector(el)).normalized()
-        um = porter.Mesh("UpperArm" + nm)
-        arm(um, mat, spec, side, sh, el, wr, sleeve=a.get("sleeve", "garment"), lower=False, wide=a.get("wide", 1.0))
-        upper = um.build(smooth=True, origin=sh, parent=body)
-        fm = porter.Mesh("Forearm" + nm)
-        arm(fm, mat, spec, side, sh, el, wr, hand_dir=tuple(ahead), sleeve=a.get("sleeve", "garment"), cuff=a.get("cuff"),
-            fist=a.get("fist", False), upper=False, wide=a.get("wide", 1.0))
+        am = porter.Mesh("Arm" + nm)
+        arm(am, mat, spec, side, sh, el, wr, hand_dir=tuple(ahead), sleeve=a.get("sleeve", "garment"), cuff=a.get("cuff"),
+            fist=a.get("fist", False), wide=a.get("wide", 1.0))
         grip = a.get("grip", tuple(Vector(wr) + ahead * 0.05))
         if a.get("held"):
-            fm.tag = "bone:hand_" + ("l" if side < 0 else "r")
-            a["held"](fm, mat, grip, tuple(ahead))
-            fm.tag = None
-        fm.build(smooth=True, origin=el, parent=upper)
+            am.tag = "bone:hand_" + ("l" if side < 0 else "r")
+            a["held"](am, mat, grip, tuple(ahead))
+            am.tag = None
+        am.build(smooth=True, origin=sh, parent=body)
 
 
 # ------------------------------------------------------------ the texture
@@ -786,11 +789,16 @@ shader_parameter/atlas = ExtResource("atlas")
 
 def face_look(spec):
     """What the face shader is given for this person (face.gdshader): how
-    deep his lines are, and the colours of his eyes, brows and lips."""
+    deep his lines are, the colours of his eyes, brows and lips, and the
+    shape of his brows (the kit's BROWS)."""
     brow = spec.get("brow_color") or tuple(c * 0.9 for c in spec["hair"])
     out = {"lines": round(spec.get("lines", spec.get("age_lines", 0.5)), 3), "iris_color": spec.get("iris", (0.32, 0.25, 0.17)),
            "brow_color": brow, "lip_color": spec.get("lip", (0.52, 0.33, 0.29))}
-    if spec.get("brow_size"):
+    brows = spec.get("brows")
+    if brows:
+        out.update({"brow_size": brows["size"], "brow_at": brows["at"], "brow_arch": brows["arch"], "brow_slant": brows["slant"],
+                    "brow_taper": brows["taper"]})
+    elif spec.get("brow_size"):
         out["brow_size"] = spec["brow_size"]
     return out
 
@@ -806,10 +814,10 @@ def materials(spec):
     open(os.path.join(folder, name + ".tres"), "w").write(MATERIAL % ("person", name))
     rows = []
     for k, v in face_look(spec).items():
-        if k == "lines":
-            rows.append("shader_parameter/lines = %s" % v)
-        elif k == "brow_size":
-            rows.append("shader_parameter/brow_size = Vector2(%s, %s)" % (round(v[0], 4), round(v[1], 4)))
+        if isinstance(v, (int, float)):
+            rows.append("shader_parameter/%s = %s" % (k, round(float(v), 4)))
+        elif len(v) == 2:
+            rows.append("shader_parameter/%s = Vector2(%s, %s)" % (k, round(v[0], 4), round(v[1], 4)))
         else:
             rows.append("shader_parameter/%s = Color(%s, %s, %s, 1)" % (k, round(v[0], 3), round(v[1], 3), round(v[2], 3)))
     open(os.path.join(folder, name + "_face.tres"), "w").write(MATERIAL % ("face", name) + "\n".join(rows) + "\n")
