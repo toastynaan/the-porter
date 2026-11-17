@@ -17,8 +17,12 @@ static func idle(node: Node) -> float:
 	return 0.0 if node.get_tree().paused else node.get_process_delta_time()
 
 
-## Awaits the next physics frame of play, waiting out any pause.
+## Awaits the next physics frame of play, waiting out any pause. The node
+## may have gone with its scene meanwhile (back to the title, another scene
+## started): there is then no pause to wait out, and asking the freed node
+## for its tree was a script error on every such leaving.
 static func physics_frame(node: Node) -> void:
-	await node.get_tree().physics_frame
-	while node.get_tree().paused:
-		await node.get_tree().physics_frame
+	var tree := node.get_tree()
+	await tree.physics_frame
+	while is_instance_valid(node) and node.is_inside_tree() and tree.paused:
+		await tree.physics_frame

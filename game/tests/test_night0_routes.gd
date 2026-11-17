@@ -13,6 +13,8 @@ extends Node
 ##   gate's beat ends, the bell strikes and he thinks of Agnes;
 ## - straight to Agnes, with no knock and no word from Mab: she gives him the
 ##   room, the knock is no longer wanted, and the bed starts the window.
+## And leaving the night while the window plays (as he crosses to it, and
+## during the killing) stops its loops with no script error.
 ## Run: tools/check.sh
 
 const TEST_SAVE := "user://test_night0_routes_save.tres"
@@ -92,7 +94,7 @@ func _run() -> void:
 	_check(eight.call() and not _said("", "(Warm light and noise across the lane."),
 		"the bell strikes eight and he thinks of Agnes; nothing tells him the Keys is across the lane")
 
-	# Straight to Agnes: no knock, no Mab. (Last: the window is left playing.)
+	# Straight to Agnes: no knock, no Mab.
 	pilot = await _set_down()
 	p = pilot.player
 	night = pilot.night
@@ -119,6 +121,29 @@ func _run() -> void:
 	await _frames(3)
 	_check(GameState.has_flag(&"n0_lay_down") and not _said("", "Nobody has let it to you yet"),
 		"using it starts the window; nothing says the bed isn't his")
+
+	# Leaving the night while the window plays (back to the title, another
+	# scene): its loops stop with it, with no script error (check.sh fails on one).
+	var window_night := night.get_instance_id()
+	await pilot.seconds(0.4)
+	_check(p.controls_locked and pilot.beat() == &"Window", "he is crossing to the window")
+	await _set_down()
+	await pilot.seconds(1.0)
+	_check(not is_instance_id_valid(window_night) and _beat() == &"Arrive", "left mid-walk, that night is gone and the next begins (%s)" % _beat())
+	await _until(func() -> bool: return _said("", "(The gate is shut and barred."), 5.0)
+	_flow.start_at(0, &"Window")
+	await _until(func() -> bool: return _beat() == &"Window", 10.0)
+	pilot = NightPilot.new(_level(), _check)
+	pilot.shorten()
+	var death := pilot.night.get_node(^"WindowKilling") as DeathScene
+	await pilot.use("InnBed")
+	await _until(func() -> bool: return is_instance_valid(death.killer), 20.0)
+	await pilot.seconds(0.5)
+	_check(is_instance_valid(death.killer), "from the window, his view follows the killer in the court")
+	window_night = pilot.night.get_instance_id()
+	await _set_down()
+	await pilot.seconds(1.0)
+	_check(not is_instance_id_valid(window_night) and _beat() == &"Arrive", "left during the killing, that night is gone too (%s)" % _beat())
 
 	Talk.auto_choice = Callable()
 	for path in [TEST_SAVE, GameState.quiet_path(), TEST_SETTINGS]:
